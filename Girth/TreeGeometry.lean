@@ -222,6 +222,153 @@ theorem controlledPair_swap
   · right
     exact ⟨a, by simpa [Set.inter_comm] using ha⟩
 
+/-- If two ambient `A`-copies lie in one `B`-copy and meet in more
+than one vertex, linearity of `A` inside `B` forces them to have the same
+carrier. -/
+theorem sameCopy_of_contained_and_not_subsingleton
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    (hBase : ALinear A B)
+    (a c : Embedding A T) (b : Embedding B T)
+    (ha : copyCarrier a ⊆ copyCarrier b)
+    (hc : copyCarrier c ⊆ copyCarrier b)
+    (hMeet : ¬ (copyCarrier a ∩ copyCarrier c).Subsingleton) :
+    SameCopy a c := by
+  classical
+  let haRange : ∀ x : U, ∃ y : V, a x = b y := by
+    intro x
+    rcases ha ⟨x, rfl⟩ with ⟨y, hy⟩
+    exact ⟨y, hy.symm⟩
+  let hcRange : ∀ x : U, ∃ y : V, c x = b y := by
+    intro x
+    rcases hc ⟨x, rfl⟩ with ⟨y, hy⟩
+    exact ⟨y, hy.symm⟩
+  let fa : Embedding A B := a.factorThroughRange b haRange
+  let fc : Embedding A B := c.factorThroughRange b hcRange
+  have hfa (x : U) : a x = b (fa x) :=
+    Classical.choose_spec (haRange x)
+  have hfc (x : U) : c x = b (fc x) :=
+    Classical.choose_spec (hcRange x)
+  by_contra hSame
+  have hFactors : ¬ SameCopy fa fc := by
+    intro h
+    apply hSame
+    change Set.range a = Set.range c
+    apply Set.Subset.antisymm
+    · intro x hx
+      rcases hx with ⟨u, rfl⟩
+      have hmem : fa u ∈ copyCarrier fc := by
+        rw [← h]
+        exact ⟨u, rfl⟩
+      rcases hmem with ⟨v, huv⟩
+      refine ⟨v, ?_⟩
+      calc
+        c v = b (fc v) := hfc v
+        _ = b (fa u) := congrArg b huv
+        _ = a u := (hfa u).symm
+    · intro x hx
+      rcases hx with ⟨u, rfl⟩
+      have hmem : fc u ∈ copyCarrier fa := by
+        rw [h]
+        exact ⟨u, rfl⟩
+      rcases hmem with ⟨v, huv⟩
+      refine ⟨v, ?_⟩
+      calc
+        a v = b (fa v) := hfa v
+        _ = b (fc u) := congrArg b huv
+        _ = c u := (hfc u).symm
+  have hSmallBase := hBase fa fc hFactors
+  apply hMeet
+  intro x hx y hy
+  rcases hx.1 with ⟨ux, rfl⟩
+  rcases hx.2 with ⟨vx, hvx⟩
+  rcases hy.1 with ⟨uy, rfl⟩
+  rcases hy.2 with ⟨vy, hvy⟩
+  have hxB : fa ux = fc vx := by
+    apply b.injective
+    calc
+      b (fa ux) = a ux := (hfa ux).symm
+      _ = c vx := hvx.symm
+      _ = b (fc vx) := hfc vx
+  have hyB : fa uy = fc vy := by
+    apply b.injective
+    calc
+      b (fa uy) = a uy := (hfa uy).symm
+      _ = c vy := hvy.symm
+      _ = b (fc vy) := hfc vy
+  have hEq : fa ux = fa uy := hSmallBase
+    ⟨⟨ux, rfl⟩, ⟨vx, hxB.symm⟩⟩
+    ⟨⟨uy, rfl⟩, ⟨vy, hyB.symm⟩⟩
+  calc
+    a ux = b (fa ux) := hfa ux
+    _ = b (fa uy) := congrArg b hEq
+    _ = a uy := (hfa uy).symm
+
+/-- Local `A`-linearity inside `B`, together with coverage and controlled
+pairwise `B`-intersections, implies global `A`-linearity. -/
+theorem aLinear_of_base_and_controlled
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    (hBase : ALinear A B)
+    (hCover : ACopiesCoveredByB A B T)
+    (hInter : BIntersectionsControlled A B T) :
+    ALinear A T := by
+  intro a₁ a₂ hne
+  by_contra hMeet
+  obtain ⟨b₁, ha₁⟩ := hCover a₁
+  obtain ⟨b₂, ha₂⟩ := hCover a₂
+  by_cases hSameB : SameCopy b₁ b₂
+  · have ha₂' : copyCarrier a₂ ⊆ copyCarrier b₁ := by
+      intro x hx
+      have : x ∈ copyCarrier b₂ := ha₂ hx
+      rw [← hSameB] at this
+      exact this
+    exact hne (sameCopy_of_contained_and_not_subsingleton
+      hBase a₁ a₂ b₁ ha₁ ha₂' hMeet)
+  · rcases hInter b₁ b₂ hSameB with hSmall | ⟨c, hc⟩
+    · apply hMeet
+      intro x hx y hy
+      apply hSmall
+      · exact ⟨ha₁ hx.1, ha₂ hx.2⟩
+      · exact ⟨ha₁ hy.1, ha₂ hy.2⟩
+    · have hCommonSubset (x : W)
+          (hx : x ∈ copyCarrier a₁ ∩ copyCarrier a₂) :
+          x ∈ copyCarrier c := by
+        have hxB : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ :=
+          ⟨ha₁ hx.1, ha₂ hx.2⟩
+        rw [hc] at hxB
+        exact hxB
+      have hMeet₁ : ¬ (copyCarrier a₁ ∩ copyCarrier c).Subsingleton := by
+        intro hs
+        apply hMeet
+        intro x hx y hy
+        exact hs ⟨hx.1, hCommonSubset x hx⟩
+          ⟨hy.1, hCommonSubset y hy⟩
+      have hMeet₂ : ¬ (copyCarrier a₂ ∩ copyCarrier c).Subsingleton := by
+        intro hs
+        apply hMeet
+        intro x hx y hy
+        exact hs ⟨hx.2, hCommonSubset x hx⟩
+          ⟨hy.2, hCommonSubset y hy⟩
+      have hc₁ : copyCarrier c ⊆ copyCarrier b₁ := by
+        intro x hx
+        have : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ := by
+          rw [hc]
+          exact hx
+        exact this.1
+      have hc₂ : copyCarrier c ⊆ copyCarrier b₂ := by
+        intro x hx
+        have : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ := by
+          rw [hc]
+          exact hx
+        exact this.2
+      have h1 := sameCopy_of_contained_and_not_subsingleton
+        hBase a₁ c b₁ ha₁ hc₁ hMeet₁
+      have h2 := sameCopy_of_contained_and_not_subsingleton
+        hBase a₂ c b₂ ha₂ hc₂ hMeet₂
+      exact hne (h1.trans h2.symm)
+
+
 /-- In an `A`-edge free gluing, the intersection of an old `B`-copy
 with the fresh side is controlled by the old `B`-intersection invariant.
 This is the only nontrivial cross-side step in the recursive intersection
@@ -419,152 +566,6 @@ theorem ASupportedTreeAmalgam.aCopiesCoveredByB
   rcases hx with ⟨u, rfl⟩
   obtain ⟨v, huv⟩ := hab u
   exact ⟨v, huv.symm⟩
-
-/-- If two ambient `A`-copies lie in one `B`-copy and meet in more
-than one vertex, linearity of `A` inside `B` forces them to have the same
-carrier. -/
-theorem sameCopy_of_contained_and_not_subsingleton
-    {A : RelStructure L U} {B : RelStructure L V}
-    {T : RelStructure L W}
-    (hBase : ALinear A B)
-    (a c : Embedding A T) (b : Embedding B T)
-    (ha : copyCarrier a ⊆ copyCarrier b)
-    (hc : copyCarrier c ⊆ copyCarrier b)
-    (hMeet : ¬ (copyCarrier a ∩ copyCarrier c).Subsingleton) :
-    SameCopy a c := by
-  classical
-  let haRange : ∀ x : U, ∃ y : V, a x = b y := by
-    intro x
-    rcases ha ⟨x, rfl⟩ with ⟨y, hy⟩
-    exact ⟨y, hy.symm⟩
-  let hcRange : ∀ x : U, ∃ y : V, c x = b y := by
-    intro x
-    rcases hc ⟨x, rfl⟩ with ⟨y, hy⟩
-    exact ⟨y, hy.symm⟩
-  let fa : Embedding A B := a.factorThroughRange b haRange
-  let fc : Embedding A B := c.factorThroughRange b hcRange
-  have hfa (x : U) : a x = b (fa x) :=
-    Classical.choose_spec (haRange x)
-  have hfc (x : U) : c x = b (fc x) :=
-    Classical.choose_spec (hcRange x)
-  by_contra hSame
-  have hFactors : ¬ SameCopy fa fc := by
-    intro h
-    apply hSame
-    change Set.range a = Set.range c
-    apply Set.Subset.antisymm
-    · intro x hx
-      rcases hx with ⟨u, rfl⟩
-      have hmem : fa u ∈ copyCarrier fc := by
-        rw [← h]
-        exact ⟨u, rfl⟩
-      rcases hmem with ⟨v, huv⟩
-      refine ⟨v, ?_⟩
-      calc
-        c v = b (fc v) := hfc v
-        _ = b (fa u) := congrArg b huv
-        _ = a u := (hfa u).symm
-    · intro x hx
-      rcases hx with ⟨u, rfl⟩
-      have hmem : fc u ∈ copyCarrier fa := by
-        rw [h]
-        exact ⟨u, rfl⟩
-      rcases hmem with ⟨v, huv⟩
-      refine ⟨v, ?_⟩
-      calc
-        a v = b (fa v) := hfa v
-        _ = b (fc u) := congrArg b huv
-        _ = c u := (hfc u).symm
-  have hSmallBase := hBase fa fc hFactors
-  apply hMeet
-  intro x hx y hy
-  rcases hx.1 with ⟨ux, rfl⟩
-  rcases hx.2 with ⟨vx, hvx⟩
-  rcases hy.1 with ⟨uy, rfl⟩
-  rcases hy.2 with ⟨vy, hvy⟩
-  have hxB : fa ux = fc vx := by
-    apply b.injective
-    calc
-      b (fa ux) = a ux := (hfa ux).symm
-      _ = c vx := hvx.symm
-      _ = b (fc vx) := hfc vx
-  have hyB : fa uy = fc vy := by
-    apply b.injective
-    calc
-      b (fa uy) = a uy := (hfa uy).symm
-      _ = c vy := hvy.symm
-      _ = b (fc vy) := hfc vy
-  have hEq : fa ux = fa uy := hSmallBase
-    ⟨⟨ux, rfl⟩, ⟨vx, hxB.symm⟩⟩
-    ⟨⟨uy, rfl⟩, ⟨vy, hyB.symm⟩⟩
-  calc
-    a ux = b (fa ux) := hfa ux
-    _ = b (fa uy) := congrArg b hEq
-    _ = a uy := (hfa uy).symm
-
-/-- Local `A`-linearity inside `B`, together with coverage and controlled
-pairwise `B`-intersections, implies global `A`-linearity. -/
-theorem aLinear_of_base_and_controlled
-    {A : RelStructure L U} {B : RelStructure L V}
-    {T : RelStructure L W}
-    (hBase : ALinear A B)
-    (hCover : ACopiesCoveredByB A B T)
-    (hInter : BIntersectionsControlled A B T) :
-    ALinear A T := by
-  intro a₁ a₂ hne
-  by_contra hMeet
-  obtain ⟨b₁, ha₁⟩ := hCover a₁
-  obtain ⟨b₂, ha₂⟩ := hCover a₂
-  by_cases hSameB : SameCopy b₁ b₂
-  · have ha₂' : copyCarrier a₂ ⊆ copyCarrier b₁ := by
-      intro x hx
-      have : x ∈ copyCarrier b₂ := ha₂ hx
-      rw [← hSameB] at this
-      exact this
-    exact hne (sameCopy_of_contained_and_not_subsingleton
-      hBase a₁ a₂ b₁ ha₁ ha₂' hMeet)
-  · rcases hInter b₁ b₂ hSameB with hSmall | ⟨c, hc⟩
-    · apply hMeet
-      intro x hx y hy
-      apply hSmall
-      · exact ⟨ha₁ hx.1, ha₂ hx.2⟩
-      · exact ⟨ha₁ hy.1, ha₂ hy.2⟩
-    · have hCommonSubset (x : W)
-          (hx : x ∈ copyCarrier a₁ ∩ copyCarrier a₂) :
-          x ∈ copyCarrier c := by
-        have hxB : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ :=
-          ⟨ha₁ hx.1, ha₂ hx.2⟩
-        rw [hc] at hxB
-        exact hxB
-      have hMeet₁ : ¬ (copyCarrier a₁ ∩ copyCarrier c).Subsingleton := by
-        intro hs
-        apply hMeet
-        intro x hx y hy
-        exact hs ⟨hx.1, hCommonSubset x hx⟩
-          ⟨hy.1, hCommonSubset y hy⟩
-      have hMeet₂ : ¬ (copyCarrier a₂ ∩ copyCarrier c).Subsingleton := by
-        intro hs
-        apply hMeet
-        intro x hx y hy
-        exact hs ⟨hx.2, hCommonSubset x hx⟩
-          ⟨hy.2, hCommonSubset y hy⟩
-      have hc₁ : copyCarrier c ⊆ copyCarrier b₁ := by
-        intro x hx
-        have : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ := by
-          rw [hc]
-          exact hx
-        exact this.1
-      have hc₂ : copyCarrier c ⊆ copyCarrier b₂ := by
-        intro x hx
-        have : x ∈ copyCarrier b₁ ∩ copyCarrier b₂ := by
-          rw [hc]
-          exact hx
-        exact this.2
-      have h1 := sameCopy_of_contained_and_not_subsingleton
-        hBase a₁ c b₁ ha₁ hc₁ hMeet₁
-      have h2 := sameCopy_of_contained_and_not_subsingleton
-        hBase a₂ c b₂ ha₂ hc₂ hMeet₂
-      exact hne (h1.trans h2.symm)
 
 /-- Pairwise `B`-copy intersections in an `A`-supported tree
 amalgam are empty/singleton-sized or exactly an ambient `A`-copy. -/
