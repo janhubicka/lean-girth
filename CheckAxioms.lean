@@ -1,6 +1,7 @@
 import Girth
 
 #print axioms StructuralRamsey.Girth.aStrong_univ
+#print axioms StructuralRamsey.Girth.sameCopy_of_range_subset
 #print axioms StructuralRamsey.Girth.girthGT_mono
 #print axioms StructuralRamsey.Girth.girthGT_one
 #print axioms StructuralRamsey.Girth.girthGT_of_subset
