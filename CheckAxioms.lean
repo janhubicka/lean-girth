@@ -30,6 +30,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.crossSingletonSupport_glueA
 #print axioms StructuralRamsey.Girth.crossSingletonSupport_gluePoint
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.singletonIntersectionsSupported
+#print axioms StructuralRamsey.Girth.allowedIntersection_symm
+#print axioms StructuralRamsey.Girth.JoinTree.occurrence_reachable
+#print axioms StructuralRamsey.Girth.ForestOfCopies.joinTree_of_nonempty
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
 #print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
