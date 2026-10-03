@@ -127,6 +127,24 @@ theorem cyclicPath_vertex_succ
         (Fin.castLE (Nat.le_of_lt hklt) i)) := by
   rfl
 
+
+@[simp]
+theorem cyclicPath_vertex_last
+    {H : Set (Set W)} (c : BergeCycle H)
+    (before : Fin c.length) (k : ℕ)
+    (hkpos : 0 < k) (hklt : k < c.length) :
+    (c.cyclicPath before k hkpos hklt).vertex (Fin.last k) =
+      c.vertex (cyclicRunIndex before
+        (Fin.castLE (Nat.le_of_lt hklt)
+          ⟨k - 1, by omega⟩)) := by
+  let off : Fin k := ⟨k - 1, by omega⟩
+  have hlast : off.succ = Fin.last k := by
+    apply Fin.ext
+    simp [off]
+    omega
+  rw [← hlast]
+  exact c.cyclicPath_vertex_succ before k hkpos hklt off
+
 end BergeCycle
 
 end StructuralRamsey.Girth
