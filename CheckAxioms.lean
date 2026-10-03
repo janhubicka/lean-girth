@@ -8,9 +8,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.cyclicSucc_eq_finRotate
 #print axioms StructuralRamsey.Girth.exists_cyclic_change_of_nonconstant
 #print axioms StructuralRamsey.Girth.exists_two_cyclic_changes
-#print axioms StructuralRamsey.Girth.exists_constant_prefix
 #print axioms StructuralRamsey.Girth.exists_first_cyclic_change
-#print axioms StructuralRamsey.Girth.BergePath.prefix
+#print axioms StructuralRamsey.Girth.BergePath.initialSegment
 #print axioms StructuralRamsey.Girth.BergePath.close
 #print axioms StructuralRamsey.Girth.BergeCycle.cyclicPath
 #print axioms StructuralRamsey.Girth.pairwise_subsingleton_of_girthGT_two
