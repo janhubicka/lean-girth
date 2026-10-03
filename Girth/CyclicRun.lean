@@ -21,6 +21,28 @@ theorem cyclicRunIndex_zero {n : ℕ} [NeZero n] (before : Fin n) :
     cyclicRunIndex before (0 : Fin n) = finRotate n before := by
   simp [cyclicRunIndex, finCycle_apply]
 
+/-- A proper positive offset after the successor of `before` cannot
+return to `before`. -/
+theorem cyclicRunIndex_ne_before
+    {n : ℕ} (before offset : Fin n)
+    (hproper : offset.1 + 1 < n) :
+    cyclicRunIndex before offset ≠ before := by
+  letI : NeZero n := ⟨by omega⟩
+  intro h
+  have hEq : before + (1 + offset) = before := by
+    simpa [cyclicRunIndex, finCycle_apply, finRotate_apply,
+      add_assoc, add_comm, add_left_comm] using h
+  have hzero : (1 + offset : Fin n) = 0 := by
+    apply add_left_cancel (a := before)
+    simpa using hEq
+  have hval : ((1 + offset : Fin n) : ℕ) = offset.1 + 1 := by
+    rw [Fin.val_add_eq_of_add_lt]
+    · rfl
+    · simpa [add_comm] using hproper
+  have hz := congrArg Fin.val hzero
+  rw [hval] at hz
+  simp at hz
+
 /-- Our cyclic successor agrees with mathlib's canonical rotation of `Fin n`. -/
 theorem cyclicSucc_eq_finRotate {n : ℕ} (i : Fin n) :
     cyclicSucc i = finRotate n i := by
