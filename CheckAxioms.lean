@@ -13,6 +13,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bCopy_same_constituent
 #print axioms StructuralRamsey.Girth.freeAmalgam_side_intersection
 #print axioms StructuralRamsey.Girth.irreducibleCopy_side_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.sameCopy_comp
+#print axioms StructuralRamsey.Girth.controlledIntersection_comp
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
 #print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
