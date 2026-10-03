@@ -71,3 +71,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.punit_overlap_subsingleton
 #print axioms StructuralRamsey.Girth.supportCopies_eq_mapped_of_iso
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.girthGT
+
+#print axioms StructuralRamsey.Girth.JoinTree.exists_leaf_attachment
+#print axioms StructuralRamsey.Girth.JoinTree.exists_two_terminal_members
