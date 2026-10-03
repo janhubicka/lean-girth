@@ -27,10 +27,11 @@ def cyclicPath
   let cast : Fin k → Fin c.length :=
     fun m => Fin.castLE (Nat.le_of_lt hklt) m
   let idx : Fin k → Fin c.length :=
-    fun m => finCycle start (cast m)
+    fun m => cyclicRunIndex before (cast m)
   have hidx : Function.Injective idx := by
     intro i j hij
-    have hc : cast i = cast j := (finCycle start).injective hij
+    have hc : cast i = cast j :=
+      (finCycle start).injective (by simpa [idx, cyclicRunIndex, start] using hij)
     apply Fin.ext
     exact congrArg Fin.val hc
   have hidx0 : idx 0 = cyclicSucc before := by
@@ -96,6 +97,35 @@ def cyclicPath
         simpa [edges, vertices, hs] using hm
   · intro i
     simpa [edges, vertices] using c.left_mem (idx i)
+
+@[simp]
+theorem cyclicPath_edge
+    {H : Set (Set W)} (c : BergeCycle H)
+    (before : Fin c.length) (k : ℕ)
+    (hkpos : 0 < k) (hklt : k < c.length) (i : Fin k) :
+    (c.cyclicPath before k hkpos hklt).edge i =
+      c.edge (cyclicRunIndex before
+        (Fin.castLE (Nat.le_of_lt hklt) i)) := by
+  rfl
+
+@[simp]
+theorem cyclicPath_vertex_zero
+    {H : Set (Set W)} (c : BergeCycle H)
+    (before : Fin c.length) (k : ℕ)
+    (hkpos : 0 < k) (hklt : k < c.length) :
+    (c.cyclicPath before k hkpos hklt).vertex 0 =
+      c.vertex before := by
+  rfl
+
+@[simp]
+theorem cyclicPath_vertex_succ
+    {H : Set (Set W)} (c : BergeCycle H)
+    (before : Fin c.length) (k : ℕ)
+    (hkpos : 0 < k) (hklt : k < c.length) (i : Fin k) :
+    (c.cyclicPath before k hkpos hklt).vertex i.succ =
+      c.vertex (cyclicRunIndex before
+        (Fin.castLE (Nat.le_of_lt hklt) i)) := by
+  rfl
 
 end BergeCycle
 
