@@ -36,9 +36,10 @@ theorem cyclicRunIndex_ne_before
     apply add_left_cancel (a := before)
     simpa using hEq
   have hval : ((1 + offset : Fin n) : ℕ) = offset.1 + 1 := by
-    change (1 + offset.1) % n = offset.1 + 1
-    rw [Nat.mod_eq_of_lt (by omega)]
-    omega
+    have hlt : (1 : Fin n).val + offset.val < n := by
+      simpa [Nat.add_comm] using hproper
+    simpa [Nat.add_comm] using
+      (Fin.val_add_eq_of_add_lt (a := (1 : Fin n)) (b := offset) hlt)
   have hz := congrArg Fin.val hzero
   rw [hval] at hz
   simp at hz
@@ -140,10 +141,11 @@ theorem exists_cyclic_run_to_change
   let off : Fin n := ⟨k.1 - 1, by omega⟩
   have hoff : off + 1 = k := by
     apply Fin.ext
-    change ((off.1 + 1) % n) = k.1
-    rw [Nat.mod_eq_of_lt (by omega)]
-    dsimp [off]
-    omega
+    rw [Fin.val_add_eq_of_add_lt]
+    · dsimp [off]
+      omega
+    · dsimp [off]
+      omega
   have hlastIndex : cyclicRunIndex before off = before + k := by
     rw [cyclicRunIndex, finCycle_apply, finRotate_apply]
     calc
