@@ -53,3 +53,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
 #print axioms StructuralRamsey.Girth.aStrong_of_linear_and_controlled
 #print axioms StructuralRamsey.Girth.localTreeRamseyCore
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_subsingleton_glue
