@@ -35,6 +35,31 @@ def BSingletonIntersectionsSupported
       VertexSupportedInBCopy A b₁ x ∧
         VertexSupportedInBCopy A b₂ x
 
+/-- Subsingleton-ness of a B-copy intersection depends only on the two
+image carriers. -/
+theorem intersectionSubsingleton_congr
+    {B : RelStructure L V} {T : RelStructure L W}
+    {b₁ b₂ c₁ c₂ : Embedding B T}
+    (h₁ : SameCopy b₁ c₁) (h₂ : SameCopy b₂ c₂) :
+    (copyCarrier b₁ ∩ copyCarrier b₂).Subsingleton ↔
+      (copyCarrier c₁ ∩ copyCarrier c₂).Subsingleton := by
+  change copyCarrier b₁ = copyCarrier c₁ at h₁
+  change copyCarrier b₂ = copyCarrier c₂ at h₂
+  rw [h₁, h₂]
+
+/-- Membership in a B-copy intersection depends only on the two image
+carriers. -/
+theorem intersectionMem_congr
+    {B : RelStructure L V} {T : RelStructure L W}
+    {b₁ b₂ c₁ c₂ : Embedding B T}
+    (h₁ : SameCopy b₁ c₁) (h₂ : SameCopy b₂ c₂)
+    (x : W) :
+    x ∈ copyCarrier b₁ ∩ copyCarrier b₂ ↔
+      x ∈ copyCarrier c₁ ∩ copyCarrier c₂ := by
+  change copyCarrier b₁ = copyCarrier c₁ at h₁
+  change copyCarrier b₂ = copyCarrier c₂ at h₂
+  rw [h₁, h₂]
+
 /-- Support transports through an ambient embedding. -/
 theorem vertexSupported_comp
     {A : RelStructure L U} {B : RelStructure L V}
