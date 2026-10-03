@@ -15,6 +15,70 @@ universe u v
 variable {L : RelLanguage.{u}}
 variable {U V W : Type v}
 
+/-- The two side images of a concrete free amalgam intersect exactly in
+the image of the prescribed overlap. -/
+theorem freeAmalgam_side_intersection
+    {D : RelStructure L U} {Left : RelStructure L V}
+    {Right : RelStructure L W} {X : Type v}
+    {Whole : RelStructure L X}
+    {fL : Embedding D Left} {fR : Embedding D Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hfree : IsFreeAmalgam fL fR iL iR) :
+    Set.range iL ∩ Set.range iR = Set.range (iL.comp fL) := by
+  apply Set.Subset.antisymm
+  · intro x hx
+    rcases hx.1 with ⟨l, hl⟩
+    rcases hx.2 with ⟨r, hr⟩
+    have hlr : iL l = iR r := hl.symm.trans hr
+    obtain ⟨d, hld, hrd⟩ := (hfree.overlap l r).mp hlr
+    refine ⟨d, ?_⟩
+    change iL (fL d) = x
+    rw [← hld]
+    exact hl
+  · intro x hx
+    rcases hx with ⟨d, rfl⟩
+    constructor
+    · exact ⟨fL d, rfl⟩
+    · refine ⟨fR d, ?_⟩
+      exact (hfree.overlap (fL d) (fR d)).mpr ⟨d, rfl, rfl⟩
+
+/-- An embedded irreducible structure in a free amalgam factors through one
+side, with exactly the same image carrier. -/
+theorem irreducibleCopy_side_of_freeAmalgam
+    {D : RelStructure L U} {Left : RelStructure L V}
+    {Right : RelStructure L W} {X Y : Type v}
+    {Whole : RelStructure L X} {Q : RelStructure L Y}
+    {fL : Embedding D Left} {fR : Embedding D Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hfree : IsFreeAmalgam fL fR iL iR)
+    (hQ : Q.Irreducible) (e : Embedding Q Whole) :
+    (∃ eL : Embedding Q Left, SameCopy e (iL.comp eL)) ∨
+      (∃ eR : Embedding Q Right, SameCopy e (iR.comp eR)) := by
+  classical
+  rcases hfree.irreducible_side (Set.range e) (hQ.range_embedding e) with hL | hR
+  · let eL : Embedding Q Left :=
+      e.factorThroughRange iL (fun q => hL ⟨e q, ⟨q, rfl⟩⟩)
+    have heL (q : Y) : e q = iL (eL q) :=
+      Classical.choose_spec (hL ⟨e q, ⟨q, rfl⟩⟩)
+    refine Or.inl ⟨eL, ?_⟩
+    change Set.range e = Set.range (iL.comp eL)
+    apply Set.Subset.antisymm
+    · rintro x ⟨q, rfl⟩
+      exact ⟨q, (heL q).symm⟩
+    · rintro x ⟨q, rfl⟩
+      exact ⟨q, heL q⟩
+  · let eR : Embedding Q Right :=
+      e.factorThroughRange iR (fun q => hR ⟨e q, ⟨q, rfl⟩⟩)
+    have heR (q : Y) : e q = iR (eR q) :=
+      Classical.choose_spec (hR ⟨e q, ⟨q, rfl⟩⟩)
+    refine Or.inr ⟨eR, ?_⟩
+    change Set.range e = Set.range (iR.comp eR)
+    apply Set.Subset.antisymm
+    · rintro x ⟨q, rfl⟩
+      exact ⟨q, (heR q).symm⟩
+    · rintro x ⟨q, rfl⟩
+      exact ⟨q, heR q⟩
+
 /-- Every ambient copy of `A` is contained in some ambient copy of `B`. -/
 def ACopiesCoveredByB
     (A : RelStructure L U) (B : RelStructure L V)
