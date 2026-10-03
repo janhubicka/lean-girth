@@ -7,6 +7,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_of_subset
 #print axioms StructuralRamsey.Girth.cyclicSucc_eq_finRotate
 #print axioms StructuralRamsey.Girth.exists_first_cyclic_change
+#print axioms StructuralRamsey.Girth.BergePath.close
 #print axioms StructuralRamsey.Girth.pairwise_subsingleton_of_girthGT_two
 #print axioms StructuralRamsey.Girth.aLinear_of_girthGT_two
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.toTreeAmalgam
