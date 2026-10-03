@@ -55,3 +55,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.localTreeRamseyCore
 
 #print axioms StructuralRamsey.Girth.girthGT_union_of_subsingleton_glue
+
+#print axioms StructuralRamsey.Girth.cyclicRunIndex_ne_before
+#print axioms StructuralRamsey.Girth.BergePath.ofEdgeMem
+#print axioms StructuralRamsey.Girth.BergeCycle.cyclicPath_vertex_last
