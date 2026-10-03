@@ -174,8 +174,19 @@ theorem girthGT_mappedSupportCopies
     apply c.edge_injective
     rw [ha' j, ha' k]
     change copyCarrier (i.comp (a j)) = copyCarrier (i.comp (a k))
-    apply sameCopy_comp
-    exact hjk
+    apply Set.Subset.antisymm
+    · rintro x ⟨u, rfl⟩
+      have hu : a j u ∈ copyCarrier (a k) := by
+        rw [← hjk]
+        exact ⟨u, rfl⟩
+      rcases hu with ⟨v, hv⟩
+      exact ⟨v, congrArg i hv⟩
+    · rintro x ⟨u, rfl⟩
+      have hu : a k u ∈ copyCarrier (a j) := by
+        rw [hjk]
+        exact ⟨u, rfl⟩
+      rcases hu with ⟨v, hv⟩
+      exact ⟨v, congrArg i hv⟩
   have hvExists (j : Fin c.length) :
       ∃ x : T, i x = c.vertex j := by
     have hv : c.vertex j ∈ copyCarrier (i.comp (a j)) := by
@@ -203,8 +214,8 @@ theorem girthGT_mappedSupportCopies
     rcases hv with ⟨u, hu⟩
     have : oldVertex j = a j u := by
       apply i.injective
-      exact hu
-    exact ⟨u, this⟩
+      exact hu.symm
+    exact ⟨u, this.symm⟩
   have hRight (j : Fin c.length) :
       oldVertex j ∈ oldEdge (cyclicSucc j) := by
     have hv :
@@ -215,8 +226,8 @@ theorem girthGT_mappedSupportCopies
     rcases hv with ⟨u, hu⟩
     have : oldVertex j = a (cyclicSucc j) u := by
       apply i.injective
-      exact hu
-    exact ⟨u, this⟩
+      exact hu.symm
+    exact ⟨u, this.symm⟩
   let oldCycle : BergeCycle (supportCopies A D) := {
     length := c.length
     hlength := c.hlength
