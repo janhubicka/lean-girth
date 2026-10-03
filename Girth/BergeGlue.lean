@@ -80,4 +80,114 @@ theorem girthGT_union_of_subsingleton_glue
   have hvj : c.vertex j ∈ S := transition_mem j hj
   exact hij (c.vertex_injective (hS hvi hvj))
 
+
+/-- Gluing two hypergraphs along a common separator edge preserves Berge
+girth, provided every cross-side edge intersection is contained in the
+separator. -/
+theorem girthGT_union_of_edge_glue
+    {HL HR : Set (Set W)} {separator : Set W} {g : ℕ}
+    (hsepL : separator ∈ HL) (hsepR : separator ∈ HR)
+    (hcross : ∀ ⦃eL eR : Set W⦄, eL ∈ HL → eR ∈ HR →
+      eL ∩ eR ⊆ separator)
+    (hL : GirthGT HL g) (hR : GirthGT HR g) :
+    GirthGT (HL ∪ HR) g := by
+  rintro ⟨c, hcLen⟩
+  classical
+  by_cases hallR : ∀ i, c.edge i ∈ HR
+  · exact hR ⟨c.ofEdgeMem hallR, hcLen⟩
+  push Not at hallR
+  let side : Fin c.length → Bool :=
+    fun i => decide (c.edge i ∈ HR)
+  have hR_of_true {i : Fin c.length} (hi : side i = true) :
+      c.edge i ∈ HR := by
+    exact of_decide_eq_true (by simpa [side] using hi)
+  have hnotR_of_false {i : Fin c.length} (hi : side i = false) :
+      c.edge i ∉ HR := by
+    exact of_decide_eq_false (by simpa [side] using hi)
+  have hL_of_false {i : Fin c.length} (hi : side i = false) :
+      c.edge i ∈ HL := by
+    rcases c.edge_mem i with hli | hri
+    · exact hli
+    · exact (hnotR_of_false hi hri).elim
+  obtain ⟨iFalse, hiNotR⟩ := hallR
+  have hiFalse : side iFalse = false := by
+    simp [side, hiNotR]
+  by_cases hTrue : ∃ i : Fin c.length, side i = true
+  · obtain ⟨iTrue, hiTrue⟩ := hTrue
+    have hmix : ∃ i j : Fin c.length, side i ≠ side j :=
+      ⟨iFalse, iTrue, by simp [hiFalse, hiTrue]⟩
+    obtain ⟨before, k, hkpos, hbeforeTrue, hstartFalse,
+      hrun, hlastFalse, hnextTrue⟩ :=
+      exists_false_cyclic_run c.hlength side hmix
+    let pU : BergePath (HL ∪ HR) :=
+      c.cyclicPath before k.1 hkpos k.2
+    have pEdgesL : ∀ t, pU.edge t ∈ HL := by
+      intro t
+      let m : Fin c.length :=
+        Fin.castLE (Nat.le_of_lt k.2) t
+      have hm : m < k := by
+        rw [Fin.lt_def]
+        exact t.2
+      have hs : side (cyclicRunIndex before m) = false :=
+        hrun m hm
+      have hmem := hL_of_false hs
+      simpa [pU, m] using hmem
+    let pL : BergePath HL := pU.ofEdgeMem pEdgesL
+    have hstartSep : c.vertex before ∈ separator := by
+      have hRbefore := hR_of_true hbeforeTrue
+      have hLnext := hL_of_false hstartFalse
+      exact hcross hLnext hRbefore
+        ⟨c.right_mem before, c.left_mem before⟩
+    let lastIndex : Fin c.length := before + k
+    have hendSep : c.vertex lastIndex ∈ separator := by
+      have hLlast := hL_of_false hlastFalse
+      have hRnext := hR_of_true hnextTrue
+      exact hcross hLlast hRnext
+        ⟨c.left_mem lastIndex, c.right_mem lastIndex⟩
+    have hpStart : pL.vertex 0 ∈ separator := by
+      change pU.vertex 0 ∈ separator
+      simpa [pU] using hstartSep
+    have hpEnd : pL.vertex (Fin.last k.1) ∈ separator := by
+      change pU.vertex (Fin.last k.1) ∈ separator
+      have hEndEq :
+          pU.vertex (Fin.last k.1) = c.vertex lastIndex := by
+        simpa [pU, lastIndex] using
+          c.cyclicPath_vertex_last before k.1 hkpos k.2
+      rw [hEndEq]
+      exact hendSep
+    have hpNew : ∀ t, pL.edge t ≠ separator := by
+      intro t hEq
+      let m : Fin c.length :=
+        Fin.castLE (Nat.le_of_lt k.2) t
+      have hm : m < k := by
+        rw [Fin.lt_def]
+        exact t.2
+      have hs : side (cyclicRunIndex before m) = false :=
+        hrun m hm
+      have hnotR := hnotR_of_false hs
+      apply hnotR
+      have hEdge :
+          pL.edge t =
+            c.edge (cyclicRunIndex before m) := by
+        change pU.edge t =
+          c.edge (cyclicRunIndex before m)
+        simpa [pU, m] using
+          c.cyclicPath_edge before k.1 hkpos k.2 t
+      rw [← hEdge, hEq]
+      exact hsepR
+    let closed : BergeCycle HL :=
+      pL.close separator hsepL hpNew hpStart hpEnd
+    have hClosedLen : closed.length ≤ g := by
+      change k.1 + 1 ≤ g
+      omega
+    exact hL ⟨closed, hClosedLen⟩
+  · have hallFalse : ∀ i : Fin c.length, side i = false := by
+      intro i
+      cases hi : side i
+      · exact hi
+      · exact (hTrue ⟨i, hi⟩).elim
+    have hallL : ∀ i, c.edge i ∈ HL :=
+      fun i => hL_of_false (hallFalse i)
+    exact hL ⟨c.ofEdgeMem hallL, hcLen⟩
+
 end StructuralRamsey.Girth
