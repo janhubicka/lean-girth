@@ -97,6 +97,94 @@ def BIntersectionsControlled
       ∃ a : Embedding A T,
         copyCarrier b₁ ∩ copyCarrier b₂ = copyCarrier a
 
+/-- Equality of copy carriers is preserved by composition with an
+ambient embedding. -/
+theorem sameCopy_comp
+    {A : RelStructure L U} {T : RelStructure L V}
+    {S : RelStructure L W}
+    {e f : Embedding A T} (h : SameCopy e f)
+    (i : Embedding T S) :
+    SameCopy (i.comp e) (i.comp f) := by
+  change Set.range (i.comp e) = Set.range (i.comp f)
+  apply Set.Subset.antisymm
+  · rintro x ⟨a, rfl⟩
+    have : e a ∈ copyCarrier f := by
+      rw [← h]
+      exact ⟨a, rfl⟩
+    rcases this with ⟨b, hab⟩
+    exact ⟨b, congrArg i hab⟩
+  · rintro x ⟨a, rfl⟩
+    have : f a ∈ copyCarrier e := by
+      rw [h]
+      exact ⟨a, rfl⟩
+    rcases this with ⟨b, hab⟩
+    exact ⟨b, congrArg i hab⟩
+
+/-- A controlled pair of `B`-copies remains controlled after embedding the
+whole ambient structure. -/
+theorem controlledIntersection_comp
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W} {X : Type v}
+    {S : RelStructure L X}
+    (hInter : BIntersectionsControlled A B T)
+    (i : Embedding T S)
+    (b₁ b₂ : Embedding B T)
+    (hne : ¬ SameCopy (i.comp b₁) (i.comp b₂)) :
+    (copyCarrier (i.comp b₁) ∩ copyCarrier (i.comp b₂)).Subsingleton ∨
+      ∃ a : Embedding A S,
+        copyCarrier (i.comp b₁) ∩ copyCarrier (i.comp b₂) =
+          copyCarrier a := by
+  have hneOld : ¬ SameCopy b₁ b₂ := by
+    intro h
+    exact hne (sameCopy_comp h i)
+  rcases hInter b₁ b₂ hneOld with hSmall | ⟨a, ha⟩
+  · left
+    intro x hx y hy
+    rcases hx.1 with ⟨u₁, hu₁⟩
+    rcases hx.2 with ⟨u₂, hu₂⟩
+    rcases hy.1 with ⟨v₁, hv₁⟩
+    rcases hy.2 with ⟨v₂, hv₂⟩
+    have hxu : b₁ u₁ = b₂ u₂ := by
+      apply i.injective
+      exact hu₁.symm.trans hu₂
+    have hyv : b₁ v₁ = b₂ v₂ := by
+      apply i.injective
+      exact hv₁.symm.trans hv₂
+    have hold : b₁ u₁ = b₁ v₁ := hSmall
+      ⟨⟨u₁, rfl⟩, ⟨u₂, hxu.symm⟩⟩
+      ⟨⟨v₁, rfl⟩, ⟨v₂, hyv.symm⟩⟩
+    calc
+      x = i (b₁ u₁) := hu₁.symm
+      _ = i (b₁ v₁) := congrArg i hold
+      _ = y := hv₁
+  · right
+    refine ⟨i.comp a, ?_⟩
+    apply Set.Subset.antisymm
+    · intro x hx
+      rcases hx.1 with ⟨u₁, hu₁⟩
+      rcases hx.2 with ⟨u₂, hu₂⟩
+      have hxu : b₁ u₁ = b₂ u₂ := by
+        apply i.injective
+        exact hu₁.symm.trans hu₂
+      have hold : b₁ u₁ ∈ copyCarrier a := by
+        rw [← ha]
+        exact ⟨⟨u₁, rfl⟩, ⟨u₂, hxu.symm⟩⟩
+      rcases hold with ⟨v, hv⟩
+      refine ⟨v, ?_⟩
+      calc
+        i (a v) = i (b₁ u₁) := congrArg i hv.symm
+        _ = x := hu₁
+    · intro x hx
+      rcases hx with ⟨v, rfl⟩
+      have hold : a v ∈ copyCarrier b₁ ∩ copyCarrier b₂ := by
+        rw [ha]
+        exact ⟨v, rfl⟩
+      rcases hold.1 with ⟨u₁, hu₁⟩
+      rcases hold.2 with ⟨u₂, hu₂⟩
+      constructor
+      · exact ⟨u₁, congrArg i hu₁.symm⟩
+      · exact ⟨u₂, congrArg i hu₂.symm⟩
+
 /-- The generic tree-amalgam localization theorem supplies `A`-copy coverage
 by `B`-copies for every supported tree amalgam. -/
 theorem ASupportedTreeAmalgam.aCopiesCoveredByB
