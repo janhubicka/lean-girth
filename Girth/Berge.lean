@@ -45,6 +45,7 @@ theorem girthGT_mono {H : Set (Set W)} {g h : ℕ}
 
 theorem girthGT_one (H : Set (Set W)) : GirthGT H 1 := by
   rintro ⟨c, hc⟩
+  have hlen : 2 ≤ c.length := c.hlength
   omega
 
 end StructuralRamsey.Girth
