@@ -135,4 +135,99 @@ theorem aLinear_of_girthGT_two
   · exact ⟨f, rfl⟩
   · simpa [SameCopy] using hne
 
+
+/-- Support copies transported through an ambient embedding. -/
+def mappedSupportCopies
+    {L : RelLanguage.{u}} {U T S : Type v}
+    (A : StructuralRamsey.RelStructure L U)
+    (D : StructuralRamsey.RelStructure L T)
+    (E : StructuralRamsey.RelStructure L S)
+    (i : StructuralRamsey.RelStructure.Embedding D E) :
+    Set (Set S) :=
+  {X | ∃ a : StructuralRamsey.RelStructure.Embedding A D,
+    X = copyCarrier (i.comp a)}
+
+/-- A Berge cycle among transported support copies pulls back through the
+ambient embedding. -/
+theorem girthGT_mappedSupportCopies
+    {L : RelLanguage.{u}} {U T S : Type v}
+    (A : StructuralRamsey.RelStructure L U)
+    (D : StructuralRamsey.RelStructure L T)
+    (E : StructuralRamsey.RelStructure L S)
+    (i : StructuralRamsey.RelStructure.Embedding D E)
+    {g : ℕ}
+    (hgt : GirthGT (supportCopies A D) g) :
+    GirthGT (mappedSupportCopies A D E i) g := by
+  intro hcyc
+  rcases hcyc with ⟨c, hcLen⟩
+  classical
+  choose a ha using fun j => c.edge_mem j
+  have ha' (j : Fin c.length) :
+      c.edge j = copyCarrier (i.comp (a j)) := ha j
+  let oldEdge : Fin c.length → Set T :=
+    fun j => copyCarrier (a j)
+  have hOldEdgeMem (j : Fin c.length) :
+      oldEdge j ∈ supportCopies A D := by
+    exact ⟨a j, rfl⟩
+  have hOldEdgeInj : Function.Injective oldEdge := by
+    intro j k hjk
+    apply c.edge_injective
+    rw [ha' j, ha' k]
+    change copyCarrier (i.comp (a j)) = copyCarrier (i.comp (a k))
+    apply sameCopy_comp
+    exact hjk
+  have hvExists (j : Fin c.length) :
+      ∃ x : T, i x = c.vertex j := by
+    have hv : c.vertex j ∈ copyCarrier (i.comp (a j)) := by
+      rw [← ha' j]
+      exact c.left_mem j
+    rcases hv with ⟨u, hu⟩
+    exact ⟨a j u, hu⟩
+  let oldVertex : Fin c.length → T :=
+    fun j => Classical.choose (hvExists j)
+  have hOldVertexMap (j : Fin c.length) :
+      i (oldVertex j) = c.vertex j :=
+    Classical.choose_spec (hvExists j)
+  have hOldVertexInj : Function.Injective oldVertex := by
+    intro j k hjk
+    apply c.vertex_injective
+    calc
+      c.vertex j = i (oldVertex j) := (hOldVertexMap j).symm
+      _ = i (oldVertex k) := congrArg i hjk
+      _ = c.vertex k := hOldVertexMap k
+  have hLeft (j : Fin c.length) :
+      oldVertex j ∈ oldEdge j := by
+    have hv : i (oldVertex j) ∈ copyCarrier (i.comp (a j)) := by
+      rw [hOldVertexMap j, ← ha' j]
+      exact c.left_mem j
+    rcases hv with ⟨u, hu⟩
+    have : oldVertex j = a j u := by
+      apply i.injective
+      exact hu
+    exact ⟨u, this⟩
+  have hRight (j : Fin c.length) :
+      oldVertex j ∈ oldEdge (cyclicSucc j) := by
+    have hv :
+        i (oldVertex j) ∈
+          copyCarrier (i.comp (a (cyclicSucc j))) := by
+      rw [hOldVertexMap j, ← ha' (cyclicSucc j)]
+      exact c.right_mem j
+    rcases hv with ⟨u, hu⟩
+    have : oldVertex j = a (cyclicSucc j) u := by
+      apply i.injective
+      exact hu
+    exact ⟨u, this⟩
+  let oldCycle : BergeCycle (supportCopies A D) := {
+    length := c.length
+    hlength := c.hlength
+    edge := oldEdge
+    vertex := oldVertex
+    edge_mem := hOldEdgeMem
+    edge_injective := hOldEdgeInj
+    vertex_injective := hOldVertexInj
+    left_mem := hLeft
+    right_mem := hRight
+  }
+  exact hgt ⟨oldCycle, hcLen⟩
+
 end StructuralRamsey.Girth
