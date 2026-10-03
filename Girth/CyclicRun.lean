@@ -47,6 +47,46 @@ theorem exists_cyclic_change_of_nonconstant
       apply hij
       exact (hall i.1 i.2).trans (hall j.1 j.2).symm
 
+/-- A nonconstant cyclic Boolean word has two distinct transition
+indices. -/
+theorem exists_two_cyclic_changes
+    {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool)
+    (hmix : ∃ i j : Fin n, side i ≠ side j) :
+    ∃ i j : Fin n, i ≠ j ∧
+      side i ≠ side (cyclicSucc i) ∧
+      side j ≠ side (cyclicSucc j) := by
+  obtain ⟨i, hi⟩ := exists_cyclic_change_of_nonconstant side hmix
+  have hi' : side i ≠ side (finRotate n i) := hi
+  obtain ⟨k, hkpos, hklt, hafter, hconst⟩ :=
+    exists_first_cyclic_change hn side i hi'
+  let start : Fin n := finRotate n i
+  let offLast : Fin n := ⟨k - 1, by omega⟩
+  let j : Fin n := finCycle offLast start
+  have hjconst : side j = side start := by
+    exact hconst (k - 1) (by omega)
+  have hsucc :
+      cyclicSucc j =
+        finCycle ⟨k, hklt⟩ start := by
+    rw [cyclicSucc_eq_finRotate]
+    apply Fin.ext
+    simp [j, offLast, start, finCycle_apply, finRotate_apply,
+      Fin.add_def, Nat.add_mod]
+    omega
+  have hj : side j ≠ side (cyclicSucc j) := by
+    rw [hjconst, hsucc]
+    exact hafter.symm
+  have hij : i ≠ j := by
+    intro hij
+    have hEq : i = i + (⟨k, hklt⟩ : Fin n) := by
+      simpa [j, offLast, start, finCycle_apply, finRotate_apply,
+        add_assoc, add_comm, add_left_comm] using hij
+    have hkzero : (⟨k, hklt⟩ : Fin n) = 0 := by
+      apply add_left_cancel (a := i)
+      simpa using hEq.symm
+    have hv := congrArg Fin.val hkzero
+    simpa using hkpos.ne' hv
+  exact ⟨i, j, hij, hi, hj⟩
+
 /-- Every nonempty finite Boolean word has a maximal constant prefix.
 The prefix ends either at the end of the word or immediately before its first
 change. -/
