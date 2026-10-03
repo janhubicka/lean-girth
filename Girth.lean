@@ -5,3 +5,4 @@ import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore
 import Girth.Forest
+import Girth.ForestEnumeration
