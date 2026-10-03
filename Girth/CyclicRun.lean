@@ -47,6 +47,38 @@ theorem exists_cyclic_change_of_nonconstant
       apply hij
       exact (hall i.1 i.2).trans (hall j.1 j.2).symm
 
+/-- Every nonempty finite Boolean word has a maximal constant prefix.
+The prefix ends either at the end of the word or immediately before its first
+change. -/
+theorem exists_constant_prefix
+    {n : ℕ} (hn : 0 < n) (side : Fin n → Bool) :
+    ∃ k : ℕ, 0 < k ∧ k ≤ n ∧
+      (∀ m : ℕ, m < k →
+        side ⟨m, lt_of_lt_of_le ‹m < k› ‹k ≤ n›⟩ = side 0) ∧
+      (k = n ∨ ∃ hk : k < n, side ⟨k, hk⟩ ≠ side 0) := by
+  let p : Fin n → Prop := fun i => side i ≠ side 0
+  letI : DecidablePred p := Classical.decPred p
+  by_cases hex : ∃ i : Fin n, p i
+  · let kf : Fin n := Fin.find p hex
+    have hkSpec : p kf := Fin.find_spec hex
+    have hkpos : 0 < kf.1 := by
+      by_contra hk
+      have hk0 : kf = 0 := Fin.ext (by omega)
+      subst kf
+      simpa [p] using hkSpec
+    refine ⟨kf.1, hkpos, Nat.le_of_lt kf.2, ?_, Or.inr ⟨kf.2, hkSpec⟩⟩
+    intro m hm
+    let mf : Fin n := ⟨m, lt_trans hm kf.2⟩
+    have hmf : mf < kf := hm
+    have hnot : ¬ p mf := Fin.find_min hex hmf
+    exact not_ne_iff.mp hnot
+  · refine ⟨n, hn, le_rfl, ?_, Or.inl rfl⟩
+    intro m hm
+    have hnot : ¬ p ⟨m, hm⟩ := by
+      intro hp
+      exact hex ⟨⟨m, hm⟩, hp⟩
+    exact not_ne_iff.mp hnot
+
 /-- Starting immediately after a change in a cyclic Boolean word, there is a
 first later change before returning all the way around the circle.  Thus the
 intervening positive-length block is constant. -/
