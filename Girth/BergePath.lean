@@ -62,17 +62,13 @@ def initialSegment
     edge := fun i => p.edge (castE i)
     vertex := fun i => p.vertex (castV i)
     edge_mem := fun i => p.edge_mem (castE i)
-    edge_injective := p.edge_injective.comp ?_
-    vertex_injective := p.vertex_injective.comp ?_
+    edge_injective := p.edge_injective.comp
+      (Fin.castLE_injective hrle)
+    vertex_injective := p.vertex_injective.comp
+      (Fin.castLE_injective (Nat.add_le_add_right hrle 1))
     left_mem := ?_
     right_mem := ?_
   }
-  · intro i j hij
-    apply Fin.ext
-    exact congrArg Fin.val hij
-  · intro i j hij
-    apply Fin.ext
-    exact congrArg Fin.val hij
   · intro i
     simpa [castE, castV] using p.left_mem (castE i)
   · intro i
@@ -133,30 +129,47 @@ def close
         simpa [edges, vertices] using p.right_mem i
   · intro i
     obtain ⟨j, rfl⟩ | rfl := i.eq_castSucc_or_eq_last
-    · by_cases hj : j.1 + 1 < p.length
+    · change p.vertex j.succ ∈ edges (cyclicSucc j.castSucc)
+      by_cases hj : j.1 + 1 < p.length
       · let jn : Fin p.length := ⟨j.1 + 1, hj⟩
         have hsucc : cyclicSucc j.castSucc = jn.castSucc := by
           apply Fin.ext
-          simp [cyclicSucc, jn]
-          rw [Nat.mod_eq_of_lt]
-          · rfl
-          · omega
-        have hmem := p.left_mem jn
-        simpa [edges, vertices, hsucc, jn] using hmem
+          change (j.1 + 1) % (p.length + 1) = j.1 + 1
+          rw [Nat.mod_eq_of_lt (by omega)]
+        rw [hsucc]
+        change p.vertex j.succ ∈ p.edge jn
+        have hv : j.succ = jn.castSucc := by
+          apply Fin.ext
+          rfl
+        rw [hv]
+        exact p.left_mem jn
       · have heq : j.1 + 1 = p.length := by omega
         have hsucc :
             cyclicSucc j.castSucc = Fin.last p.length := by
           apply Fin.ext
-          simp [cyclicSucc, heq]
-        simpa [edges, vertices, hsucc, heq] using hend
+          change (j.1 + 1) % (p.length + 1) = p.length
+          rw [Nat.mod_eq_of_lt (by omega), heq]
+        rw [hsucc]
+        change p.vertex j.succ ∈ separator
+        have hv : j.succ = Fin.last p.length := by
+          apply Fin.ext
+          exact heq
+        rw [hv]
+        exact hend
     · let z : Fin p.length := ⟨0, by omega⟩
+      change p.vertex 0 ∈ edges (cyclicSucc (Fin.last p.length))
       have hsucc :
           cyclicSucc (Fin.last p.length) =
             (0 : Fin (p.length + 1)) := by
         apply Fin.ext
         simp [cyclicSucc]
-      have hfirst := p.left_mem z
-      simpa [edges, vertices, hsucc, z] using hfirst
+      rw [hsucc]
+      have hz : (0 : Fin (p.length + 1)) = z.castSucc := by
+        apply Fin.ext
+        rfl
+      rw [hz]
+      change p.vertex 0 ∈ p.edge z
+      exact p.left_mem z
 
 end BergePath
 
