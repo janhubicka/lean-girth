@@ -185,6 +185,43 @@ theorem controlledIntersection_comp
       · exact ⟨u₁, congrArg i hu₁⟩
       · exact ⟨u₂, congrArg i hu₂⟩
 
+/-- A controlled-intersection conclusion depends only on the two image
+carriers, not on the chosen embeddings representing them. -/
+theorem controlledPair_congr
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    {b₁ b₂ c₁ c₂ : Embedding B T}
+    (h₁ : SameCopy b₁ c₁) (h₂ : SameCopy b₂ c₂)
+    (h :
+      (copyCarrier c₁ ∩ copyCarrier c₂).Subsingleton ∨
+        ∃ a : Embedding A T,
+          copyCarrier c₁ ∩ copyCarrier c₂ = copyCarrier a) :
+    (copyCarrier b₁ ∩ copyCarrier b₂).Subsingleton ∨
+      ∃ a : Embedding A T,
+        copyCarrier b₁ ∩ copyCarrier b₂ = copyCarrier a := by
+  change copyCarrier b₁ = copyCarrier c₁ at h₁
+  change copyCarrier b₂ = copyCarrier c₂ at h₂
+  rw [h₁, h₂]
+  exact h
+
+/-- The controlled-intersection conclusion is symmetric in its two copies. -/
+theorem controlledPair_swap
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    {b₁ b₂ : Embedding B T}
+    (h :
+      (copyCarrier b₁ ∩ copyCarrier b₂).Subsingleton ∨
+        ∃ a : Embedding A T,
+          copyCarrier b₁ ∩ copyCarrier b₂ = copyCarrier a) :
+    (copyCarrier b₂ ∩ copyCarrier b₁).Subsingleton ∨
+      ∃ a : Embedding A T,
+        copyCarrier b₂ ∩ copyCarrier b₁ = copyCarrier a := by
+  rcases h with hs | ⟨a, ha⟩
+  · left
+    simpa [Set.inter_comm] using hs
+  · right
+    exact ⟨a, by simpa [Set.inter_comm] using ha⟩
+
 /-- In an `A`-edge free gluing, the intersection of an old `B`-copy
 with the fresh side is controlled by the old `B`-intersection invariant.
 This is the only nontrivial cross-side step in the recursive intersection
@@ -255,9 +292,15 @@ theorem crossControlled_glueA
       have hoy : cOld by = fOld ay := by
         apply iOld.injective
         exact hby.trans hay.symm
+      have hbxB0 : cOld bx ∈ copyCarrier b₀ := by
+        rw [hox]
+        exact hf₀ ⟨ax, rfl⟩
+      have hbyB0 : cOld by ∈ copyCarrier b₀ := by
+        rw [hoy]
+        exact hf₀ ⟨ay, rfl⟩
       have hold : cOld bx = cOld by := hSmall
-        ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ⟨ax, rfl⟩⟩
-        ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ⟨ay, rfl⟩⟩
+        ⟨⟨bx, rfl⟩, hbxB0⟩
+        ⟨⟨by, rfl⟩, hbyB0⟩
       calc
         x = iOld (cOld bx) := hbx.symm
         _ = iOld (cOld by) := congrArg iOld hold
@@ -418,9 +461,9 @@ theorem sameCopy_of_contained_and_not_subsingleton
       rcases hmem with ⟨v, huv⟩
       refine ⟨v, ?_⟩
       calc
-        a u = b (fa u) := hfa u
-        _ = b (fc v) := congrArg b huv.symm
-        _ = c v := (hfc v).symm
+        c v = b (fc v) := hfc v
+        _ = b (fa u) := congrArg b huv
+        _ = a u := (hfa u).symm
     · intro x hx
       rcases hx with ⟨u, rfl⟩
       have hmem : fc u ∈ copyCarrier fa := by
@@ -429,9 +472,9 @@ theorem sameCopy_of_contained_and_not_subsingleton
       rcases hmem with ⟨v, huv⟩
       refine ⟨v, ?_⟩
       calc
-        c u = b (fc u) := hfc u
-        _ = b (fa v) := congrArg b huv.symm
-        _ = a v := (hfa v).symm
+        a v = b (fa v) := hfa v
+        _ = b (fc u) := congrArg b huv
+        _ = c u := (hfc u).symm
   have hSmallBase := hBase fa fc hFactors
   apply hMeet
   intro x hx y hy
