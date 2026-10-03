@@ -38,9 +38,7 @@ theorem localTreeRamseyCore
         C.IsHomomorphismEmbedding G p ∧
         RelStructure.LocallyTreeLike A B C n ∧
         RelStructure.IrreduciblesExtendTo B C := by
-  exact
-    StructuralRamsey.Partite.IteratedSparsening.
-      sparseningRamsey_hereditarilyIrreducible_all
-        A B G κ hRamsey hA hB n
+  exact StructuralRamsey.Partite.IteratedSparsening.sparseningRamsey_hereditarilyIrreducible_all
+    A B G κ hRamsey hA hB n
 
 end StructuralRamsey.Girth
