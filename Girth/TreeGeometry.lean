@@ -29,7 +29,7 @@ theorem freeAmalgam_side_intersection
   · intro x hx
     rcases hx.1 with ⟨l, hl⟩
     rcases hx.2 with ⟨r, hr⟩
-    have hlr : iL l = iR r := hl.symm.trans hr
+    have hlr : iL l = iR r := hl.trans hr.symm
     obtain ⟨d, hld, hrd⟩ := (hfree.overlap l r).mp hlr
     refine ⟨d, ?_⟩
     change iL (fL d) = x
@@ -40,7 +40,7 @@ theorem freeAmalgam_side_intersection
     constructor
     · exact ⟨fL d, rfl⟩
     · refine ⟨fR d, ?_⟩
-      exact (hfree.overlap (fL d) (fR d)).mpr ⟨d, rfl, rfl⟩
+      exact ((hfree.overlap (fL d) (fR d)).mpr ⟨d, rfl, rfl⟩).symm
 
 /-- An embedded irreducible structure in a free amalgam factors through one
 side, with exactly the same image carrier. -/
@@ -146,10 +146,10 @@ theorem controlledIntersection_comp
     rcases hy.2 with ⟨v₂, hv₂⟩
     have hxu : b₁ u₁ = b₂ u₂ := by
       apply i.injective
-      exact hu₁.symm.trans hu₂
+      exact hu₁.trans hu₂.symm
     have hyv : b₁ v₁ = b₂ v₂ := by
       apply i.injective
-      exact hv₁.symm.trans hv₂
+      exact hv₁.trans hv₂.symm
     have hold : b₁ u₁ = b₁ v₁ := hSmall
       ⟨⟨u₁, rfl⟩, ⟨u₂, hxu.symm⟩⟩
       ⟨⟨v₁, rfl⟩, ⟨v₂, hyv.symm⟩⟩
@@ -172,7 +172,7 @@ theorem controlledIntersection_comp
       rcases hold with ⟨v, hv⟩
       refine ⟨v, ?_⟩
       calc
-        i (a v) = i (b₁ u₁) := congrArg i hv.symm
+        i (a v) = i (b₁ u₁) := congrArg i hv
         _ = x := hu₁
     · intro x hx
       rcases hx with ⟨v, rfl⟩
@@ -182,8 +182,8 @@ theorem controlledIntersection_comp
       rcases hold.1 with ⟨u₁, hu₁⟩
       rcases hold.2 with ⟨u₂, hu₂⟩
       constructor
-      · exact ⟨u₁, congrArg i hu₁.symm⟩
-      · exact ⟨u₂, congrArg i hu₂.symm⟩
+      · exact ⟨u₁, congrArg i hu₁⟩
+      · exact ⟨u₂, congrArg i hu₂⟩
 
 /-- In an `A`-edge free gluing, the intersection of an old `B`-copy
 with the fresh side is controlled by the old `B`-intersection invariant.
@@ -228,13 +228,13 @@ theorem crossControlled_glueA
       rcases hx with ⟨a, ha⟩
       have hOldMem : fOld a ∈ copyCarrier cOld := by
         rw [hSame]
-        exact hf₀ a
+        exact hf₀ ⟨a, rfl⟩
       rcases hOldMem with ⟨b, hb⟩
       constructor
       · refine ⟨b, ?_⟩
         change iOld (cOld b) = x
         calc
-          iOld (cOld b) = iOld (fOld a) := congrArg iOld hb.symm
+          iOld (cOld b) = iOld (fOld a) := congrArg iOld hb
           _ = x := ha
       · exact hxSide.2
   · rcases hInter cOld b₀ hSame with hSmall | ⟨d, hd⟩
@@ -256,8 +256,8 @@ theorem crossControlled_glueA
         apply iOld.injective
         exact hby.trans hay.symm
       have hold : cOld bx = cOld by := hSmall
-        ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ax⟩
-        ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ay⟩
+        ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ⟨ax, rfl⟩⟩
+        ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ⟨ay, rfl⟩⟩
       calc
         x = iOld (cOld bx) := hbx.symm
         _ = iOld (cOld by) := congrArg iOld hold
@@ -390,12 +390,20 @@ theorem sameCopy_of_contained_and_not_subsingleton
     (hMeet : ¬ (copyCarrier a ∩ copyCarrier c).Subsingleton) :
     SameCopy a c := by
   classical
-  let fa : Embedding A B := a.factorThroughRange b (fun x => ha ⟨x, rfl⟩)
-  let fc : Embedding A B := c.factorThroughRange b (fun x => hc ⟨x, rfl⟩)
+  let haRange : ∀ x : U, ∃ y : V, a x = b y := by
+    intro x
+    rcases ha ⟨x, rfl⟩ with ⟨y, hy⟩
+    exact ⟨y, hy.symm⟩
+  let hcRange : ∀ x : U, ∃ y : V, c x = b y := by
+    intro x
+    rcases hc ⟨x, rfl⟩ with ⟨y, hy⟩
+    exact ⟨y, hy.symm⟩
+  let fa : Embedding A B := a.factorThroughRange b haRange
+  let fc : Embedding A B := c.factorThroughRange b hcRange
   have hfa (x : U) : a x = b (fa x) :=
-    Classical.choose_spec (ha ⟨x, rfl⟩)
+    Classical.choose_spec (haRange x)
   have hfc (x : U) : c x = b (fc x) :=
-    Classical.choose_spec (hc ⟨x, rfl⟩)
+    Classical.choose_spec (hcRange x)
   by_contra hSame
   have hFactors : ¬ SameCopy fa fc := by
     intro h
@@ -411,7 +419,7 @@ theorem sameCopy_of_contained_and_not_subsingleton
       refine ⟨v, ?_⟩
       calc
         a u = b (fa u) := hfa u
-        _ = b (fc v) := congrArg b huv
+        _ = b (fc v) := congrArg b huv.symm
         _ = c v := (hfc v).symm
     · intro x hx
       rcases hx with ⟨u, rfl⟩
@@ -422,7 +430,7 @@ theorem sameCopy_of_contained_and_not_subsingleton
       refine ⟨v, ?_⟩
       calc
         c u = b (fc u) := hfc u
-        _ = b (fa v) := congrArg b huv
+        _ = b (fa v) := congrArg b huv.symm
         _ = a v := (hfa v).symm
   have hSmallBase := hBase fa fc hFactors
   apply hMeet
@@ -435,18 +443,18 @@ theorem sameCopy_of_contained_and_not_subsingleton
     apply b.injective
     calc
       b (fa ux) = a ux := (hfa ux).symm
-      _ = c vx := hvx
+      _ = c vx := hvx.symm
       _ = b (fc vx) := hfc vx
   have hyB : fa uy = fc vy := by
     apply b.injective
     calc
       b (fa uy) = a uy := (hfa uy).symm
-      _ = c vy := hvy
+      _ = c vy := hvy.symm
       _ = b (fc vy) := hfc vy
   have hEq : fa ux = fa uy := hSmallBase
     ⟨⟨ux, rfl⟩, ⟨vx, hxB.symm⟩⟩
     ⟨⟨uy, rfl⟩, ⟨vy, hyB.symm⟩⟩
-  exact a.injective (fa.injective hEq)
+  exact a.injective (congrArg b hEq |> (hfa ux).symm.trans |> fun h => h.trans (hfa uy))
 
 /-- Local `A`-linearity inside `B`, together with coverage and controlled
 pairwise `B`-intersections, implies global `A`-linearity. -/
