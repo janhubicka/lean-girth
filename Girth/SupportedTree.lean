@@ -99,6 +99,37 @@ theorem aCopy_contained_in_copy
     ∃ j : Embedding B T, ∀ a : U, ∃ b : V, e a = j b := by
   exact irreducible_contained_in_copy hA hT hA e
 
+/-- Every ambient copy of the finite base structure `B` has exactly the
+carrier of a constituent `B`-copy.  This packages the manuscript's
+"every B-copy is one of the constituent copies" reduction. -/
+theorem bCopy_same_constituent
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    [Finite V]
+    (hA : A.Irreducible) (hB : B.Irreducible)
+    (hT : ASupportedTreeAmalgam A B W T)
+    (e : Embedding B T) :
+    ∃ j : Embedding B T, SameCopy e j := by
+  classical
+  obtain ⟨j, hj⟩ :=
+    irreducible_contained_in_copy hA hT hB e
+  let q : Embedding B B := e.factorThroughRange j hj
+  have hqSpec (b : V) : e b = j (q b) :=
+    Classical.choose_spec (hj b)
+  have hqSurj : Function.Surjective q :=
+    Finite.injective_iff_surjective.mp q.injective
+  refine ⟨j, ?_⟩
+  change Set.range e = Set.range j
+  apply Set.Subset.antisymm
+  · intro x hx
+    rcases hx with ⟨b, rfl⟩
+    exact ⟨q b, (hqSpec b).symm⟩
+  · intro x hx
+    rcases hx with ⟨b, rfl⟩
+    obtain ⟨a, ha⟩ := hqSurj b
+    refine ⟨a, ?_⟩
+    simpa [ha] using hqSpec a
+
 end ASupportedTreeAmalgam
 
 end StructuralRamsey.Girth
