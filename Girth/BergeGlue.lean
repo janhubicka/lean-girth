@@ -29,7 +29,7 @@ theorem girthGT_union_of_subsingleton_glue
   · exact hR ⟨c.ofEdgeMem hallR, hc⟩
   by_cases hallL : ∀ i, c.edge i ∈ HL
   · exact hL ⟨c.ofEdgeMem hallL, hc⟩
-  push_neg at hallR hallL
+  push Not at hallR hallL
   let side : Fin c.length → Bool :=
     fun i => decide (c.edge i ∈ HR)
   have hR_of_true {i : Fin c.length} (hi : side i = true) :
@@ -43,24 +43,29 @@ theorem girthGT_union_of_subsingleton_glue
     rcases c.edge_mem i with hli | hri
     · exact hli
     · exact (hnotR_of_false hi hri).elim
-  obtain ⟨iR, hiR⟩ := hallR
-  obtain ⟨iL, hiL⟩ := hallL
-  have hiSide : side iR = false := by
-    apply Bool.eq_false_of_not_eq_true
-    intro h
-    exact hiR (hR_of_true h)
-  have hiLR : c.edge iL ∈ HR := by
-    rcases c.edge_mem iL with hli | hri
-    · exact (hiL hli).elim
-    · exact hri
-  have hjSide : side iL = true := by
+  obtain ⟨iFalse, hiNotR⟩ := hallR
+  obtain ⟨iNotL, hiNotL⟩ := hallL
+  have hiFalse : side iFalse = false := by
+    simp [side, hiNotR]
+  have hiTrue : side iNotL = true := by
     apply Bool.eq_true_of_not_eq_false
-    intro h
-    exact hnotR_of_false h hiLR
+    intro hf
+    exact hiNotL (hL_of_false hf)
   have hmix : ∃ i j : Fin c.length, side i ≠ side j :=
-    ⟨iR, iL, by simp [hiSide, hjSide]⟩
-  obtain ⟨i, j, hij, hi, hj⟩ :=
-    exists_two_cyclic_changes c.hlength side hmix
+    ⟨iFalse, iNotL, by simp [hiFalse, hiTrue]⟩
+  obtain ⟨before, k, hkpos, hbeforeTrue, hstartFalse,
+    _hrun, hlastFalse, hnextTrue⟩ :=
+    exists_false_cyclic_run c.hlength side hmix
+  let lastIndex : Fin c.length := before + k
+  have hbeforeChange :
+      side before ≠ side (cyclicSucc before) := by
+    rw [hbeforeTrue, hstartFalse]
+    decide
+  have hlastChange :
+      side lastIndex ≠ side (cyclicSucc lastIndex) := by
+    dsimp [lastIndex]
+    rw [hlastFalse, hnextTrue]
+    decide
   have transition_mem (q : Fin c.length)
       (hq : side q ≠ side (cyclicSucc q)) :
       c.vertex q ∈ S := by
@@ -76,9 +81,18 @@ theorem girthGT_union_of_subsingleton_glue
       have hnextL := hL_of_false hq1
       exact hcross hnextL hqR ⟨c.right_mem q, c.left_mem q⟩
     · exact (hq (by simp [hq0, hq1])).elim
-  have hvi : c.vertex i ∈ S := transition_mem i hi
-  have hvj : c.vertex j ∈ S := transition_mem j hj
-  exact hij (c.vertex_injective (hS hvi hvj))
+  have hvi : c.vertex before ∈ S :=
+    transition_mem before hbeforeChange
+  have hvj : c.vertex lastIndex ∈ S :=
+    transition_mem lastIndex hlastChange
+  have hidx : before ≠ lastIndex := by
+    intro hEq
+    have hkzero : k = 0 := by
+      apply add_left_cancel (a := before)
+      simpa [lastIndex] using hEq.symm
+    have hv := congrArg Fin.val hkzero
+    exact hkpos.ne' hv
+  exact hidx (c.vertex_injective (hS hvi hvj))
 
 
 /-- Gluing two hypergraphs along a common separator edge preserves Berge
