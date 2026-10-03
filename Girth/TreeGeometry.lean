@@ -327,6 +327,40 @@ theorem crossControlled_glueA
           _ = iOld (cOld by) := congrArg iOld hold
           _ = y := hby
 
+/-- In a singleton free gluing, every old-copy/fresh-side
+intersection is automatically subsingleton. -/
+theorem crossSubsingleton_gluePoint
+    {B : RelStructure L V} {Old : RelStructure L W}
+    {X : Type v} {Whole : RelStructure L X}
+    {D : RelStructure L PUnit}
+    (fOld : Embedding D Old) (fB : Embedding D B)
+    (iOld : Embedding Old Whole) (iB : Embedding B Whole)
+    (hfree : IsFreeAmalgam fOld fB iOld iB)
+    (cOld : Embedding B Old) :
+    (copyCarrier (iOld.comp cOld) ∩ copyCarrier iB).Subsingleton := by
+  have hSide :
+      Set.range iOld ∩ Set.range iB = Set.range (iOld.comp fOld) :=
+    freeAmalgam_side_intersection hfree
+  intro x hx y hy
+  have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+    constructor
+    · rcases hx.1 with ⟨b, hb⟩
+      exact ⟨cOld b, hb⟩
+    · exact hx.2
+  have hySide : y ∈ Set.range iOld ∩ Set.range iB := by
+    constructor
+    · rcases hy.1 with ⟨b, hb⟩
+      exact ⟨cOld b, hb⟩
+    · exact hy.2
+  rw [hSide] at hxSide hySide
+  rcases hxSide with ⟨dx, hdx⟩
+  rcases hySide with ⟨dy, hdy⟩
+  have hxyD : dx = dy := Subsingleton.elim dx dy
+  calc
+    x = (iOld.comp fOld) dx := hdx.symm
+    _ = (iOld.comp fOld) dy := congrArg (iOld.comp fOld) hxyD
+    _ = y := hdy
+
 /-- The generic tree-amalgam localization theorem supplies `A`-copy coverage
 by `B`-copies for every supported tree amalgam. -/
 theorem ASupportedTreeAmalgam.aCopiesCoveredByB
