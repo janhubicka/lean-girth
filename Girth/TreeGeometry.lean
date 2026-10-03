@@ -512,6 +512,112 @@ theorem aLinear_of_base_and_controlled
         hBase a₂ c b₂ ha₂ hc₂ hMeet₂
       exact hne (h1.trans h2.symm)
 
+/-- Pairwise `B`-copy intersections in an `A`-supported tree
+amalgam are empty/singleton-sized or exactly an ambient `A`-copy. -/
+theorem ASupportedTreeAmalgam.bIntersectionsControlled
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    [Finite V]
+    (hA : A.Irreducible) (hB : B.Irreducible)
+    (hBase : ALinear A B)
+    (hT : ASupportedTreeAmalgam A B W T) :
+    BIntersectionsControlled A B T := by
+  classical
+  induction hT with
+  | copy h =>
+      intro b₁ b₂ hne
+      let j : Embedding B _ := h.toEmbedding
+      have hfull (b : Embedding B _) : SameCopy b j := by
+        apply sameCopy_of_range_subset b j
+        intro x
+        refine ⟨h.toEquiv.symm (b x), ?_⟩
+        change b x = h.toEquiv (h.toEquiv.symm (b x))
+        simp
+      exact (hne ((hfull b₁).trans (hfull b₂).symm)).elim
+  | glueA h₀ f₀ fB i₀ iB hfree ih =>
+      intro b₁ b₂ hne
+      have hCover₀ : ACopiesCoveredByB A B _ :=
+        h₀.aCopiesCoveredByB hA
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
+          simpa only [hc₁, hc₂] using hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          have hres :=
+            crossControlled_glueA hBase hCover₀ ih
+              f₀ fB i₀ iB hfree c₁
+          simpa only [hc₁, hb₂R] using hres
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro x
+          exact ⟨q₁ x, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hres :=
+            crossControlled_glueA hBase hCover₀ ih
+              f₀ fB i₀ iB hfree c₂
+          rcases hres with hs | ⟨a, ha⟩
+          · left
+            simpa only [hb₁R, hc₂, Set.inter_comm] using hs
+          · right
+            refine ⟨a, ?_⟩
+            simpa only [hb₁R, hc₂, Set.inter_comm] using ha
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
+  | gluePoint h₀ f₀ fB support₀ supportB i₀ iB hfree ih =>
+      intro b₁ b₂ hne
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
+          simpa only [hc₁, hc₂] using hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          left
+          have hs :=
+            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₁
+          simpa only [hc₁, hb₂R] using hs
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro x
+          exact ⟨q₁ x, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · left
+          have hs :=
+            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₂
+          simpa only [hb₁R, hc₂, Set.inter_comm] using hs
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
+
 /-- Once global `A`-linearity and pairwise `B`-intersection control are
 known, every `B`-copy is automatically `A`-strong.  This is the formal
 version of the simplification used in the reorganized proof of Lemma 2.1. -/
