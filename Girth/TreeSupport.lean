@@ -202,6 +202,7 @@ theorem singletonIntersectionsSupported_comp
       VertexSupportedInBCopy A (i.comp b₁) (i (b₁ u₁)) ∧
         VertexSupportedInBCopy A (i.comp b₂) (i (b₁ u₁)) :=
     ⟨vertexSupported_comp hOld.1 i, vertexSupported_comp hOld.2 i⟩
+  change i (b₁ u₁) = x at hu₁
   rw [hu₁] at hNew
   exact hNew
 
@@ -240,6 +241,7 @@ theorem crossSingletonSupport_glueA
       cOld fOld (fOld a) ⟨a, rfl⟩ ⟨b, hOldEq⟩
   have hOldTransport :=
     vertexSupported_comp hOldSupport iOld
+  change iOld (fOld a) = x at ha
   rw [ha] at hOldTransport
   refine ⟨hOldTransport, ?_⟩
   refine ⟨iB.comp fB, ?_, ?_⟩
@@ -291,6 +293,7 @@ theorem crossSingletonSupport_gluePoint
       cOld αOld (fOld d) ⟨aOld, haOld.symm⟩ ⟨b, hOldEq⟩
   have hOldTransport :=
     vertexSupported_comp hOldSupport iOld
+  change iOld (fOld d) = x at hd
   rw [hd] at hOldTransport
   refine ⟨hOldTransport, ?_⟩
   rcases supportB with ⟨αB, hαB⟩
