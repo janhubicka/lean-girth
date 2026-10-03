@@ -139,7 +139,7 @@ def close
           change (j.1 + 1) % (p.length + 1) = j.1 + 1
           rw [Nat.mod_eq_of_lt (by omega)]
         rw [hsucc]
-        change p.vertex j.succ ∈ p.edge jn
+        simp only [edges, Fin.snoc_castSucc]
         have hv : j.succ = jn.castSucc := by
           apply Fin.ext
           rfl
@@ -152,7 +152,7 @@ def close
           change (j.1 + 1) % (p.length + 1) = p.length
           rw [Nat.mod_eq_of_lt (by omega), heq]
         rw [hsucc]
-        change p.vertex j.succ ∈ separator
+        simp only [edges, Fin.snoc_last]
         have hv : j.succ = Fin.last p.length := by
           apply Fin.ext
           exact heq
@@ -173,7 +173,7 @@ def close
         apply Fin.ext
         rfl
       rw [hz]
-      change p.vertex 0 ∈ p.edge z
+      simp only [edges, Fin.snoc_castSucc]
       exact p.left_mem z
 
 end BergePath
