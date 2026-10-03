@@ -63,4 +63,34 @@ theorem JoinTree.leaf_inter_iUnion_eq_parent
     have hpne : parent ≠ leaf := hadj.ne.symm
     exact ⟨⟨parent, hpne⟩, hx.2⟩
 
+
+/-- Every nontrivial finite join tree has a leaf whose intersection with all
+remaining carriers is exactly its intersection with its unique neighbour. -/
+theorem JoinTree.exists_leaf_attachment
+    {F : ι → HypergraphPiece W} [Fintype ι] [Nontrivial ι]
+    (J : JoinTree F) :
+    ∃ leaf parent : ι,
+      J.tree.Adj leaf parent ∧
+      (∀ j : ι, J.tree.Adj leaf j → j = parent) ∧
+      (F leaf).carrier ∩
+          (⋃ j : {j : ι // j ≠ leaf}, (F j.1).carrier) =
+        (F leaf).carrier ∩ (F parent).carrier := by
+  classical
+  obtain ⟨leaf, hdeg⟩ :=
+    J.isTree.exists_vert_degree_one_of_nontrivial
+  rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj] at hdeg
+  rcases hdeg with ⟨parent, hadj, huniq⟩
+  refine ⟨leaf, parent, hadj, huniq, ?_⟩
+  exact J.leaf_inter_iUnion_eq_parent hadj huniq
+
+/-- A nontrivial finite join tree has two distinct possible terminal
+members. -/
+theorem JoinTree.exists_two_terminal_members
+    {F : ι → HypergraphPiece W} [Fintype ι] [Nontrivial ι]
+    (J : JoinTree F) :
+    ∃ u v : ι, u ≠ v ∧ J.tree.degree u = 1 ∧
+      J.tree.degree v = 1 := by
+  classical
+  exact J.isTree.exists_ne_and_degree_eq_one
+
 end StructuralRamsey.Girth
