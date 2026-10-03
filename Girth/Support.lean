@@ -52,4 +52,29 @@ theorem sameCopy_refl {A : RelStructure L U} {D : RelStructure L W}
     (e : Embedding A D) : SameCopy e e :=
   rfl
 
+/-- For a finite source, containment between two embedded copies forces equality
+of their image carriers. -/
+theorem sameCopy_of_range_subset
+    {A : RelStructure L U} {D : RelStructure L W}
+    [Finite U]
+    (e f : Embedding A D)
+    (h : ∀ a : U, ∃ b : U, e a = f b) :
+    SameCopy e f := by
+  classical
+  let q : Embedding A A := e.factorThroughRange f h
+  have hqSpec (a : U) : e a = f (q a) :=
+    Classical.choose_spec (h a)
+  have hqSurj : Function.Surjective q :=
+    Finite.injective_iff_surjective.mp q.injective
+  change Set.range e = Set.range f
+  apply Set.Subset.antisymm
+  · intro x hx
+    rcases hx with ⟨a, rfl⟩
+    exact ⟨q a, (hqSpec a).symm⟩
+  · intro x hx
+    rcases hx with ⟨b, rfl⟩
+    obtain ⟨a, ha⟩ := hqSurj b
+    refine ⟨a, ?_⟩
+    simpa [ha] using hqSpec a
+
 end StructuralRamsey.Girth
