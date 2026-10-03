@@ -165,7 +165,7 @@ theorem controlledIntersection_comp
       rcases hx.2 with ⟨u₂, hu₂⟩
       have hxu : b₁ u₁ = b₂ u₂ := by
         apply i.injective
-        exact hu₁.symm.trans hu₂
+        exact hu₁.trans hu₂.symm
       have hold : b₁ u₁ ∈ copyCarrier a := by
         rw [← ha]
         exact ⟨⟨u₁, rfl⟩, ⟨u₂, hxu.symm⟩⟩
@@ -315,10 +315,10 @@ theorem crossControlled_glueA
           exact hby.trans hay.symm
         have hdx : cOld bx ∈ copyCarrier d := by
           rw [← hd]
-          exact ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ax⟩
+          exact ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ⟨ax, rfl⟩⟩
         have hdy : cOld by ∈ copyCarrier d := by
           rw [← hd]
-          exact ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ay⟩
+          exact ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ⟨ay, rfl⟩⟩
         have hold : cOld bx = cOld by := hSmallA
           ⟨hdx, by rw [hox]; exact ⟨ax, rfl⟩⟩
           ⟨hdy, by rw [hoy]; exact ⟨ay, rfl⟩⟩
@@ -454,7 +454,10 @@ theorem sameCopy_of_contained_and_not_subsingleton
   have hEq : fa ux = fa uy := hSmallBase
     ⟨⟨ux, rfl⟩, ⟨vx, hxB.symm⟩⟩
     ⟨⟨uy, rfl⟩, ⟨vy, hyB.symm⟩⟩
-  exact a.injective (congrArg b hEq |> (hfa ux).symm.trans |> fun h => h.trans (hfa uy))
+  calc
+    a ux = b (fa ux) := hfa ux
+    _ = b (fa uy) := congrArg b hEq
+    _ = a uy := (hfa uy).symm
 
 /-- Local `A`-linearity inside `B`, together with coverage and controlled
 pairwise `B`-intersections, implies global `A`-linearity. -/
