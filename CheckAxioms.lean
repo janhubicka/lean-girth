@@ -3,5 +3,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.aStrong_univ
 #print axioms StructuralRamsey.Girth.girthGT_mono
 #print axioms StructuralRamsey.Girth.girthGT_one
+#print axioms StructuralRamsey.Girth.girthGT_of_subset
+#print axioms StructuralRamsey.Girth.pairwise_subsingleton_of_girthGT_two
+#print axioms StructuralRamsey.Girth.aLinear_of_girthGT_two
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.toTreeAmalgam
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.irreducible_contained_in_copy
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopy_contained_in_copy
 #print axioms StructuralRamsey.Girth.localTreeRamseyCore
