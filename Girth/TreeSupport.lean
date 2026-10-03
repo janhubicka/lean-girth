@@ -308,4 +308,134 @@ theorem crossSingletonSupport_gluePoint
     rcases hy with ⟨a, ha⟩
     exact ⟨αB a, ha⟩
 
+
+/-- Every singleton intersection of distinct B-copies in an A-supported tree
+amalgam is supported by an A-copy inside both incident B-copies. -/
+theorem ASupportedTreeAmalgam.singletonIntersectionsSupported
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    [Finite V]
+    (hA : A.Irreducible) (hB : B.Irreducible)
+    (hBase : ALinear A B)
+    (hT : ASupportedTreeAmalgam A B W T) :
+    BSingletonIntersectionsSupported A B T := by
+  classical
+  induction hT with
+  | copy h =>
+      intro b₁ b₂ hne hSmall x hx
+      let j : Embedding B _ := h.toEmbedding
+      have hfull (b : Embedding B _) : SameCopy b j := by
+        apply sameCopy_of_range_subset b j
+        intro y
+        refine ⟨h.toEquiv.symm (b y), ?_⟩
+        change b y = h.toEquiv (h.toEquiv.symm (b y))
+        simp
+      exact (hne ((hfull b₁).trans (hfull b₂).symm)).elim
+  | glueA h₀ f₀ fB i₀ iB hfree ih =>
+      intro b₁ b₂ hne hSmall x hx
+      have hCover₀ : ACopiesCoveredByB A B _ :=
+        h₀.aCopiesCoveredByB hA
+      have hInter₀ : BIntersectionsControlled A B _ :=
+        h₀.bIntersectionsControlled hA hB hBase
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hSmallRep :=
+            (intersectionSubsingleton_congr hc₁ hc₂).mp hSmall
+          have hxRep := (intersectionMem_congr hc₁ hc₂ x).mp hx
+          have hres :=
+            singletonIntersectionsSupported_comp ih i₀ c₁ c₂
+              hneOld hSmallRep x hxRep
+          exact singletonSupport_congr hc₁ hc₂ hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro y
+            exact ⟨q₂ y, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          have hxRep := (intersectionMem_congr hc₁ hb₂R x).mp hx
+          have hres :=
+            crossSingletonSupport_glueA hCover₀ hInter₀ ih
+              f₀ fB i₀ iB hfree c₁ x hxRep
+          exact singletonSupport_congr hc₁ hb₂R hres
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro y
+          exact ⟨q₁ y, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hxRep := (intersectionMem_congr hb₁R hc₂ x).mp hx
+          have hxOldFresh :
+              x ∈ copyCarrier (i₀.comp c₂) ∩ copyCarrier iB :=
+            ⟨hxRep.2, hxRep.1⟩
+          have hres :=
+            crossSingletonSupport_glueA hCover₀ hInter₀ ih
+              f₀ fB i₀ iB hfree c₂ x hxOldFresh
+          exact singletonSupport_congr hb₁R hc₂
+            (singletonSupport_swap hres)
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro y
+            exact ⟨q₂ y, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
+  | gluePoint h₀ f₀ fB support₀ supportB i₀ iB hfree ih =>
+      intro b₁ b₂ hne hSmall x hx
+      have hCover₀ : ACopiesCoveredByB A B _ :=
+        h₀.aCopiesCoveredByB hA
+      have hInter₀ : BIntersectionsControlled A B _ :=
+        h₀.bIntersectionsControlled hA hB hBase
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hSmallRep :=
+            (intersectionSubsingleton_congr hc₁ hc₂).mp hSmall
+          have hxRep := (intersectionMem_congr hc₁ hc₂ x).mp hx
+          have hres :=
+            singletonIntersectionsSupported_comp ih i₀ c₁ c₂
+              hneOld hSmallRep x hxRep
+          exact singletonSupport_congr hc₁ hc₂ hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro y
+            exact ⟨q₂ y, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          have hxRep := (intersectionMem_congr hc₁ hb₂R x).mp hx
+          have hres :=
+            crossSingletonSupport_gluePoint hCover₀ hInter₀ ih
+              f₀ fB support₀ supportB i₀ iB hfree c₁ x hxRep
+          exact singletonSupport_congr hc₁ hb₂R hres
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro y
+          exact ⟨q₁ y, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hxRep := (intersectionMem_congr hb₁R hc₂ x).mp hx
+          have hxOldFresh :
+              x ∈ copyCarrier (i₀.comp c₂) ∩ copyCarrier iB :=
+            ⟨hxRep.2, hxRep.1⟩
+          have hres :=
+            crossSingletonSupport_gluePoint hCover₀ hInter₀ ih
+              f₀ fB support₀ supportB i₀ iB hfree c₂ x hxOldFresh
+          exact singletonSupport_congr hb₁R hc₂
+            (singletonSupport_swap hres)
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro y
+            exact ⟨q₂ y, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
+
 end StructuralRamsey.Girth
