@@ -176,15 +176,17 @@ theorem girthGT_mappedSupportCopies
     change copyCarrier (i.comp (a j)) = copyCarrier (i.comp (a k))
     apply Set.Subset.antisymm
     · rintro x ⟨u, rfl⟩
-      have hu : a j u ∈ copyCarrier (a k) := by
+      have hu : a j u ∈ oldEdge k := by
         rw [← hjk]
         exact ⟨u, rfl⟩
+      change a j u ∈ copyCarrier (a k) at hu
       rcases hu with ⟨v, hv⟩
       exact ⟨v, congrArg i hv⟩
     · rintro x ⟨u, rfl⟩
-      have hu : a k u ∈ copyCarrier (a j) := by
+      have hu : a k u ∈ oldEdge j := by
         rw [hjk]
         exact ⟨u, rfl⟩
+      change a k u ∈ copyCarrier (a j) at hu
       rcases hu with ⟨v, hv⟩
       exact ⟨v, congrArg i hv⟩
   have hvExists (j : Fin c.length) :
