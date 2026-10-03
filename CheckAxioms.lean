@@ -35,6 +35,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.joinTree_of_nonempty
 #print axioms StructuralRamsey.Girth.JoinTree.mem_parent_of_mem_leaf_and_other
 #print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_iUnion_eq_parent
+#print axioms StructuralRamsey.Girth.JoinTree.rootPath_isPath
+#print axioms StructuralRamsey.Girth.JoinTree.rootPath_unique
+#print axioms StructuralRamsey.Girth.JoinTree.rootPath_length_eq_dist
+#print axioms StructuralRamsey.Girth.JoinTree.parent_adj
+#print axioms StructuralRamsey.Girth.JoinTree.parent_dist_add_one
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
 #print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
