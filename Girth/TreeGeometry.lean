@@ -278,32 +278,32 @@ theorem crossControlled_glueA
     · left
       intro x hx y hy
       rcases hx.1 with ⟨bx, hbx⟩
-      rcases hy.1 with ⟨by, hby⟩
+      rcases hy.1 with ⟨bY, hby⟩
       have hxSide : x ∈ Set.range iOld ∩ Set.range iB :=
         ⟨⟨cOld bx, hbx⟩, hx.2⟩
       have hySide : y ∈ Set.range iOld ∩ Set.range iB :=
-        ⟨⟨cOld by, hby⟩, hy.2⟩
+        ⟨⟨cOld bY, hby⟩, hy.2⟩
       rw [hSide] at hxSide hySide
       rcases hxSide with ⟨ax, hax⟩
       rcases hySide with ⟨ay, hay⟩
       have hox : cOld bx = fOld ax := by
         apply iOld.injective
         exact hbx.trans hax.symm
-      have hoy : cOld by = fOld ay := by
+      have hoy : cOld bY = fOld ay := by
         apply iOld.injective
         exact hby.trans hay.symm
       have hbxB0 : cOld bx ∈ copyCarrier b₀ := by
         rw [hox]
         exact hf₀ ⟨ax, rfl⟩
-      have hbyB0 : cOld by ∈ copyCarrier b₀ := by
+      have hbyB0 : cOld bY ∈ copyCarrier b₀ := by
         rw [hoy]
         exact hf₀ ⟨ay, rfl⟩
-      have hold : cOld bx = cOld by := hSmall
+      have hold : cOld bx = cOld bY := hSmall
         ⟨⟨bx, rfl⟩, hbxB0⟩
-        ⟨⟨by, rfl⟩, hbyB0⟩
+        ⟨⟨bY, rfl⟩, hbyB0⟩
       calc
         x = iOld (cOld bx) := hbx.symm
-        _ = iOld (cOld by) := congrArg iOld hold
+        _ = iOld (cOld bY) := congrArg iOld hold
         _ = y := hby
     · have hOldLinear : ALinear A Old :=
         aLinear_of_base_and_controlled hBase hCover hInter
@@ -342,32 +342,32 @@ theorem crossControlled_glueA
         have hSmallA := hOldLinear d fOld hSameA
         intro x hx y hy
         rcases hx.1 with ⟨bx, hbx⟩
-        rcases hy.1 with ⟨by, hby⟩
+        rcases hy.1 with ⟨bY, hby⟩
         have hxSide : x ∈ Set.range iOld ∩ Set.range iB :=
           ⟨⟨cOld bx, hbx⟩, hx.2⟩
         have hySide : y ∈ Set.range iOld ∩ Set.range iB :=
-          ⟨⟨cOld by, hby⟩, hy.2⟩
+          ⟨⟨cOld bY, hby⟩, hy.2⟩
         rw [hSide] at hxSide hySide
         rcases hxSide with ⟨ax, hax⟩
         rcases hySide with ⟨ay, hay⟩
         have hox : cOld bx = fOld ax := by
           apply iOld.injective
           exact hbx.trans hax.symm
-        have hoy : cOld by = fOld ay := by
+        have hoy : cOld bY = fOld ay := by
           apply iOld.injective
           exact hby.trans hay.symm
         have hdx : cOld bx ∈ copyCarrier d := by
           rw [← hd]
           exact ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ⟨ax, rfl⟩⟩
-        have hdy : cOld by ∈ copyCarrier d := by
+        have hdy : cOld bY ∈ copyCarrier d := by
           rw [← hd]
-          exact ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ⟨ay, rfl⟩⟩
-        have hold : cOld bx = cOld by := hSmallA
+          exact ⟨⟨bY, rfl⟩, by rw [hoy]; exact hf₀ ⟨ay, rfl⟩⟩
+        have hold : cOld bx = cOld bY := hSmallA
           ⟨hdx, by rw [hox]; exact ⟨ax, rfl⟩⟩
           ⟨hdy, by rw [hoy]; exact ⟨ay, rfl⟩⟩
         calc
           x = iOld (cOld bx) := hbx.symm
-          _ = iOld (cOld by) := congrArg iOld hold
+          _ = iOld (cOld bY) := congrArg iOld hold
           _ = y := hby
 
 /-- In a singleton free gluing, every old-copy/fresh-side
