@@ -222,157 +222,7 @@ theorem controlledPair_swap
   · right
     exact ⟨a, by simpa [Set.inter_comm] using ha⟩
 
-/-- Pairwise `B`-copy intersections in an `A`-supported tree
-amalgam are empty/singleton-sized or exactly an ambient `A`-copy. -/
-theorem ASupportedTreeAmalgam.bIntersectionsControlled
-    {A : RelStructure L U} {B : RelStructure L V}
-    {T : RelStructure L W}
-    [Finite V]
-    (hA : A.Irreducible) (hB : B.Irreducible)
-    (hBase : ALinear A B)
-    (hT : ASupportedTreeAmalgam A B W T) :
-    BIntersectionsControlled A B T := by
-  classical
-  induction hT with
-  | copy h =>
-      intro b₁ b₂ hne
-      let j : Embedding B _ := h.toEmbedding
-      have hfull (b : Embedding B _) : SameCopy b j := by
-        apply sameCopy_of_range_subset b j
-        intro x
-        refine ⟨h.toEquiv.symm (b x), ?_⟩
-        change b x = h.toEquiv (h.toEquiv.symm (b x))
-        simp
-      exact (hne ((hfull b₁).trans (hfull b₂).symm)).elim
-  | glueA h₀ f₀ fB i₀ iB hfree ih =>
-      intro b₁ b₂ hne
-      have hCover₀ : ACopiesCoveredByB A B _ :=
-        h₀.aCopiesCoveredByB hA
-      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
-        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
-      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
-          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
-        · have hneOld :
-              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
-            intro h
-            exact hne (hc₁.trans (h.trans hc₂.symm))
-          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
-          exact controlledPair_congr hc₁ hc₂ hres
-        · have hq₂full : SameCopy (iB.comp q₂) iB := by
-            apply sameCopy_of_range_subset (iB.comp q₂) iB
-            intro x
-            exact ⟨q₂ x, rfl⟩
-          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
-          have hres :=
-            crossControlled_glueA hBase hCover₀ ih
-              f₀ fB i₀ iB hfree c₁
-          exact controlledPair_congr hc₁ hb₂R hres
-      · have hq₁full : SameCopy (iB.comp q₁) iB := by
-          apply sameCopy_of_range_subset (iB.comp q₁) iB
-          intro x
-          exact ⟨q₁ x, rfl⟩
-        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
-        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
-          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
-        · have hres :=
-            crossControlled_glueA hBase hCover₀ ih
-              f₀ fB i₀ iB hfree c₂
-          exact controlledPair_congr hb₁R hc₂ (controlledPair_swap hres)
-        · have hq₂full : SameCopy (iB.comp q₂) iB := by
-            apply sameCopy_of_range_subset (iB.comp q₂) iB
-            intro x
-            exact ⟨q₂ x, rfl⟩
-          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
-          exact (hne (hb₁R.trans hb₂R.symm)).elim
-  | gluePoint h₀ f₀ fB support₀ supportB i₀ iB hfree ih =>
-      intro b₁ b₂ hne
-      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
-        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
-      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
-          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
-        · have hneOld :
-              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
-            intro h
-            exact hne (hc₁.trans (h.trans hc₂.symm))
-          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
-          exact controlledPair_congr hc₁ hc₂ hres
-        · have hq₂full : SameCopy (iB.comp q₂) iB := by
-            apply sameCopy_of_range_subset (iB.comp q₂) iB
-            intro x
-            exact ⟨q₂ x, rfl⟩
-          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
-          have hs :=
-            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₁
-          exact controlledPair_congr hc₁ hb₂R (Or.inl hs)
-      · have hq₁full : SameCopy (iB.comp q₁) iB := by
-          apply sameCopy_of_range_subset (iB.comp q₁) iB
-          intro x
-          exact ⟨q₁ x, rfl⟩
-        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
-        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
-          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
-        · have hs :=
-            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₂
-          exact controlledPair_congr hb₁R hc₂
-            (controlledPair_swap (Or.inl hs))
-        · have hq₂full : SameCopy (iB.comp q₂) iB := by
-            apply sameCopy_of_range_subset (iB.comp q₂) iB
-            intro x
-            exact ⟨q₂ x, rfl⟩
-          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
-          exact (hne (hb₁R.trans hb₂R.symm)).elim
-
-/-- Once global `A`-linearity and pairwise `B`-intersection control are
-known, every `B`-copy is automatically `A`-strong.  This is the formal
-version of the simplification used in the reorganized proof of Lemma 2.1. -/
-theorem aStrong_of_linear_and_controlled
-    {A : RelStructure L U} {B : RelStructure L V}
-    {T : RelStructure L W}
-    (hLinear : ALinear A T)
-    (hCover : ACopiesCoveredByB A B T)
-    (hInter : BIntersectionsControlled A B T)
-    (b : Embedding B T) :
-    AStrong A T (copyCarrier b) := by
-  intro a hMeet
-  obtain ⟨b', hab'⟩ := hCover a
-  by_cases hSameB : SameCopy b' b
-  · intro x hx
-    have hx' : x ∈ copyCarrier b' := hab' hx
-    rw [hSameB] at hx'
-    exact hx'
-  · rcases hInter b' b hSameB with hSmall | ⟨c, hc⟩
-    · have hs : (copyCarrier a ∩ copyCarrier b).Subsingleton := by
-        intro x hx y hy
-        apply hSmall
-        · exact ⟨hab' hx.1, hx.2⟩
-        · exact ⟨hab' hy.1, hy.2⟩
-      exact (hMeet hs).elim
-    · by_cases hSameA : SameCopy a c
-      · intro x hx
-        have hxc : x ∈ copyCarrier c := by
-          rw [← hSameA]
-          exact hx
-        have hxboth : x ∈ copyCarrier b' ∩ copyCarrier b := by
-          rw [hc]
-          exact hxc
-        exact hxboth.2
-      · have hSmallAC := hLinear a c hSameA
-        have hs : (copyCarrier a ∩ copyCarrier b).Subsingleton := by
-          intro x hx y hy
-          apply hSmallAC
-          · refine ⟨hx.1, ?_⟩
-            have hxboth : x ∈ copyCarrier b' ∩ copyCarrier b :=
-              ⟨hab' hx.1, hx.2⟩
-            rw [hc] at hxboth
-            exact hxboth
-          · refine ⟨hy.1, ?_⟩
-            have hyboth : y ∈ copyCarrier b' ∩ copyCarrier b :=
-              ⟨hab' hy.1, hy.2⟩
-            rw [hc] at hyboth
-            exact hyboth
-        exact (hMeet hs).elim
-
-end StructuralRamsey.Girth/-- If two ambient `A`-copies lie in one `B`-copy and meet in more
+/-- If two ambient `A`-copies lie in one `B`-copy and meet in more
 than one vertex, linearity of `A` inside `B` forces them to have the same
 carrier. -/
 theorem sameCopy_of_contained_and_not_subsingleton
@@ -717,5 +567,154 @@ theorem ASupportedTreeAmalgam.aCopiesCoveredByB
   obtain ⟨v, huv⟩ := hab u
   exact ⟨v, huv.symm⟩
 
+/-- Pairwise `B`-copy intersections in an `A`-supported tree
+amalgam are empty/singleton-sized or exactly an ambient `A`-copy. -/
+theorem ASupportedTreeAmalgam.bIntersectionsControlled
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    [Finite V]
+    (hA : A.Irreducible) (hB : B.Irreducible)
+    (hBase : ALinear A B)
+    (hT : ASupportedTreeAmalgam A B W T) :
+    BIntersectionsControlled A B T := by
+  classical
+  induction hT with
+  | copy h =>
+      intro b₁ b₂ hne
+      let j : Embedding B _ := h.toEmbedding
+      have hfull (b : Embedding B _) : SameCopy b j := by
+        apply sameCopy_of_range_subset b j
+        intro x
+        refine ⟨h.toEquiv.symm (b x), ?_⟩
+        change b x = h.toEquiv (h.toEquiv.symm (b x))
+        simp
+      exact (hne ((hfull b₁).trans (hfull b₂).symm)).elim
+  | glueA h₀ f₀ fB i₀ iB hfree ih =>
+      intro b₁ b₂ hne
+      have hCover₀ : ACopiesCoveredByB A B _ :=
+        h₀.aCopiesCoveredByB hA
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
+          exact controlledPair_congr hc₁ hc₂ hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          have hres :=
+            crossControlled_glueA hBase hCover₀ ih
+              f₀ fB i₀ iB hfree c₁
+          exact controlledPair_congr hc₁ hb₂R hres
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro x
+          exact ⟨q₁ x, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hres :=
+            crossControlled_glueA hBase hCover₀ ih
+              f₀ fB i₀ iB hfree c₂
+          exact controlledPair_congr hb₁R hc₂ (controlledPair_swap hres)
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
+  | gluePoint h₀ f₀ fB support₀ supportB i₀ iB hfree ih =>
+      intro b₁ b₂ hne
+      rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₁ with
+        ⟨c₁, hc₁⟩ | ⟨q₁, hq₁⟩
+      · rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hneOld :
+              ¬ SameCopy (i₀.comp c₁) (i₀.comp c₂) := by
+            intro h
+            exact hne (hc₁.trans (h.trans hc₂.symm))
+          have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
+          exact controlledPair_congr hc₁ hc₂ hres
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          have hs :=
+            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₁
+          exact controlledPair_congr hc₁ hb₂R (Or.inl hs)
+      · have hq₁full : SameCopy (iB.comp q₁) iB := by
+          apply sameCopy_of_range_subset (iB.comp q₁) iB
+          intro x
+          exact ⟨q₁ x, rfl⟩
+        have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
+        rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
+          ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
+        · have hs :=
+            crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₂
+          exact controlledPair_congr hb₁R hc₂
+            (controlledPair_swap (Or.inl hs))
+        · have hq₂full : SameCopy (iB.comp q₂) iB := by
+            apply sameCopy_of_range_subset (iB.comp q₂) iB
+            intro x
+            exact ⟨q₂ x, rfl⟩
+          have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
+          exact (hne (hb₁R.trans hb₂R.symm)).elim
 
+/-- Once global `A`-linearity and pairwise `B`-intersection control are
+known, every `B`-copy is automatically `A`-strong.  This is the formal
+version of the simplification used in the reorganized proof of Lemma 2.1. -/
+theorem aStrong_of_linear_and_controlled
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    (hLinear : ALinear A T)
+    (hCover : ACopiesCoveredByB A B T)
+    (hInter : BIntersectionsControlled A B T)
+    (b : Embedding B T) :
+    AStrong A T (copyCarrier b) := by
+  intro a hMeet
+  obtain ⟨b', hab'⟩ := hCover a
+  by_cases hSameB : SameCopy b' b
+  · intro x hx
+    have hx' : x ∈ copyCarrier b' := hab' hx
+    rw [hSameB] at hx'
+    exact hx'
+  · rcases hInter b' b hSameB with hSmall | ⟨c, hc⟩
+    · have hs : (copyCarrier a ∩ copyCarrier b).Subsingleton := by
+        intro x hx y hy
+        apply hSmall
+        · exact ⟨hab' hx.1, hx.2⟩
+        · exact ⟨hab' hy.1, hy.2⟩
+      exact (hMeet hs).elim
+    · by_cases hSameA : SameCopy a c
+      · intro x hx
+        have hxc : x ∈ copyCarrier c := by
+          rw [← hSameA]
+          exact hx
+        have hxboth : x ∈ copyCarrier b' ∩ copyCarrier b := by
+          rw [hc]
+          exact hxc
+        exact hxboth.2
+      · have hSmallAC := hLinear a c hSameA
+        have hs : (copyCarrier a ∩ copyCarrier b).Subsingleton := by
+          intro x hx y hy
+          apply hSmallAC
+          · refine ⟨hx.1, ?_⟩
+            have hxboth : x ∈ copyCarrier b' ∩ copyCarrier b :=
+              ⟨hab' hx.1, hx.2⟩
+            rw [hc] at hxboth
+            exact hxboth
+          · refine ⟨hy.1, ?_⟩
+            have hyboth : y ∈ copyCarrier b' ∩ copyCarrier b :=
+              ⟨hab' hy.1, hy.2⟩
+            rw [hc] at hyboth
+            exact hyboth
+        exact (hMeet hs).elim
 
+end StructuralRamsey.Girth
