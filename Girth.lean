@@ -8,3 +8,4 @@ import Girth.Forest
 import Girth.ForestEnumeration
 import Girth.RootedForest
 import Girth.CyclicRun
+import Girth.BergePath
