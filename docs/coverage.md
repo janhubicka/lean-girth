@@ -17,9 +17,10 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | finite copy containment forces equal carriers | proved by `sameCopy_of_range_subset`; supported-tree specialization `bCopy_same_constituent` |
 | A-copy coverage in supported trees | proved by `ASupportedTreeAmalgam.aCopiesCoveredByB` |
 | A-linearity + controlled B-intersections imply B-copies are A-strong | proved by `aStrong_of_linear_and_controlled` |
+| supported-tree B-copy intersections are controlled | proved by `ASupportedTreeAmalgam.bIntersectionsControlled` |
 | §2 EHN / partite structural input | imported from pinned `partite-construction`; its formalization there is still being strengthened |
 | Ramsey + generic bounded local-tree + irreducible coverage core | `localTreeRamseyCore` |
-| Lemma 2.1 geometry of A-supported tree amalgams | **in progress; constituent localization and strongness reduction checked; recursive intersections and girth remain** |
+| Lemma 2.1 geometry of A-supported tree amalgams | **in progress; constituent localization, controlled B-intersections, global A-linearity, and strongness checked; singleton support and girth remain** |
 | Observation 2.2 closure expansions | not yet formalized here |
 | Theorem 2.4 A-linear Ramsey theorem | not yet formalized here; depends on the reusable ordered functional Ramsey interface |
 | §4 forest of copies / join trees | next combinatorial layer after Lemma 2.1 |
