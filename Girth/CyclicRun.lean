@@ -118,6 +118,57 @@ theorem exists_first_cyclic_change
     have hnot : ¬ p m := Fin.find_min hex hm
     exact not_ne_iff.mp hnot
 
+/-- A transition determines a positive maximal run on the new side; the
+edge at index `before + k` is the last edge of the run and is itself followed
+by a side change. -/
+theorem exists_cyclic_run_to_change
+    {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool) (before : Fin n)
+    (hchange : side before ≠ side (cyclicSucc before)) :
+    ∃ k : Fin n, 0 < k.1 ∧
+      (∀ m : Fin n, m < k →
+        side (cyclicRunIndex before m) = side (cyclicSucc before)) ∧
+      side (before + k) ≠ side (cyclicSucc (before + k)) := by
+  letI : NeZero n := ⟨by omega⟩
+  have hchangeRot : side before ≠ side (finRotate n before) := by
+    rw [← cyclicSucc_eq_finRotate]
+    exact hchange
+  obtain ⟨k, hkpos, hafter, hconst⟩ :=
+    exists_first_cyclic_change hn side before hchangeRot
+  have hrun : ∀ m : Fin n, m < k →
+      side (cyclicRunIndex before m) = side (cyclicSucc before) := by
+    intro m hm
+    rw [cyclicSucc_eq_finRotate]
+    simpa [cyclicRunIndex] using hconst m hm
+  let off : Fin n := ⟨k.1 - 1, by omega⟩
+  have hoff : off + 1 = k := by
+    apply Fin.ext
+    simp [off, Fin.add_def]
+    rw [Nat.mod_eq_of_lt]
+    · omega
+    · omega
+  have hlastIndex : cyclicRunIndex before off = before + k := by
+    rw [cyclicRunIndex, finCycle_apply, finRotate_apply]
+    calc
+      before + 1 + off = before + (off + 1) := by ac_rfl
+      _ = before + k := by rw [hoff]
+  have hlastSide : side (before + k) = side (cyclicSucc before) := by
+    rw [← hlastIndex]
+    exact hrun off (by
+      rw [Fin.lt_def]
+      dsimp [off]
+      omega)
+  have hnextIndex :
+      finCycle k (finRotate n before) =
+        cyclicSucc (before + k) := by
+    rw [cyclicSucc_eq_finRotate, finCycle_apply, finRotate_apply,
+      finRotate_apply]
+    ac_rfl
+  have hlastChange :
+      side (before + k) ≠ side (cyclicSucc (before + k)) := by
+    rw [hlastSide, ← hnextIndex]
+    exact hafter.symm
+  exact ⟨k, hkpos, hrun, hlastChange⟩
+
 /-- A nonconstant cyclic Boolean word has two distinct transition indices. -/
 theorem exists_two_cyclic_changes
     {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool)
