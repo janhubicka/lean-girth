@@ -205,4 +205,107 @@ theorem singletonIntersectionsSupported_comp
   rw [hu₁] at hNew
   exact hNew
 
+
+/-- In an A-edge gluing, every vertex shared by an old B-copy and the fresh
+B-side is supported inside both incident copies. -/
+theorem crossSingletonSupport_glueA
+    {A : RelStructure L U} {B : RelStructure L V}
+    {Old : RelStructure L W} {S : RelStructure L X}
+    (hCover : ACopiesCoveredByB A B Old)
+    (hInter : BIntersectionsControlled A B Old)
+    (hSingleton : BSingletonIntersectionsSupported A B Old)
+    (fOld : Embedding A Old) (fB : Embedding A B)
+    (iOld : Embedding Old S) (iB : Embedding B S)
+    (hfree : IsFreeAmalgam fOld fB iOld iB)
+    (cOld : Embedding B Old) (x : X)
+    (hx : x ∈ copyCarrier (iOld.comp cOld) ∩ copyCarrier iB) :
+    VertexSupportedInBCopy A (iOld.comp cOld) x ∧
+      VertexSupportedInBCopy A iB x := by
+  have hSide :
+      Set.range iOld ∩ Set.range iB = Set.range (iOld.comp fOld) :=
+    freeAmalgam_side_intersection hfree
+  have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+    constructor
+    · rcases hx.1 with ⟨b, hb⟩
+      exact ⟨cOld b, hb⟩
+    · exact hx.2
+  rw [hSide] at hxSide
+  rcases hxSide with ⟨a, ha⟩
+  rcases hx.1 with ⟨b, hb⟩
+  have hOldEq : cOld b = fOld a := by
+    apply iOld.injective
+    exact hb.trans ha.symm
+  have hOldSupport :=
+    vertexSupported_of_common_ACopy hCover hInter hSingleton
+      cOld fOld (fOld a) ⟨a, rfl⟩ ⟨b, hOldEq⟩
+  have hOldTransport :=
+    vertexSupported_comp hOldSupport iOld
+  rw [ha] at hOldTransport
+  refine ⟨hOldTransport, ?_⟩
+  refine ⟨iB.comp fB, ?_, ?_⟩
+  · refine ⟨a, ?_⟩
+    have hov :
+        iOld (fOld a) = iB (fB a) :=
+      (hfree.overlap (fOld a) (fB a)).mpr ⟨a, rfl, rfl⟩
+    exact hov.symm.trans ha
+  · intro y hy
+    rcases hy with ⟨a', ha'⟩
+    exact ⟨fB a', ha'⟩
+
+/-- In a supported singleton gluing, every vertex shared by an old B-copy and
+the fresh B-side is supported inside both incident copies. -/
+theorem crossSingletonSupport_gluePoint
+    {A : RelStructure L U} {B : RelStructure L V}
+    {Old : RelStructure L W} {S : RelStructure L X}
+    {D : RelStructure L PUnit}
+    (hCover : ACopiesCoveredByB A B Old)
+    (hInter : BIntersectionsControlled A B Old)
+    (hSingleton : BSingletonIntersectionsSupported A B Old)
+    (fOld : Embedding D Old) (fB : Embedding D B)
+    (supportOld : ∃ α : Embedding A Old, ∀ d, ∃ a, fOld d = α a)
+    (supportB : ∃ α : Embedding A B, ∀ d, ∃ a, fB d = α a)
+    (iOld : Embedding Old S) (iB : Embedding B S)
+    (hfree : IsFreeAmalgam fOld fB iOld iB)
+    (cOld : Embedding B Old) (x : X)
+    (hx : x ∈ copyCarrier (iOld.comp cOld) ∩ copyCarrier iB) :
+    VertexSupportedInBCopy A (iOld.comp cOld) x ∧
+      VertexSupportedInBCopy A iB x := by
+  have hSide :
+      Set.range iOld ∩ Set.range iB = Set.range (iOld.comp fOld) :=
+    freeAmalgam_side_intersection hfree
+  have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+    constructor
+    · rcases hx.1 with ⟨b, hb⟩
+      exact ⟨cOld b, hb⟩
+    · exact hx.2
+  rw [hSide] at hxSide
+  rcases hxSide with ⟨d, hd⟩
+  rcases hx.1 with ⟨b, hb⟩
+  have hOldEq : cOld b = fOld d := by
+    apply iOld.injective
+    exact hb.trans hd.symm
+  rcases supportOld with ⟨αOld, hαOld⟩
+  obtain ⟨aOld, haOld⟩ := hαOld d
+  have hOldSupport :=
+    vertexSupported_of_common_ACopy hCover hInter hSingleton
+      cOld αOld (fOld d) ⟨aOld, haOld.symm⟩ ⟨b, hOldEq⟩
+  have hOldTransport :=
+    vertexSupported_comp hOldSupport iOld
+  rw [hd] at hOldTransport
+  refine ⟨hOldTransport, ?_⟩
+  rcases supportB with ⟨αB, hαB⟩
+  obtain ⟨aB, haB⟩ := hαB d
+  refine ⟨iB.comp αB, ?_, ?_⟩
+  · refine ⟨aB, ?_⟩
+    have hov :
+        iOld (fOld d) = iB (fB d) :=
+      (hfree.overlap (fOld d) (fB d)).mpr ⟨d, rfl, rfl⟩
+    calc
+      iB (αB aB) = iB (fB d) := congrArg iB haB.symm
+      _ = iOld (fOld d) := hov.symm
+      _ = x := hd
+  · intro y hy
+    rcases hy with ⟨a, ha⟩
+    exact ⟨αB a, ha⟩
+
 end StructuralRamsey.Girth
