@@ -185,6 +185,148 @@ theorem controlledIntersection_comp
       · exact ⟨u₁, congrArg i hu₁.symm⟩
       · exact ⟨u₂, congrArg i hu₂.symm⟩
 
+/-- In an `A`-edge free gluing, the intersection of an old `B`-copy
+with the fresh side is controlled by the old `B`-intersection invariant.
+This is the only nontrivial cross-side step in the recursive intersection
+proof for supported tree amalgams. -/
+theorem crossControlled_glueA
+    {A : RelStructure L U} {B : RelStructure L V}
+    {Old : RelStructure L W} {X : Type v}
+    {Whole : RelStructure L X}
+    (hBase : ALinear A B)
+    (hCover : ACopiesCoveredByB A B Old)
+    (hInter : BIntersectionsControlled A B Old)
+    (fOld : Embedding A Old) (fB : Embedding A B)
+    (iOld : Embedding Old Whole) (iB : Embedding B Whole)
+    (hfree : IsFreeAmalgam fOld fB iOld iB)
+    (cOld : Embedding B Old) :
+    (copyCarrier (iOld.comp cOld) ∩ copyCarrier iB).Subsingleton ∨
+      ∃ a : Embedding A Whole,
+        copyCarrier (iOld.comp cOld) ∩ copyCarrier iB =
+          copyCarrier a := by
+  classical
+  obtain ⟨b₀, hf₀⟩ := hCover fOld
+  have hSide :
+      Set.range iOld ∩ Set.range iB = Set.range (iOld.comp fOld) :=
+    freeAmalgam_side_intersection hfree
+  by_cases hSame : SameCopy cOld b₀
+  · right
+    refine ⟨iOld.comp fOld, ?_⟩
+    apply Set.Subset.antisymm
+    · intro x hx
+      have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+        constructor
+        · rcases hx.1 with ⟨b, hb⟩
+          exact ⟨cOld b, hb⟩
+        · exact hx.2
+      rw [hSide] at hxSide
+      exact hxSide
+    · intro x hx
+      have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+        rw [hSide]
+        exact hx
+      rcases hx with ⟨a, ha⟩
+      have hOldMem : fOld a ∈ copyCarrier cOld := by
+        rw [hSame]
+        exact hf₀ a
+      rcases hOldMem with ⟨b, hb⟩
+      constructor
+      · refine ⟨b, ?_⟩
+        change iOld (cOld b) = x
+        calc
+          iOld (cOld b) = iOld (fOld a) := congrArg iOld hb.symm
+          _ = x := ha
+      · exact hxSide.2
+  · rcases hInter cOld b₀ hSame with hSmall | ⟨d, hd⟩
+    · left
+      intro x hx y hy
+      rcases hx.1 with ⟨bx, hbx⟩
+      rcases hy.1 with ⟨by, hby⟩
+      have hxSide : x ∈ Set.range iOld ∩ Set.range iB :=
+        ⟨⟨cOld bx, hbx⟩, hx.2⟩
+      have hySide : y ∈ Set.range iOld ∩ Set.range iB :=
+        ⟨⟨cOld by, hby⟩, hy.2⟩
+      rw [hSide] at hxSide hySide
+      rcases hxSide with ⟨ax, hax⟩
+      rcases hySide with ⟨ay, hay⟩
+      have hox : cOld bx = fOld ax := by
+        apply iOld.injective
+        exact hbx.trans hax.symm
+      have hoy : cOld by = fOld ay := by
+        apply iOld.injective
+        exact hby.trans hay.symm
+      have hold : cOld bx = cOld by := hSmall
+        ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ax⟩
+        ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ay⟩
+      calc
+        x = iOld (cOld bx) := hbx.symm
+        _ = iOld (cOld by) := congrArg iOld hold
+        _ = y := hby
+    · have hOldLinear : ALinear A Old :=
+        aLinear_of_base_and_controlled hBase hCover hInter
+      by_cases hSameA : SameCopy d fOld
+      · right
+        refine ⟨iOld.comp fOld, ?_⟩
+        apply Set.Subset.antisymm
+        · intro x hx
+          have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+            constructor
+            · rcases hx.1 with ⟨b, hb⟩
+              exact ⟨cOld b, hb⟩
+            · exact hx.2
+          rw [hSide] at hxSide
+          exact hxSide
+        · intro x hx
+          have hxSide : x ∈ Set.range iOld ∩ Set.range iB := by
+            rw [hSide]
+            exact hx
+          rcases hx with ⟨a, ha⟩
+          have hfaD : fOld a ∈ copyCarrier d := by
+            rw [hSameA]
+            exact ⟨a, rfl⟩
+          have hfaBoth : fOld a ∈ copyCarrier cOld ∩ copyCarrier b₀ := by
+            rw [hd]
+            exact hfaD
+          rcases hfaBoth.1 with ⟨b, hb⟩
+          constructor
+          · refine ⟨b, ?_⟩
+            change iOld (cOld b) = x
+            calc
+              iOld (cOld b) = iOld (fOld a) := congrArg iOld hb
+              _ = x := ha
+          · exact hxSide.2
+      · left
+        have hSmallA := hOldLinear d fOld hSameA
+        intro x hx y hy
+        rcases hx.1 with ⟨bx, hbx⟩
+        rcases hy.1 with ⟨by, hby⟩
+        have hxSide : x ∈ Set.range iOld ∩ Set.range iB :=
+          ⟨⟨cOld bx, hbx⟩, hx.2⟩
+        have hySide : y ∈ Set.range iOld ∩ Set.range iB :=
+          ⟨⟨cOld by, hby⟩, hy.2⟩
+        rw [hSide] at hxSide hySide
+        rcases hxSide with ⟨ax, hax⟩
+        rcases hySide with ⟨ay, hay⟩
+        have hox : cOld bx = fOld ax := by
+          apply iOld.injective
+          exact hbx.trans hax.symm
+        have hoy : cOld by = fOld ay := by
+          apply iOld.injective
+          exact hby.trans hay.symm
+        have hdx : cOld bx ∈ copyCarrier d := by
+          rw [← hd]
+          exact ⟨⟨bx, rfl⟩, by rw [hox]; exact hf₀ ax⟩
+        have hdy : cOld by ∈ copyCarrier d := by
+          rw [← hd]
+          exact ⟨⟨by, rfl⟩, by rw [hoy]; exact hf₀ ay⟩
+        have hold : cOld bx = cOld by := hSmallA
+          ⟨hdx, by rw [hox]; exact ⟨ax, rfl⟩⟩
+          ⟨hdy, by rw [hoy]; exact ⟨ay, rfl⟩⟩
+        calc
+          x = iOld (cOld bx) := hbx.symm
+          _ = iOld (cOld by) := congrArg iOld hold
+          _ = y := hby
+
 /-- The generic tree-amalgam localization theorem supplies `A`-copy coverage
 by `B`-copies for every supported tree amalgam. -/
 theorem ASupportedTreeAmalgam.aCopiesCoveredByB
