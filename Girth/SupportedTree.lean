@@ -110,25 +110,9 @@ theorem bCopy_same_constituent
     (hT : ASupportedTreeAmalgam A B W T)
     (e : Embedding B T) :
     ∃ j : Embedding B T, SameCopy e j := by
-  classical
   obtain ⟨j, hj⟩ :=
     irreducible_contained_in_copy hA hT hB e
-  let q : Embedding B B := e.factorThroughRange j hj
-  have hqSpec (b : V) : e b = j (q b) :=
-    Classical.choose_spec (hj b)
-  have hqSurj : Function.Surjective q :=
-    Finite.injective_iff_surjective.mp q.injective
-  refine ⟨j, ?_⟩
-  change Set.range e = Set.range j
-  apply Set.Subset.antisymm
-  · intro x hx
-    rcases hx with ⟨b, rfl⟩
-    exact ⟨q b, (hqSpec b).symm⟩
-  · intro x hx
-    rcases hx with ⟨b, rfl⟩
-    obtain ⟨a, ha⟩ := hqSurj b
-    refine ⟨a, ?_⟩
-    simpa [ha] using hqSpec a
+  exact ⟨j, sameCopy_of_range_subset e j hj⟩
 
 end ASupportedTreeAmalgam
 
