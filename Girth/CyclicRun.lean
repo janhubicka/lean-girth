@@ -190,7 +190,11 @@ theorem exists_false_cyclic_run
   obtain ⟨k, hkpos, hrun, hlastSide, hlastChange⟩ :=
     exists_cyclic_run_to_change hn side before hbefore
   cases hs : side (cyclicSucc before)
-  · refine ⟨before, k, hkpos, hs, ?_, ?_, ?_⟩
+  · have hbeforeTrue : side before = true := by
+      cases hb : side before
+      · exact (hbefore (by simp [hb, hs])).elim
+      · exact hb
+    refine ⟨before, k, hkpos, hbeforeTrue, hs, ?_, ?_, ?_⟩
     · intro m hm
       simpa [hs] using hrun m hm
     · simpa [hs] using hlastSide
