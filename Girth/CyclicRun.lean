@@ -11,6 +11,21 @@ singleton and common-edge gluings.
 
 namespace StructuralRamsey.Girth
 
+/-- Index obtained by moving `offset` steps from the edge immediately
+after `before`. -/
+def cyclicRunIndex {n : ℕ} (before offset : Fin n) : Fin n :=
+  finCycle (finRotate n before) offset
+
+@[simp]
+theorem cyclicRunIndex_zero {n : ℕ} (before : Fin n) :
+    cyclicRunIndex before 0 = finRotate n before := by
+  simp [cyclicRunIndex, finCycle_apply]
+
+theorem cyclicRunIndex_comm {n : ℕ} (before offset : Fin n) :
+    cyclicRunIndex before offset =
+      finCycle offset (finRotate n before) := by
+  simp [cyclicRunIndex, finCycle_apply, add_comm]
+
 /-- Our cyclic successor agrees with mathlib's canonical rotation of `Fin n`. -/
 theorem cyclicSucc_eq_finRotate {n : ℕ} (i : Fin n) :
     cyclicSucc i = finRotate n i := by
