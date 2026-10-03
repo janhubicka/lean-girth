@@ -11,4 +11,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.irreducible_contained_in_copy
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopy_contained_in_copy
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bCopy_same_constituent
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
+#print axioms StructuralRamsey.Girth.aStrong_of_linear_and_controlled
 #print axioms StructuralRamsey.Girth.localTreeRamseyCore
