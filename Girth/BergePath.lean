@@ -32,7 +32,7 @@ structure BergePath (H : Set (Set W)) where
 namespace BergePath
 
 /-- A nonempty initial segment of a Berge path is again a Berge path. -/
-def prefix
+def initialSegment
     {H : Set (Set W)} (p : BergePath H)
     (r : ℕ) (hrpos : 0 < r) (hrle : r ≤ p.length) :
     BergePath H := by
@@ -91,6 +91,7 @@ def close
       have hzero : i.succ = (0 : Fin (p.length + 1)) :=
         p.vertex_injective hi
       exact Fin.succ_ne_zero i hzero
+  have hp1 := p.hlength
   refine {
     length := p.length + 1
     hlength := by omega
@@ -114,20 +115,32 @@ def close
         simpa [edges, vertices] using hstart
     | cast i =>
         simpa [edges, vertices] using p.right_mem i
-  · obtain ⟨m, hm⟩ := Nat.exists_eq_add_of_le p.hlength
-    subst p.length
-    intro i
-    cases i using Fin.lastCases with
-    | last =>
-        have hfirst := p.left_mem (0 : Fin (m + 1))
-        simpa [edges, vertices, cyclicSucc] using hfirst
-    | cast i =>
-        cases i using Fin.lastCases with
-        | last =>
-            simpa [edges, vertices, cyclicSucc] using hend
-        | cast j =>
-            have hnext := p.left_mem j.succ
-            simpa [edges, vertices, cyclicSucc] using hnext
+  · intro i
+    obtain ⟨j, rfl⟩ | rfl := i.eq_castSucc_or_eq_last
+    · by_cases hj : j.1 + 1 < p.length
+      · let jn : Fin p.length := ⟨j.1 + 1, hj⟩
+        have hsucc : cyclicSucc j.castSucc = jn.castSucc := by
+          apply Fin.ext
+          simp [cyclicSucc, jn]
+          rw [Nat.mod_eq_of_lt]
+          · rfl
+          · omega
+        have hmem := p.left_mem jn
+        simpa [edges, vertices, hsucc, jn] using hmem
+      · have heq : j.1 + 1 = p.length := by omega
+        have hsucc :
+            cyclicSucc j.castSucc = Fin.last p.length := by
+          apply Fin.ext
+          simp [cyclicSucc, heq]
+        simpa [edges, vertices, hsucc, heq] using hend
+    · let z : Fin p.length := ⟨0, by omega⟩
+      have hsucc :
+          cyclicSucc (Fin.last p.length) =
+            (0 : Fin (p.length + 1)) := by
+        apply Fin.ext
+        simp [cyclicSucc]
+      have hfirst := p.left_mem z
+      simpa [edges, vertices, hsucc, z] using hfirst
 
 end BergePath
 
