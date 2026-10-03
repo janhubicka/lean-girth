@@ -59,3 +59,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.cyclicRunIndex_ne_before
 #print axioms StructuralRamsey.Girth.BergePath.ofEdgeMem
 #print axioms StructuralRamsey.Girth.BergeCycle.cyclicPath_vertex_last
+
+#print axioms StructuralRamsey.Girth.exists_cyclic_run_to_change
+#print axioms StructuralRamsey.Girth.exists_false_cyclic_run
