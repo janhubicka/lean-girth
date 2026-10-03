@@ -31,6 +31,37 @@ structure BergePath (H : Set (Set W)) where
 
 namespace BergePath
 
+/-- A nonempty initial segment of a Berge path is again a Berge path. -/
+def prefix
+    {H : Set (Set W)} (p : BergePath H)
+    (r : ℕ) (hrpos : 0 < r) (hrle : r ≤ p.length) :
+    BergePath H := by
+  let castE : Fin r → Fin p.length :=
+    fun i => Fin.castLE hrle i
+  let castV : Fin (r + 1) → Fin (p.length + 1) :=
+    fun i => Fin.castLE (Nat.add_le_add_right hrle 1) i
+  refine {
+    length := r
+    hlength := hrpos
+    edge := fun i => p.edge (castE i)
+    vertex := fun i => p.vertex (castV i)
+    edge_mem := fun i => p.edge_mem (castE i)
+    edge_injective := p.edge_injective.comp ?_
+    vertex_injective := p.vertex_injective.comp ?_
+    left_mem := ?_
+    right_mem := ?_
+  }
+  · intro i j hij
+    apply Fin.ext
+    exact congrArg Fin.val hij
+  · intro i j hij
+    apply Fin.ext
+    exact congrArg Fin.val hij
+  · intro i
+    simpa [castE, castV] using p.left_mem (castE i)
+  · intro i
+    simpa [castE, castV] using p.right_mem (castE i)
+
 /-- Close a Berge path by a new hyperedge through its two endpoint
 connectors. -/
 def close
