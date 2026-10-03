@@ -83,14 +83,4 @@ theorem JoinTree.exists_leaf_attachment
   refine ⟨leaf, parent, hadj, huniq, ?_⟩
   exact J.leaf_inter_iUnion_eq_parent hadj huniq
 
-/-- A nontrivial finite join tree has two distinct possible terminal
-members. -/
-theorem JoinTree.exists_two_terminal_members
-    {F : ι → HypergraphPiece W} [Fintype ι] [Nontrivial ι]
-    (J : JoinTree F) :
-    ∃ u v : ι, u ≠ v ∧ J.tree.degree u = 1 ∧
-      J.tree.degree v = 1 := by
-  classical
-  exact J.isTree.exists_ne_and_degree_eq_one
-
 end StructuralRamsey.Girth
