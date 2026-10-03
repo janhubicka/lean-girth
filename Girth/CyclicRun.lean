@@ -176,6 +176,7 @@ theorem exists_false_cyclic_run
     {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool)
     (hmix : ∃ i j : Fin n, side i ≠ side j) :
     ∃ before k : Fin n, 0 < k.1 ∧
+      side before = true ∧
       side (cyclicSucc before) = false ∧
       (∀ m : Fin n, m < k →
         side (cyclicRunIndex before m) = false) ∧
@@ -214,7 +215,7 @@ theorem exists_false_cyclic_run
       decide
     obtain ⟨k₂, hk₂pos, hrun₂, hlastSide₂, hlastChange₂⟩ :=
       exists_cyclic_run_to_change hn side before₂ hchange₂
-    refine ⟨before₂, k₂, hk₂pos, hnextFalse, ?_, ?_, ?_⟩
+    refine ⟨before₂, k₂, hk₂pos, hlastTrue, hnextFalse, ?_, ?_, ?_⟩
     · intro m hm
       simpa [hnextFalse] using hrun₂ m hm
     · simpa [hnextFalse] using hlastSide₂
