@@ -1,0 +1,103 @@
+import Girth.Berge
+import Mathlib.Data.Fin.Tuple.Basic
+
+/-! # Berge paths and closing edges
+
+The mixed-cycle argument in the girth proof repeatedly cuts a Berge cycle at
+two separator vertices.  The resulting object is a Berge path.  Appending a
+fresh separator edge through the two endpoints closes that path to a Berge
+cycle.  Keeping this construction separate avoids repeating finite-index
+bookkeeping in the amalgamation proof.
+-/
+
+namespace StructuralRamsey.Girth
+
+universe v
+variable {W : Type v}
+
+/-- A Berge path with `length` distinct hyperedges and `length + 1`
+distinct connector vertices.  Edge `i` contains connectors `i` and
+`i+1`. -/
+structure BergePath (H : Set (Set W)) where
+  length : ℕ
+  hlength : 1 ≤ length
+  edge : Fin length → Set W
+  vertex : Fin (length + 1) → W
+  edge_mem : ∀ i, edge i ∈ H
+  edge_injective : Function.Injective edge
+  vertex_injective : Function.Injective vertex
+  left_mem : ∀ i, vertex i.castSucc ∈ edge i
+  right_mem : ∀ i, vertex i.succ ∈ edge i
+
+namespace BergePath
+
+/-- Close a Berge path by a new hyperedge through its two endpoint
+connectors. -/
+def close
+    {H : Set (Set W)} (p : BergePath H)
+    (separator : Set W) (hseparator : separator ∈ H)
+    (hnew : ∀ i, p.edge i ≠ separator)
+    (hstart : p.vertex 0 ∈ separator)
+    (hend : p.vertex (Fin.last p.length) ∈ separator) :
+    BergeCycle H := by
+  let edges : Fin (p.length + 1) → Set W :=
+    Fin.snoc p.edge separator
+  let vertices : Fin (p.length + 1) → W :=
+    Fin.snoc (fun i : Fin p.length => p.vertex i.succ) (p.vertex 0)
+  have hedges : Function.Injective edges := by
+    apply Fin.snoc_injective_iff.mpr
+    constructor
+    · exact p.edge_injective
+    · rintro ⟨i, hi⟩
+      exact hnew i hi
+  have hvertices : Function.Injective vertices := by
+    apply Fin.snoc_injective_iff.mpr
+    constructor
+    · intro i j hij
+      apply Fin.succ_injective
+      exact p.vertex_injective hij
+    · rintro ⟨i, hi⟩
+      have hzero : i.succ = (0 : Fin (p.length + 1)) :=
+        p.vertex_injective hi
+      exact Fin.succ_ne_zero i hzero
+  refine {
+    length := p.length + 1
+    hlength := by omega
+    edge := edges
+    vertex := vertices
+    edge_mem := ?_
+    edge_injective := hedges
+    vertex_injective := hvertices
+    left_mem := ?_
+    right_mem := ?_
+  }
+  · intro i
+    cases i using Fin.lastCases with
+    | last =>
+        simpa [edges] using hseparator
+    | cast i =>
+        simpa [edges] using p.edge_mem i
+  · intro i
+    cases i using Fin.lastCases with
+    | last =>
+        simpa [edges, vertices] using hstart
+    | cast i =>
+        simpa [edges, vertices] using p.right_mem i
+  · obtain ⟨m, hm⟩ := Nat.exists_eq_add_of_le p.hlength
+    subst p.length
+    intro i
+    cases i using Fin.lastCases with
+    | last =>
+        have hfirst := p.left_mem (0 : Fin (m + 1))
+        simpa [edges, vertices, cyclicSucc] using hfirst
+    | cast i =>
+        cases i using Fin.lastCases with
+        | last =>
+            simpa [edges, vertices, cyclicSucc] using hend
+        | cast j =>
+            have hnext := p.left_mem j.succ
+            simpa [edges, vertices, cyclicSucc] using hnext
+
+end BergePath
+
+end StructuralRamsey.Girth
