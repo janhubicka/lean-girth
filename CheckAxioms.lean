@@ -5,6 +5,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_mono
 #print axioms StructuralRamsey.Girth.girthGT_one
 #print axioms StructuralRamsey.Girth.girthGT_of_subset
+#print axioms StructuralRamsey.Girth.girthGT_mappedSupportCopies
 #print axioms StructuralRamsey.Girth.cyclicSucc_eq_finRotate
 #print axioms StructuralRamsey.Girth.exists_cyclic_change_of_nonconstant
 #print axioms StructuralRamsey.Girth.exists_two_cyclic_changes
