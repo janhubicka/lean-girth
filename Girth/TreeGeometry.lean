@@ -601,7 +601,7 @@ theorem ASupportedTreeAmalgam.bIntersectionsControlled
             intro h
             exact hne (hc₁.trans (h.trans hc₂.symm))
           have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
-          simpa only [hc₁, hc₂] using hres
+          exact controlledPair_congr hc₁ hc₂ hres
         · have hq₂full : SameCopy (iB.comp q₂) iB := by
             apply sameCopy_of_range_subset (iB.comp q₂) iB
             intro x
@@ -610,7 +610,7 @@ theorem ASupportedTreeAmalgam.bIntersectionsControlled
           have hres :=
             crossControlled_glueA hBase hCover₀ ih
               f₀ fB i₀ iB hfree c₁
-          simpa only [hc₁, hb₂R] using hres
+          exact controlledPair_congr hc₁ hb₂R hres
       · have hq₁full : SameCopy (iB.comp q₁) iB := by
           apply sameCopy_of_range_subset (iB.comp q₁) iB
           intro x
@@ -621,12 +621,7 @@ theorem ASupportedTreeAmalgam.bIntersectionsControlled
         · have hres :=
             crossControlled_glueA hBase hCover₀ ih
               f₀ fB i₀ iB hfree c₂
-          rcases hres with hs | ⟨a, ha⟩
-          · left
-            simpa only [hb₁R, hc₂, Set.inter_comm] using hs
-          · right
-            refine ⟨a, ?_⟩
-            simpa only [hb₁R, hc₂, Set.inter_comm] using ha
+          exact controlledPair_congr hb₁R hc₂ (controlledPair_swap hres)
         · have hq₂full : SameCopy (iB.comp q₂) iB := by
             apply sameCopy_of_range_subset (iB.comp q₂) iB
             intro x
@@ -644,16 +639,15 @@ theorem ASupportedTreeAmalgam.bIntersectionsControlled
             intro h
             exact hne (hc₁.trans (h.trans hc₂.symm))
           have hres := controlledIntersection_comp ih i₀ c₁ c₂ hneOld
-          simpa only [hc₁, hc₂] using hres
+          exact controlledPair_congr hc₁ hc₂ hres
         · have hq₂full : SameCopy (iB.comp q₂) iB := by
             apply sameCopy_of_range_subset (iB.comp q₂) iB
             intro x
             exact ⟨q₂ x, rfl⟩
           have hb₂R : SameCopy b₂ iB := hq₂.trans hq₂full
-          left
           have hs :=
             crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₁
-          simpa only [hc₁, hb₂R] using hs
+          exact controlledPair_congr hc₁ hb₂R (Or.inl hs)
       · have hq₁full : SameCopy (iB.comp q₁) iB := by
           apply sameCopy_of_range_subset (iB.comp q₁) iB
           intro x
@@ -661,10 +655,10 @@ theorem ASupportedTreeAmalgam.bIntersectionsControlled
         have hb₁R : SameCopy b₁ iB := hq₁.trans hq₁full
         rcases irreducibleCopy_side_of_freeAmalgam hfree hB b₂ with
           ⟨c₂, hc₂⟩ | ⟨q₂, hq₂⟩
-        · left
-          have hs :=
+        · have hs :=
             crossSubsingleton_gluePoint f₀ fB i₀ iB hfree c₂
-          simpa only [hb₁R, hc₂, Set.inter_comm] using hs
+          exact controlledPair_congr hb₁R hc₂
+            (controlledPair_swap (Or.inl hs))
         · have hq₂full : SameCopy (iB.comp q₂) iB := by
             apply sameCopy_of_range_subset (iB.comp q₂) iB
             intro x
