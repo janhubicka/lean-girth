@@ -134,16 +134,32 @@ theorem cyclicPath_vertex_last
     (before : Fin c.length) (k : ℕ)
     (hkpos : 0 < k) (hklt : k < c.length) :
     (c.cyclicPath before k hkpos hklt).vertex (Fin.last k) =
-      c.vertex (cyclicRunIndex before
-        (Fin.castLE (Nat.le_of_lt hklt)
-          ⟨k - 1, by omega⟩)) := by
+      c.vertex (before + (⟨k, hklt⟩ : Fin c.length)) := by
   let off : Fin k := ⟨k - 1, by omega⟩
+  let offN : Fin c.length :=
+    Fin.castLE (Nat.le_of_lt hklt) off
+  let kN : Fin c.length := ⟨k, hklt⟩
   have hlast : off.succ = Fin.last k := by
     apply Fin.ext
     simp [off]
     omega
+  have hoff : offN + 1 = kN := by
+    apply Fin.ext
+    dsimp [offN, off, kN]
+    simp [Fin.add_def]
+    rw [Nat.mod_eq_of_lt]
+    · omega
+    · omega
+  have hidx :
+      cyclicRunIndex before offN = before + kN := by
+    letI : NeZero c.length := ⟨by omega⟩
+    rw [cyclicRunIndex, finCycle_apply, finRotate_apply]
+    calc
+      before + 1 + offN = before + (offN + 1) := by ac_rfl
+      _ = before + kN := by rw [hoff]
   rw [← hlast]
-  exact c.cyclicPath_vertex_succ before k hkpos hklt off
+  rw [c.cyclicPath_vertex_succ before k hkpos hklt off]
+  exact congrArg c.vertex hidx
 
 end BergeCycle
 
