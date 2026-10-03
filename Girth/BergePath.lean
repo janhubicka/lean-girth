@@ -129,7 +129,9 @@ def close
         simpa [edges, vertices] using p.right_mem i
   · intro i
     obtain ⟨j, rfl⟩ | rfl := i.eq_castSucc_or_eq_last
-    · change p.vertex j.succ ∈ edges (cyclicSucc j.castSucc)
+    · have hvert : vertices j.castSucc = p.vertex j.succ := by
+        simp [vertices]
+      rw [hvert]
       by_cases hj : j.1 + 1 < p.length
       · let jn : Fin p.length := ⟨j.1 + 1, hj⟩
         have hsucc : cyclicSucc j.castSucc = jn.castSucc := by
@@ -157,7 +159,10 @@ def close
         rw [hv]
         exact hend
     · let z : Fin p.length := ⟨0, by omega⟩
-      change p.vertex 0 ∈ edges (cyclicSucc (Fin.last p.length))
+      have hvert :
+          vertices (Fin.last p.length) = p.vertex 0 := by
+        simp [vertices]
+      rw [hvert]
       have hsucc :
           cyclicSucc (Fin.last p.length) =
             (0 : Fin (p.length + 1)) := by
