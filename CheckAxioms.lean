@@ -64,3 +64,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_false_cyclic_run
 
 #print axioms StructuralRamsey.Girth.girthGT_union_of_edge_glue
+
+#print axioms StructuralRamsey.Girth.freeAmalgam_overlap_carrier_eq
+#print axioms StructuralRamsey.Girth.supportCopies_eq_union_mapped_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.mappedSupport_cross_subset_overlap
+#print axioms StructuralRamsey.Girth.punit_overlap_subsingleton
+#print axioms StructuralRamsey.Girth.supportCopies_eq_mapped_of_iso
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.girthGT
