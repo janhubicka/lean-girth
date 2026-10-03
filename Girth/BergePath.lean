@@ -31,6 +31,22 @@ structure BergePath (H : Set (Set W)) where
 
 namespace BergePath
 
+/-- Reinterpret a Berge path in any hypergraph containing all of its edges. -/
+def ofEdgeMem
+    {H K : Set (Set W)} (p : BergePath H)
+    (h : ∀ i, p.edge i ∈ K) :
+    BergePath K where
+  length := p.length
+  hlength := p.hlength
+  edge := p.edge
+  vertex := p.vertex
+  edge_mem := h
+  edge_injective := p.edge_injective
+  vertex_injective := p.vertex_injective
+  left_mem := p.left_mem
+  right_mem := p.right_mem
+
+
 /-- A nonempty initial segment of a Berge path is again a Berge path. -/
 def initialSegment
     {H : Set (Set W)} (p : BergePath H)
