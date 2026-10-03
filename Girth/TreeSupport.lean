@@ -99,4 +99,85 @@ theorem singletonSupport_congr
   exact ⟨vertexSupported_congr h₁.symm h.1,
     vertexSupported_congr h₂.symm h.2⟩
 
+
+/-- If a vertex lies in both a B-copy and an ambient A-copy, then controlled
+B-intersections plus singleton support let us find an A-copy through that
+vertex contained in the chosen B-copy. -/
+theorem vertexSupported_of_common_ACopy
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    (hCover : ACopiesCoveredByB A B T)
+    (hInter : BIntersectionsControlled A B T)
+    (hSingleton : BSingletonIntersectionsSupported A B T)
+    (b : Embedding B T) (a : Embedding A T) (x : W)
+    (hxA : x ∈ copyCarrier a) (hxB : x ∈ copyCarrier b) :
+    VertexSupportedInBCopy A b x := by
+  obtain ⟨b₀, ha₀⟩ := hCover a
+  by_cases hSame : SameCopy b b₀
+  · refine ⟨a, hxA, ?_⟩
+    intro y hy
+    have hy₀ : y ∈ copyCarrier b₀ := ha₀ hy
+    change copyCarrier b = copyCarrier b₀ at hSame
+    rw [← hSame] at hy₀
+    exact hy₀
+  · rcases hInter b b₀ hSame with hSmall | ⟨d, hd⟩
+    · exact (hSingleton b b₀ hSame hSmall x
+        ⟨hxB, ha₀ hxA⟩).1
+    · refine ⟨d, ?_, ?_⟩
+      · have hxBoth : x ∈ copyCarrier b ∩ copyCarrier b₀ :=
+          ⟨hxB, ha₀ hxA⟩
+        rw [hd] at hxBoth
+        exact hxBoth
+      · intro y hy
+        have hyBoth : y ∈ copyCarrier b ∩ copyCarrier b₀ := by
+          rw [hd]
+          exact hy
+        exact hyBoth.1
+
+/-- The singleton-intersection support property transports through an ambient
+embedding, for two old B-copies. -/
+theorem singletonIntersectionsSupported_comp
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W} {S : RelStructure L X}
+    (hSingleton : BSingletonIntersectionsSupported A B T)
+    (i : Embedding T S)
+    (b₁ b₂ : Embedding B T)
+    (hne : ¬ SameCopy (i.comp b₁) (i.comp b₂))
+    (hSmall :
+      (copyCarrier (i.comp b₁) ∩ copyCarrier (i.comp b₂)).Subsingleton)
+    (x : X)
+    (hx : x ∈ copyCarrier (i.comp b₁) ∩ copyCarrier (i.comp b₂)) :
+    VertexSupportedInBCopy A (i.comp b₁) x ∧
+      VertexSupportedInBCopy A (i.comp b₂) x := by
+  have hneOld : ¬ SameCopy b₁ b₂ := by
+    intro h
+    exact hne (sameCopy_comp h i)
+  have hSmallOld : (copyCarrier b₁ ∩ copyCarrier b₂).Subsingleton := by
+    intro y hy z hz
+    apply i.injective
+    apply hSmall
+    · constructor
+      · rcases hy.1 with ⟨u, hu⟩
+        exact ⟨u, congrArg i hu⟩
+      · rcases hy.2 with ⟨u, hu⟩
+        exact ⟨u, congrArg i hu⟩
+    · constructor
+      · rcases hz.1 with ⟨u, hu⟩
+        exact ⟨u, congrArg i hu⟩
+      · rcases hz.2 with ⟨u, hu⟩
+        exact ⟨u, congrArg i hu⟩
+  rcases hx.1 with ⟨u₁, hu₁⟩
+  rcases hx.2 with ⟨u₂, hu₂⟩
+  have hEq : b₁ u₁ = b₂ u₂ := by
+    apply i.injective
+    exact hu₁.trans hu₂.symm
+  have hOld := hSingleton b₁ b₂ hneOld hSmallOld (b₁ u₁)
+    ⟨⟨u₁, rfl⟩, ⟨u₂, hEq.symm⟩⟩
+  have hNew :
+      VertexSupportedInBCopy A (i.comp b₁) (i (b₁ u₁)) ∧
+        VertexSupportedInBCopy A (i.comp b₂) (i (b₁ u₁)) :=
+    ⟨vertexSupported_comp hOld.1 i, vertexSupported_comp hOld.2 i⟩
+  rw [hu₁] at hNew
+  exact hNew
+
 end StructuralRamsey.Girth
