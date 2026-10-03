@@ -24,7 +24,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | Lemma 2.1 geometry of A-supported tree amalgams | **in progress; every relational clause checked, only Berge-girth preservation remains** |
 | Observation 2.2 closure expansions | not yet formalized here |
 | Theorem 2.4 A-linear Ramsey theorem | not yet formalized here; depends on the reusable ordered functional Ramsey interface |
-| §4 forest of copies / join trees | `HypergraphPiece`, `AllowedIntersection`, `JoinTree`, `ForestOfCopies` formalized; leaf-attachment equality `JoinTree.leaf_inter_iUnion_eq_parent` in progress through CI |
+| §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths, parents, and parent-level equation formalized |
 | §§3–6 induced picture/local-forest construction | not yet formalized |
 | Main Theorem 1.1 | not yet formalized |
 
