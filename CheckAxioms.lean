@@ -23,6 +23,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.vertexSupported_comp
 #print axioms StructuralRamsey.Girth.vertexSupported_congr
 #print axioms StructuralRamsey.Girth.singletonSupport_congr
+#print axioms StructuralRamsey.Girth.vertexSupported_of_common_ACopy
+#print axioms StructuralRamsey.Girth.singletonIntersectionsSupported_comp
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
 #print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
