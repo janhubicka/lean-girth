@@ -15,6 +15,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.irreducibleCopy_side_of_freeAmalgam
 #print axioms StructuralRamsey.Girth.sameCopy_comp
 #print axioms StructuralRamsey.Girth.controlledIntersection_comp
+#print axioms StructuralRamsey.Girth.controlledPair_congr
+#print axioms StructuralRamsey.Girth.controlledPair_swap
 #print axioms StructuralRamsey.Girth.crossControlled_glueA
 #print axioms StructuralRamsey.Girth.crossSubsingleton_gluePoint
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bIntersectionsControlled
