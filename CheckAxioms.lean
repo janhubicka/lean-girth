@@ -8,7 +8,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_mappedSupportCopies
 #print axioms StructuralRamsey.Girth.cyclicSucc_eq_finRotate
 #print axioms StructuralRamsey.Girth.exists_cyclic_change_of_nonconstant
-#print axioms StructuralRamsey.Girth.exists_two_cyclic_changes
 #print axioms StructuralRamsey.Girth.exists_first_cyclic_change
 #print axioms StructuralRamsey.Girth.BergePath.initialSegment
 #print axioms StructuralRamsey.Girth.BergePath.close
@@ -43,11 +42,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.joinTree_of_nonempty
 #print axioms StructuralRamsey.Girth.JoinTree.mem_parent_of_mem_leaf_and_other
 #print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_iUnion_eq_parent
-#print axioms StructuralRamsey.Girth.JoinTree.rootPath_isPath
-#print axioms StructuralRamsey.Girth.JoinTree.rootPath_unique
-#print axioms StructuralRamsey.Girth.JoinTree.rootPath_length_eq_dist
-#print axioms StructuralRamsey.Girth.JoinTree.parent_adj
-#print axioms StructuralRamsey.Girth.JoinTree.parent_dist_add_one
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
 #print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
 #print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
@@ -73,4 +67,3 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.girthGT
 
 #print axioms StructuralRamsey.Girth.JoinTree.exists_leaf_attachment
-#print axioms StructuralRamsey.Girth.JoinTree.exists_two_terminal_members
