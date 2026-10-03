@@ -28,6 +28,24 @@ structure BergeCycle (H : Set (Set W)) where
   left_mem : ∀ i, vertex i ∈ edge i
   right_mem : ∀ i, vertex i ∈ edge (cyclicSucc i)
 
+namespace BergeCycle
+
+/-- Reinterpret a Berge cycle in any hypergraph containing all of its edges. -/
+def ofEdgeMem {H K : Set (Set W)} (c : BergeCycle H)
+    (h : ∀ i, c.edge i ∈ K) :
+    BergeCycle K where
+  length := c.length
+  hlength := c.hlength
+  edge := c.edge
+  vertex := c.vertex
+  edge_mem := h
+  edge_injective := c.edge_injective
+  vertex_injective := c.vertex_injective
+  left_mem := c.left_mem
+  right_mem := c.right_mem
+
+end BergeCycle
+
 /-- The hypergraph has a Berge cycle of length at most `g`. -/
 def HasBergeCycleAtMost (H : Set (Set W)) (g : ℕ) : Prop :=
   ∃ c : BergeCycle H, c.length ≤ g
