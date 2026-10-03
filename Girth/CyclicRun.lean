@@ -127,6 +127,7 @@ theorem exists_cyclic_run_to_change
     ∃ k : Fin n, 0 < k.1 ∧
       (∀ m : Fin n, m < k →
         side (cyclicRunIndex before m) = side (cyclicSucc before)) ∧
+      side (before + k) = side (cyclicSucc before) ∧
       side (before + k) ≠ side (cyclicSucc (before + k)) := by
   letI : NeZero n := ⟨by omega⟩
   have hchangeRot : side before ≠ side (finRotate n before) := by
@@ -167,7 +168,61 @@ theorem exists_cyclic_run_to_change
       side (before + k) ≠ side (cyclicSucc (before + k)) := by
     rw [hlastSide, ← hnextIndex]
     exact hafter.symm
-  exact ⟨k, hkpos, hrun, hlastChange⟩
+  exact ⟨k, hkpos, hrun, hlastSide, hlastChange⟩
+
+/-- In a nonconstant cyclic Boolean word there is a maximal run on the
+false side, bounded by side changes at both ends. -/
+theorem exists_false_cyclic_run
+    {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool)
+    (hmix : ∃ i j : Fin n, side i ≠ side j) :
+    ∃ before k : Fin n, 0 < k.1 ∧
+      side (cyclicSucc before) = false ∧
+      (∀ m : Fin n, m < k →
+        side (cyclicRunIndex before m) = false) ∧
+      side (before + k) = false ∧
+      side (cyclicSucc (before + k)) = true := by
+  obtain ⟨before, hbeforeRot⟩ :=
+    exists_cyclic_change_of_nonconstant side hmix
+  have hbefore : side before ≠ side (cyclicSucc before) := by
+    rw [cyclicSucc_eq_finRotate]
+    exact hbeforeRot
+  obtain ⟨k, hkpos, hrun, hlastSide, hlastChange⟩ :=
+    exists_cyclic_run_to_change hn side before hbefore
+  cases hs : side (cyclicSucc before)
+  · refine ⟨before, k, hkpos, hs, ?_, ?_, ?_⟩
+    · intro m hm
+      simpa [hs] using hrun m hm
+    · simpa [hs] using hlastSide
+    · have := hlastChange
+      rw [hlastSide, hs] at this
+      cases hnext : side (cyclicSucc (before + k))
+      · exact (this rfl).elim
+      · exact hnext
+  · have hlastTrue : side (before + k) = true := by
+      simpa [hs] using hlastSide
+    have hnextFalse : side (cyclicSucc (before + k)) = false := by
+      have := hlastChange
+      rw [hlastTrue] at this
+      cases hnext : side (cyclicSucc (before + k))
+      · exact hnext
+      · exact (this rfl).elim
+    let before₂ : Fin n := before + k
+    have hchange₂ :
+        side before₂ ≠ side (cyclicSucc before₂) := by
+      dsimp [before₂]
+      rw [hlastTrue, hnextFalse]
+      decide
+    obtain ⟨k₂, hk₂pos, hrun₂, hlastSide₂, hlastChange₂⟩ :=
+      exists_cyclic_run_to_change hn side before₂ hchange₂
+    refine ⟨before₂, k₂, hk₂pos, hnextFalse, ?_, ?_, ?_⟩
+    · intro m hm
+      simpa [hnextFalse] using hrun₂ m hm
+    · simpa [hnextFalse] using hlastSide₂
+    · have := hlastChange₂
+      rw [hlastSide₂, hnextFalse] at this
+      cases hnext : side (cyclicSucc (before₂ + k₂))
+      · exact (this rfl).elim
+      · exact hnext
 
 /-- A nonconstant cyclic Boolean word has two distinct transition indices. -/
 theorem exists_two_cyclic_changes
