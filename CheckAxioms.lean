@@ -20,6 +20,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.crossControlled_glueA
 #print axioms StructuralRamsey.Girth.crossSubsingleton_gluePoint
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bIntersectionsControlled
+#print axioms StructuralRamsey.Girth.intersectionSubsingleton_congr
+#print axioms StructuralRamsey.Girth.intersectionMem_congr
 #print axioms StructuralRamsey.Girth.vertexSupported_comp
 #print axioms StructuralRamsey.Girth.vertexSupported_congr
 #print axioms StructuralRamsey.Girth.singletonSupport_congr
