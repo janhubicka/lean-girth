@@ -91,7 +91,7 @@ theorem ForestOfCopies.joinTree_of_nonempty
     (h : ForestOfCopies F) :
     Nonempty (JoinTree F) := by
   rcases h.2 with hEmpty | hJ
-  · exact False.elim (not_isEmpty_of_nonempty ι hEmpty)
+  · exact (not_isEmpty_of_nonempty ι hEmpty).elim
   · exact hJ
 
 end StructuralRamsey.Girth
