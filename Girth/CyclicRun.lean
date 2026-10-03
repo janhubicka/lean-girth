@@ -17,6 +17,36 @@ theorem cyclicSucc_eq_finRotate {n : ℕ} (i : Fin n) :
   apply Fin.ext
   simp [cyclicSucc, finRotate_apply, Fin.add_def]
 
+/-- A nonconstant cyclic Boolean word has an adjacent change. -/
+theorem exists_cyclic_change_of_nonconstant
+    {n : ℕ} (side : Fin n → Bool)
+    (hmix : ∃ i j : Fin n, side i ≠ side j) :
+    ∃ i : Fin n, side i ≠ side (finRotate n i) := by
+  by_contra hnone
+  push_neg at hnone
+  cases n with
+  | zero =>
+      rcases hmix with ⟨i, _, _⟩
+      exact i.elim0
+  | succ n =>
+      have hall : ∀ (m : ℕ) (hm : m < n + 1),
+          side ⟨m, hm⟩ = side 0 := by
+        intro m hm
+        induction m with
+        | zero => rfl
+        | succ m ih =>
+            have hmn : m < n := by omega
+            have hprev := hnone ⟨m, by omega⟩
+            have hrot :
+                finRotate (n + 1) ⟨m, by omega⟩ =
+                  ⟨m + 1, hm⟩ := by
+              simpa using (finRotate_of_lt (n := n) hmn)
+            rw [hrot] at hprev
+            exact hprev.symm.trans (ih (by omega))
+      rcases hmix with ⟨i, j, hij⟩
+      apply hij
+      exact (hall i.1 i.2).trans (hall j.1 j.2).symm
+
 /-- Starting immediately after a change in a cyclic Boolean word, there is a
 first later change before returning all the way around the circle.  Thus the
 intervening positive-length block is constant. -/
