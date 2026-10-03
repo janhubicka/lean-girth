@@ -62,3 +62,5 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_cyclic_run_to_change
 #print axioms StructuralRamsey.Girth.exists_false_cyclic_run
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_edge_glue
