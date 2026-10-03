@@ -21,8 +21,8 @@ theorem cyclicRunIndex_zero {n : ℕ} [NeZero n] (before : Fin n) :
     cyclicRunIndex before (0 : Fin n) = finRotate n before := by
   simp [cyclicRunIndex, finCycle_apply]
 
-/-- A proper positive offset after the successor of `before` cannot
-return to `before`. -/
+/-- A proper positive offset after the successor of `before` cannot return
+to `before`. -/
 theorem cyclicRunIndex_ne_before
     {n : ℕ} (before offset : Fin n)
     (hproper : offset.1 + 1 < n) :
@@ -36,9 +36,9 @@ theorem cyclicRunIndex_ne_before
     apply add_left_cancel (a := before)
     simpa using hEq
   have hval : ((1 + offset : Fin n) : ℕ) = offset.1 + 1 := by
-    rw [Fin.val_add_eq_of_add_lt]
-    · rfl
-    · simpa [add_comm] using hproper
+    change (1 + offset.1) % n = offset.1 + 1
+    rw [Nat.mod_eq_of_lt (by omega)]
+    omega
   have hz := congrArg Fin.val hzero
   rw [hval] at hz
   simp at hz
@@ -108,15 +108,14 @@ theorem exists_first_cyclic_change
   have hkSpec : p k := Fin.find_spec hex
   have hkpos : 0 < k.1 := by
     by_contra hk
-    have hk0 : k = (0 : Fin n) := Fin.ext (by omega)
-    subst k
-    change side (finCycle (0 : Fin n) start) ≠ side start at hkSpec
-    simpa [finCycle_apply] using hkSpec
-  refine ⟨k, hkpos, ?_, ?_⟩
-  · exact hkSpec
-  · intro m hm
-    have hnot : ¬ p m := Fin.find_min hex hm
-    exact not_ne_iff.mp hnot
+    have hkval : k.1 = 0 := Nat.eq_zero_of_not_pos hk
+    have hk0 : k = (0 : Fin n) := Fin.ext hkval
+    have hkSpec0 : p (0 : Fin n) := hk0 ▸ hkSpec
+    simpa [p, finCycle_apply] using hkSpec0
+  refine ⟨k, hkpos, hkSpec, ?_⟩
+  intro m hm
+  have hnot : ¬ p m := Fin.find_min hex hm
+  exact not_ne_iff.mp hnot
 
 /-- A transition determines a positive maximal run on the new side; the
 edge at index `before + k` is the last edge of the run and is itself followed
@@ -131,22 +130,20 @@ theorem exists_cyclic_run_to_change
       side (before + k) ≠ side (cyclicSucc (before + k)) := by
   letI : NeZero n := ⟨by omega⟩
   have hchangeRot : side before ≠ side (finRotate n before) := by
-    rw [← cyclicSucc_eq_finRotate]
-    exact hchange
+    simpa only [cyclicSucc_eq_finRotate] using hchange
   obtain ⟨k, hkpos, hafter, hconst⟩ :=
     exists_first_cyclic_change hn side before hchangeRot
   have hrun : ∀ m : Fin n, m < k →
       side (cyclicRunIndex before m) = side (cyclicSucc before) := by
     intro m hm
-    rw [cyclicSucc_eq_finRotate]
-    simpa [cyclicRunIndex] using hconst m hm
+    simpa only [cyclicRunIndex, cyclicSucc_eq_finRotate] using hconst m hm
   let off : Fin n := ⟨k.1 - 1, by omega⟩
   have hoff : off + 1 = k := by
     apply Fin.ext
-    simp [off, Fin.add_def]
-    rw [Nat.mod_eq_of_lt]
-    · omega
-    · omega
+    change ((off.1 + 1) % n) = k.1
+    rw [Nat.mod_eq_of_lt (by omega)]
+    dsimp [off]
+    omega
   have hlastIndex : cyclicRunIndex before off = before + k := by
     rw [cyclicRunIndex, finCycle_apply, finRotate_apply]
     calc
@@ -166,8 +163,15 @@ theorem exists_cyclic_run_to_change
     ac_rfl
   have hlastChange :
       side (before + k) ≠ side (cyclicSucc (before + k)) := by
-    rw [hlastSide, ← hnextIndex]
-    exact hafter.symm
+    intro heq
+    apply hafter
+    calc
+      side (finCycle k (finRotate n before)) =
+          side (cyclicSucc (before + k)) := congrArg side hnextIndex
+      _ = side (before + k) := heq.symm
+      _ = side (cyclicSucc before) := hlastSide
+      _ = side (finRotate n before) :=
+        congrArg side (cyclicSucc_eq_finRotate before)
   exact ⟨k, hkpos, hrun, hlastSide, hlastChange⟩
 
 /-- In a nonconstant cyclic Boolean word there is a maximal run on the
@@ -185,102 +189,59 @@ theorem exists_false_cyclic_run
   obtain ⟨before, hbeforeRot⟩ :=
     exists_cyclic_change_of_nonconstant side hmix
   have hbefore : side before ≠ side (cyclicSucc before) := by
-    rw [cyclicSucc_eq_finRotate]
-    exact hbeforeRot
+    simpa only [cyclicSucc_eq_finRotate] using hbeforeRot
   obtain ⟨k, hkpos, hrun, hlastSide, hlastChange⟩ :=
     exists_cyclic_run_to_change hn side before hbefore
-  cases hs : side (cyclicSucc before)
-  · have hbeforeTrue : side before = true := by
-      cases hb : side before
-      · exact (hbefore (by simp [hb, hs])).elim
-      · exact hb
-    refine ⟨before, k, hkpos, hbeforeTrue, hs, ?_, ?_, ?_⟩
-    · intro m hm
-      simpa [hs] using hrun m hm
-    · simpa [hs] using hlastSide
-    · have := hlastChange
-      rw [hlastSide, hs] at this
-      cases hnext : side (cyclicSucc (before + k))
-      · exact (this rfl).elim
-      · exact hnext
-  · have hlastTrue : side (before + k) = true := by
-      simpa [hs] using hlastSide
-    have hnextFalse : side (cyclicSucc (before + k)) = false := by
-      have := hlastChange
-      rw [hlastTrue] at this
-      cases hnext : side (cyclicSucc (before + k))
-      · exact hnext
-      · exact (this rfl).elim
-    let before₂ : Fin n := before + k
-    have hchange₂ :
-        side before₂ ≠ side (cyclicSucc before₂) := by
-      dsimp [before₂]
-      rw [hlastTrue, hnextFalse]
-      decide
-    obtain ⟨k₂, hk₂pos, hrun₂, hlastSide₂, hlastChange₂⟩ :=
-      exists_cyclic_run_to_change hn side before₂ hchange₂
-    refine ⟨before₂, k₂, hk₂pos, hlastTrue, hnextFalse, ?_, ?_, ?_⟩
-    · intro m hm
-      simpa [hnextFalse] using hrun₂ m hm
-    · simpa [hnextFalse] using hlastSide₂
-    · have := hlastChange₂
-      rw [hlastSide₂, hnextFalse] at this
-      cases hnext : side (cyclicSucc (before₂ + k₂))
-      · exact (this rfl).elim
-      · exact hnext
-
-/-- A nonconstant cyclic Boolean word has two distinct transition indices. -/
-theorem exists_two_cyclic_changes
-    {n : ℕ} (hn : 2 ≤ n) (side : Fin n → Bool)
-    (hmix : ∃ i j : Fin n, side i ≠ side j) :
-    ∃ i j : Fin n, i ≠ j ∧
-      side i ≠ side (cyclicSucc i) ∧
-      side j ≠ side (cyclicSucc j) := by
-  letI : NeZero n := ⟨by omega⟩
-  obtain ⟨i, hiRot⟩ := exists_cyclic_change_of_nonconstant side hmix
-  obtain ⟨k, hkpos, hafter, hconst⟩ :=
-    exists_first_cyclic_change hn side i hiRot
-  let start : Fin n := finRotate n i
-  let offLast : Fin n := ⟨k.1 - 1, by omega⟩
-  let j : Fin n := finCycle offLast start
-  have hoff : offLast + 1 = k := by
-    apply Fin.ext
-    simp [offLast, Fin.add_def]
-    rw [Nat.mod_eq_of_lt]
-    · omega
-    · omega
-  have hjconst : side j = side start := by
-    exact hconst offLast (by
-      rw [Fin.lt_def]
-      dsimp [offLast]
-      omega)
-  have hsucc : cyclicSucc j = finCycle k start := by
-    rw [cyclicSucc_eq_finRotate, finRotate_apply]
-    dsimp [j]
-    rw [finCycle_apply, finCycle_apply]
-    calc
-      start + offLast + 1 = start + (offLast + 1) := by ac_rfl
-      _ = start + k := by rw [hoff]
-  have hj : side j ≠ side (cyclicSucc j) := by
-    rw [hjconst, hsucc]
-    exact hafter.symm
-  have hjform : j = i + k := by
-    dsimp [j, start]
-    rw [finCycle_apply, finRotate_apply]
-    calc
-      i + 1 + offLast = i + (offLast + 1) := by ac_rfl
-      _ = i + k := by rw [hoff]
-  have hij : i ≠ j := by
-    intro hij
-    have hik : i = i + k := hij.trans hjform
-    have hkzero : k = 0 := by
-      apply add_left_cancel (a := i)
-      simpa using hik
-    have hv := congrArg Fin.val hkzero
-    simpa using hkpos.ne' hv
-  have hi : side i ≠ side (cyclicSucc i) := by
-    rw [cyclicSucc_eq_finRotate]
-    exact hiRot
-  exact ⟨i, j, hij, hi, hj⟩
+  cases hs : side (cyclicSucc before) with
+  | false =>
+      have hbeforeTrue : side before = true := by
+        apply Bool.eq_true_of_not_eq_false
+        intro hb
+        apply hbefore
+        rw [hb, hs]
+      have hlastFalse : side (before + k) = false := by
+        exact hlastSide.trans hs
+      have hnextTrue : side (cyclicSucc (before + k)) = true := by
+        apply Bool.eq_true_of_not_eq_false
+        intro hnxt
+        apply hlastChange
+        rw [hlastFalse, hnxt]
+      refine ⟨before, k, hkpos, hbeforeTrue, hs, ?_, hlastFalse, hnextTrue⟩
+      intro m hm
+      exact (hrun m hm).trans hs
+  | true =>
+      have hbeforeFalse : side before = false := by
+        apply Bool.eq_false_of_not_eq_true
+        intro hb
+        apply hbefore
+        rw [hb, hs]
+      have hlastTrue : side (before + k) = true := by
+        exact hlastSide.trans hs
+      have hnextFalse : side (cyclicSucc (before + k)) = false := by
+        apply Bool.eq_false_of_not_eq_true
+        intro hnxt
+        apply hlastChange
+        rw [hlastTrue, hnxt]
+      let before₂ : Fin n := before + k
+      have hsucc₂ : side (cyclicSucc before₂) = false := by
+        simpa [before₂] using hnextFalse
+      have hchange₂ :
+          side before₂ ≠ side (cyclicSucc before₂) := by
+        intro hEq
+        rw [hlastTrue, hsucc₂] at hEq
+        contradiction
+      obtain ⟨k₂, hk₂pos, hrun₂, hlastSide₂, hlastChange₂⟩ :=
+        exists_cyclic_run_to_change hn side before₂ hchange₂
+      have hlastFalse₂ : side (before₂ + k₂) = false :=
+        hlastSide₂.trans hsucc₂
+      have hnextTrue₂ : side (cyclicSucc (before₂ + k₂)) = true := by
+        apply Bool.eq_true_of_not_eq_false
+        intro hnxt
+        apply hlastChange₂
+        rw [hlastFalse₂, hnxt]
+      refine ⟨before₂, k₂, hk₂pos, hlastTrue, hsucc₂, ?_,
+        hlastFalse₂, hnextTrue₂⟩
+      intro m hm
+      exact (hrun₂ m hm).trans hsucc₂
 
 end StructuralRamsey.Girth
