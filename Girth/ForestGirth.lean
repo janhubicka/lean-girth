@@ -58,7 +58,9 @@ theorem girthGT_pieceList_of_singletonAttachments
   | nil =>
       intro hcyc
       rcases hcyc with ⟨c, _⟩
-      exact (c.edge_mem 0 : c.edge 0 ∈ (∅ : Set (Set W)))
+      let i : Fin c.length := ⟨0, by omega⟩
+      have h := c.edge_mem i
+      simpa [pieceListEdges] using h
   | cons F Fs ih =>
       rw [SingletonAttachmentList] at hAttach
       rcases hAttach with ⟨hSep, hTail⟩
