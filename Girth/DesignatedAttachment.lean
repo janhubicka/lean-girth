@@ -33,6 +33,37 @@ def LocalIrreduciblesCoveredByAInCopies
       (∀ z : T, z.1 ∈ copyCarrier a) ∧
       copyCarrier a ⊆ copyCarrier (f i).toEmbedding
 
+/-- Every ambient A-copy of the local core is contained in one designated
+local copy. -/
+def ACopiesCoveredByLocalCopies
+    (A : RelStructure L UA)
+    (E : StructuralRamsey.Partite.System L P Y)
+    {C : StructuralRamsey.Partite.System L P X}
+    {S : Set X}
+    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E) : Prop :=
+  ∀ a : RelStructure.Embedding A E.toRelStructure,
+    ∃ i : I, copyCarrier a ⊆ copyCarrier (f i).toEmbedding
+
+/-- Irreducible A-coverage plus coverage of all A-copies by designated local
+copies gives exactly the local hypothesis used by designated attachment
+preservation. -/
+theorem localIrreduciblesCovered_of_extendTo_and_ACopyCover
+    (A : RelStructure L UA)
+    (E : StructuralRamsey.Partite.System L P Y)
+    {C : StructuralRamsey.Partite.System L P X}
+    {S : Set X}
+    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E)
+    (hIrr : RelStructure.IrreduciblesExtendTo A E.toRelStructure)
+    (hACover : ACopiesCoveredByLocalCopies A E f) :
+    LocalIrreduciblesCoveredByAInCopies A E f := by
+  intro T hT
+  obtain ⟨a, hTa⟩ := hIrr T hT
+  obtain ⟨i, hai⟩ := hACover a
+  refine ⟨i, a, ?_, hai⟩
+  intro z
+  obtain ⟨u, hu⟩ := hTa z
+  exact ⟨u, hu.symm⟩
+
 /-- Transport one old designated B-copy into a standard attached copy. -/
 def DesignatedCopy.transportToStandard
     {B : RelStructure L VB} {D : RelStructure L P}
