@@ -162,3 +162,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeAttachment_copy_comp
 #print axioms StructuralRamsey.Girth.activeAttachment_pictureProperty
 #print axioms StructuralRamsey.Girth.activeInducedPictureStep
+#print axioms StructuralRamsey.Girth.activeCarrier
+#print axioms StructuralRamsey.Girth.projected_mem_activeCarrier
+#print axioms StructuralRamsey.Girth.activeCarrier_subset_support
+#print axioms StructuralRamsey.Girth.activeInducedPictureStep_onActiveCarrier
