@@ -22,8 +22,8 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | §2 EHN / partite structural input | imported from pinned `partite-construction`; its formalization there is still being strengthened |
 | Ramsey + generic bounded local-tree + irreducible coverage core | `localTreeRamseyCore` |
 | Lemma 2.1 geometry of A-supported tree amalgams | fully proved; `ASupportedTreeAmalgam.girthGT`, `bIntersectionsControlled`, `singletonIntersectionsSupported`, `aLinear_of_base_and_controlled`, `aStrong_of_linear_and_controlled` |
-| Observation 2.2 closure expansions | target-side closure semantics and classification now formalized in `TargetClosure`; ambient free-amalgamation closure class remains |
-| Theorem 2.4 A-linear Ramsey theorem | not yet formalized here; depends on the reusable ordered functional Ramsey interface |
+| Observation 2.2 closure expansions | pair-closure ↔ A-strongness proved; target-side closure classification proved; ambient free-amalgamation closure class remains |
+| Theorem 2.4 A-linear Ramsey theorem | target-copy geometry after the Ramsey step is formalized in `ClosedCopyGeometry`; external class-Ramsey/free-amalgamation input remains |
 | §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths, parents, and parent-level equation formalized |
 | §§3–6 induced picture/local-forest construction | not yet formalized |
 | Main Theorem 1.1 | not yet formalized |
