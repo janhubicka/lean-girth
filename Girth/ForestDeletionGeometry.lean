@@ -102,6 +102,80 @@ theorem neighbor_eq_of_reachable_after_delete
     simp [q]
   exact (heq.trans hsnd).symm
 
+/-- Let `root` be the neighbour through which a component attaches to the
+deleted vertex.  Any vertex shared by the deleted member and a piece in that
+component already belongs to the root piece.  This is the running-intersection
+form of the manuscript's "components attached through the same vertex" step. -/
+theorem mem_root_of_mem_center_and_reachable_after_delete
+    {F : ι → HypergraphPiece W}
+    (J : JoinTree F)
+    {center root i : ι}
+    (hroot : J.tree.Adj center root)
+    (hi : i ≠ center)
+    (hreach :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨root, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hroot.ne.symm⟩
+        ⟨i, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hi⟩)
+    {x : W}
+    (hxCenter : x ∈ (F center).carrier)
+    (hxI : x ∈ (F i).carrier) :
+    x ∈ (F root).carrier := by
+  obtain ⟨p0, hp0⟩ := hreach.exists_isPath
+  let delInc :
+      (J.tree.induce (({center} : Set ι)ᶜ)) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let p : J.tree.Walk root i := p0.map delInc
+  have hp : p.IsPath := by
+    dsimp [p]
+    exact hp0.map (fun u v h => Subtype.ext h)
+  have hcenter : center ∉ p.support := by
+    intro hc
+    dsimp [p, delInc] at hc
+    rw [SimpleGraph.Walk.support_map] at hc
+    rcases List.mem_map.mp hc with ⟨z, hz, hval⟩
+    have hzout : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    exact hzout hval
+  let q : J.tree.Walk center i := p.cons hroot
+  have hq : q.IsPath := hp.cons hcenter
+
+  let occ : Set ι := {k : ι | x ∈ (F k).carrier}
+  let centerOcc : occ := ⟨center, hxCenter⟩
+  let iOcc : occ := ⟨i, hxI⟩
+  obtain ⟨r0, hr0⟩ :=
+    (J.running x centerOcc iOcc).exists_isPath
+  let occInc : (J.tree.induce occ) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let r : J.tree.Walk center i := r0.map occInc
+  have hr : r.IsPath := by
+    dsimp [r]
+    exact hr0.map (fun u v h => Subtype.ext h)
+  have hqr : q = r :=
+    (J.isTree.existsUnique_path center i).unique hq hr
+  have hrootEq : root = r.snd := by
+    calc
+      root = q.snd := by simp [q]
+      _ = r.snd := congrArg SimpleGraph.Walk.snd hqr
+  have hrsndVal : r.snd = r0.snd.1 := by
+    change (r0.map occInc).getVert 1 = (r0.getVert 1).1
+    rw [SimpleGraph.Walk.getVert_map]
+    rfl
+  have hrsnd : x ∈ (F r.snd).carrier := by
+    rw [hrsndVal]
+    exact r0.snd.2
+  rw [← hrootEq] at hrsnd
+  exact hrsnd
+
 /-- If the deleted member is a one-edge piece and no surviving piece contains
 that whole edge, then two pieces in different components after deletion meet in
 at most one vertex.  Any two common vertices would both lie in the deleted edge,
