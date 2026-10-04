@@ -83,4 +83,20 @@ theorem JoinTree.exists_leaf_attachment
   refine ⟨leaf, parent, hadj, huniq, ?_⟩
   exact J.leaf_inter_iUnion_eq_parent hadj huniq
 
+
+
+/-- If distinct piece carriers meet only subsingletonly, then a leaf meets the
+union of all remaining carriers subsingletonly. -/
+theorem JoinTree.leaf_inter_rest_subsingleton
+    {F : ι → HypergraphPiece W} (J : JoinTree F)
+    (hPair :
+      ∀ ⦃i j : ι⦄, i ≠ j →
+        ((F i).carrier ∩ (F j).carrier).Subsingleton)
+    {leaf parent : ι}
+    (hadj : J.tree.Adj leaf parent)
+    (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
+    ((F leaf).carrier ∩
+      (⋃ j : {j : ι // j ≠ leaf}, (F j.1).carrier)).Subsingleton := by
+  rw [J.leaf_inter_iUnion_eq_parent hadj huniq]
+  exact hPair hadj.ne
 end StructuralRamsey.Girth
