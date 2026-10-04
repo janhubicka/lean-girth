@@ -27,3 +27,4 @@ import Girth.ActivePicture
 import Girth.IrreducibleAttachment
 import Girth.AttachmentGeometry
 import Girth.AttachmentStrongness
+import Girth.AttachmentLinearity
