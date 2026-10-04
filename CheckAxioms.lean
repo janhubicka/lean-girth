@@ -117,3 +117,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_of_edgeFamily_subsingleton
 #print axioms StructuralRamsey.Girth.oneEdgePiece_girthGT
 #print axioms StructuralRamsey.Girth.girthGT_oneEdgeList_of_singletonAttachments
+#print axioms StructuralRamsey.Girth.bergeTriangle_of_three_pair_edges
+#print axioms StructuralRamsey.Girth.three_pair_edges_not_all_distinct
+#print axioms StructuralRamsey.Girth.pairCovered_subset_edge_of_girthGT_three
