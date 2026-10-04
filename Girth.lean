@@ -17,3 +17,4 @@ import Girth.ClosureExpansion
 import Girth.ClosureEmbeddingGeometry
 import Girth.ClosureLift
 import Girth.ElementaryClosureAmalgam
+import Girth.ForestGirth
