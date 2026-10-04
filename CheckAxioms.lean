@@ -196,3 +196,7 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.HypergraphPiece.carrier_subset_of_isOneEdge_of_allowed_not_subsingleton
 #print axioms StructuralRamsey.Girth.HypergraphPiece.isOneEdge_allowed_dichotomy
+
+#print axioms StructuralRamsey.Girth.JoinTree.degree_eq_one_of_unique_neighbor
+#print axioms StructuralRamsey.Girth.JoinTree.pairwiseAllowed_erase
+#print axioms StructuralRamsey.Girth.ForestOfCopies.erase_leaf

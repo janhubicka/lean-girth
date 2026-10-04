@@ -6,6 +6,7 @@ import Girth.TreeSupport
 import Girth.StructuralCore
 import Girth.Forest
 import Girth.ForestSingleEdge
+import Girth.ForestLeafDeletion
 import Girth.ForestEnumeration
 import Girth.CyclicRun
 import Girth.BergePath
