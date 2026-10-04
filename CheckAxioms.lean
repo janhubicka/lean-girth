@@ -171,6 +171,15 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_copy_core_intersection
 #print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection
 #print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection_subset_core
+#print axioms StructuralRamsey.Girth.attachment_irreducible_copy_localize
+#print axioms StructuralRamsey.Girth.attachment_core_aStrong
+#print axioms StructuralRamsey.Girth.attachment_copy_aStrong
+#print axioms StructuralRamsey.Girth.attachment_aLinear
+#print axioms StructuralRamsey.Girth.shared_standard_copy_preimage_mem_glue
+#print axioms StructuralRamsey.Girth.shared_standard_copy_part_mem_active_support
+#print axioms StructuralRamsey.Girth.shared_standard_copy_part_mem_base_intersection
+#print axioms StructuralRamsey.Girth.no_common_projected_copy_of_subsingleton_base_intersection
+#print axioms StructuralRamsey.Girth.no_common_projected_copy_of_base_aLinear
 #print axioms StructuralRamsey.Girth.activePictureStep_invariants
 #print axioms StructuralRamsey.Girth.DesignatedCopy.projects
 #print axioms StructuralRamsey.Girth.activeCarrier_part_in_baseCopy
