@@ -157,3 +157,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateStrongSupportCopy_of_highGirth
 
 #print axioms StructuralRamsey.Girth.customInducedPictureStep
+
+#print axioms StructuralRamsey.Girth.activeInduceProjected
+#print axioms StructuralRamsey.Girth.activeAttachment_copy_comp
+#print axioms StructuralRamsey.Girth.activeAttachment_pictureProperty
+#print axioms StructuralRamsey.Girth.activeInducedPictureStep
