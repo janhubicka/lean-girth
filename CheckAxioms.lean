@@ -106,6 +106,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.elementaryClosure_isFreeAmalgam
 #print axioms StructuralRamsey.Girth.concreteElementaryClosure_freeAmalgam
 #print axioms StructuralRamsey.Girth.sameCopy_of_comp
+#print axioms StructuralRamsey.Girth.ordered_embedding_eq_of_sameCopy
 #print axioms StructuralRamsey.Girth.aLinear_induce
 #print axioms StructuralRamsey.Girth.elementaryClosure_induceEmbedding
 #print axioms StructuralRamsey.Girth.elementaryClosure_closed_induce_aLinear
@@ -138,5 +139,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupport_edgeCarrier
 #print axioms StructuralRamsey.Girth.decorateSupport_exact
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupport_ordered_copy_eq_edgeEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong_of_highGirth
