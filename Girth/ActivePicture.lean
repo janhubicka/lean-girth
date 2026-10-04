@@ -59,7 +59,7 @@ theorem activeAttachment_copy_comp
     (hRange : ∀ a : UA, e.val a ∈ S) :
     e.comp
         (StructuralRamsey.Partite.Attachment.copyEmbedding B S E f i) =
-      (activeInduceProjected A e hRange).comp (f i) |>.comp
+      ((activeInduceProjected A e hRange).comp (f i)).comp
         (StructuralRamsey.Partite.Attachment.coreEmbedding B S E f) := by
   apply Subtype.ext
   apply RelStructure.Embedding.ext
