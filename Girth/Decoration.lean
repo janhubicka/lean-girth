@@ -105,6 +105,11 @@ noncomputable def decorateSupport_edgeEmbedding
     intro R x
     constructor
     · rintro ⟨f, hf, _hvals, hA⟩
+      have hp :
+          part ∘ (hTrans.vertex he ∘ x) = x := by
+        funext i
+        exact hTrans.part_vertex he (x i)
+      rw [hp] at hA
       exact hA
     · intro hA
       refine ⟨e, he, ?_, ?_⟩
