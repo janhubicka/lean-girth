@@ -26,6 +26,9 @@ import Girth.CustomPictureStep
 import Girth.ActivePicture
 import Girth.IrreducibleAttachment
 import Girth.AttachmentGeometry
+import Girth.AttachmentStrongness
+import Girth.AttachmentLinearity
+import Girth.PictureProjectionGeometry
 import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
 import Girth.DesignatedAttachment
