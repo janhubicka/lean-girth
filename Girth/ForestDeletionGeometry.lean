@@ -83,6 +83,7 @@ theorem neighbor_eq_of_reachable_after_delete
     exact hp0.map emb.injective
   have hcenter : center ∉ p.support := by
     intro hc
+    dsimp [p] at hc
     rw [SimpleGraph.Walk.support_map] at hc
     rcases List.mem_map.mp hc with ⟨z, _hz, hval⟩
     have hzout : z.1 ≠ center := by
@@ -96,7 +97,7 @@ theorem neighbor_eq_of_reachable_after_delete
     J.isTree.isAcyclic.eq_snd_of_adj_start hq hb hbmem
   have hsnd : q.snd = a := by
     simp [q]
-  exact heq.trans hsnd
+  exact (heq.trans hsnd).symm
 
 /-- If the deleted member is a one-edge piece and no surviving piece contains
 that whole edge, then two pieces in different components after deletion meet in
