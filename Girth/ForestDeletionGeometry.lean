@@ -53,7 +53,7 @@ theorem mem_center_of_shared_not_reachable_after_delete
         exact hab }
   have hm := hreach.map phi
   apply hnreach
-  simpa [phi, iOcc, jOcc] using hm
+  convert hm using 1 <;> apply Subtype.ext <;> rfl
 
 /-- If the deleted member is a one-edge piece and no surviving piece contains
 that whole edge, then two pieces in different components after deletion meet in
