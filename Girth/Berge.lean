@@ -243,4 +243,21 @@ theorem girthGT_mappedSupportCopies
   }
   exact hgt ⟨oldCycle, hcLen⟩
 
+
+
+/-- A hypergraph with at most one edge has no Berge cycle, hence has girth
+greater than every finite bound. -/
+theorem girthGT_of_edgeFamily_subsingleton
+    {H : Set (Set W)} (hH : H.Subsingleton) (g : ℕ) :
+    GirthGT H g := by
+  rintro ⟨c, _⟩
+  have hlen : 2 ≤ c.length := c.hlength
+  let i0 : Fin c.length := ⟨0, by omega⟩
+  let i1 : Fin c.length := ⟨1, by omega⟩
+  have heq : c.edge i0 = c.edge i1 :=
+    hH (c.edge_mem i0) (c.edge_mem i1)
+  have hij : i0 = i1 := c.edge_injective heq
+  have hv := congrArg Fin.val hij
+  dsimp [i0, i1] at hv
+  omega
 end StructuralRamsey.Girth
