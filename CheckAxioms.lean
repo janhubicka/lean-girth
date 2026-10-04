@@ -200,3 +200,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.degree_eq_one_of_unique_neighbor
 #print axioms StructuralRamsey.Girth.JoinTree.pairwiseAllowed_erase
 #print axioms StructuralRamsey.Girth.ForestOfCopies.erase_leaf
+
+#print axioms StructuralRamsey.Girth.JoinTree.mem_center_of_shared_not_reachable_after_delete
