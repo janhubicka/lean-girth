@@ -18,3 +18,4 @@ import Girth.ClosureEmbeddingGeometry
 import Girth.ClosureLift
 import Girth.ElementaryClosureAmalgam
 import Girth.ForestGirth
+import Girth.HypergraphClique
