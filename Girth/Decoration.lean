@@ -227,6 +227,19 @@ def decorateSupportEmbedding
         exact hpart (x i)
 
 
+/-- Membership in an exact support family, without rewriting the support
+set through a target type that itself depends on that set. -/
+theorem copyCarrier_mem_of_support_eq
+    {A : RelStructure L U} {R : RelStructure L W}
+    {H : Set (Set W)}
+    (hSupport : supportCopies A R = H)
+    (a : Embedding A R) :
+    copyCarrier a ∈ H := by
+  have ha : copyCarrier a ∈ supportCopies A R := ⟨a, rfl⟩
+  exact Eq.mp
+    (congrArg (fun K : Set (Set W) => copyCarrier a ∈ K) hSupport)
+    ha
+
 /-- The decoration together with its part map is an A-partite system whenever
 each support edge contains exactly one vertex in every part. -/
 def decorateSupportSystem
@@ -293,9 +306,8 @@ noncomputable def decorateSupportSystem_embeddingEquivEdge
         (StructuralRamsey.Partite.transversal A)
         (decorateSupportSystem A H part hTrans) ≃
       {e : Set W // e ∈ H} where
-  toFun a := ⟨copyCarrier a.toEmbedding, by
-    rw [← hSupport]
-    exact ⟨a.toEmbedding, rfl⟩⟩
+  toFun a := ⟨copyCarrier a.toEmbedding,
+    copyCarrier_mem_of_support_eq hSupport a.toEmbedding⟩
   invFun e :=
     decorateSupportSystem_edgeEmbedding A hTrans e.2
   left_inv a := by
@@ -305,12 +317,12 @@ noncomputable def decorateSupportSystem_embeddingEquivEdge
         a x ∈ copyCarrier a.toEmbedding :=
       ⟨x, rfl⟩
     have hp : part (a x) = x := by
-      simpa [StructuralRamsey.Partite.transversal] using a.map_part x
+      have hp' := a.map_part x
+      change part (a x) = x at hp'
+      exact hp'
     exact
       (hTrans.vertex_unique
-        (show copyCarrier a.toEmbedding ∈ H by
-          rw [← hSupport]
-          exact ⟨a.toEmbedding, rfl⟩)
+        (copyCarrier_mem_of_support_eq hSupport a.toEmbedding)
         hx hp).symm
   right_inv e := by
     apply Subtype.ext
@@ -376,7 +388,7 @@ theorem copyCarrier_comp_decorateSupportSystemEmbedding
     rcases hy with ⟨z, ⟨x, hx⟩, rfl⟩
     refine ⟨x, ?_⟩
     change f (a x) = f z
-    exact congrArg f hx.symm
+    exact congrArg f hx
 
 /-- A designated Ramsey family of strong, part-preserving support copies gives
 exactly the partite Ramsey arrow needed by the induced Picture step. -/
@@ -477,9 +489,8 @@ theorem decorateSupport_ordered_copy_eq_edgeEmbedding
     ∃ (e : Set W) (he : e ∈ H),
       a = decorateSupport_edgeEmbedding A₀.ordered hTrans he := by
   let e : Set W := copyCarrier a
-  have he : e ∈ H := by
-    rw [← hSupport]
-    exact ⟨a, rfl⟩
+  have he : e ∈ H :=
+    copyCarrier_mem_of_support_eq hSupport a
   let b : Embedding A₀.ordered (decorateSupport A₀.ordered H part) :=
     decorateSupport_edgeEmbedding A₀.ordered hTrans he
   have hb : copyCarrier b = e := by
@@ -487,7 +498,6 @@ theorem decorateSupport_ordered_copy_eq_edgeEmbedding
   have hs : SameCopy a b := by
     change copyCarrier a = copyCarrier b
     rw [hb]
-    rfl
   exact ⟨e, he, ordered_embedding_eq_of_sameCopy a b hs⟩
 
 
@@ -504,9 +514,8 @@ noncomputable def decorateSupport_ordered_embeddingEquivEdge
     RelStructure.Embedding A₀.ordered
         (decorateSupport A₀.ordered H part) ≃
       {e : Set W // e ∈ H} where
-  toFun a := ⟨copyCarrier a, by
-    rw [← hSupport]
-    exact ⟨a, rfl⟩⟩
+  toFun a := ⟨copyCarrier a,
+    copyCarrier_mem_of_support_eq hSupport a⟩
   invFun e :=
     decorateSupport_edgeEmbedding A₀.ordered hTrans e.2
   left_inv a := by
@@ -514,9 +523,7 @@ noncomputable def decorateSupport_ordered_embeddingEquivEdge
     change
       copyCarrier
           (decorateSupport_edgeEmbedding A₀.ordered hTrans
-            (show copyCarrier a ∈ H by
-              rw [← hSupport]
-              exact ⟨a, rfl⟩)) =
+            (copyCarrier_mem_of_support_eq hSupport a)) =
         copyCarrier a
     rw [decorateSupport_edgeCarrier]
   right_inv e := by
@@ -540,9 +547,8 @@ theorem decorateSupportEmbedding_range_aStrong
     (hSupport : supportCopies A (decorateSupport A K partY) = K) :
     AStrong A (decorateSupport A K partY) (Set.range f) := by
   intro a hMeet
-  have hEdge : copyCarrier a ∈ K := by
-    rw [← hSupport]
-    exact ⟨a, rfl⟩
+  have hEdge : copyCarrier a ∈ K :=
+    copyCarrier_mem_of_support_eq hSupport a
   obtain ⟨e, he, hEq⟩ :=
     f.reflect_edge (copyCarrier a) hEdge hMeet
   intro y hy
