@@ -116,7 +116,7 @@ theorem targetEmbedding_range_pairClosed
   have hRange := structureEmbedding_range_isClosed b
   intro x hx y hy hxy a hxa hya z hz
   let t2 : Fin 2 → W := ![x, y]
-  let t := cAInput t2
+  let t := cAInput (L := L) t2
   have ht2 : ∀ i : Fin 2, t2 i ∈ Set.range b := by
     intro i
     fin_cases i
@@ -130,6 +130,7 @@ theorem targetEmbedding_range_pairClosed
       z ∈ C.func (ClosureFunc.cA : ClosureFunc.{u}) t := by
     rw [hCA t2]
     exact hzValue
+  change z ∈ Set.range b.toFun
   exact hRange (ClosureFunc.cA : ClosureFunc.{u}) t ht hzFunc
 
 /-- Therefore every full embedding of the expanded target has an A-strong
