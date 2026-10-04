@@ -173,3 +173,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection_subset_core
 #print axioms StructuralRamsey.Girth.attachment_irreducible_copy_localize
 #print axioms StructuralRamsey.Girth.attachment_core_aStrong
+#print axioms StructuralRamsey.Girth.attachment_copy_aStrong
+#print axioms StructuralRamsey.Girth.attachment_aLinear
