@@ -55,6 +55,49 @@ theorem mem_center_of_shared_not_reachable_after_delete
   apply hnreach
   convert hm using 1 <;> apply Subtype.ext <;> rfl
 
+/-- Two neighbours of the deleted vertex cannot lie in the same component of
+the deleted tree unless they are equal.  Thus every component of a tree with
+one vertex removed has a unique attachment neighbour at that vertex. -/
+theorem neighbor_eq_of_reachable_after_delete
+    {F : ι → HypergraphPiece W}
+    (J : JoinTree F)
+    {center a b : ι}
+    (ha : J.tree.Adj center a)
+    (hb : J.tree.Adj center b)
+    (hreach :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨a, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using ha.ne.symm⟩
+        ⟨b, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hb.ne.symm⟩) :
+    a = b := by
+  obtain ⟨p0, hp0⟩ := hreach.exists_isPath
+  let emb :=
+    SimpleGraph.Embedding.induce
+      (G := J.tree) (({center} : Set ι)ᶜ)
+  let p : J.tree.Walk a b := p0.map emb.toHom
+  have hp : p.IsPath := by
+    dsimp [p]
+    exact hp0.map emb.injective
+  have hcenter : center ∉ p.support := by
+    intro hc
+    rw [SimpleGraph.Walk.support_map] at hc
+    rcases List.mem_map.mp hc with ⟨z, _hz, hval⟩
+    have hzout : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    exact hzout hval
+  let q : J.tree.Walk center b := p.cons ha
+  have hq : q.IsPath := hp.cons hcenter
+  have hbmem : b ∈ q.support := by
+    simp [q]
+  have heq : b = q.snd :=
+    J.isTree.isAcyclic.eq_snd_of_adj_start hq hb hbmem
+  have hsnd : q.snd = a := by
+    simp [q]
+  exact heq.trans hsnd
+
 /-- If the deleted member is a one-edge piece and no surviving piece contains
 that whole edge, then two pieces in different components after deletion meet in
 at most one vertex.  Any two common vertices would both lie in the deleted edge,
