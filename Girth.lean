@@ -11,3 +11,4 @@ import Girth.BergePath
 import Girth.BergeSegment
 import Girth.BergeGlue
 import Girth.TreeGirth
+import Girth.TargetClosure
