@@ -55,6 +55,119 @@ theorem structureEmbeddingWithLinearOrder_apply
     structureEmbeddingWithLinearOrder e hmono x = e x :=
   rfl
 
+
+/-- The Ramsey family singled out by the target closure expansion.  A colouring
+of relational A-embeddings is witnessed by a full closed embedding of the
+expanded target B; hence the same witnesses inherit the closure geometry. -/
+def ClosedTargetRamseyFamily
+    (A : RelStructure L U) (B : RelStructure L V)
+    {W : Type v}
+    (C : StructuralRamsey.Structure (closureLanguage L) W)
+    (κ : Type*) : Prop :=
+  ∀ χ : RelStructure.Embedding A (closureRelReduct C) → κ,
+    ∃ b : StructuralRamsey.Structure.Embedding
+        (targetClosureExpansion A B) C,
+      ∀ a₁ a₂ : RelStructure.Embedding A B,
+        χ ((targetEmbeddingRel b).comp a₁) =
+          χ ((targetEmbeddingRel b).comp a₂)
+
+/-- A closed-target Ramsey family is, after forgetting the closure structure,
+an ordinary Ramsey arrow. -/
+theorem ClosedTargetRamseyFamily.arrow
+    {A : RelStructure L U} {B : RelStructure L V}
+    {W : Type v}
+    {C : StructuralRamsey.Structure (closureLanguage L) W}
+    {κ : Type*}
+    (h : ClosedTargetRamseyFamily A B C κ) :
+    StructuralRamsey.Arrow A B (closureRelReduct C) κ := by
+  intro χ
+  obtain ⟨b, hb⟩ := h χ
+  exact ⟨targetEmbeddingRel b, hb⟩
+
+/-- Functional EHN produces the stronger closed-target Ramsey family used in
+the manuscript.  The monotonicity hypothesis is exactly what lets every
+relational A-embedding into B lift through the fresh auxiliary order. -/
+theorem closedTargetRamseyFamily_of_monotone_embeddings
+    (A : RelStructure L U) (B : RelStructure L V)
+    [LinearOrder U] [LinearOrder V]
+    [Finite U] [Finite V]
+    (hAirr : A.Irreducible)
+    (hBlin : ALinear A B)
+    (hmono : ∀ a : RelStructure.Embedding A B, StrictMono a)
+    (κ : Type*) [Fintype κ] [Nonempty κ] :
+    ∃ (W : Type v) (_ : Finite W) (o : LinearOrder W)
+      (C : StructuralRamsey.Structure (closureLanguage L) W),
+      ElementaryCAClass A C ∧
+      ClosedTargetRamseyFamily A B C κ := by
+  classical
+  let K : StructuralRamsey.Structure.StructureClass.{u,v}
+      (L := closureLanguage L) := ElementaryCAClass A
+  have hK :
+      StructuralRamsey.Structure.FreeAmalgamationClass K :=
+    ElementaryCAClass_freeAmalgamationClass A hAirr
+  let Ahat := targetClosureExpansion A A
+  let Bhat := targetClosureExpansion A B
+  have hBmem : K Bhat :=
+    targetClosure_mem_ElementaryCAClass hBlin
+  obtain ⟨W, hW, o, C, hCmem, hRamsey⟩ :=
+    hK.orderedRamsey_of_mem_target
+      Ahat Bhat hBmem closureLanguage_positiveFuncArity κ
+  letI : Finite W := hW
+  letI : LinearOrder W := o
+  refine ⟨W, hW, o, C, hCmem, ?_⟩
+  intro χ
+  let χhat :
+      StructuralRamsey.Structure.Embedding
+        Ahat.withLinearOrder C.withLinearOrder → κ :=
+    fun e => χ (targetEmbeddingRel e.linearOrderReduct)
+  obtain ⟨b, hb⟩ := hRamsey χhat
+  let b0 :
+      StructuralRamsey.Structure.Embedding Bhat C :=
+    b.linearOrderReduct
+  refine ⟨b0, ?_⟩
+  intro a₁ a₂
+  let a₁f :
+      StructuralRamsey.Structure.Embedding Ahat Bhat :=
+    targetClosureLift hBlin a₁
+  let a₂f :
+      StructuralRamsey.Structure.Embedding Ahat Bhat :=
+    targetClosureLift hBlin a₂
+  let a₁o :
+      StructuralRamsey.Structure.Embedding
+        Ahat.withLinearOrder Bhat.withLinearOrder :=
+    structureEmbeddingWithLinearOrder a₁f (hmono a₁)
+  let a₂o :
+      StructuralRamsey.Structure.Embedding
+        Ahat.withLinearOrder Bhat.withLinearOrder :=
+    structureEmbeddingWithLinearOrder a₂f (hmono a₂)
+  have hc := hb a₁o a₂o
+  have hcomp₁ :
+      targetEmbeddingRel
+          ((b.comp a₁o).linearOrderReduct) =
+        (targetEmbeddingRel b0).comp a₁ := by
+    apply RelStructure.Embedding.ext
+    intro x
+    rfl
+  have hcomp₂ :
+      targetEmbeddingRel
+          ((b.comp a₂o).linearOrderReduct) =
+        (targetEmbeddingRel b0).comp a₂ := by
+    apply RelStructure.Embedding.ext
+    intro x
+    rfl
+  change
+    χ (targetEmbeddingRel ((b.comp a₁o).linearOrderReduct)) =
+      χ (targetEmbeddingRel ((b.comp a₂o).linearOrderReduct))
+    at hc
+  calc
+    χ ((targetEmbeddingRel b0).comp a₁) =
+        χ (targetEmbeddingRel ((b.comp a₁o).linearOrderReduct)) :=
+      congrArg χ hcomp₁.symm
+    _ = χ (targetEmbeddingRel ((b.comp a₂o).linearOrderReduct)) := hc
+    _ = χ ((targetEmbeddingRel b0).comp a₂) :=
+      congrArg χ hcomp₂
+
+
 /-- Functional EHN gives the manuscript's A-linear Ramsey input whenever the
 chosen external linear orders are respected by every A-embedding into B.
 
