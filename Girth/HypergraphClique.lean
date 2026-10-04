@@ -183,4 +183,46 @@ theorem irreducible_induce_subset_edge_of_girthGT_three
     obtain ⟨e, he, hSe⟩ :=
       pairCovered_subset_edge_of_girthGT_three hgt hnon hPair
     exact ⟨e, he, fun z => hSe z.2⟩
+
+
+/-- Structural decoration theorem used in the local-forest translation.
+Under girth > 3, relation support and edge decorations force the ambient
+A-support to be exactly H; every irreducible induced substructure is contained
+in one edge of H. -/
+theorem decorated_highGirth_support_exact
+    {L : RelLanguage.{u}} {U : Type v}
+    {A : RelStructure L U} {R : RelStructure L W}
+    [Finite U]
+    {H : Set (Set W)}
+    (hA : A.Irreducible)
+    (hgt : GirthGT H 3)
+    (hRel : RelationsCoveredBy H R)
+    (hH : H.Nonempty)
+    (hVert : ∀ x : W, ∃ e : Set W, e ∈ H ∧ x ∈ e)
+    (hDecorated :
+      ∀ e : Set W, e ∈ H →
+        ∃ b : Embedding A R, copyCarrier b = e) :
+    supportCopies A R = H ∧
+      ∀ S : Set W, (R.induce S).Irreducible →
+        ∃ e : Set W, e ∈ H ∧ ∀ z : S, z.1 ∈ e := by
+  have hIrrCover :
+      ∀ S : Set W, (R.induce S).Irreducible →
+        ∃ e : Set W, e ∈ H ∧ ∀ z : S, z.1 ∈ e := by
+    intro S hS
+    exact irreducible_induce_subset_edge_of_girthGT_three
+      hgt hRel hH hVert hS
+  have hCopyCover :
+      ∀ a : Embedding A R,
+        ∃ e : Set W, e ∈ H ∧ copyCarrier a ⊆ e := by
+    intro a
+    have hRange : (R.induce (copyCarrier a)).Irreducible :=
+      hA.range_embedding a
+    obtain ⟨e, he, hsub⟩ :=
+      hIrrCover (copyCarrier a) hRange
+    refine ⟨e, he, ?_⟩
+    intro x hx
+    exact hsub ⟨x, hx⟩
+  exact ⟨supportCopies_eq_of_decorated_cover
+      hDecorated hCopyCover,
+    hIrrCover⟩
 end StructuralRamsey.Girth
