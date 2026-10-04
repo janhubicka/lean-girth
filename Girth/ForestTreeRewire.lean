@@ -11,9 +11,9 @@ lemmas needed for that surgery.
 
 namespace StructuralRamsey.Girth
 
-universe u v
+universe v
 
-variable {V : Type u} {ι : Type v}
+variable {V ι : Type v}
 
 /-- A finite connected graph with exactly one fewer edge than vertices is a
 tree.  We use this after replacing the deleted star by a tree on its
@@ -157,7 +157,7 @@ theorem JoinTree.rewireAfterDelete_card_edgeFinset
     (R : SimpleGraph (J.tree.neighborSet center))
     (hR : R.IsTree) :
     Finset.card (J.rewireAfterDelete center R).edgeFinset + 1 =
-      Fintype.card {i : ι // i ∈ ({center} : Set ι)ᶜ} := by
+      Fintype.card ι - 1 := by
   classical
   let D := J.tree.induce (({center} : Set ι)ᶜ)
   let e := J.neighborToErasedEmbedding center
@@ -193,15 +193,10 @@ theorem JoinTree.rewireAfterDelete_card_edgeFinset
       Fintype.card (J.tree.neighborSet center) =
         J.tree.degree center :=
     J.tree.card_neighborSet_eq_degree center
-  have hScard :
-      Fintype.card {i : ι // i ∈ ({center} : Set ι)ᶜ} =
-        Fintype.card ι - 1 := by
-    rw [Fintype.card_compl_set]
-    simp
   have hdeg :
       J.tree.degree center ≤ Finset.card J.tree.edgeFinset :=
     J.tree.degree_le_card_edgeFinset
-  rw [hsup, hDcard, hMcard, hScard]
+  rw [hsup, hDcard, hMcard]
   omega
 
 
@@ -214,9 +209,11 @@ theorem JoinTree.rewireAfterDelete_isTree
     (hR : R.IsTree) :
     (J.rewireAfterDelete center R).IsTree := by
   classical
-  exact isTree_of_connected_card_edgeFinset
+  apply isTree_of_connected_card_edgeFinset
     (J.rewireAfterDelete center R)
-    (J.rewireAfterDelete_connected center R hR.connected)
-    (J.rewireAfterDelete_card_edgeFinset center R hR)
+  · exact J.rewireAfterDelete_connected center R hR.connected
+  · rw [J.rewireAfterDelete_card_edgeFinset center R hR,
+      Fintype.card_compl_set]
+    simp
 
 end StructuralRamsey.Girth
