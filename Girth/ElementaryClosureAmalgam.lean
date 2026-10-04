@@ -390,4 +390,218 @@ theorem concreteElementaryClosureAmalgam_geometry
       hBaseL hBaseR hfree,
     freeAmalgam_left_aStrong hA hBaseR hfree,
     freeAmalgam_right_aStrong hA hBaseL hfree⟩
+
+
+/-- The elementary c_A expansions form a genuine free amalgam whenever the
+relational base images are A-strong. -/
+theorem elementaryClosure_isFreeAmalgam
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    {Whole : RelStructure L C}
+    {fL : Embedding Base Left} {fR : Embedding Base Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hA : A.Irreducible)
+    (hBaseL : AStrong A Left (copyCarrier fL))
+    (hBaseR : AStrong A Right (copyCarrier fR))
+    (hfree : IsFreeAmalgam fL fR iL iR) :
+    StructuralRamsey.Structure.IsFreeAmalgam
+      (elementaryClosureEmbeddingOfStrong fL hBaseL)
+      (elementaryClosureEmbeddingOfStrong fR hBaseR)
+      (elementaryClosureEmbeddingOfStrong iL
+        (freeAmalgam_left_aStrong hA hBaseR hfree))
+      (elementaryClosureEmbeddingOfStrong iR
+        (freeAmalgam_right_aStrong hA hBaseL hfree)) := by
+  let fLf :=
+    elementaryClosureEmbeddingOfStrong fL hBaseL
+  let fRf :=
+    elementaryClosureEmbeddingOfStrong fR hBaseR
+  let iLf :=
+    elementaryClosureEmbeddingOfStrong iL
+      (freeAmalgam_left_aStrong hA hBaseR hfree)
+  let iRf :=
+    elementaryClosureEmbeddingOfStrong iR
+      (freeAmalgam_right_aStrong hA hBaseL hfree)
+  change StructuralRamsey.Structure.IsFreeAmalgam fLf fRf iLf iRf
+  refine {
+    covers := ?_
+    overlap := ?_
+    rel_iff := ?_
+    func_iff := ?_
+  }
+  · intro z
+    rcases hfree.covers z with ⟨x, hx⟩ | ⟨y, hy⟩
+    · exact Or.inl ⟨x, hx⟩
+    · exact Or.inr ⟨y, hy⟩
+  · intro x y
+    exact hfree.overlap x y
+  · intro R z
+    exact hfree.rel_iff R z
+  · intro Fsym x y
+    cases Fsym with
+    | cB =>
+        simp [elementaryClosureExpansion]
+    | cA =>
+        simp only [closureLanguage] at x
+        change
+          y ∈ cAValue A Whole x ↔
+            (∃ a : Fin 2 → E, ∃ b : E,
+              b ∈ cAValue A Left a ∧
+              x = iL ∘ a ∧ y = iL b) ∨
+            (∃ a : Fin 2 → F, ∃ b : F,
+              b ∈ cAValue A Right a ∧
+              x = iR ∘ a ∧ y = iR b)
+        constructor
+        · intro hy
+          rcases hy with ⟨hxy, a, h0, h1, hy⟩
+          rcases irreducibleCopy_side_of_freeAmalgam hfree hA a with
+            ⟨aL, haL⟩ | ⟨aR, haR⟩
+          · change copyCarrier a = copyCarrier (iL.comp aL) at haL
+            have h0' : x 0 ∈ copyCarrier (iL.comp aL) := by
+              rw [← haL]
+              exact h0
+            have h1' : x 1 ∈ copyCarrier (iL.comp aL) := by
+              rw [← haL]
+              exact h1
+            have hy' : y ∈ copyCarrier (iL.comp aL) := by
+              rw [← haL]
+              exact hy
+            rcases h0' with ⟨u0, hu0⟩
+            rcases h1' with ⟨u1, hu1⟩
+            rcases hy' with ⟨uy, huy⟩
+            let args : Fin 2 → E := ![aL u0, aL u1]
+            refine Or.inl ⟨args, aL uy, ?_, ?_, ?_⟩
+            · refine ⟨?_, aL, ?_, ?_, ?_⟩
+              · intro heq
+                apply hxy
+                calc
+                  x 0 = iL (aL u0) := hu0.symm
+                  _ = iL (aL u1) := congrArg iL heq
+                  _ = x 1 := hu1
+              · exact ⟨u0, rfl⟩
+              · exact ⟨u1, rfl⟩
+              · exact ⟨uy, rfl⟩
+            · funext j
+              fin_cases j
+              · exact hu0.symm
+              · exact hu1.symm
+            · exact huy.symm
+          · change copyCarrier a = copyCarrier (iR.comp aR) at haR
+            have h0' : x 0 ∈ copyCarrier (iR.comp aR) := by
+              rw [← haR]
+              exact h0
+            have h1' : x 1 ∈ copyCarrier (iR.comp aR) := by
+              rw [← haR]
+              exact h1
+            have hy' : y ∈ copyCarrier (iR.comp aR) := by
+              rw [← haR]
+              exact hy
+            rcases h0' with ⟨u0, hu0⟩
+            rcases h1' with ⟨u1, hu1⟩
+            rcases hy' with ⟨uy, huy⟩
+            let args : Fin 2 → F := ![aR u0, aR u1]
+            refine Or.inr ⟨args, aR uy, ?_, ?_, ?_⟩
+            · refine ⟨?_, aR, ?_, ?_, ?_⟩
+              · intro heq
+                apply hxy
+                calc
+                  x 0 = iR (aR u0) := hu0.symm
+                  _ = iR (aR u1) := congrArg iR heq
+                  _ = x 1 := hu1
+              · exact ⟨u0, rfl⟩
+              · exact ⟨u1, rfl⟩
+              · exact ⟨uy, rfl⟩
+            · funext j
+              fin_cases j
+              · exact hu0.symm
+              · exact hu1.symm
+            · exact huy.symm
+        · rintro (⟨args, b, hb, hx, hy⟩ | ⟨args, b, hb, hx, hy⟩)
+          · rcases hb with ⟨hneq, a, h0, h1, hb⟩
+            refine ⟨?_, iL.comp a, ?_, ?_, ?_⟩
+            · intro hEq
+              apply hneq
+              apply iL.injective
+              calc
+                iL (args 0) = x 0 := (congrFun hx 0).symm
+                _ = x 1 := hEq
+                _ = iL (args 1) := congrFun hx 1
+            · rcases h0 with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iL (a u) = iL (args 0) := congrArg iL hu
+                _ = x 0 := (congrFun hx 0).symm
+            · rcases h1 with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iL (a u) = iL (args 1) := congrArg iL hu
+                _ = x 1 := (congrFun hx 1).symm
+            · rcases hb with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iL (a u) = iL b := congrArg iL hu
+                _ = y := hy.symm
+          · rcases hb with ⟨hneq, a, h0, h1, hb⟩
+            refine ⟨?_, iR.comp a, ?_, ?_, ?_⟩
+            · intro hEq
+              apply hneq
+              apply iR.injective
+              calc
+                iR (args 0) = x 0 := (congrFun hx 0).symm
+                _ = x 1 := hEq
+                _ = iR (args 1) := congrFun hx 1
+            · rcases h0 with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iR (a u) = iR (args 0) := congrArg iR hu
+                _ = x 0 := (congrFun hx 0).symm
+            · rcases h1 with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iR (a u) = iR (args 1) := congrArg iR hu
+                _ = x 1 := (congrFun hx 1).symm
+            · rcases hb with ⟨u, hu⟩
+              refine ⟨u, ?_⟩
+              calc
+                iR (a u) = iR b := congrArg iR hu
+                _ = y := hy.symm
+
+/-- Concrete free amalgamation for elementary closure expansions.  The
+underlying relational whole is the canonical relational free amalgam. -/
+theorem concreteElementaryClosure_freeAmalgam
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    (hA : A.Irreducible)
+    (hLeft : ALinear A Left)
+    (hRight : ALinear A Right)
+    (fL : Embedding Base Left) (fR : Embedding Base Right)
+    (hBaseL : AStrong A Left (copyCarrier fL))
+    (hBaseR : AStrong A Right (copyCarrier fR)) :
+    let Whole :=
+      RelStructure.FreeAmalgam.amalgam Base Left Right fL fR
+    let iL :=
+      RelStructure.FreeAmalgam.leftEmbedding Base Left Right fL fR
+    let iR :=
+      RelStructure.FreeAmalgam.rightEmbedding Base Left Right fL fR
+    ALinear A Whole ∧
+      StructuralRamsey.Structure.IsFreeAmalgam
+        (elementaryClosureEmbeddingOfStrong fL hBaseL)
+        (elementaryClosureEmbeddingOfStrong fR hBaseR)
+        (elementaryClosureEmbeddingOfStrong iL
+          (freeAmalgam_left_aStrong hA hBaseR
+            (RelStructure.FreeAmalgam.isFreeAmalgam
+              Base Left Right fL fR)))
+        (elementaryClosureEmbeddingOfStrong iR
+          (freeAmalgam_right_aStrong hA hBaseL
+            (RelStructure.FreeAmalgam.isFreeAmalgam
+              Base Left Right fL fR))) := by
+  dsimp
+  let hfree :=
+    RelStructure.FreeAmalgam.isFreeAmalgam Base Left Right fL fR
+  exact ⟨aLinear_of_freeAmalgam hA hLeft hRight
+      hBaseL hBaseR hfree,
+    elementaryClosure_isFreeAmalgam hA hBaseL hBaseR hfree⟩
 end StructuralRamsey.Girth
