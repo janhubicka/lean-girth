@@ -204,3 +204,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.mem_center_of_shared_not_reachable_after_delete
 
 #print axioms StructuralRamsey.Girth.JoinTree.intersection_subsingleton_across_delete_of_oneEdge_of_no_full
+
+#print axioms StructuralRamsey.Girth.JoinTree.neighbor_eq_of_reachable_after_delete
