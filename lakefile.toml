@@ -5,7 +5,7 @@ defaultTargets = ["Girth"]
 [[require]]
 name = "partite-construction"
 git = "https://github.com/janhubicka/partite-construction.git"
-rev = "3cdbcfae618ffe782cb085db9ab11c7d54762d45"
+rev = "d2394f65861528f27d68c4a42042285dafef301d"
 
 [[lean_lib]]
 name = "Girth"
