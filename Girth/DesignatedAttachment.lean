@@ -124,22 +124,22 @@ theorem designatedCoversIrreducibles_partiteAttachment
     change z.1 =
       (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i)
         (q.embedding b)
+    have hb' : (aS a0).1 = q.embedding b := by
+      simpa [aC, incS] using hb
     have hqS : q.embedding b ∈ S := by
-      have hb' : aC a0 = q.embedding b := hb
-      change (incS (aS a0)).1 = q.embedding b at hb'
-      simpa [incS] using congrArg id hb'
+      rw [← hb']
+      exact (aS a0).2
     let qs : S := ⟨q.embedding b, hqS⟩
     have hqsa : qs = aS a0 := by
       apply Subtype.ext
-      change q.embedding b = (aS a0).1
-      exact hb.symm
+      exact hb'.symm
     have hcopyExt :=
       StructuralRamsey.Partite.Attachment.copy_extends
         C S E f i qs
     calc
       z.1 = core (eE z) := by
         exact hzE
-      _ = core (aE a0) := congrArg core ha0
+      _ = core (aE a0) := congrArg core ha0.symm
       _ = core ((f i).toEmbedding (aS a0)) :=
         congrArg core (haS a0)
       _ = core ((f i).toEmbedding qs) := by rw [hqsa]
