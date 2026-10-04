@@ -122,3 +122,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.pairCovered_subset_edge_of_girthGT_three
 #print axioms StructuralRamsey.Girth.irreducible_induce_subset_edge_of_girthGT_three
 #print axioms StructuralRamsey.Girth.supportCopies_eq_of_decorated_cover
+#print axioms StructuralRamsey.Girth.decorated_highGirth_support_exact
