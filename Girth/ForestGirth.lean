@@ -84,4 +84,33 @@ theorem girthGT_pieceList_of_singletonAttachments
         girthGT_union_of_subsingleton_glue
           hSep hcross hF hFs
 
+
+
+/-- Regard a vertex set as the one-edge hypergraph piece whose only edge is
+the whole set. -/
+def oneEdgePiece (S : Set W) : HypergraphPiece W where
+  carrier := S
+  edges := {S}
+  edge_subset_carrier := by
+    intro e he
+    simpa using he
+
+/-- A one-edge piece has Berge girth above every finite bound. -/
+theorem oneEdgePiece_girthGT (S : Set W) (g : ℕ) :
+    GirthGT (oneEdgePiece S).edges g := by
+  apply girthGT_of_edgeFamily_subsingleton
+  intro e he f hf
+  simpa [oneEdgePiece] using he.trans hf.symm
+
+/-- A reverse admissible enumeration of sets, each meeting the remaining union
+in at most one vertex, has no Berge cycle of length at most g. -/
+theorem girthGT_oneEdgeList_of_singletonAttachments
+    {g : ℕ} (Ss : List (Set W))
+    (hAttach : SingletonAttachmentList (Ss.map oneEdgePiece)) :
+    GirthGT (pieceListEdges (Ss.map oneEdgePiece)) g := by
+  apply girthGT_pieceList_of_singletonAttachments
+    (Ss.map oneEdgePiece) hAttach
+  intro F hF
+  rcases List.mem_map.mp hF with ⟨S, _hS, rfl⟩
+  exact oneEdgePiece_girthGT S g
 end StructuralRamsey.Girth
