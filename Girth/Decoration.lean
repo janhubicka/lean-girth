@@ -155,4 +155,100 @@ theorem decorateSupport_exact
   exact ⟨decorateSupport_edgeEmbedding A hTrans he,
     decorateSupport_edgeCarrier A hTrans he⟩
 
+
+
+/-- Strong embedding data for support hypergraphs: source edges map to target
+edges, and every target edge meeting the image in at least two vertices comes
+from a source edge. -/
+structure StrongSupportEmbedding
+    {X Y : Type v}
+    (H : Set (Set X)) (K : Set (Set Y)) where
+  toFun : X → Y
+  injective : Function.Injective toFun
+  map_edge :
+    ∀ e : Set X, e ∈ H →
+      ∃ E : Set Y, E ∈ K ∧ E = toFun '' e
+  reflect_edge :
+    ∀ E : Set Y, E ∈ K →
+      ¬ (E ∩ Set.range toFun).Subsingleton →
+      ∃ e : Set X, e ∈ H ∧ E = toFun '' e
+
+instance {X Y : Type v} {H : Set (Set X)} {K : Set (Set Y)} :
+    CoeFun (StrongSupportEmbedding H K) (fun _ => X → Y) :=
+  ⟨StrongSupportEmbedding.toFun⟩
+
+/-- A strongly induced, part-preserving support embedding lifts to an induced
+embedding of the corresponding decorated relational structures. -/
+def decorateSupportEmbedding
+    {X Y : Type v}
+    (A : RelStructure L U)
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (f : StrongSupportEmbedding H K)
+    (hpart : ∀ x : X, partY (f x) = partX x)
+    (hH : H.Nonempty)
+    (hCover : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e) :
+    Embedding
+      (decorateSupport A H partX)
+      (decorateSupport A K partY) where
+  toFun := f
+  injective := f.injective
+  map_rel_iff := by
+    classical
+    intro R x
+    constructor
+    · rintro ⟨E, hE, hxE, hArel⟩
+      have hArelX : A.rel R (partX ∘ x) := by
+        convert hArel using 1
+        funext i
+        exact hpart (x i)
+      have hSourceEdge :
+          ∃ e : Set X, e ∈ H ∧ ∀ i, x i ∈ e := by
+        by_cases hRange : (Set.range x).Subsingleton
+        · cases har : L.arity R with
+          | zero =>
+              obtain ⟨e, he⟩ := hH
+              refine ⟨e, he, ?_⟩
+              intro i
+              exact Fin.elim0 (Fin.cast (by simp [har]) i)
+          | succ n =>
+              let i0 : Fin (n + 1) := ⟨0, Nat.zero_lt_succ n⟩
+              obtain ⟨e, he, hxe⟩ := hCover (x i0)
+              refine ⟨e, he, ?_⟩
+              intro i
+              have hEq : x i = x i0 :=
+                hRange ⟨i, rfl⟩ ⟨i0, rfl⟩
+              simpa [hEq] using hxe
+        · have hMeet :
+              ¬ (E ∩ Set.range f).Subsingleton := by
+            rw [Set.not_subsingleton_iff] at hRange
+            rcases hRange with ⟨u, hu, v, hv, huv⟩
+            rcases hu with ⟨i, rfl⟩
+            rcases hv with ⟨j, rfl⟩
+            rw [Set.not_subsingleton_iff]
+            refine ⟨f (x i), ?_, f (x j), ?_, ?_⟩
+            · exact ⟨hxE i, ⟨x i, rfl⟩⟩
+            · exact ⟨hxE j, ⟨x j, rfl⟩⟩
+            · intro heq
+              exact huv (f.injective heq)
+          obtain ⟨e, he, hEeq⟩ := f.reflect_edge E hE hMeet
+          refine ⟨e, he, ?_⟩
+          intro i
+          have hmem : f (x i) ∈ f '' e := by
+            rw [← hEeq]
+            exact hxE i
+          rcases hmem with ⟨z, hz, hzi⟩
+          have hzxi : z = x i := f.injective hzi
+          simpa [hzxi] using hz
+      rcases hSourceEdge with ⟨e, he, hxe⟩
+      exact ⟨e, he, hxe, hArelX⟩
+    · rintro ⟨e, he, hxe, hArel⟩
+      obtain ⟨E, hE, hEeq⟩ := f.map_edge e he
+      refine ⟨E, hE, ?_, ?_⟩
+      · intro i
+        rw [hEeq]
+        exact ⟨x i, hxe i, rfl⟩
+      · convert hArel using 1
+        funext i
+        exact (hpart (x i)).symm
 end StructuralRamsey.Girth
