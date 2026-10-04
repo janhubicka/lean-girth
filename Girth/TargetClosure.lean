@@ -16,6 +16,30 @@ universe u v
 variable {L : RelLanguage.{u}}
 variable {U V : Type v}
 
+/-- Closure under the elementary pair-closure function c_A. -/
+def PairClosed
+    (A : RelStructure L U) (D : RelStructure L V)
+    (S : Set V) : Prop :=
+  ∀ x, x ∈ S → ∀ y, y ∈ S → x ≠ y →
+    ∀ a : Embedding A D,
+      x ∈ copyCarrier a → y ∈ copyCarrier a →
+        copyCarrier a ⊆ S
+
+/-- Pair closure is exactly A-strong inducedness. -/
+theorem pairClosed_iff_aStrong
+    (A : RelStructure L U) (D : RelStructure L V)
+    (S : Set V) :
+    PairClosed A D S ↔ AStrong A D S := by
+  constructor
+  · intro hPair a hMeet
+    rw [Set.not_subsingleton_iff] at hMeet
+    rcases hMeet with ⟨x, hx, y, hy, hxy⟩
+    exact hPair x hx.2 y hy.2 hxy a hx.1 hy.1
+  · intro hStrong x hx y hy hxy a hxa hya
+    apply hStrong a
+    intro hsub
+    exact hxy (hsub ⟨hxa, hx⟩ ⟨hya, hy⟩)
+
 /-- Three vertices lie together in some ambient copy of A. -/
 def TripleInACopy
     (A : RelStructure L U) (B : RelStructure L V)
