@@ -9,6 +9,7 @@ import Girth.ForestSingleEdge
 import Girth.ForestLeafDeletion
 import Girth.ForestDeletionGeometry
 import Girth.FiberConnectedTree
+import Girth.ForestTreeRewire
 import Girth.ForestEnumeration
 import Girth.CyclicRun
 import Girth.BergePath
