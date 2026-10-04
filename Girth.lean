@@ -15,3 +15,4 @@ import Girth.TargetClosure
 import Girth.ClosedCopyGeometry
 import Girth.ClosureExpansion
 import Girth.ClosureEmbeddingGeometry
+import Girth.ClosureLift
