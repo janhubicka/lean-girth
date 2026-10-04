@@ -41,16 +41,16 @@ theorem mem_center_of_shared_not_reachable_after_delete
     simpa [occ, iOcc, jOcc] using J.running x iOcc jOcc
   let phi :
       (J.tree.induce occ) →g
-        (J.tree.induce (({center} : Set ι)ᶜ)) where
-    toFun z :=
-      ⟨z.1, by
-        simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
-        intro hz
-        subst hz
-        exact hxc z.2⟩
-    map_rel' := by
-      intro a b hab
-      exact hab
+        (J.tree.induce (({center} : Set ι)ᶜ)) :=
+    { toFun := fun z =>
+        ⟨z.1, by
+          simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+          intro hz
+          subst hz
+          exact hxc z.2⟩
+      map_rel' := by
+        intro a b hab
+        exact hab }
   have hm := hreach.map phi
   apply hnreach
   simpa [phi, iOcc, jOcc] using hm
@@ -84,7 +84,8 @@ theorem intersection_subsingleton_across_delete_of_oneEdge_of_no_full
   have hCI :
       ((F center).carrier ∩ (F i).carrier).Subsingleton ∨
         (F center).carrier ⊆ (F i).carrier :=
-    hOne.isOneEdge_allowed_dichotomy (hPair hi.symm)
+    HypergraphPiece.isOneEdge_allowed_dichotomy
+      hOne (hPair hi.symm)
   have hsmall :
       ((F center).carrier ∩ (F i).carrier).Subsingleton :=
     hCI.resolve_right (hNoFull i hi)
