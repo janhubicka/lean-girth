@@ -144,8 +144,12 @@ theorem hasElementaryCA_of_embedding
         cAValue A (closureRelReduct D) (e ∘ x) := by
     have h := ec.map_func (ClosureFunc.cA : ClosureFunc.{u})
       (cAInput (L := L) x)
-    simpa [ec, elementaryClosureExpansion, cAInput, closureLanguage,
-      htuple] using h
+    simp only [elementaryClosureExpansion, closureLanguage] at h
+    change
+      StructuralRamsey.Structure.imageSet e
+          (cAValue A (closureRelReduct C) x) =
+        cAValue A (closureRelReduct D) (e ∘ x) at h
+    exact h
   apply Set.ext
   intro y
   constructor
