@@ -1,4 +1,5 @@
 import Girth.ClosureExpansion
+import Girth.ClosureEmbeddingGeometry
 import Girth.TreeGeometry
 import PartiteConstruction.Iterated.FreeAmalgam
 
@@ -721,4 +722,94 @@ theorem elementaryClosure_closed_induce_aLinear
     (_hClosed : (elementaryClosureExpansion A D₀).IsClosed S) :
     ALinear A (D₀.induce S) :=
   aLinear_induce hLinear S
+
+
+/-- Forget the elementary closure functions from a full embedding. -/
+def elementaryEmbeddingRel
+    {A : RelStructure L U}
+    {D₀ : RelStructure L D} {E₀ : RelStructure L E}
+    (e : StructuralRamsey.Structure.Embedding
+      (elementaryClosureExpansion A D₀)
+      (elementaryClosureExpansion A E₀)) :
+    RelStructure.Embedding D₀ E₀ where
+  toFun := e
+  injective := e.injective
+  map_rel_iff R x := e.map_rel_iff R x
+
+/-- The relational image of every full elementary-closure embedding is
+A-strong. -/
+theorem elementaryEmbedding_range_aStrong
+    {A : RelStructure L U}
+    {D₀ : RelStructure L D} {E₀ : RelStructure L E}
+    (e : StructuralRamsey.Structure.Embedding
+      (elementaryClosureExpansion A D₀)
+      (elementaryClosureExpansion A E₀)) :
+    AStrong A E₀ (copyCarrier (elementaryEmbeddingRel e)) := by
+  have hClosed :
+      (elementaryClosureExpansion A E₀).IsClosed (Set.range e) :=
+    structureEmbedding_range_isClosed e
+  exact (elementaryClosure_isClosed_iff_aStrong A E₀ (Set.range e)).mp
+    hClosed
+
+/-- Class-level free amalgamation for elementary A-closure structures:
+two full embeddings into A-linear objects admit the canonical relational free
+amalgam, whose elementary closure expansion is a full free amalgam. -/
+theorem elementaryClosure_freeAmalgam_of_embeddings
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    (hA : A.Irreducible)
+    (hLeft : ALinear A Left)
+    (hRight : ALinear A Right)
+    (fL : StructuralRamsey.Structure.Embedding
+      (elementaryClosureExpansion A Base)
+      (elementaryClosureExpansion A Left))
+    (fR : StructuralRamsey.Structure.Embedding
+      (elementaryClosureExpansion A Base)
+      (elementaryClosureExpansion A Right)) :
+    let fLr := elementaryEmbeddingRel fL
+    let fRr := elementaryEmbeddingRel fR
+    let Whole :=
+      RelStructure.FreeAmalgam.amalgam Base Left Right fLr fRr
+    let iL :=
+      RelStructure.FreeAmalgam.leftEmbedding Base Left Right fLr fRr
+    let iR :=
+      RelStructure.FreeAmalgam.rightEmbedding Base Left Right fLr fRr
+    ∃ (iLf : StructuralRamsey.Structure.Embedding
+          (elementaryClosureExpansion A Left)
+          (elementaryClosureExpansion A Whole))
+      (iRf : StructuralRamsey.Structure.Embedding
+          (elementaryClosureExpansion A Right)
+          (elementaryClosureExpansion A Whole)),
+      ALinear A Whole ∧
+      StructuralRamsey.Structure.IsFreeAmalgam fL fR iLf iRf := by
+  dsimp
+  let fLr := elementaryEmbeddingRel fL
+  let fRr := elementaryEmbeddingRel fR
+  let Whole :=
+    RelStructure.FreeAmalgam.amalgam Base Left Right fLr fRr
+  let iL :=
+    RelStructure.FreeAmalgam.leftEmbedding Base Left Right fLr fRr
+  let iR :=
+    RelStructure.FreeAmalgam.rightEmbedding Base Left Right fLr fRr
+  have hBaseL : AStrong A Left (copyCarrier fLr) :=
+    elementaryEmbedding_range_aStrong fL
+  have hBaseR : AStrong A Right (copyCarrier fRr) :=
+    elementaryEmbedding_range_aStrong fR
+  have hfreeRel :
+      IsFreeAmalgam fLr fRr iL iR :=
+    RelStructure.FreeAmalgam.isFreeAmalgam Base Left Right fLr fRr
+  have hStrongL : AStrong A Whole (copyCarrier iL) :=
+    freeAmalgam_left_aStrong hA hBaseR hfreeRel
+  have hStrongR : AStrong A Whole (copyCarrier iR) :=
+    freeAmalgam_right_aStrong hA hBaseL hfreeRel
+  let iLf :=
+    elementaryClosureEmbeddingOfStrong iL hStrongL
+  let iRf :=
+    elementaryClosureEmbeddingOfStrong iR hStrongR
+  refine ⟨iLf, iRf, ?_, ?_⟩
+  · exact aLinear_of_freeAmalgam hA hLeft hRight
+      hBaseL hBaseR hfreeRel
+  · exact elementaryClosure_isFreeAmalgam hA hBaseL hBaseR hfreeRel
 end StructuralRamsey.Girth
