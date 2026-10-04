@@ -75,3 +75,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.targetClosed_of_distinct_pair
 #print axioms StructuralRamsey.Girth.targetClosed_classify
 #print axioms StructuralRamsey.Girth.targetClosed_classify_nonempty
+
+#print axioms StructuralRamsey.Girth.pairClosed_iff_aStrong
