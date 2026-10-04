@@ -109,6 +109,41 @@ theorem sameCopy_of_comp
     apply i.injective
     exact hb
 
+
+/-- In a finite linearly ordered structure, two embeddings with the same image
+carrier are equal.  The induced self-embedding of the source is strictly
+monotone, hence the identity. -/
+theorem ordered_embedding_eq_of_sameCopy
+    {A₀ : RelStructure L U}
+    {D : RelStructure L.withOrder W}
+    [LinearOrder U] [Finite U]
+    (e f : Embedding A₀.ordered D)
+    (h : SameCopy e f) :
+    e = f := by
+  have hrange : ∀ a : U, ∃ b : U, e a = f b := by
+    intro a
+    have ha : e a ∈ copyCarrier f := by
+      change copyCarrier e = copyCarrier f at h
+      rw [← h]
+      exact ⟨a, rfl⟩
+    rcases ha with ⟨b, hb⟩
+    exact ⟨b, hb.symm⟩
+  let q : Embedding A₀.ordered A₀.ordered :=
+    e.factorThroughRange f hrange
+  have hqSpec (a : U) : e a = f (q a) :=
+    Classical.choose_spec (hrange a)
+  have hqMono : StrictMono q :=
+    RelStructure.Embedding.strictMono q
+  have hqFix (a : U) : q a = a := by
+    have hId : (q : U → U) = id := StrictMono.eq_id hqMono
+    exact congrFun hId a
+  apply Embedding.ext
+  intro a
+  calc
+    e a = f (q a) := hqSpec a
+    _ = f a := congrArg f (hqFix a)
+
+
 /-- A-linearity is hereditary under induced substructures. -/
 theorem aLinear_induce
     {A : RelStructure L U} {D : RelStructure L W}
