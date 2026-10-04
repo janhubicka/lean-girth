@@ -150,8 +150,15 @@ theorem aLinearRamsey_of_monotone_embeddings
       χ (targetEmbeddingRel ((b.comp a₁o).linearOrderReduct)) =
         χ (targetEmbeddingRel ((b.comp a₂o).linearOrderReduct))
       at hmonoColour
-    rw [hcomp₁, hcomp₂] at hmonoColour
-    exact hmonoColour
+    calc
+      χ (br.comp a₁) =
+          χ (targetEmbeddingRel ((b.comp a₁o).linearOrderReduct)) :=
+        congrArg χ hcomp₁.symm
+      _ =
+          χ (targetEmbeddingRel ((b.comp a₂o).linearOrderReduct)) :=
+        hmonoColour
+      _ = χ (br.comp a₂) :=
+        congrArg χ hcomp₂
   refine ⟨W, hW, o, C, hCmem, hRelArrow, ?_, ?_⟩
   · intro b
     exact targetEmbedding_range_aStrong hCmem.2 b
