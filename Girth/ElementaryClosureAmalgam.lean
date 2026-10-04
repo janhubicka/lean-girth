@@ -41,7 +41,8 @@ def elementaryClosureEmbeddingOfStrong
         change
           StructuralRamsey.Structure.imageSet e (cAValue A D₀ x) =
             cAValue A E₀ (e ∘ x)
-        ext y
+        apply Set.ext
+        intro y
         constructor
         · rintro ⟨z, hz, rfl⟩
           rcases hz with ⟨hxy, a, h0, h1, hz⟩
@@ -624,9 +625,15 @@ def elementaryClosure_induceEmbedding
     cases Fsym with
     | cB =>
         simp only [closureLanguage] at x
-        ext y
-        simp [elementaryClosureExpansion,
-          StructuralRamsey.Structure.imageSet]
+        apply Set.ext
+        intro y
+        constructor
+        · rintro ⟨z, hz, rfl⟩
+          change z ∈ (∅ : Set S) at hz
+          exact hz.elim
+        · intro hy
+          change y.1 ∈ (∅ : Set D) at hy
+          exact hy.elim
     | cA =>
         simp only [closureLanguage] at x
         let incl : RelStructure.Embedding (D₀.induce S) D₀ :=
@@ -675,28 +682,22 @@ def elementaryClosure_induceEmbedding
             rcases h0 with ⟨a0, ha0⟩
             refine ⟨a0, ?_⟩
             apply Subtype.ext
-            change bS a0 = x 0
-            apply incl.injective
             calc
-              incl (bS a0) = b a0 := (hbS a0).symm
-              _ = Subtype.val (x 0) := ha0
+              (bS a0).1 = b a0 := (hbS a0).symm
+              _ = (x 0).1 := ha0
           have h1S : x 1 ∈ copyCarrier bS := by
             rcases h1 with ⟨a1, ha1⟩
             refine ⟨a1, ?_⟩
             apply Subtype.ext
-            change bS a1 = x 1
-            apply incl.injective
             calc
-              incl (bS a1) = b a1 := (hbS a1).symm
-              _ = Subtype.val (x 1) := ha1
+              (bS a1).1 = b a1 := (hbS a1).symm
+              _ = (x 1).1 := ha1
           have hyS : y ∈ copyCarrier bS := by
             rcases hyb with ⟨ay, hay⟩
             refine ⟨ay, ?_⟩
             apply Subtype.ext
-            change bS ay = y
-            apply incl.injective
             calc
-              incl (bS ay) = b ay := (hbS ay).symm
+              (bS ay).1 = b ay := (hbS ay).symm
               _ = y.1 := hay
           have hxyS : x 0 ≠ x 1 := by
             intro heq
