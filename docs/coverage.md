@@ -23,7 +23,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | Ramsey + generic bounded local-tree + irreducible coverage core | `localTreeRamseyCore` |
 | Lemma 2.1 geometry of A-supported tree amalgams | fully proved; `ASupportedTreeAmalgam.girthGT`, `bIntersectionsControlled`, `singletonIntersectionsSupported`, `aLinear_of_base_and_controlled`, `aStrong_of_linear_and_controlled` |
 | Observation 2.2 closure expansions | actual c_A expansion formalized; `Structure.IsClosed ↔ AStrong` proved; ambient free-amalgamation closure class remains |
-| Theorem 2.4 A-linear Ramsey theorem | actual c_A/c_B target expansion, closed-set classification, full-embedding closedness, A-strongness, and pairwise controlled intersections formalized; external class-Ramsey/free-amalgamation input remains |
+| Theorem 2.4 A-linear Ramsey theorem | actual c_A/c_B expansion, relational A-copy lift, closed-set classification, full-embedding closedness, A-strongness, and pairwise controlled intersections formalized; external class-Ramsey/free-amalgamation input remains |
 | §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths, parents, and parent-level equation formalized |
 | §§3–6 induced picture/local-forest construction | not yet formalized |
 | Main Theorem 1.1 | not yet formalized |
