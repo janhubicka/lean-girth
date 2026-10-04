@@ -55,6 +55,47 @@ theorem mem_center_of_shared_not_reachable_after_delete
   apply hnreach
   convert hm using 1 <;> apply Subtype.ext <;> rfl
 
+/-- Every surviving vertex lies in a component with a neighbour of the
+deleted vertex.  Equivalently, every component of a tree after deleting one
+vertex has an attachment root adjacent to the deleted vertex. -/
+theorem exists_neighbor_reachable_after_delete
+    {F : ι → HypergraphPiece W}
+    (J : JoinTree F)
+    {center i : ι}
+    (hi : i ≠ center) :
+    ∃ root : ι, ∃ hroot : J.tree.Adj center root,
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨root, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hroot.ne.symm⟩
+        ⟨i, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩ := by
+  obtain ⟨p, hp, _huniq⟩ :=
+    J.isTree.existsUnique_path center i
+  have hnp : ¬ p.Nil :=
+    SimpleGraph.Walk.not_nil_of_ne hi.symm
+  let root : ι := p.snd
+  have hroot : J.tree.Adj center root := by
+    exact p.adj_snd hnp
+  have hcenterTail : center ∉ p.tail.support := by
+    rw [p.support_tail_of_not_nil hnp]
+    have hnodup : (center :: p.support.tail).Nodup := by
+      rw [p.cons_tail_support]
+      exact hp.support_nodup
+    exact (List.nodup_cons.mp hnodup).1
+  have htail :
+      ∀ x ∈ p.tail.support, x ∈ (({center} : Set ι)ᶜ) := by
+    intro x hx
+    simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+    intro h
+    subst x
+    exact hcenterTail hx
+  let q :=
+    p.tail.induce (({center} : Set ι)ᶜ) htail
+  refine ⟨root, hroot, ?_⟩
+  have hq := q.reachable
+  convert hq using 1 <;> apply Subtype.ext <;> rfl
+
 /-- Two neighbours of the deleted vertex cannot lie in the same component of
 the deleted tree unless they are equal.  Thus every component of a tree with
 one vertex removed has a unique attachment neighbour at that vertex. -/
