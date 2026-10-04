@@ -1,4 +1,4 @@
-import Girth.DesignatedPicture
+import Girth.DesignatedAttachment
 import Girth.AttachmentGeometry
 
 /-! # Shared support through a picture attachment
@@ -62,8 +62,8 @@ theorem transportedDesignated_corePoint_supported
     (hShared : DesignatedSupportsACopies A C family)
     (i : I)
     (q : DesignatedCopy B D C family)
-    (z : (StructuralRamsey.Partite.Attachment.attach
-      C (activeCarrier A C α) E f).toRelStructure.Carrier)
+    (z : StructuralRamsey.Partite.Attachment.Vertex
+      (activeCarrier A C α) (W := Y) (I := I))
     (hzCopy :
       z ∈ copyCarrier
         (q.transportToStandard f i).embedding)
