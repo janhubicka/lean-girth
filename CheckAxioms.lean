@@ -143,6 +143,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupport_exact
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupport_ordered_copy_eq_edgeEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupport_ordered_embeddingEquivEdge
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong_of_highGirth
 
