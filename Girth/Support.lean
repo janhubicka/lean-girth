@@ -139,4 +139,39 @@ theorem aLinear_induce
       exact congrArg Subtype.val ha
     · refine ⟨b, ?_⟩
       exact congrArg Subtype.val hb
+
+
+/-- If every designated hyperedge is the carrier of an A-copy and every
+ambient A-copy is contained in one designated hyperedge, then the designated
+hypergraph is exactly the ambient A-support. -/
+theorem supportCopies_eq_of_decorated_cover
+    {A : RelStructure L U} {D : RelStructure L W}
+    [Finite U]
+    {H : Set (Set W)}
+    (hDecorated :
+      ∀ e : Set W, e ∈ H →
+        ∃ b : Embedding A D, copyCarrier b = e)
+    (hCover :
+      ∀ a : Embedding A D,
+        ∃ e : Set W, e ∈ H ∧ copyCarrier a ⊆ e) :
+    supportCopies A D = H := by
+  apply Set.Subset.antisymm
+  · intro S hS
+    rcases hS with ⟨a, rfl⟩
+    obtain ⟨e, he, hae⟩ := hCover a
+    obtain ⟨b, hb⟩ := hDecorated e he
+    have hab : ∀ x : U, ∃ y : U, a x = b y := by
+      intro x
+      have hx : a x ∈ e := hae ⟨x, rfl⟩
+      rw [← hb] at hx
+      rcases hx with ⟨y, hy⟩
+      exact ⟨y, hy.symm⟩
+    have hs : SameCopy a b :=
+      sameCopy_of_range_subset a b hab
+    change copyCarrier a = copyCarrier b at hs
+    rw [hs, hb]
+    exact he
+  · intro e he
+    obtain ⟨b, hb⟩ := hDecorated e he
+    exact ⟨b, hb.symm⟩
 end StructuralRamsey.Girth
