@@ -298,9 +298,6 @@ theorem activeSubsystem_aGenerated
       rcases hTupleIn i with ⟨a0, ha0⟩
       refine ⟨a0, ?_⟩
       apply Subtype.ext
-      apply inc.injective
-      calc
-        inc (aS' a0) = aC a0 := (haS' a0).symm
-        _ = (t i).1 := ha0
+      simpa [inc] using (haS' a0).symm.trans ha0
 
 end StructuralRamsey.Girth
