@@ -79,10 +79,15 @@ theorem neighbor_eq_of_reachable_after_delete
       (G := J.tree) (({center} : Set ι)ᶜ)
   let pRaw := p0.map emb.toHom
   let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
+  have hpRaw : pRaw.IsPath := by
+    dsimp [pRaw]
+    exact
+      (SimpleGraph.Walk.isPath_map_iff_of_injective
+        (p := p0) (f := emb.toHom) emb.injective).2 hp0
   have hp : p.IsPath := by
-    simp [p, pRaw, hp0.map emb.injective]
+    simpa [p] using hpRaw
   have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = p0.getVert 1 |>.1
+    change p.getVert 1 = (p0.getVert 1).1
     simp [p, pRaw, emb, SimpleGraph.Walk.getVert_map]
   have hsndOut : p.snd ≠ center := by
     have hout : p0.snd.1 ≠ center := by
