@@ -64,9 +64,7 @@ def cyclicPath
       finRotate c.length (cyclicRunIndex before (cast m0))
     rw [hcast, cyclicRunIndex, cyclicRunIndex, finCycle_apply,
       finCycle_apply]
-    have hrot :=
-      finRotate_apply (finCycle (cast m0) (finRotate c.length before))
-    rw [hrot]
+    conv_rhs => rw [finRotate_apply]
     ac_rfl
   let edges : Fin k → Set W := fun m => c.edge (idx m)
   let vertices : Fin (k + 1) → W :=
@@ -131,7 +129,8 @@ def cyclicPath
       rw [hz]
       exact c.right_mem before
     · have hs : idx j.succ = cyclicSucc (idx j.castSucc) := by
-        simpa using (hidxSucc (m := j.1) (by omega))
+        convert hidxSucc (m := j.1) (by omega) using 1 <;>
+          apply Fin.ext <;> rfl
       change c.vertex (idx j.castSucc) ∈ c.edge (idx j.succ)
       rw [hs]
       exact c.right_mem (idx j.castSucc)
@@ -195,7 +194,8 @@ theorem cyclicPath_vertex_last
     apply Fin.ext
     rw [Fin.val_add_eq_of_add_lt haddlt']
     dsimp [offN, off, kN]
-    rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+    change k - 1 + 1 % c.length = k
+    rw [Nat.mod_eq_of_lt (by omega)]
     omega
   have hidx :
       cyclicRunIndex before offN = before + kN := by
