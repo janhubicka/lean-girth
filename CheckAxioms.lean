@@ -95,3 +95,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.targetEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.targetEmbedding_pullback_targetClosed
 #print axioms StructuralRamsey.Girth.targetEmbeddings_controlledIntersection
+
+#print axioms StructuralRamsey.Girth.targetClosureLift
