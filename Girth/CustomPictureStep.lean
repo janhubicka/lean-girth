@@ -32,7 +32,7 @@ theorem customInducedPictureStep
     (κ : Type*)
     (hPartite : C₀.IsPartiteOver D₀)
     (hCover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₀ B₀ D₀)
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₀ B₀ D₀)
     (hE : E.IsPartiteOver A)
     (hArrow :
       StructuralRamsey.Partite.Arrow
@@ -41,7 +41,7 @@ theorem customInducedPictureStep
     let αf := α.1.toFunctionEmbedding
     let C₁ := StructuralRamsey.Partite.Picture.build C₀ αf E
     C₁.IsPartiteOver D₀ ∧
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ ∧
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₁ B₀ D₀ ∧
       StructuralRamsey.Partite.PictureProperty A C₀ αf C₁ κ := by
   classical
   let αf := α.1.toFunctionEmbedding
@@ -56,12 +56,12 @@ theorem customInducedPictureStep
       (StructuralRamsey.Partite.Picture.attachingMap C₀ αf E)
       hPartite hCorePartite
   have hCoreCover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy
         (E.relabel αf) B₀ D₀ :=
     StructuralRamsey.Partite.Induced.relabel_covers_of_relevant
       A B₀ D₀ E α
   have hC₁Cover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ := by
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₁ B₀ D₀ := by
     exact StructuralRamsey.Partite.Induced.Attachment.attach_covers
       B₀ D₀ C₀ (C₀.support αf) (E.relabel αf)
       (StructuralRamsey.Partite.Picture.attachingMap C₀ αf E)
