@@ -77,3 +77,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.targetClosed_classify_nonempty
 
 #print axioms StructuralRamsey.Girth.pairClosed_iff_aStrong
+
+#print axioms StructuralRamsey.Girth.bIntersectionsControlled_of_targetClosedPullbacks
+#print axioms StructuralRamsey.Girth.bCopiesStrong_of_pairClosed
+#print axioms StructuralRamsey.Girth.closedTargetCopies_geometry
