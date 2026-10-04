@@ -124,4 +124,63 @@ theorem pairCovered_subset_edge_of_girthGT_three
   · rw [← h3]
     exact hzZX
 
+
+
+/-- Every relation tuple of R is supported inside one hyperedge of H. -/
+def RelationsCoveredBy
+    {L : RelLanguage.{u}} (H : Set (Set W))
+    (R : RelStructure L W) : Prop :=
+  ∀ (sym : L.Symbol) (x : Fin (L.arity sym) → W),
+    R.rel sym x →
+      ∃ e : Set W, e ∈ H ∧ ∀ i, x i ∈ e
+
+/-- High-girth support controls every irreducible induced substructure:
+if relation tuples are edge-supported and every ambient vertex lies in a
+support edge, then every irreducible induced substructure lies in one edge. -/
+theorem irreducible_induce_subset_edge_of_girthGT_three
+    {L : RelLanguage.{u}} {R : RelStructure L W}
+    {H : Set (Set W)}
+    (hgt : GirthGT H 3)
+    (hRel : RelationsCoveredBy H R)
+    (hH : H.Nonempty)
+    (hVert : ∀ x : W, ∃ e : Set W, e ∈ H ∧ x ∈ e)
+    {S : Set W}
+    (hIrr : (R.induce S).Irreducible) :
+    ∃ e : Set W, e ∈ H ∧ ∀ z : S, z.1 ∈ e := by
+  by_cases hsub : S.Subsingleton
+  · by_cases hne : S.Nonempty
+    · rcases hne with ⟨x, hx⟩
+      obtain ⟨e, he, hxe⟩ := hVert x
+      refine ⟨e, he, ?_⟩
+      intro z
+      have hzx : z.1 = x := hsub z.2 hx
+      simpa [hzx] using hxe
+    · obtain ⟨e, he⟩ := hH
+      refine ⟨e, he, ?_⟩
+      intro z
+      exact (hne ⟨z.1, z.2⟩).elim
+  · have hnon : S.Nontrivial := by
+      rw [← Set.not_subsingleton_iff]
+      exact hsub
+    have hPair : PairCoveredBy H S := by
+      intro x y hx hy hxy
+      let xs : S := ⟨x, hx⟩
+      let ys : S := ⟨y, hy⟩
+      have hxyS : xs ≠ ys := by
+        intro h
+        apply hxy
+        exact congrArg Subtype.val h
+      obtain ⟨sym, t, i, j, ht, hi, hj⟩ := hIrr hxyS
+      have htR : R.rel sym (Subtype.val ∘ t) := ht
+      obtain ⟨e, he, hte⟩ := hRel sym (Subtype.val ∘ t) htR
+      refine ⟨e, he, ?_, ?_⟩
+      · have := hte i
+        change t i |>.1 ∈ e at this
+        simpa [xs, hi] using this
+      · have := hte j
+        change t j |>.1 ∈ e at this
+        simpa [ys, hj] using this
+    obtain ⟨e, he, hSe⟩ :=
+      pairCovered_subset_edge_of_girthGT_three hgt hnon hPair
+    exact ⟨e, he, fun z => hSe z.2⟩
 end StructuralRamsey.Girth
