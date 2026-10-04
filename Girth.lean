@@ -25,3 +25,4 @@ import Girth.Decoration
 import Girth.CustomPictureStep
 import Girth.ActivePicture
 import Girth.IrreducibleAttachment
+import Girth.AttachmentGeometry
