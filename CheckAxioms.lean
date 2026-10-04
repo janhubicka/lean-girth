@@ -202,3 +202,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.erase_leaf
 
 #print axioms StructuralRamsey.Girth.JoinTree.mem_center_of_shared_not_reachable_after_delete
+
+#print axioms StructuralRamsey.Girth.JoinTree.intersection_subsingleton_across_delete_of_oneEdge_of_no_full
