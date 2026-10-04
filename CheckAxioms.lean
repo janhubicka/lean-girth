@@ -171,3 +171,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_copy_core_intersection
 #print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection
 #print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection_subset_core
+#print axioms StructuralRamsey.Girth.activePictureStep_invariants
