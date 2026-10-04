@@ -74,31 +74,24 @@ theorem neighbor_eq_of_reachable_after_delete
             using hb.ne.symm⟩) :
     a = b := by
   obtain ⟨p0, hp0⟩ := hreach.exists_isPath
-  let emb :=
-    SimpleGraph.Embedding.induce
-      (G := J.tree) (({center} : Set ι)ᶜ)
-  let pRaw := p0.map emb.toHom
-  let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
-  have hpRaw : pRaw.IsPath := by
-    dsimp [pRaw]
-    exact
-      (SimpleGraph.Walk.isPath_map_iff_of_injective
-        (p := p0) (f := emb.toHom) emb.injective).2 hp0
+  let inc :
+      (J.tree.induce (({center} : Set ι)ᶜ)) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let p : J.tree.Walk a b := p0.map inc
   have hp : p.IsPath := by
-    simpa [p] using hpRaw
-  have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = (p0.getVert 1).1
-    simp [p, pRaw, emb, SimpleGraph.Walk.getVert_map]
-  have hsndOut : p.snd ≠ center := by
-    have hout : p0.snd.1 ≠ center := by
-      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using p0.snd.2
-    intro h
-    exact hout (hsndVal.symm.trans h)
+    dsimp [p]
+    exact hp0.map (fun u v h => Subtype.ext h)
   have hcenter : center ∉ p.support := by
     intro hc
-    have heq : center = p.snd :=
-      J.isTree.isAcyclic.eq_snd_of_adj_start hp ha.symm hc
-    exact hsndOut heq.symm
+    dsimp [p, inc] at hc
+    rw [SimpleGraph.Walk.support_map] at hc
+    rcases List.mem_map.mp hc with ⟨z, hz, hval⟩
+    have hzout : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    exact hzout hval
   let q : J.tree.Walk center b := p.cons ha
   have hq : q.IsPath := hp.cons hcenter
   have hbmem : b ∈ q.support := by
@@ -132,31 +125,24 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
     (hxI : x ∈ (F i).carrier) :
     x ∈ (F root).carrier := by
   obtain ⟨p0, hp0⟩ := hreach.exists_isPath
-  let delEmb :=
-    SimpleGraph.Embedding.induce
-      (G := J.tree) (({center} : Set ι)ᶜ)
-  let pRaw := p0.map delEmb.toHom
-  let p : J.tree.Walk root i := pRaw.copy (by rfl) (by rfl)
-  have hpRaw : pRaw.IsPath := by
-    dsimp [pRaw]
-    exact
-      (SimpleGraph.Walk.isPath_map_iff_of_injective
-        (p := p0) (f := delEmb.toHom) delEmb.injective).2 hp0
+  let delInc :
+      (J.tree.induce (({center} : Set ι)ᶜ)) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let p : J.tree.Walk root i := p0.map delInc
   have hp : p.IsPath := by
-    simpa [p] using hpRaw
-  have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = (p0.getVert 1).1
-    simp [p, pRaw, delEmb, SimpleGraph.Walk.getVert_map]
-  have hsndOut : p.snd ≠ center := by
-    have hout : p0.snd.1 ≠ center := by
-      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using p0.snd.2
-    intro h
-    exact hout (hsndVal.symm.trans h)
+    dsimp [p]
+    exact hp0.map (fun u v h => Subtype.ext h)
   have hcenter : center ∉ p.support := by
     intro hc
-    have heq : center = p.snd :=
-      J.isTree.isAcyclic.eq_snd_of_adj_start hp hroot.symm hc
-    exact hsndOut heq.symm
+    dsimp [p, delInc] at hc
+    rw [SimpleGraph.Walk.support_map] at hc
+    rcases List.mem_map.mp hc with ⟨z, hz, hval⟩
+    have hzout : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    exact hzout hval
   let q : J.tree.Walk center i := p.cons hroot
   have hq : q.IsPath := hp.cons hcenter
 
@@ -165,17 +151,15 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
   let iOcc : occ := ⟨i, hxI⟩
   obtain ⟨r0, hr0⟩ :=
     (J.running x centerOcc iOcc).exists_isPath
-  let occEmb :=
-    SimpleGraph.Embedding.induce (G := J.tree) occ
-  let rRaw := r0.map occEmb.toHom
-  let r : J.tree.Walk center i := rRaw.copy (by rfl) (by rfl)
-  have hrRaw : rRaw.IsPath := by
-    dsimp [rRaw]
-    exact
-      (SimpleGraph.Walk.isPath_map_iff_of_injective
-        (p := r0) (f := occEmb.toHom) occEmb.injective).2 hr0
+  let occInc : (J.tree.induce occ) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let r : J.tree.Walk center i := r0.map occInc
   have hr : r.IsPath := by
-    simpa [r] using hrRaw
+    dsimp [r]
+    exact hr0.map (fun u v h => Subtype.ext h)
   have hqr : q = r :=
     (J.isTree.existsUnique_path center i).unique hq hr
   have hrootEq : root = r.snd := by
@@ -183,8 +167,7 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
       root = q.snd := by simp [q]
       _ = r.snd := congrArg SimpleGraph.Walk.snd hqr
   have hrsndVal : r.snd = r0.snd.1 := by
-    change r.getVert 1 = (r0.getVert 1).1
-    simp [r, rRaw, occEmb, SimpleGraph.Walk.getVert_map]
+    simp [r, occInc]
   have hrsnd : x ∈ (F r.snd).carrier := by
     rw [hrsndVal]
     exact r0.snd.2
