@@ -26,8 +26,7 @@ def LocalIrreduciblesCoveredByAInCopies
     (A : RelStructure L UA)
     (E : StructuralRamsey.Partite.System L P Y)
     {C : StructuralRamsey.Partite.System L P X}
-    {S : Set X}
-    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E) : Prop :=
+    (f : I → StructuralRamsey.Partite.Embedding C E) : Prop :=
   ∀ (T : Set Y), (E.toRelStructure.induce T).Irreducible →
     ∃ (i : I) (a : RelStructure.Embedding A E.toRelStructure),
       (∀ z : T, z.1 ∈ copyCarrier a) ∧
@@ -39,8 +38,7 @@ def ACopiesCoveredByLocalCopies
     (A : RelStructure L UA)
     (E : StructuralRamsey.Partite.System L P Y)
     {C : StructuralRamsey.Partite.System L P X}
-    {S : Set X}
-    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E) : Prop :=
+    (f : I → StructuralRamsey.Partite.Embedding C E) : Prop :=
   ∀ a : RelStructure.Embedding A E.toRelStructure,
     ∃ i : I, copyCarrier a ⊆ copyCarrier (f i).toEmbedding
 
@@ -51,8 +49,7 @@ theorem localIrreduciblesCovered_of_extendTo_and_ACopyCover
     (A : RelStructure L UA)
     (E : StructuralRamsey.Partite.System L P Y)
     {C : StructuralRamsey.Partite.System L P X}
-    {S : Set X}
-    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E)
+    (f : I → StructuralRamsey.Partite.Embedding C E)
     (hIrr : RelStructure.IrreduciblesExtendTo A E.toRelStructure)
     (hACover : ACopiesCoveredByLocalCopies A E f) :
     LocalIrreduciblesCoveredByAInCopies A E f := by
