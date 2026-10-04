@@ -19,6 +19,43 @@ universe u v
 variable {L : RelLanguage.{u}}
 variable {UA P X Y I : Type v}
 
+/-- The true active vertex set for a projection alpha: precisely the union
+of the carriers of A-copies with that projection.  This is the manuscript's
+vertex set of P[e]. -/
+def activeCarrier
+    (A : RelStructure L UA)
+    (B : StructuralRamsey.Partite.System L P X)
+    (α : UA → P) : Set X :=
+  {x | ∃ e : StructuralRamsey.Partite.ProjectedEmbedding A B α,
+    x ∈ Set.range e.val}
+
+/-- Every projected A-copy lies pointwise in the active carrier by
+construction. -/
+theorem projected_mem_activeCarrier
+    (A : RelStructure L UA)
+    (B : StructuralRamsey.Partite.System L P X)
+    (α : UA → P)
+    (e : StructuralRamsey.Partite.ProjectedEmbedding A B α)
+    (a : UA) :
+    e.val a ∈ activeCarrier A B α :=
+  ⟨e, ⟨a, rfl⟩⟩
+
+/-- For an injective projection, the active carrier is contained in the union
+of the selected parts.  The inclusion can be strict because boundary vertices
+need not lie in an active A-copy. -/
+theorem activeCarrier_subset_support
+    (A : RelStructure L UA)
+    (B : StructuralRamsey.Partite.System L P X)
+    (α : UA ↪ P) :
+    activeCarrier A B α ⊆ B.support α := by
+  intro x hx
+  rcases hx with ⟨e, a, ha⟩
+  refine ⟨a, ?_⟩
+  change α a = B.part x
+  have hp := e.property a
+  rw [ha] at hp
+  exact hp.symm
+
 /-- Restrict a projected A-copy to an induced subsystem containing its whole
 image. -/
 def activeInduceProjected
