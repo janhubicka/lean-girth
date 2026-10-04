@@ -1,5 +1,6 @@
 import Girth.FiberConnectedTree
 import Mathlib.Combinatorics.SimpleGraph.Finite
+import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
 
 /-! # Rewiring a deleted vertex of a join tree
 
@@ -146,5 +147,61 @@ theorem JoinTree.rewireAfterDelete_connected
         J.rewireAfterDelete center R from le_sup_left)
     convert h using 1 <;> apply Subtype.ext <;> rfl
   exact hA.trans (hRoots.trans hB)
+
+
+/-- The rewired graph has exactly one fewer edge than surviving vertices when
+the replacement graph on the former neighbours is a tree. -/
+theorem JoinTree.rewireAfterDelete_card_edgeFinset
+    {F : ι → HypergraphPiece V} [Fintype ι]
+    (J : JoinTree F) (center : ι)
+    (R : SimpleGraph (J.tree.neighborSet center))
+    (hR : R.IsTree) :
+    Finset.card (J.rewireAfterDelete center R).edgeFinset + 1 =
+      Fintype.card {i : ι // i ∈ ({center} : Set ι)ᶜ} := by
+  classical
+  let D := J.tree.induce (({center} : Set ι)ᶜ)
+  let e := J.neighborToErasedEmbedding center
+  let M := R.map e
+  have hdisjGraph : Disjoint D M := by
+    simpa [D, M, e] using
+      J.disjoint_deletedGraph_map_neighborGraph center R
+  have hdisj : Disjoint D.edgeFinset M.edgeFinset :=
+    SimpleGraph.disjoint_edgeFinset.mpr hdisjGraph
+  have hsup :
+      Finset.card (J.rewireAfterDelete center R).edgeFinset =
+        Finset.card D.edgeFinset + Finset.card M.edgeFinset := by
+    rw [JoinTree.rewireAfterDelete, SimpleGraph.edgeFinset_sup,
+      Finset.card_union_of_disjoint hdisj]
+  have hDcard :
+      Finset.card D.edgeFinset =
+        Finset.card J.tree.edgeFinset - J.tree.degree center := by
+    dsimp [D]
+    rw [SimpleGraph.card_edgeFinset_induce_compl_singleton,
+      SimpleGraph.card_edgeFinset_deleteIncidenceSet]
+  have hMcard :
+      Finset.card M.edgeFinset = Finset.card R.edgeFinset := by
+    dsimp [M]
+    exact SimpleGraph.card_edgeFinset_map e R
+  have hJcard :
+      Finset.card J.tree.edgeFinset + 1 = Fintype.card ι :=
+    J.isTree.card_edgeFinset
+  have hRcard :
+      Finset.card R.edgeFinset + 1 =
+        Fintype.card (J.tree.neighborSet center) :=
+    hR.card_edgeFinset
+  have hNcard :
+      Fintype.card (J.tree.neighborSet center) =
+        J.tree.degree center :=
+    J.tree.card_neighborSet_eq_degree center
+  have hScard :
+      Fintype.card {i : ι // i ∈ ({center} : Set ι)ᶜ} =
+        Fintype.card ι - 1 := by
+    rw [Fintype.card_compl_set]
+    simp
+  have hdeg :
+      J.tree.degree center ≤ Finset.card J.tree.edgeFinset :=
+    J.tree.degree_le_card_edgeFinset
+  rw [hsup, hDcard, hMcard, hScard]
+  omega
 
 end StructuralRamsey.Girth
