@@ -18,7 +18,7 @@ variable {L : RelLanguage.{u}}
 variable {U V : Type v}
 
 /-- The two closure symbols used in the Ramsey input. -/
-inductive ClosureFunc
+inductive ClosureFunc : Type u
   | cA
   | cB
   deriving DecidableEq
@@ -26,7 +26,7 @@ inductive ClosureFunc
 /-- Add the two closure function symbols to a relational language. -/
 def closureLanguage (L : RelLanguage.{u}) : StructuralRamsey.Language.{u} where
   RelSymbol := L.Symbol
-  FuncSymbol := ClosureFunc
+  FuncSymbol := ClosureFunc.{u}
   relArity := L.arity
   funcArity
     | .cA => 2
