@@ -49,21 +49,24 @@ def cyclicPath
         ((cast m0 : Fin c.length) : ℕ) + 1 < c.length := by
       change m + 1 < c.length
       omega
-    have hone : ((1 : Fin c.length) : ℕ) = 1 := by
-      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
     have haddlt' :
         ((cast m0 : Fin c.length) : ℕ) +
           ((1 : Fin c.length) : ℕ) < c.length := by
-      simpa [hone] using haddlt
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+      exact haddlt
     have hcast : cast m1 = cast m0 + 1 := by
       apply Fin.ext
       rw [Fin.val_add_eq_of_add_lt haddlt']
-      simpa [cast, m0, m1, hone]
+      change m + 1 = m + ((1 : Fin c.length) : ℕ)
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
     rw [cyclicSucc_eq_finRotate]
     change cyclicRunIndex before (cast m1) =
       finRotate c.length (cyclicRunIndex before (cast m0))
     rw [hcast, cyclicRunIndex, cyclicRunIndex, finCycle_apply,
-      finCycle_apply, finRotate_apply]
+      finCycle_apply]
+    have hrot :=
+      finRotate_apply (finCycle (cast m0) (finRotate c.length before))
+    rw [hrot]
     ac_rfl
   let edges : Fin k → Set W := fun m => c.edge (idx m)
   let vertices : Fin (k + 1) → W :=
@@ -90,16 +93,16 @@ def cyclicPath
     have haddlt : (cast m : ℕ) + 1 < c.length := by
       change (m : ℕ) + 1 < c.length
       omega
-    have hone : ((1 : Fin c.length) : ℕ) = 1 := by
-      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
     have haddlt' :
         ((cast m : Fin c.length) : ℕ) +
           ((1 : Fin c.length) : ℕ) < c.length := by
-      simpa [hone] using haddlt
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+      exact haddlt
     have hval :
         ((cast m + 1 : Fin c.length) : ℕ) = (m : ℕ) + 1 := by
       rw [Fin.val_add_eq_of_add_lt haddlt']
-      simpa [cast, hone]
+      change (m : ℕ) + ((1 : Fin c.length) : ℕ) = (m : ℕ) + 1
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
     have hz := congrArg Fin.val hzero
     rw [hval] at hz
     simp at hz
@@ -127,7 +130,8 @@ def cyclicPath
       change c.vertex before ∈ c.edge (idx (0 : Fin (r + 1)))
       rw [hz]
       exact c.right_mem before
-    · have hs := hidxSucc (m := j.1) (by omega)
+    · have hs : idx j.succ = cyclicSucc (idx j.castSucc) := by
+        simpa using (hidxSucc (m := j.1) (by omega))
       change c.vertex (idx j.castSucc) ∈ c.edge (idx j.succ)
       rw [hs]
       exact c.right_mem (idx j.castSucc)
@@ -183,15 +187,15 @@ theorem cyclicPath_vertex_last
   have haddlt : (offN : ℕ) + 1 < c.length := by
     change k - 1 + 1 < c.length
     omega
-  have hone : ((1 : Fin c.length) : ℕ) = 1 := by
-    rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
   have haddlt' :
       (offN : ℕ) + ((1 : Fin c.length) : ℕ) < c.length := by
-    simpa [hone] using haddlt
+    rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+    exact haddlt
   have hoff : offN + 1 = kN := by
     apply Fin.ext
     rw [Fin.val_add_eq_of_add_lt haddlt']
-    change k - 1 + 1 = k
+    dsimp [offN, off, kN]
+    rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
     omega
   have hidx :
       cyclicRunIndex before offN = before + kN := by
