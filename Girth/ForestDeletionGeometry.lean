@@ -176,6 +176,50 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
   rw [← hrootEq] at hrsnd
   exact hrsnd
 
+/-- A vertex shared by pieces in two different post-deletion components is
+visible at both component roots.  Thus all cross-component overlap can be
+represented solely at the roots when the deleted node is replaced. -/
+theorem shared_mem_component_roots
+    {F : ι → HypergraphPiece W}
+    (J : JoinTree F)
+    {center root₁ root₂ i j : ι}
+    (hroot₁ : J.tree.Adj center root₁)
+    (hroot₂ : J.tree.Adj center root₂)
+    (hi : i ≠ center)
+    (hj : j ≠ center)
+    (hreach₁ :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨root₁, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hroot₁.ne.symm⟩
+        ⟨i, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩)
+    (hreach₂ :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨root₂, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using hroot₂.ne.symm⟩
+        ⟨j, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩)
+    (hnreach :
+      ¬ (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨i, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩
+        ⟨j, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩)
+    {x : W}
+    (hxi : x ∈ (F i).carrier)
+    (hxj : x ∈ (F j).carrier) :
+    x ∈ (F root₁).carrier ∩ (F root₂).carrier := by
+  have hxCenter : x ∈ (F center).carrier :=
+    J.mem_center_of_shared_not_reachable_after_delete
+      hi hj hxi hxj hnreach
+  exact
+    ⟨J.mem_root_of_mem_center_and_reachable_after_delete
+        hroot₁ hi hreach₁ hxCenter hxi,
+      J.mem_root_of_mem_center_and_reachable_after_delete
+        hroot₂ hj hreach₂ hxCenter hxj⟩
+
 /-- If the deleted member is a one-edge piece and no surviving piece contains
 that whole edge, then two pieces in different components after deletion meet in
 at most one vertex.  Any two common vertices would both lie in the deleted edge,

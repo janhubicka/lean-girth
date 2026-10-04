@@ -208,3 +208,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.neighbor_eq_of_reachable_after_delete
 
 #print axioms StructuralRamsey.Girth.JoinTree.mem_root_of_mem_center_and_reachable_after_delete
+
+#print axioms StructuralRamsey.Girth.JoinTree.shared_mem_component_roots
