@@ -24,4 +24,3 @@ import Girth.ALinearRamsey
 import Girth.Decoration
 import Girth.CustomPictureStep
 import Girth.ActivePicture
-import Girth.ClosureRamseyClass
