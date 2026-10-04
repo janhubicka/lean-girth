@@ -357,4 +357,40 @@ theorem decorateSupportEmbedding_range_aStrong_of_highGirth
     (decorateSupport_exact A hA hTrans hgt hK hVert).1
   exact decorateSupportEmbedding_range_aStrong A f hSupport
 
+/-- Complete copy-lifting package for the structural local-forest lemma:
+a strongly induced, part-preserving support copy lifts to an induced relational
+copy whose image is A-strong in the high-girth target decoration. -/
+theorem decorateStrongSupportCopy_of_highGirth
+    {X Y : Type v}
+    (A : RelStructure L U)
+    [Finite U]
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (f : StrongSupportEmbedding H K)
+    (hpart : ∀ x : X, partY (f x) = partX x)
+    (hH : H.Nonempty)
+    (hCoverX : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e)
+    (hA : A.Irreducible)
+    (hTransK : EdgeTransversal K partY)
+    (hgtK : GirthGT K 3)
+    (hK : K.Nonempty)
+    (hCoverY : ∀ y : Y, ∃ e : Set Y, e ∈ K ∧ y ∈ e) :
+    let e : RelStructure.Embedding
+        (decorateSupport A H partX)
+        (decorateSupport A K partY) :=
+      decorateSupportEmbedding A f hpart hH hCoverX
+    AStrong A (decorateSupport A K partY) (copyCarrier e) := by
+  let e : RelStructure.Embedding
+      (decorateSupport A H partX)
+      (decorateSupport A K partY) :=
+    decorateSupportEmbedding A f hpart hH hCoverX
+  have hs :=
+    decorateSupportEmbedding_range_aStrong_of_highGirth
+      A f hA hTransK hgtK hK hCoverY
+  change
+    AStrong A (decorateSupport A K partY)
+      (Set.range (fun x => e x))
+  exact hs
+
+
 end StructuralRamsey.Girth
