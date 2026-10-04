@@ -58,7 +58,8 @@ theorem girthGT_pieceList_of_singletonAttachments
   | nil =>
       intro hcyc
       rcases hcyc with ⟨c, _⟩
-      have hpos : 0 < c.length := by omega
+      have hpos : 0 < c.length :=
+        lt_of_lt_of_le (by decide : 0 < 2) c.hlength
       let i : Fin c.length := ⟨0, hpos⟩
       have h := c.edge_mem i
       simpa [pieceListEdges] using h
