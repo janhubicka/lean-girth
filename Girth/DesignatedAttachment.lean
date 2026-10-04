@@ -156,8 +156,8 @@ theorem designatedCoversIrreducibles_partiteAttachment
       (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i)
         (q.embedding b)
     have hb' : (aS a0).1 = q.embedding b := by
-      change incS (aS a0) = q.embedding b at hb
-      exact hb
+      simpa [aC, incS, RelStructure.inclusion,
+        RelStructure.Embedding.comp] using hb
     have hqS : q.embedding b ∈ S := by
       rw [← hb']
       exact (aS a0).2
