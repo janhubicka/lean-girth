@@ -132,6 +132,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.closureLanguage_positiveFuncArity
 #print axioms StructuralRamsey.Girth.ElementaryCAClass_freeAmalgamationClass
 #print axioms StructuralRamsey.Girth.structureEmbeddingWithLinearOrder
+#print axioms StructuralRamsey.Girth.ClosedTargetRamseyFamily.arrow
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_of_monotone_embeddings
 #print axioms StructuralRamsey.Girth.aLinearRamsey_of_monotone_embeddings
 #print axioms StructuralRamsey.Girth.aLinearRamsey_ordered
 #print axioms StructuralRamsey.Girth.EdgeTransversal.edge_eq_range_vertex
