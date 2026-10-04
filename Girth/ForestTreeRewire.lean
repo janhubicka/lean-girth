@@ -51,7 +51,8 @@ theorem isTree_of_connected_ncard_edgeSet
   haveI : Fintype G.edgeSet := Fintype.ofFinite G.edgeSet
   apply isTree_of_connected_card_edgeFinset G hconn
   rw [← G.card_edgeSet]
-  simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using hcard
+  simpa [SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard,
+    Nat.card_eq_fintype_card] using hcard
 
 
 /-- A neighbour of the deleted vertex, viewed as a surviving vertex. -/
@@ -191,14 +192,15 @@ theorem JoinTree.rewireAfterDelete_isTree
     have h2 :=
       SimpleGraph.card_edgeFinset_deleteIncidenceSet J.tree center
     rw [h2] at h1
-    simpa [D, Set.fintypeCard_eq_ncard] using h1
+    simpa [D, SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard] using h1
   have hMcard : M.edgeSet.ncard = R.edgeSet.ncard := by
     dsimp [M]
     rw [SimpleGraph.edgeSet_map]
     exact Set.ncard_image_of_injective _ e.sym2Map.injective
   have hJcard : J.tree.edgeSet.ncard + 1 = Nat.card ι := by
     have h := J.isTree.card_edgeFinset
-    simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using h
+    simpa [SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard,
+      Nat.card_eq_fintype_card] using h
   have hRcard :
       R.edgeSet.ncard + 1 = Nat.card (J.tree.neighborSet center) := by
     have h := hR.card_edgeFinset
