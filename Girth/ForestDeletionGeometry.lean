@@ -81,14 +81,19 @@ theorem neighbor_eq_of_reachable_after_delete
   let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
   have hp : p.IsPath := by
     simp [p, pRaw, hp0.map emb.injective]
+  have hsndVal : p.snd = p0.snd.1 := by
+    change p.getVert 1 = p0.getVert 1 |>.1
+    simp [p, pRaw, emb, SimpleGraph.Walk.getVert_map]
+  have hsndOut : p.snd ≠ center := by
+    have hout : p0.snd.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using p0.snd.2
+    intro h
+    exact hout (hsndVal.symm.trans h)
   have hcenter : center ∉ p.support := by
     intro hc
-    dsimp [p, pRaw] at hc
-    rw [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map] at hc
-    rcases List.mem_map.mp hc with ⟨z, _hz, hval⟩
-    have hzout : z.1 ≠ center := by
-      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
-    exact hzout hval
+    have heq : center = p.snd :=
+      J.isTree.isAcyclic.eq_snd_of_adj_start hp ha.symm hc
+    exact hsndOut heq.symm
   let q : J.tree.Walk center b := p.cons ha
   have hq : q.IsPath := hp.cons hcenter
   have hbmem : b ∈ q.support := by
