@@ -213,5 +213,4 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.JoinTree.exists_neighbor_reachable_after_delete
 
-#print axioms StructuralRamsey.Girth.fiberStarGraph_isAcyclic
 #print axioms StructuralRamsey.Girth.exists_tree_fibers_preconnected
