@@ -214,3 +214,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.exists_neighbor_reachable_after_delete
 
 #print axioms StructuralRamsey.Girth.exists_tree_fibers_preconnected
+
+#print axioms StructuralRamsey.Girth.isTree_of_connected_card_edgeFinset
