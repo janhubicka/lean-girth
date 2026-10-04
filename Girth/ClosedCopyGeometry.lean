@@ -24,21 +24,20 @@ def pullbackIntersection
     (b c : Embedding B D) : Set V :=
   {x | b x ∈ copyCarrier c}
 
-/-- If every pullback intersection of two B-copies is target-closed, then
-A-linearity of the target forces the ambient B-copy family to have controlled
-intersections. -/
-theorem bIntersectionsControlled_of_targetClosedPullbacks
+/-- One target-closed pullback gives one controlled ambient intersection. -/
+theorem controlledIntersection_of_targetClosedPullback
     {A : RelStructure L U} {B : RelStructure L V}
     {D : RelStructure L W}
     [Finite V]
     (hBase : ALinear A B)
-    (hClosed :
-      ∀ b c : Embedding B D,
-        TargetClosed A B (pullbackIntersection b c)) :
-    BIntersectionsControlled A B D := by
-  intro b c hne
+    (b c : Embedding B D)
+    (hne : ¬ SameCopy b c)
+    (hClosed : TargetClosed A B (pullbackIntersection b c)) :
+    (copyCarrier b ∩ copyCarrier c).Subsingleton ∨
+      ∃ a : Embedding A D,
+        copyCarrier b ∩ copyCarrier c = copyCarrier a := by
   let S : Set V := pullbackIntersection b c
-  have hS : TargetClosed A B S := hClosed b c
+  have hS : TargetClosed A B S := hClosed
   rcases targetClosed_classify hBase hS with
     hsub | ⟨a, ha⟩ | hall
   · left
@@ -89,6 +88,22 @@ theorem bIntersectionsControlled_of_targetClosedPullbacks
     change b x ∈ copyCarrier c at hxS
     rcases hxS with ⟨y, hy⟩
     exact ⟨y, hy.symm⟩
+
+/-- If every pullback intersection of two B-copies is target-closed, then
+A-linearity of the target forces the ambient B-copy family to have controlled
+intersections. -/
+theorem bIntersectionsControlled_of_targetClosedPullbacks
+    {A : RelStructure L U} {B : RelStructure L V}
+    {D : RelStructure L W}
+    [Finite V]
+    (hBase : ALinear A B)
+    (hClosed :
+      ∀ b c : Embedding B D,
+        TargetClosed A B (pullbackIntersection b c)) :
+    BIntersectionsControlled A B D := by
+  intro b c hne
+  exact controlledIntersection_of_targetClosedPullback
+    hBase b c hne (hClosed b c)
 
 /-- Pair closure of every B-image is exactly the strong-inducedness conclusion
 needed in the Ramsey family. -/
