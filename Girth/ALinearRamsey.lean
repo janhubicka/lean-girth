@@ -88,7 +88,8 @@ theorem aLinearRamsey_of_monotone_embeddings
                 copyCarrier (targetEmbeddingRel c) =
                   copyCarrier a) := by
   classical
-  let K := ElementaryCAClass A
+  let K : StructuralRamsey.Structure.StructureClass.{u,v}
+      (L := closureLanguage L) := ElementaryCAClass A
   have hK :
       StructuralRamsey.Structure.FreeAmalgamationClass K :=
     ElementaryCAClass_freeAmalgamationClass A hAirr
@@ -192,6 +193,5 @@ theorem aLinearRamsey_ordered
   · exact hBlin
   · intro a
     exact RelStructure.Embedding.strictMono a
-  · exact κ
 
 end StructuralRamsey.Girth
