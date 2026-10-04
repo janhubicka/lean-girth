@@ -133,7 +133,7 @@ theorem attachment_copy_aStrong
       rcases hx.1 with ⟨ax, hax⟩
       rcases hx.2 with ⟨bx, hbx⟩
       rcases hy.1 with ⟨ay, hay⟩
-      rcases hy.2 with ⟨by, hby⟩
+      rcases hy.2 with ⟨bY, hbY⟩
       have hbxEq :
           RelStructure.Attachment.copyMap B S D f i bx =
             Sum.inl (eD ax) := by
@@ -141,14 +141,14 @@ theorem attachment_copy_aStrong
           core (eD ax)
         exact hbx.trans (hax.symm.trans (heD ax))
       have hbyEq :
-          RelStructure.Attachment.copyMap B S D f i by =
+          RelStructure.Attachment.copyMap B S D f i bY =
             Sum.inl (eD ay) := by
-        change RelStructure.Attachment.copyEmbedding B S D f i by =
+        change RelStructure.Attachment.copyEmbedding B S D f i bY =
           core (eD ay)
-        exact hby.trans (hay.symm.trans (heD ay))
+        exact hbY.trans (hay.symm.trans (heD ay))
       have hbxS : bx ∈ S :=
         RelStructure.Attachment.mem_of_copyMap_eq_inl hbxEq
-      have hbyS : by ∈ S :=
+      have hbYS : bY ∈ S :=
         RelStructure.Attachment.mem_of_copyMap_eq_inl hbyEq
       have hxFi : eD ax ∈ copyCarrier (f i) := by
         refine ⟨⟨bx, hbxS⟩, ?_⟩
@@ -158,11 +158,11 @@ theorem attachment_copy_aStrong
             (B := B) (S := S) (D := D) (f := f) i bx hbxS).symm.trans
             hbxEq
       have hyFi : eD ay ∈ copyCarrier (f i) := by
-        refine ⟨⟨by, hbyS⟩, ?_⟩
+        refine ⟨⟨bY, hbYS⟩, ?_⟩
         apply Sum.inl.inj
         exact
           (RelStructure.Attachment.copyMap_mem
-            (B := B) (S := S) (D := D) (f := f) i by hbyS).symm.trans
+            (B := B) (S := S) (D := D) (f := f) i bY hbYS).symm.trans
             hbyEq
       have hxyD : eD ax ≠ eD ay := by
         intro hEq
