@@ -93,7 +93,8 @@ def oneEdgePiece (S : Set W) : HypergraphPiece W where
   edges := {S}
   edge_subset_carrier := by
     intro e he
-    simpa using he
+    have hEq : e = S := by simpa using he
+    simpa [hEq]
 
 /-- A one-edge piece has Berge girth above every finite bound. -/
 theorem oneEdgePiece_girthGT (S : Set W) (g : ℕ) :
