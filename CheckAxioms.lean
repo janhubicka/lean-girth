@@ -107,3 +107,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.concreteElementaryClosure_freeAmalgam
 #print axioms StructuralRamsey.Girth.sameCopy_of_comp
 #print axioms StructuralRamsey.Girth.aLinear_induce
+#print axioms StructuralRamsey.Girth.elementaryClosure_induceEmbedding
+#print axioms StructuralRamsey.Girth.elementaryClosure_closed_induce_aLinear
