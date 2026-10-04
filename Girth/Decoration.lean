@@ -250,6 +250,34 @@ def decorateSupportEmbedding
       · convert hArel using 1
         funext i
         exact hpart (x i)
+
+/-- For ordered A, every embedding into an exact transversal decoration is the
+canonical embedding carried by its unique support edge. -/
+theorem decorateSupport_ordered_copy_eq_edgeEmbedding
+    (A₀ : RelStructure L U)
+    [LinearOrder U] [Finite U]
+    {H : Set (Set W)} {part : W → U}
+    (hTrans : EdgeTransversal H part)
+    (hSupport :
+      supportCopies A₀.ordered (decorateSupport A₀.ordered H part) = H)
+    (a : Embedding A₀.ordered (decorateSupport A₀.ordered H part)) :
+    ∃ (e : Set W) (he : e ∈ H),
+      a = decorateSupport_edgeEmbedding A₀.ordered hTrans he := by
+  let e : Set W := copyCarrier a
+  have he : e ∈ H := by
+    rw [← hSupport]
+    exact ⟨a, rfl⟩
+  let b : Embedding A₀.ordered (decorateSupport A₀.ordered H part) :=
+    decorateSupport_edgeEmbedding A₀.ordered hTrans he
+  have hb : copyCarrier b = e := by
+    exact decorateSupport_edgeCarrier A₀.ordered hTrans he
+  have hs : SameCopy a b := by
+    change copyCarrier a = copyCarrier b
+    rw [hb]
+    rfl
+  exact ⟨e, he, ordered_embedding_eq_of_sameCopy a b hs⟩
+
+
 /-- A strong support embedding has A-strong image once the target decoration
 has exactly the prescribed support hypergraph.  This is the strong-inducedness
 bridge used in the structural local-forest corollary. -/
