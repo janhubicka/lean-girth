@@ -24,7 +24,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | Lemma 2.1 geometry of A-supported tree amalgams | fully proved; `ASupportedTreeAmalgam.girthGT`, `bIntersectionsControlled`, `singletonIntersectionsSupported`, `aLinear_of_base_and_controlled`, `aStrong_of_linear_and_controlled` |
 | Observation 2.2 closure expansions | actual c_A expansion, `IsClosed ↔ AStrong`, hereditary closed substructures, strong-base lift, relational free-amalgam geometry, and full `Structure.IsFreeAmalgam` packaging now encoded through CI |
 | Theorem 2.4 A-linear Ramsey theorem | actual c_A/c_B expansion, relational A-copy lift, closed-set classification, full-embedding closedness, A-strongness, and pairwise controlled intersections formalized; external class-Ramsey/free-amalgamation input remains |
-| §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths, parents, and parent-level equation formalized |
+| §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths/parents, and singleton-attachment girth induction formalized |
 | §§3–6 induced picture/local-forest construction | not yet formalized |
 | Main Theorem 1.1 | not yet formalized |
 
