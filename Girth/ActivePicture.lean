@@ -196,4 +196,44 @@ theorem activeInducedPictureStep
       A C₀ S E f κ hRange hLocal
   exact ⟨hC₁Partite, hC₁Cover, hPicture⟩
 
+/-- The invariant-preserving picture step specialized to the manuscript's
+canonical active subsystem P[e].  The range hypothesis is automatic from the
+definition of `activeCarrier`. -/
+theorem activeInducedPictureStep_onActiveCarrier
+    {VB : Type v}
+    (A : RelStructure L UA)
+    (B₀ : RelStructure L VB)
+    (D₀ : RelStructure L P)
+    (C₀ : StructuralRamsey.Partite.System L P X)
+    (α : UA → P)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C₀.induce (activeCarrier A C₀ α)) E)
+    (κ : Type*)
+    (hPartite : C₀.IsPartiteOver D₀)
+    (hCover :
+      StructuralRamsey.Partite.CoversIrreduciblesBy C₀ B₀ D₀)
+    (hEPartite : E.IsPartiteOver D₀)
+    (hECover :
+      StructuralRamsey.Partite.CoversIrreduciblesBy E B₀ D₀)
+    (hLocal :
+      ∀ χ :
+          StructuralRamsey.Partite.ProjectedEmbedding A E α → κ,
+        ∃ i : I,
+          ∀ e₁ e₂ : StructuralRamsey.Partite.ProjectedEmbedding A C₀ α,
+            χ ((activeInduceProjected A e₁
+              (projected_mem_activeCarrier A C₀ α e₁)).comp (f i)) =
+              χ ((activeInduceProjected A e₂
+                (projected_mem_activeCarrier A C₀ α e₂)).comp (f i))) :
+    let C₁ := StructuralRamsey.Partite.Attachment.attach
+      C₀ (activeCarrier A C₀ α) E f
+    C₁.IsPartiteOver D₀ ∧
+      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ ∧
+      StructuralRamsey.Partite.PictureProperty A C₀ α C₁ κ := by
+  exact activeInducedPictureStep
+    A B₀ D₀ C₀ (activeCarrier A C₀ α) E f κ
+    hPartite hCover hEPartite hECover
+    (projected_mem_activeCarrier A C₀ α) hLocal
+
+
 end StructuralRamsey.Girth
