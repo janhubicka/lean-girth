@@ -13,3 +13,4 @@ import Girth.BergeGlue
 import Girth.TreeGirth
 import Girth.TargetClosure
 import Girth.ClosedCopyGeometry
+import Girth.ClosureExpansion
