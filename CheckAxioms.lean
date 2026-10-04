@@ -87,3 +87,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.elementaryClosure_isClosed_iff_aStrong
 #print axioms StructuralRamsey.Girth.targetClosure_isClosed_iff
 #print axioms StructuralRamsey.Girth.targetClosure_closed_classify_nonempty
+
+#print axioms StructuralRamsey.Girth.structureEmbedding_range_isClosed
+#print axioms StructuralRamsey.Girth.structureIsClosed_inter
+#print axioms StructuralRamsey.Girth.structureIsClosed_preimage
+#print axioms StructuralRamsey.Girth.targetEmbedding_range_pairClosed
+#print axioms StructuralRamsey.Girth.targetEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.targetEmbedding_pullback_targetClosed
+#print axioms StructuralRamsey.Girth.targetEmbeddings_controlledIntersection
