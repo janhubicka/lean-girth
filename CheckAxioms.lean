@@ -146,5 +146,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupport_ordered_embeddingEquivEdge
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong_of_highGirth
+#print axioms StructuralRamsey.Girth.decorateStrongSupportCopy_of_highGirth
 
 #print axioms StructuralRamsey.Girth.customInducedPictureStep
