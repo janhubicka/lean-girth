@@ -41,13 +41,30 @@ def cyclicPath
     simp [idx, zeroK, cast, cyclicRunIndex]
   have hidxSucc :
       ∀ {m : ℕ} (hm : m + 1 < k),
-        idx ⟨m + 1, hm⟩ = cyclicSucc (idx ⟨m, by omega⟩) := by
+        idx ⟨m + 1, hm⟩ = cyclicSucc (idx ⟨m, Nat.lt_of_succ_lt hm⟩) := by
     intro m hm
+    let m0 : Fin k := ⟨m, Nat.lt_of_succ_lt hm⟩
+    let m1 : Fin k := ⟨m + 1, hm⟩
+    have haddlt :
+        ((cast m0 : Fin c.length) : ℕ) + 1 < c.length := by
+      change m + 1 < c.length
+      omega
+    have hone : ((1 : Fin c.length) : ℕ) = 1 := by
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+    have haddlt' :
+        ((cast m0 : Fin c.length) : ℕ) +
+          ((1 : Fin c.length) : ℕ) < c.length := by
+      simpa [hone] using haddlt
+    have hcast : cast m1 = cast m0 + 1 := by
+      apply Fin.ext
+      rw [Fin.val_add_eq_of_add_lt haddlt']
+      simpa [cast, m0, m1, hone]
     rw [cyclicSucc_eq_finRotate]
-    apply Fin.ext
-    simp [idx, cast, cyclicRunIndex, finCycle_apply, finRotate_apply,
-      Fin.add_def, Nat.add_mod]
-    omega
+    change cyclicRunIndex before (cast m1) =
+      finRotate c.length (cyclicRunIndex before (cast m0))
+    rw [hcast, cyclicRunIndex, cyclicRunIndex, finCycle_apply,
+      finCycle_apply, finRotate_apply]
+    ac_rfl
   let edges : Fin k → Set W := fun m => c.edge (idx m)
   let vertices : Fin (k + 1) → W :=
     Fin.cons (c.vertex before) (fun m : Fin k => c.vertex (idx m))
@@ -62,7 +79,9 @@ def cyclicPath
     rintro ⟨m, hm⟩
     have hbm : before = idx m := c.vertex_injective hm.symm
     have hform : idx m = before + (cast m + 1) := by
-      rw [idx, cyclicRunIndex, finCycle_apply, finRotate_apply]
+      change cyclicRunIndex before (cast m) =
+        before + (cast m + 1)
+      rw [cyclicRunIndex, finCycle_apply, finRotate_apply]
       ac_rfl
     rw [hform] at hbm
     have hzero : (cast m + 1 : Fin c.length) = 0 := by
@@ -71,12 +90,16 @@ def cyclicPath
     have haddlt : (cast m : ℕ) + 1 < c.length := by
       change (m : ℕ) + 1 < c.length
       omega
+    have hone : ((1 : Fin c.length) : ℕ) = 1 := by
+      rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+    have haddlt' :
+        ((cast m : Fin c.length) : ℕ) +
+          ((1 : Fin c.length) : ℕ) < c.length := by
+      simpa [hone] using haddlt
     have hval :
         ((cast m + 1 : Fin c.length) : ℕ) = (m : ℕ) + 1 := by
-      have hv :=
-        @Fin.val_add_eq_of_add_lt c.length (cast m)
-          (1 : Fin c.length) haddlt
-      simpa [cast] using hv
+      rw [Fin.val_add_eq_of_add_lt haddlt']
+      simpa [cast, hone]
     have hz := congrArg Fin.val hzero
     rw [hval] at hz
     simp at hz
@@ -98,12 +121,19 @@ def cyclicPath
       Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hkpos)
     subst k
     refine Fin.cases ?_ (fun j => ?_) i
-    · simpa [edges, vertices, zeroK, hidx0] using c.right_mem before
+    · have hz :
+          idx (0 : Fin (r + 1)) = cyclicSucc before := by
+        simpa [zeroK] using hidx0
+      change c.vertex before ∈ c.edge (idx (0 : Fin (r + 1)))
+      rw [hz]
+      exact c.right_mem before
     · have hs := hidxSucc (m := j.1) (by omega)
-      have hm := c.right_mem (idx j.castSucc)
-      simpa [edges, vertices, hs, Fin.succ_castSucc] using hm
+      change c.vertex (idx j.castSucc) ∈ c.edge (idx j.succ)
+      rw [hs]
+      exact c.right_mem (idx j.castSucc)
   · intro i
-    simpa [edges, vertices] using c.left_mem (idx i)
+    change c.vertex (idx i) ∈ c.edge (idx i)
+    exact c.left_mem (idx i)
 
 @[simp]
 theorem cyclicPath_edge
@@ -153,9 +183,14 @@ theorem cyclicPath_vertex_last
   have haddlt : (offN : ℕ) + 1 < c.length := by
     change k - 1 + 1 < c.length
     omega
+  have hone : ((1 : Fin c.length) : ℕ) = 1 := by
+    rw [Fin.val_one', Nat.mod_eq_of_lt (by omega)]
+  have haddlt' :
+      (offN : ℕ) + ((1 : Fin c.length) : ℕ) < c.length := by
+    simpa [hone] using haddlt
   have hoff : offN + 1 = kN := by
     apply Fin.ext
-    rw [Fin.val_add_eq_of_add_lt haddlt]
+    rw [Fin.val_add_eq_of_add_lt haddlt']
     change k - 1 + 1 = k
     omega
   have hidx :
