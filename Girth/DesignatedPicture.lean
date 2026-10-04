@@ -298,6 +298,11 @@ theorem activeSubsystem_aGenerated
       rcases hTupleIn i with ⟨a0, ha0⟩
       refine ⟨a0, ?_⟩
       apply Subtype.ext
-      simpa [inc] using (haS' a0).symm.trans ha0
+      have hval :
+          (aS' a0).1 = aC a0 := by
+        have h := (haS' a0).symm
+        change inc (aS' a0) = aC a0 at h
+        exact h
+      exact hval.trans ha0
 
 end StructuralRamsey.Girth
