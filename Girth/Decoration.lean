@@ -642,9 +642,9 @@ theorem structuralPartiteWitness_of_strongSupportRamsey
       (∀ S : Set Y,
         (R.toRelStructure.induce S).Irreducible →
           ∃ e : Set Y, e ∈ K ∧ ∀ z : S, z.1 ∈ e) ∧
-      ∀ f : StrongSupportEmbedding H K, f ∈ 𝓗 →
+      ∀ (f : StrongSupportEmbedding H K) (hf : f ∈ 𝓗),
         let g : RelStructure.Embedding P.toRelStructure R.toRelStructure :=
-          decorateSupportEmbedding A f (hParts f ‹f ∈ 𝓗›) hH hCoverX
+          decorateSupportEmbedding A f (hParts f hf) hH hCoverX
         AStrong A R.toRelStructure (copyCarrier g) := by
   let P := decorateSupportSystem A H partX hTransH
   let R := decorateSupportSystem A K partY hTransK
