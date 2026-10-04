@@ -1,0 +1,198 @@
+import Girth
+
+#print axioms StructuralRamsey.Girth.aStrong_univ
+#print axioms StructuralRamsey.Girth.sameCopy_of_range_subset
+#print axioms StructuralRamsey.Girth.girthGT_mono
+#print axioms StructuralRamsey.Girth.girthGT_one
+#print axioms StructuralRamsey.Girth.girthGT_of_subset
+#print axioms StructuralRamsey.Girth.girthGT_mappedSupportCopies
+#print axioms StructuralRamsey.Girth.cyclicSucc_eq_finRotate
+#print axioms StructuralRamsey.Girth.exists_cyclic_change_of_nonconstant
+#print axioms StructuralRamsey.Girth.exists_first_cyclic_change
+#print axioms StructuralRamsey.Girth.BergePath.initialSegment
+#print axioms StructuralRamsey.Girth.BergePath.close
+#print axioms StructuralRamsey.Girth.BergeCycle.cyclicPath
+#print axioms StructuralRamsey.Girth.pairwise_subsingleton_of_girthGT_two
+#print axioms StructuralRamsey.Girth.aLinear_of_girthGT_two
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.toTreeAmalgam
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.irreducible_contained_in_copy
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopy_contained_in_copy
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bCopy_same_constituent
+#print axioms StructuralRamsey.Girth.freeAmalgam_side_intersection
+#print axioms StructuralRamsey.Girth.irreducibleCopy_side_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.sameCopy_comp
+#print axioms StructuralRamsey.Girth.controlledIntersection_comp
+#print axioms StructuralRamsey.Girth.controlledPair_congr
+#print axioms StructuralRamsey.Girth.controlledPair_swap
+#print axioms StructuralRamsey.Girth.crossControlled_glueA
+#print axioms StructuralRamsey.Girth.crossSubsingleton_gluePoint
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.bIntersectionsControlled
+#print axioms StructuralRamsey.Girth.intersectionSubsingleton_congr
+#print axioms StructuralRamsey.Girth.intersectionMem_congr
+#print axioms StructuralRamsey.Girth.vertexSupported_comp
+#print axioms StructuralRamsey.Girth.vertexSupported_congr
+#print axioms StructuralRamsey.Girth.singletonSupport_congr
+#print axioms StructuralRamsey.Girth.vertexSupported_of_common_ACopy
+#print axioms StructuralRamsey.Girth.singletonIntersectionsSupported_comp
+#print axioms StructuralRamsey.Girth.crossSingletonSupport_glueA
+#print axioms StructuralRamsey.Girth.crossSingletonSupport_gluePoint
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.singletonIntersectionsSupported
+#print axioms StructuralRamsey.Girth.allowedIntersection_symm
+#print axioms StructuralRamsey.Girth.JoinTree.occurrence_reachable
+#print axioms StructuralRamsey.Girth.ForestOfCopies.joinTree_of_nonempty
+#print axioms StructuralRamsey.Girth.JoinTree.mem_parent_of_mem_leaf_and_other
+#print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_iUnion_eq_parent
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.aCopiesCoveredByB
+#print axioms StructuralRamsey.Girth.sameCopy_of_contained_and_not_subsingleton
+#print axioms StructuralRamsey.Girth.aLinear_of_base_and_controlled
+#print axioms StructuralRamsey.Girth.aStrong_of_linear_and_controlled
+#print axioms StructuralRamsey.Girth.localTreeRamseyCore
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_subsingleton_glue
+
+#print axioms StructuralRamsey.Girth.cyclicRunIndex_ne_before
+#print axioms StructuralRamsey.Girth.BergePath.ofEdgeMem
+#print axioms StructuralRamsey.Girth.BergeCycle.cyclicPath_vertex_last
+
+#print axioms StructuralRamsey.Girth.exists_cyclic_run_to_change
+#print axioms StructuralRamsey.Girth.exists_false_cyclic_run
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_edge_glue
+
+#print axioms StructuralRamsey.Girth.freeAmalgam_overlap_carrier_eq
+#print axioms StructuralRamsey.Girth.supportCopies_eq_union_mapped_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.mappedSupport_cross_subset_overlap
+#print axioms StructuralRamsey.Girth.punit_overlap_subsingleton
+#print axioms StructuralRamsey.Girth.supportCopies_eq_mapped_of_iso
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.girthGT
+
+#print axioms StructuralRamsey.Girth.JoinTree.exists_leaf_attachment
+
+#print axioms StructuralRamsey.Girth.sameCopy_of_common_distinct_pair
+#print axioms StructuralRamsey.Girth.targetClosed_univ
+#print axioms StructuralRamsey.Girth.targetClosed_singleton
+#print axioms StructuralRamsey.Girth.targetClosed_copy
+#print axioms StructuralRamsey.Girth.targetClosed_of_distinct_pair
+#print axioms StructuralRamsey.Girth.targetClosed_classify
+#print axioms StructuralRamsey.Girth.targetClosed_classify_nonempty
+
+#print axioms StructuralRamsey.Girth.pairClosed_iff_aStrong
+
+#print axioms StructuralRamsey.Girth.controlledIntersection_of_targetClosedPullback
+#print axioms StructuralRamsey.Girth.bIntersectionsControlled_of_targetClosedPullbacks
+#print axioms StructuralRamsey.Girth.bCopiesStrong_of_pairClosed
+#print axioms StructuralRamsey.Girth.closedTargetCopies_geometry
+
+#print axioms StructuralRamsey.Girth.elementaryClosure_isClosed_iff_pairClosed
+#print axioms StructuralRamsey.Girth.elementaryClosure_isClosed_iff_aStrong
+#print axioms StructuralRamsey.Girth.targetClosure_isClosed_iff
+#print axioms StructuralRamsey.Girth.targetClosure_closed_classify_nonempty
+
+#print axioms StructuralRamsey.Girth.structureEmbedding_range_isClosed
+#print axioms StructuralRamsey.Girth.structureIsClosed_inter
+#print axioms StructuralRamsey.Girth.structureIsClosed_preimage
+#print axioms StructuralRamsey.Girth.targetEmbedding_range_pairClosed
+#print axioms StructuralRamsey.Girth.targetEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.targetEmbedding_pullback_targetClosed
+#print axioms StructuralRamsey.Girth.targetEmbeddings_controlledIntersection
+
+#print axioms StructuralRamsey.Girth.targetClosureLift
+
+#print axioms StructuralRamsey.Girth.elementaryClosureEmbeddingOfStrong
+#print axioms StructuralRamsey.Girth.freeAmalgam_left_aStrong
+#print axioms StructuralRamsey.Girth.freeAmalgam_right_aStrong
+#print axioms StructuralRamsey.Girth.aLinear_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.concreteElementaryClosureAmalgam_geometry
+#print axioms StructuralRamsey.Girth.elementaryClosure_isFreeAmalgam
+#print axioms StructuralRamsey.Girth.concreteElementaryClosure_freeAmalgam
+#print axioms StructuralRamsey.Girth.sameCopy_of_comp
+#print axioms StructuralRamsey.Girth.ordered_embedding_eq_of_sameCopy
+#print axioms StructuralRamsey.Girth.aLinear_induce
+#print axioms StructuralRamsey.Girth.elementaryClosure_induceEmbedding
+#print axioms StructuralRamsey.Girth.elementaryClosure_closed_induce_aLinear
+#print axioms StructuralRamsey.Girth.pieceListEdges_subset_carrier
+#print axioms StructuralRamsey.Girth.girthGT_pieceList_of_singletonAttachments
+#print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_rest_subsingleton
+#print axioms StructuralRamsey.Girth.elementaryEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.elementaryClosure_freeAmalgam_of_embeddings
+#print axioms StructuralRamsey.Girth.girthGT_of_edgeFamily_subsingleton
+#print axioms StructuralRamsey.Girth.oneEdgePiece_girthGT
+#print axioms StructuralRamsey.Girth.girthGT_oneEdgeList_of_singletonAttachments
+#print axioms StructuralRamsey.Girth.bergeTriangle_of_three_pair_edges
+#print axioms StructuralRamsey.Girth.three_pair_edges_not_all_distinct
+#print axioms StructuralRamsey.Girth.pairCovered_subset_edge_of_girthGT_three
+#print axioms StructuralRamsey.Girth.irreducible_induce_subset_edge_of_girthGT_three
+#print axioms StructuralRamsey.Girth.supportCopies_eq_of_decorated_cover
+#print axioms StructuralRamsey.Girth.decorated_highGirth_support_exact
+#print axioms StructuralRamsey.Girth.closureFreeAmalgamRel
+#print axioms StructuralRamsey.Girth.aLinear_of_embedding
+#print axioms StructuralRamsey.Girth.closureEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.hasElementaryCA_of_embedding
+#print axioms StructuralRamsey.Girth.targetClosure_mem_ElementaryCAClass
+#print axioms StructuralRamsey.Girth.closureLanguage_positiveFuncArity
+#print axioms StructuralRamsey.Girth.ElementaryCAClass_freeAmalgamationClass
+#print axioms StructuralRamsey.Girth.structureEmbeddingWithLinearOrder
+#print axioms StructuralRamsey.Girth.ClosedTargetRamseyFamily.arrow
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_of_monotone_embeddings
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_ordered
+#print axioms StructuralRamsey.Girth.aLinearRamsey_of_monotone_embeddings
+#print axioms StructuralRamsey.Girth.aLinearRamsey_ordered
+#print axioms StructuralRamsey.Girth.EdgeTransversal.edge_eq_range_vertex
+#print axioms StructuralRamsey.Girth.decorateSupport_relationsCovered
+#print axioms StructuralRamsey.Girth.decorateSupport_edgeCarrier
+#print axioms StructuralRamsey.Girth.decorateSupportSystem
+#print axioms StructuralRamsey.Girth.decorateSupportSystem_edgeEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupportSystemEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupportSystem_embeddingEquivEdge
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapEdge
+#print axioms StructuralRamsey.Girth.copyCarrier_comp_decorateSupportSystemEmbedding
+#print axioms StructuralRamsey.Girth.strongSupportRamseyFamily_partiteArrow
+#print axioms StructuralRamsey.Girth.structuralPartiteWitness_of_strongSupportRamsey
+#print axioms StructuralRamsey.Girth.decorateSupport_exact
+#print axioms StructuralRamsey.Girth.decorateSupportEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupport_ordered_copy_eq_edgeEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupport_ordered_embeddingEquivEdge
+#print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.decorateSupportEmbedding_range_aStrong_of_highGirth
+#print axioms StructuralRamsey.Girth.decorateStrongSupportCopy_of_highGirth
+
+#print axioms StructuralRamsey.Girth.customInducedPictureStep
+
+#print axioms StructuralRamsey.Girth.activeInduceProjected
+#print axioms StructuralRamsey.Girth.activeAttachment_copy_comp
+#print axioms StructuralRamsey.Girth.activeAttachment_pictureProperty
+#print axioms StructuralRamsey.Girth.activeInducedPictureStep
+#print axioms StructuralRamsey.Girth.activeCarrier
+#print axioms StructuralRamsey.Girth.projected_mem_activeCarrier
+#print axioms StructuralRamsey.Girth.activeCarrier_subset_support
+#print axioms StructuralRamsey.Girth.activeInducedPictureStep_onActiveCarrier
+
+#print axioms StructuralRamsey.Girth.irreduciblesExtendTo_partiteAttachment
+#print axioms StructuralRamsey.Girth.attachment_copy_core_intersection
+#print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection
+#print axioms StructuralRamsey.Girth.attachment_copy_copy_intersection_subset_core
+#print axioms StructuralRamsey.Girth.attachment_irreducible_copy_localize
+#print axioms StructuralRamsey.Girth.attachment_core_aStrong
+#print axioms StructuralRamsey.Girth.attachment_copy_aStrong
+#print axioms StructuralRamsey.Girth.attachment_aLinear
+#print axioms StructuralRamsey.Girth.shared_standard_copy_preimage_mem_glue
+#print axioms StructuralRamsey.Girth.shared_standard_copy_part_mem_active_support
+#print axioms StructuralRamsey.Girth.shared_standard_copy_part_mem_base_intersection
+#print axioms StructuralRamsey.Girth.no_common_projected_copy_of_subsingleton_base_intersection
+#print axioms StructuralRamsey.Girth.no_common_projected_copy_of_base_aLinear
+#print axioms StructuralRamsey.Girth.activePictureStep_invariants
+#print axioms StructuralRamsey.Girth.DesignatedCopy.projects
+#print axioms StructuralRamsey.Girth.activeCarrier_part_in_baseCopy
+#print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated
+#print axioms StructuralRamsey.Girth.DesignatedCopy.transportToStandard
+#print axioms StructuralRamsey.Girth.designatedCoversIrreducibles_partiteAttachment
+#print axioms StructuralRamsey.Girth.transportedDesignated_corePoint_supported
+#print axioms StructuralRamsey.Girth.initialDesignatedCopy
+#print axioms StructuralRamsey.Girth.initial_designatedCoversIrreducibles
+#print axioms StructuralRamsey.Girth.localIrreduciblesCovered_of_extendTo_and_ACopyCover
+#print axioms StructuralRamsey.Girth.decorateSupport_irreduciblesExtendTo
+#print axioms StructuralRamsey.Girth.localForest_ACopiesCovered
+#print axioms StructuralRamsey.Girth.localForest_localIrreduciblesCovered
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.carrier_subset_of_isOneEdge_of_allowed_not_subsingleton
+#print axioms StructuralRamsey.Girth.HypergraphPiece.isOneEdge_allowed_dichotomy

@@ -1,0 +1,11 @@
+name = "lean-girth"
+version = "0.1.0"
+defaultTargets = ["Girth"]
+
+[[require]]
+name = "partite-construction"
+git = "https://github.com/janhubicka/partite-construction.git"
+rev = "d2394f65861528f27d68c4a42042285dafef301d"
+
+[[lean_lib]]
+name = "Girth"
