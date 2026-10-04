@@ -640,7 +640,8 @@ def elementaryClosure_induceEmbedding
           RelStructure.inclusion D₀ S
         have hStrong : AStrong A D₀ S :=
           (elementaryClosure_isClosed_iff_aStrong A D₀ S).mp hClosed
-        ext y
+        apply Set.ext
+        intro y
         constructor
         · rintro ⟨z, hz, rfl⟩
           rcases hz with ⟨hxy, a, h0, h1, hz⟩
