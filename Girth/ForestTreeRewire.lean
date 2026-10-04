@@ -92,4 +92,59 @@ theorem JoinTree.disjoint_deletedGraph_map_neighborGraph
   exact hrs.ne (Subtype.ext hrsEq)
 
 
+
+/-- Replacing the centre-star by a connected graph on all former neighbours
+keeps the surviving vertices connected. -/
+theorem JoinTree.rewireAfterDelete_connected
+    {F : ι → HypergraphPiece V} [Fintype ι]
+    (J : JoinTree F) (center : ι)
+    (R : SimpleGraph (J.tree.neighborSet center))
+    (hR : R.Connected) :
+    (J.rewireAfterDelete center R).Connected := by
+  classical
+  let e := J.neighborToErasedEmbedding center
+  haveI : Nonempty (J.tree.neighborSet center) := hR.nonempty
+  haveI : Nonempty {i : ι // i ∈ ({center} : Set ι)ᶜ} :=
+    Nonempty.map e hR.nonempty
+  refine ⟨?_⟩
+  intro a b
+  have ha : a.1 ≠ center := by
+    simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using a.2
+  have hb : b.1 ≠ center := by
+    simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using b.2
+  obtain ⟨ra, hra, hreachA⟩ :=
+    J.exists_neighbor_reachable_after_delete ha
+  obtain ⟨rb, hrb, hreachB⟩ :=
+    J.exists_neighbor_reachable_after_delete hb
+  let raN : J.tree.neighborSet center := ⟨ra, hra⟩
+  let rbN : J.tree.neighborSet center := ⟨rb, hrb⟩
+  have hA :
+      (J.rewireAfterDelete center R).Reachable
+        a (J.neighborToErasedEmbedding center raN) := by
+    have h := hreachA.symm.mono
+      (show J.tree.induce (({center} : Set ι)ᶜ) ≤
+        J.rewireAfterDelete center R from le_sup_left)
+    convert h using 1 <;> apply Subtype.ext <;> rfl
+  have hRootsMap :
+      (R.map (J.neighborToErasedEmbedding center)).Reachable
+        (J.neighborToErasedEmbedding center raN)
+        (J.neighborToErasedEmbedding center rbN) := by
+    have h := hR raN rbN
+    exact h.map
+      (SimpleGraph.Embedding.map
+        (J.neighborToErasedEmbedding center) R).toHom
+  have hRoots :
+      (J.rewireAfterDelete center R).Reachable
+        (J.neighborToErasedEmbedding center raN)
+        (J.neighborToErasedEmbedding center rbN) :=
+    hRootsMap.mono le_sup_right
+  have hB :
+      (J.rewireAfterDelete center R).Reachable
+        (J.neighborToErasedEmbedding center rbN) b := by
+    have h := hreachB.mono
+      (show J.tree.induce (({center} : Set ι)ᶜ) ≤
+        J.rewireAfterDelete center R from le_sup_left)
+    convert h using 1 <;> apply Subtype.ext <;> rfl
+  exact hA.trans (hRoots.trans hB)
+
 end StructuralRamsey.Girth
