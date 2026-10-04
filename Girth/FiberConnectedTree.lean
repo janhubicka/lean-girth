@@ -41,7 +41,7 @@ theorem fiberCliqueGraph_walk_support_label
     label x = label u := by
   induction p with
   | nil =>
-      exact congrArg label hx
+      exact congrArg label (SimpleGraph.Walk.mem_support_nil_iff.mp hx)
   | @cons u w v huw p ih =>
       simp only [SimpleGraph.Walk.support_cons, List.mem_cons] at hx
       rcases hx with rfl | hx
