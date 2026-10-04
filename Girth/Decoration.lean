@@ -606,4 +606,62 @@ theorem decorateStrongSupportCopy_of_highGirth
   exact hs
 
 
+/-- Structural form of a high-girth support Ramsey witness.
+
+This packages the whole support-to-structure translation used in the proof of
+the structural local-forest partite lemma.  What remains external here is only
+the genuinely hypergraph-theoretic production of the strong Ramsey family and
+its forest property. -/
+theorem structuralPartiteWitness_of_strongSupportRamsey
+    {X Y : Type v}
+    (A : RelStructure L U)
+    [Finite U]
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (hA : A.Irreducible)
+    (hTransH : EdgeTransversal H partX)
+    (hTransK : EdgeTransversal K partY)
+    (hgtH : GirthGT H 3)
+    (hgtK : GirthGT K 3)
+    (hH : H.Nonempty)
+    (hK : K.Nonempty)
+    (hCoverX : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e)
+    (hCoverY : ∀ y : Y, ∃ e : Set Y, e ∈ K ∧ y ∈ e)
+    (𝓗 : Set (StrongSupportEmbedding H K))
+    (hParts :
+      ∀ f : StrongSupportEmbedding H K, f ∈ 𝓗 →
+        ∀ x : X, partY (f x) = partX x)
+    {κ : Type*}
+    (hRamsey : StrongSupportRamseyFamily H K 𝓗 κ) :
+    let P := decorateSupportSystem A H partX hTransH
+    let R := decorateSupportSystem A K partY hTransK
+    supportCopies A P.toRelStructure = H ∧
+      supportCopies A R.toRelStructure = K ∧
+      StructuralRamsey.Partite.Arrow
+        (StructuralRamsey.Partite.transversal A) P R κ ∧
+      (∀ S : Set Y,
+        (R.toRelStructure.induce S).Irreducible →
+          ∃ e : Set Y, e ∈ K ∧ ∀ z : S, z.1 ∈ e) ∧
+      ∀ f : StrongSupportEmbedding H K, f ∈ 𝓗 →
+        let g : RelStructure.Embedding P.toRelStructure R.toRelStructure :=
+          decorateSupportEmbedding A f (hParts f ‹f ∈ 𝓗›) hH hCoverX
+        AStrong A R.toRelStructure (copyCarrier g) := by
+  let P := decorateSupportSystem A H partX hTransH
+  let R := decorateSupportSystem A K partY hTransK
+  have hExactH :=
+    decorateSupport_exact A hA hTransH hgtH hH hCoverX
+  have hExactK :=
+    decorateSupport_exact A hA hTransK hgtK hK hCoverY
+  have hArrow :
+      StructuralRamsey.Partite.Arrow
+        (StructuralRamsey.Partite.transversal A) P R κ := by
+    exact strongSupportRamseyFamily_partiteArrow
+      A hTransH hTransK hExactH.1 hExactK.1
+      hH hCoverX 𝓗 hParts hRamsey
+  refine ⟨hExactH.1, hExactK.1, hArrow, hExactK.2, ?_⟩
+  intro f hf
+  exact decorateStrongSupportCopy_of_highGirth
+    A f (hParts f hf) hH hCoverX hA hTransK hgtK hK hCoverY
+
+
 end StructuralRamsey.Girth
