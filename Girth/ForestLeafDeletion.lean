@@ -14,12 +14,10 @@ namespace StructuralRamsey.Girth
 universe v
 variable {W ι : Type v}
 
-/-- Restrict a family of pieces to all indices different from `leaf`.  The
-complement-of-singleton subtype is chosen so that the restricted join tree is
-literally `SimpleGraph.induce`. -/
+/-- Restrict a family of pieces to all indices different from `leaf`. -/
 def erasePiece
     (F : ι → HypergraphPiece W) (leaf : ι) :
-    {i : ι // i ≠ leaf} → HypergraphPiece W :=
+    {i : ι // i ∈ (({leaf} : Set ι)ᶜ)} → HypergraphPiece W :=
   fun i => F i.1
 
 namespace JoinTree
@@ -32,6 +30,7 @@ theorem degree_eq_one_of_unique_neighbor
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     J.tree.degree leaf = 1 := by
   classical
+  letI : Fintype (J.tree.neighborSet leaf) := Fintype.ofFinite _
   rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
   exact ⟨parent, hadj, huniq⟩
 
@@ -45,23 +44,25 @@ noncomputable def eraseLeaf
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     JoinTree (erasePiece F leaf) := by
   classical
-  let s : Set ι := {i : ι | i ≠ leaf}
+  letI : Fintype (J.tree.neighborSet leaf) := Fintype.ofFinite _
   have hdeg : J.tree.degree leaf = 1 :=
     J.degree_eq_one_of_unique_neighbor hadj huniq
-  have hTreeErase : (J.tree.induce s).IsTree := by
+  have hTreeErase :
+      (J.tree.induce (({leaf} : Set ι)ᶜ)).IsTree := by
     constructor
-    · simpa [s] using
-        J.isTree.connected.induce_compl_singleton_of_degree_eq_one hdeg
-    · exact J.isTree.isAcyclic.induce s
+    · exact J.isTree.connected.induce_compl_singleton_of_degree_eq_one hdeg
+    · exact J.isTree.isAcyclic.induce (({leaf} : Set ι)ᶜ)
   refine
-    { tree := J.tree.induce s
+    { tree := J.tree.induce (({leaf} : Set ι)ᶜ)
       isTree := hTreeErase
       running := ?_ }
   intro x
   let occ : Set ι := {i : ι | x ∈ (F i).carrier}
-  let occErase : Set s := {i : s | x ∈ (F i.1).carrier}
+  let occErase :
+      Set {i : ι // i ∈ (({leaf} : Set ι)ᶜ)} :=
+    {i | x ∈ (F i.1).carrier}
   change
-    ((J.tree.induce s).induce occErase).Preconnected
+    ((J.tree.induce (({leaf} : Set ι)ᶜ)).induce occErase).Preconnected
   by_cases hxLeaf : x ∈ (F leaf).carrier
   · let leafOcc : occ := ⟨leaf, hxLeaf⟩
     by_cases hsub : occErase.Subsingleton
@@ -72,14 +73,18 @@ noncomputable def eraseLeaf
       have hparentOcc : x ∈ (F parent).carrier := by
         obtain ⟨j, hj, _k, _hk, _hjk⟩ := hnontriv
         have hjne : j.1 ≠ leaf := by
-          simpa [s] using j.2
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using j.2
         exact
           J.mem_parent_of_mem_leaf_and_other
             hadj huniq hjne hxLeaf hj
       let parentOcc : occ := ⟨parent, hparentOcc⟩
-      have hOccConnected : (J.tree.induce occ).Connected := by
-        refine ⟨?_, ⟨leafOcc⟩⟩
+      have hOccPre : (J.tree.induce occ).Preconnected := by
         simpa [occ] using J.running x
+      letI : Nonempty occ := ⟨leafOcc⟩
+      have hOccConnected : (J.tree.induce occ).Connected :=
+        ⟨hOccPre⟩
+      letI : Fintype ((J.tree.induce occ).neighborSet leafOcc) :=
+        Fintype.ofFinite _
       have hLeafDegree :
           (J.tree.induce occ).degree leafOcc = 1 := by
         rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
@@ -94,32 +99,32 @@ noncomputable def eraseLeaf
           hLeafDegree).preconnected
       let phi :
           ((J.tree.induce occ).induce ({leafOcc} : Set occ)ᶜ) →g
-            ((J.tree.induce s).induce occErase) where
-        toFun z :=
-          ⟨⟨z.1.1, by
-              have hz : z.1 ≠ leafOcc := by
-                simpa using z.2
-              have hne : z.1.1 ≠ leaf := by
-                intro h
-                apply hz
-                apply Subtype.ext
-                exact h
-              simpa [s] using hne⟩,
-            z.1.2⟩
-        map_rel' := by
-          intro a b hab
-          exact hab
+            ((J.tree.induce (({leaf} : Set ι)ᶜ)).induce occErase) :=
+        { toFun := fun z =>
+            ⟨⟨z.1.1, by
+                have hz : z.1 ≠ leafOcc := by
+                  simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+                have hne : z.1.1 ≠ leaf := by
+                  intro h
+                  apply hz
+                  apply Subtype.ext
+                  exact h
+                simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hne⟩,
+              z.1.2⟩
+          map_rel' := by
+            intro a b hab
+            exact hab }
       have hphi : Function.Surjective phi := by
         intro y
         let q : occ := ⟨y.1.1, y.2⟩
         have hqne : q ≠ leafOcc := by
           have hyne : y.1.1 ≠ leaf := by
-            simpa [s] using y.1.2
+            simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using y.1.2
           intro h
           apply hyne
           exact congrArg Subtype.val h
         refine ⟨⟨q, ?_⟩, ?_⟩
-        · simpa using hqne
+        · simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hqne
         · apply Subtype.ext
           apply Subtype.ext
           rfl
@@ -128,18 +133,18 @@ noncomputable def eraseLeaf
       simpa [occ] using J.running x
     let phi :
         (J.tree.induce occ) →g
-          ((J.tree.induce s).induce occErase) where
-      toFun z :=
-        ⟨⟨z.1, by
-            have hne : z.1 ≠ leaf := by
-              intro h
-              subst h
-              exact hxLeaf z.2
-            simpa [s] using hne⟩,
-          z.2⟩
-      map_rel' := by
-        intro a b hab
-        exact hab
+          ((J.tree.induce (({leaf} : Set ι)ᶜ)).induce occErase) :=
+      { toFun := fun z =>
+          ⟨⟨z.1, by
+              have hne : z.1 ≠ leaf := by
+                intro h
+                subst h
+                exact hxLeaf z.2
+              simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hne⟩,
+            z.2⟩
+        map_rel' := by
+          intro a b hab
+          exact hab }
     have hphi : Function.Surjective phi := by
       intro y
       refine ⟨⟨y.1.1, y.2⟩, ?_⟩
