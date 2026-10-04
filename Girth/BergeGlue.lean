@@ -90,7 +90,7 @@ theorem girthGT_union_of_subsingleton_glue
     let z : Fin c.length := ⟨0, by omega⟩
     have hzadd : before + z = before := by
       apply Fin.ext
-      simp [z, Fin.add_def]
+      simp [z, Fin.add_def, Nat.mod_eq_of_lt before.2]
     have hkzero : k = z := by
       apply add_left_cancel (a := before)
       calc
