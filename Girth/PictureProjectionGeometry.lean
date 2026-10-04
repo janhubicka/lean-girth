@@ -181,11 +181,11 @@ theorem no_common_projected_copy_of_base_aLinear
     (f : I → StructuralRamsey.Partite.Embedding (B.induce S) D)
     (hS :
       S ⊆ B.support
-        ({ toFun := α₀.toFun, injective := α₀.injective } : UA ↪ P))
+        ({ toFun := α₀.toFun, inj' := α₀.injective } : UA ↪ P))
     {i j : I} (hij : i ≠ j)
     (e : StructuralRamsey.Partite.ProjectedEmbedding A
       (StructuralRamsey.Partite.Attachment.attach B S D f)
-      ({ toFun := β₀.toFun, injective := β₀.injective } : UA ↪ P))
+      ({ toFun := β₀.toFun, inj' := β₀.injective } : UA ↪ P))
     (hi :
       copyCarrier e.val ⊆
         copyCarrier
@@ -199,9 +199,9 @@ theorem no_common_projected_copy_of_base_aLinear
     (a b : UA) (hab : a ≠ b) :
     False := by
   let α : UA ↪ P :=
-    { toFun := α₀.toFun, injective := α₀.injective }
+    { toFun := α₀.toFun, inj' := α₀.injective }
   let β : UA ↪ P :=
-    { toFun := β₀.toFun, injective := β₀.injective }
+    { toFun := β₀.toFun, inj' := β₀.injective }
   have hInter :
       (Set.range α ∩ Set.range β).Subsingleton := by
     simpa [α, β, copyCarrier] using hLinear α₀ β₀ hne
