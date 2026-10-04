@@ -170,5 +170,3 @@ import Girth
 #print axioms StructuralRamsey.Girth.aStrong_of_isClosed_of_cACompatible
 #print axioms StructuralRamsey.Girth.cACompatible_of_embedding
 #print axioms StructuralRamsey.Girth.cACompatible_of_freeAmalgam
-#print axioms StructuralRamsey.Girth.elementaryClosureClass_freeAmalgamation
-#print axioms StructuralRamsey.Girth.elementaryClosureClass_orderedRamsey
