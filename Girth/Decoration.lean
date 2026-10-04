@@ -201,24 +201,23 @@ def decorateSupportEmbedding
       have hArelX : A.rel R (partX ∘ x) := by
         convert hArel using 1
         funext i
-        exact hpart (x i)
+        exact (hpart (x i)).symm
       have hSourceEdge :
           ∃ e : Set X, e ∈ H ∧ ∀ i, x i ∈ e := by
         by_cases hRange : (Set.range x).Subsingleton
-        · cases har : L.arity R with
-          | zero =>
-              obtain ⟨e, he⟩ := hH
-              refine ⟨e, he, ?_⟩
-              intro i
-              exact Fin.elim0 (Fin.cast (by simp [har]) i)
-          | succ n =>
-              let i0 : Fin (n + 1) := ⟨0, Nat.zero_lt_succ n⟩
-              obtain ⟨e, he, hxe⟩ := hCover (x i0)
-              refine ⟨e, he, ?_⟩
-              intro i
-              have hEq : x i = x i0 :=
-                hRange ⟨i, rfl⟩ ⟨i0, rfl⟩
-              simpa [hEq] using hxe
+        · by_cases hzero : L.arity R = 0
+          · obtain ⟨e, he⟩ := hH
+            refine ⟨e, he, ?_⟩
+            intro i
+            exact Fin.elim0 (Fin.cast hzero i)
+          · have hpos : 0 < L.arity R := Nat.pos_of_ne_zero hzero
+            let i0 : Fin (L.arity R) := ⟨0, hpos⟩
+            obtain ⟨e, he, hxe⟩ := hCover (x i0)
+            refine ⟨e, he, ?_⟩
+            intro i
+            have hEq : x i = x i0 :=
+              hRange ⟨i, rfl⟩ ⟨i0, rfl⟩
+            simpa [hEq] using hxe
         · have hMeet :
               ¬ (E ∩ Set.range f).Subsingleton := by
             rw [Set.not_subsingleton_iff] at hRange
@@ -250,5 +249,5 @@ def decorateSupportEmbedding
         exact ⟨x i, hxe i, rfl⟩
       · convert hArel using 1
         funext i
-        exact (hpart (x i)).symm
+        exact hpart (x i)
 end StructuralRamsey.Girth
