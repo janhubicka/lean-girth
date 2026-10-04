@@ -193,3 +193,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupport_irreduciblesExtendTo
 #print axioms StructuralRamsey.Girth.localForest_ACopiesCovered
 #print axioms StructuralRamsey.Girth.localForest_localIrreduciblesCovered
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.carrier_subset_of_isOneEdge_of_allowed_not_subsingleton
+#print axioms StructuralRamsey.Girth.HypergraphPiece.isOneEdge_allowed_dichotomy
