@@ -168,6 +168,29 @@ theorem closedTargetRamseyFamily_of_monotone_embeddings
       congrArg χ hcomp₂
 
 
+
+/-- Ordered specialization of the closed-target Ramsey family theorem.  The
+distinguished order makes A hereditarily irreducible and every embedding
+strictly monotone. -/
+theorem closedTargetRamseyFamily_ordered
+    (A₀ : RelStructure L U) (B₀ : RelStructure L V)
+    [LinearOrder U] [LinearOrder V]
+    [Finite U] [Finite V]
+    (hBlin : ALinear A₀.ordered B₀.ordered)
+    (κ : Type*) [Fintype κ] [Nonempty κ] :
+    ∃ (W : Type v) (_ : Finite W) (o : LinearOrder W)
+      (C : StructuralRamsey.Structure
+        (closureLanguage L.withOrder) W),
+      ElementaryCAClass A₀.ordered C ∧
+      ClosedTargetRamseyFamily A₀.ordered B₀.ordered C κ := by
+  apply closedTargetRamseyFamily_of_monotone_embeddings
+    A₀.ordered B₀.ordered
+  · exact (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
+  · exact hBlin
+  · intro a
+    exact RelStructure.Embedding.strictMono a
+
+
 /-- Functional EHN gives the manuscript's A-linear Ramsey input whenever the
 chosen external linear orders are respected by every A-embedding into B.
 
