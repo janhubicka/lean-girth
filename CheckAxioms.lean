@@ -181,3 +181,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.shared_standard_copy_part_mem_base_intersection
 #print axioms StructuralRamsey.Girth.no_common_projected_copy_of_subsingleton_base_intersection
 #print axioms StructuralRamsey.Girth.no_common_projected_copy_of_base_aLinear
+
+#print axioms StructuralRamsey.Girth.JoinTree.degree_eq_one_of_unique_neighbor
+#print axioms StructuralRamsey.Girth.JoinTree.pairwiseAllowed_erase
+#print axioms StructuralRamsey.Girth.ForestOfCopies.erase_leaf
