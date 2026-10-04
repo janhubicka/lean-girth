@@ -5,11 +5,12 @@ import Girth.ForestDeletionGeometry
 The one-edge deletion argument eventually reduces to reconnecting the connected
 components of a forest. Components carrying the same attachment label must
 remain connected. This file isolates the finite graph lemma needed for that
-step: every finite nonempty labelled set admits a tree in which each label
-fibre induces a preconnected subgraph.
+step.
 
-The proof starts with the disjoint union of stars inside the fibres and extends
-that acyclic graph to a spanning tree.
+Let the auxiliary graph connect exactly pairs with the same label. Mathlib's
+maximal-acyclic theorem extends the empty graph to a spanning forest with the
+same reachability as this auxiliary graph. Extending that forest once more to a
+spanning tree preserves the fibre connections.
 -/
 
 namespace StructuralRamsey.Girth
@@ -17,115 +18,47 @@ namespace StructuralRamsey.Girth
 universe v
 variable {C A : Type v}
 
-/-- The disjoint union of stars selected by a fibrewise centre map. -/
-def fiberStarGraph (label : C → A) (center : C → C) : SimpleGraph C where
-  Adj u v :=
-    u ≠ v ∧ label u = label v ∧
-      (u = center u ∨ v = center v)
+/-- The graph whose connected components are exactly the nonempty fibres of
+`label`. -/
+def fiberCliqueGraph (label : C → A) : SimpleGraph C where
+  Adj u v := u ≠ v ∧ label u = label v
   symm := {
     symm := by
       intro u v h
-      rcases h with ⟨hne, hlab, hu | hv⟩
-      · exact ⟨hne.symm, hlab.symm, Or.inr hu⟩
-      · exact ⟨hne.symm, hlab.symm, Or.inl hv⟩ }
+      exact ⟨h.1.symm, h.2.symm⟩ }
   loopless := {
     irrefl := by
       intro u h
       exact h.1 rfl }
 
-theorem fiberCenter_fixed
-    (label : C → A) (center : C → C)
-    (hlabel : ∀ c, label (center c) = label c)
-    (hconst : ∀ a b, label a = label b → center a = center b)
-    (c : C) :
-    center (center c) = center c :=
-  hconst (center c) c (hlabel c)
+/-- A walk in the fibre graph never changes its label. -/
+theorem fiberCliqueGraph_walk_support_label
+    (label : C → A)
+    {u v : C}
+    (p : (fiberCliqueGraph label).Walk u v)
+    {x : C}
+    (hx : x ∈ p.support) :
+    label x = label u := by
+  induction p with
+  | nil =>
+      simpa using hx
+  | @cons u w v huw p ih =>
+      simp only [SimpleGraph.Walk.support_cons, List.mem_cons] at hx
+      rcases hx with rfl | hx
+      · rfl
+      · have hwu : label w = label u := huw.2.symm
+        exact (ih hx).trans hwu
 
-/-- Every non-centre vertex is adjacent to the selected centre of its fibre. -/
-theorem fiberStarGraph_adj_center
-    (label : C → A) (center : C → C)
-    (hlabel : ∀ c, label (center c) = label c)
-    (hconst : ∀ a b, label a = label b → center a = center b)
-    {c : C} (hc : c ≠ center c) :
-    (fiberStarGraph label center).Adj c (center c) := by
-  refine ⟨hc, (hlabel c).symm, Or.inr ?_⟩
-  exact (fiberCenter_fixed label center hlabel hconst c).symm
-
-/-- A non-centre vertex has only its fibre centre as a neighbour. -/
-theorem eq_center_of_fiberStarGraph_adj_of_ne_center
-    (label : C → A) (center : C → C)
-    (hconst : ∀ a b, label a = label b → center a = center b)
-    {u v : C} (hu : u ≠ center u)
-    (huv : (fiberStarGraph label center).Adj u v) :
-    v = center u := by
-  rcases huv with ⟨_hne, hlab, hu' | hv⟩
-  · exact (hu hu').elim
-  · exact hv.trans (hconst u v hlab).symm
-
-/-- A disjoint union of fibre stars is acyclic. -/
-theorem fiberStarGraph_isAcyclic
-    (label : C → A) (center : C → C)
-    (hlabel : ∀ c, label (center c) = label c)
-    (hconst : ∀ a b, label a = label b → center a = center b) :
-    (fiberStarGraph label center).IsAcyclic := by
-  classical
-  intro v c hc
-  have noCycleAtNoncenter :
-      ∀ {u : C} (p : (fiberStarGraph label center).Walk u u),
-        p.IsCycle → u ≠ center u → False := by
-    intro u p hp hu
-    have hsnd :
-        p.snd = center u :=
-      eq_center_of_fiberStarGraph_adj_of_ne_center
-        label center hconst hu (p.adj_snd hp.not_nil)
-    have hpen :
-        p.penultimate = center u :=
-      eq_center_of_fiberStarGraph_adj_of_ne_center
-        label center hconst hu (p.adj_penultimate hp.not_nil).symm
-    exact hp.snd_ne_penultimate (hsnd.trans hpen.symm)
-  by_cases hv : v = center v
-  · have hadj := c.adj_snd hc.not_nil
-    have hsndNon : c.snd ≠ center c.snd := by
-      intro hsndFixed
-      have hlab : label v = label c.snd := hadj.2.1
-      have hvc : center v = center c.snd :=
-        hconst v c.snd hlab
-      apply hadj.ne
-      exact hv.trans (hvc.trans hsndFixed.symm)
-    have hsndMem : c.snd ∈ c.support :=
-      List.mem_of_mem_tail (c.snd_mem_tail_support hc.not_nil)
-    exact noCycleAtNoncenter
-      (c.rotate c.snd hsndMem) (hc.rotate hsndMem) hsndNon
-  · exact noCycleAtNoncenter c hc hv
-
-/-- A canonical representative of a value in the range of a labelling. -/
-noncomputable def fiberRepresentative
-    (label : C → A) (a : Set.range label) : C :=
-  Classical.choose a.property
-
-theorem fiberRepresentative_spec
-    (label : C → A) (a : Set.range label) :
-    label (fiberRepresentative label a) = a.1 :=
-  Classical.choose_spec a.property
-
-/-- The range-valued label of a vertex. -/
-def fiberKey (label : C → A) (c : C) : Set.range label :=
-  ⟨label c, ⟨c, rfl⟩⟩
-
-/-- The chosen representative of the fibre containing a vertex. -/
-noncomputable def fiberCenter (label : C → A) (c : C) : C :=
-  fiberRepresentative label (fiberKey label c)
-
-theorem fiberCenter_label (label : C → A) (c : C) :
-    label (fiberCenter label c) = label c := by
-  exact fiberRepresentative_spec label (fiberKey label c)
-
-theorem fiberCenter_eq_of_label_eq
-    (label : C → A) {a b : C} (h : label a = label b) :
-    fiberCenter label a = fiberCenter label b := by
-  unfold fiberCenter
-  congr 1
-  exact Subtype.ext h
+/-- Equal labels are reachable in the fibre graph. -/
+theorem fiberCliqueGraph_reachable_of_label_eq
+    (label : C → A)
+    {u v : C}
+    (h : label u = label v) :
+    (fiberCliqueGraph label).Reachable u v := by
+  by_cases huv : u = v
+  · subst v
+    exact SimpleGraph.Reachable.refl _
+  · exact (show (fiberCliqueGraph label).Adj u v from ⟨huv, h⟩).reachable
 
 /-- Every finite nonempty labelled set admits a tree in which every label fibre
 is preconnected. -/
@@ -135,55 +68,42 @@ theorem exists_tree_fibers_preconnected
     ∃ T : SimpleGraph C, T.IsTree ∧
       ∀ a : A, (T.induce {c : C | label c = a}).Preconnected := by
   classical
-  let center : C → C := fiberCenter label
-  let H : SimpleGraph C := fiberStarGraph label center
-  have hlabel : ∀ c : C, label (center c) = label c := by
-    intro c
-    exact fiberCenter_label label c
-  have hconst :
-      ∀ a b : C, label a = label b → center a = center b := by
-    intro a b h
-    exact fiberCenter_eq_of_label_eq label h
-  have hH : H.IsAcyclic := by
-    exact fiberStarGraph_isAcyclic label center hlabel hconst
+  let K : SimpleGraph C := fiberCliqueGraph label
+  obtain ⟨F, _hBotF, hFK, hFacyc, hReach⟩ :=
+    K.exists_isAcyclic_reachable_eq_le_of_le_of_isAcyclic
+      (H := (⊥ : SimpleGraph C)) bot_le SimpleGraph.isAcyclic_bot
   have hTop : (⊤ : SimpleGraph C).Connected :=
     SimpleGraph.connected_top
-  obtain ⟨T, hHT, _hTTop, hT⟩ :=
+  obtain ⟨T, hFT, _hTTop, hT⟩ :=
     hTop.exists_isTree_le_of_le_of_isAcyclic
-      (H := H) le_top hH
+      (H := F) le_top hFacyc
   refine ⟨T, hT, ?_⟩
   intro a c d
-  let r : C := center c.1
-  have hrlabel : label r = a := by
-    exact (hlabel c.1).trans c.2
-  let rr : {z : C | label z = a} := ⟨r, hrlabel⟩
-  have reachRoot :
-      ∀ z : {z : C | label z = a},
-        (T.induce {z : C | label z = a}).Reachable z rr := by
-    intro z
-    by_cases hz : z.1 = r
-    · have hzr : z = rr := Subtype.ext hz
-      subst z
-      exact SimpleGraph.Reachable.refl _
-    · have hcenterZ : center z.1 = r := by
-        exact hconst z.1 c.1 (z.2.trans c.2.symm)
-      have hzCenter : z.1 ≠ center z.1 := by
-        intro h
-        apply hz
-        exact h.trans hcenterZ
-      have hadjH :
-          H.Adj z.1 r := by
-        have h :=
-          fiberStarGraph_adj_center
-            label center hlabel hconst hzCenter
-        rw [hcenterZ] at h
-        exact h
-      have hadjT : T.Adj z.1 r :=
-        hHT hadjH
-      have hadjInd :
-          (T.induce {z : C | label z = a}).Adj z rr :=
-        hadjT
-      exact hadjInd.reachable
-  exact (reachRoot c).trans (reachRoot d).symm
+  have hKreach :
+      K.Reachable c.1 d.1 := by
+    exact fiberCliqueGraph_reachable_of_label_eq
+      label (c.2.trans d.2.symm)
+  have hFreach : F.Reachable c.1 d.1 := by
+    rw [hReach]
+    exact hKreach
+  rcases hFreach with ⟨p⟩
+  let pK := p.mapLe hFK
+  let pT := p.mapLe hFT
+  have hpLabel :
+      ∀ x ∈ p.support, label x = a := by
+    intro x hx
+    have hxK : x ∈ pK.support := by
+      simpa [pK] using hx
+    exact
+      (fiberCliqueGraph_walk_support_label label pK hxK).trans c.2
+  have hpTLabel :
+      ∀ x ∈ pT.support, x ∈ {z : C | label z = a} := by
+    intro x hx
+    have hxP : x ∈ p.support := by
+      simpa [pT] using hx
+    exact hpLabel x hxP
+  let q := pT.induce {z : C | label z = a} hpTLabel
+  have hq := q.reachable
+  convert hq using 1 <;> apply Subtype.ext <;> rfl
 
 end StructuralRamsey.Girth
