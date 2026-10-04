@@ -115,3 +115,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.elementaryEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.elementaryClosure_freeAmalgam_of_embeddings
 #print axioms StructuralRamsey.Girth.girthGT_of_edgeFamily_subsingleton
+#print axioms StructuralRamsey.Girth.oneEdgePiece_girthGT
+#print axioms StructuralRamsey.Girth.girthGT_oneEdgeList_of_singletonAttachments
