@@ -84,9 +84,10 @@ theorem targetClosed_singleton
     subst y
     subst z
     subst w
-    exact (hdist (Or.elim (fun h => (h rfl).elim)
-      (fun h => Or.elim (fun h' => (h' rfl).elim)
-        (fun h' => (h' rfl).elim)) h)).elim
+    rcases hdist with h | h | h
+    · exact (h rfl).elim
+    · exact (h rfl).elim
+    · exact (h rfl).elim
 
 /-- In an A-linear target, every A-copy carrier is target-closed. -/
 theorem targetClosed_copy
@@ -125,8 +126,7 @@ theorem targetClosed_of_distinct_pair
     by_cases hSa : S ⊆ copyCarrier a
     · exact Or.inl ⟨a, Set.Subset.antisymm hSa haS⟩
     · right
-      push Not at hSa
-      rcases hSa with ⟨z, hzS, hza⟩
+      rcases Set.not_subset.mp hSa with ⟨z, hzS, hza⟩
       apply hClosed.2 x hx y hy z hzS (Or.inl hxy)
       intro htriple
       rcases htriple with ⟨b, hxb, hyb, hzb⟩
