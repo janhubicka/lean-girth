@@ -278,6 +278,43 @@ theorem decorateSupport_ordered_copy_eq_edgeEmbedding
   exact ⟨e, he, ordered_embedding_eq_of_sameCopy a b hs⟩
 
 
+
+/-- In an exact transversal decoration of an ordered structure, A-embeddings
+are canonically equivalent to support edges. -/
+noncomputable def decorateSupport_ordered_embeddingEquivEdge
+    (A₀ : RelStructure L U)
+    [LinearOrder U] [Finite U]
+    {H : Set (Set W)} {part : W → U}
+    (hTrans : EdgeTransversal H part)
+    (hSupport :
+      supportCopies A₀.ordered (decorateSupport A₀.ordered H part) = H) :
+    RelStructure.Embedding A₀.ordered
+        (decorateSupport A₀.ordered H part) ≃
+      {e : Set W // e ∈ H} where
+  toFun a := ⟨copyCarrier a, by
+    rw [← hSupport]
+    exact ⟨a, rfl⟩⟩
+  invFun e :=
+    decorateSupport_edgeEmbedding A₀.ordered hTrans e.2
+  left_inv a := by
+    apply ordered_embedding_eq_of_sameCopy
+    change
+      copyCarrier
+          (decorateSupport_edgeEmbedding A₀.ordered hTrans
+            (show copyCarrier a ∈ H by
+              rw [← hSupport]
+              exact ⟨a, rfl⟩)) =
+        copyCarrier a
+    rw [decorateSupport_edgeCarrier]
+  right_inv e := by
+    apply Subtype.ext
+    change
+      copyCarrier
+          (decorateSupport_edgeEmbedding A₀.ordered hTrans e.2) =
+        e.1
+    exact decorateSupport_edgeCarrier A₀.ordered hTrans e.2
+
+
 /-- A strong support embedding has A-strong image once the target decoration
 has exactly the prescribed support hypergraph.  This is the strong-inducedness
 bridge used in the structural local-forest corollary. -/
