@@ -114,3 +114,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_rest_subsingleton
 #print axioms StructuralRamsey.Girth.elementaryEmbedding_range_aStrong
 #print axioms StructuralRamsey.Girth.elementaryClosure_freeAmalgam_of_embeddings
+#print axioms StructuralRamsey.Girth.girthGT_of_edgeFamily_subsingleton
