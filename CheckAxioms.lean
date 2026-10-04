@@ -123,3 +123,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.irreducible_induce_subset_edge_of_girthGT_three
 #print axioms StructuralRamsey.Girth.supportCopies_eq_of_decorated_cover
 #print axioms StructuralRamsey.Girth.decorated_highGirth_support_exact
+#print axioms StructuralRamsey.Girth.closureFreeAmalgamRel
+#print axioms StructuralRamsey.Girth.aLinear_of_embedding
+#print axioms StructuralRamsey.Girth.closureEmbedding_range_aStrong
+#print axioms StructuralRamsey.Girth.hasElementaryCA_of_embedding
+#print axioms StructuralRamsey.Girth.targetClosure_mem_ElementaryCAClass
+#print axioms StructuralRamsey.Girth.closureLanguage_positiveFuncArity
+#print axioms StructuralRamsey.Girth.ElementaryCAClass_freeAmalgamationClass
