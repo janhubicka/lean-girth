@@ -26,13 +26,10 @@ namespace JoinTree
 theorem degree_eq_one_of_unique_neighbor
     {F : ι → HypergraphPiece W} [Fintype ι]
     (J : JoinTree F) {leaf parent : ι}
+    [Fintype (J.tree.neighborSet leaf)]
     (hadj : J.tree.Adj leaf parent)
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     J.tree.degree leaf = 1 := by
-  classical
-  letI : Fintype (J.tree.neighborSet leaf) :=
-    Fintype.ofInjective (fun z : J.tree.neighborSet leaf => z.1)
-      Subtype.val_injective
   rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
   exact ⟨parent, hadj, huniq⟩
 
