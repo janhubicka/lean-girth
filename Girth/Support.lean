@@ -209,4 +209,32 @@ theorem supportCopies_eq_of_decorated_cover
   · intro e he
     obtain ⟨b, hb⟩ := hDecorated e he
     exact ⟨b, hb.symm⟩
+
+
+/-- A-linearity pulls back along an induced embedding. -/
+theorem aLinear_of_embedding
+    {X : Type v}
+    {A : RelStructure L U} {D : RelStructure L W}
+    {E : RelStructure L X}
+    (hE : ALinear A E)
+    (i : Embedding D E) :
+    ALinear A D := by
+  intro e f hne
+  have hne' : ¬ SameCopy (i.comp e) (i.comp f) := by
+    intro h
+    exact hne (sameCopy_of_comp i h)
+  have hs := hE (i.comp e) (i.comp f) hne'
+  intro x hx y hy
+  apply i.injective
+  apply hs
+  · rcases hx.1 with ⟨a, ha⟩
+    rcases hx.2 with ⟨b, hb⟩
+    constructor
+    · exact ⟨a, congrArg i ha⟩
+    · exact ⟨b, congrArg i hb⟩
+  · rcases hy.1 with ⟨a, ha⟩
+    rcases hy.2 with ⟨b, hb⟩
+    constructor
+    · exact ⟨a, congrArg i ha⟩
+    · exact ⟨b, congrArg i hb⟩
 end StructuralRamsey.Girth
