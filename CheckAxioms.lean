@@ -181,3 +181,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.initialDesignatedCopy
 #print axioms StructuralRamsey.Girth.initial_designatedCoversIrreducibles
 #print axioms StructuralRamsey.Girth.localIrreduciblesCovered_of_extendTo_and_ACopyCover
+#print axioms StructuralRamsey.Girth.decorateSupport_irreduciblesExtendTo
+#print axioms StructuralRamsey.Girth.localForest_ACopiesCovered
+#print axioms StructuralRamsey.Girth.localForest_localIrreduciblesCovered
