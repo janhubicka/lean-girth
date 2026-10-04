@@ -67,3 +67,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.girthGT
 
 #print axioms StructuralRamsey.Girth.JoinTree.exists_leaf_attachment
+
+#print axioms StructuralRamsey.Girth.sameCopy_of_common_distinct_pair
+#print axioms StructuralRamsey.Girth.targetClosed_univ
+#print axioms StructuralRamsey.Girth.targetClosed_singleton
+#print axioms StructuralRamsey.Girth.targetClosed_copy
+#print axioms StructuralRamsey.Girth.targetClosed_of_distinct_pair
+#print axioms StructuralRamsey.Girth.targetClosed_classify
+#print axioms StructuralRamsey.Girth.targetClosed_classify_nonempty
