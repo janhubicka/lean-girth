@@ -50,31 +50,6 @@ theorem closureFreeAmalgamRel
   overlap := hfree.overlap
   rel_iff R x := hfree.rel_iff R x
 
-/-- A-linearity pulls back along an arbitrary induced embedding. -/
-theorem aLinear_of_embedding
-    {A : RelStructure L U}
-    {D : RelStructure L X} {E : RelStructure L Y}
-    (hD : ALinear A E) (e : RelStructure.Embedding D E) :
-    ALinear A D := by
-  intro a b hne
-  have hne' : ¬ SameCopy (e.comp a) (e.comp b) := by
-    intro h
-    exact hne (sameCopy_of_comp e h)
-  have hs := hD (e.comp a) (e.comp b) hne'
-  intro x hx y hy
-  apply e.injective
-  apply hs
-  · rcases hx.1 with ⟨a0, ha0⟩
-    rcases hx.2 with ⟨b0, hb0⟩
-    constructor
-    · exact ⟨a0, congrArg e ha0⟩
-    · exact ⟨b0, congrArg e hb0⟩
-  · rcases hy.1 with ⟨a0, ha0⟩
-    rcases hy.2 with ⟨b0, hb0⟩
-    constructor
-    · exact ⟨a0, congrArg e ha0⟩
-    · exact ⟨b0, congrArg e hb0⟩
-
 /-- Full embeddings into a structure with canonical c_A have A-strong
 relational ranges. -/
 theorem closureEmbedding_range_aStrong
