@@ -98,7 +98,7 @@ theorem sameCopy_of_comp
     rcases hx with ⟨b, hb⟩
     refine ⟨b, ?_⟩
     apply i.injective
-    exact hb.symm
+    exact hb
   · rintro x ⟨a, rfl⟩
     have hx : i (f a) ∈ copyCarrier (i.comp e) := by
       change copyCarrier (i.comp e) = copyCarrier (i.comp f) at h
@@ -107,7 +107,7 @@ theorem sameCopy_of_comp
     rcases hx with ⟨b, hb⟩
     refine ⟨b, ?_⟩
     apply i.injective
-    exact hb.symm
+    exact hb
 
 /-- A-linearity is hereditary under induced substructures. -/
 theorem aLinear_induce
