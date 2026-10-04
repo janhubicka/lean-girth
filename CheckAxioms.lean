@@ -99,3 +99,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.targetClosureLift
 
 #print axioms StructuralRamsey.Girth.elementaryClosureEmbeddingOfStrong
+#print axioms StructuralRamsey.Girth.freeAmalgam_left_aStrong
+#print axioms StructuralRamsey.Girth.freeAmalgam_right_aStrong
+#print axioms StructuralRamsey.Girth.aLinear_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.concreteElementaryClosureAmalgam_geometry
