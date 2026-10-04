@@ -30,3 +30,4 @@ import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
 import Girth.DesignatedAttachment
 import Girth.SharedSupport
+import Girth.InitialDesignated
