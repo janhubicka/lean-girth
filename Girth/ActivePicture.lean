@@ -61,7 +61,7 @@ image. -/
 def activeInduceProjected
     (A : RelStructure L UA)
     {B : StructuralRamsey.Partite.System L P X}
-    {α : UA → P}
+    {α : UA ↪ P}
     {S : Set X}
     (e : StructuralRamsey.Partite.ProjectedEmbedding A B α)
     (hRange : ∀ a : UA, e.val a ∈ S) :
@@ -87,7 +87,7 @@ subsystem. -/
 theorem activeAttachment_copy_comp
     (A : RelStructure L UA)
     (B : StructuralRamsey.Partite.System L P X)
-    {α : UA → P}
+    {α : UA ↪ P}
     (S : Set X)
     (E : StructuralRamsey.Partite.System L P Y)
     (f : I → StructuralRamsey.Partite.Embedding (B.induce S) E)
@@ -114,7 +114,7 @@ selected parts but in no active A-copy. -/
 theorem activeAttachment_pictureProperty
     (A : RelStructure L UA)
     (B : StructuralRamsey.Partite.System L P X)
-    {α : UA → P}
+    {α : UA ↪ P}
     (S : Set X)
     (E : StructuralRamsey.Partite.System L P Y)
     (f : I → StructuralRamsey.Partite.Embedding (B.induce S) E)
@@ -157,17 +157,17 @@ theorem activeInducedPictureStep
     (B₀ : RelStructure L VB)
     (D₀ : RelStructure L P)
     (C₀ : StructuralRamsey.Partite.System L P X)
-    {α : UA → P}
+    {α : UA ↪ P}
     (S : Set X)
     (E : StructuralRamsey.Partite.System L P Y)
     (f : I → StructuralRamsey.Partite.Embedding (C₀.induce S) E)
     (κ : Type*)
     (hPartite : C₀.IsPartiteOver D₀)
     (hCover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₀ B₀ D₀)
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₀ B₀ D₀)
     (hEPartite : E.IsPartiteOver D₀)
     (hECover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy E B₀ D₀)
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy E B₀ D₀)
     (hRange :
       ∀ e : StructuralRamsey.Partite.ProjectedEmbedding A C₀ α,
         ∀ a : UA, e.val a ∈ S)
@@ -180,14 +180,14 @@ theorem activeInducedPictureStep
               χ ((activeInduceProjected A e₂ (hRange e₂)).comp (f i))) :
     let C₁ := StructuralRamsey.Partite.Attachment.attach C₀ S E f
     C₁.IsPartiteOver D₀ ∧
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ ∧
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₁ B₀ D₀ ∧
       StructuralRamsey.Partite.PictureProperty A C₀ α C₁ κ := by
   let C₁ := StructuralRamsey.Partite.Attachment.attach C₀ S E f
   have hC₁Partite : C₁.IsPartiteOver D₀ :=
     StructuralRamsey.Partite.Attachment.attach_isPartiteOver
       C₀ S E f hPartite hEPartite
   have hC₁Cover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ :=
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₁ B₀ D₀ :=
     StructuralRamsey.Partite.Induced.Attachment.attach_covers
       B₀ D₀ C₀ S E f hCover hECover
   have hPicture :
@@ -205,17 +205,17 @@ theorem activeInducedPictureStep_onActiveCarrier
     (B₀ : RelStructure L VB)
     (D₀ : RelStructure L P)
     (C₀ : StructuralRamsey.Partite.System L P X)
-    (α : UA → P)
+    (α : UA ↪ P)
     (E : StructuralRamsey.Partite.System L P Y)
     (f : I → StructuralRamsey.Partite.Embedding
       (C₀.induce (activeCarrier A C₀ α)) E)
     (κ : Type*)
     (hPartite : C₀.IsPartiteOver D₀)
     (hCover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₀ B₀ D₀)
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₀ B₀ D₀)
     (hEPartite : E.IsPartiteOver D₀)
     (hECover :
-      StructuralRamsey.Partite.CoversIrreduciblesBy E B₀ D₀)
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy E B₀ D₀)
     (hLocal :
       ∀ χ :
           StructuralRamsey.Partite.ProjectedEmbedding A E α → κ,
@@ -228,7 +228,7 @@ theorem activeInducedPictureStep_onActiveCarrier
     let C₁ := StructuralRamsey.Partite.Attachment.attach
       C₀ (activeCarrier A C₀ α) E f
     C₁.IsPartiteOver D₀ ∧
-      StructuralRamsey.Partite.CoversIrreduciblesBy C₁ B₀ D₀ ∧
+      StructuralRamsey.Partite.Induced.CoversIrreduciblesBy C₁ B₀ D₀ ∧
       StructuralRamsey.Partite.PictureProperty A C₀ α C₁ κ := by
   exact activeInducedPictureStep
     A B₀ D₀ C₀ (activeCarrier A C₀ α) E f κ
