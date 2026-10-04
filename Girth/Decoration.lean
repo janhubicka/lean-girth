@@ -250,4 +250,46 @@ def decorateSupportEmbedding
       · convert hArel using 1
         funext i
         exact hpart (x i)
+/-- A strong support embedding has A-strong image once the target decoration
+has exactly the prescribed support hypergraph.  This is the strong-inducedness
+bridge used in the structural local-forest corollary. -/
+theorem decorateSupportEmbedding_range_aStrong
+    {X Y : Type v}
+    (A : RelStructure L U)
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partY : Y → U}
+    (f : StrongSupportEmbedding H K)
+    (hSupport : supportCopies A (decorateSupport A K partY) = K) :
+    AStrong A (decorateSupport A K partY) (Set.range f) := by
+  intro a hMeet
+  have hEdge : copyCarrier a ∈ K := by
+    rw [← hSupport]
+    exact ⟨a, rfl⟩
+  obtain ⟨e, he, hEq⟩ :=
+    f.reflect_edge (copyCarrier a) hEdge hMeet
+  intro y hy
+  rw [hEq] at hy
+  rcases hy with ⟨x, hx, rfl⟩
+  exact ⟨x, rfl⟩
+
+/-- Convenient high-girth specialization of
+`decorateSupportEmbedding_range_aStrong`. -/
+theorem decorateSupportEmbedding_range_aStrong_of_highGirth
+    {X Y : Type v}
+    (A : RelStructure L U)
+    [Finite U]
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partY : Y → U}
+    (f : StrongSupportEmbedding H K)
+    (hA : A.Irreducible)
+    (hTrans : EdgeTransversal K partY)
+    (hgt : GirthGT K 3)
+    (hK : K.Nonempty)
+    (hVert : ∀ y : Y, ∃ e : Set Y, e ∈ K ∧ y ∈ e) :
+    AStrong A (decorateSupport A K partY) (Set.range f) := by
+  have hSupport :
+      supportCopies A (decorateSupport A K partY) = K :=
+    (decorateSupport_exact A hA hTrans hgt hK hVert).1
+  exact decorateSupportEmbedding_range_aStrong A f hSupport
+
 end StructuralRamsey.Girth
