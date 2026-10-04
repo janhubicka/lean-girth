@@ -63,12 +63,11 @@ theorem exists_neighbor_reachable_after_delete
     (J : JoinTree F)
     {center i : ι}
     (hi : i ≠ center) :
-    ∃ root : ι,
-      J.tree.Adj center root ∧
+    ∃ root : ι, ∃ hroot : J.tree.Adj center root,
       (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
         ⟨root, by
           simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
-            using (show root ≠ center from ‹J.tree.Adj center root›.ne.symm)⟩
+            using hroot.ne.symm⟩
         ⟨i, by
           simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩ := by
   obtain ⟨p, hp, _huniq⟩ :=
@@ -81,8 +80,7 @@ theorem exists_neighbor_reachable_after_delete
   have hcenterTail : center ∉ p.tail.support := by
     rw [p.support_tail_of_not_nil hnp]
     have hnodup : (center :: p.support.tail).Nodup := by
-      rw [← p.head_support]
-      rw [List.cons_head_tail p.support_ne_nil]
+      rw [p.cons_tail_support]
       exact hp.support_nodup
     exact (List.nodup_cons.mp hnodup).1
   have htail :
@@ -95,9 +93,7 @@ theorem exists_neighbor_reachable_after_delete
   let q :=
     p.tail.induce (({center} : Set ι)ᶜ) htail
   refine ⟨root, hroot, ?_⟩
-  have hq : (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
-      q.start q.end :=
-    q.reachable
+  have hq := q.reachable
   convert hq using 1 <;> apply Subtype.ext <;> rfl
 
 /-- Two neighbours of the deleted vertex cannot lie in the same component of
