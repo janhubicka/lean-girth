@@ -175,3 +175,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.DesignatedCopy.projects
 #print axioms StructuralRamsey.Girth.activeCarrier_part_in_baseCopy
 #print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated
+#print axioms StructuralRamsey.Girth.DesignatedCopy.transportToStandard
+#print axioms StructuralRamsey.Girth.designatedCoversIrreducibles_partiteAttachment
