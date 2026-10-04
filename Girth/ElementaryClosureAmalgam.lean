@@ -643,9 +643,12 @@ def elementaryClosure_induceEmbedding
         apply Set.ext
         intro y
         constructor
-        · rintro ⟨z, hz, rfl⟩
+        · rintro ⟨z, hz, hzy⟩
+          have hzy' : z = y := by
+            simpa using hzy
+          rw [← hzy']
           rcases hz with ⟨hxy, a, h0, h1, hz⟩
-          change y.1 ∈ cAValue A D₀ (Subtype.val ∘ x)
+          change z.1 ∈ cAValue A D₀ (Subtype.val ∘ x)
           refine ⟨?_, incl.comp a, ?_, ?_, ?_⟩
           · intro heq
             apply hxy
