@@ -64,23 +64,17 @@ noncomputable def eraseLeaf
   by_cases hxLeaf : x ∈ (F leaf).carrier
   · let leafOcc : occ := ⟨leaf, hxLeaf⟩
     by_cases hsub : occErase.Subsingleton
-    · letI : Subsingleton occErase := hsub
+    · letI : Subsingleton occErase := hsub.coe_sort
       exact SimpleGraph.Preconnected.of_subsingleton
-    · have hneOcc : Nontrivial occErase :=
-        not_subsingleton_iff_nontrivial.mp
-          (by
-            intro h
-            exact hsub h)
-      letI : Nontrivial occErase := hneOcc
+    · have hnontriv : occErase.Nontrivial :=
+        Set.not_subsingleton_iff.mp hsub
       have hparentOcc : x ∈ (F parent).carrier := by
-        obtain ⟨j, k, hj, hk, hjk⟩ :=
-          Set.not_subsingleton_iff.mp (by
-            simpa [not_subsingleton_iff_nontrivial] using hneOcc)
+        obtain ⟨j, hj, _k, _hk, _hjk⟩ := hnontriv
         have hjne : j.1 ≠ leaf := by
           simpa [s] using j.2
         exact
           J.mem_parent_of_mem_leaf_and_other
-            hadj huniq hjne hxLeaf j.2
+            hadj huniq hjne hxLeaf hj
       let parentOcc : occ := ⟨parent, hparentOcc⟩
       have hOccConnected : (J.tree.induce occ).Connected := by
         refine ⟨?_, ⟨leafOcc⟩⟩
@@ -102,11 +96,14 @@ noncomputable def eraseLeaf
             ((J.tree.induce s).induce occErase) where
         toFun z :=
           ⟨⟨z.1.1, by
-              change z.1.1 ≠ leaf
-              intro h
-              apply z.2
-              apply Subtype.ext
-              exact h⟩,
+              have hz : z.1 ≠ leafOcc := by
+                simpa using z.2
+              have hne : z.1.1 ≠ leaf := by
+                intro h
+                apply hz
+                apply Subtype.ext
+                exact h
+              simpa [s] using hne⟩,
             z.1.2⟩
         map_rel' := by
           intro a b hab
@@ -115,10 +112,11 @@ noncomputable def eraseLeaf
         intro y
         let q : occ := ⟨y.1.1, y.2⟩
         have hqne : q ≠ leafOcc := by
+          have hyne : y.1.1 ≠ leaf := by
+            simpa [s] using y.1.2
           intro h
-          have hv : y.1.1 = leaf :=
-            congrArg Subtype.val h
-          exact y.1.2 (by simpa [s] using hv)
+          apply hyne
+          exact congrArg Subtype.val h
         refine ⟨⟨q, ?_⟩, ?_⟩
         · simpa using hqne
         · apply Subtype.ext
@@ -132,10 +130,11 @@ noncomputable def eraseLeaf
           ((J.tree.induce s).induce occErase) where
       toFun z :=
         ⟨⟨z.1, by
-            change z.1 ≠ leaf
-            intro h
-            subst h
-            exact hxLeaf z.2⟩,
+            have hne : z.1 ≠ leaf := by
+              intro h
+              subst h
+              exact hxLeaf z.2
+            simpa [s] using hne⟩,
           z.2⟩
       map_rel' := by
         intro a b hab
@@ -174,10 +173,6 @@ theorem ForestOfCopies.erase_leaf
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     ForestOfCopies (erasePiece F leaf) := by
   refine ⟨JoinTree.pairwiseAllowed_erase hF.pairwiseAllowed leaf, ?_⟩
-  by_cases hne : Nonempty (({leaf} : Set ι)ᶜ)
-  · exact Or.inr ⟨J.eraseLeaf hadj huniq⟩
-  · have hEmpty : IsEmpty (({leaf} : Set ι)ᶜ) := by
-      exact not_nonempty_iff.mp hne
-    exact Or.inl hEmpty
+  exact Or.inr ⟨J.eraseLeaf hadj huniq⟩
 
 end StructuralRamsey.Girth
