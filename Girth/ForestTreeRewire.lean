@@ -39,6 +39,21 @@ theorem isTree_of_connected_card_edgeFinset
   simpa [hEq] using hTtree
 
 
+/-- Instance-independent version of the finite edge-count criterion. -/
+theorem isTree_of_connected_ncard_edgeSet
+    {V : Type v} [Finite V]
+    (G : SimpleGraph V)
+    (hconn : G.Connected)
+    (hcard : G.edgeSet.ncard + 1 = Nat.card V) :
+    G.IsTree := by
+  classical
+  letI := Fintype.ofFinite V
+  haveI : Fintype G.edgeSet := Fintype.ofFinite G.edgeSet
+  apply isTree_of_connected_card_edgeFinset G hconn
+  rw [← G.card_edgeSet]
+  simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using hcard
+
+
 /-- A neighbour of the deleted vertex, viewed as a surviving vertex. -/
 def JoinTree.neighborToErasedEmbedding
     {F : ι → HypergraphPiece V}
@@ -47,7 +62,11 @@ def JoinTree.neighborToErasedEmbedding
   toFun r := ⟨r.1, by
     simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
     exact r.2.ne.symm⟩
-  inj' := fun a b h => Subtype.ext (congrArg Subtype.val h)
+  inj' := by
+    intro a b h
+    apply Subtype.ext
+    exact congrArg
+      (fun z : {i : ι // i ∈ ({center} : Set ι)ᶜ} => z.1) h
 
 /-- Replace the deleted centre-star by an arbitrary graph on its former
 neighbours. -/
@@ -149,57 +168,6 @@ theorem JoinTree.rewireAfterDelete_connected
   exact hA.trans (hRoots.trans hB)
 
 
-/-- The rewired graph has exactly one fewer edge than surviving vertices when
-the replacement graph on the former neighbours is a tree. -/
-theorem JoinTree.rewireAfterDelete_card_edgeFinset
-    {F : ι → HypergraphPiece V} [Fintype ι]
-    (J : JoinTree F) (center : ι)
-    (R : SimpleGraph (J.tree.neighborSet center))
-    (hR : R.IsTree) :
-    Finset.card (J.rewireAfterDelete center R).edgeFinset + 1 =
-      Fintype.card ι - 1 := by
-  classical
-  let D := J.tree.induce (({center} : Set ι)ᶜ)
-  let e := J.neighborToErasedEmbedding center
-  let M := R.map e
-  have hdisjGraph : Disjoint D M := by
-    simpa [D, M, e] using
-      J.disjoint_deletedGraph_map_neighborGraph center R
-  have hdisj : Disjoint D.edgeFinset M.edgeFinset :=
-    SimpleGraph.disjoint_edgeFinset.mpr hdisjGraph
-  have hsup :
-      Finset.card (J.rewireAfterDelete center R).edgeFinset =
-        Finset.card D.edgeFinset + Finset.card M.edgeFinset := by
-    rw [JoinTree.rewireAfterDelete, SimpleGraph.edgeFinset_sup,
-      Finset.card_union_of_disjoint hdisj]
-  have hDcard :
-      Finset.card D.edgeFinset =
-        Finset.card J.tree.edgeFinset - J.tree.degree center := by
-    dsimp [D]
-    rw [SimpleGraph.card_edgeFinset_induce_compl_singleton,
-      SimpleGraph.card_edgeFinset_deleteIncidenceSet]
-  have hMcard :
-      Finset.card M.edgeFinset = Finset.card R.edgeFinset := by
-    dsimp [M]
-    exact SimpleGraph.card_edgeFinset_map e R
-  have hJcard :
-      Finset.card J.tree.edgeFinset + 1 = Fintype.card ι :=
-    J.isTree.card_edgeFinset
-  have hRcard :
-      Finset.card R.edgeFinset + 1 =
-        Fintype.card (J.tree.neighborSet center) :=
-    hR.card_edgeFinset
-  have hNcard :
-      Fintype.card (J.tree.neighborSet center) =
-        J.tree.degree center :=
-    J.tree.card_neighborSet_eq_degree center
-  have hdeg :
-      J.tree.degree center ≤ Finset.card J.tree.edgeFinset :=
-    J.tree.degree_le_card_edgeFinset
-  rw [hsup, hDcard, hMcard]
-  omega
-
-
 /-- Replacing one vertex of a join tree by any tree on its former neighbours
 again gives a tree on the surviving vertices. -/
 theorem JoinTree.rewireAfterDelete_isTree
@@ -209,11 +177,62 @@ theorem JoinTree.rewireAfterDelete_isTree
     (hR : R.IsTree) :
     (J.rewireAfterDelete center R).IsTree := by
   classical
-  apply isTree_of_connected_card_edgeFinset
+  let D := J.tree.induce (({center} : Set ι)ᶜ)
+  let e := J.neighborToErasedEmbedding center
+  let M := R.map e
+  have hdisjGraph : Disjoint D M := by
+    simpa [D, M, e] using
+      J.disjoint_deletedGraph_map_neighborGraph center R
+  have hDcard :
+      D.edgeSet.ncard =
+        J.tree.edgeSet.ncard - J.tree.degree center := by
+    have h1 :=
+      SimpleGraph.card_edgeFinset_induce_compl_singleton J.tree center
+    have h2 :=
+      SimpleGraph.card_edgeFinset_deleteIncidenceSet J.tree center
+    rw [h2] at h1
+    simpa [D, Set.fintypeCard_eq_ncard] using h1
+  have hMcard : M.edgeSet.ncard = R.edgeSet.ncard := by
+    dsimp [M]
+    rw [SimpleGraph.edgeSet_map]
+    exact Set.ncard_image_of_injective _ e.sym2Map.injective
+  have hJcard : J.tree.edgeSet.ncard + 1 = Nat.card ι := by
+    have h := J.isTree.card_edgeFinset
+    simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using h
+  have hRcard :
+      R.edgeSet.ncard + 1 = Nat.card (J.tree.neighborSet center) := by
+    have h := hR.card_edgeFinset
+    simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using h
+  have hNcard :
+      Nat.card (J.tree.neighborSet center) = J.tree.degree center := by
+    simpa [Nat.card_eq_fintype_card] using
+      J.tree.card_neighborSet_eq_degree center
+  have hdeg :
+      J.tree.degree center ≤ J.tree.edgeSet.ncard := by
+    rw [← SimpleGraph.ncard_incidenceSet]
+    exact Set.ncard_le_ncard
+      (J.tree.incidenceSet_subset center)
+      (Set.toFinite J.tree.edgeSet)
+  have hrewireCard :
+      (J.rewireAfterDelete center R).edgeSet.ncard + 1 =
+        Nat.card {i : ι // i ∈ ({center} : Set ι)ᶜ} := by
+    have hsup :
+        (J.rewireAfterDelete center R).edgeSet =
+          D.edgeSet ∪ M.edgeSet := by
+      simp [JoinTree.rewireAfterDelete, D, M, e, SimpleGraph.edgeSet_sup]
+    have hdisjEdge : Disjoint D.edgeSet M.edgeSet :=
+      SimpleGraph.disjoint_edgeSet.mpr hdisjGraph
+    rw [hsup, Set.ncard_union_eq hdisjEdge, hDcard, hMcard]
+    have hsurv :
+        Nat.card {i : ι // i ∈ ({center} : Set ι)ᶜ} =
+          Nat.card ι - 1 := by
+      rw [Nat.card_eq_fintype_card, Fintype.card_compl_set]
+      simp
+    rw [hsurv]
+    omega
+  exact isTree_of_connected_ncard_edgeSet
     (J.rewireAfterDelete center R)
-  · exact J.rewireAfterDelete_connected center R hR.connected
-  · rw [J.rewireAfterDelete_card_edgeFinset center R hR,
-      Fintype.card_compl_set]
-    simp
+    (J.rewireAfterDelete_connected center R hR.connected)
+    hrewireCard
 
 end StructuralRamsey.Girth
