@@ -98,7 +98,7 @@ theorem transportedDesignated_corePoint_supported
     ⟨b, rfl⟩
   have hOldInA :
       q.embedding b ∈ copyCarrier aOld.val := by
-    exact ⟨u, hu.symm⟩
+    exact ⟨u, hu⟩
   obtain ⟨aB, haB⟩ :=
     hShared q aOld.val (q.embedding b) hOldInQ hOldInA
   refine ⟨aB, ?_⟩
