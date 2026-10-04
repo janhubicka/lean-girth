@@ -166,9 +166,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.projected_mem_activeCarrier
 #print axioms StructuralRamsey.Girth.activeCarrier_subset_support
 #print axioms StructuralRamsey.Girth.activeInducedPictureStep_onActiveCarrier
-#print axioms StructuralRamsey.Girth.structureFreeAmalgam_relReduct
-#print axioms StructuralRamsey.Girth.aStrong_of_isClosed_of_cACompatible
-#print axioms StructuralRamsey.Girth.cACompatible_of_embedding
-#print axioms StructuralRamsey.Girth.cACompatible_of_freeAmalgam
 
 #print axioms StructuralRamsey.Girth.irreduciblesExtendTo_partiteAttachment
