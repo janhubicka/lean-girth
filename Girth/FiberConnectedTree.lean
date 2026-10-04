@@ -22,14 +22,16 @@ def fiberStarGraph (label : C → A) (center : C → C) : SimpleGraph C where
   Adj u v :=
     u ≠ v ∧ label u = label v ∧
       (u = center u ∨ v = center v)
-  symm := by
-    intro u v h
-    rcases h with ⟨hne, hlab, hu | hv⟩
-    · exact ⟨hne.symm, hlab.symm, Or.inr hu⟩
-    · exact ⟨hne.symm, hlab.symm, Or.inl hv⟩
-  loopless := by
-    intro u h
-    exact h.1 rfl
+  symm := {
+    symm := by
+      intro u v h
+      rcases h with ⟨hne, hlab, hu | hv⟩
+      · exact ⟨hne.symm, hlab.symm, Or.inr hu⟩
+      · exact ⟨hne.symm, hlab.symm, Or.inl hv⟩ }
+  loopless := {
+    irrefl := by
+      intro u h
+      exact h.1 rfl }
 
 theorem fiberCenter_fixed
     (label : C → A) (center : C → C)
@@ -66,6 +68,7 @@ theorem fiberStarGraph_isAcyclic
     (hlabel : ∀ c, label (center c) = label c)
     (hconst : ∀ a b, label a = label b → center a = center b) :
     (fiberStarGraph label center).IsAcyclic := by
+  classical
   intro v c hc
   have noCycleAtNoncenter :
       ∀ {u : C} (p : (fiberStarGraph label center).Walk u u),
@@ -154,15 +157,13 @@ theorem exists_tree_fibers_preconnected
   have hrlabel : label r = a := by
     exact (hlabel c.1).trans c.2
   let rr : {z : C | label z = a} := ⟨r, hrlabel⟩
-  have hcenterD : center d.1 = r := by
-    exact hconst d.1 c.1 (d.2.trans c.2.symm)
   have reachRoot :
       ∀ z : {z : C | label z = a},
         (T.induce {z : C | label z = a}).Reachable z rr := by
     intro z
     by_cases hz : z.1 = r
     · have hzr : z = rr := Subtype.ext hz
-      rw [hzr]
+      subst z
       exact SimpleGraph.Reachable.refl _
     · have hcenterZ : center z.1 = r := by
         exact hconst z.1 c.1 (z.2.trans c.2.symm)
