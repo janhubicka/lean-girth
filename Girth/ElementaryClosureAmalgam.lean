@@ -1,5 +1,6 @@
 import Girth.ClosureExpansion
 import Girth.TreeGeometry
+import PartiteConstruction.Iterated.FreeAmalgam
 
 /-! # Elementary closure embeddings and free-amalgam sides
 
@@ -113,4 +114,280 @@ theorem elementaryClosureEmbeddingOfStrong_apply
     elementaryClosureEmbeddingOfStrong e hStrong x = e x :=
   rfl
 
+
+
+/-- In a relational free amalgam, if the base is A-strong on the right,
+then the left side remains A-strong in the whole amalgam. -/
+theorem freeAmalgam_left_aStrong
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    {Whole : RelStructure L C}
+    {fL : Embedding Base Left} {fR : Embedding Base Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hA : A.Irreducible)
+    (hBaseR : AStrong A Right (copyCarrier fR))
+    (hfree : IsFreeAmalgam fL fR iL iR) :
+    AStrong A Whole (copyCarrier iL) := by
+  intro a hMeet
+  rcases irreducibleCopy_side_of_freeAmalgam hfree hA a with
+    ⟨aL, haL⟩ | ⟨aR, haR⟩
+  · intro x hx
+    change copyCarrier a = copyCarrier (iL.comp aL) at haL
+    rw [haL] at hx
+    rcases hx with ⟨u, hu⟩
+    exact ⟨aL u, hu⟩
+  · have hMeetR :
+        ¬ (copyCarrier aR ∩ copyCarrier fR).Subsingleton := by
+      intro hs
+      apply hMeet
+      intro x hx y hy
+      change copyCarrier a = copyCarrier (iR.comp aR) at haR
+      have hxR : x ∈ copyCarrier (iR.comp aR) := by
+        rw [← haR]
+        exact hx.1
+      have hyR : y ∈ copyCarrier (iR.comp aR) := by
+        rw [← haR]
+        exact hy.1
+      rcases hxR with ⟨ux, hux⟩
+      rcases hyR with ⟨uy, huy⟩
+      rcases hx.2 with ⟨lx, hlx⟩
+      rcases hy.2 with ⟨ly, hly⟩
+      have hoverx :
+          ∃ d : D, lx = fL d ∧ aR ux = fR d := by
+        exact (hfree.overlap lx (aR ux)).mp
+          (hlx.trans hux.symm)
+      have hovery :
+          ∃ d : D, ly = fL d ∧ aR uy = fR d := by
+        exact (hfree.overlap ly (aR uy)).mp
+          (hly.trans huy.symm)
+      rcases hoverx with ⟨dx, _, hdx⟩
+      rcases hovery with ⟨dy, _, hdy⟩
+      have hEqR : aR ux = aR uy := hs
+        ⟨⟨ux, rfl⟩, ⟨dx, hdx.symm⟩⟩
+        ⟨⟨uy, rfl⟩, ⟨dy, hdy.symm⟩⟩
+      calc
+        x = iR (aR ux) := hux.symm
+        _ = iR (aR uy) := congrArg iR hEqR
+        _ = y := huy
+    have hSubR : copyCarrier aR ⊆ copyCarrier fR :=
+      hBaseR aR hMeetR
+    intro x hx
+    change copyCarrier a = copyCarrier (iR.comp aR) at haR
+    rw [haR] at hx
+    rcases hx with ⟨u, hu⟩
+    have huBase := hSubR ⟨u, rfl⟩
+    rcases huBase with ⟨d, hd⟩
+    refine ⟨fL d, ?_⟩
+    have hov :
+        iL (fL d) = iR (aR u) := by
+      apply (hfree.overlap (fL d) (aR u)).mpr
+      exact ⟨d, rfl, hd.symm⟩
+    exact hov.trans hu
+
+/-- Symmetric version: if the base is A-strong on the left, then the right
+side remains A-strong in the whole amalgam. -/
+theorem freeAmalgam_right_aStrong
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    {Whole : RelStructure L C}
+    {fL : Embedding Base Left} {fR : Embedding Base Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hA : A.Irreducible)
+    (hBaseL : AStrong A Left (copyCarrier fL))
+    (hfree : IsFreeAmalgam fL fR iL iR) :
+    AStrong A Whole (copyCarrier iR) := by
+  intro a hMeet
+  rcases irreducibleCopy_side_of_freeAmalgam hfree hA a with
+    ⟨aL, haL⟩ | ⟨aR, haR⟩
+  · have hMeetL :
+        ¬ (copyCarrier aL ∩ copyCarrier fL).Subsingleton := by
+      intro hs
+      apply hMeet
+      intro x hx y hy
+      change copyCarrier a = copyCarrier (iL.comp aL) at haL
+      have hxL : x ∈ copyCarrier (iL.comp aL) := by
+        rw [← haL]
+        exact hx.1
+      have hyL : y ∈ copyCarrier (iL.comp aL) := by
+        rw [← haL]
+        exact hy.1
+      rcases hxL with ⟨ux, hux⟩
+      rcases hyL with ⟨uy, huy⟩
+      rcases hx.2 with ⟨rx, hrx⟩
+      rcases hy.2 with ⟨ry, hry⟩
+      have hoverx :
+          ∃ d : D, aL ux = fL d ∧ rx = fR d := by
+        exact (hfree.overlap (aL ux) rx).mp
+          (hux.trans hrx.symm)
+      have hovery :
+          ∃ d : D, aL uy = fL d ∧ ry = fR d := by
+        exact (hfree.overlap (aL uy) ry).mp
+          (huy.trans hry.symm)
+      rcases hoverx with ⟨dx, hdx, _⟩
+      rcases hovery with ⟨dy, hdy, _⟩
+      have hEqL : aL ux = aL uy := hs
+        ⟨⟨ux, rfl⟩, ⟨dx, hdx.symm⟩⟩
+        ⟨⟨uy, rfl⟩, ⟨dy, hdy.symm⟩⟩
+      calc
+        x = iL (aL ux) := hux.symm
+        _ = iL (aL uy) := congrArg iL hEqL
+        _ = y := huy
+    have hSubL : copyCarrier aL ⊆ copyCarrier fL :=
+      hBaseL aL hMeetL
+    intro x hx
+    change copyCarrier a = copyCarrier (iL.comp aL) at haL
+    rw [haL] at hx
+    rcases hx with ⟨u, hu⟩
+    have huBase := hSubL ⟨u, rfl⟩
+    rcases huBase with ⟨d, hd⟩
+    refine ⟨fR d, ?_⟩
+    have hov :
+        iR (fR d) = iL (aL u) := by
+      symm
+      apply (hfree.overlap (aL u) (fR d)).mpr
+      exact ⟨d, hd.symm, rfl⟩
+    exact hov.trans hu
+  · intro x hx
+    change copyCarrier a = copyCarrier (iR.comp aR) at haR
+    rw [haR] at hx
+    rcases hx with ⟨u, hu⟩
+    exact ⟨aR u, hu⟩
+
+/-- Free amalgamation over A-strong bases preserves A-linearity. -/
+theorem aLinear_of_freeAmalgam
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    {Whole : RelStructure L C}
+    {fL : Embedding Base Left} {fR : Embedding Base Right}
+    {iL : Embedding Left Whole} {iR : Embedding Right Whole}
+    (hA : A.Irreducible)
+    (hLeft : ALinear A Left)
+    (hRight : ALinear A Right)
+    (hBaseL : AStrong A Left (copyCarrier fL))
+    (hBaseR : AStrong A Right (copyCarrier fR))
+    (hfree : IsFreeAmalgam fL fR iL iR) :
+    ALinear A Whole := by
+  have hStrongL : AStrong A Whole (copyCarrier iL) :=
+    freeAmalgam_left_aStrong hA hBaseR hfree
+  have hStrongR : AStrong A Whole (copyCarrier iR) :=
+    freeAmalgam_right_aStrong hA hBaseL hfree
+  intro a b hne
+  by_contra hMeet
+  rcases irreducibleCopy_side_of_freeAmalgam hfree hA a with
+    ⟨aL, haL⟩ | ⟨aR, haR⟩
+  · rcases irreducibleCopy_side_of_freeAmalgam hfree hA b with
+      ⟨bL, hbL⟩ | ⟨bR, hbR⟩
+    · have haSub : copyCarrier a ⊆ copyCarrier iL := by
+        change copyCarrier a = copyCarrier (iL.comp aL) at haL
+        rw [haL]
+        rintro x ⟨u, rfl⟩
+        exact ⟨aL u, rfl⟩
+      have hbSub : copyCarrier b ⊆ copyCarrier iL := by
+        change copyCarrier b = copyCarrier (iL.comp bL) at hbL
+        rw [hbL]
+        rintro x ⟨u, rfl⟩
+        exact ⟨bL u, rfl⟩
+      exact hne (sameCopy_of_contained_and_not_subsingleton
+        hLeft a b iL haSub hbSub hMeet)
+    · have haMeetR :
+          ¬ (copyCarrier a ∩ copyCarrier iR).Subsingleton := by
+        intro hs
+        apply hMeet
+        intro x hx y hy
+        apply hs
+        · exact ⟨hx.1, by
+            change copyCarrier b = copyCarrier (iR.comp bR) at hbR
+            rw [hbR] at hx
+            rcases hx.2 with ⟨u, hu⟩
+            exact ⟨bR u, hu⟩⟩
+        · exact ⟨hy.1, by
+            change copyCarrier b = copyCarrier (iR.comp bR) at hbR
+            rw [hbR] at hy
+            rcases hy.2 with ⟨u, hu⟩
+            exact ⟨bR u, hu⟩⟩
+      have haSub : copyCarrier a ⊆ copyCarrier iR :=
+        hStrongR a haMeetR
+      have hbSub : copyCarrier b ⊆ copyCarrier iR := by
+        change copyCarrier b = copyCarrier (iR.comp bR) at hbR
+        rw [hbR]
+        rintro x ⟨u, rfl⟩
+        exact ⟨bR u, rfl⟩
+      exact hne (sameCopy_of_contained_and_not_subsingleton
+        hRight a b iR haSub hbSub hMeet)
+  · rcases irreducibleCopy_side_of_freeAmalgam hfree hA b with
+      ⟨bL, hbL⟩ | ⟨bR, hbR⟩
+    · have haMeetL :
+          ¬ (copyCarrier a ∩ copyCarrier iL).Subsingleton := by
+        intro hs
+        apply hMeet
+        intro x hx y hy
+        apply hs
+        · exact ⟨hx.1, by
+            change copyCarrier b = copyCarrier (iL.comp bL) at hbL
+            rw [hbL] at hx
+            rcases hx.2 with ⟨u, hu⟩
+            exact ⟨bL u, hu⟩⟩
+        · exact ⟨hy.1, by
+            change copyCarrier b = copyCarrier (iL.comp bL) at hbL
+            rw [hbL] at hy
+            rcases hy.2 with ⟨u, hu⟩
+            exact ⟨bL u, hu⟩⟩
+      have haSub : copyCarrier a ⊆ copyCarrier iL :=
+        hStrongL a haMeetL
+      have hbSub : copyCarrier b ⊆ copyCarrier iL := by
+        change copyCarrier b = copyCarrier (iL.comp bL) at hbL
+        rw [hbL]
+        rintro x ⟨u, rfl⟩
+        exact ⟨bL u, rfl⟩
+      exact hne (sameCopy_of_contained_and_not_subsingleton
+        hLeft a b iL haSub hbSub hMeet)
+    · have haSub : copyCarrier a ⊆ copyCarrier iR := by
+        change copyCarrier a = copyCarrier (iR.comp aR) at haR
+        rw [haR]
+        rintro x ⟨u, rfl⟩
+        exact ⟨aR u, rfl⟩
+      have hbSub : copyCarrier b ⊆ copyCarrier iR := by
+        change copyCarrier b = copyCarrier (iR.comp bR) at hbR
+        rw [hbR]
+        rintro x ⟨u, rfl⟩
+        exact ⟨bR u, rfl⟩
+      exact hne (sameCopy_of_contained_and_not_subsingleton
+        hRight a b iR haSub hbSub hMeet)
+
+/-- The concrete relational free amalgam of two A-linear structures over
+A-strong base images is again A-linear, and both side embeddings are A-strong.
+-/
+theorem concreteElementaryClosureAmalgam_geometry
+    {A : RelStructure L U}
+    {Base : RelStructure L D}
+    {Left : RelStructure L E}
+    {Right : RelStructure L F}
+    (hA : A.Irreducible)
+    (hLeft : ALinear A Left)
+    (hRight : ALinear A Right)
+    (fL : Embedding Base Left) (fR : Embedding Base Right)
+    (hBaseL : AStrong A Left (copyCarrier fL))
+    (hBaseR : AStrong A Right (copyCarrier fR)) :
+    let Whole :=
+      RelStructure.FreeAmalgam.amalgam Base Left Right fL fR
+    let iL :=
+      RelStructure.FreeAmalgam.leftEmbedding Base Left Right fL fR
+    let iR :=
+      RelStructure.FreeAmalgam.rightEmbedding Base Left Right fL fR
+    ALinear A Whole ∧
+      AStrong A Whole (copyCarrier iL) ∧
+      AStrong A Whole (copyCarrier iR) := by
+  dsimp
+  let hfree :=
+    RelStructure.FreeAmalgam.isFreeAmalgam Base Left Right fL fR
+  exact ⟨aLinear_of_freeAmalgam hA hLeft hRight
+      hBaseL hBaseR hfree,
+    freeAmalgam_left_aStrong hA hBaseR hfree,
+    freeAmalgam_right_aStrong hA hBaseL hfree⟩
 end StructuralRamsey.Girth
