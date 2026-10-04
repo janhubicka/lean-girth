@@ -21,7 +21,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | singleton B-copy intersections are A-supported on both sides | proved by `ASupportedTreeAmalgam.singletonIntersectionsSupported` |
 | §2 EHN / partite structural input | imported from pinned `partite-construction`; its formalization there is still being strengthened |
 | Ramsey + generic bounded local-tree + irreducible coverage core | `localTreeRamseyCore` |
-| Lemma 2.1 geometry of A-supported tree amalgams | **full formalization in progress through CI: relational clauses green; pure singleton/common-edge girth lemmas and supported-tree girth induction now encoded** |
+| Lemma 2.1 geometry of A-supported tree amalgams | fully proved; `ASupportedTreeAmalgam.girthGT`, `bIntersectionsControlled`, `singletonIntersectionsSupported`, `aLinear_of_base_and_controlled`, `aStrong_of_linear_and_controlled` |
 | Observation 2.2 closure expansions | not yet formalized here |
 | Theorem 2.4 A-linear Ramsey theorem | not yet formalized here; depends on the reusable ordered functional Ramsey interface |
 | §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths, parents, and parent-level equation formalized |
