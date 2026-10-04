@@ -131,6 +131,101 @@ theorem decorateSupport_edgeCarrier
   change Set.range (hTrans.vertex he) = e
   exact (hTrans.edge_eq_range_vertex he).symm
 
+
+/-- The decoration together with its part map is an A-partite system whenever
+each support edge contains exactly one vertex in every part. -/
+def decorateSupportSystem
+    (A : RelStructure L U)
+    (H : Set (Set W)) (part : W → U)
+    (hTrans : EdgeTransversal H part) :
+    StructuralRamsey.Partite.System L U W where
+  toRelStructure := decorateSupport A H part
+  part := part
+  transversal := by
+    intro R x hx i j hij
+    rcases hx with ⟨e, he, hxe, _⟩
+    have hi :
+        x i = hTrans.vertex he (part (x i)) :=
+      hTrans.vertex_unique he (hxe i) rfl
+    have hj :
+        x j = hTrans.vertex he (part (x i)) :=
+      hTrans.vertex_unique he (hxe j) hij.symm
+    exact hi.trans hj.symm
+
+/-- A support edge is canonically a part-preserving copy of the transversal A
+inside the decorated A-partite system. -/
+noncomputable def decorateSupportSystem_edgeEmbedding
+    (A : RelStructure L U)
+    {H : Set (Set W)} {part : W → U}
+    (hTrans : EdgeTransversal H part)
+    {e : Set W} (he : e ∈ H) :
+    StructuralRamsey.Partite.Embedding
+      (StructuralRamsey.Partite.transversal A)
+      (decorateSupportSystem A H part hTrans) where
+  toEmbedding := decorateSupport_edgeEmbedding A hTrans he
+  map_part x := by
+    exact hTrans.part_vertex he x
+
+/-- A strong support embedding that preserves parts lifts to a partite
+embedding between decorated systems. -/
+def decorateSupportSystemEmbedding
+    {X Y : Type v}
+    (A : RelStructure L U)
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (hTransH : EdgeTransversal H partX)
+    (hTransK : EdgeTransversal K partY)
+    (f : StrongSupportEmbedding H K)
+    (hpart : ∀ x : X, partY (f x) = partX x)
+    (hH : H.Nonempty)
+    (hCover : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e) :
+    StructuralRamsey.Partite.Embedding
+      (decorateSupportSystem A H partX hTransH)
+      (decorateSupportSystem A K partY hTransK) where
+  toEmbedding := decorateSupportEmbedding A f hpart hH hCover
+  map_part x := hpart x
+
+/-- In an exact transversal decoration, part-preserving copies of transversal
+A are canonically equivalent to support edges.  Unlike the purely relational
+version below, no external order is needed: the part map rigidifies the copy. -/
+noncomputable def decorateSupportSystem_embeddingEquivEdge
+    (A : RelStructure L U)
+    {H : Set (Set W)} {part : W → U}
+    (hTrans : EdgeTransversal H part)
+    (hSupport :
+      supportCopies A (decorateSupport A H part) = H) :
+    StructuralRamsey.Partite.Embedding
+        (StructuralRamsey.Partite.transversal A)
+        (decorateSupportSystem A H part hTrans) ≃
+      {e : Set W // e ∈ H} where
+  toFun a := ⟨copyCarrier a.toEmbedding, by
+    rw [← hSupport]
+    exact ⟨a.toEmbedding, rfl⟩⟩
+  invFun e :=
+    decorateSupportSystem_edgeEmbedding A hTrans e.2
+  left_inv a := by
+    apply StructuralRamsey.Partite.Embedding.ext
+    intro x
+    have hx :
+        a x ∈ copyCarrier a.toEmbedding :=
+      ⟨x, rfl⟩
+    have hp : part (a x) = x := by
+      simpa [StructuralRamsey.Partite.transversal] using a.map_part x
+    exact
+      (hTrans.vertex_unique
+        (show copyCarrier a.toEmbedding ∈ H by
+          rw [← hSupport]
+          exact ⟨a.toEmbedding, rfl⟩)
+        hx hp).symm
+  right_inv e := by
+    apply Subtype.ext
+    change
+      copyCarrier
+          (decorateSupport_edgeEmbedding A hTrans e.2) =
+        e.1
+    exact decorateSupport_edgeCarrier A hTrans e.2
+
+
 /-- Complete structural translation used in the manuscript: in a transversal
 high-girth support hypergraph, decorating edges by A introduces no unintended
 A-copies or irreducible substructures. -/
