@@ -140,6 +140,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTransversal.edge_eq_range_vertex
 #print axioms StructuralRamsey.Girth.decorateSupport_relationsCovered
 #print axioms StructuralRamsey.Girth.decorateSupport_edgeCarrier
+#print axioms StructuralRamsey.Girth.decorateSupportSystem
+#print axioms StructuralRamsey.Girth.decorateSupportSystem_edgeEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupportSystemEmbedding
+#print axioms StructuralRamsey.Girth.decorateSupportSystem_embeddingEquivEdge
 #print axioms StructuralRamsey.Girth.decorateSupport_exact
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupport_ordered_copy_eq_edgeEmbedding
