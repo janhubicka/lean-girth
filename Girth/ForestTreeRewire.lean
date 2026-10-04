@@ -204,4 +204,19 @@ theorem JoinTree.rewireAfterDelete_card_edgeFinset
   rw [hsup, hDcard, hMcard, hScard]
   omega
 
+
+/-- Replacing one vertex of a join tree by any tree on its former neighbours
+again gives a tree on the surviving vertices. -/
+theorem JoinTree.rewireAfterDelete_isTree
+    {F : ι → HypergraphPiece V} [Fintype ι]
+    (J : JoinTree F) (center : ι)
+    (R : SimpleGraph (J.tree.neighborSet center))
+    (hR : R.IsTree) :
+    (J.rewireAfterDelete center R).IsTree := by
+  classical
+  exact isTree_of_connected_card_edgeFinset
+    (J.rewireAfterDelete center R)
+    (J.rewireAfterDelete_connected center R hR.connected)
+    (J.rewireAfterDelete_card_edgeFinset center R hR)
+
 end StructuralRamsey.Girth
