@@ -19,13 +19,13 @@ theorem isTree_of_connected_card_edgeFinset
     {V : Type v} [Fintype V]
     (G : SimpleGraph V) [DecidableRel G.Adj]
     (hconn : G.Connected)
-    (hcard : #G.edgeFinset + 1 = Fintype.card V) :
+    (hcard : Finset.card G.edgeFinset + 1 = Fintype.card V) :
     G.IsTree := by
   classical
   obtain ⟨T, hTG, hTtree⟩ := hconn.exists_isTree_le
-  have hTcard : #T.edgeFinset + 1 = Fintype.card V :=
+  have hTcard : Finset.card T.edgeFinset + 1 = Fintype.card V :=
     hTtree.card_edgeFinset
-  have hcards : #T.edgeFinset = #G.edgeFinset := by
+  have hcards : Finset.card T.edgeFinset = Finset.card G.edgeFinset := by
     omega
   have hsub : T.edgeFinset ⊆ G.edgeFinset :=
     SimpleGraph.edgeFinset_subset_edgeFinset.2 hTG
