@@ -23,3 +23,4 @@ import Girth.FunctionalEHNClass
 import Girth.ALinearRamsey
 import Girth.Decoration
 import Girth.CustomPictureStep
+import Girth.ActivePicture
