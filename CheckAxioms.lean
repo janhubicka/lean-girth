@@ -144,6 +144,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupportSystem_edgeEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupportSystemEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupportSystem_embeddingEquivEdge
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapEdge
+#print axioms StructuralRamsey.Girth.copyCarrier_comp_decorateSupportSystemEmbedding
+#print axioms StructuralRamsey.Girth.strongSupportRamseyFamily_partiteArrow
 #print axioms StructuralRamsey.Girth.decorateSupport_exact
 #print axioms StructuralRamsey.Girth.decorateSupportEmbedding
 #print axioms StructuralRamsey.Girth.decorateSupport_ordered_copy_eq_edgeEmbedding
