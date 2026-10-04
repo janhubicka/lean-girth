@@ -11,6 +11,8 @@ hypergraph of Berge girth greater than three lies in one hyperedge.
 
 namespace StructuralRamsey.Girth
 
+open StructuralRamsey.RelStructure
+
 universe v
 variable {W : Type v}
 
@@ -159,10 +161,10 @@ theorem irreducible_induce_subset_edge_of_girthGT_three
       refine ⟨e, he, ?_⟩
       intro z
       exact (hne ⟨z.1, z.2⟩).elim
-  · have hnon : S.Nontrivial := by
-      rw [← Set.not_subsingleton_iff]
-      exact hsub
+  · have hnon : S.Nontrivial :=
+      Set.not_subsingleton_iff.mp hsub
     have hPair : PairCoveredBy H S := by
+      unfold PairCoveredBy
       intro x y hx hy hxy
       let xs : S := ⟨x, hx⟩
       let ys : S := ⟨y, hy⟩
@@ -175,10 +177,10 @@ theorem irreducible_induce_subset_edge_of_girthGT_three
       obtain ⟨e, he, hte⟩ := hRel sym (Subtype.val ∘ t) htR
       refine ⟨e, he, ?_, ?_⟩
       · have := hte i
-        change t i |>.1 ∈ e at this
+        change (t i).1 ∈ e at this
         simpa [xs, hi] using this
       · have := hte j
-        change t j |>.1 ∈ e at this
+        change (t j).1 ∈ e at this
         simpa [ys, hj] using this
     obtain ⟨e, he, hSe⟩ :=
       pairCovered_subset_edge_of_girthGT_three hgt hnon hPair
