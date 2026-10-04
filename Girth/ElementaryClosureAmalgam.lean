@@ -604,4 +604,116 @@ theorem concreteElementaryClosure_freeAmalgam
   exact ⟨aLinear_of_freeAmalgam hA hLeft hRight
       hBaseL hBaseR hfree,
     elementaryClosure_isFreeAmalgam hA hBaseL hBaseR hfree⟩
+
+
+/-- A closed induced substructure of an elementary closure expansion is exactly
+the elementary closure expansion of its relational reduct.  The embedding is
+the identity on the subtype carrier. -/
+def elementaryClosure_induceEmbedding
+    {A : RelStructure L U} {D₀ : RelStructure L D}
+    (S : Set D)
+    (hClosed : (elementaryClosureExpansion A D₀).IsClosed S) :
+    StructuralRamsey.Structure.Embedding
+      (elementaryClosureExpansion A (D₀.induce S))
+      ((elementaryClosureExpansion A D₀).induce S hClosed) where
+  toFun := id
+  injective := Function.injective_id
+  map_rel_iff R x := Iff.rfl
+  map_func := by
+    intro Fsym x
+    cases Fsym with
+    | cB =>
+        simp only [closureLanguage] at x
+        ext y
+        simp [elementaryClosureExpansion,
+          StructuralRamsey.Structure.imageSet]
+    | cA =>
+        simp only [closureLanguage] at x
+        let incl : RelStructure.Embedding (D₀.induce S) D₀ :=
+          RelStructure.inclusion D₀ S
+        have hStrong : AStrong A D₀ S :=
+          (elementaryClosure_isClosed_iff_aStrong A D₀ S).mp hClosed
+        ext y
+        constructor
+        · rintro ⟨z, hz, rfl⟩
+          rcases hz with ⟨hxy, a, h0, h1, hz⟩
+          change y.1 ∈ cAValue A D₀ (Subtype.val ∘ x)
+          refine ⟨?_, incl.comp a, ?_, ?_, ?_⟩
+          · intro heq
+            apply hxy
+            apply Subtype.ext
+            exact heq
+          · rcases h0 with ⟨u, hu⟩
+            exact ⟨u, congrArg Subtype.val hu⟩
+          · rcases h1 with ⟨u, hu⟩
+            exact ⟨u, congrArg Subtype.val hu⟩
+          · rcases hz with ⟨u, hu⟩
+            exact ⟨u, congrArg Subtype.val hu⟩
+        · intro hy
+          change y.1 ∈ cAValue A D₀ (Subtype.val ∘ x) at hy
+          rcases hy with ⟨hxy, b, h0, h1, hyb⟩
+          have hMeet :
+              ¬ (copyCarrier b ∩ S).Subsingleton := by
+            intro hs
+            have h0S : (Subtype.val (x 0)) ∈ S := (x 0).2
+            have h1S : (Subtype.val (x 1)) ∈ S := (x 1).2
+            have heq : Subtype.val (x 0) = Subtype.val (x 1) :=
+              hs ⟨h0, h0S⟩ ⟨h1, h1S⟩
+            apply hxy
+            exact heq
+          have hbSub : copyCarrier b ⊆ S :=
+            hStrong b hMeet
+          have hfactor : ∀ a : U, ∃ s : S, b a = incl s := by
+            intro a
+            have hmem := hbSub ⟨a, rfl⟩
+            exact ⟨⟨b a, hmem⟩, rfl⟩
+          let bS : RelStructure.Embedding A (D₀.induce S) :=
+            b.factorThroughRange incl hfactor
+          have hbS (a : U) : b a = incl (bS a) :=
+            Classical.choose_spec (hfactor a)
+          have h0S : x 0 ∈ copyCarrier bS := by
+            rcases h0 with ⟨a0, ha0⟩
+            refine ⟨a0, ?_⟩
+            apply Subtype.ext
+            change bS a0 = x 0
+            apply incl.injective
+            calc
+              incl (bS a0) = b a0 := (hbS a0).symm
+              _ = Subtype.val (x 0) := ha0
+          have h1S : x 1 ∈ copyCarrier bS := by
+            rcases h1 with ⟨a1, ha1⟩
+            refine ⟨a1, ?_⟩
+            apply Subtype.ext
+            change bS a1 = x 1
+            apply incl.injective
+            calc
+              incl (bS a1) = b a1 := (hbS a1).symm
+              _ = Subtype.val (x 1) := ha1
+          have hyS : y ∈ copyCarrier bS := by
+            rcases hyb with ⟨ay, hay⟩
+            refine ⟨ay, ?_⟩
+            apply Subtype.ext
+            change bS ay = y
+            apply incl.injective
+            calc
+              incl (bS ay) = b ay := (hbS ay).symm
+              _ = y.1 := hay
+          have hxyS : x 0 ≠ x 1 := by
+            intro heq
+            apply hxy
+            exact congrArg Subtype.val heq
+          change y ∈
+            StructuralRamsey.Structure.imageSet id
+              (cAValue A (D₀.induce S) x)
+          exact ⟨y, ⟨hxyS, bS, h0S, h1S, hyS⟩, rfl⟩
+
+/-- Consequently, closed induced reducts of A-linear elementary closure
+structures are again A-linear. -/
+theorem elementaryClosure_closed_induce_aLinear
+    {A : RelStructure L U} {D₀ : RelStructure L D}
+    (hLinear : ALinear A D₀)
+    (S : Set D)
+    (_hClosed : (elementaryClosureExpansion A D₀).IsClosed S) :
+    ALinear A (D₀.induce S) :=
+  aLinear_induce hLinear S
 end StructuralRamsey.Girth
