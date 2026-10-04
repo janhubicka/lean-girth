@@ -30,7 +30,9 @@ theorem degree_eq_one_of_unique_neighbor
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     J.tree.degree leaf = 1 := by
   classical
-  letI : Fintype (J.tree.neighborSet leaf) := Fintype.ofFinite _
+  letI : Fintype (J.tree.neighborSet leaf) :=
+    Fintype.ofInjective (fun z : J.tree.neighborSet leaf => z.1)
+      Subtype.val_injective
   rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
   exact ⟨parent, hadj, huniq⟩
 
@@ -83,8 +85,12 @@ noncomputable def eraseLeaf
       letI : Nonempty occ := ⟨leafOcc⟩
       have hOccConnected : (J.tree.induce occ).Connected :=
         ⟨hOccPre⟩
+      letI : Fintype occ :=
+        Fintype.ofInjective (fun z : occ => z.1) Subtype.val_injective
       letI : Fintype ((J.tree.induce occ).neighborSet leafOcc) :=
-        Fintype.ofFinite _
+        Fintype.ofInjective
+          (fun z : (J.tree.induce occ).neighborSet leafOcc => z.1)
+          Subtype.val_injective
       have hLeafDegree :
           (J.tree.induce occ).degree leafOcc = 1 := by
         rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
