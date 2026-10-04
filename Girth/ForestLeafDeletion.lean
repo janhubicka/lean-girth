@@ -19,7 +19,7 @@ complement-of-singleton subtype is chosen so that the restricted join tree is
 literally `SimpleGraph.induce`. -/
 def erasePiece
     (F : ι → HypergraphPiece W) (leaf : ι) :
-    (({leaf} : Set ι)ᶜ) → HypergraphPiece W :=
+    {i : ι // i ≠ leaf} → HypergraphPiece W :=
   fun i => F i.1
 
 namespace JoinTree
@@ -31,6 +31,7 @@ theorem degree_eq_one_of_unique_neighbor
     (hadj : J.tree.Adj leaf parent)
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     J.tree.degree leaf = 1 := by
+  classical
   rw [SimpleGraph.degree_eq_one_iff_existsUnique_adj]
   exact ⟨parent, hadj, huniq⟩
 
@@ -44,7 +45,7 @@ noncomputable def eraseLeaf
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     JoinTree (erasePiece F leaf) := by
   classical
-  let s : Set ι := ({leaf} : Set ι)ᶜ
+  let s : Set ι := {i : ι | i ≠ leaf}
   have hdeg : J.tree.degree leaf = 1 :=
     J.degree_eq_one_of_unique_neighbor hadj huniq
   have hTreeErase : (J.tree.induce s).IsTree := by
