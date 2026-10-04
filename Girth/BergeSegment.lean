@@ -23,12 +23,10 @@ def cyclicPath
     (before : Fin c.length) (k : ℕ)
     (hkpos : 0 < k) (hklt : k < c.length) :
     BergePath H := by
-  obtain ⟨r, rfl⟩ :=
-    Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hkpos)
   letI : NeZero c.length := ⟨by omega⟩
-  let cast : Fin (r + 1) → Fin c.length :=
+  let cast : Fin k → Fin c.length :=
     fun m => Fin.castLE (Nat.le_of_lt hklt) m
-  let idx : Fin (r + 1) → Fin c.length :=
+  let idx : Fin k → Fin c.length :=
     fun m => cyclicRunIndex before (cast m)
   have hidx : Function.Injective idx := by
     intro i j hij
@@ -37,11 +35,12 @@ def cyclicPath
       apply (finCycle start).injective
       simpa [idx, cast, cyclicRunIndex, start, finCycle_apply, add_comm] using hij
     exact Fin.castLE_injective (Nat.le_of_lt hklt) hc
-  have hidx0 : idx 0 = cyclicSucc before := by
+  let zeroK : Fin k := ⟨0, hkpos⟩
+  have hidx0 : idx zeroK = cyclicSucc before := by
     rw [cyclicSucc_eq_finRotate]
-    simp [idx, cast, cyclicRunIndex]
+    simp [idx, zeroK, cast, cyclicRunIndex]
   have hidxSucc :
-      ∀ {m : ℕ} (hm : m + 1 < r + 1),
+      ∀ {m : ℕ} (hm : m + 1 < k),
         idx ⟨m + 1, hm⟩ = cyclicSucc (idx ⟨m, by omega⟩) := by
     intro m hm
     rw [cyclicSucc_eq_finRotate]
@@ -49,17 +48,17 @@ def cyclicPath
     simp [idx, cast, cyclicRunIndex, finCycle_apply, finRotate_apply,
       Fin.add_def, Nat.add_mod]
     omega
-  let edges : Fin (r + 1) → Set W := fun m => c.edge (idx m)
-  let vertices : Fin (r + 2) → W :=
-    Fin.cons (c.vertex before) (fun m : Fin (r + 1) => c.vertex (idx m))
+  let edges : Fin k → Set W := fun m => c.edge (idx m)
+  let vertices : Fin (k + 1) → W :=
+    Fin.cons (c.vertex before) (fun m : Fin k => c.vertex (idx m))
   have hedges : Function.Injective edges :=
     c.edge_injective.comp hidx
   have htail :
-      Function.Injective (fun m : Fin (r + 1) => c.vertex (idx m)) :=
+      Function.Injective (fun m : Fin k => c.vertex (idx m)) :=
     c.vertex_injective.comp hidx
   have hhead :
       c.vertex before ∉
-        Set.range (fun m : Fin (r + 1) => c.vertex (idx m)) := by
+        Set.range (fun m : Fin k => c.vertex (idx m)) := by
     rintro ⟨m, hm⟩
     have hbm : before = idx m := c.vertex_injective hm.symm
     have hform : idx m = before + (cast m + 1) := by
@@ -74,18 +73,18 @@ def cyclicPath
       omega
     have hval :
         ((cast m + 1 : Fin c.length) : ℕ) = (m : ℕ) + 1 := by
-      simpa [cast] using
-        (Fin.val_add_eq_of_add_lt haddlt :
-          ((cast m + 1 : Fin c.length) : ℕ) =
-            (cast m : ℕ) + 1)
+      have hv :=
+        @Fin.val_add_eq_of_add_lt c.length (cast m)
+          (1 : Fin c.length) haddlt
+      simpa [cast] using hv
     have hz := congrArg Fin.val hzero
     rw [hval] at hz
     simp at hz
   have hvertices : Function.Injective vertices := by
     exact Fin.cons_injective_iff.mpr ⟨hhead, htail⟩
   refine {
-    length := r + 1
-    hlength := by omega
+    length := k
+    hlength := hkpos
     edge := edges
     vertex := vertices
     edge_mem := fun i => c.edge_mem (idx i)
@@ -95,8 +94,11 @@ def cyclicPath
     right_mem := ?_
   }
   · intro i
+    obtain ⟨r, hr⟩ :=
+      Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hkpos)
+    subst k
     refine Fin.cases ?_ (fun j => ?_) i
-    · simpa [edges, vertices, hidx0] using c.right_mem before
+    · simpa [edges, vertices, zeroK, hidx0] using c.right_mem before
     · have hs := hidxSucc (m := j.1) (by omega)
       have hm := c.right_mem (idx j.castSucc)
       simpa [edges, vertices, hs, Fin.succ_castSucc] using hm
@@ -153,11 +155,7 @@ theorem cyclicPath_vertex_last
     omega
   have hoff : offN + 1 = kN := by
     apply Fin.ext
-    have hv :
-        ((offN + 1 : Fin c.length) : ℕ) =
-          (offN : ℕ) + 1 :=
-      Fin.val_add_eq_of_add_lt haddlt
-    rw [hv]
+    rw [Fin.val_add_eq_of_add_lt haddlt]
     change k - 1 + 1 = k
     omega
   have hidx :
