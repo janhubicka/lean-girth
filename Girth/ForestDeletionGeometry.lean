@@ -79,10 +79,15 @@ theorem neighbor_eq_of_reachable_after_delete
       (G := J.tree) (({center} : Set ι)ᶜ)
   let pRaw := p0.map emb.toHom
   let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
+  have hpRaw : pRaw.IsPath := by
+    dsimp [pRaw]
+    exact
+      (SimpleGraph.Walk.isPath_map_iff_of_injective
+        (p := p0) (f := emb.toHom) emb.injective).2 hp0
   have hp : p.IsPath := by
-    simp [p, pRaw, hp0.map emb.injective]
+    simpa [p] using hpRaw
   have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = p0.getVert 1 |>.1
+    change p.getVert 1 = (p0.getVert 1).1
     simp [p, pRaw, emb, SimpleGraph.Walk.getVert_map]
   have hsndOut : p.snd ≠ center := by
     have hout : p0.snd.1 ≠ center := by
@@ -132,10 +137,15 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
       (G := J.tree) (({center} : Set ι)ᶜ)
   let pRaw := p0.map delEmb.toHom
   let p : J.tree.Walk root i := pRaw.copy (by rfl) (by rfl)
+  have hpRaw : pRaw.IsPath := by
+    dsimp [pRaw]
+    exact
+      (SimpleGraph.Walk.isPath_map_iff_of_injective
+        (p := p0) (f := delEmb.toHom) delEmb.injective).2 hp0
   have hp : p.IsPath := by
-    simp [p, pRaw, hp0.map delEmb.injective]
+    simpa [p] using hpRaw
   have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = p0.getVert 1 |>.1
+    change p.getVert 1 = (p0.getVert 1).1
     simp [p, pRaw, delEmb, SimpleGraph.Walk.getVert_map]
   have hsndOut : p.snd ≠ center := by
     have hout : p0.snd.1 ≠ center := by
@@ -159,8 +169,13 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
     SimpleGraph.Embedding.induce (G := J.tree) occ
   let rRaw := r0.map occEmb.toHom
   let r : J.tree.Walk center i := rRaw.copy (by rfl) (by rfl)
+  have hrRaw : rRaw.IsPath := by
+    dsimp [rRaw]
+    exact
+      (SimpleGraph.Walk.isPath_map_iff_of_injective
+        (p := r0) (f := occEmb.toHom) occEmb.injective).2 hr0
   have hr : r.IsPath := by
-    simp [r, rRaw, hr0.map occEmb.injective]
+    simpa [r] using hrRaw
   have hqr : q = r :=
     (J.isTree.existsUnique_path center i).unique hq hr
   have hrootEq : root = r.snd := by
@@ -168,7 +183,7 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
       root = q.snd := by simp [q]
       _ = r.snd := congrArg SimpleGraph.Walk.snd hqr
   have hrsndVal : r.snd = r0.snd.1 := by
-    change r.getVert 1 = r0.getVert 1 |>.1
+    change r.getVert 1 = (r0.getVert 1).1
     simp [r, rRaw, occEmb, SimpleGraph.Walk.getVert_map]
   have hrsnd : x ∈ (F r.snd).carrier := by
     rw [hrsndVal]
