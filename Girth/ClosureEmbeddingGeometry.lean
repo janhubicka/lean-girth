@@ -14,7 +14,7 @@ open StructuralRamsey.RelStructure
 
 universe u v w
 variable {L : RelLanguage.{u}}
-variable {U V : Type v} {W : Type w}
+variable {U V W : Type v}
 
 /-- The relational reduct of a structure in the closure language. -/
 def closureRelReduct
@@ -32,8 +32,8 @@ def targetEmbeddingRel
   toFun := e
   injective := e.injective
   map_rel_iff R x := by
-    simpa [targetClosureExpansion, closureRelReduct] using
-      e.map_rel_iff R x
+    change C.rel R (e.toFun ∘ x) ↔ B.rel R x
+    exact e.map_rel_iff R x
 
 /-- The range of every full relation/function embedding is function-closed. -/
 theorem structureEmbedding_range_isClosed
