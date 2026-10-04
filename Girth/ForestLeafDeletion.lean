@@ -46,7 +46,9 @@ noncomputable def eraseLeaf
     (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent) :
     JoinTree (erasePiece F leaf) := by
   classical
-  letI : Fintype (J.tree.neighborSet leaf) := Fintype.ofFinite _
+  letI : Fintype (J.tree.neighborSet leaf) :=
+    Fintype.ofInjective (fun z : J.tree.neighborSet leaf => z.1)
+      Subtype.val_injective
   have hdeg : J.tree.degree leaf = 1 :=
     J.degree_eq_one_of_unique_neighbor hadj huniq
   have hTreeErase :
