@@ -28,3 +28,4 @@ import Girth.IrreducibleAttachment
 import Girth.AttachmentGeometry
 import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
+import Girth.DesignatedAttachment
