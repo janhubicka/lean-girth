@@ -74,31 +74,24 @@ theorem neighbor_eq_of_reachable_after_delete
             using hb.ne.symm⟩) :
     a = b := by
   obtain ⟨p0, hp0⟩ := hreach.exists_isPath
-  let emb :=
-    SimpleGraph.Embedding.induce
-      (G := J.tree) (({center} : Set ι)ᶜ)
-  let pRaw := p0.map emb.toHom
-  let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
-  have hpRaw : pRaw.IsPath := by
-    dsimp [pRaw]
-    exact
-      (SimpleGraph.Walk.isPath_map_iff_of_injective
-        (p := p0) (f := emb.toHom) emb.injective).2 hp0
+  let inc :
+      (J.tree.induce (({center} : Set ι)ᶜ)) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro u v huv
+        exact huv }
+  let p : J.tree.Walk a b := p0.map inc
   have hp : p.IsPath := by
-    simpa [p] using hpRaw
-  have hsndVal : p.snd = p0.snd.1 := by
-    change p.getVert 1 = (p0.getVert 1).1
-    simp [p, pRaw, emb, SimpleGraph.Walk.getVert_map]
-  have hsndOut : p.snd ≠ center := by
-    have hout : p0.snd.1 ≠ center := by
-      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using p0.snd.2
-    intro h
-    exact hout (hsndVal.symm.trans h)
+    dsimp [p]
+    exact hp0.map (fun u v h => Subtype.ext h)
   have hcenter : center ∉ p.support := by
     intro hc
-    have heq : center = p.snd :=
-      J.isTree.isAcyclic.eq_snd_of_adj_start hp ha.symm hc
-    exact hsndOut heq.symm
+    dsimp [p, inc] at hc
+    rw [SimpleGraph.Walk.support_map] at hc
+    rcases List.mem_map.mp hc with ⟨z, hz, hval⟩
+    have hzout : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    exact hzout hval
   let q : J.tree.Walk center b := p.cons ha
   have hq : q.IsPath := hp.cons hcenter
   have hbmem : b ∈ q.support := by
