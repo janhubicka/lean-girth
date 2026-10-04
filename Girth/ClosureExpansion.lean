@@ -93,10 +93,13 @@ theorem elementaryClosure_isClosed_iff_pairClosed
   · intro hPair F x hx z hz
     cases F with
     | cA =>
+        simp only [closureLanguage] at x hx
+        change z ∈ cAValue A D x at hz
         rcases hz with ⟨hneq, a, h0, h1, hz⟩
         exact hPair (x 0) (hx 0) (x 1) (hx 1)
           hneq a h0 h1 hz
     | cB =>
+        simp only [closureLanguage] at x hx
         simpa [elementaryClosureExpansion] using hz
 
 /-- Hence elementary function-closed subsets are exactly A-strongly induced
@@ -148,10 +151,14 @@ theorem targetClosure_isClosed_iff
   · intro hTarget F x hx z hz
     cases F with
     | cA =>
+        simp only [closureLanguage] at x hx
+        change z ∈ cAValue A B x at hz
         rcases hz with ⟨hneq, a, h0, h1, hz⟩
         exact hTarget.1 (x 0) (hx 0) (x 1) (hx 1)
           hneq a h0 h1 hz
     | cB =>
+        simp only [closureLanguage] at x hx
+        change z ∈ cBValue A B x at hz
         rcases hz with ⟨hdist, hno⟩
         have hall :=
           hTarget.2 (x 0) (hx 0) (x 1) (hx 1)
