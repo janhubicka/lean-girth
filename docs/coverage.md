@@ -19,7 +19,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | A-linearity + controlled B-intersections imply B-copies are A-strong | proved by `aStrong_of_linear_and_controlled` |
 | supported-tree B-copy intersections are controlled | proved by `ASupportedTreeAmalgam.bIntersectionsControlled` |
 | singleton B-copy intersections are A-supported on both sides | proved by `ASupportedTreeAmalgam.singletonIntersectionsSupported` |
-| §2 EHN / partite structural input | imported from pinned `partite-construction`; its formalization there is still being strengthened |
+| §2 EHN / partite structural input | merged functional EHN imported from `partite-construction`; `FreeAmalgamationClass.orderedRamsey_of_mem_target` now instantiated for the girth closure class |
 | Ramsey + generic bounded local-tree + irreducible coverage core | `localTreeRamseyCore` |
 | Lemma 2.1 geometry of A-supported tree amalgams | fully proved; `ASupportedTreeAmalgam.girthGT`, `bIntersectionsControlled`, `singletonIntersectionsSupported`, `aLinear_of_base_and_controlled`, `aStrong_of_linear_and_controlled` |
 | Observation 2.2 closure expansions | actual c_A expansion, `IsClosed ↔ AStrong`, hereditary closed substructures, and class-level full free amalgamation from arbitrary full embeddings now encoded through CI |
