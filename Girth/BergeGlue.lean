@@ -87,10 +87,17 @@ theorem girthGT_union_of_subsingleton_glue
     transition_mem lastIndex hlastChange
   have hidx : before ≠ lastIndex := by
     intro hEq
-    have hkzero : k = 0 := by
+    let z : Fin c.length := ⟨0, by omega⟩
+    have hzadd : before + z = before := by
+      apply Fin.ext
+      simp [z, Fin.add_def]
+    have hkzero : k = z := by
       apply add_left_cancel (a := before)
-      simpa [lastIndex] using hEq.symm
+      calc
+        before + k = before := by simpa [lastIndex] using hEq.symm
+        _ = before + z := hzadd.symm
     have hv := congrArg Fin.val hkzero
+    change k.1 = 0 at hv
     exact hkpos.ne' hv
   exact hidx (c.vertex_injective (hS hvi hvj))
 
@@ -145,7 +152,9 @@ theorem girthGT_union_of_edge_glue
       have hs : side (cyclicRunIndex before m) = false :=
         hrun m hm
       have hmem := hL_of_false hs
-      simpa [pU, m] using hmem
+      change (c.cyclicPath before k.1 hkpos k.2).edge t ∈ HL
+      rw [c.cyclicPath_edge before k.1 hkpos k.2 t]
+      simpa [m] using hmem
     let pL : BergePath HL := pU.ofEdgeMem pEdgesL
     have hstartSep : c.vertex before ∈ separator := by
       have hRbefore := hR_of_true hbeforeTrue
@@ -198,7 +207,7 @@ theorem girthGT_union_of_edge_glue
   · have hallFalse : ∀ i : Fin c.length, side i = false := by
       intro i
       cases hi : side i
-      · exact hi
+      · rfl
       · exact (hTrue ⟨i, hi⟩).elim
     have hallL : ∀ i, c.edge i ∈ HL :=
       fun i => hL_of_false (hallFalse i)
