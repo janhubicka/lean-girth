@@ -153,7 +153,7 @@ theorem activeSubsystem_aGenerated
         apply Subtype.ext
         change a.val u = (t i).1
         rw [hti]
-        exact hu.symm
+        exact hu
       · rcases hActive with ⟨x, hx⟩
         rcases hx with ⟨a, _, _⟩
         let aS : RelStructure.Embedding A (C.toRelStructure.induce S) := {
@@ -170,7 +170,7 @@ theorem activeSubsystem_aGenerated
         }
         refine ⟨aS, ?_⟩
         intro i
-        exact (False.elim (by omega : False))
+        exact (har (Nat.zero_lt_of_lt i.isLt)).elim
     · have hTIrr :
           ((C.toRelStructure.induce S).induce T).Irreducible := by
         intro x y hxy
@@ -214,8 +214,7 @@ theorem activeSubsystem_aGenerated
             C.part ((t i).1) ∈ copyCarrier q.base := by
         intro i
         have hmem : (t i).1 ∈ TRng := by
-          refine ⟨⟨⟨t i, ⟨i, rfl⟩⟩, ?_⟩, rfl⟩
-          rfl
+          exact ⟨⟨t i, ⟨i, rfl⟩⟩, rfl⟩
         obtain ⟨b, hb⟩ := hq ⟨(t i).1, hmem⟩
         refine ⟨b, ?_⟩
         calc
@@ -260,8 +259,7 @@ theorem activeSubsystem_aGenerated
           ∀ i : Fin (L.arity R), (t i).1 ∈ copyCarrier aC := by
         intro i
         have hmem : (t i).1 ∈ TRng := by
-          refine ⟨⟨⟨t i, ⟨i, rfl⟩⟩, ?_⟩, rfl⟩
-          rfl
+          exact ⟨⟨t i, ⟨i, rfl⟩⟩, rfl⟩
         obtain ⟨b, hb⟩ := hq ⟨(t i).1, hmem⟩
         obtain ⟨a0, ha0⟩ := hPartInE i
         have hparts :
@@ -276,22 +274,6 @@ theorem activeSubsystem_aGenerated
         change q.embedding (eB a0) = (t i).1
         rw [← hbEq]
         exact hb.symm
-      let aS : RelStructure.Embedding A
-          (C.toRelStructure.induce S) := {
-        toFun := fun a => ⟨aC a, by
-          rcases hTupleIn (Classical.choose
-            (Set.not_subsingleton_iff.mp hTsub)).1 with _⟩
-        injective := by
-          intro x y h
-          apply aC.injective
-          exact congrArg Subtype.val h
-        map_rel_iff := by
-          intro Q s
-          change C.rel Q (aC ∘ s) ↔ A.rel Q s
-          exact aC.map_rel_iff Q s
-      }
-      -- The preceding subtype construction is easier obtained by factoring
-      -- the already embedded copy through the active inclusion.
       have hACsub : copyCarrier aC ⊆ S := by
         intro z hz
         rcases hz with ⟨a0, rfl⟩
@@ -302,22 +284,23 @@ theorem activeSubsystem_aGenerated
         calc
           C.part (aC a) = q.base (eB a) := q.projects (eB a)
           _ = e a := (heB a).symm
+      have hActiveFactor :
+          ∀ a0 : UA, ∃ s : S, aC a0 = inc s := by
+        intro a0
+        exact ⟨⟨aC a0, hACsub ⟨a0, rfl⟩⟩, rfl⟩
       let aS' : RelStructure.Embedding A
           (C.toRelStructure.induce S) :=
-        aC.factorThroughRange inc (fun a => by
-          exact ⟨⟨aC a, hACsub ⟨a, rfl⟩⟩, rfl⟩)
+        aC.factorThroughRange inc hActiveFactor
+      have haS' (a0 : UA) : aC a0 = inc (aS' a0) :=
+        Classical.choose_spec (hActiveFactor a0)
       refine ⟨aS', ?_⟩
       intro i
       rcases hTupleIn i with ⟨a0, ha0⟩
       refine ⟨a0, ?_⟩
       apply Subtype.ext
-      change aS' a0 = t i
       apply inc.injective
-      have hs := Classical.choose_spec
-        (show ∃ s : S, aC a0 = inc s by
-          exact ⟨⟨aC a0, hACsub ⟨a0, rfl⟩⟩, rfl⟩)
       calc
-        inc (aS' a0) = aC a0 := hs.symm
+        inc (aS' a0) = aC a0 := (haS' a0).symm
         _ = (t i).1 := ha0
 
 end StructuralRamsey.Girth
