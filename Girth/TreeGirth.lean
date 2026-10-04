@@ -134,10 +134,12 @@ theorem supportCopies_eq_mapped_of_iso
     apply Set.Subset.antisymm
     · rintro x ⟨a, rfl⟩
       refine ⟨a, ?_⟩
-      simp [eB, hInv]
+      change h.toEquiv (h.toEquiv.symm (e a)) = e a
+      exact h.toEquiv.apply_symm_apply (e a)
     · rintro x ⟨a, rfl⟩
       refine ⟨a, ?_⟩
-      simp [eB, hInv]
+      change e a = h.toEquiv (h.toEquiv.symm (e a))
+      exact (h.toEquiv.apply_symm_apply (e a)).symm
   · rintro ⟨e, rfl⟩
     exact ⟨h.toEmbedding.comp e, rfl⟩
 
