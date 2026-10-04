@@ -180,3 +180,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedDesignated_corePoint_supported
 #print axioms StructuralRamsey.Girth.initialDesignatedCopy
 #print axioms StructuralRamsey.Girth.initial_designatedCoversIrreducibles
+#print axioms StructuralRamsey.Girth.localIrreduciblesCovered_of_extendTo_and_ACopyCover
