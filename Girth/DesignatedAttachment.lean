@@ -65,7 +65,7 @@ theorem localIrreduciblesCovered_of_extendTo_and_ACopyCover
   exact ⟨u, hu.symm⟩
 
 /-- Transport one old designated B-copy into a standard attached copy. -/
-def DesignatedCopy.transportToStandard
+noncomputable def DesignatedCopy.transportToStandard
     {B : RelStructure L VB} {D : RelStructure L P}
     {C : StructuralRamsey.Partite.System L P X}
     {family : Set (RelStructure.Embedding B D)}
@@ -156,7 +156,8 @@ theorem designatedCoversIrreducibles_partiteAttachment
       (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i)
         (q.embedding b)
     have hb' : (aS a0).1 = q.embedding b := by
-      simpa [aC, incS] using hb
+      change incS (aS a0) = q.embedding b at hb
+      exact hb
     have hqS : q.embedding b ∈ S := by
       rw [← hb']
       exact (aS a0).2
