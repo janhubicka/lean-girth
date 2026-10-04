@@ -111,3 +111,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.elementaryClosure_closed_induce_aLinear
 #print axioms StructuralRamsey.Girth.pieceListEdges_subset_carrier
 #print axioms StructuralRamsey.Girth.girthGT_pieceList_of_singletonAttachments
+#print axioms StructuralRamsey.Girth.JoinTree.leaf_inter_rest_subsingleton
