@@ -114,17 +114,30 @@ theorem supportCopies_eq_mapped_of_iso
   ext E
   constructor
   · rintro ⟨e, rfl⟩
-    let eB : Embedding A B := h.symm.toEmbedding.comp e
+    let hInv : Embedding T B := {
+      toFun := h.toEquiv.symm
+      injective := h.toEquiv.symm.injective
+      map_rel_iff := by
+        intro R x
+        have hx := h.map_rel_iff R (h.toEquiv.symm ∘ x)
+        have heq :
+            h.toEquiv ∘ (h.toEquiv.symm ∘ x) = x := by
+          funext i
+          simp
+        rw [heq] at hx
+        exact hx.symm
+    }
+    let eB : Embedding A B := hInv.comp e
     refine ⟨eB, ?_⟩
     change copyCarrier e =
       copyCarrier (h.toEmbedding.comp eB)
     apply Set.Subset.antisymm
     · rintro x ⟨a, rfl⟩
       refine ⟨a, ?_⟩
-      simp [eB]
+      simp [eB, hInv]
     · rintro x ⟨a, rfl⟩
       refine ⟨a, ?_⟩
-      simp [eB]
+      simp [eB, hInv]
   · rintro ⟨e, rfl⟩
     exact ⟨h.toEmbedding.comp e, rfl⟩
 
