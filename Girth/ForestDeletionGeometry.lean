@@ -167,7 +167,7 @@ theorem mem_root_of_mem_center_and_reachable_after_delete
       root = q.snd := by simp [q]
       _ = r.snd := congrArg SimpleGraph.Walk.snd hqr
   have hrsndVal : r.snd = r0.snd.1 := by
-    dsimp [r]
+    change (r0.map occInc).getVert 1 = (r0.getVert 1).1
     rw [SimpleGraph.Walk.getVert_map]
     rfl
   have hrsnd : x ∈ (F r.snd).carrier := by
