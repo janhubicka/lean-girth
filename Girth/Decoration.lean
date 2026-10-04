@@ -226,6 +226,123 @@ noncomputable def decorateSupportSystem_embeddingEquivEdge
     exact decorateSupport_edgeCarrier A hTrans e.2
 
 
+
+/-- The image of a source support edge under a strong support embedding,
+packaged as a target support edge. -/
+def StrongSupportEmbedding.mapEdge
+    {X Y : Type v}
+    {H : Set (Set X)} {K : Set (Set Y)}
+    (f : StrongSupportEmbedding H K)
+    (e : {e : Set X // e ∈ H}) :
+    {E : Set Y // E ∈ K} := by
+  refine ⟨f '' e.1, ?_⟩
+  obtain ⟨E, hE, hEq⟩ := f.map_edge e.1 e.2
+  rw [← hEq]
+  exact hE
+
+/-- A designated family of strong support embeddings is Ramsey when every
+edge-colouring of the target is constant on all source edges inside one
+designated member. -/
+def StrongSupportRamseyFamily
+    {X Y : Type v}
+    (H : Set (Set X)) (K : Set (Set Y))
+    (𝓗 : Set (StrongSupportEmbedding H K))
+    (κ : Type*) : Prop :=
+  ∀ χ : {E : Set Y // E ∈ K} → κ,
+    ∃ f : StrongSupportEmbedding H K, f ∈ 𝓗 ∧
+      ∀ e₁ e₂ : {e : Set X // e ∈ H},
+        χ (f.mapEdge e₁) = χ (f.mapEdge e₂)
+
+/-- Carrier of a composite through a lifted strong support embedding is the
+set-theoretic image of the original carrier. -/
+theorem copyCarrier_comp_decorateSupportSystemEmbedding
+    {X Y : Type v}
+    (A : RelStructure L U)
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (hTransH : EdgeTransversal H partX)
+    (hTransK : EdgeTransversal K partY)
+    (f : StrongSupportEmbedding H K)
+    (hpart : ∀ x : X, partY (f x) = partX x)
+    (hH : H.Nonempty)
+    (hCover : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e)
+    (a : StructuralRamsey.Partite.Embedding
+      (StructuralRamsey.Partite.transversal A)
+      (decorateSupportSystem A H partX hTransH)) :
+    copyCarrier
+        ((decorateSupportSystemEmbedding A hTransH hTransK
+          f hpart hH hCover).comp a).toEmbedding =
+      f '' copyCarrier a.toEmbedding := by
+  apply Set.Subset.antisymm
+  · intro y hy
+    rcases hy with ⟨x, rfl⟩
+    exact ⟨a x, ⟨x, rfl⟩, rfl⟩
+  · intro y hy
+    rcases hy with ⟨z, ⟨x, hx⟩, rfl⟩
+    refine ⟨x, ?_⟩
+    change f (a x) = f z
+    exact congrArg f hx.symm
+
+/-- A designated Ramsey family of strong, part-preserving support copies gives
+exactly the partite Ramsey arrow needed by the induced Picture step. -/
+theorem strongSupportRamseyFamily_partiteArrow
+    {X Y : Type v}
+    (A : RelStructure L U)
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partX : X → U} {partY : Y → U}
+    (hTransH : EdgeTransversal H partX)
+    (hTransK : EdgeTransversal K partY)
+    (hSupportH : supportCopies A (decorateSupport A H partX) = H)
+    (hSupportK : supportCopies A (decorateSupport A K partY) = K)
+    (hH : H.Nonempty)
+    (hCoverX : ∀ x : X, ∃ e : Set X, e ∈ H ∧ x ∈ e)
+    (𝓗 : Set (StrongSupportEmbedding H K))
+    (hParts :
+      ∀ f : StrongSupportEmbedding H K, f ∈ 𝓗 →
+        ∀ x : X, partY (f x) = partX x)
+    {κ : Type*}
+    (hRamsey : StrongSupportRamseyFamily H K 𝓗 κ) :
+    StructuralRamsey.Partite.Arrow
+      (StructuralRamsey.Partite.transversal A)
+      (decorateSupportSystem A H partX hTransH)
+      (decorateSupportSystem A K partY hTransK) κ := by
+  intro χ
+  let srcEq :=
+    decorateSupportSystem_embeddingEquivEdge
+      A hTransH hSupportH
+  let dstEq :=
+    decorateSupportSystem_embeddingEquivEdge
+      A hTransK hSupportK
+  let χEdge : {E : Set Y // E ∈ K} → κ :=
+    fun E => χ (dstEq.symm E)
+  obtain ⟨f, hf, hmono⟩ := hRamsey χEdge
+  have hpart := hParts f hf
+  let g :=
+    decorateSupportSystemEmbedding
+      A hTransH hTransK f hpart hH hCoverX
+  refine ⟨g, ?_⟩
+  intro a₁ a₂
+  have hmap (a : StructuralRamsey.Partite.Embedding
+      (StructuralRamsey.Partite.transversal A)
+      (decorateSupportSystem A H partX hTransH)) :
+      dstEq (g.comp a) = f.mapEdge (srcEq a) := by
+    apply Subtype.ext
+    change
+      copyCarrier (g.comp a).toEmbedding =
+        f '' copyCarrier a.toEmbedding
+    exact copyCarrier_comp_decorateSupportSystemEmbedding
+      A hTransH hTransK f hpart hH hCoverX a
+  have hback (a : StructuralRamsey.Partite.Embedding
+      (StructuralRamsey.Partite.transversal A)
+      (decorateSupportSystem A H partX hTransH)) :
+      g.comp a = dstEq.symm (f.mapEdge (srcEq a)) := by
+    apply dstEq.injective
+    rw [Equiv.apply_symm_apply]
+    exact hmap a
+  rw [hback a₁, hback a₂]
+  exact hmono (srcEq a₁) (srcEq a₂)
+
+
 /-- Complete structural translation used in the manuscript: in a transversal
 high-girth support hypergraph, decorating edges by A introduces no unintended
 A-copies or irreducible substructures. -/
