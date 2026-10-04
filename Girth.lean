@@ -22,3 +22,4 @@ import Girth.HypergraphClique
 import Girth.FunctionalEHNClass
 import Girth.ALinearRamsey
 import Girth.Decoration
+import Girth.CustomPictureStep
