@@ -133,3 +133,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.structureEmbeddingWithLinearOrder
 #print axioms StructuralRamsey.Girth.aLinearRamsey_of_monotone_embeddings
 #print axioms StructuralRamsey.Girth.aLinearRamsey_ordered
+#print axioms StructuralRamsey.Girth.EdgeTransversal.edge_eq_range_vertex
+#print axioms StructuralRamsey.Girth.decorateSupport_relationsCovered
+#print axioms StructuralRamsey.Girth.decorateSupport_edgeCarrier
+#print axioms StructuralRamsey.Girth.decorateSupport_exact
