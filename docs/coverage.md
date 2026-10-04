@@ -26,7 +26,8 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | Theorem 2.4 A-linear Ramsey theorem | full functional-EHN derivation encoded in `ALinearRamsey`; ordered specialization and Ramsey-family geometry now through CI |
 | §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths/parents, and singleton-attachment girth induction formalized |
 | Structural local-forest translation | transversal decoration, exact support, and irreducible containment encoded in `Decoration`/`HypergraphClique`; lifting strong partite embeddings remains |
-| §§3–6 induced picture/local-forest construction | not yet formalized |
+| §5 active picture step | true active subsystem, custom local witness, projection/actual irreducible coverage, Ramsey picture property, and standard-copy intersection geometry packaged in `ActivePictureInvariant` |
+| §§3–6 induced picture/local-forest construction | remaining global completion/shared-support induction not yet formalized |
 | Main Theorem 1.1 | not yet formalized |
 
 The dependency on `partite-construction` is pinned deliberately.  As the EHN
