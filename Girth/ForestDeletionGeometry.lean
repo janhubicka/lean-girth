@@ -77,14 +77,14 @@ theorem neighbor_eq_of_reachable_after_delete
   let emb :=
     SimpleGraph.Embedding.induce
       (G := J.tree) (({center} : Set ι)ᶜ)
-  let p : J.tree.Walk a b := p0.map emb.toHom
+  let pRaw := p0.map emb.toHom
+  let p : J.tree.Walk a b := pRaw.copy (by rfl) (by rfl)
   have hp : p.IsPath := by
-    dsimp [p]
-    exact hp0.map emb.injective
+    simp [p, pRaw, hp0.map emb.injective]
   have hcenter : center ∉ p.support := by
     intro hc
-    dsimp [p] at hc
-    rw [SimpleGraph.Walk.support_map] at hc
+    dsimp [p, pRaw] at hc
+    rw [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map] at hc
     rcases List.mem_map.mp hc with ⟨z, _hz, hval⟩
     have hzout : z.1 ≠ center := by
       simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
