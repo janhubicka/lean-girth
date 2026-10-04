@@ -41,7 +41,7 @@ theorem fiberCliqueGraph_walk_support_label
     label x = label u := by
   induction p with
   | nil =>
-      simpa using hx
+      exact congrArg label hx
   | @cons u w v huw p ih =>
       simp only [SimpleGraph.Walk.support_cons, List.mem_cons] at hx
       rcases hx with rfl | hx
@@ -104,6 +104,6 @@ theorem exists_tree_fibers_preconnected
     exact hpLabel x hxP
   let q := pT.induce {z : C | label z = a} hpTLabel
   have hq := q.reachable
-  convert hq using 1 <;> apply Subtype.ext <;> rfl
+  convert hq using 1
 
 end StructuralRamsey.Girth
