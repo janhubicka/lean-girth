@@ -103,3 +103,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.freeAmalgam_right_aStrong
 #print axioms StructuralRamsey.Girth.aLinear_of_freeAmalgam
 #print axioms StructuralRamsey.Girth.concreteElementaryClosureAmalgam_geometry
+#print axioms StructuralRamsey.Girth.elementaryClosure_isFreeAmalgam
+#print axioms StructuralRamsey.Girth.concreteElementaryClosure_freeAmalgam
