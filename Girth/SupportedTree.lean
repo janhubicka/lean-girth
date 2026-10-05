@@ -50,6 +50,23 @@ inductive ASupportedTreeAmalgam
 
 namespace ASupportedTreeAmalgam
 
+/-- Any supported tree amalgam contains a copy of A as soon as B does.
+Following the old side through the construction gives a canonical choice from a
+chosen embedding A -> B. -/
+def inheritedAEmbedding
+    {A : RelStructure L U} {B : RelStructure L V}
+    {T : RelStructure L W}
+    (hT : ASupportedTreeAmalgam A B W T)
+    (alphaB : Embedding A B) :
+    Embedding A T := by
+  induction hT with
+  | copy h =>
+      exact h.toEmbedding.comp alphaB
+  | glueA h₀ f₀ fB i₀ iB hfree ih =>
+      exact i₀.comp ih
+  | gluePoint h₀ f₀ fB support₀ supportB i₀ iB hfree ih =>
+      exact i₀.comp ih
+
 /-- Forgetting the restricted overlap information gives the generic
 `TreeAmalgam` used by the partite-construction formalization. -/
 theorem toTreeAmalgam
