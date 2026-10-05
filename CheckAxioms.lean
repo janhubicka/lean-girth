@@ -286,3 +286,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_carrierEdgeFamily_of_joinTree
 #print axioms StructuralRamsey.Girth.pairwiseMixedSharedVerticesSupported_of_bMembers
 #print axioms StructuralRamsey.Girth.mixedForest_embeds_supportedTree_of_bMemberSupport
+#print axioms StructuralRamsey.Girth.JoinTree.restrictCarriers
+#print axioms StructuralRamsey.Girth.pairwise_restrictedCarrier_subsingleton_of_allowed
+#print axioms StructuralRamsey.Girth.girthGT_restrictedCarrierEdgeFamily_of_forest
+#print axioms StructuralRamsey.Girth.girthGT_restrictedCarrierEdgeFamily_of_part
