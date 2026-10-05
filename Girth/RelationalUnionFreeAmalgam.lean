@@ -27,7 +27,7 @@ def induceEmbeddingOfSubset
   injective := by
     intro x y h
     apply Subtype.ext
-    exact congrArg Subtype.val h
+    exact congrArg (fun z : ↥T => z.1) h
   map_rel_iff := by
     intro sym x
     rfl
@@ -55,8 +55,10 @@ theorem induceUnion_isFreeAmalgam_of_overlap
     (hSplit : RelationsSplitOver R S T) :
     IsFreeAmalgam
       fS fT
-      (induceEmbeddingOfSubset R Set.subset_union_left)
-      (induceEmbeddingOfSubset R Set.subset_union_right) := by
+      (induceEmbeddingOfSubset R
+        (S := S) (T := S ∪ T) Set.subset_union_left)
+      (induceEmbeddingOfSubset R
+        (S := T) (T := S ∪ T) Set.subset_union_right) := by
   classical
   constructor
   · intro z
@@ -64,8 +66,15 @@ theorem induceUnion_isFreeAmalgam_of_overlap
     · exact Or.inl ⟨⟨z.1, hzS⟩, by apply Subtype.ext; rfl⟩
     · exact Or.inr ⟨⟨z.1, hzT⟩, by apply Subtype.ext; rfl⟩
   · intro a b
-    change a.1 = b.1 ↔ ∃ d : D, a = fS d ∧ b = fT d
-    exact hOverlap a b
+    constructor
+    · intro hab
+      have hv : a.1 = b.1 :=
+        congrArg (fun z : ↥(S ∪ T) => z.1) hab
+      exact (hOverlap a b).mp hv
+    · intro h
+      have hv : a.1 = b.1 := (hOverlap a b).mpr h
+      apply Subtype.ext
+      exact hv
   · intro sym z
     constructor
     · intro hz
@@ -99,59 +108,39 @@ theorem induceUnion_isFreeAmalgam
     (S T : Set W)
     (hSplit : RelationsSplitOver R S T) :
     IsFreeAmalgam
-      (induceEmbeddingOfSubset R Set.inter_subset_left)
-      (induceEmbeddingOfSubset R Set.inter_subset_right)
-      (induceEmbeddingOfSubset R Set.subset_union_left)
-      (induceEmbeddingOfSubset R Set.subset_union_right) := by
-  classical
-  constructor
-  · intro z
-    rcases z.2 with hzS | hzT
-    · exact Or.inl ⟨⟨z.1, hzS⟩, by apply Subtype.ext; rfl⟩
-    · exact Or.inr ⟨⟨z.1, hzT⟩, by apply Subtype.ext; rfl⟩
+      (induceEmbeddingOfSubset R
+        (S := S ∩ T) (T := S) Set.inter_subset_left)
+      (induceEmbeddingOfSubset R
+        (S := S ∩ T) (T := T) Set.inter_subset_right)
+      (induceEmbeddingOfSubset R
+        (S := S) (T := S ∪ T) Set.subset_union_left)
+      (induceEmbeddingOfSubset R
+        (S := T) (T := S ∪ T) Set.subset_union_right) := by
+  apply induceUnion_isFreeAmalgam_of_overlap
+    R S T (R.induce (S ∩ T))
+    (induceEmbeddingOfSubset R
+      (S := S ∩ T) (T := S) Set.inter_subset_left)
+    (induceEmbeddingOfSubset R
+      (S := S ∩ T) (T := T) Set.inter_subset_right)
   · intro a b
     constructor
     · intro hab
-      have hv : a.1 = b.1 :=
-        congrArg Subtype.val hab
-      let d : ↥(S ∩ T) :=
-        ⟨a.1, a.2, by simpa [← hv] using b.2⟩
+      let d : ↥(S ∩ T) := ⟨a.1, a.2, by simpa [hab] using b.2⟩
       refine ⟨d, ?_, ?_⟩
       · apply Subtype.ext
         rfl
       · apply Subtype.ext
-        exact hv.symm
-    · rintro ⟨d, rfl, rfl⟩
-      rfl
-  · intro sym z
-    constructor
-    · intro hz
-      have hzR : R.rel sym (Subtype.val ∘ z) := hz
-      have hzUnion : ∀ i, (Subtype.val ∘ z) i ∈ S ∪ T :=
-        fun i => (z i).2
-      rcases hSplit sym (Subtype.val ∘ z) hzR hzUnion with hS | hT
-      · let x : Fin (L.arity sym) → ↥S :=
-          fun i => ⟨(z i).1, hS i⟩
-        refine Or.inl ⟨x, ?_, ?_⟩
-        · exact hzR
-        · funext i
-          apply Subtype.ext
-          rfl
-      · let x : Fin (L.arity sym) → ↥T :=
-          fun i => ⟨(z i).1, hT i⟩
-        refine Or.inr ⟨x, ?_, ?_⟩
-        · exact hzR
-        · funext i
-          apply Subtype.ext
-          rfl
-    · rintro (⟨x, hx, rfl⟩ | ⟨x, hx, rfl⟩)
-      · exact hx
-      · exact hx
+        exact hab.symm
+    · rintro ⟨d, ha, hb⟩
+      have haVal := congrArg Subtype.val ha
+      have hbVal := congrArg Subtype.val hb
+      exact haVal.trans hbVal.symm
+  · exact hSplit
 
 
 /-- When source and target free amalgams use the same overlap structure, exact
 overlap reflection is automatic from injectivity of the two side embeddings. -/
-noncomputable def StructuralRamsey.RelStructure.IsFreeAmalgam.liftEmbedding_sameOverlap
+noncomputable def freeAmalgam_liftEmbedding_sameOverlap
     {H E F C E₂ F₂ T : Type v}
     {D : RelStructure L H}
     {A₁ : RelStructure L E} {B₁ : RelStructure L F}
