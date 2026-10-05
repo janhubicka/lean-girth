@@ -226,3 +226,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.erase_oneEdge_of_no_full
 #print axioms StructuralRamsey.Girth.starGraph_induce_preconnected_of_mem_center
 #print axioms StructuralRamsey.Girth.JoinTree.nonempty_eraseMember_of_full
+\n#print axioms StructuralRamsey.Girth.JoinTree.fullOccurrence_preconnected\n#print axioms StructuralRamsey.Girth.JoinTree.enlargeCarriers\n
