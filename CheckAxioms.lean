@@ -256,3 +256,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.aCopyFactorIntoMember_spec
 
 #print axioms StructuralRamsey.Girth.aCopyFactorIntoMember_exists
+
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overA
