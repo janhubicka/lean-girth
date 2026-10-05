@@ -38,8 +38,13 @@ def pointAtEmbedding
     change
       T.rel R ((fun _ : PUnit => alpha a) ∘ x) ↔
         A.rel R (fun _ => a)
-    convert alpha.map_rel_iff R (fun _ => a) using 1 <;>
-      funext k <;> rfl
+    have htuple :
+        ((fun _ : PUnit => alpha a) ∘ x) =
+          (alpha.toFun ∘ (fun _ : Fin (L.arity R) => a)) := by
+      funext k
+      rfl
+    rw [htuple]
+    exact alpha.map_rel_iff R (fun _ => a)
 
 /-- The canonical free amalgam over an A-copy is again an A-supported tree
 amalgam. -/
