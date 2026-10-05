@@ -49,10 +49,15 @@ theorem isTree_of_connected_ncard_edgeSet
   classical
   letI := Fintype.ofFinite V
   haveI : Fintype G.edgeSet := Fintype.ofFinite G.edgeSet
+  have hedge : Finset.card G.edgeFinset = G.edgeSet.ncard := by
+    calc
+      Finset.card G.edgeFinset = Fintype.card G.edgeSet :=
+        G.edgeFinset_card
+      _ = G.edgeSet.ncard :=
+        Set.fintypeCard_eq_ncard G.edgeSet
   apply isTree_of_connected_card_edgeFinset G hconn
-  rw [← G.card_edgeSet]
-  simpa [SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard,
-    Nat.card_eq_fintype_card] using hcard
+  rw [hedge, ← Nat.card_eq_fintype_card]
+  exact hcard
 
 
 /-- A neighbour of the deleted vertex, viewed as a surviving vertex. -/
@@ -106,10 +111,18 @@ theorem JoinTree.disjoint_deletedGraph_map_neighborGraph
         (J.neighborToErasedEmbedding center r)
         (J.neighborToErasedEmbedding center s) :=
     hdelete.reachable
+  have hreach' :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨r.1, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using r.2.ne.symm⟩
+        ⟨s.1, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            using s.2.ne.symm⟩ := by
+    convert hreach using 1 <;> apply Subtype.ext <;> rfl
   have hrsEq : r.1 = s.1 := by
-    apply J.neighbor_eq_of_reachable_after_delete
-      (center := center) r.2 s.2
-    simpa [JoinTree.neighborToErasedEmbedding] using hreach
+    exact J.neighbor_eq_of_reachable_after_delete
+      (center := center) r.2 s.2 hreach'
   exact hrs.ne (Subtype.ext hrsEq)
 
 
@@ -184,6 +197,17 @@ theorem JoinTree.rewireAfterDelete_isTree
   have hdisjGraph : Disjoint D M := by
     simpa [D, M, e] using
       J.disjoint_deletedGraph_map_neighborGraph center R
+  have hDedge : Finset.card D.edgeFinset = D.edgeSet.ncard := by
+    calc
+      Finset.card D.edgeFinset = Fintype.card D.edgeSet := D.edgeFinset_card
+      _ = D.edgeSet.ncard := Set.fintypeCard_eq_ncard D.edgeSet
+  have hJedge :
+      Finset.card J.tree.edgeFinset = J.tree.edgeSet.ncard := by
+    calc
+      Finset.card J.tree.edgeFinset = Fintype.card J.tree.edgeSet :=
+        J.tree.edgeFinset_card
+      _ = J.tree.edgeSet.ncard :=
+        Set.fintypeCard_eq_ncard J.tree.edgeSet
   have hDcard :
       D.edgeSet.ncard =
         J.tree.edgeSet.ncard - J.tree.degree center := by
@@ -192,19 +216,33 @@ theorem JoinTree.rewireAfterDelete_isTree
     have h2 :=
       SimpleGraph.card_edgeFinset_deleteIncidenceSet J.tree center
     rw [h2] at h1
-    simpa [D, SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard] using h1
+    calc
+      D.edgeSet.ncard = Finset.card D.edgeFinset := hDedge.symm
+      _ = Finset.card J.tree.edgeFinset - J.tree.degree center := by
+        simpa [D] using h1
+      _ = J.tree.edgeSet.ncard - J.tree.degree center := by
+        rw [hJedge]
   have hMcard : M.edgeSet.ncard = R.edgeSet.ncard := by
     dsimp [M]
     rw [SimpleGraph.edgeSet_map]
     exact Set.ncard_image_of_injective _ e.sym2Map.injective
   have hJcard : J.tree.edgeSet.ncard + 1 = Nat.card ι := by
-    have h := J.isTree.card_edgeFinset
-    simpa [SimpleGraph.edgeFinset, Set.fintypeCard_eq_ncard,
-      Nat.card_eq_fintype_card] using h
+    calc
+      J.tree.edgeSet.ncard + 1 =
+          Finset.card J.tree.edgeFinset + 1 := by rw [hJedge]
+      _ = Fintype.card ι := J.isTree.card_edgeFinset
+      _ = Nat.card ι := by rw [Nat.card_eq_fintype_card]
+  have hRedge : Finset.card R.edgeFinset = R.edgeSet.ncard := by
+    calc
+      Finset.card R.edgeFinset = Fintype.card R.edgeSet := R.edgeFinset_card
+      _ = R.edgeSet.ncard := Set.fintypeCard_eq_ncard R.edgeSet
   have hRcard :
       R.edgeSet.ncard + 1 = Nat.card (J.tree.neighborSet center) := by
-    have h := hR.card_edgeFinset
-    simpa [Set.fintypeCard_eq_ncard, Nat.card_eq_fintype_card] using h
+    calc
+      R.edgeSet.ncard + 1 = Finset.card R.edgeFinset + 1 := by rw [hRedge]
+      _ = Fintype.card (J.tree.neighborSet center) := hR.card_edgeFinset
+      _ = Nat.card (J.tree.neighborSet center) := by
+        rw [Nat.card_eq_fintype_card]
   have hNcard :
       Nat.card (J.tree.neighborSet center) = J.tree.degree center := by
     simpa [Nat.card_eq_fintype_card] using
