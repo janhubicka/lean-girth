@@ -240,3 +240,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam
 #print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam_of_overlap
 #print axioms StructuralRamsey.Girth.freeAmalgam_liftEmbedding_sameOverlap
+
+#print axioms StructuralRamsey.Girth.familyMemberEmbedding
+#print axioms StructuralRamsey.Girth.supportedBCopyOverlap_symm
+#print axioms StructuralRamsey.Girth.BCopyJoinTree.leaf_inter_rest_eq_parent
+#print axioms StructuralRamsey.Girth.pairwiseSupportedBCopyOverlap_erase
+#print axioms StructuralRamsey.Girth.BCopyJoinTree.restToFullEmbedding
