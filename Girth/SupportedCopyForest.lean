@@ -55,6 +55,25 @@ def familyMemberEmbedding
       intro k
       exact ⟨x k, rfl⟩
 
+/-- If the index type has only one element, the generated family union
+embeds back into that unique member. -/
+noncomputable def familyUnionToMember_of_subsingleton
+    {B : RelStructure L VB} {R : RelStructure L W}
+    [Subsingleton ι]
+    (b : ι → Embedding B R) (i : ι) :
+    Embedding (familyUnionStructure R b) B := by
+  refine
+    ((Iso.refl (familyUnionStructure R b)).toEmbedding).factorThroughRange
+      (familyMemberEmbedding b i) ?_
+  intro q
+  rcases Set.mem_iUnion.mp q.2 with ⟨j, hqj⟩
+  rcases hqj with ⟨y, hy⟩
+  have hji : j = i := Subsingleton.elim _ _
+  subst j
+  refine ⟨y, ?_⟩
+  apply Subtype.ext
+  exact hy.symm
+
 /-- Regard only the carrier of an embedded copy as a hypergraph piece. -/
 def embeddingCarrierPiece
     {B : RelStructure L VB} {R : RelStructure L W}
