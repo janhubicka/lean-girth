@@ -37,9 +37,9 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overA
         (familyUnionStructure R
           (fun j : {j : ι // j ≠ leaf} => b j.1))
         T) :
-    ∃ (Y : Type v) (S : RelStructure L Y),
-      ASupportedTreeAmalgam A B Y S ∧
-      Embedding (familyUnionStructure R b) S := by
+    ∃ (Y : Type v) (S : RelStructure L Y)
+        (e : Embedding (familyUnionStructure R b) S),
+      ASupportedTreeAmalgam A B Y S := by
   classical
   let p : {j : ι // j ≠ leaf} :=
     ⟨parent, hadj.ne.symm⟩
@@ -124,7 +124,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overA
       hSrc hTgt eRest idB
       (by intro d; rfl)
       (by intro d; rfl)
-  exact ⟨Y, S, hS, eFull⟩
+  exact ⟨Y, S, eFull, hS⟩
 
 /-- If a leaf meets the rest in one supported vertex, the induction extends
 across the leaf by one supported singleton gluing. -/
@@ -148,9 +148,9 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
         (familyUnionStructure R
           (fun j : {j : ι // j ≠ leaf} => b j.1))
         T) :
-    ∃ (Y : Type v) (S : RelStructure L Y),
-      ASupportedTreeAmalgam A B Y S ∧
-      Embedding (familyUnionStructure R b) S := by
+    ∃ (Y : Type v) (S : RelStructure L Y)
+        (e : Embedding (familyUnionStructure R b) S),
+      ASupportedTreeAmalgam A B Y S := by
   classical
   let p : {j : ι // j ≠ leaf} :=
     ⟨parent, hadj.ne.symm⟩
@@ -261,7 +261,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
       hSrc hTgt eRest idB
       (by intro d; rfl)
       (by intro d; rfl)
-  exact ⟨Y, S, hS, eFull⟩
+  exact ⟨Y, S, eFull, hS⟩
 
 /-- If a leaf is disjoint from its parent, then it is disjoint from the whole
 leaf-deleted union.  Three supported singleton bridge gluings place a fresh
@@ -286,9 +286,9 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
         T)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (Y : Type v) (S : RelStructure L Y),
-      ASupportedTreeAmalgam A B Y S ∧
-      Embedding (familyUnionStructure R b) S := by
+    ∃ (Y : Type v) (S : RelStructure L Y)
+        (e : Embedding (familyUnionStructure R b) S),
+      ASupportedTreeAmalgam A B Y S := by
   classical
   let p : {j : ι // j ≠ leaf} :=
     ⟨parent, hadj.ne.symm⟩
@@ -354,7 +354,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
       (by intro d; exact PEmpty.elim d)
   let eFull : Embedding (familyUnionStructure R b) S :=
     (induceToAmbient S (Set.range iT ∪ Set.range iB)).comp eInduced
-  exact ⟨Y, S, hS, eFull⟩
+  exact ⟨Y, S, eFull, hS⟩
 
 /-- Unified recursive leaf step.  The supported-overlap trichotomy is exactly
 the case split needed by the forest-to-tree-amalgam induction. -/
@@ -376,9 +376,9 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf
         T)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (Y : Type v) (S : RelStructure L Y),
-      ASupportedTreeAmalgam A B Y S ∧
-      Embedding (familyUnionStructure R b) S := by
+    ∃ (Y : Type v) (S : RelStructure L Y)
+        (e : Embedding (familyUnionStructure R b) S),
+      ASupportedTreeAmalgam A B Y S := by
   rcases hOverlap hadj.ne with hEmpty | hCopy | hPoint
   · exact
       hT.extendCopyForestLeaf_overEmpty
