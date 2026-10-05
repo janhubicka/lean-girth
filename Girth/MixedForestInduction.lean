@@ -28,9 +28,9 @@ theorem mixedJoinTree_embeds_supportedTree
     (hShared : PairwiseMixedSharedVerticesSupported A m)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (X : Type v) (T : RelStructure L X),
-      ASupportedTreeAmalgam A B X T ∧
-      Embedding (mixedFamilyUnionStructure R m) T := by
+    ∃ (X : Type v) (T : RelStructure L X)
+        (e : Embedding (mixedFamilyUnionStructure R m) T),
+      ASupportedTreeAmalgam A B X T := by
   classical
   by_cases hsub : Subsingleton ι
   · let i : ι := Classical.choice (inferInstance : Nonempty ι)
@@ -40,7 +40,7 @@ theorem mixedJoinTree_embeds_supportedTree
     let eB : Embedding (mixedFamilyUnionStructure R m) B :=
       ((m i).toB alphaB).comp eMember
     exact
-      ⟨VB, B, ASupportedTreeAmalgam.copy (Iso.refl B), eB⟩
+      ⟨VB, B, eB, ASupportedTreeAmalgam.copy (Iso.refl B)⟩
   · letI : Nontrivial ι := not_subsingleton_iff_nontrivial.mp hsub
     obtain ⟨leaf, parent, hadj, huniq, _hLeafInter⟩ :=
       J.exists_leaf_attachment
@@ -71,15 +71,15 @@ theorem mixedJoinTree_embeds_supportedTree
       intro hsurj
       obtain ⟨j, hj⟩ := hsurj leaf
       exact j.2 hj
-    obtain ⟨X, T, hT, eRest⟩ :=
+    obtain ⟨X, T, eRest, hT⟩ :=
       mixedJoinTree_embeds_supportedTree
         (ι := {j : ι // j ≠ leaf})
         JRest hAllowedRest hSharedRest alphaB a0 a1 hne
-    obtain ⟨Y, S, hS, eFull⟩ :=
+    obtain ⟨Y, S, eFull, hS⟩ :=
       hT.extendMixedForestLeaf
         J hAllowed hShared hadj huniq
         eRest alphaB a0 a1 hne
-    exact ⟨Y, S, hS, eFull⟩
+    exact ⟨Y, S, eFull, hS⟩
 termination_by Fintype.card ι
 decreasing_by
   exact hcard
@@ -94,9 +94,9 @@ theorem mixedForest_embeds_supportedTree
     (hShared : PairwiseMixedSharedVerticesSupported A m)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (X : Type v) (T : RelStructure L X),
-      ASupportedTreeAmalgam A B X T ∧
-      Embedding (mixedFamilyUnionStructure R m) T := by
+    ∃ (X : Type v) (T : RelStructure L X)
+        (e : Embedding (mixedFamilyUnionStructure R m) T),
+      ASupportedTreeAmalgam A B X T := by
   obtain ⟨J⟩ := hForest.joinTree_of_nonempty
   exact
     mixedJoinTree_embeds_supportedTree
