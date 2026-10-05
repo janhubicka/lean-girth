@@ -127,6 +127,46 @@ theorem JoinTree.disjoint_deletedGraph_map_neighborGraph
 
 
 
+/-- If an ambient vertex is absent from the deleted member, its whole
+old occurrence subtree survives the deletion. -/
+theorem JoinTree.reachable_occurrence_after_delete_of_not_mem_center
+    {F : ι → HypergraphPiece V}
+    (J : JoinTree F)
+    {center i j : ι}
+    (hi : i ≠ center) (hj : j ≠ center)
+    {x : V}
+    (hxi : x ∈ (F i).carrier)
+    (hxj : x ∈ (F j).carrier)
+    (hxCenter : x ∉ (F center).carrier) :
+    ((J.tree.induce (({center} : Set ι)ᶜ)).induce
+      {k | x ∈ (F k.1).carrier}).Reachable
+        ⟨⟨i, by
+            simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩,
+          hxi⟩
+        ⟨⟨j, by
+            simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩,
+          hxj⟩ := by
+  let occ : Set ι := {k : ι | x ∈ (F k).carrier}
+  let iOcc : occ := ⟨i, hxi⟩
+  let jOcc : occ := ⟨j, hxj⟩
+  let phi :
+      (J.tree.induce occ) →g
+        ((J.tree.induce (({center} : Set ι)ᶜ)).induce
+          {k | x ∈ (F k.1).carrier}) :=
+    { toFun := fun z =>
+        ⟨⟨z.1, by
+            simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+            intro hz
+            subst hz
+            exact hxCenter z.2⟩,
+          z.2⟩
+      map_rel' := by
+        intro a b hab
+        exact hab }
+  have h := (J.running x iOcc jOcc).map phi
+  convert h using 1 <;> apply Subtype.ext <;> apply Subtype.ext <;> rfl
+
+
 /-- Inside a fixed component of the deleted tree, the unique path
 between two occurrences of an ambient vertex still consists entirely of
 occurrences of that vertex. -/
