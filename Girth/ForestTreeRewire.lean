@@ -238,6 +238,67 @@ theorem JoinTree.reachable_occurrence_after_delete
   convert hqx using 1 <;> apply Subtype.ext <;> apply Subtype.ext <;> rfl
 
 
+/-- The attachment label of a former neighbour is its carrier
+intersection with the deleted member. -/
+def JoinTree.neighborAttachment
+    {F : ι → HypergraphPiece V}
+    (J : JoinTree F) (center : ι)
+    (r : J.tree.neighborSet center) : Set V :=
+  (F center).carrier ∩ (F r.1).carrier
+
+/-- In the no-full-edge case, every neighbour attachment is empty or a
+singleton. -/
+theorem JoinTree.neighborAttachment_subsingleton
+    {F : ι → HypergraphPiece V}
+    (J : JoinTree F)
+    (hPair : PairwiseAllowed F)
+    {center : ι}
+    (hOne : (F center).IsOneEdge)
+    (hNoFull :
+      ∀ k : ι, k ≠ center →
+        ¬ (F center).carrier ⊆ (F k).carrier)
+    (r : J.tree.neighborSet center) :
+    (J.neighborAttachment center r).Subsingleton := by
+  have h :=
+    HypergraphPiece.isOneEdge_allowed_dichotomy
+      hOne (hPair r.2.ne)
+  exact h.resolve_right (hNoFull r.1 r.2.ne.symm)
+
+/-- Two neighbour attachments containing the same vertex of the deleted
+one-edge member are equal. -/
+theorem JoinTree.neighborAttachment_eq_of_common
+    {F : ι → HypergraphPiece V}
+    (J : JoinTree F)
+    (hPair : PairwiseAllowed F)
+    {center : ι}
+    (hOne : (F center).IsOneEdge)
+    (hNoFull :
+      ∀ k : ι, k ≠ center →
+        ¬ (F center).carrier ⊆ (F k).carrier)
+    {r s : J.tree.neighborSet center}
+    {x : V}
+    (hxCenter : x ∈ (F center).carrier)
+    (hxr : x ∈ (F r.1).carrier)
+    (hxs : x ∈ (F s.1).carrier) :
+    J.neighborAttachment center r =
+      J.neighborAttachment center s := by
+  have hrsub :=
+    J.neighborAttachment_subsingleton hPair hOne hNoFull r
+  have hssub :=
+    J.neighborAttachment_subsingleton hPair hOne hNoFull s
+  apply Set.Subset.antisymm
+  · intro y hy
+    have hyx : y = x :=
+      hrsub hy ⟨hxCenter, hxr⟩
+    simpa [hyx] using (show x ∈ J.neighborAttachment center s from
+      ⟨hxCenter, hxs⟩)
+  · intro y hy
+    have hyx : y = x :=
+      hssub hy ⟨hxCenter, hxs⟩
+    simpa [hyx] using (show x ∈ J.neighborAttachment center r from
+      ⟨hxCenter, hxr⟩)
+
+
 /-- Replacing the centre-star by a connected graph on all former neighbours
 keeps the surviving vertices connected. -/
 theorem JoinTree.rewireAfterDelete_connected
