@@ -2,6 +2,7 @@ import Girth.Support
 import Girth.Berge
 import Girth.SupportedTree
 import Girth.SupportedTreeConstruction
+import Girth.RelationalUnionFreeAmalgam
 import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore
