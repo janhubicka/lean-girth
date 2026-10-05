@@ -118,18 +118,23 @@ def JoinTree.reindex
           ((J.tree.comap e).induce newOcc) :=
       { toFun := fun z =>
           ⟨e.symm z.1, by
+            have hz := z.2
+            change x ∈ (F z.1).carrier at hz
             change x ∈ (F (e (e.symm z.1))).carrier
-            simpa using z.2⟩
+            simpa only [e.apply_symm_apply] using hz⟩
         map_rel' := by
           intro a b hab
           change J.tree.Adj (e (e.symm a.1)) (e (e.symm b.1))
           simpa using hab }
     have hphi : Function.Surjective phi := by
       intro y
-      let z : oldOcc := ⟨e y.1, y.2⟩
+      have hy := y.2
+      change x ∈ (F (e y.1)).carrier at hy
+      let z : oldOcc := ⟨e y.1, hy⟩
       refine ⟨z, ?_⟩
       apply Subtype.ext
-      simp [phi, z]
+      change e.symm (e y.1) = y.1
+      exact e.symm_apply_apply y.1
     exact hOld.map phi hphi
 
 end StructuralRamsey.Girth
