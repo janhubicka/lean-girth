@@ -112,4 +112,24 @@ theorem mixedForest_embeds_supportedTree
     mixedJoinTree_embeds_supportedTree
       J hForest.pairwiseAllowed hShared alphaB a0 a1 hne
 
+/-- Exact manuscript form: it is enough to require shared-point support only
+inside incident B-members.  Support on an incident A-member is automatic. -/
+theorem mixedForest_embeds_supportedTree_of_bMemberSupport
+    {A : RelStructure L UA} {B : RelStructure L VB}
+    {R : RelStructure L W}
+    {ι : Type v}
+    {m : ι → ABMember A B R}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies (fun i => (m i).supportPiece A))
+    (hShared : PairwiseSharedVerticesSupportedInBMembers A m)
+    (alphaB : Embedding A B)
+    (a0 a1 : UA) (hne : a0 ≠ a1) :
+    ∃ (X : Type v) (T : RelStructure L X)
+        (e : Embedding (mixedFamilyUnionStructure R m) T),
+      ASupportedTreeAmalgam A B X T :=
+  mixedForest_embeds_supportedTree
+    hForest
+    (pairwiseMixedSharedVerticesSupported_of_bMembers A hShared)
+    alphaB a0 a1 hne
+
 end StructuralRamsey.Girth
