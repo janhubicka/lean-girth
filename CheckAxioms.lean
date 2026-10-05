@@ -216,3 +216,13 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_tree_fibers_preconnected
 
 #print axioms StructuralRamsey.Girth.isTree_of_connected_card_edgeFinset
+
+#print axioms StructuralRamsey.Girth.isTree_of_connected_ncard_edgeSet
+#print axioms StructuralRamsey.Girth.JoinTree.rewireAfterDelete_isTree
+#print axioms StructuralRamsey.Girth.JoinTree.reachable_occurrence_after_delete_of_not_mem_center
+#print axioms StructuralRamsey.Girth.JoinTree.neighborAttachment_subsingleton
+#print axioms StructuralRamsey.Girth.JoinTree.neighborAttachment_eq_of_common
+#print axioms StructuralRamsey.Girth.JoinTree.nonempty_eraseOneEdgeNoFull
+#print axioms StructuralRamsey.Girth.ForestOfCopies.erase_oneEdge_of_no_full
+#print axioms StructuralRamsey.Girth.starGraph_induce_preconnected_of_mem_center
+#print axioms StructuralRamsey.Girth.JoinTree.nonempty_eraseMember_of_full
