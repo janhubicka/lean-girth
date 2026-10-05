@@ -6,6 +6,7 @@ import Girth.RelationalUnionFreeAmalgam
 import Girth.SupportedCopyForest
 import Girth.SupportedCopyForestStep
 import Girth.SupportedCopyForestInduction
+import Girth.SupportForestToTree
 import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore
