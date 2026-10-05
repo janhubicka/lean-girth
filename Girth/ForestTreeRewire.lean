@@ -48,16 +48,30 @@ theorem isTree_of_connected_ncard_edgeSet
     G.IsTree := by
   classical
   letI := Fintype.ofFinite V
-  haveI : Fintype G.edgeSet := Fintype.ofFinite G.edgeSet
-  have hedge : Finset.card G.edgeFinset = G.edgeSet.ncard := by
+  obtain ⟨T, hTG, hTtree⟩ := hconn.exists_isTree_le
+  have hTedge :
+      Finset.card T.edgeFinset = T.edgeSet.ncard := by
     calc
-      Finset.card G.edgeFinset = Fintype.card G.edgeSet :=
-        G.edgeFinset_card
-      _ = G.edgeSet.ncard :=
-        Set.fintypeCard_eq_ncard G.edgeSet
-  apply isTree_of_connected_card_edgeFinset G hconn
-  rw [hedge, ← Nat.card_eq_fintype_card]
-  exact hcard
+      Finset.card T.edgeFinset = Fintype.card T.edgeSet :=
+        T.edgeFinset_card
+      _ = T.edgeSet.ncard :=
+        Set.fintypeCard_eq_ncard T.edgeSet
+  have hTcard : T.edgeSet.ncard + 1 = Nat.card V := by
+    calc
+      T.edgeSet.ncard + 1 =
+          Finset.card T.edgeFinset + 1 :=
+        congrArg (· + 1) hTedge.symm
+      _ = Fintype.card V := hTtree.card_edgeFinset
+      _ = Nat.card V := by simp
+  have hcards : T.edgeSet.ncard = G.edgeSet.ncard := by
+    omega
+  have hsub : T.edgeSet ⊆ G.edgeSet :=
+    SimpleGraph.edgeSet_mono hTG
+  have hedge : T.edgeSet = G.edgeSet :=
+    Set.eq_of_subset_of_ncard_le hsub (by omega) (Set.toFinite G.edgeSet)
+  have hEq : T = G :=
+    SimpleGraph.edgeSet_injective hedge
+  simpa [hEq] using hTtree
 
 
 /-- A neighbour of the deleted vertex, viewed as a surviving vertex. -/
@@ -139,7 +153,8 @@ theorem JoinTree.reachable_occurrence_after_delete_of_not_mem_center
     (hxj : x ∈ (F j).carrier)
     (hxCenter : x ∉ (F center).carrier) :
     ((J.tree.induce (({center} : Set ι)ᶜ)).induce
-      {k | x ∈ (F k.1).carrier}).Reachable
+      {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}).Reachable
         ⟨⟨i, by
             simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩,
           hxi⟩
@@ -152,7 +167,8 @@ theorem JoinTree.reachable_occurrence_after_delete_of_not_mem_center
   let phi :
       (J.tree.induce occ) →g
         ((J.tree.induce (({center} : Set ι)ᶜ)).induce
-          {k | x ∈ (F k.1).carrier}) :=
+          {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}) :=
     { toFun := fun z =>
         ⟨⟨z.1, by
             simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
@@ -185,7 +201,8 @@ theorem JoinTree.reachable_occurrence_after_delete
         ⟨j, by
           simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩) :
     ((J.tree.induce (({center} : Set ι)ᶜ)).induce
-      {k | x ∈ (F k.1).carrier}).Reachable
+      {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}).Reachable
         ⟨⟨i, by
             simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩,
           hxi⟩
@@ -232,8 +249,11 @@ theorem JoinTree.reachable_occurrence_after_delete
     rw [SimpleGraph.Walk.support_map] at hzq
     rcases List.mem_map.mp hzq with ⟨w, hw, hwval⟩
     have hwx : x ∈ (F w.1).carrier := w.2
-    simpa [hwval] using hwx
-  let qx := q0.induce {k | x ∈ (F k.1).carrier} hqX
+    change w.1 = z.1 at hwval
+    rw [← hwval]
+    exact hwx
+  let qx := q0.induce {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier} hqX
   have hqx := qx.reachable
   convert hqx using 1 <;> apply Subtype.ext <;> apply Subtype.ext <;> rfl
 
@@ -464,7 +484,8 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
     JoinTree (erasePiece F center) := by
   classical
   let survivor := {i : ι // i ∈ (({center} : Set ι)ᶜ)}
-  obtain ⟨i0⟩ := (inferInstance : Nonempty survivor)
+  let i0 : survivor :=
+    Classical.choice (inferInstance : Nonempty survivor)
   have hi0 : i0.1 ≠ center := by
     simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using i0.2
   obtain ⟨root0, hroot0, _hreach0⟩ :=
@@ -489,9 +510,11 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
     simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using b.1.2
   have hmono :
       ((J.tree.induce (({center} : Set ι)ᶜ)).induce
-        {k | x ∈ (F k.1).carrier}) ≤
+        {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}) ≤
       ((J.rewireAfterDelete center R).induce
-        {k | x ∈ (F k.1).carrier}) := by
+        {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}) := by
     exact SimpleGraph.induce_mono
       (show J.tree.induce (({center} : Set ι)ᶜ) ≤
         J.rewireAfterDelete center R from le_sup_left)
@@ -517,7 +540,8 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
         hrb.ne.symm hb hxrb b.2 hreachB
     have hA :
         ((J.rewireAfterDelete center R).induce
-          {k | x ∈ (F k.1).carrier}).Reachable
+          {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}).Reachable
           a
           ⟨J.neighborToErasedEmbedding center raN, hxra⟩ := by
       have h := (hOccA.mono hmono).symm
@@ -525,7 +549,8 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
         apply Subtype.ext <;> rfl
     have hB :
         ((J.rewireAfterDelete center R).induce
-          {k | x ∈ (F k.1).carrier}).Reachable
+          {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}).Reachable
           ⟨J.neighborToErasedEmbedding center rbN, hxrb⟩
           b := by
       have h := hOccB.mono hmono
@@ -559,7 +584,8 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
             J.neighborAttachment center r =
               J.neighborAttachment center raN}) →g
         ((J.rewireAfterDelete center R).induce
-          {k | x ∈ (F k.1).carrier}) :=
+          {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}) :=
       { toFun := fun z =>
           ⟨J.neighborToErasedEmbedding center z.1,
             by
@@ -581,7 +607,8 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
     have hRoots0 := hRroots.map phi
     have hRoots :
         ((J.rewireAfterDelete center R).induce
-          {k | x ∈ (F k.1).carrier}).Reachable
+          {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
+        x ∈ (F k.1).carrier}).Reachable
           ⟨J.neighborToErasedEmbedding center raN, hxra⟩
           ⟨J.neighborToErasedEmbedding center rbN, hxrb⟩ := by
       convert hRoots0 using 1 <;> apply Subtype.ext <;>
@@ -606,7 +633,7 @@ theorem ForestOfCopies.erase_oneEdge_of_no_full
         ¬ (F center).carrier ⊆ (F k).carrier) :
     ForestOfCopies (erasePiece F center) := by
   refine
-    ⟨J.pairwiseAllowed_erase hF.pairwiseAllowed center, ?_⟩
+    ⟨JoinTree.pairwiseAllowed_erase hF.pairwiseAllowed center, ?_⟩
   let survivor := {i : ι // i ∈ (({center} : Set ι)ᶜ)}
   by_cases hN : Nonempty survivor
   · letI : Nonempty survivor := hN
