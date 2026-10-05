@@ -99,4 +99,37 @@ theorem JoinTree.leaf_inter_rest_subsingleton
       (⋃ j : {j : ι // j ≠ leaf}, (F j.1).carrier)).Subsingleton := by
   rw [J.leaf_inter_iUnion_eq_parent hadj huniq]
   exact hPair hadj.ne
+/-- Relabel a join tree along an equivalence of its index type. -/
+def JoinTree.reindex
+    {κ : Type v} {F : ι → HypergraphPiece W}
+    (J : JoinTree F) (e : κ ≃ ι) :
+    JoinTree (fun k => F (e k)) where
+  tree := J.tree.comap e
+  isTree :=
+    (SimpleGraph.Iso.comap e J.tree).isTree_iff.mpr J.isTree
+  running := by
+    intro x
+    let oldOcc : Set ι := {i | x ∈ (F i).carrier}
+    let newOcc : Set κ := {k | x ∈ (F (e k)).carrier}
+    have hOld : (J.tree.induce oldOcc).Preconnected := by
+      simpa [oldOcc] using J.running x
+    let phi :
+        (J.tree.induce oldOcc) →g
+          ((J.tree.comap e).induce newOcc) :=
+      { toFun := fun z =>
+          ⟨e.symm z.1, by
+            change x ∈ (F (e (e.symm z.1))).carrier
+            simpa using z.2⟩
+        map_rel' := by
+          intro a b hab
+          change J.tree.Adj (e (e.symm a.1)) (e (e.symm b.1))
+          simpa using hab }
+    have hphi : Function.Surjective phi := by
+      intro y
+      let z : oldOcc := ⟨e y.1, y.2⟩
+      refine ⟨z, ?_⟩
+      apply Subtype.ext
+      simp [phi, z]
+    exact hOld.map phi hphi
+
 end StructuralRamsey.Girth
