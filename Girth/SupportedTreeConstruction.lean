@@ -252,7 +252,8 @@ theorem ASupportedTreeAmalgam.exists_disjointCopyExtension_split
               iS12 (iS01 (w k)) = z k := by
             calc
               iS12 (iS01 (w k)) = iS12 (y k) := by
-                rw [congrFun hyw k]
+                simpa only [Function.comp_apply] using
+                  (congrArg iS12 (congrFun hyw k)).symm
               _ = z k := (congrFun hzy k).symm
           have heq2 :
               iS12 (iS01 (w k)) = iB2 b :=
@@ -288,7 +289,8 @@ theorem ASupportedTreeAmalgam.exists_disjointCopyExtension_split
               _ = z k := ht
               _ = iS12 (y k) := congrFun hzy k
               _ = iS12 (iB1 (w k)) := by
-                rw [congrFun hyw k]
+                simpa only [Function.comp_apply] using
+                  congrArg iS12 (congrFun hyw k)
           obtain ⟨d1, hleft1, _hright1⟩ :=
             (hfree1.overlap (iT0 t) (w k)).mp heq1
           have heq0 :
