@@ -263,4 +263,96 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
       (by intro d; rfl)
   exact ⟨Y, S, hS, eFull⟩
 
+/-- If a leaf is disjoint from its parent, then it is disjoint from the whole
+leaf-deleted union.  Three supported singleton bridge gluings place a fresh
+B-copy far enough from the old target that the two source sides remain both
+vertex-disjoint and relation-separated. -/
+theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
+    {A : RelStructure L UA} {B : RelStructure L VB}
+    {R : RelStructure L W}
+    {b : ι → Embedding B R}
+    (J : BCopyJoinTree b)
+    {leaf parent : ι}
+    (hadj : J.tree.Adj leaf parent)
+    (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent)
+    (hInter :
+      copyCarrier (b leaf) ∩ copyCarrier (b parent) = ∅)
+    {T : RelStructure L X}
+    (hT : ASupportedTreeAmalgam A B X T)
+    (eRest :
+      Embedding
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1))
+        T)
+    (alphaT : Embedding A T) (alphaB : Embedding A B)
+    (a0 a1 : UA) (hne : a0 ≠ a1) :
+    ∃ (Y : Type v) (S : RelStructure L Y),
+      ASupportedTreeAmalgam A B Y S ∧
+      Embedding (familyUnionStructure R b) S := by
+  classical
+  let p : {j : ι // j ≠ leaf} :=
+    ⟨parent, hadj.ne.symm⟩
+  let D : RelStructure L PEmpty := ambientEmpty R
+  let fRest :
+      Embedding D
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1)) :=
+    ambientEmptyToFamilyUnion
+      (fun j : {j : ι // j ≠ leaf} => b j.1) p
+  let fLeaf : Embedding D B :=
+    ambientEmptyToMember (b leaf)
+  have hOverlap :
+      ∀ q :
+          familyCarrier
+            (fun j : {j : ι // j ≠ leaf} => b j.1),
+        ∀ y : VB,
+          q.1 = b leaf y ↔
+            ∃ d : PEmpty, q = fRest d ∧ y = fLeaf d := by
+    intro q y
+    constructor
+    · intro hqy
+      have hBoth :
+          q.1 ∈
+            copyCarrier (b leaf) ∩
+              familyCarrier
+                (fun j : {j : ι // j ≠ leaf} => b j.1) :=
+        ⟨⟨y, hqy.symm⟩, q.2⟩
+      rw [J.leaf_inter_rest_eq_parent hadj huniq] at hBoth
+      have hempty : q.1 ∈ (∅ : Set W) := by
+        rw [← hInter]
+        exact hBoth
+      exfalso
+      simpa using hempty
+    · rintro ⟨d, _hq, _hy⟩
+      exact PEmpty.elim d
+  have hSrc :
+      IsFreeAmalgam
+        fRest fLeaf
+        (J.restToFullEmbedding hadj huniq)
+        (familyMemberEmbedding b leaf) :=
+    J.familyUnion_isFreeAmalgam_leaf_of_overlap
+      hadj huniq D fRest fLeaf hOverlap
+  obtain ⟨Y, S, hS, iT, iB, hDisj, hSplit⟩ :=
+    hT.exists_disjointCopyExtension_split
+      alphaT alphaB a0 a1 hne
+  have hTgt :
+      IsFreeAmalgam
+        (eRest.comp fRest) fLeaf
+        (leftToInducedImageUnion iT iB)
+        (rightToInducedImageUnion iT iB) :=
+    inducedImageUnion_isFreeAmalgam_of_disjoint
+      (eRest.comp fRest) fLeaf iT iB hDisj hSplit
+  let idB : Embedding B B := (Iso.refl B).toEmbedding
+  let eInduced :
+      Embedding
+        (familyUnionStructure R b)
+        (S.induce (Set.range iT ∪ Set.range iB)) :=
+    freeAmalgam_liftEmbedding_sameOverlap
+      hSrc hTgt eRest idB
+      (by intro d; exact PEmpty.elim d)
+      (by intro d; exact PEmpty.elim d)
+  let eFull : Embedding (familyUnionStructure R b) S :=
+    (induceToAmbient S (Set.range iT ∪ Set.range iB)).comp eInduced
+  exact ⟨Y, S, hS, eFull⟩
+
 end StructuralRamsey.Girth
