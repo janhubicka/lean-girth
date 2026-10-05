@@ -355,4 +355,38 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
     (induceToAmbient S (Set.range iT ∪ Set.range iB)).comp eInduced
   exact ⟨Y, S, hS, eFull⟩
 
+/-- Unified recursive leaf step.  The supported-overlap trichotomy is exactly
+the case split needed by the forest-to-tree-amalgam induction. -/
+theorem ASupportedTreeAmalgam.extendCopyForestLeaf
+    {A : RelStructure L UA} {B : RelStructure L VB}
+    {R : RelStructure L W}
+    {b : ι → Embedding B R}
+    (J : BCopyJoinTree b)
+    (hOverlap : PairwiseSupportedBCopyOverlap A b)
+    {leaf parent : ι}
+    (hadj : J.tree.Adj leaf parent)
+    (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent)
+    {T : RelStructure L X}
+    (hT : ASupportedTreeAmalgam A B X T)
+    (eRest :
+      Embedding
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1))
+        T)
+    (alphaT : Embedding A T) (alphaB : Embedding A B)
+    (a0 a1 : UA) (hne : a0 ≠ a1) :
+    ∃ (Y : Type v) (S : RelStructure L Y),
+      ASupportedTreeAmalgam A B Y S ∧
+      Embedding (familyUnionStructure R b) S := by
+  rcases hOverlap hadj.ne with hEmpty | hCopy | hPoint
+  · exact
+      hT.extendCopyForestLeaf_overEmpty
+        J hadj huniq hEmpty eRest alphaT alphaB a0 a1 hne
+  · rcases hCopy with ⟨a, ha⟩
+    exact hT.extendCopyForestLeaf_overA J hadj huniq a ha eRest
+  · rcases hPoint with ⟨x, hx, hsLeaf, hsParent⟩
+    exact
+      hT.extendCopyForestLeaf_overPoint
+        J hadj huniq x hx hsParent hsLeaf eRest
+
 end StructuralRamsey.Girth
