@@ -515,10 +515,11 @@ theorem JoinTree.nonempty_eraseOneEdgeNoFull
       ((J.rewireAfterDelete center R).induce
         {k : {t : ι // t ∈ (({center} : Set ι)ᶜ)} |
         x ∈ (F k.1).carrier}) := by
-    exact SimpleGraph.induce_mono
-      (show J.tree.induce (({center} : Set ι)ᶜ) ≤
-        J.rewireAfterDelete center R from le_sup_left)
-      Set.Subset.rfl
+    intro u v huv
+    have hle :
+        J.tree.induce (({center} : Set ι)ᶜ) ≤
+          J.rewireAfterDelete center R := le_sup_left
+    exact hle huv
   by_cases hxCenter : x ∈ (F center).carrier
   · obtain ⟨ra, hra, hreachA⟩ :=
       J.exists_neighbor_reachable_after_delete ha
@@ -602,7 +603,10 @@ theorem JoinTree.nonempty_eraseOneEdgeNoFull
           change (J.rewireAfterDelete center R).Adj
             (J.neighborToErasedEmbedding center z.1)
             (J.neighborToErasedEmbedding center w.1)
-          apply le_sup_right
+          have hle :
+              R.map (J.neighborToErasedEmbedding center) ≤
+                J.rewireAfterDelete center R := le_sup_right
+          apply hle
           simpa using hzw }
     have hRoots0 := hRroots.map phi
     have hRoots :
