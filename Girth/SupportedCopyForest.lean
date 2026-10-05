@@ -197,4 +197,113 @@ def BCopyJoinTree.restToFullEmbedding
       rcases hRest.2 with ⟨j, hj⟩
       exact ⟨j.1, hj⟩
 
+
+/-- The full member-generated union is the free amalgam of the leaf-deleted
+union and the leaf copy over any overlap structure that parametrizes exactly
+their common vertices. -/
+theorem BCopyJoinTree.familyUnion_isFreeAmalgam_leaf_of_overlap
+    {B : RelStructure L VB} {R : RelStructure L W}
+    {b : ι → Embedding B R}
+    (J : BCopyJoinTree b)
+    {leaf parent : ι}
+    (hadj : J.tree.Adj leaf parent)
+    (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent)
+    {D : Type v} (O : RelStructure L D)
+    (fRest :
+      Embedding O
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1)))
+    (fLeaf : Embedding O B)
+    (hOverlap :
+      ∀ a :
+          familyCarrier
+            (fun j : {j : ι // j ≠ leaf} => b j.1),
+        ∀ y : VB,
+          a.1 = b leaf y ↔
+            ∃ d : D, a = fRest d ∧ y = fLeaf d) :
+    IsFreeAmalgam
+      fRest fLeaf
+      (J.restToFullEmbedding hadj huniq)
+      (familyMemberEmbedding b leaf) := by
+  classical
+  constructor
+  · intro z
+    rcases Set.mem_iUnion.mp z.2 with ⟨i, hzi⟩
+    by_cases hil : i = leaf
+    · subst i
+      rcases hzi with ⟨y, hy⟩
+      refine Or.inr ⟨y, ?_⟩
+      apply Subtype.ext
+      exact hy.symm
+    · let j : {j : ι // j ≠ leaf} := ⟨i, hil⟩
+      let a :
+          familyCarrier
+            (fun j : {j : ι // j ≠ leaf} => b j.1) :=
+        ⟨z.1, Set.mem_iUnion.mpr ⟨j, hzi⟩⟩
+      refine Or.inl ⟨a, ?_⟩
+      apply Subtype.ext
+      rfl
+  · intro a y
+    constructor
+    · intro hay
+      have hv : a.1 = b leaf y := by
+        exact congrArg
+          (fun z : familyCarrier b => z.1) hay
+      exact (hOverlap a y).mp hv
+    · intro h
+      have hv : a.1 = b leaf y :=
+        (hOverlap a y).mpr h
+      apply Subtype.ext
+      exact hv
+  · intro sym z
+    constructor
+    · intro hz
+      rcases hz.2 with ⟨i, hi⟩
+      by_cases hil : i = leaf
+      · subst i
+        let pre : Fin (L.arity sym) → VB :=
+          fun k => Classical.choose (hi k)
+        have hpre (k : Fin (L.arity sym)) :
+            b leaf (pre k) = (z k).1 :=
+          Classical.choose_spec (hi k)
+        have htuple :
+            (b leaf).toFun ∘ pre = Subtype.val ∘ z := by
+          funext k
+          exact hpre k
+        have hBrel : B.rel sym pre := by
+          apply ((b leaf).map_rel_iff sym pre).mp
+          rw [htuple]
+          exact hz.1
+        refine Or.inr ⟨pre, hBrel, ?_⟩
+        funext k
+        apply Subtype.ext
+        exact (hpre k).symm
+      · let j : {j : ι // j ≠ leaf} := ⟨i, hil⟩
+        let x :
+            Fin (L.arity sym) →
+              familyCarrier
+                (fun j : {j : ι // j ≠ leaf} => b j.1) :=
+          fun k =>
+            ⟨(z k).1, Set.mem_iUnion.mpr ⟨j, hi k⟩⟩
+        have hxrel :
+            (familyUnionStructure R
+              (fun j : {j : ι // j ≠ leaf} => b j.1)).rel sym x := by
+          refine ⟨?_, ⟨j, ?_⟩⟩
+          · exact hz.1
+          · intro k
+            exact hi k
+        refine Or.inl ⟨x, hxrel, ?_⟩
+        funext k
+        apply Subtype.ext
+        rfl
+    · rintro (⟨x, hx, hz⟩ | ⟨x, hx, hz⟩)
+      · have hmap :=
+          ((J.restToFullEmbedding hadj huniq).map_rel_iff sym x).mpr hx
+        rw [hz]
+        exact hmap
+      · have hmap :=
+          ((familyMemberEmbedding b leaf).map_rel_iff sym x).mpr hx
+        rw [hz]
+        exact hmap
+
 end StructuralRamsey.Girth
