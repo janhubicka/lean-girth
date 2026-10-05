@@ -168,4 +168,132 @@ noncomputable def freeAmalgam_liftEmbedding_sameOverlap
     apply hB.injective
     exact hbg.trans (hcompatB g).symm
 
+/-- Canonical inclusion of an induced substructure into its ambient structure. -/
+def induceToAmbient
+    (R : RelStructure L W) (S : Set W) :
+    Embedding (R.induce S) R where
+  toFun x := x.1
+  injective := by
+    intro x y h
+    exact Subtype.ext h
+  map_rel_iff := by
+    intro sym x
+    rfl
+
+/-- Embed the left side into the structure induced on the union of two image
+ranges. -/
+def leftToInducedImageUnion
+    {A : RelStructure L W} {B : RelStructure L V}
+    {X : Type v} {R : RelStructure L X}
+    (iA : Embedding A R) (iB : Embedding B R) :
+    Embedding A (R.induce (Set.range iA ∪ Set.range iB)) where
+  toFun a := ⟨iA a, Or.inl ⟨a, rfl⟩⟩
+  injective := by
+    intro x y h
+    apply iA.injective
+    exact congrArg Subtype.val h
+  map_rel_iff := by
+    intro sym x
+    change R.rel sym (iA.toFun ∘ x) ↔ A.rel sym x
+    exact iA.map_rel_iff sym x
+
+/-- Embed the right side into the structure induced on the union of two image
+ranges. -/
+def rightToInducedImageUnion
+    {A : RelStructure L W} {B : RelStructure L V}
+    {X : Type v} {R : RelStructure L X}
+    (iA : Embedding A R) (iB : Embedding B R) :
+    Embedding B (R.induce (Set.range iA ∪ Set.range iB)) where
+  toFun b := ⟨iB b, Or.inr ⟨b, rfl⟩⟩
+  injective := by
+    intro x y h
+    apply iB.injective
+    exact congrArg Subtype.val h
+  map_rel_iff := by
+    intro sym x
+    change R.rel sym (iB.toFun ∘ x) ↔ B.rel sym x
+    exact iB.map_rel_iff sym x
+
+/-- Disjoint side images with relation splitting form a free amalgam over any
+empty common structure, after restricting the ambient structure to the union
+of the two images. -/
+theorem inducedImageUnion_isFreeAmalgam_of_disjoint
+    {D : RelStructure L PEmpty}
+    {A : RelStructure L W} {B : RelStructure L V}
+    {X : Type v} {R : RelStructure L X}
+    (fA : Embedding D A) (fB : Embedding D B)
+    (iA : Embedding A R) (iB : Embedding B R)
+    (hDisj : Disjoint (Set.range iA) (Set.range iB))
+    (hSplit : RelationsSplitBetweenImages iA iB) :
+    IsFreeAmalgam
+      fA fB
+      (leftToInducedImageUnion iA iB)
+      (rightToInducedImageUnion iA iB) := by
+  classical
+  constructor
+  · intro z
+    rcases z.2 with hzA | hzB
+    · rcases hzA with ⟨a, ha⟩
+      exact Or.inl ⟨a, by apply Subtype.ext; exact ha.symm⟩
+    · rcases hzB with ⟨b, hb⟩
+      exact Or.inr ⟨b, by apply Subtype.ext; exact hb.symm⟩
+  · intro a b
+    constructor
+    · intro hab
+      exfalso
+      apply Set.disjoint_left.mp hDisj (iA a)
+      · exact ⟨a, rfl⟩
+      · refine ⟨b, ?_⟩
+        exact congrArg Subtype.val hab |>.symm
+    · rintro ⟨d, _ha, _hb⟩
+      exact PEmpty.elim d
+  · intro sym z
+    constructor
+    · intro hz
+      have hzR : R.rel sym (Subtype.val ∘ z) := hz
+      have hzUnion :
+          ∀ k, (Subtype.val ∘ z) k ∈
+            Set.range iA ∪ Set.range iB :=
+        fun k => (z k).2
+      rcases hSplit sym (Subtype.val ∘ z) hzR hzUnion with hA | hB
+      · let x : Fin (L.arity sym) → W :=
+          fun k => Classical.choose (hA k)
+        have hx (k : Fin (L.arity sym)) :
+            iA (x k) = (z k).1 :=
+          Classical.choose_spec (hA k)
+        have hxrel : A.rel sym x := by
+          apply (iA.map_rel_iff sym x).mp
+          have htup :
+              iA.toFun ∘ x = Subtype.val ∘ z := by
+            funext k
+            exact hx k
+          rw [htup]
+          exact hzR
+        refine Or.inl ⟨x, hxrel, ?_⟩
+        funext k
+        apply Subtype.ext
+        exact (hx k).symm
+      · let x : Fin (L.arity sym) → V :=
+          fun k => Classical.choose (hB k)
+        have hx (k : Fin (L.arity sym)) :
+            iB (x k) = (z k).1 :=
+          Classical.choose_spec (hB k)
+        have hxrel : B.rel sym x := by
+          apply (iB.map_rel_iff sym x).mp
+          have htup :
+              iB.toFun ∘ x = Subtype.val ∘ z := by
+            funext k
+            exact hx k
+          rw [htup]
+          exact hzR
+        refine Or.inr ⟨x, hxrel, ?_⟩
+        funext k
+        apply Subtype.ext
+        exact (hx k).symm
+    · rintro (⟨x, hx, rfl⟩ | ⟨x, hx, rfl⟩)
+      · exact
+          ((leftToInducedImageUnion iA iB).map_rel_iff sym x).mpr hx
+      · exact
+          ((rightToInducedImageUnion iA iB).map_rel_iff sym x).mpr hx
+
 end StructuralRamsey.Girth
