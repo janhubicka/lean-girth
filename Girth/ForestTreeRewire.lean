@@ -127,6 +127,77 @@ theorem JoinTree.disjoint_deletedGraph_map_neighborGraph
 
 
 
+/-- Inside a fixed component of the deleted tree, the unique path
+between two occurrences of an ambient vertex still consists entirely of
+occurrences of that vertex. -/
+theorem JoinTree.reachable_occurrence_after_delete
+    {F : ι → HypergraphPiece V}
+    (J : JoinTree F)
+    {center i j : ι}
+    (hi : i ≠ center) (hj : j ≠ center)
+    {x : V}
+    (hxi : x ∈ (F i).carrier)
+    (hxj : x ∈ (F j).carrier)
+    (hdel :
+      (J.tree.induce (({center} : Set ι)ᶜ)).Reachable
+        ⟨i, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩
+        ⟨j, by
+          simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩) :
+    ((J.tree.induce (({center} : Set ι)ᶜ)).induce
+      {k | x ∈ (F k.1).carrier}).Reachable
+        ⟨⟨i, by
+            simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hi⟩,
+          hxi⟩
+        ⟨⟨j, by
+            simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using hj⟩,
+          hxj⟩ := by
+  obtain ⟨q0, hq0⟩ := hdel.exists_isPath
+  let delInc :
+      (J.tree.induce (({center} : Set ι)ᶜ)) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro a b hab
+        exact hab }
+  let q : J.tree.Walk i j := q0.map delInc
+  have hq : q.IsPath := by
+    dsimp [q]
+    exact hq0.map (fun a b h => Subtype.ext h)
+
+  let occ : Set ι := {k : ι | x ∈ (F k).carrier}
+  let iOcc : occ := ⟨i, hxi⟩
+  let jOcc : occ := ⟨j, hxj⟩
+  obtain ⟨p0, hp0⟩ := (J.running x iOcc jOcc).exists_isPath
+  let occInc : (J.tree.induce occ) →g J.tree :=
+    { toFun := fun z => z.1
+      map_rel' := by
+        intro a b hab
+        exact hab }
+  let p : J.tree.Walk i j := p0.map occInc
+  have hp : p.IsPath := by
+    dsimp [p]
+    exact hp0.map (fun a b h => Subtype.ext h)
+  have hpq : p = q :=
+    (J.isTree.existsUnique_path i j).unique hp hq
+
+  have hqX :
+      ∀ z ∈ q0.support, x ∈ (F z.1).carrier := by
+    intro z hz
+    have hzq : z.1 ∈ q.support := by
+      dsimp [q, delInc]
+      rw [SimpleGraph.Walk.support_map]
+      exact List.mem_map.mpr ⟨z, hz, rfl⟩
+    rw [← hpq] at hzq
+    dsimp [p, occInc] at hzq
+    rw [SimpleGraph.Walk.support_map] at hzq
+    rcases List.mem_map.mp hzq with ⟨w, hw, hwval⟩
+    have hwx : x ∈ (F w.1).carrier := w.2
+    simpa [hwval] using hwx
+  let qx := q0.induce {k | x ∈ (F k.1).carrier} hqX
+  have hqx := qx.reachable
+  convert hqx using 1 <;> apply Subtype.ext <;> apply Subtype.ext <;> rfl
+
+
 /-- Replacing the centre-star by a connected graph on all former neighbours
 keeps the surviving vertices connected. -/
 theorem JoinTree.rewireAfterDelete_connected
