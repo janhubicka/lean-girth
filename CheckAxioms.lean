@@ -272,3 +272,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.supportJoinTreeToBCopyJoinTree
 #print axioms StructuralRamsey.Girth.pairwiseSupportedBCopyOverlap_of_supportAllowed
 #print axioms StructuralRamsey.Girth.supportForestOfBCopies_embeds_supportedTree
+#print axioms StructuralRamsey.Girth.ABMember.supportEdge_witness
+#print axioms StructuralRamsey.Girth.pairwiseMixedSharedVerticesSupported_erase
