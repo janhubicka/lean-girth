@@ -252,3 +252,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.aCopyToFamilyUnion
 #print axioms StructuralRamsey.Girth.aCopyFactorIntoMember
 #print axioms StructuralRamsey.Girth.ambientPointEmbedding
+
+#print axioms StructuralRamsey.Girth.aCopyFactorIntoMember_spec
