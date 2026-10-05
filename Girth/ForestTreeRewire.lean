@@ -667,7 +667,7 @@ theorem starGraph_induce_preconnected_of_mem_center
       exact SimpleGraph.Reachable.refl _
     · have hadj :
           (SimpleGraph.starGraph r).Adj z.1 r :=
-        SimpleGraph.starGraph_center_adj' hz.symm
+        SimpleGraph.starGraph_center_adj' (Ne.symm hz)
       exact
         (show ((SimpleGraph.starGraph r).induce S).Adj z rS from hadj).reachable
   exact (reachCenter a).trans (reachCenter b).symm
