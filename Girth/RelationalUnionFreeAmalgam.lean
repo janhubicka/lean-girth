@@ -241,10 +241,11 @@ theorem inducedImageUnion_isFreeAmalgam_of_disjoint
     constructor
     · intro hab
       exfalso
-      apply Set.disjoint_left.mp hDisj (iA a)
-      · exact ⟨a, rfl⟩
-      · refine ⟨b, ?_⟩
+      have hmemA : iA a ∈ Set.range iA := ⟨a, rfl⟩
+      have hmemB : iA a ∈ Set.range iB := by
+        refine ⟨b, ?_⟩
         exact congrArg Subtype.val hab |>.symm
+      exact (Set.disjoint_left.mp hDisj) hmemA hmemB
     · rintro ⟨d, _ha, _hb⟩
       exact PEmpty.elim d
   · intro sym z
