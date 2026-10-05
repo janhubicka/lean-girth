@@ -129,6 +129,46 @@ theorem aCopyFactorIntoMember_spec
     (Classical.choose_spec
       (aCopyFactorIntoMember_exists a b hSub x)).symm
 
+/-- The empty structure carrying the ambient nullary relation data of R. -/
+def ambientEmpty
+    (R : RelStructure L W) :
+    RelStructure L PEmpty where
+  rel sym x := R.rel sym (fun k => PEmpty.elim (x k))
+
+/-- The ambient empty structure embeds into any structure already embedded in
+the ambient structure.  This keeps nullary relations correct without assuming
+that the language has positive arity. -/
+def ambientEmptyToMember
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (b : Embedding B R) :
+    Embedding (ambientEmpty R) B where
+  toFun d := PEmpty.elim d
+  injective := by
+    intro d
+    exact PEmpty.elim d
+  map_rel_iff := by
+    intro sym x
+    let y : Fin (L.arity sym) → VB :=
+      fun k => PEmpty.elim (x k)
+    have htuple :
+        b.toFun ∘ y = (fun k => PEmpty.elim (x k)) := by
+      funext k
+      exact PEmpty.elim (x k)
+    change
+      B.rel sym y ↔
+        R.rel sym (fun k => PEmpty.elim (x k))
+    rw [← htuple]
+    exact (b.map_rel_iff sym y).symm
+
+/-- The ambient empty structure embeds into a member-generated union through
+any chosen family member. -/
+def ambientEmptyToFamilyUnion
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (b : ι → Embedding B R) (i : ι) :
+    Embedding (ambientEmpty R) (familyUnionStructure R b) :=
+  (familyMemberEmbedding b i).comp
+    (ambientEmptyToMember (b i))
+
 /-- The one-point structure induced by the ambient relational type of x. -/
 def ambientPoint
     (R : RelStructure L W) (x : W) :
