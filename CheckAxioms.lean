@@ -248,3 +248,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.BCopyJoinTree.restToFullEmbedding
 
 #print axioms StructuralRamsey.Girth.BCopyJoinTree.familyUnion_isFreeAmalgam_leaf_of_overlap
+
+#print axioms StructuralRamsey.Girth.aCopyToFamilyUnion
+#print axioms StructuralRamsey.Girth.aCopyFactorIntoMember
+#print axioms StructuralRamsey.Girth.ambientPointEmbedding
