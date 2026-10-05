@@ -37,9 +37,9 @@ theorem ASupportedTreeAmalgam.extendMixedForestLeaf
         T)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (Y : Type v) (S : RelStructure L Y),
-      ASupportedTreeAmalgam A B Y S ∧
-      Embedding (mixedFamilyUnionStructure R m) S := by
+    ∃ (Y : Type v) (S : RelStructure L Y)
+        (e : Embedding (mixedFamilyUnionStructure R m) S),
+      ASupportedTreeAmalgam A B Y S := by
   classical
   let p : {j : ι // j ≠ leaf} :=
     ⟨parent, hadj.ne.symm⟩
@@ -116,7 +116,7 @@ theorem ASupportedTreeAmalgam.extendMixedForestLeaf
           (by intro d; exact PEmpty.elim d)
       let eFull : Embedding (mixedFamilyUnionStructure R m) S :=
         (induceToAmbient S (Set.range iT ∪ Set.range iB)).comp eInduced
-      exact ⟨Y, S, hS, eFull⟩
+      exact ⟨Y, S, eFull, hS⟩
     · have hNonempty :
           ((m leaf).carrier ∩ (m parent).carrier).Nonempty :=
         Set.nonempty_iff_ne_empty.mpr hEmpty
@@ -240,7 +240,7 @@ theorem ASupportedTreeAmalgam.extendMixedForestLeaf
           hSrc hTgt eRest leafToB
           (by intro d; rfl)
           (by intro d; rfl)
-      exact ⟨Y, S, hS, eFull⟩
+      exact ⟨Y, S, eFull, hS⟩
   · rcases hEdge with ⟨e, heLeaf, _heParent, hInter⟩
     obtain ⟨a, ha, hALeaf⟩ :=
       (m leaf).supportEdge_witness A heLeaf
@@ -328,6 +328,6 @@ theorem ASupportedTreeAmalgam.extendMixedForestLeaf
         hSrc hTgt eRest leafToB
         (by intro d; rfl)
         (by intro d; rfl)
-    exact ⟨Y, S, hS, eFull⟩
+    exact ⟨Y, S, eFull, hS⟩
 
 end StructuralRamsey.Girth
