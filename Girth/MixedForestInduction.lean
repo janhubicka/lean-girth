@@ -21,6 +21,7 @@ and supported shared vertices embeds into an A-supported tree amalgam. -/
 theorem mixedJoinTree_embeds_supportedTree
     {A : RelStructure L UA} {B : RelStructure L VB}
     {R : RelStructure L W}
+    {ι : Type v}
     {m : ι → ABMember A B R}
     [Fintype ι] [Nonempty ι]
     (J : JoinTree (fun i => (m i).supportPiece A))
@@ -78,6 +79,7 @@ theorem mixedJoinTree_embeds_supportedTree
       exact j.2 hj
     obtain ⟨X, T, eRest, hT⟩ :=
       mixedJoinTree_embeds_supportedTree
+        (ι := {j : ι // j ≠ leaf})
         (m := fun j : {j : ι // j ≠ leaf} => m j.1)
         JRest hAllowedRest hSharedRest alphaB a0 a1 hne
     obtain ⟨Y, S, eFull, hS⟩ :=
