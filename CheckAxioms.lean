@@ -268,3 +268,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.inheritedAEmbedding
 #print axioms StructuralRamsey.Girth.familyUnionToMember_of_subsingleton
 #print axioms StructuralRamsey.Girth.bCopyForest_embeds_supportedTree
+#print axioms StructuralRamsey.Girth.bSupportPiece
+#print axioms StructuralRamsey.Girth.supportJoinTreeToBCopyJoinTree
+#print axioms StructuralRamsey.Girth.pairwiseSupportedBCopyOverlap_of_supportAllowed
+#print axioms StructuralRamsey.Girth.supportForestOfBCopies_embeds_supportedTree
