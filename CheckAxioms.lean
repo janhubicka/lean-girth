@@ -280,3 +280,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.mixed_leaf_inter_rest_eq_parent
 #print axioms StructuralRamsey.Girth.JoinTree.mixedRestToFullEmbedding
 #print axioms StructuralRamsey.Girth.JoinTree.mixedFamilyUnion_isFreeAmalgam_leaf_of_overlap
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendMixedForestLeaf
