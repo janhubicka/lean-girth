@@ -284,7 +284,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
         (familyUnionStructure R
           (fun j : {j : ι // j ≠ leaf} => b j.1))
         T)
-    (alphaT : Embedding A T) (alphaB : Embedding A B)
+    (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
     ∃ (Y : Type v) (S : RelStructure L Y),
       ASupportedTreeAmalgam A B Y S ∧
@@ -334,7 +334,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
       hadj huniq D fRest fLeaf hOverlap
   obtain ⟨Y, S, hS, iT, iB, hDisj, hSplit⟩ :=
     hT.exists_disjointCopyExtension_split
-      alphaT alphaB a0 a1 hne
+      (inheritedAEmbedding hT alphaB) alphaB a0 a1 hne
   have hTgt :
       IsFreeAmalgam
         (eRest.comp fRest) fLeaf
@@ -373,7 +373,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf
         (familyUnionStructure R
           (fun j : {j : ι // j ≠ leaf} => b j.1))
         T)
-    (alphaT : Embedding A T) (alphaB : Embedding A B)
+    (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
     ∃ (Y : Type v) (S : RelStructure L Y),
       ASupportedTreeAmalgam A B Y S ∧
@@ -381,7 +381,7 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf
   rcases hOverlap hadj.ne with hEmpty | hCopy | hPoint
   · exact
       hT.extendCopyForestLeaf_overEmpty
-        J hadj huniq hEmpty eRest alphaT alphaB a0 a1 hne
+        J hadj huniq hEmpty eRest alphaB a0 a1 hne
   · rcases hCopy with ⟨a, ha⟩
     exact hT.extendCopyForestLeaf_overA J hadj huniq a ha eRest
   · rcases hPoint with ⟨x, hx, hsLeaf, hsParent⟩
