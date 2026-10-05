@@ -284,3 +284,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.mixedJoinTree_embeds_supportedTree
 #print axioms StructuralRamsey.Girth.mixedForest_embeds_supportedTree
 #print axioms StructuralRamsey.Girth.girthGT_carrierEdgeFamily_of_joinTree
+#print axioms StructuralRamsey.Girth.pairwiseMixedSharedVerticesSupported_of_bMembers
+#print axioms StructuralRamsey.Girth.mixedForest_embeds_supportedTree_of_bMemberSupport

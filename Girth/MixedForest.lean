@@ -164,4 +164,55 @@ theorem pairwiseMixedSharedVerticesSupported_erase
   · exact hxi
   · exact hxj
 
+/-- The manuscript only asks for shared-point support on incident B-members.
+There is no extra condition on an A-member, since the member itself supports
+each of its vertices. -/
+def ABMember.BIncidentSupport
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (c : ABMember A B R) (x : W) : Prop :=
+  match c with
+  | .a _ => True
+  | .b f => VertexSupportedInBCopy A f x
+
+/-- The manuscript's incident-B support condition implies the uniform mixed
+support condition used by the leaf induction. -/
+theorem ABMember.vertexSupported_of_bIncidentSupport
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (c : ABMember A B R) {x : W}
+    (hx : x ∈ c.carrier)
+    (hs : c.BIncidentSupport A x) :
+    c.VertexSupported A x := by
+  cases c with
+  | a a =>
+      exact ⟨a, hx, Set.Subset.rfl⟩
+  | b f =>
+      change VertexSupportedInBCopy A f x
+      exact hs
+
+/-- Every shared vertex is supported in each incident B-member; A-members need
+no hypothesis.  This is the condition stated in the manuscript observation. -/
+def PairwiseSharedVerticesSupportedInBMembers
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (m : ι → ABMember A B R) : Prop :=
+  ∀ ⦃i j : ι⦄, i ≠ j → ∀ ⦃x : W⦄,
+    x ∈ (m i).carrier →
+    x ∈ (m j).carrier →
+      (m i).BIncidentSupport A x ∧
+        (m j).BIncidentSupport A x
+
+theorem pairwiseMixedSharedVerticesSupported_of_bMembers
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {R : RelStructure L W}
+    {m : ι → ABMember A B R}
+    (h : PairwiseSharedVerticesSupportedInBMembers A m) :
+    PairwiseMixedSharedVerticesSupported A m := by
+  intro i j hij x hxi hxj
+  have hs := h hij hxi hxj
+  exact
+    ⟨(m i).vertexSupported_of_bIncidentSupport A hxi hs.1,
+      (m j).vertexSupported_of_bIncidentSupport A hxj hs.2⟩
+
 end StructuralRamsey.Girth
