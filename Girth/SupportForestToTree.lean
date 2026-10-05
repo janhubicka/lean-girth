@@ -109,9 +109,9 @@ theorem supportForestOfBCopies_embeds_supportedTree
     (hShared : PairwiseSharedVerticesSupported A b)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (X : Type v) (T : RelStructure L X),
-      ASupportedTreeAmalgam A B X T ∧
-      Embedding (familyUnionStructure R b) T := by
+    ∃ (X : Type v) (T : RelStructure L X)
+        (e : Embedding (familyUnionStructure R b) T),
+      ASupportedTreeAmalgam A B X T := by
   obtain ⟨J⟩ := hForest.joinTree_of_nonempty
   let JFull : BCopyJoinTree b :=
     supportJoinTreeToBCopyJoinTree A J
