@@ -447,4 +447,149 @@ theorem JoinTree.rewireAfterDelete_isTree
     (J.rewireAfterDelete_connected center R hR.connected)
     hrewireCard
 
+
+/-- In the no-full-edge case, deleting a one-edge member from a nonempty
+remaining family admits a new join tree.  The deleted star is replaced by a
+tree on its former neighbours whose fibres are the attachment intersections. -/
+noncomputable def JoinTree.eraseOneEdgeNoFull
+    {F : ι → HypergraphPiece V} [Fintype ι]
+    (J : JoinTree F)
+    (hPair : PairwiseAllowed F)
+    {center : ι}
+    (hOne : (F center).IsOneEdge)
+    (hNoFull :
+      ∀ k : ι, k ≠ center →
+        ¬ (F center).carrier ⊆ (F k).carrier)
+    [Nonempty {i : ι // i ∈ (({center} : Set ι)ᶜ)}] :
+    JoinTree (erasePiece F center) := by
+  classical
+  let survivor := {i : ι // i ∈ (({center} : Set ι)ᶜ)}
+  obtain ⟨i0⟩ := (inferInstance : Nonempty survivor)
+  have hi0 : i0.1 ≠ center := by
+    simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using i0.2
+  obtain ⟨root0, hroot0, _hreach0⟩ :=
+    J.exists_neighbor_reachable_after_delete hi0
+  let rootN0 : J.tree.neighborSet center := ⟨root0, hroot0⟩
+  letI : Nonempty (J.tree.neighborSet center) := ⟨rootN0⟩
+  obtain ⟨R, hRtree, hFib⟩ :=
+    exists_tree_fibers_preconnected
+      (J.neighborAttachment center)
+  refine
+    { tree := J.rewireAfterDelete center R
+      isTree := J.rewireAfterDelete_isTree center R hRtree
+      running := ?_ }
+  intro x
+  change
+    ((J.rewireAfterDelete center R).induce
+      {k : survivor | x ∈ (F k.1).carrier}).Preconnected
+  intro a b
+  have ha : a.1.1 ≠ center := by
+    simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using a.1.2
+  have hb : b.1.1 ≠ center := by
+    simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using b.1.2
+  have hmono :
+      ((J.tree.induce (({center} : Set ι)ᶜ)).induce
+        {k | x ∈ (F k.1).carrier}) ≤
+      ((J.rewireAfterDelete center R).induce
+        {k | x ∈ (F k.1).carrier}) := by
+    exact SimpleGraph.induce_mono
+      (show J.tree.induce (({center} : Set ι)ᶜ) ≤
+        J.rewireAfterDelete center R from le_sup_left)
+      Set.Subset.rfl
+  by_cases hxCenter : x ∈ (F center).carrier
+  · obtain ⟨ra, hra, hreachA⟩ :=
+      J.exists_neighbor_reachable_after_delete ha
+    obtain ⟨rb, hrb, hreachB⟩ :=
+      J.exists_neighbor_reachable_after_delete hb
+    let raN : J.tree.neighborSet center := ⟨ra, hra⟩
+    let rbN : J.tree.neighborSet center := ⟨rb, hrb⟩
+    have hxra : x ∈ (F ra).carrier :=
+      J.mem_root_of_mem_center_and_reachable_after_delete
+        hra ha hreachA hxCenter a.2
+    have hxrb : x ∈ (F rb).carrier :=
+      J.mem_root_of_mem_center_and_reachable_after_delete
+        hrb hb hreachB hxCenter b.2
+    have hOccA :=
+      J.reachable_occurrence_after_delete
+        hra.ne.symm ha hxra a.2 hreachA
+    have hOccB :=
+      J.reachable_occurrence_after_delete
+        hrb.ne.symm hb hxrb b.2 hreachB
+    have hA :
+        ((J.rewireAfterDelete center R).induce
+          {k | x ∈ (F k.1).carrier}).Reachable
+          a
+          ⟨J.neighborToErasedEmbedding center raN, hxra⟩ := by
+      have h := (hOccA.mono hmono).symm
+      convert h using 1 <;> apply Subtype.ext <;>
+        apply Subtype.ext <;> rfl
+    have hB :
+        ((J.rewireAfterDelete center R).induce
+          {k | x ∈ (F k.1).carrier}).Reachable
+          ⟨J.neighborToErasedEmbedding center rbN, hxrb⟩
+          b := by
+      have h := hOccB.mono hmono
+      convert h using 1 <;> apply Subtype.ext <;>
+        apply Subtype.ext <;> rfl
+    have hLabel :
+        J.neighborAttachment center raN =
+          J.neighborAttachment center rbN :=
+      J.neighborAttachment_eq_of_common
+        hPair hOne hNoFull hxCenter hxra hxrb
+    let raF :
+        {r : J.tree.neighborSet center |
+          J.neighborAttachment center r =
+            J.neighborAttachment center raN} :=
+      ⟨raN, rfl⟩
+    let rbF :
+        {r : J.tree.neighborSet center |
+          J.neighborAttachment center r =
+            J.neighborAttachment center raN} :=
+      ⟨rbN, hLabel.symm⟩
+    have hRroots :
+        (R.induce
+          {r |
+            J.neighborAttachment center r =
+              J.neighborAttachment center raN}).Reachable
+          raF rbF :=
+      hFib (J.neighborAttachment center raN) raF rbF
+    let phi :
+        (R.induce
+          {r |
+            J.neighborAttachment center r =
+              J.neighborAttachment center raN}) →g
+        ((J.rewireAfterDelete center R).induce
+          {k | x ∈ (F k.1).carrier}) :=
+      { toFun := fun z =>
+          ⟨J.neighborToErasedEmbedding center z.1,
+            by
+              have hxBase :
+                  x ∈ J.neighborAttachment center raN :=
+                ⟨hxCenter, hxra⟩
+              have hxHere :
+                  x ∈ J.neighborAttachment center z.1 := by
+                rw [z.2]
+                exact hxBase
+              exact hxHere.2⟩
+        map_rel' := by
+          intro z w hzw
+          change (J.rewireAfterDelete center R).Adj
+            (J.neighborToErasedEmbedding center z.1)
+            (J.neighborToErasedEmbedding center w.1)
+          apply le_sup_right
+          simpa using hzw }
+    have hRoots0 := hRroots.map phi
+    have hRoots :
+        ((J.rewireAfterDelete center R).induce
+          {k | x ∈ (F k.1).carrier}).Reachable
+          ⟨J.neighborToErasedEmbedding center raN, hxra⟩
+          ⟨J.neighborToErasedEmbedding center rbN, hxrb⟩ := by
+      convert hRoots0 using 1 <;> apply Subtype.ext <;>
+        apply Subtype.ext <;> rfl
+    exact hA.trans (hRoots.trans hB)
+  · have h :=
+      J.reachable_occurrence_after_delete_of_not_mem_center
+        ha hb a.2 b.2 hxCenter
+    exact h.mono hmono
+
 end StructuralRamsey.Girth
