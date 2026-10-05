@@ -103,6 +103,18 @@ noncomputable def aCopyFactorIntoMember
     rcases hSub ⟨x, rfl⟩ with ⟨y, hy⟩
     exact ⟨y, hy.symm⟩)
 
+
+@[simp]
+theorem aCopyFactorIntoMember_spec
+    {A : RelStructure L UA} {B : RelStructure L VB}
+    {R : RelStructure L W}
+    (a : Embedding A R) (b : Embedding B R)
+    (hSub : copyCarrier a ⊆ copyCarrier b)
+    (x : UA) :
+    b (aCopyFactorIntoMember a b hSub x) = a x := by
+  change b (Classical.choose _) = a x
+  exact (Classical.choose_spec _).symm
+
 /-- The one-point structure induced by the ambient relational type of x. -/
 def ambientPoint
     (R : RelStructure L W) (x : W) :
