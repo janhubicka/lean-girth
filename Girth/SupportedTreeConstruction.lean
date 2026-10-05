@@ -36,8 +36,8 @@ def pointAtEmbedding
   map_rel_iff := by
     intro R x
     change
-      A.rel R (fun _ => a) ↔
-        T.rel R ((fun _ : PUnit => alpha a) ∘ x)
+      T.rel R ((fun _ : PUnit => alpha a) ∘ x) ↔
+        A.rel R (fun _ => a)
     have hx : (fun _ : Fin (L.arity R) => alpha a) =
         ((fun _ : PUnit => alpha a) ∘ x) := by
       funext k
