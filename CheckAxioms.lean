@@ -258,3 +258,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.aCopyFactorIntoMember_exists
 
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overA
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_disjointCopyExtension_split
+#print axioms StructuralRamsey.Girth.inducedImageUnion_isFreeAmalgam_of_disjoint
+#print axioms StructuralRamsey.Girth.ambientEmptyToMember
+#print axioms StructuralRamsey.Girth.ambientEmptyToFamilyUnion
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf
