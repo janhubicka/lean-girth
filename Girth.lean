@@ -1,6 +1,7 @@
 import Girth.Support
 import Girth.Berge
 import Girth.SupportedTree
+import Girth.SupportedTreeConstruction
 import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore

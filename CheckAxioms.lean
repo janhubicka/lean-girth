@@ -229,3 +229,9 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.JoinTree.fullOccurrence_preconnected
 #print axioms StructuralRamsey.Girth.JoinTree.enlargeCarriers
+
+#print axioms StructuralRamsey.Girth.pointAtEmbedding
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_freeGlueA
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_freeGluePoint
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_freeGluePointAt
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_disjointCopyExtension
