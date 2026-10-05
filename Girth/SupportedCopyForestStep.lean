@@ -334,7 +334,8 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
       hadj huniq D fRest fLeaf hOverlap
   obtain ⟨Y, S, hS, iT, iB, hDisj, hSplit⟩ :=
     hT.exists_disjointCopyExtension_split
-      (inheritedAEmbedding hT alphaB) alphaB a0 a1 hne
+      (Classical.choice (hT.exists_aEmbedding alphaB))
+      alphaB a0 a1 hne
   have hTgt :
       IsFreeAmalgam
         (eRest.comp fRest) fLeaf
