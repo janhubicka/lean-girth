@@ -7,6 +7,10 @@ import Girth.SupportedCopyForest
 import Girth.SupportedCopyForestStep
 import Girth.SupportedCopyForestInduction
 import Girth.SupportForestToTree
+import Girth.MixedForest
+import Girth.MixedFamilyUnion
+import Girth.MixedForestStep
+import Girth.MixedForestInduction
 import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore

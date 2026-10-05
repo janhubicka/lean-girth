@@ -272,3 +272,14 @@ import Girth
 #print axioms StructuralRamsey.Girth.supportJoinTreeToBCopyJoinTree
 #print axioms StructuralRamsey.Girth.pairwiseSupportedBCopyOverlap_of_supportAllowed
 #print axioms StructuralRamsey.Girth.supportForestOfBCopies_embeds_supportedTree
+#print axioms StructuralRamsey.Girth.ABMember.supportEdge_witness
+#print axioms StructuralRamsey.Girth.pairwiseMixedSharedVerticesSupported_erase
+#print axioms StructuralRamsey.Girth.mixedMemberEmbedding
+#print axioms StructuralRamsey.Girth.aCopyFactorIntoMixedMember
+#print axioms StructuralRamsey.Girth.mixedFamilyUnionToMember_of_subsingleton
+#print axioms StructuralRamsey.Girth.JoinTree.mixed_leaf_inter_rest_eq_parent
+#print axioms StructuralRamsey.Girth.JoinTree.mixedRestToFullEmbedding
+#print axioms StructuralRamsey.Girth.JoinTree.mixedFamilyUnion_isFreeAmalgam_leaf_of_overlap
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendMixedForestLeaf
+#print axioms StructuralRamsey.Girth.mixedJoinTree_embeds_supportedTree
+#print axioms StructuralRamsey.Girth.mixedForest_embeds_supportedTree
