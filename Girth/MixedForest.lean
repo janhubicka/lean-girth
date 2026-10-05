@@ -113,7 +113,10 @@ theorem ABMember.supportEdge_witness
       change
         ∃ a : Embedding A R,
           copyCarrier a = e ∧ copyCarrier a ⊆ copyCarrier f at he
-      simpa [ABMember.carrier] using he
+      change
+        ∃ a : Embedding A R,
+          copyCarrier a = e ∧ copyCarrier a ⊆ copyCarrier f
+      exact he
 
 /-- A vertex is A-supported inside a mixed member.  For an A-member this is
 automatic; for a B-member this is the manuscript's supported-singleton
