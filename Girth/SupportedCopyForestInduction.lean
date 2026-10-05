@@ -43,13 +43,9 @@ theorem bCopyForest_embeds_supportedTree
       ⟨parent, hadj.ne.symm⟩
     let reindexRest :
         {j : ι // j ≠ leaf} ≃
-          {j : ι // j ∈ (({leaf} : Set ι)ᶜ)} where
-      toFun j := ⟨j.1, by
-        simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using j.2⟩
-      invFun j := ⟨j.1, by
-        simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using j.2⟩
-      left_inv j := by apply Subtype.ext; rfl
-      right_inv j := by apply Subtype.ext; rfl
+          {j : ι // j ∈ (({leaf} : Set ι)ᶜ)} :=
+      Equiv.subtypeEquivRight (fun j => by
+        simp only [Set.mem_compl_iff, Set.mem_singleton_iff])
     let JRest :
         BCopyJoinTree
           (fun j : {j : ι // j ≠ leaf} => b j.1) := by
