@@ -10,7 +10,6 @@ import Girth.ForestLeafDeletion
 import Girth.ForestDeletionGeometry
 import Girth.FiberConnectedTree
 import Girth.ForestTreeRewire
-import Girth.TreeConvexity
 import Girth.ForestEnumeration
 import Girth.CyclicRun
 import Girth.BergePath
