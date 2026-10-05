@@ -265,3 +265,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf_overEmpty
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.extendCopyForestLeaf
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.inheritedAEmbedding
