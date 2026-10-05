@@ -21,6 +21,7 @@ supported overlap trichotomy embeds into an A-supported tree amalgam. -/
 theorem bCopyForest_embeds_supportedTree
     {A : RelStructure L UA} {B : RelStructure L VB}
     {R : RelStructure L W}
+    {ι : Type v}
     {b : ι → Embedding B R}
     [Fintype ι] [Nonempty ι]
     (J : BCopyJoinTree b)
@@ -66,6 +67,7 @@ theorem bCopyForest_embeds_supportedTree
       exact j.2 hj
     obtain ⟨X, T, eRest, hT⟩ :=
       bCopyForest_embeds_supportedTree
+        (ι := {j : ι // j ≠ leaf})
         (b := fun j : {j : ι // j ≠ leaf} => b j.1)
         JRest hOverlapRest alphaB a0 a1 hne
     obtain ⟨Y, S, eFull, hS⟩ :=
