@@ -592,4 +592,29 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
         ha hb a.2 b.2 hxCenter
     exact h.mono hmono
 
+
+/-- Therefore a one-edge member can be deleted from a finite forest whenever
+no remaining member contains its whole carrier. -/
+theorem ForestOfCopies.erase_oneEdge_of_no_full
+    {F : ι → HypergraphPiece V} [Fintype ι]
+    (hF : ForestOfCopies F)
+    (J : JoinTree F)
+    {center : ι}
+    (hOne : (F center).IsOneEdge)
+    (hNoFull :
+      ∀ k : ι, k ≠ center →
+        ¬ (F center).carrier ⊆ (F k).carrier) :
+    ForestOfCopies (erasePiece F center) := by
+  refine
+    ⟨J.pairwiseAllowed_erase hF.pairwiseAllowed center, ?_⟩
+  let survivor := {i : ι // i ∈ (({center} : Set ι)ᶜ)}
+  by_cases hN : Nonempty survivor
+  · letI : Nonempty survivor := hN
+    exact Or.inr
+      ⟨J.eraseOneEdgeNoFull
+        hF.pairwiseAllowed hOne hNoFull⟩
+  · left
+    exact
+      ⟨fun z => hN ⟨z⟩⟩
+
 end StructuralRamsey.Girth
