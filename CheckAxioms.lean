@@ -239,4 +239,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.induceEmbeddingOfSubset
 #print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam
 #print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam_of_overlap
-#print axioms StructuralRamsey.RelStructure.IsFreeAmalgam.liftEmbedding_sameOverlap
+#print axioms StructuralRamsey.Girth.freeAmalgam_liftEmbedding_sameOverlap
