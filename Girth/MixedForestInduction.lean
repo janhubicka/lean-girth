@@ -62,8 +62,11 @@ theorem mixedJoinTree_embeds_supportedTree
         PairwiseAllowed
           (fun j : {j : ι // j ≠ leaf} =>
             (m j.1).supportPiece A) := by
-      simpa [erasePiece, Set.mem_compl_iff, Set.mem_singleton_iff] using
-        (JoinTree.pairwiseAllowed_erase hAllowed leaf)
+      intro i j hij
+      apply hAllowed
+      intro hval
+      apply hij
+      exact Subtype.ext hval
     have hSharedRest :
         PairwiseMixedSharedVerticesSupported A
           (fun j : {j : ι // j ≠ leaf} => m j.1) :=
