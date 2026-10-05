@@ -471,7 +471,7 @@ theorem JoinTree.rewireAfterDelete_isTree
 /-- In the no-full-edge case, deleting a one-edge member from a nonempty
 remaining family admits a new join tree.  The deleted star is replaced by a
 tree on its former neighbours whose fibres are the attachment intersections. -/
-noncomputable def JoinTree.eraseOneEdgeNoFull
+theorem JoinTree.nonempty_eraseOneEdgeNoFull
     {F : ι → HypergraphPiece V} [Fintype ι]
     (J : JoinTree F)
     (hPair : PairwiseAllowed F)
@@ -481,7 +481,7 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
       ∀ k : ι, k ≠ center →
         ¬ (F center).carrier ⊆ (F k).carrier)
     [Nonempty {i : ι // i ∈ (({center} : Set ι)ᶜ)}] :
-    JoinTree (erasePiece F center) := by
+    Nonempty (JoinTree (erasePiece F center)) := by
   classical
   let survivor := {i : ι // i ∈ (({center} : Set ι)ᶜ)}
   let i0 : survivor :=
@@ -496,9 +496,9 @@ noncomputable def JoinTree.eraseOneEdgeNoFull
     exists_tree_fibers_preconnected
       (J.neighborAttachment center)
   refine
-    { tree := J.rewireAfterDelete center R
-      isTree := J.rewireAfterDelete_isTree center R hRtree
-      running := ?_ }
+    ⟨{ tree := J.rewireAfterDelete center R
+       isTree := J.rewireAfterDelete_isTree center R hRtree
+       running := ?_ }⟩
   intro x
   change
     ((J.rewireAfterDelete center R).induce
@@ -638,8 +638,8 @@ theorem ForestOfCopies.erase_oneEdge_of_no_full
   by_cases hN : Nonempty survivor
   · letI : Nonempty survivor := hN
     exact Or.inr
-      ⟨J.eraseOneEdgeNoFull
-        hF.pairwiseAllowed hOne hNoFull⟩
+      (J.nonempty_eraseOneEdgeNoFull
+        hF.pairwiseAllowed hOne hNoFull)
   · left
     exact
       ⟨fun z => hN ⟨z⟩⟩
