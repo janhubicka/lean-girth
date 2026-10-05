@@ -46,12 +46,21 @@ theorem mixedJoinTree_embeds_supportedTree
       J.exists_leaf_attachment
     let p : {j : ι // j ≠ leaf} :=
       ⟨parent, hadj.ne.symm⟩
+    let reindexRest :
+        {j : ι // j ≠ leaf} ≃
+          {j : ι // j ∈ (({leaf} : Set ι)ᶜ)} where
+      toFun j := ⟨j.1, by
+        simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using j.2⟩
+      invFun j := ⟨j.1, by
+        simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using j.2⟩
+      left_inv j := by apply Subtype.ext; rfl
+      right_inv j := by apply Subtype.ext; rfl
     let JRest :
         JoinTree
           (fun j : {j : ι // j ≠ leaf} =>
             (m j.1).supportPiece A) := by
-      simpa [erasePiece, Set.mem_compl_iff, Set.mem_singleton_iff] using
-        (J.eraseLeaf hadj huniq)
+      simpa [erasePiece, reindexRest] using
+        (J.eraseLeaf hadj huniq).reindex reindexRest
     have hAllowedRest :
         PairwiseAllowed
           (fun j : {j : ι // j ≠ leaf} =>
@@ -73,7 +82,7 @@ theorem mixedJoinTree_embeds_supportedTree
       exact j.2 hj
     obtain ⟨X, T, eRest, hT⟩ :=
       mixedJoinTree_embeds_supportedTree
-        (ι := {j : ι // j ≠ leaf})
+        (m := fun j : {j : ι // j ≠ leaf} => m j.1)
         JRest hAllowedRest hSharedRest alphaB a0 a1 hne
     obtain ⟨Y, S, eFull, hS⟩ :=
       hT.extendMixedForestLeaf
