@@ -126,4 +126,141 @@ theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overA
       (by intro d; rfl)
   exact ⟨Y, S, hS, eFull⟩
 
+/-- If a leaf meets the rest in one supported vertex, the induction extends
+across the leaf by one supported singleton gluing. -/
+theorem ASupportedTreeAmalgam.extendCopyForestLeaf_overPoint
+    {A : RelStructure L UA} {B : RelStructure L VB}
+    {R : RelStructure L W}
+    {b : ι → Embedding B R}
+    (J : BCopyJoinTree b)
+    {leaf parent : ι}
+    (hadj : J.tree.Adj leaf parent)
+    (huniq : ∀ j : ι, J.tree.Adj leaf j → j = parent)
+    (x : W)
+    (hInter :
+      copyCarrier (b leaf) ∩ copyCarrier (b parent) = {x})
+    (hParent : VertexSupportedInBCopy A (b parent) x)
+    (hLeaf : VertexSupportedInBCopy A (b leaf) x)
+    {T : RelStructure L X}
+    (hT : ASupportedTreeAmalgam A B X T)
+    (eRest :
+      Embedding
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1))
+        T) :
+    ∃ (Y : Type v) (S : RelStructure L Y),
+      ASupportedTreeAmalgam A B Y S ∧
+      Embedding (familyUnionStructure R b) S := by
+  classical
+  let p : {j : ι // j ≠ leaf} :=
+    ⟨parent, hadj.ne.symm⟩
+  rcases hParent with ⟨aParent, hxParent, hAParent⟩
+  rcases hLeaf with ⟨aLeaf, hxLeaf, hALeaf⟩
+  rcases hxParent with ⟨uParent, huParent⟩
+  rcases hxLeaf with ⟨uLeaf, huLeaf⟩
+  let alphaRest :
+      Embedding A
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1)) :=
+    aCopyToFamilyUnion
+      (fun j : {j : ι // j ≠ leaf} => b j.1)
+      aParent p hAParent
+  let alphaLeaf : Embedding A B :=
+    aCopyFactorIntoMember aLeaf (b leaf) hALeaf
+  let D : RelStructure L PUnit := ambientPoint R x
+  let fRest :
+      Embedding D
+        (familyUnionStructure R
+          (fun j : {j : ι // j ≠ leaf} => b j.1)) :=
+    ambientPointEmbedding
+      aParent alphaRest uParent x huParent
+  let fLeaf : Embedding D B :=
+    ambientPointEmbedding
+      aLeaf alphaLeaf uLeaf x huLeaf
+  have hOverlap :
+      ∀ q :
+          familyCarrier
+            (fun j : {j : ι // j ≠ leaf} => b j.1),
+        ∀ y : VB,
+          q.1 = b leaf y ↔
+            ∃ d : PUnit, q = fRest d ∧ y = fLeaf d := by
+    intro q y
+    constructor
+    · intro hqy
+      have hBoth :
+          q.1 ∈
+            copyCarrier (b leaf) ∩
+              familyCarrier
+                (fun j : {j : ι // j ≠ leaf} => b j.1) :=
+        ⟨⟨y, hqy.symm⟩, q.2⟩
+      rw [J.leaf_inter_rest_eq_parent hadj huniq] at hBoth
+      have hqx : q.1 = x := by
+        have : q.1 ∈ ({x} : Set W) := by
+          rw [← hInter]
+          exact hBoth
+        simpa using this
+      refine ⟨PUnit.unit, ?_, ?_⟩
+      · apply Subtype.ext
+        change q.1 = aParent uParent
+        exact hqx.trans huParent.symm
+      · apply (b leaf).injective
+        change b leaf y = b leaf (alphaLeaf uLeaf)
+        calc
+          b leaf y = q.1 := hqy.symm
+          _ = x := hqx
+          _ = aLeaf uLeaf := huLeaf.symm
+          _ = b leaf (alphaLeaf uLeaf) := by
+            exact
+              (aCopyFactorIntoMember_spec
+                aLeaf (b leaf) hALeaf uLeaf).symm
+    · rintro ⟨d, hq, hy⟩
+      cases d
+      have hqv :
+          q.1 = aParent uParent := by
+        have := congrArg Subtype.val hq
+        exact this
+      have hyb :
+          b leaf y = b leaf (alphaLeaf uLeaf) := by
+        exact congrArg (b leaf) hy
+      calc
+        q.1 = aParent uParent := hqv
+        _ = x := huParent
+        _ = aLeaf uLeaf := huLeaf.symm
+        _ = b leaf (alphaLeaf uLeaf) := by
+          exact
+            (aCopyFactorIntoMember_spec
+              aLeaf (b leaf) hALeaf uLeaf).symm
+        _ = b leaf y := hyb.symm
+  have hSrc :
+      IsFreeAmalgam
+        fRest fLeaf
+        (J.restToFullEmbedding hadj huniq)
+        (familyMemberEmbedding b leaf) :=
+    J.familyUnion_isFreeAmalgam_leaf_of_overlap
+      hadj huniq D fRest fLeaf hOverlap
+  let fT : Embedding D T := eRest.comp fRest
+  have supportT :
+      ∃ alpha : Embedding A T,
+        ∀ d, ∃ a, fT d = alpha a := by
+    refine ⟨eRest.comp alphaRest, ?_⟩
+    intro d
+    cases d
+    exact ⟨uParent, rfl⟩
+  have supportB :
+      ∃ alpha : Embedding A B,
+        ∀ d, ∃ a, fLeaf d = alpha a := by
+    refine ⟨alphaLeaf, ?_⟩
+    intro d
+    cases d
+    exact ⟨uLeaf, rfl⟩
+  obtain ⟨Y, S, hS, iT, iB, hTgt⟩ :=
+    hT.exists_freeGluePoint fT fLeaf supportT supportB
+  let idB : Embedding B B := (Iso.refl B).toEmbedding
+  let eFull : Embedding (familyUnionStructure R b) S :=
+    freeAmalgam_liftEmbedding_sameOverlap
+      hSrc hTgt eRest idB
+      (by intro d; rfl)
+      (by intro d; rfl)
+  exact ⟨Y, S, hS, eFull⟩
+
 end StructuralRamsey.Girth
