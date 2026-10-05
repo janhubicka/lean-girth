@@ -235,3 +235,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_freeGluePoint
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_freeGluePointAt
 #print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.exists_disjointCopyExtension
+
+#print axioms StructuralRamsey.Girth.induceEmbeddingOfSubset
+#print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam
+#print axioms StructuralRamsey.Girth.induceUnion_isFreeAmalgam_of_overlap
+#print axioms StructuralRamsey.Girth.freeAmalgam_liftEmbedding_sameOverlap
