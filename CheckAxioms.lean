@@ -246,3 +246,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.BCopyJoinTree.leaf_inter_rest_eq_parent
 #print axioms StructuralRamsey.Girth.pairwiseSupportedBCopyOverlap_erase
 #print axioms StructuralRamsey.Girth.BCopyJoinTree.restToFullEmbedding
+
+#print axioms StructuralRamsey.Girth.BCopyJoinTree.familyUnion_isFreeAmalgam_leaf_of_overlap
