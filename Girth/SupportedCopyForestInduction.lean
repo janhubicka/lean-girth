@@ -27,15 +27,15 @@ theorem bCopyForest_embeds_supportedTree
     (hOverlap : PairwiseSupportedBCopyOverlap A b)
     (alphaB : Embedding A B)
     (a0 a1 : UA) (hne : a0 ≠ a1) :
-    ∃ (X : Type v) (T : RelStructure L X),
-      ASupportedTreeAmalgam A B X T ∧
-      Embedding (familyUnionStructure R b) T := by
+    ∃ (X : Type v) (T : RelStructure L X)
+        (e : Embedding (familyUnionStructure R b) T),
+      ASupportedTreeAmalgam A B X T := by
   classical
   by_cases hsub : Subsingleton ι
   · let i : ι := Classical.choice (inferInstance : Nonempty ι)
     exact
-      ⟨VB, B, ASupportedTreeAmalgam.copy (Iso.refl B),
-        familyUnionToMember_of_subsingleton b i⟩
+      ⟨VB, B, familyUnionToMember_of_subsingleton b i,
+        ASupportedTreeAmalgam.copy (Iso.refl B)⟩
   · letI : Nontrivial ι := not_subsingleton_iff_nontrivial.mp hsub
     obtain ⟨leaf, parent, hadj, huniq, _hLeafInter⟩ :=
       J.exists_leaf_attachment
@@ -59,14 +59,14 @@ theorem bCopyForest_embeds_supportedTree
       intro hsurj
       obtain ⟨j, hj⟩ := hsurj leaf
       exact j.2 hj
-    obtain ⟨X, T, hT, eRest⟩ :=
+    obtain ⟨X, T, eRest, hT⟩ :=
       bCopyForest_embeds_supportedTree
         (ι := {j : ι // j ≠ leaf})
         JRest hOverlapRest alphaB a0 a1 hne
-    obtain ⟨Y, S, hS, eFull⟩ :=
+    obtain ⟨Y, S, eFull, hS⟩ :=
       hT.extendCopyForestLeaf
         J hOverlap hadj huniq eRest alphaB a0 a1 hne
-    exact ⟨Y, S, hS, eFull⟩
+    exact ⟨Y, S, eFull, hS⟩
 termination_by Fintype.card ι
 decreasing_by
   exact hcard
