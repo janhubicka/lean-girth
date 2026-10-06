@@ -15,6 +15,7 @@ import Girth.MixedFamilyUnion
 import Girth.MixedForestStep
 import Girth.MixedForestInduction
 import Girth.TreeGeometry
+import Girth.RootedGraph
 import Girth.TreeSupport
 import Girth.StructuralCore
 import Girth.Forest
