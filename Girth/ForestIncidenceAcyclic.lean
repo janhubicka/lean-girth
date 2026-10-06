@@ -37,12 +37,22 @@ theorem boundaryIncidenceGraph_isAcyclic_of_forest_restriction
     simpa [edge] using
       pairwise_restrictedCarrier_subsingleton_of_allowed
         hForest.pairwiseAllowed P hEdgePart
+  have hFamilyEq :
+      carrierEdgeFamily
+          (fun i => (F i).restrictCarrier P) =
+        Set.range edge := by
+    ext e
+    constructor
+    · rintro ⟨i, hi⟩
+      exact ⟨i, by simpa [edge] using hi.symm⟩
+    · rintro ⟨i, hi⟩
+      exact ⟨i, by simpa [edge] using hi.symm⟩
   have hgt :
       GirthGT (Set.range edge) (Fintype.card ι) := by
-    have h :=
+    rw [← hFamilyEq]
+    exact
       girthGT_restrictedCarrierEdgeFamily_of_forest
         hForest P hEdgePart (Fintype.card ι)
-    simpa [edge, carrierEdgeFamily, eq_comm] using h
   exact
     boundaryIncidenceGraph_isAcyclic_of_pairwiseSubsingleton_of_girthGT
       edge hPair (Fintype.card ι) (by rfl) hgt
