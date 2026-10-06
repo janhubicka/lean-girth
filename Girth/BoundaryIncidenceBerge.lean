@@ -142,4 +142,49 @@ noncomputable def bergeCycleOfBoundaryIncidenceCycleLeft
       (boundaryIncidenceGraph_adj_right_left
         edge (edgeLabel (cyclicSucc i)) (vertexLabel i)).mp hadj
 
+
+/-- Any simple cycle in the boundary incidence graph yields a Berge cycle.
+If the cycle is based at a vertex-node, rotate it to its second node, which
+must be an edge-node by bipartiteness. -/
+noncomputable def bergeCycleOfBoundaryIncidenceCycle
+    (edge : E → Set W)
+    (hEdgeInj : Function.Injective edge)
+    {z : E ⊕ W}
+    (p : (boundaryIncidenceGraph edge).Walk z z)
+    (hp : p.IsCycle) :
+    BergeCycle (Set.range edge) := by
+  classical
+  cases z with
+  | inl e0 =>
+      exact
+        bergeCycleOfBoundaryIncidenceCycleLeft
+          edge hEdgeInj p hp
+  | inr x =>
+      have hnon : ¬p.Nil := hp.not_nil
+      have hadj :
+          (boundaryIncidenceGraph edge).Adj
+            (Sum.inr x) p.snd :=
+        p.adj_snd hnon
+      cases hsnd : p.snd with
+      | inl e =>
+          have hsupp : Sum.inl e ∈ p.support := by
+            have htail := p.snd_mem_tail_support hnon
+            have hall : p.snd ∈ p.support :=
+              List.mem_of_mem_tail htail
+            simpa [hsnd] using hall
+          let q := p.rotate (Sum.inl e) hsupp
+          have hq : q.IsCycle := hp.rotate hsupp
+          exact
+            bergeCycleOfBoundaryIncidenceCycleLeft
+              edge hEdgeInj q hq
+      | inr y =>
+          exfalso
+          have hbad :
+              (boundaryIncidenceGraph edge).Adj
+                (Sum.inr x) (Sum.inr y) := by
+            simpa [hsnd] using hadj
+          exact
+            (boundaryIncidenceGraph_not_adj_right_right
+              edge x y hbad)
+
 end StructuralRamsey.Girth
