@@ -1,4 +1,5 @@
 import Girth.ForestJoinGlue
+import Mathlib.Data.Fintype.Lattice
 
 /-! # Attaching one dominated leaf to a forest
 
@@ -134,5 +135,78 @@ theorem no_dominating_member_of_not_forest
   exact hBad
     (forestOfCopies_attach_dominated
       hY F hCrossAllowed p hDom)
+
+
+/-- A finite family of boundary intersections which is totally ordered by
+inclusion has a dominating member. -/
+theorem exists_dominating_member_of_comparable
+    [Fintype ι] [Nonempty ι] [Finite W]
+    {Y : ι → HypergraphPiece W}
+    (F : HypergraphPiece W)
+    (hComp :
+      ∀ i j : ι,
+        F.carrier ∩ (Y i).carrier ⊆
+            F.carrier ∩ (Y j).carrier ∨
+        F.carrier ∩ (Y j).carrier ⊆
+            F.carrier ∩ (Y i).carrier) :
+    ∃ p : ι, ∀ i : ι,
+      F.carrier ∩ (Y i).carrier ⊆
+        F.carrier ∩ (Y p).carrier := by
+  classical
+  obtain ⟨p, hp⟩ :=
+    Finite.exists_max
+      (fun i : ι => (F.carrier ∩ (Y i).carrier).ncard)
+  refine ⟨p, ?_⟩
+  intro i
+  rcases hComp i p with hip | hpi
+  · exact hip
+  · have heq :
+        F.carrier ∩ (Y p).carrier =
+          F.carrier ∩ (Y i).carrier :=
+      Set.eq_of_subset_of_ncard_le hpi (hp i)
+    exact heq.symm.subset
+
+/-- Exact finite form used in the successor-profile proof: if attaching a new
+piece to a forest is bad, then two of its old boundary intersections are
+incomparable. -/
+theorem exists_incomparable_intersections_of_not_forest
+    [Fintype ι] [Nonempty ι] [Finite W]
+    {Y : ι → HypergraphPiece W}
+    (hY : ForestOfCopies Y)
+    (F : HypergraphPiece W)
+    (hCrossAllowed :
+      ∀ i : ι, AllowedIntersection (Y i) F)
+    (hBad :
+      ¬ ForestOfCopies (sumPieces Y (fun _ : PUnit => F))) :
+    ∃ i j : ι,
+      ¬(F.carrier ∩ (Y i).carrier ⊆
+        F.carrier ∩ (Y j).carrier) ∧
+      ¬(F.carrier ∩ (Y j).carrier ⊆
+        F.carrier ∩ (Y i).carrier) := by
+  classical
+  by_contra hNo
+  have hComp :
+      ∀ i j : ι,
+        F.carrier ∩ (Y i).carrier ⊆
+            F.carrier ∩ (Y j).carrier ∨
+        F.carrier ∩ (Y j).carrier ⊆
+            F.carrier ∩ (Y i).carrier := by
+    intro i j
+    by_cases hij :
+        F.carrier ∩ (Y i).carrier ⊆
+          F.carrier ∩ (Y j).carrier
+    · exact Or.inl hij
+    · by_cases hji :
+          F.carrier ∩ (Y j).carrier ⊆
+            F.carrier ∩ (Y i).carrier
+      · exact Or.inr hji
+      · exfalso
+        exact hNo ⟨i, j, hij, hji⟩
+  obtain ⟨p, hp⟩ :=
+    exists_dominating_member_of_comparable F hComp
+  obtain ⟨i, hi⟩ :=
+    no_dominating_member_of_not_forest
+      hY F hCrossAllowed hBad p
+  exact hi (hp i)
 
 end StructuralRamsey.Girth
