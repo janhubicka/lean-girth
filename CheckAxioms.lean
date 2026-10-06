@@ -296,3 +296,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedDesignated_sharedSupport
 #print axioms StructuralRamsey.Girth.forest_centerWithEdgeLeaves
 #print axioms StructuralRamsey.Girth.forest_bSupport_with_aLeaves
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_reindex
+#print axioms StructuralRamsey.Girth.ForestOfCopies.reindex
