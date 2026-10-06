@@ -312,3 +312,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.joinTree_of_disjoint
 #print axioms StructuralRamsey.Girth.forestOfCopies_of_disjoint
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_disjoint
+#print axioms StructuralRamsey.Girth.JoinTree.mem_snd_of_mem_endpoints
+#print axioms StructuralRamsey.Girth.JoinTree.first_separator_edge_eq
+#print axioms StructuralRamsey.Girth.localMember_contains_outer_edge
+#print axioms StructuralRamsey.Girth.crossAllowed_of_linear_outer
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_of_linear
