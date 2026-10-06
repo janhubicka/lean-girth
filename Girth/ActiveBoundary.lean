@@ -46,7 +46,7 @@ theorem projectedCopy_activeCarrier_intersection_classify
     have hyE : C.part y ∈ copyCarrier e :=
       activeCarrier_part_in_baseCopy A D C e hy.2
     rcases hx.1 with ⟨bx, hbx⟩
-    rcases hy.1 with ⟨by, hby⟩
+    rcases hy.1 with ⟨by0, hby⟩
     have hxB : C.part x ∈ copyCarrier b := by
       refine ⟨bx, ?_⟩
       calc
@@ -55,27 +55,27 @@ theorem projectedCopy_activeCarrier_intersection_classify
     have hyB : C.part y ∈ copyCarrier b := by
       refine ⟨by, ?_⟩
       calc
-        b by = C.part (q.val by) := (q.property by).symm
+        b by0 = C.part (q.val by0) := (q.property by).symm
         _ = C.part y := congrArg C.part hby
     have hpartxy : C.part x ≠ C.part y := by
       intro hpart
-      have hbxy : b bx = b by := by
+      have hbxy : b bx = b by0 := by
         calc
           b bx = C.part x := by
             calc
               b bx = C.part (q.val bx) := (q.property bx).symm
               _ = C.part x := congrArg C.part hbx
           _ = C.part y := hpart
-          _ = b by := by
+          _ = b by0 := by
             calc
-              C.part y = C.part (q.val by) :=
+              C.part y = C.part (q.val by0) :=
                 (congrArg C.part hby).symm
-              _ = b by := q.property by
-      have hb : bx = by := b.injective hbxy
+              _ = b by0 := q.property by
+      have hb : bx = by0 := b.injective hbxy
       apply hxy
       calc
         x = q.val bx := hbx.symm
-        _ = q.val by := congrArg q.val hb
+        _ = q.val by0 := congrArg q.val hb
         _ = y := hby
     have hbaseMeet :
         ¬(copyCarrier e ∩ copyCarrier b).Subsingleton := by
