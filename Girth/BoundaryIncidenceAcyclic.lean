@@ -58,6 +58,10 @@ theorem boundaryIncidenceGraph_isAcyclic_of_girthGT
 
 end StructuralRamsey.Girth
 
+namespace StructuralRamsey.Girth
+
+universe v
+variable {W E : Type v}
 
 /-- Pairwise-subsingleton labelled edges are enough to exclude incidence
 cycles.  This is the form needed after restricting a forest of copies to one
@@ -79,3 +83,5 @@ theorem boundaryIncidenceGraph_isAcyclic_of_pairwiseSubsingleton_of_girthGT
   apply hgt
   exact
     ⟨c, (BergeCycle.length_le_card_range edge c).trans hcard⟩
+
+end StructuralRamsey.Girth
