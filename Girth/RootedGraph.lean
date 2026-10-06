@@ -78,10 +78,10 @@ theorem IsTree.parent_dist_add_one
       p.dropLast =
         IsTree.rootPath hG root (IsTree.parent hG root v) := by
     exact
-      hG.rootPath_unique
+      IsTree.rootPath_unique hG
         root (IsTree.parent hG root v) p.dropLast hdrop
   have hparent :=
-    hG.rootPath_length_eq_dist
+    IsTree.rootPath_length_eq_dist hG
       root (IsTree.parent hG root v)
   have hv := IsTree.rootPath_length_eq_dist hG root v
   calc
@@ -118,7 +118,7 @@ theorem IsTree.parent_eq_of_adj_of_not_mem_rootPath
   have hpath :
       (IsTree.rootPath hG root v).concat hadj =
         IsTree.rootPath hG root w := by
-    apply hG.rootPath_unique
+    apply IsTree.rootPath_unique hG
     exact
       (IsTree.rootPath_isPath hG root v).concat hw hadj
   change (IsTree.rootPath hG root w).penultimate = v
