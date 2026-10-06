@@ -53,9 +53,9 @@ theorem projectedCopy_activeCarrier_intersection_classify
         b bx = C.part (q.val bx) := (q.property bx).symm
         _ = C.part x := congrArg C.part hbx
     have hyB : C.part y ∈ copyCarrier b := by
-      refine ⟨by, ?_⟩
+      refine ⟨by0, ?_⟩
       calc
-        b by0 = C.part (q.val by0) := (q.property by).symm
+        b by0 = C.part (q.val by0) := (q.property by0).symm
         _ = C.part y := congrArg C.part hby
     have hpartxy : C.part x ≠ C.part y := by
       intro hpart
@@ -70,7 +70,7 @@ theorem projectedCopy_activeCarrier_intersection_classify
             calc
               C.part y = C.part (q.val by0) :=
                 (congrArg C.part hby).symm
-              _ = b by0 := q.property by
+              _ = b by0 := q.property by0
       have hb : bx = by0 := b.injective hbxy
       apply hxy
       calc
