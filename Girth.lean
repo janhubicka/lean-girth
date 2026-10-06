@@ -3,6 +3,7 @@ import Girth.Berge
 import Girth.BoundaryIncidence
 import Girth.BoundaryIncidenceBerge
 import Girth.BoundaryIncidenceAcyclic
+import Girth.BoundaryIncidenceCompletion
 import Girth.SupportedTree
 import Girth.SupportedTreeConstruction
 import Girth.RelationalUnionFreeAmalgam
