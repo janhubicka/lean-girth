@@ -165,10 +165,14 @@ theorem boundaryIncidenceCompletion_reachable_root
           (boundaryIncidenceCompletionGraph edge).Adj
             (Sum.inr x) (Sum.inl e) := by
         exact hxe
-      exact
-        hxedge.reachable.trans
-          (boundaryIncidenceCompletion_reachable_root
-            edge root (Sum.inl e))
+      by_cases h : e = root
+      · subst e
+        exact hxedge.reachable
+      · have heroot :
+            (boundaryIncidenceCompletionGraph edge).Adj
+              (Sum.inl e) (Sum.inl root) := by
+          simpa using h
+        exact hxedge.reachable.trans heroot.reachable
 
 /-- The completion graph is connected as soon as there is one edge label. -/
 theorem boundaryIncidenceCompletion_connected
