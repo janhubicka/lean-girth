@@ -78,6 +78,7 @@ theorem ownerFiber_card_add_degree_le
                 _ = s.1 := hrep s.1
             exact congrArg Sum.inr (Subtype.ext hval)
   have hcard := Fintype.card_le_of_injective f hf
-  simpa [SimpleGraph.card_neighborSet_eq_degree] using hcard
+  rw [← G.card_neighborSet_eq_degree q]
+  simpa only [Fintype.card_sum] using hcard
 
 end StructuralRamsey.Girth
