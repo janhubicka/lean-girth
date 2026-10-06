@@ -42,10 +42,9 @@ def JoinTree.restrictCarriers
       rw [hOcc]
       exact J.running x
     · intro a b
-      have ha : x ∈ P := by
-        change x ∈ (F a.1).carrier ∩ P at a.property
-        exact a.property.2
-      exact (hx ha).elim
+      have haProp := a.property
+      change x ∈ (F a.1).carrier ∩ P at haProp
+      exact (hx haProp.2).elim
 
 /-- Allowed full intersections become subsingleton after restriction whenever
 every common support edge meets the restricting set in at most one vertex. -/
