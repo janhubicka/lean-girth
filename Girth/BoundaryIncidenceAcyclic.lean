@@ -57,3 +57,25 @@ theorem boundaryIncidenceGraph_isAcyclic_of_girthGT
     ⟨c, (BergeCycle.length_le_card_range edge c).trans hcard⟩
 
 end StructuralRamsey.Girth
+
+
+/-- Pairwise-subsingleton labelled edges are enough to exclude incidence
+cycles.  This is the form needed after restricting a forest of copies to one
+part: labels need not be globally injective, but repeated labels can only carry
+subsingleton sets and therefore cannot occur on a simple incidence cycle. -/
+theorem boundaryIncidenceGraph_isAcyclic_of_pairwiseSubsingleton_of_girthGT
+    [Fintype E]
+    (edge : E → Set W)
+    (hLinear :
+      ∀ ⦃e f : E⦄, e ≠ f → (edge e ∩ edge f).Subsingleton)
+    (g : ℕ)
+    (hcard : Fintype.card E ≤ g)
+    (hgt : GirthGT (Set.range edge) g) :
+    (boundaryIncidenceGraph edge).IsAcyclic := by
+  intro z p hp
+  let c : BergeCycle (Set.range edge) :=
+    bergeCycleOfBoundaryIncidenceCycle_of_pairwiseSubsingleton
+      edge hLinear p hp
+  apply hgt
+  exact
+    ⟨c, (BergeCycle.length_le_card_range edge c).trans hcard⟩
