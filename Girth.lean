@@ -20,6 +20,7 @@ import Girth.ForestLeafDeletion
 import Girth.ForestDeletionGeometry
 import Girth.FiberConnectedTree
 import Girth.ForestTreeRewire
+import Girth.ForestJoinGlue
 import Girth.ForestCarrierLift
 import Girth.ForestEnumeration
 import Girth.ForestReindex
