@@ -22,12 +22,12 @@ def boundaryIncidenceGraph (edge : E → Set W) : SimpleGraph (E ⊕ W) where
     | .inl e, .inr x => x ∈ edge e
     | .inr x, .inl e => x ∈ edge e
     | _, _ => False
-  symm := by
+  symm := ⟨by
     intro a b
-    cases a <;> cases b <;> simp_all
-  loopless := by
+    cases a <;> cases b <;> simp_all⟩
+  loopless := ⟨by
     intro a
-    cases a <;> simp
+    cases a <;> simp⟩
 
 @[simp]
 theorem boundaryIncidenceGraph_adj_left_right
