@@ -57,7 +57,24 @@ theorem activeBoundaryIncidenceHom_injective
     (edge : E → Set W) :
     Function.Injective (activeBoundaryIncidenceHom edge) := by
   intro a b h
-  cases a <;> cases b <;> simp_all [activeBoundaryIncidenceHom]
+  cases a with
+  | inl e =>
+      cases b with
+      | inl f =>
+          simpa [activeBoundaryIncidenceHom] using h
+      | inr x =>
+          simp [activeBoundaryIncidenceHom] at h
+  | inr x =>
+      cases b with
+      | inl f =>
+          simp [activeBoundaryIncidenceHom] at h
+      | inr y =>
+          have hval : x.1 = y.1 := by
+            have hs : Sum.inr x.1 = Sum.inr y.1 := by
+              simpa [activeBoundaryIncidenceHom] using h
+            exact Sum.inr.inj hs
+          have hxy : x = y := Subtype.ext hval
+          simpa [hxy]
 
 /-- Acyclicity passes to the active incidence graph. -/
 theorem activeBoundaryIncidence_isAcyclic
@@ -82,8 +99,20 @@ def boundaryIncidenceCompletionGraph
     | .inr x, .inl e => x.1 ∈ edge e
     | .inr _, .inr _ => False
   symm := ⟨by
-    intro a b
-    cases a <;> cases b <;> simp_all⟩
+    intro a b hab
+    cases a with
+    | inl e =>
+        cases b with
+        | inl f =>
+            exact fun hfe => hab hfe.symm
+        | inr x =>
+            exact hab
+    | inr x =>
+        cases b with
+        | inl e =>
+            exact hab
+        | inr y =>
+            exact False.elim hab⟩
   loopless := ⟨by
     intro a
     cases a <;> simp⟩
