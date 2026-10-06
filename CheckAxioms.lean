@@ -304,3 +304,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.forestOfCopies_sumBridge
 #print axioms StructuralRamsey.Girth.initialACopy_same_index
 #print axioms StructuralRamsey.Girth.initialACopy_factors_component
+#print axioms StructuralRamsey.Girth.sigmaSplitAt
+#print axioms StructuralRamsey.Girth.joinTree_sigma_of_subsingleton
+#print axioms StructuralRamsey.Girth.joinTree_lift_local
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_local
