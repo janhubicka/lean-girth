@@ -62,4 +62,28 @@ theorem boundaryIncidenceGraph_isAcyclic_of_forest_part
   intro i j hij e hei hej
   exact hPart i hei
 
+
+/-- Once the restricted-forest incidence graph is known to be acyclic, it has
+no nonempty closed trail.  This is the exact endpoint needed after maximal
+run compression in the circulation proof: the compressed alternating walk is
+shown to be a circuit, with no further shortest-subwalk minimization. -/
+theorem no_boundaryIncidenceCircuit_of_forest_restriction
+    {F : ι → HypergraphPiece W}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set W)
+    (hEdgePart :
+      ∀ ⦃i j : ι⦄, i ≠ j → ∀ ⦃e : Set W⦄,
+        e ∈ (F i).edges → e ∈ (F j).edges →
+          (e ∩ P).Subsingleton)
+    {z : ι ⊕ W}
+    (p : (boundaryIncidenceGraph
+      (fun i => ((F i).restrictCarrier P).carrier)).Walk z z) :
+    ¬ p.IsCircuit := by
+  intro hp
+  have hAcyc :=
+    boundaryIncidenceGraph_isAcyclic_of_forest_restriction
+      hForest P hEdgePart
+  exact hAcyc p.cycleBypass hp.isCycle_cycleBypass
+
 end StructuralRamsey.Girth
