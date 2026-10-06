@@ -206,4 +206,188 @@ theorem transportedDesignated_sharedACopy_supported
         A B D C family α E f hShared i q z
         ⟨bq, hbq⟩ hzCore
 
+
+/-- Old shared-support property between two distinct designated B-copies. -/
+def DesignatedSupportsDesignated
+    (A : RelStructure L UA)
+    {B : RelStructure L VB}
+    {D : RelStructure L P}
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D)) : Prop :=
+  ∀ (q r : DesignatedCopy B D C family), q ≠ r →
+    ∀ (x : X),
+      x ∈ copyCarrier q.embedding →
+      x ∈ copyCarrier r.embedding →
+      VertexSupportedInDesignated A q x ∧
+        VertexSupportedInDesignated A r x
+
+/-- Shared points of two distinct transported designated B-members remain
+A-supported in both members.  If the copies lie in the same standard copy,
+pull back to the old picture.  If they lie in different standard copies, their
+intersection lies in the core and the core-point support lemma applies to both. -/
+theorem transportedDesignated_sharedDesignated_supported
+    (A : RelStructure L UA)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (α : UA ↪ P)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C α)) E)
+    (hSharedA : DesignatedSupportsACopies A C family)
+    (hSharedB : DesignatedSupportsDesignated A C family)
+    (i j : I)
+    (q r : DesignatedCopy B D C family)
+    (hDistinct : i ≠ j ∨ q ≠ r)
+    (z : StructuralRamsey.Partite.Attachment.Vertex
+      (activeCarrier A C α) (W := Y) (I := I))
+    (hzQ :
+      z ∈ copyCarrier
+        (q.transportToStandard f i).embedding)
+    (hzR :
+      z ∈ copyCarrier
+        (r.transportToStandard f j).embedding) :
+    (∃ aB : RelStructure.Embedding A B,
+      z ∈ copyCarrier
+        ((q.transportToStandard f i).embedding.comp aB)) ∧
+    (∃ aB : RelStructure.Embedding A B,
+      z ∈ copyCarrier
+        ((r.transportToStandard f j).embedding.comp aB)) := by
+  classical
+  let S := activeCarrier A C α
+  rcases hzQ with ⟨bq, hbq⟩
+  rcases hzR with ⟨br, hbr⟩
+  by_cases hij : i = j
+  · subst j
+    have hqr : q ≠ r := by
+      rcases hDistinct with hne | hne
+      · exact (hne rfl).elim
+      · exact hne
+    let copyE : RelStructure.Embedding C.toRelStructure
+        (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure :=
+      (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
+    have hOldEq : q.embedding bq = r.embedding br := by
+      apply copyE.injective
+      exact hbq.trans hbr.symm
+    obtain ⟨hqSupp, hrSupp⟩ :=
+      hSharedB q r hqr (q.embedding bq)
+        ⟨bq, rfl⟩ ⟨br, hOldEq.symm⟩
+    constructor
+    · rcases hqSupp with ⟨aB, u, hu⟩
+      refine ⟨aB, u, ?_⟩
+      change copyE (q.embedding (aB u)) = z
+      calc
+        copyE (q.embedding (aB u)) =
+            copyE (q.embedding bq) := congrArg copyE hu
+        _ = z := hbq
+    · rcases hrSupp with ⟨aB, u, hu⟩
+      refine ⟨aB, u, ?_⟩
+      change copyE (r.embedding (aB u)) = z
+      calc
+        copyE (r.embedding (aB u)) =
+            copyE (q.embedding bq) := congrArg copyE hu
+        _ = z := hbq
+  · let copyI : RelStructure.Embedding C.toRelStructure
+        (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure :=
+      (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
+    let copyJ : RelStructure.Embedding C.toRelStructure
+        (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure :=
+      (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f j).toEmbedding
+    let coreE : RelStructure.Embedding E.toRelStructure
+        (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure :=
+      (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
+    have hzI : z ∈ copyCarrier copyI := ⟨q.embedding bq, hbq⟩
+    have hzJ : z ∈ copyCarrier copyJ := ⟨r.embedding br, hbr⟩
+    have hzCore : z ∈ copyCarrier coreE :=
+      attachment_copy_copy_intersection_subset_core
+        C.toRelStructure S E.toRelStructure
+        (fun k => (f k).toEmbedding) hij ⟨hzI, hzJ⟩
+    constructor
+    · exact
+        transportedDesignated_corePoint_supported
+          A B D C family α E f hSharedA i q z
+          ⟨bq, hbq⟩ hzCore
+    · exact
+        transportedDesignated_corePoint_supported
+          A B D C family α E f hSharedA j r z
+          ⟨br, hbr⟩ hzCore
+
+
+/-- The two nonvacuous clauses of the manuscript's shared-support invariant:
+designated B versus ambient A, and two distinct designated B-members. -/
+def DesignatedSharedSupport
+    (A : RelStructure L UA)
+    {B : RelStructure L VB}
+    {D : RelStructure L P}
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D)) : Prop :=
+  DesignatedSupportsACopies A C family ∧
+    DesignatedSupportsDesignated A C family
+
+/-- Shared-support invariant for the transported designated family in one
+attachment step.  A-A pairs need no clause because there is no incident
+B-member to support. -/
+def TransportedDesignatedSharedSupport
+    (A : RelStructure L UA)
+    {B : RelStructure L VB}
+    {D : RelStructure L P}
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (α : UA ↪ P)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C α)) E) : Prop :=
+  (∀ (i : I) (q : DesignatedCopy B D C family)
+      (a : RelStructure.Embedding A
+        (StructuralRamsey.Partite.Attachment.attach
+          C (activeCarrier A C α) E f).toRelStructure)
+      (z : StructuralRamsey.Partite.Attachment.Vertex
+        (activeCarrier A C α) (W := Y) (I := I)),
+      z ∈ copyCarrier (q.transportToStandard f i).embedding →
+      z ∈ copyCarrier a →
+      ∃ aB : RelStructure.Embedding A B,
+        z ∈ copyCarrier
+          ((q.transportToStandard f i).embedding.comp aB)) ∧
+  (∀ (i j : I) (q r : DesignatedCopy B D C family),
+      i ≠ j ∨ q ≠ r →
+      ∀ (z : StructuralRamsey.Partite.Attachment.Vertex
+        (activeCarrier A C α) (W := Y) (I := I)),
+      z ∈ copyCarrier (q.transportToStandard f i).embedding →
+      z ∈ copyCarrier (r.transportToStandard f j).embedding →
+      (∃ aB : RelStructure.Embedding A B,
+        z ∈ copyCarrier
+          ((q.transportToStandard f i).embedding.comp aB)) ∧
+      (∃ aB : RelStructure.Embedding A B,
+        z ∈ copyCarrier
+          ((r.transportToStandard f j).embedding.comp aB)))
+
+/-- A standard picture attachment preserves the manuscript's full
+shared-support invariant for the transported designated family. -/
+theorem transportedDesignated_sharedSupport
+    (A : RelStructure L UA)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (α : UA ↪ P)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C α)) E)
+    (hA : A.Irreducible)
+    (hShared : DesignatedSharedSupport A C family) :
+    TransportedDesignatedSharedSupport
+      A C family α E f := by
+  constructor
+  · intro i q a z hzQ hzA
+    exact
+      transportedDesignated_sharedACopy_supported
+        A B D C family α E f hA hShared.1
+        i q a z hzQ hzA
+  · intro i j q r hDistinct z hzQ hzR
+    exact
+      transportedDesignated_sharedDesignated_supported
+        A B D C family α E f hShared.1 hShared.2
+        i j q r hDistinct z hzQ hzR
+
 end StructuralRamsey.Girth
