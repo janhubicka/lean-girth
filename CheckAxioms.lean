@@ -295,3 +295,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedDesignated_sharedDesignated_supported
 #print axioms StructuralRamsey.Girth.transportedDesignated_sharedSupport
 #print axioms StructuralRamsey.Girth.forest_centerWithEdgeLeaves
+#print axioms StructuralRamsey.Girth.forest_bSupport_with_aLeaves
