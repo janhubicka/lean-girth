@@ -1,5 +1,6 @@
 import Girth.DesignatedAttachment
 import Girth.AttachmentGeometry
+import PartiteConstruction.Iterated.PureCopyGeometry
 
 /-! # Shared support through a picture attachment
 
@@ -109,5 +110,100 @@ theorem transportedDesignated_corePoint_supported
     copyE (q.embedding (aB u0)) =
         copyE (q.embedding b) := congrArg copyE hu0
     _ = z := hb
+
+
+/-- Full B-versus-A shared-support preservation for one transported designated
+copy.  An ambient irreducible A-copy is either wholly inside the same standard
+copy, where the old shared-support hypothesis applies after pullback, or it
+meets that standard copy only through the active support, where the already
+verified core-point lemma applies. -/
+theorem transportedDesignated_sharedACopy_supported
+    (A : RelStructure L UA)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (α : UA ↪ P)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C α)) E)
+    (hA : A.Irreducible)
+    (hShared : DesignatedSupportsACopies A C family)
+    (i : I)
+    (q : DesignatedCopy B D C family)
+    (a : RelStructure.Embedding A
+      (StructuralRamsey.Partite.Attachment.attach
+        C (activeCarrier A C α) E f).toRelStructure)
+    (z : StructuralRamsey.Partite.Attachment.Vertex
+      (activeCarrier A C α) (W := Y) (I := I))
+    (hzQ :
+      z ∈ copyCarrier
+        (q.transportToStandard f i).embedding)
+    (hzA : z ∈ copyCarrier a) :
+    ∃ aB : RelStructure.Embedding A B,
+      z ∈ copyCarrier
+        ((q.transportToStandard f i).embedding.comp aB) := by
+  classical
+  let S := activeCarrier A C α
+  let Whole :=
+    (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure
+  let copyE : RelStructure.Embedding C.toRelStructure Whole :=
+    (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
+  let coreE : RelStructure.Embedding E.toRelStructure Whole :=
+    (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
+  rcases hzQ with ⟨bq, hbq⟩
+  rcases hzA with ⟨u, hu⟩
+  have hMeet :
+      a u = copyE (q.embedding bq) := by
+    exact hu.trans hbq.symm
+  have hloc :=
+    RelStructure.Attachment.irreducible_copy_or_intersection_in_support
+      (Control := A) (Base := C.toRelStructure)
+      (Core := E.toRelStructure) (S := S)
+      (f := fun k => (f k).toEmbedding)
+      hA a i
+  rcases hloc with hInside | hSupport
+  · let aOld : RelStructure.Embedding A C.toRelStructure :=
+      a.factorThroughRange copyE hInside
+    have haOld (v : UA) : a v = copyE (aOld v) :=
+      Classical.choose_spec (hInside v)
+    have hOldPoint :
+        aOld u = q.embedding bq := by
+      apply copyE.injective
+      calc
+        copyE (aOld u) = a u := (haOld u).symm
+        _ = copyE (q.embedding bq) := hMeet
+    have hOldInQ :
+        q.embedding bq ∈ copyCarrier q.embedding :=
+      ⟨bq, rfl⟩
+    have hOldInA :
+        q.embedding bq ∈ copyCarrier aOld :=
+      ⟨u, hOldPoint⟩
+    obtain ⟨aB, haB⟩ :=
+      hShared q aOld (q.embedding bq) hOldInQ hOldInA
+    refine ⟨aB, ?_⟩
+    rcases haB with ⟨v, hv⟩
+    refine ⟨v, ?_⟩
+    change copyE (q.embedding (aB v)) = z
+    calc
+      copyE (q.embedding (aB v)) =
+          copyE (q.embedding bq) := congrArg copyE hv
+      _ = z := hbq
+  · have hqS : q.embedding bq ∈ S := by
+      exact hSupport u (q.embedding bq) hMeet
+    have hzCore :
+        z ∈ copyCarrier coreE := by
+      refine ⟨(f i).toEmbedding ⟨q.embedding bq, hqS⟩, ?_⟩
+      calc
+        coreE ((f i).toEmbedding ⟨q.embedding bq, hqS⟩) =
+            copyE (q.embedding bq) := by
+          exact
+            (StructuralRamsey.Partite.Attachment.copy_extends
+              C S E f i ⟨q.embedding bq, hqS⟩).symm
+        _ = z := hbq
+    exact
+      transportedDesignated_corePoint_supported
+        A B D C family α E f hShared i q z
+        ⟨bq, hbq⟩ hzCore
 
 end StructuralRamsey.Girth
