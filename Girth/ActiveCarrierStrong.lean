@@ -1,5 +1,6 @@
 import Girth.ActivePicture
 import Girth.DesignatedPicture
+import Girth.AttachmentLinearity
 import PartiteConstruction.Partite.Induced
 
 /-! # Strongness of the true active subsystem
@@ -110,5 +111,91 @@ theorem activeCarrier_aStrong_ordered
     hPartite hLinear e
   intro b hb
   exact ordered_embedding_eq_of_sameCopy b e hb
+
+
+/-- Geometry package for one active attachment.  Strongness of the true
+active carrier reduces the manuscript's standard-copy strongness and global
+A-linearity clauses to the generic attachment theorems. -/
+theorem activeAttachment_geometry_of_base_aLinear
+    (A : RelStructure L UA)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (hA : A.Irreducible)
+    (hPartite : C.IsPartiteOver D)
+    (hBaseLinear : ALinear A D)
+    (e : RelStructure.Embedding A D)
+    (hRigid :
+      ∀ b : RelStructure.Embedding A D,
+        SameCopy b e → b = e)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C e.toFunctionEmbedding)) E)
+    (hOldLinear : ALinear A C.toRelStructure)
+    (hCoreLinear : ALinear A E.toRelStructure)
+    (hImage :
+      ∀ i : I,
+        AStrong A E.toRelStructure
+          (copyCarrier (f i).toEmbedding)) :
+    let S := activeCarrier A C e.toFunctionEmbedding
+    let T := StructuralRamsey.Partite.Attachment.attach C S E f
+    ALinear A T.toRelStructure ∧
+      ∀ i : I,
+        AStrong A T.toRelStructure
+          (copyCarrier
+            (StructuralRamsey.Partite.Attachment.copyEmbedding
+              C S E f i).toEmbedding) := by
+  let S := activeCarrier A C e.toFunctionEmbedding
+  have hS : AStrong A C.toRelStructure S :=
+    activeCarrier_aStrong_of_base_aLinear
+      A D C hA hPartite hBaseLinear e hRigid
+  constructor
+  · exact
+      attachment_aLinear
+        C.toRelStructure S E.toRelStructure
+        (fun i => (f i).toEmbedding)
+        hA hOldLinear hCoreLinear hS hImage
+  · intro i
+    exact
+      attachment_copy_aStrong
+        C.toRelStructure S E.toRelStructure
+        (fun i => (f i).toEmbedding)
+        hA hS hImage i
+
+/-- Ordered specialization of the active-attachment geometry package. -/
+theorem activeAttachment_geometry_ordered
+    (A₀ : RelStructure L UA)
+    [LinearOrder UA] [Finite UA]
+    (D : RelStructure L.withOrder P)
+    (C : StructuralRamsey.Partite.System L.withOrder P X)
+    (hPartite : C.IsPartiteOver D)
+    (hBaseLinear : ALinear A₀.ordered D)
+    (e : RelStructure.Embedding A₀.ordered D)
+    (E : StructuralRamsey.Partite.System L.withOrder P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce
+        (activeCarrier A₀.ordered C e.toFunctionEmbedding)) E)
+    (hOldLinear : ALinear A₀.ordered C.toRelStructure)
+    (hCoreLinear : ALinear A₀.ordered E.toRelStructure)
+    (hImage :
+      ∀ i : I,
+        AStrong A₀.ordered E.toRelStructure
+          (copyCarrier (f i).toEmbedding)) :
+    let S := activeCarrier A₀.ordered C e.toFunctionEmbedding
+    let T := StructuralRamsey.Partite.Attachment.attach C S E f
+    ALinear A₀.ordered T.toRelStructure ∧
+      ∀ i : I,
+        AStrong A₀.ordered T.toRelStructure
+          (copyCarrier
+            (StructuralRamsey.Partite.Attachment.copyEmbedding
+              C S E f i).toEmbedding) := by
+  apply activeAttachment_geometry_of_base_aLinear
+    A₀.ordered D C
+    (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
+    hPartite hBaseLinear e
+  · intro b hb
+    exact ordered_embedding_eq_of_sameCopy b e hb
+  · exact hOldLinear
+  · exact hCoreLinear
+  · exact hImage
 
 end StructuralRamsey.Girth
