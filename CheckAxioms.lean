@@ -322,3 +322,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.initialACopyOwner
 #print axioms StructuralRamsey.Girth.initialACopyFactor
 #print axioms StructuralRamsey.Girth.initialPicture_forestCompletion
+#print axioms StructuralRamsey.Girth.boundaryIncidenceColoring
+#print axioms StructuralRamsey.Girth.boundaryIncidence_closedWalk_even
+#print axioms StructuralRamsey.Girth.boundaryIncidence_cycle_even
