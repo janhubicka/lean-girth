@@ -337,3 +337,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeBoundaryIncidence_isAcyclic
 #print axioms StructuralRamsey.Girth.boundaryIncidenceCompletion_connected
 #print axioms StructuralRamsey.Girth.exists_boundaryIncidenceCompletionTree
+
+#print axioms StructuralRamsey.Girth.joinTree_singlePiece
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_singlePiece
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_disjoint
+#print axioms StructuralRamsey.Girth.no_dominating_member_of_not_forest
+#print axioms StructuralRamsey.Girth.exists_dominating_member_of_comparable
+#print axioms StructuralRamsey.Girth.exists_incomparable_intersections_of_not_forest
