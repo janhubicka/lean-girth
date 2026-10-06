@@ -333,3 +333,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.rankedParentGraph_reachable_root
 #print axioms StructuralRamsey.Girth.rankedParentGraph_isAcyclic
 #print axioms StructuralRamsey.Girth.rankedParentGraph_isTree
+
+#print axioms StructuralRamsey.Girth.activeBoundaryIncidence_isAcyclic
+#print axioms StructuralRamsey.Girth.boundaryIncidenceCompletion_connected
+#print axioms StructuralRamsey.Girth.exists_boundaryIncidenceCompletionTree
