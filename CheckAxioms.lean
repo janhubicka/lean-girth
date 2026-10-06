@@ -330,3 +330,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.bergeCycleOfBoundaryIncidenceCycleLeft
 #print axioms StructuralRamsey.Girth.BergeCycle.length_le_card_range
 #print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_girthGT
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.rootPath
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.parent
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.parent_adj
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.parent_dist_add_one
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.eq_parent_of_adj_of_mem_rootPath
+#print axioms StructuralRamsey.Girth.SimpleGraph.IsTree.parent_eq_of_adj_of_not_mem_rootPath
