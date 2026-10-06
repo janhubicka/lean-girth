@@ -292,3 +292,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_restrictedCarrierEdgeFamily_of_part
 #print axioms StructuralRamsey.Girth.girthGT_forest_restricted_to_part
 #print axioms StructuralRamsey.Girth.transportedDesignated_sharedACopy_supported
+#print axioms StructuralRamsey.Girth.transportedDesignated_sharedDesignated_supported
+#print axioms StructuralRamsey.Girth.transportedDesignated_sharedSupport
