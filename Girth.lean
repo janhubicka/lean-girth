@@ -30,6 +30,7 @@ import Girth.ForestDisjoint
 import Girth.ForestCarrierLift
 import Girth.ForestEnumeration
 import Girth.ForestReindex
+import Girth.RankedParentTree
 import Girth.CyclicRun
 import Girth.BergePath
 import Girth.BergeSegment
