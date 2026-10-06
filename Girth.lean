@@ -25,6 +25,7 @@ import Girth.ForestDeletionGeometry
 import Girth.FiberConnectedTree
 import Girth.ForestTreeRewire
 import Girth.ForestJoinGlue
+import Girth.ForestAttach
 import Girth.ForestJoinLift
 import Girth.ForestJoinLiftLinear
 import Girth.ForestDisjoint
