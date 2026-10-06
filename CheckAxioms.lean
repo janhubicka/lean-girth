@@ -353,3 +353,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ownerFiber_card_add_degree_le
 
 #print axioms StructuralRamsey.Girth.projectedCopy_activeCarrier_intersection_classify
+
+#print axioms StructuralRamsey.Girth.aStrong_copyCarrier_of_aLinear
+#print axioms StructuralRamsey.Girth.projectedACopy_activeCarrier_intersection_classify
