@@ -308,3 +308,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.joinTree_sigma_of_subsingleton
 #print axioms StructuralRamsey.Girth.joinTree_lift_local
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_local
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_of_disjoint
+#print axioms StructuralRamsey.Girth.joinTree_of_disjoint
+#print axioms StructuralRamsey.Girth.forestOfCopies_of_disjoint
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_disjoint
