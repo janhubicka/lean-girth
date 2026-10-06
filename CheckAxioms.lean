@@ -298,3 +298,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.forest_bSupport_with_aLeaves
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_reindex
 #print axioms StructuralRamsey.Girth.ForestOfCopies.reindex
+#print axioms StructuralRamsey.Girth.isTree_sum_sup_edge
+#print axioms StructuralRamsey.Girth.JoinTree.sumBridge
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_sumPieces
+#print axioms StructuralRamsey.Girth.forestOfCopies_sumBridge
