@@ -70,7 +70,8 @@ theorem activeBoundaryIncidenceHom_injective
           simp [activeBoundaryIncidenceHom] at h
       | inr y =>
           have hval : x.1 = y.1 := by
-            have hs : Sum.inr x.1 = Sum.inr y.1 := by
+            have hs :
+                (Sum.inr x.1 : E ⊕ W) = Sum.inr y.1 := by
               simpa [activeBoundaryIncidenceHom] using h
             exact Sum.inr.inj hs
           have hxy : x = y := Subtype.ext hval
