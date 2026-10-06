@@ -25,41 +25,41 @@ noncomputable def IsTree.rootPath
 theorem IsTree.rootPath_isPath
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V) :
-    (hG.rootPath root v).IsPath :=
+    (IsTree.rootPath hG root v).IsPath :=
   (Classical.choose_spec (hG.existsUnique_path root v)).1
 
 theorem IsTree.rootPath_unique
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V)
     (p : G.Walk root v) (hp : p.IsPath) :
-    p = hG.rootPath root v :=
+    p = IsTree.rootPath hG root v :=
   (Classical.choose_spec (hG.existsUnique_path root v)).2 p hp
 
 /-- The canonical tree path is a shortest path. -/
 theorem IsTree.rootPath_length_eq_dist
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V) :
-    (hG.rootPath root v).length = G.dist root v := by
+    (IsTree.rootPath hG root v).length = G.dist root v := by
   obtain ⟨p, hp, hlen⟩ :=
     hG.connected.exists_path_of_dist root v
-  have hpv : p = hG.rootPath root v :=
-    hG.rootPath_unique root v p hp
+  have hpv : p = IsTree.rootPath hG root v :=
+    IsTree.rootPath_unique hG root v p hp
   simpa [hpv] using hlen
 
 /-- Parent with respect to a chosen root. At the root, this returns the root. -/
 noncomputable def IsTree.parent
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V) : V :=
-  (hG.rootPath root v).penultimate
+  (IsTree.rootPath hG root v).penultimate
 
 /-- A non-root vertex is adjacent to its parent. -/
 theorem IsTree.parent_adj
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V)
     (hvr : v ≠ root) :
-    G.Adj (hG.parent root v) v := by
+    G.Adj (IsTree.parent hG root v) v := by
   exact
-    (hG.rootPath root v).adj_penultimate
+    (IsTree.rootPath hG root v).adj_penultimate
       (SimpleGraph.Walk.not_nil_of_ne hvr.symm)
 
 /-- The parent lies exactly one graph-distance closer to the root. -/
@@ -67,26 +67,26 @@ theorem IsTree.parent_dist_add_one
     {G : SimpleGraph V}
     (hG : G.IsTree) (root v : V)
     (hvr : v ≠ root) :
-    G.dist root (hG.parent root v) + 1 =
+    G.dist root (IsTree.parent hG root v) + 1 =
       G.dist root v := by
-  let p := hG.rootPath root v
-  have hp : p.IsPath := hG.rootPath_isPath root v
+  let p := IsTree.rootPath hG root v
+  have hp : p.IsPath := IsTree.rootPath_isPath hG root v
   have hnp : ¬p.Nil :=
     SimpleGraph.Walk.not_nil_of_ne hvr.symm
   have hdrop : p.dropLast.IsPath := hp.dropLast
   have huniq :
       p.dropLast =
-        hG.rootPath root (hG.parent root v) := by
+        IsTree.rootPath hG root (IsTree.parent hG root v) := by
     exact
       hG.rootPath_unique
-        root (hG.parent root v) p.dropLast hdrop
+        root (IsTree.parent hG root v) p.dropLast hdrop
   have hparent :=
     hG.rootPath_length_eq_dist
-      root (hG.parent root v)
-  have hv := hG.rootPath_length_eq_dist root v
+      root (IsTree.parent hG root v)
+  have hv := IsTree.rootPath_length_eq_dist hG root v
   calc
-    G.dist root (hG.parent root v) + 1 =
-        (hG.rootPath root (hG.parent root v)).length + 1 := by
+    G.dist root (IsTree.parent hG root v) + 1 =
+        (IsTree.rootPath hG root (IsTree.parent hG root v)).length + 1 := by
           rw [hparent]
     _ = p.dropLast.length + 1 := by rw [← huniq]
     _ = p.length := p.length_dropLast_add_one hnp
@@ -99,11 +99,11 @@ theorem IsTree.eq_parent_of_adj_of_mem_rootPath
     (hG : G.IsTree) (root v w : V)
     (hvr : v ≠ root)
     (hadj : G.Adj v w)
-    (hw : w ∈ (hG.rootPath root v).support) :
-    w = hG.parent root v := by
+    (hw : w ∈ (IsTree.rootPath hG root v).support) :
+    w = IsTree.parent hG root v := by
   exact
     hG.isAcyclic.eq_penultimate_of_adj_end
-      (hG.rootPath_isPath root v)
+      (IsTree.rootPath_isPath hG root v)
       hadj
       hw
 
@@ -113,15 +113,15 @@ theorem IsTree.parent_eq_of_adj_of_not_mem_rootPath
     (hG : G.IsTree) (root v w : V)
     (hwr : w ≠ root)
     (hadj : G.Adj v w)
-    (hw : w ∉ (hG.rootPath root v).support) :
-    hG.parent root w = v := by
+    (hw : w ∉ (IsTree.rootPath hG root v).support) :
+    IsTree.parent hG root w = v := by
   have hpath :
-      (hG.rootPath root v).concat hadj =
-        hG.rootPath root w := by
+      (IsTree.rootPath hG root v).concat hadj =
+        IsTree.rootPath hG root w := by
     apply hG.rootPath_unique
     exact
-      (hG.rootPath_isPath root v).concat hw hadj
-  change (hG.rootPath root w).penultimate = v
+      (IsTree.rootPath_isPath hG root v).concat hw hadj
+  change (IsTree.rootPath hG root w).penultimate = v
   rw [← hpath]
   simp
 
