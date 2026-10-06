@@ -344,3 +344,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_forest_restriction
 #print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_forest_part
 #print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_forest_restricted_to_part
+
+#print axioms StructuralRamsey.Girth.no_boundaryIncidenceCircuit_of_forest_restriction
