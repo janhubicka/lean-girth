@@ -22,6 +22,7 @@ import Girth.FiberConnectedTree
 import Girth.ForestTreeRewire
 import Girth.ForestJoinGlue
 import Girth.ForestJoinLift
+import Girth.ForestDisjoint
 import Girth.ForestCarrierLift
 import Girth.ForestEnumeration
 import Girth.ForestReindex
