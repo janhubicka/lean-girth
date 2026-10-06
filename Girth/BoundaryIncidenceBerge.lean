@@ -330,6 +330,7 @@ noncomputable def bergeCycleOfBoundaryIncidenceCycleLeft_of_pairwiseSubsingleton
   have hEdgeSetInj :
       Function.Injective (fun i : Fin m => edge (edgeLabel i)) := by
     intro i j hij
+    change edge (edgeLabel i) = edge (edgeLabel j) at hij
     by_contra hne
     have hLabelNe : edgeLabel i ≠ edgeLabel j := by
       intro h
@@ -340,12 +341,10 @@ noncomputable def bergeCycleOfBoundaryIncidenceCycleLeft_of_pairwiseSubsingleton
     apply hsmall
     · constructor
       · exact hx
-      · rw [← hij]
-        exact hx
+      · exact hij ▸ hx
     · constructor
       · exact hy
-      · rw [← hij]
-        exact hy
+      · exact hij ▸ hy
   have hCyclicGetVert (i : Fin m) :
       p.getVert (2 * (cyclicSucc i).1) =
         p.getVert (2 * i.1 + 2) := by
