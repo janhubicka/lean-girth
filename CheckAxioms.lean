@@ -328,3 +328,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.boundaryIncidence_getVert_even_left
 #print axioms StructuralRamsey.Girth.boundaryIncidence_getVert_odd_right
 #print axioms StructuralRamsey.Girth.bergeCycleOfBoundaryIncidenceCycleLeft
+#print axioms StructuralRamsey.Girth.BergeCycle.length_le_card_range
+#print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_girthGT
