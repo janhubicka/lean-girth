@@ -33,7 +33,7 @@ noncomputable def joinTree_singlePiece
   · intro a b
     exfalso
     apply hx
-    simpa using a.2
+    exact a.2
 
 /-- Pairwise allowed intersections are automatic in a one-piece family. -/
 theorem pairwiseAllowed_singlePiece
