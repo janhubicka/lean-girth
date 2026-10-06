@@ -95,4 +95,41 @@ theorem exists_edge_cover_of_allowed_contains_incomparable
         exact hNo e heF)
       hContainG hContainH) hAllowed
 
+
+/-- A set of support edges is linear when two distinct edges meet
+subsingletonly. -/
+def LinearEdgeSet (E : Set (Set W)) : Prop :=
+  ∀ ⦃e f : Set W⦄,
+    e ∈ E → f ∈ E → e ≠ f →
+      (e ∩ f).Subsingleton
+
+/-- The A-carrier half of the successor corner lemma.  Two edges in one
+linear ambient support family cannot both contain two incomparable boundary
+sets unless they are the same edge. -/
+theorem edge_eq_of_contains_incomparable
+    (E : Set (Set W))
+    (hLinear : LinearEdgeSet E)
+    (S T e f : Set W)
+    (hNotST : ¬ S ⊆ T)
+    (hNotTS : ¬ T ⊆ S)
+    (he : e ∈ E) (hf : f ∈ E)
+    (hSe : S ⊆ e) (hTe : T ⊆ e)
+    (hSf : S ⊆ f) (hTf : T ⊆ f) :
+    e = f := by
+  by_contra hef
+  obtain ⟨x, hxS, hxNotT⟩ :=
+    Set.not_subset.mp hNotST
+  obtain ⟨y, hyT, hyNotS⟩ :=
+    Set.not_subset.mp hNotTS
+  have hxy : x ≠ y := by
+    intro hxy
+    apply hxNotT
+    simpa [hxy] using hyT
+  have hsmall : (e ∩ f).Subsingleton :=
+    hLinear he hf hef
+  apply hxy
+  exact hsmall
+    ⟨hSe hxS, hSf hxS⟩
+    ⟨hTe hyT, hTf hyT⟩
+
 end StructuralRamsey.Girth
