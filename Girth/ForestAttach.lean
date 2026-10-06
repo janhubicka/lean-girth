@@ -16,21 +16,21 @@ variable {W ι : Type v}
 /-- The one-piece family has the tautological join tree. -/
 noncomputable def joinTree_singlePiece
     (F : HypergraphPiece W) :
-    JoinTree (fun _ : Unit => F) := by
+    JoinTree (fun _ : PUnit.{v} => F) := by
   classical
   refine
-    { tree := SimpleGraph.starGraph ()
-      isTree := SimpleGraph.isTree_starGraph ()
+    { tree := SimpleGraph.starGraph PUnit.unit
+      isTree := SimpleGraph.isTree_starGraph PUnit.unit
       running := ?_ }
   intro x
   by_cases hx : x ∈ F.carrier
   · have hcenter :
-        () ∈
-          {i : Unit | x ∈ ((fun _ : Unit => F) i).carrier} := by
+        PUnit.unit ∈
+          {i : PUnit.{v} | x ∈ ((fun _ : PUnit.{v} => F) i).carrier} := by
       simpa using hx
     exact
       starGraph_induce_preconnected_of_mem_center
-        () hcenter
+        PUnit.unit hcenter
   · intro a b
     exfalso
     apply hx
@@ -39,7 +39,7 @@ noncomputable def joinTree_singlePiece
 /-- Pairwise allowed intersections are automatic in a one-piece family. -/
 theorem pairwiseAllowed_singlePiece
     (F : HypergraphPiece W) :
-    PairwiseAllowed (fun _ : Unit => F) := by
+    PairwiseAllowed (fun _ : PUnit.{v} => F) := by
   intro i j hij
   exfalso
   exact hij (Subsingleton.elim i j)
@@ -60,14 +60,14 @@ theorem forestOfCopies_attach_dominated
       ∀ i : ι,
         F.carrier ∩ (Y i).carrier ⊆
           F.carrier ∩ (Y p).carrier) :
-    ForestOfCopies (sumPieces Y (fun _ : Unit => F)) := by
+    ForestOfCopies (sumPieces Y (fun _ : PUnit.{v} => F)) := by
   classical
   let JY : JoinTree Y :=
     Classical.choice hY.joinTree_of_nonempty
-  let JF : JoinTree (fun _ : Unit => F) :=
+  let JF : JoinTree (fun _ : PUnit.{v} => F) :=
     joinTree_singlePiece F
   have hCrossOcc :
-      ∀ (x : W) (i : ι) (j : Unit),
+      ∀ (x : W) (i : ι) (j : PUnit.{v}),
         x ∈ (Y i).carrier →
         x ∈ F.carrier →
           x ∈ (Y p).carrier ∧ x ∈ F.carrier := by
@@ -77,7 +77,7 @@ theorem forestOfCopies_attach_dominated
       hDom i ⟨hxF, hxi⟩
     exact ⟨hxDom.2, hxDom.1⟩
   have hCrossAllowed' :
-      ∀ (i : ι) (j : Unit),
+      ∀ (i : ι) (j : PUnit.{v}),
         AllowedIntersection (Y i) F := by
     intro i j
     exact hCrossAllowed i
@@ -86,7 +86,7 @@ theorem forestOfCopies_attach_dominated
       JY JF
       hY.pairwiseAllowed
       (pairwiseAllowed_singlePiece F)
-      p ()
+      p PUnit.unit
       hCrossOcc hCrossAllowed'
 
 /-- A disjoint new piece is a special case of dominated attachment. -/
@@ -99,7 +99,7 @@ theorem forestOfCopies_attach_disjoint
       ∀ i : ι, AllowedIntersection (Y i) F)
     (hDisj :
       ∀ i : ι, Disjoint F.carrier (Y i).carrier) :
-    ForestOfCopies (sumPieces Y (fun _ : Unit => F)) := by
+    ForestOfCopies (sumPieces Y (fun _ : PUnit.{v} => F)) := by
   classical
   let p : ι := Classical.choice (inferInstance : Nonempty ι)
   apply forestOfCopies_attach_dominated hY F hCrossAllowed p
@@ -119,7 +119,7 @@ theorem no_dominating_member_of_not_forest
     (hCrossAllowed :
       ∀ i : ι, AllowedIntersection (Y i) F)
     (hBad :
-      ¬ ForestOfCopies (sumPieces Y (fun _ : Unit => F))) :
+      ¬ ForestOfCopies (sumPieces Y (fun _ : PUnit.{v} => F))) :
     ∀ p : ι, ∃ i : ι,
       ¬(F.carrier ∩ (Y i).carrier ⊆
         F.carrier ∩ (Y p).carrier) := by
@@ -177,7 +177,7 @@ theorem exists_incomparable_intersections_of_not_forest
     (hCrossAllowed :
       ∀ i : ι, AllowedIntersection (Y i) F)
     (hBad :
-      ¬ ForestOfCopies (sumPieces Y (fun _ : Unit => F))) :
+      ¬ ForestOfCopies (sumPieces Y (fun _ : PUnit.{v} => F))) :
     ∃ i j : ι,
       ¬(F.carrier ∩ (Y i).carrier ⊆
         F.carrier ∩ (Y j).carrier) ∧
