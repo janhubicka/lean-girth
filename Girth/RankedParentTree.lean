@@ -2,10 +2,11 @@ import Mathlib.Combinatorics.SimpleGraph.Acyclic
 
 /-! # Ranked parent graphs
 
-A finite rooted parent relation in which every non-root vertex points to a
-strictly lower natural-number rank defines a tree.  This packages the generic
-graph-theoretic step needed when contracting the vertex side of an incidence
-forest toward a chosen root.
+A rooted parent relation in which every non-root vertex points to a strictly
+lower natural-number rank defines a tree.  Connectivity follows by repeatedly
+following parents.  For acyclicity, rotate an alleged cycle to a vertex of
+maximum rank; both cycle neighbours would then have to be that vertex's unique
+parent.
 -/
 
 namespace StructuralRamsey.Girth
@@ -28,94 +29,39 @@ theorem rankedParentGraph_adj
           (w ≠ root ∧ parent w = v)) := by
   simp [rankedParentGraph]
 
-/-- The canonical edge contributed by a non-root vertex. -/
-def rankedParentEdge
-    (root : V) (parent : V → V)
-    (v : {v : V // v ≠ root})
-    (hParentNe : ∀ x : V, x ≠ root → parent x ≠ x) :
-    (rankedParentGraph root parent).edgeSet :=
-  ⟨s(v.1, parent v.1), by
-    rw [SimpleGraph.mem_edgeSet, rankedParentGraph_adj]
-    exact
-      ⟨hParentNe v.1 v.2,
-        Or.inl ⟨v.2, rfl⟩⟩⟩
-
-/-- Rank drop excludes the two-cycle ambiguity in the parent-edge map. -/
-theorem rankedParentEdge_injective
-    (root : V) (parent : V → V) (rank : V → ℕ)
-    (hDrop : ∀ v : V, v ≠ root → rank (parent v) < rank v) :
-    Function.Injective
-      (rankedParentEdge root parent
-        (fun v hv => ne_of_lt (hDrop v hv))) := by
-  intro v w h
-  apply Subtype.ext
-  change v.1 = w.1
-  have hedge :
-      s(v.1, parent v.1) =
-        s(w.1, parent w.1) :=
-    congrArg Subtype.val h
-  rw [Sym2.eq_iff] at hedge
-  rcases hedge with hsame | hswap
-  · exact hsame.1
-  · have hvw : v.1 = parent w.1 := hswap.1
-    have hpvw : parent v.1 = w.1 := hswap.2
-    have hvDrop := hDrop v.1 v.2
-    have hwDrop := hDrop w.1 w.2
-    rw [hvw, hpvw] at hvDrop hwDrop
-    omega
-
-/-- Every edge of the parent graph is contributed by a non-root vertex. -/
-theorem rankedParentEdge_surjective
-    (root : V) (parent : V → V)
-    (hParentNe : ∀ x : V, x ≠ root → parent x ≠ x) :
-    Function.Surjective
-      (rankedParentEdge root parent hParentNe) := by
-  intro e
-  rcases e with ⟨e, he⟩
-  induction e using Sym2.inductionOn with
-  | _ a b =>
-      rw [SimpleGraph.mem_edgeSet, rankedParentGraph_adj] at he
-      rcases he.2 with h | h
-      · refine ⟨⟨a, h.1⟩, ?_⟩
-        apply Subtype.ext
-        rw [Sym2.eq_iff]
-        exact Or.inl ⟨rfl, h.2.symm⟩
-      · refine ⟨⟨b, h.1⟩, ?_⟩
-        apply Subtype.ext
-        rw [Sym2.eq_iff]
-        exact Or.inr ⟨h.2.symm, rfl⟩
-
 /-- Every vertex reaches the root by repeatedly following the parent. -/
 theorem rankedParentGraph_reachable_root
     (root : V) (parent : V → V) (rank : V → ℕ)
     (hDrop : ∀ v : V, v ≠ root → rank (parent v) < rank v)
     (v : V) :
     (rankedParentGraph root parent).Reachable v root := by
-  classical
-  induction h : rank v using Nat.strong_induction_on generalizing v with
-  | h n ih =>
-      by_cases hv : v = root
-      · subst v
-        exact SimpleGraph.Reachable.refl _
-      · have hadj :
-            (rankedParentGraph root parent).Adj
-              v (parent v) := by
-          rw [rankedParentGraph_adj]
-          exact
-            ⟨ne_of_lt (hDrop v hv),
-              Or.inl ⟨hv, rfl⟩⟩
-        have hrec :
-            (rankedParentGraph root parent).Reachable
-              (parent v) root := by
-          apply ih (rank (parent v)) (hDrop v hv) (parent v)
-          rfl
-        exact hadj.reachable.trans hrec
+  by_cases hv : v = root
+  · subst v
+    exact SimpleGraph.Reachable.refl _
+  · have hne : v ≠ parent v := by
+      intro h
+      have hd := hDrop v hv
+      rw [← h] at hd
+      exact (Nat.lt_irrefl _ hd)
+    have hadj :
+        (rankedParentGraph root parent).Adj
+          v (parent v) := by
+      rw [rankedParentGraph_adj]
+      exact ⟨hne, Or.inl ⟨hv, rfl⟩⟩
+    exact
+      hadj.reachable.trans
+        (rankedParentGraph_reachable_root
+          root parent rank hDrop (parent v))
+termination_by rank v
+decreasing_by
+  exact hDrop v hv
 
 /-- A ranked parent graph is connected. -/
 theorem rankedParentGraph_connected
     (root : V) (parent : V → V) (rank : V → ℕ)
     (hDrop : ∀ v : V, v ≠ root → rank (parent v) < rank v) :
     (rankedParentGraph root parent).Connected := by
+  letI : Nonempty V := ⟨root⟩
   refine ⟨?_⟩
   intro a b
   exact
@@ -124,41 +70,63 @@ theorem rankedParentGraph_connected
       (rankedParentGraph_reachable_root
         root parent rank hDrop b).symm
 
-/-- A finite ranked parent graph is a tree. -/
-theorem rankedParentGraph_isTree
-    [Fintype V]
+/-- A ranked parent graph is acyclic. -/
+theorem rankedParentGraph_isAcyclic
     (root : V) (parent : V → V) (rank : V → ℕ)
     (hDrop : ∀ v : V, v ≠ root → rank (parent v) < rank v) :
-    (rankedParentGraph root parent).IsTree := by
+    (rankedParentGraph root parent).IsAcyclic := by
   classical
-  let G := rankedParentGraph root parent
-  have hConn : G.Connected :=
+  intro v c hc
+  have hs : c.support.toFinset.Nonempty := by
+    exact ⟨v, by simp⟩
+  obtain ⟨m, hmFin, hmax⟩ :=
+    Finset.exists_max_image c.support.toFinset rank hs
+  have hm : m ∈ c.support := by
+    simpa using hmFin
+  let q := c.rotate m hm
+  have hq : q.IsCycle := hc.rotate hm
+  have hnon : ¬q.Nil := hq.not_nil
+  have hsndQ : q.snd ∈ q.support :=
+    List.mem_of_mem_tail (q.snd_mem_tail_support hnon)
+  have hpenQ : q.penultimate ∈ q.support :=
+    List.mem_of_mem_dropLast
+      (q.penultimate_mem_dropLast_support hnon)
+  have hsndC : q.snd ∈ c.support :=
+    (SimpleGraph.Walk.mem_support_rotate_iff c m hm).mp hsndQ
+  have hpenC : q.penultimate ∈ c.support :=
+    (SimpleGraph.Walk.mem_support_rotate_iff c m hm).mp hpenQ
+  have hsndLe : rank q.snd ≤ rank m :=
+    hmax q.snd (by simpa using hsndC)
+  have hpenLe : rank q.penultimate ≤ rank m :=
+    hmax q.penultimate (by simpa using hpenC)
+  have neighbor_eq_parent
+      (n : V)
+      (hadj : (rankedParentGraph root parent).Adj m n)
+      (hnle : rank n ≤ rank m) :
+      n = parent m := by
+    rcases (rankedParentGraph_adj root parent m n).mp hadj with
+      ⟨_hne, hmn | hnm⟩
+    · exact hmn.2.symm
+    · have hd := hDrop n hnm.1
+      rw [hnm.2] at hd
+      omega
+  have hsnd :
+      q.snd = parent m :=
+    neighbor_eq_parent q.snd (q.adj_snd hnon) hsndLe
+  have hpen :
+      q.penultimate = parent m :=
+    neighbor_eq_parent q.penultimate
+      (q.adj_penultimate hnon).symm hpenLe
+  exact hq.snd_ne_penultimate (hsnd.trans hpen.symm)
+
+/-- A ranked parent graph is a tree. -/
+theorem rankedParentGraph_isTree
+    (root : V) (parent : V → V) (rank : V → ℕ)
+    (hDrop : ∀ v : V, v ≠ root → rank (parent v) < rank v) :
+    (rankedParentGraph root parent).IsTree where
+  connected :=
     rankedParentGraph_connected root parent rank hDrop
-  apply SimpleGraph.isTree_of_connected_card_edgeFinset G hConn
-  have hParentNe :
-      ∀ x : V, x ≠ root → parent x ≠ x :=
-    fun x hx => ne_of_lt (hDrop x hx)
-  let f :
-      {v : V // v ≠ root} →
-        G.edgeSet :=
-    rankedParentEdge root parent hParentNe
-  have hfbij : Function.Bijective f :=
-    ⟨rankedParentEdge_injective
-        root parent rank hDrop,
-      rankedParentEdge_surjective
-        root parent hParentNe⟩
-  have hcardEdges :
-      Fintype.card G.edgeSet =
-        Fintype.card {v : V // v ≠ root} :=
-    Fintype.card_congr
-      (Equiv.ofBijective f hfbij) |>.symm
-  have hcardSubtype :
-      Fintype.card {v : V // v ≠ root} + 1 =
-        Fintype.card V := by
-    simpa using
-      Fintype.card_subtype_compl
-        (p := fun v : V => v = root)
-  rw [G.edgeFinset_card, hcardEdges]
-  exact hcardSubtype
+  isAcyclic :=
+    rankedParentGraph_isAcyclic root parent rank hDrop
 
 end StructuralRamsey.Girth
