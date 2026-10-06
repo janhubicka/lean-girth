@@ -126,4 +126,37 @@ theorem projectedCopy_activeCarrier_intersection_classify
                 _ = e u := (heB u).symm }
         exact ⟨aC, a, rfl⟩
 
+
+/-- In an A-linear structure, the carrier of each A-copy is A-strong.  Any
+ambient A-copy meeting it in more than one vertex must be the same copy. -/
+theorem aStrong_copyCarrier_of_aLinear
+    {A : RelStructure L UA}
+    {D : RelStructure L P}
+    (hLinear : ALinear A D)
+    (b : RelStructure.Embedding A D) :
+    AStrong A D (copyCarrier b) := by
+  intro e hMeet
+  by_cases hSame : SameCopy e b
+  · change copyCarrier e = copyCarrier b at hSame
+    rw [hSame]
+  · exact (hMeet (hLinear e b hSame)).elim
+
+/-- Specialization of the boundary dichotomy to a lifted A-copy in an
+A-linear base. -/
+theorem projectedACopy_activeCarrier_intersection_classify
+    (A : RelStructure L UA)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (e b : RelStructure.Embedding A D)
+    (q : StructuralRamsey.Partite.ProjectedEmbedding A C b)
+    (hLinear : ALinear A D) :
+    (copyCarrier q.val ∩
+        activeCarrier A C e.toFunctionEmbedding).Subsingleton ∨
+      ∃ aA : RelStructure.Embedding A A,
+        copyCarrier q.val ∩
+            activeCarrier A C e.toFunctionEmbedding =
+          copyCarrier (q.val.comp aA) :=
+  projectedCopy_activeCarrier_intersection_classify
+    A A D C e b q (aStrong_copyCarrier_of_aLinear hLinear b)
+
 end StructuralRamsey.Girth
