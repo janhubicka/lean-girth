@@ -349,3 +349,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_edge_cover_of_allowed_contains_incomparable
 #print axioms StructuralRamsey.Girth.LinearEdgeSet
 #print axioms StructuralRamsey.Girth.edge_eq_of_contains_incomparable
+
+#print axioms StructuralRamsey.Girth.ownerFiber_card_add_degree_le
