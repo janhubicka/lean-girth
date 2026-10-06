@@ -298,3 +298,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.forest_bSupport_with_aLeaves
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_reindex
 #print axioms StructuralRamsey.Girth.ForestOfCopies.reindex
+#print axioms StructuralRamsey.Girth.initialACopy_same_index
+#print axioms StructuralRamsey.Girth.initialACopy_factors_component
+#print axioms StructuralRamsey.Girth.initialComponent_inter_eq_empty
+#print axioms StructuralRamsey.Girth.initialACopy_owner_unique
