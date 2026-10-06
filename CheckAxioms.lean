@@ -330,7 +330,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.bergeCycleOfBoundaryIncidenceCycleLeft
 #print axioms StructuralRamsey.Girth.BergeCycle.length_le_card_range
 #print axioms StructuralRamsey.Girth.boundaryIncidenceGraph_isAcyclic_of_girthGT
-#print axioms StructuralRamsey.Girth.rankedParentEdge_injective
-#print axioms StructuralRamsey.Girth.rankedParentEdge_surjective
 #print axioms StructuralRamsey.Girth.rankedParentGraph_reachable_root
+#print axioms StructuralRamsey.Girth.rankedParentGraph_isAcyclic
 #print axioms StructuralRamsey.Girth.rankedParentGraph_isTree
