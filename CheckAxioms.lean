@@ -345,3 +345,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_dominating_member_of_not_forest
 #print axioms StructuralRamsey.Girth.exists_dominating_member_of_comparable
 #print axioms StructuralRamsey.Girth.exists_incomparable_intersections_of_not_forest
+#print axioms StructuralRamsey.Girth.not_allowedIntersection_of_contains_incomparable_uncovered
+#print axioms StructuralRamsey.Girth.exists_edge_cover_of_allowed_contains_incomparable
