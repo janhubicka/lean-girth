@@ -342,3 +342,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_singlePiece
 #print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated
 #print axioms StructuralRamsey.Girth.forestOfCopies_attach_disjoint
+#print axioms StructuralRamsey.Girth.no_dominating_member_of_not_forest
