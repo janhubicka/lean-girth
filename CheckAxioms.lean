@@ -302,3 +302,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.sumBridge
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_sumPieces
 #print axioms StructuralRamsey.Girth.forestOfCopies_sumBridge
+#print axioms StructuralRamsey.Girth.initialACopy_same_index
+#print axioms StructuralRamsey.Girth.initialACopy_factors_component
