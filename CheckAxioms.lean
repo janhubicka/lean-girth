@@ -368,3 +368,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.activeCarrier_aStrong_of_base_aLinear
 #print axioms StructuralRamsey.Girth.activeCarrier_aStrong_ordered
+
+#print axioms StructuralRamsey.Girth.activeAttachment_geometry_of_base_aLinear
+#print axioms StructuralRamsey.Girth.activeAttachment_geometry_ordered
