@@ -86,9 +86,10 @@ theorem IsTree.parent_dist_add_one
   have hv := IsTree.rootPath_length_eq_dist hG root v
   calc
     G.dist root (IsTree.parent hG root v) + 1 =
-        (IsTree.rootPath hG root (IsTree.parent hG root v)).length + 1 := by
-          rw [hparent]
-    _ = p.dropLast.length + 1 := by rw [← huniq]
+        (IsTree.rootPath hG root (IsTree.parent hG root v)).length + 1 :=
+      congrArg (fun n => n + 1) hparent.symm
+    _ = p.dropLast.length + 1 :=
+      congrArg (fun n => n + 1) (congrArg SimpleGraph.Walk.length huniq.symm)
     _ = p.length := p.length_dropLast_add_one hnp
     _ = G.dist root v := hv
 
