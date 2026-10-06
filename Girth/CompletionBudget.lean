@@ -21,7 +21,7 @@ are no more numerous than all objects in `N`.
 The graph need not be a tree; looplessness is enough.  In the manuscript the
 graph is the join tree on the chosen local copies. -/
 theorem ownerFiber_card_add_degree_le
-    [Fintype N] [Fintype Q]
+    [Fintype N] [Fintype Q] [DecidableEq Q]
     (owner : N → Q)
     (hSurj : Function.Surjective owner)
     (G : SimpleGraph Q)
