@@ -35,6 +35,7 @@ import Girth.ClosureEmbeddingGeometry
 import Girth.ClosureLift
 import Girth.ElementaryClosureAmalgam
 import Girth.ForestGirth
+import Girth.ForestSeparator
 import Girth.ForestStar
 import Girth.CarrierForestGirth
 import Girth.RestrictedForestGirth
