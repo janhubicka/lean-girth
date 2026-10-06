@@ -77,6 +77,7 @@ theorem ownerFiber_card_add_degree_le
                 _ = owner (rep s.1) := congrArg owner hrs
                 _ = s.1 := hrep s.1
             exact congrArg Sum.inr (Subtype.ext hval)
+  -- The two summands inject disjointly into the selected global family.
   have hcard := Fintype.card_le_of_injective f hf
   rw [← G.card_neighborSet_eq_degree q]
   simpa only [Fintype.card_sum] using hcard
