@@ -22,6 +22,7 @@ import Girth.FiberConnectedTree
 import Girth.ForestTreeRewire
 import Girth.ForestCarrierLift
 import Girth.ForestEnumeration
+import Girth.ForestReindex
 import Girth.CyclicRun
 import Girth.BergePath
 import Girth.BergeSegment
