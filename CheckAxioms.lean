@@ -298,3 +298,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.forest_bSupport_with_aLeaves
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_reindex
 #print axioms StructuralRamsey.Girth.ForestOfCopies.reindex
+#print axioms StructuralRamsey.Girth.allowedIntersection_of_inter_subset_subsingleton
+#print axioms StructuralRamsey.Girth.allowedIntersection_across_edge_separator
