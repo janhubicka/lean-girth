@@ -189,6 +189,10 @@ noncomputable def bergeCycleOfBoundaryIncidenceCycle
 
 end StructuralRamsey.Girth
 
+namespace StructuralRamsey.Girth
+
+universe v
+variable {W E : Type v}
 
 /-- An incidence cycle based at an edge-node yields a Berge cycle when
 distinct labelled edges have subsingleton intersection.  Global injectivity of
@@ -439,3 +443,5 @@ noncomputable def bergeCycleOfBoundaryIncidenceCycle_of_pairwiseSubsingleton
           exact
             (boundaryIncidenceGraph_not_adj_right_right
               edge x y hbad)
+
+end StructuralRamsey.Girth
