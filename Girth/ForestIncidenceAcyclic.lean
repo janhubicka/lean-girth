@@ -42,7 +42,7 @@ theorem boundaryIncidenceGraph_isAcyclic_of_forest_restriction
     have h :=
       girthGT_restrictedCarrierEdgeFamily_of_forest
         hForest P hEdgePart (Fintype.card ι)
-    simpa [edge, carrierEdgeFamily] using h
+    simpa [edge, carrierEdgeFamily, eq_comm] using h
   exact
     boundaryIncidenceGraph_isAcyclic_of_pairwiseSubsingleton_of_girthGT
       edge hPair (Fintype.card ι) (by rfl) hgt
@@ -80,6 +80,7 @@ theorem no_boundaryIncidenceCircuit_of_forest_restriction
     (p : (boundaryIncidenceGraph
       (fun i => ((F i).restrictCarrier P).carrier)).Walk z z) :
     ¬ p.IsCircuit := by
+  classical
   intro hp
   have hAcyc :=
     boundaryIncidenceGraph_isAcyclic_of_forest_restriction
