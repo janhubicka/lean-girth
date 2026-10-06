@@ -337,4 +337,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeBoundaryIncidence_isAcyclic
 #print axioms StructuralRamsey.Girth.boundaryIncidenceCompletion_connected
 #print axioms StructuralRamsey.Girth.exists_boundaryIncidenceCompletionTree
-\n#print axioms StructuralRamsey.Girth.ownerFiber_card_add_degree_le\n
+
+#print axioms StructuralRamsey.Girth.ownerFiber_card_add_degree_le
