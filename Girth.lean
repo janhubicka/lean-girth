@@ -1,6 +1,7 @@
 import Girth.Support
 import Girth.Berge
 import Girth.BoundaryIncidence
+import Girth.BoundaryIncidenceBerge
 import Girth.SupportedTree
 import Girth.SupportedTreeConstruction
 import Girth.RelationalUnionFreeAmalgam
