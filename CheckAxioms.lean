@@ -351,3 +351,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.edge_eq_of_contains_incomparable
 
 #print axioms StructuralRamsey.Girth.ownerFiber_card_add_degree_le
+
+#print axioms StructuralRamsey.Girth.projectedCopy_activeCarrier_intersection_classify
