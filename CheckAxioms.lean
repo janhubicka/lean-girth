@@ -331,3 +331,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.sharedBoundaryPair_injective
 #print axioms StructuralRamsey.Girth.finite_sharedBoundaryVertex
 #print axioms StructuralRamsey.Girth.sharedBoundaryIncidence_isAcyclic
+#print axioms StructuralRamsey.Girth.exists_leaf_edge_of_incidence_acyclic
