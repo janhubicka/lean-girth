@@ -317,3 +317,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.localMember_contains_outer_edge
 #print axioms StructuralRamsey.Girth.crossAllowed_of_linear_outer
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_of_linear
+#print axioms StructuralRamsey.Girth.sameCopy_comp_of_sameCopy
+#print axioms StructuralRamsey.Girth.initialPicture_aLinear
+#print axioms StructuralRamsey.Girth.initialACopyOwner
+#print axioms StructuralRamsey.Girth.initialACopyFactor
+#print axioms StructuralRamsey.Girth.initialPicture_forestCompletion

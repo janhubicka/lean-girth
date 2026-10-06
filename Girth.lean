@@ -60,5 +60,6 @@ import Girth.DesignatedAttachment
 import Girth.SharedSupport
 import Girth.InitialDesignated
 import Girth.InitialACopyGeometry
+import Girth.InitialForestCompletion
 import Girth.InitialComponentForest
 import Girth.LocalForestBridge
