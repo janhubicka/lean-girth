@@ -106,4 +106,33 @@ theorem forestOfCopies_attach_disjoint
   exfalso
   exact Set.disjoint_left.mp (hDisj i) hx.1 hx.2
 
+
+/-- Contrapositive form used by the successor-profile proof: if adding the new
+piece to the old forest fails to be a forest, then no old member dominates all
+intersections of the new piece with the old family. -/
+theorem no_dominating_member_of_not_forest
+    [Fintype ι] [Nonempty ι]
+    {Y : ι → HypergraphPiece W}
+    (hY : ForestOfCopies Y)
+    (F : HypergraphPiece W)
+    (hCrossAllowed :
+      ∀ i : ι, AllowedIntersection (Y i) F)
+    (hBad :
+      ¬ ForestOfCopies (sumPieces Y (fun _ : PUnit => F))) :
+    ∀ p : ι, ∃ i : ι,
+      ¬(F.carrier ∩ (Y i).carrier ⊆
+        F.carrier ∩ (Y p).carrier) := by
+  intro p
+  by_contra h
+  have hDom :
+      ∀ i : ι,
+        F.carrier ∩ (Y i).carrier ⊆
+          F.carrier ∩ (Y p).carrier := by
+    intro i
+    by_contra hi
+    exact h ⟨i, hi⟩
+  exact hBad
+    (forestOfCopies_attach_dominated
+      hY F hCrossAllowed p hDom)
+
 end StructuralRamsey.Girth
