@@ -452,3 +452,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_free_shape_from_root
 #print axioms StructuralRamsey.Girth.parameterFreeEvent_rootOrbit
+
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_compl_of_oneEdge
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_of_oneEdge_outside
