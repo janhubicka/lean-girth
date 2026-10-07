@@ -351,7 +351,7 @@ theorem cyclicSucc_lastIndex
     cyclicSucc d.lastIndex = d.zeroIndex := by
   apply Fin.ext
   change ((d.length - 1) + 1) % d.length = 0
-  rw [Nat.sub_add_cancel (d.hlength.trans (by decide))]
+  rw [Nat.sub_add_cancel ((by decide : 1 ≤ 2).trans d.hlength)]
   exact Nat.mod_self d.length
 
 theorem incidenceDarts_head_fst
