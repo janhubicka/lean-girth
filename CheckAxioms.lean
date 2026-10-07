@@ -457,3 +457,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.shadowClique_subset_edge
 #print axioms StructuralRamsey.Girth.shadowClique_contained_in_edge
 #print axioms StructuralRamsey.Girth.piece_boundary_is_whole_edge_of_two
+
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_compl_of_oneEdge
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_of_oneEdge_outside
