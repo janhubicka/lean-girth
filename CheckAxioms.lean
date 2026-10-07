@@ -376,3 +376,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.irreducibleEmbedding_has_standard_owner_of_not_core
 #print axioms StructuralRamsey.Girth.projectedCopy_not_subset_core_of_subsingleton_base_intersection
 #print axioms StructuralRamsey.Girth.projectedCopy_has_standard_owner_of_subsingleton_base_intersection
+
+#print axioms StructuralRamsey.Girth.supportCopy_mem_mappedSupportCopies_of_subset
+#print axioms StructuralRamsey.Girth.bergeCycle_mappedSupportCopies_of_edge_subset
+#print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
