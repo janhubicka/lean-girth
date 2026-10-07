@@ -398,3 +398,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.untouchedOwner_spec
 #print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point
 #print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point_mapped
+
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_le
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.compress_length_le
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_ofBergeCycle
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_restriction
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_part
