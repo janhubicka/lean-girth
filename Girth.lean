@@ -80,6 +80,7 @@ import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
 import Girth.ActiveBoundary
 import Girth.ActiveCarrierStrong
+import Girth.ProjectedSupportCopy
 import Girth.DesignatedAttachment
 import Girth.SharedSupport
 import Girth.InitialDesignated
