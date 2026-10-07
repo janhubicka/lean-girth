@@ -129,7 +129,7 @@ theorem neutralGapTail_has_preimage
           child (⟨n + 1, h⟩ : Node Label arity)
             c.params c.label
       have hmn :
-          m ≤ (⟨n, s⟩ : Node Label arity).level := by
+          m ≤ Node.level (⟨n, s⟩ : Node Label arity) := by
         change m ≤ n
         dsimp [n]
         omega
