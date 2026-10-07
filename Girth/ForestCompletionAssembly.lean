@@ -37,6 +37,7 @@ theorem forestCompletion_assemble
     {P : Q → HypergraphPiece W}
     (hOuter : PairwiseAllowed P)
     (JOuter : JoinTree P)
+    [DecidableRel JOuter.tree.Adj]
     (hLinear : OuterEdgesLinear P)
     {F : (q : Q) → K q → HypergraphPiece W}
     (hLocalAllowed : ∀ q : Q, PairwiseAllowed (F q))
