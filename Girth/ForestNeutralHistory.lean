@@ -142,4 +142,29 @@ theorem neutralGapTail_has_preimage
         (by omega) choose s c hc).2
       exact hv
 
+/-- A finite family of marked histories compatible with ONE common
+gap-choice function is simultaneously reconstructed by the SAME global
+one-gap shape map.  The remaining presentation task is to obtain a
+common choice function from the marked meet data. -/
+theorem neutralGapTail_finite_preimages
+    (m : ℕ)
+    (choose : History Label arity m → Code Label arity m)
+    (k q : ℕ)
+    (h : Fin q → History Label arity (m + k + 1))
+    (hh : ∀ i : Fin q, NeutralGapTail m choose k (h i)) :
+    ∃ s : Fin q → History Label arity (m + k),
+      ∀ i : Fin q,
+        gapNode m choose
+          (⟨m + k, s i⟩ : Node Label arity) =
+          (⟨m + k + 1, h i⟩ : Node Label arity) := by
+  classical
+  have hEach (i : Fin q) :
+      ∃ s : History Label arity (m + k),
+        gapNode m choose
+          (⟨m + k, s⟩ : Node Label arity) =
+          (⟨m + k + 1, h i⟩ : Node Label arity) :=
+    neutralGapTail_has_preimage m choose (hh i)
+  exact ⟨fun i => Classical.choose (hEach i),
+    fun i => Classical.choose_spec (hEach i)⟩
+
 end StructuralRamsey.Girth
