@@ -396,3 +396,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_ofBergeCycle
 #print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_restriction
 #print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_part
+
+#print axioms StructuralRamsey.Girth.no_short_support_cycle_of_owner_forest
