@@ -27,8 +27,11 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | §4 forest of copies / join trees | definitions, running intersections, leaf-attachment equality, canonical rooted paths/parents, and singleton-attachment girth induction formalized |
 | Structural local-forest translation | transversal decoration, exact support, and irreducible containment encoded in `Decoration`/`HypergraphClique`; lifting strong partite embeddings remains |
 | §5 initial/active picture | designated initial components and irreducible coverage formalized; true active subsystem, custom local witness, projection/actual irreducible coverage, Ramsey picture property, standard-copy geometry, designated B-copy preservation, active-subsystem A-generation, shared-support core mechanism, and the bridge from strong local-forest support families to the designated local hypothesis now encoded through CI |
-| §§3–6 induced picture/local-forest construction | remaining global completion/shared-support induction not yet formalized |
-| Main Theorem 1.1 | not yet formalized |
+| §5 untouched-subsystem girth | The conditional picture-step contradiction `no_short_untouched_projected_cycle` is formalized, using `projectedCopy_subset_standardActive`, `no_short_support_cycle_of_owner_mapped_forest`, and `RawCyclicIncidenceData.exists_compressed_le`. The structural local-forest input still needs assembly at the manuscript's quantifier level. |
+| §5 local forest geometry | `StrongSupportEmbedding.supportPiece`, `localForestSupportPiece_carrier_eq_copy`, and `strongSupportPieces_meetPartAtMostOne` relate the local witness's support pieces to decorated standard copies and fine parts. |
+| §5 forest completion assembly | `ownerFiber_card_add_degree_le`, `forestOfCopies_lift_local_of_linear`, `ForestOfCopies.restrict_compl_of_oneEdge`, `ForestOfCopies.restrict_mixed_of_auxiliary_A`, and `forestCompletion_assemble` prove the counting, join-tree gluing, and removal of all auxiliary one-edge members. Actual designated local completion witnesses and their incorporation in the full picture invariant remain to be supplied. |
+| §§3–6 global iteration | The existing `activePictureStep_invariants` checks projection, irreducible coverage, Ramsey property, and intersections. The full `certpres` implication, including local forest witnesses and the completion quantifiers, is not yet a Lean theorem. |
+| Main Theorem 1.1 | not yet formalized end-to-end |
 
 The dependency on `partite-construction` is pinned deliberately.  As the EHN
 and recursive/iterated construction formalization there advances, this project
