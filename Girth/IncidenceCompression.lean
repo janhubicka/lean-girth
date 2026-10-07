@@ -42,9 +42,9 @@ def zeroIndex (d : RawCyclicIncidenceData edge) : Fin d.length :=
 
 /-- Cyclic translation commutes with cyclic successor. -/
 theorem finCycle_cyclicSucc
-    {n : ℕ} (i s : Fin n) :
-    finCycle (cyclicSucc i) s =
-      cyclicSucc (finCycle i s) := by
+    {n : ℕ} (s i : Fin n) :
+    (finCycle s) (cyclicSucc i) =
+      cyclicSucc ((finCycle s) i) := by
   rw [cyclicSucc_eq_finRotate, cyclicSucc_eq_finRotate]
   simp only [finRotate_apply, finCycle_apply]
   ac_rfl
@@ -56,29 +56,32 @@ def rotate
     RawCyclicIncidenceData edge where
   length := d.length
   hlength := d.hlength
-  label i := d.label (finCycle i s)
-  connector i := d.connector (finCycle i s)
+  label i := d.label ((finCycle s) i)
+  connector i := d.connector ((finCycle s) i)
   connector_injective := by
     intro i j hij
-    apply (finCycle s).injective
-    exact d.connector_injective hij
+    exact (finCycle s).injective (d.connector_injective hij)
   boundary_mem := by
     intro i hne
     have hneOld :
-        d.label (finCycle i s) ≠
-          d.label (cyclicSucc (finCycle i s)) := by
+        d.label ((finCycle s) i) ≠
+          d.label (cyclicSucc ((finCycle s) i)) := by
       intro heq
       apply hne
-      simpa [finCycle_cyclicSucc] using heq
-    have h := d.boundary_mem (finCycle i s) hneOld
+      rw [finCycle_cyclicSucc]
+      exact heq
+    have h := d.boundary_mem ((finCycle s) i) hneOld
     constructor
     · exact h.1
-    · simpa [finCycle_cyclicSucc] using h.2
+    · rw [finCycle_cyclicSucc]
+      exact h.2
   nonconstant := by
     rcases d.nonconstant with ⟨i, j, hij⟩
     let i' : Fin d.length := (finCycle s).symm i
     let j' : Fin d.length := (finCycle s).symm j
     refine ⟨i', j', ?_⟩
+    change d.label ((finCycle s) i') ≠
+      d.label ((finCycle s) j')
     simpa [i', j'] using hij
 
 /-- Canonical last index of nonempty raw cyclic data. -/
@@ -87,24 +90,21 @@ def last
     Fin d.length :=
   ⟨d.length - 1, Nat.sub_lt d.length_pos (by decide)⟩
 
-/-- Rotating to the successor of an index sends the last new position back to
-that index. -/
+/-- Rotating by the successor of an old index sends the last new
+position back to that old index. -/
 theorem finCycle_last_cyclicSucc
     (d : RawCyclicIncidenceData edge)
     (i : Fin d.length) :
-    finCycle d.last (cyclicSucc i) = i := by
+    (finCycle (cyclicSucc i)) d.last = i := by
   haveI : NeZero d.length := ⟨d.length_pos.ne'⟩
   have hlast : d.last = (-1 : Fin d.length) := by
     apply Fin.ext
     change d.length - 1 = ((-1 : Fin d.length) : ℕ)
-    conv_rhs =>
-      rw [show d.length = (d.length - 1) + 1 by
-        exact (Nat.sub_add_cancel (Nat.succ_le_iff.mpr d.length_pos)).symm]
     rw [Fin.coe_neg_one]
-  rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply, hlast]
+  rw [hlast, finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply]
   calc
     (-1 : Fin d.length) + (i + 1) =
-        ((-1 : Fin d.length) + 1) + i := by ac_rfl
+        i + ((-1 : Fin d.length) + 1) := by ac_rfl
     _ = i := by simp
 
 /-- If the transition at i is redundant, rotate it to the wrap-around:
@@ -118,10 +118,16 @@ theorem rotate_succ_last_label_eq_zero
       (d.rotate (cyclicSucc i)).label
         (d.rotate (cyclicSucc i)).zeroIndex := by
   change
-    d.label (finCycle d.last (cyclicSucc i)) =
-      d.label (finCycle d.zeroIndex (cyclicSucc i))
+    d.label ((finCycle (cyclicSucc i)) d.last) =
+      d.label ((finCycle (cyclicSucc i)) d.zeroIndex)
   rw [d.finCycle_last_cyclicSucc i]
-  simpa [finCycle_apply, zeroIndex] using heq
+  have hz :
+      (finCycle (cyclicSucc i)) d.zeroIndex =
+        cyclicSucc i := by
+    apply Fin.ext
+    simp [finCycle_apply, zeroIndex]
+  rw [hz]
+  exact heq
 
 /-- Inclusion of all indices except the last one. -/
 def keepBeforeLast
@@ -137,7 +143,8 @@ theorem keepBeforeLast_injective
     Function.Injective d.keepBeforeLast := by
   intro i j hij
   apply Fin.ext
-  exact congrArg Fin.val hij
+  have hv := congrArg Fin.val hij
+  simpa [keepBeforeLast] using hv
 
 /-- If the last and first labels agree, delete the redundant last label and
 last connector. Incidence is only transported for transitions which remain
@@ -228,10 +235,14 @@ def dropLast
         let i' : Fin (d.length - 1) := ⟨i.1, hlt⟩
         have hEq := hconst i' z
         change d.label (keep i') = d.label (keep z) at hEq
+        have hkeepI : keep i' = i := by
+          apply Fin.ext
+          rfl
         have hkeepZero : keep z = d.zeroIndex := by
           apply Fin.ext
           rfl
-        simpa [i', hkeepZero] using hEq
+        rw [hkeepI, hkeepZero] at hEq
+        exact hEq
     rcases d.nonconstant with ⟨i, j, hij⟩
     exact hij ((hAll i).trans (hAll j).symm)
 
@@ -267,10 +278,11 @@ theorem three_le_length_of_label_eq_succ
     (heq : d.label i = d.label (cyclicSucc i)) :
     3 ≤ d.length := by
   by_contra h3
+  have hlt3 : d.length < 3 := Nat.lt_of_not_ge h3
   have hlen : d.length = 2 := by
     omega
   have hne : i ≠ cyclicSucc i :=
-    cyclicSucc_ne_self_of_two_le d.hlength i
+    Ne.symm (cyclicSucc_ne_self_of_two_le d.hlength i)
   have hpair :
       ({i, cyclicSucc i} : Finset (Fin d.length)) = Finset.univ := by
     apply Finset.eq_univ_of_card
@@ -282,7 +294,8 @@ theorem three_le_length_of_label_eq_succ
         j ∈ ({i, cyclicSucc i} : Finset (Fin d.length)) := by
       rw [hpair]
       simp
-    rcases Finset.mem_pair.mp hjmem with hj | hj
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hjmem
+    rcases hjmem with hj | hj
     · simpa [hj]
     · simpa [hj] using heq.symm
   rcases d.nonconstant with ⟨j, k, hjk⟩
@@ -381,8 +394,8 @@ theorem exists_compressed_ofBergeCycle
       ∃ i j : Fin c.length, owner i ≠ owner j) :
     ∃ d : CyclicIncidenceData edge,
       d.length ≤ c.length :=
-  (ofBergeCycle c owner edge hBoundary hOwnerNonconstant).
-    exists_compressed_le
+  exists_compressed_le
+    (ofBergeCycle c owner edge hBoundary hOwnerNonconstant)
 
 /-- Direct contradiction used for untouched subsystems in the circulation
 proof. A forest restricted to the fine part cannot support the change
@@ -414,7 +427,7 @@ theorem no_nonconstant_owner_cycle_of_forest_restriction
       (fun i => ((F i).restrictCarrier P).carrier)
       hBoundary hOwnerNonconstant
   exact
-    no_cyclicIncidenceData_of_forest_restriction
+    CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
       hForest P hEdgePart raw.compress
 
 /-- One-part specialization of the preceding contradiction. -/
@@ -442,7 +455,7 @@ theorem no_nonconstant_owner_cycle_of_forest_part
       (fun i => ((F i).restrictCarrier P).carrier)
       hBoundary hOwnerNonconstant
   exact
-    no_cyclicIncidenceData_of_forest_part
+    CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
       hForest P hPart raw.compress
 
 end RawCyclicIncidenceData
