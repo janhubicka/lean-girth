@@ -93,8 +93,7 @@ def rotate
 def last
     (d : RawCyclicIncidenceData edge) :
     Fin d.length :=
-  letI : NeZero d.length := ⟨d.length_pos.ne'⟩
-  (-1 : Fin d.length)
+  ⟨d.length - 1, Nat.sub_lt d.length_pos (by decide)⟩
 
 /-- Rotating by the successor of an old index sends the last new
 position back to that old index. -/
@@ -102,13 +101,23 @@ theorem finCycle_last_cyclicSucc
     (d : RawCyclicIncidenceData edge)
     (i : Fin d.length) :
     (finCycle (cyclicSucc i)) d.last = i := by
-  letI : NeZero d.length := ⟨d.length_pos.ne'⟩
-  rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply]
-  change (-1 : Fin d.length) + (i + 1) = i
-  calc
-    (-1 : Fin d.length) + (i + 1) =
-        ((-1 : Fin d.length) + 1) + i := by ac_rfl
-    _ = i := by simp
+  rw [finCycle_apply]
+  apply Fin.ext
+  rw [Fin.val_add]
+  change
+    (d.length - 1 + (i.1 + 1) % d.length) % d.length = i.1
+  by_cases hnext : i.1 + 1 < d.length
+  · rw [Nat.mod_eq_of_lt hnext]
+    have hsum :
+        d.length - 1 + (i.1 + 1) =
+          d.length + i.1 := by
+      omega
+    rw [hsum, Nat.add_mod_right, Nat.mod_eq_of_lt i.2]
+  · have hlast : i.1 + 1 = d.length := by
+      omega
+    rw [hlast, Nat.mod_self, Nat.add_zero,
+      Nat.mod_eq_of_lt (Nat.sub_lt d.length_pos (by decide))]
+    omega
 
 /-- If the transition at i is redundant, rotate it to the wrap-around:
 the last and first labels of the rotated word agree. -/
@@ -124,14 +133,13 @@ theorem rotate_succ_last_label_eq_zero
     d.label ((finCycle (cyclicSucc i)) d.last) =
       d.label ((finCycle (cyclicSucc i)) d.zeroIndex)
   rw [d.finCycle_last_cyclicSucc i]
-  have hz0 : d.zeroIndex = (0 : Fin d.length) := by
-    apply Fin.ext
-    rfl
   have hz :
       (finCycle (cyclicSucc i)) d.zeroIndex =
         cyclicSucc i := by
-    rw [finCycle_apply, hz0]
-    simp
+    rw [finCycle_apply]
+    apply Fin.ext
+    rw [Fin.val_add]
+    simp [zeroIndex, Nat.mod_eq_of_lt (cyclicSucc i).2]
   rw [hz]
   exact heq
 
