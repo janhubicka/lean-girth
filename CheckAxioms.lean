@@ -428,3 +428,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.projectedFactorThroughStandard_spec
 #print axioms StructuralRamsey.Girth.standardActiveEmbedding
 #print axioms StructuralRamsey.Girth.projectedCopy_subset_standardActive
+
+#print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle
