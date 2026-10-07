@@ -77,11 +77,17 @@ theorem finCycle_last_cyclicSucc
     (i : Fin d.length) :
     finCycle d.last (cyclicSucc i) = i := by
   haveI : NeZero d.length := ⟨by omega⟩
-  rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply]
-  apply Fin.ext
-  simp [RawCyclicIncidenceData.last, Fin.add_def]
-  have hi : i.1 < d.length := i.2
-  omega
+  have hlast : d.last = (-1 : Fin d.length) := by
+    apply Fin.ext
+    change d.length - 1 = ((-1 : Fin d.length) : ℕ)
+    conv_rhs =>
+      rw [show d.length = (d.length - 1) + 1 by omega]
+    rw [Fin.coe_neg_one]
+  rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply, hlast]
+  calc
+    (-1 : Fin d.length) + (i + 1) =
+        ((-1 : Fin d.length) + 1) + i := by ac_rfl
+    _ = i := by simp
 
 /-- If the transition at i is redundant, rotate it to the wrap-around:
 the last and first labels of the rotated word agree. -/
