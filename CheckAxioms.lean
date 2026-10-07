@@ -382,3 +382,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
 
 #print axioms StructuralRamsey.Girth.attachment_shared_point_in_both_local_images
+#print axioms StructuralRamsey.Girth.EdgeAntichain
+#print axioms StructuralRamsey.Girth.FreshCarrierAlternative
+#print axioms StructuralRamsey.Girth.exists_incomparable_fresh_carrier
