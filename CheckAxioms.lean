@@ -413,3 +413,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_of_oneSeparator_boundary
 #print axioms StructuralRamsey.Girth.allowedIntersection_oldFamily_of_oneSeparator
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_of_common_oneSeparator
+
+#print axioms StructuralRamsey.Girth.forestObservableProfile_finite
+#print axioms StructuralRamsey.Girth.forestObservableProfile_map_injective
