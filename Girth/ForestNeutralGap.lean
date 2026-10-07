@@ -118,4 +118,29 @@ theorem shiftParamTuple_deleteGapParamTuple {arity : ℕ}
     · simp [shiftNat, shiftFin, hx]
   exact hval.trans h
 
+/-- Removing a neutral level also transports the transition label
+unchanged, not just its ancestral parameter indices. -/
+def deleteGapCode {Label : Type*} {arity : ℕ}
+    (m n : ℕ) (hm : m ≤ n)
+    (c : Code Label arity (n + 1))
+    (hc : ∀ j : Fin c.params.len.val,
+      (c.params.value j).val ≠ m) :
+    Code Label arity n :=
+  ⟨c.label, deleteGapParamTuple m n hm c.params hc⟩
+
+theorem shiftCode_deleteGapCode {Label : Type*} {arity : ℕ}
+    (m n : ℕ) (hm : m ≤ n)
+    (c : Code Label arity (n + 1))
+    (hc : ∀ j : Fin c.params.len.val,
+      (c.params.value j).val ≠ m) :
+    shiftCode m (deleteGapCode m n hm c hc) = c := by
+  rcases c with ⟨label, params⟩
+  change
+    Code.mk label
+      (shiftParamTuple m
+        (deleteGapParamTuple m n hm params hc)) =
+      Code.mk label params
+  exact congrArg (Code.mk label)
+    (shiftParamTuple_deleteGapParamTuple m n hm params hc)
+
 end StructuralRamsey.Girth
