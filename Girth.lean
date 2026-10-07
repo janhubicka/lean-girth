@@ -86,6 +86,7 @@ import Girth.InitialACopyGeometry
 import Girth.InitialForestCompletion
 import Girth.InitialComponentForest
 import Girth.LocalForestBridge
+import Girth.LocalForestPieces
 import Girth.ForestSuccessorBridge
 import Girth.ForestReplayObstruction
 import Girth.ForestProfileElimination
