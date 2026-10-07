@@ -372,3 +372,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_of_base_aLinear
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_ordered
 #print axioms StructuralRamsey.Girth.edge_not_subset_of_old_carrier_of_subsingleton_intersection
+
+#print axioms StructuralRamsey.Girth.attachment_shared_point_in_both_local_images
