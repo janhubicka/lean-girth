@@ -443,3 +443,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.preBirthSplit_event_ne_after
 #print axioms StructuralRamsey.Girth.sameBirthEvent_of_fixed_inputs
 #print axioms StructuralRamsey.Girth.sameBirthEvent_after_reduction
+
+#print axioms StructuralRamsey.Girth.shiftedParamLevel_ne_gap
+#print axioms StructuralRamsey.Girth.shiftFin_deleteGapFin
+#print axioms StructuralRamsey.Girth.deleteGapFin_shiftFin
+#print axioms StructuralRamsey.Girth.shiftParamTuple_deleteGapParamTuple
+#print axioms StructuralRamsey.Girth.shiftCode_deleteGapCode
