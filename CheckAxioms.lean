@@ -380,3 +380,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.supportCopy_mem_mappedSupportCopies_of_subset
 #print axioms StructuralRamsey.Girth.bergeCycle_mappedSupportCopies_of_edge_subset
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
+
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.incidenceCircuit_isCircuit
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
