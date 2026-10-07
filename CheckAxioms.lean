@@ -407,3 +407,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.private_replay_overlap_classification
 #print axioms StructuralRamsey.Girth.no_private_replay_of_nonedge_boundary
 #print axioms StructuralRamsey.Girth.forestProfileElimination_of_twoCopyTests
+#print axioms StructuralRamsey.Girth.no_linear_amalgam_of_incompatible_pair_owners
