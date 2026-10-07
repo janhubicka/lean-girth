@@ -466,3 +466,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_in_target
 #print axioms StructuralRamsey.Girth.localForestSupportPiece_carrier_eq_copy
 #print axioms StructuralRamsey.Girth.strongSupportPieces_meetPartAtMostOne
+
+#print axioms StructuralRamsey.Girth.preBirthOne_at_other_gap
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_outside_cone
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_frozen_front
