@@ -382,3 +382,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
 
 #print axioms StructuralRamsey.Girth.attachment_shared_point_in_both_local_images
+
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.incidenceCircuit_isCircuit
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
