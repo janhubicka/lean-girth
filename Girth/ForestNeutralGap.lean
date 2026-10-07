@@ -97,26 +97,11 @@ theorem shiftParamTuple_deleteGapParamTuple {arity : ℕ}
     (ht : ∀ j : Fin t.len.val, (t.value j).val ≠ m) :
     shiftParamTuple m (deleteGapParamTuple m n hm t ht) = t := by
   apply levelList_injective
-  simp only [levelList_shiftParamTuple, levelList,
-    deleteGapParamTuple, List.map_ofFn]
+  simp only [levelList, shiftParamTuple, deleteGapParamTuple]
   apply congrArg List.ofFn
   funext j
-  change shiftNat m
-      (deleteGapFin m n hm (t.value j) (ht j)).val =
-    (t.value j).val
-  have h :=
-    congrArg Fin.val
-      (shiftFin_deleteGapFin m n hm (t.value j) (ht j))
-  have hval :
-      shiftNat m
-        (deleteGapFin m n hm (t.value j) (ht j)).val =
-      (shiftFin m n
-        (deleteGapFin m n hm (t.value j) (ht j))).val := by
-    by_cases hx :
-      (deleteGapFin m n hm (t.value j) (ht j)).val < m
-    · simp [shiftNat, shiftFin, hx]
-    · simp [shiftNat, shiftFin, hx]
-  exact hval.trans h
+  exact congrArg Fin.val
+    (shiftFin_deleteGapFin m n hm (t.value j) (ht j))
 
 /-- Removing a neutral level also transports the transition label
 unchanged, not just its ancestral parameter indices. -/
