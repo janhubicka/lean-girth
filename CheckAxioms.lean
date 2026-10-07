@@ -423,3 +423,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_of_owner_forest
 
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_of_owner_mapped_forest
+
+#print axioms StructuralRamsey.Girth.projectedFactorThroughStandard
+#print axioms StructuralRamsey.Girth.projectedFactorThroughStandard_spec
+#print axioms StructuralRamsey.Girth.standardActiveEmbedding
+#print axioms StructuralRamsey.Girth.projectedCopy_subset_standardActive
