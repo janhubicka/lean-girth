@@ -469,3 +469,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ABMember.a_supportPiece_isOneEdge
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_mixed_of_auxiliary_A
+
+#print axioms StructuralRamsey.Girth.freeHistoryFiniteRoot_agrees
+#print axioms StructuralRamsey.Girth.freeHistoryRootColour_homogeneous
