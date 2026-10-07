@@ -97,3 +97,6 @@ import Girth.ForestPreBirthSplit
 import Girth.ForestNeutralGap
 import Girth.ForestParameterFreeOrbit
 import Girth.ForestShadowClique
+import Girth.ForestNeutralHistory
+import Girth.ForestClosedShadowReplay
+import Girth.ForestProfileNoGo
