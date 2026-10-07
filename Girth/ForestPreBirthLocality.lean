@@ -150,4 +150,38 @@ theorem preBirth_maps_agree_on_predClosed_front
   intro x hx hux
   exact hu (hClosed hux hx)
 
+/-- Complete *syntactic* two-copy configuration: the frozen
+predecessor-closed front is common after any further shape map, while
+the moving carrier's intrinsic birth events remain distinct.
+This does not assert that those events evaluate to different
+physical A-edges or B-copies. -/
+theorem preBirth_twoCopy_syntax
+    (m : ℕ) (hmpos : 0 < m)
+    (h0 : History Label arity m)
+    (c0 c1 : Label) (hne : c0 ≠ c1)
+    (K : Set (Node Label arity))
+    (hClosed :
+      ∀ ⦃x y : Node Label arity⦄,
+        x ≤ y → y ∈ K → x ∈ K)
+    (hu : (⟨m, h0⟩ : Node Label arity) ∉ K)
+    (e : IntrinsicEvent
+      (freeSTree (Label := Label) (arity := arity)))
+    (he : (⟨m, h0⟩ : Node Label arity) ≤ e.base)
+    (W : ShapeMap
+      (freeSTree (Label := Label) (arity := arity))) :
+    (∀ x ∈ K,
+      W (preBirthZero (arity := arity) m c0 x) =
+        W (preBirthOne (arity := arity) m h0 c0 c1 x)) ∧
+      W.mapEvent
+          ((preBirthZero (arity := arity) m c0).mapEvent e) ≠
+        W.mapEvent
+          ((preBirthOne (arity := arity) m h0 c0 c1).mapEvent e) := by
+  constructor
+  · intro x hx
+    exact congrArg W
+      (preBirth_maps_agree_on_predClosed_front
+        m hmpos h0 c0 c1 K hClosed hu x hx)
+  · exact preBirthSplit_event_ne_after
+      m h0 c0 c1 hne e he W
+
 end StructuralRamsey.Girth
