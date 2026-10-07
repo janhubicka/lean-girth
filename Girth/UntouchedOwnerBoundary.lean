@@ -121,8 +121,10 @@ theorem untouchedOwner_change_shared_point
   · change Sum.inl y = z
     change Sum.inl y = z at hy
     exact hy
-  · simpa [ia] using hyI
-  · simpa [ib] using hyJ
+  · change y ∈ copyCarrier ((f ia).toEmbedding)
+    exact hyI
+  · change y ∈ copyCarrier ((f ib).toEmbedding)
+    exact hyJ
 
 /-- The same owner-change statement as membership in the core images of the
 two gluing copies. -/
