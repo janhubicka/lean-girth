@@ -52,6 +52,7 @@ import Girth.ForestStar
 import Girth.CarrierForestGirth
 import Girth.RestrictedForestGirth
 import Girth.ForestIncidenceAcyclic
+import Girth.IncidenceCircuit
 import Girth.PartRestrictedForestGirth
 import Girth.HypergraphClique
 import Girth.FunctionalEHNClass
