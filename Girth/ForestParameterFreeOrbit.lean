@@ -95,6 +95,11 @@ noncomputable def canonicalEmptyEvent (c : Label) :
       freeSucc_paramNodes
         (rootNode (Label := Label) (arity := arity))
         (emptyParamTuple arity 0) c
+    change freeSucc
+      (rootNode (Label := Label) (arity := arity)) [] c =
+      some (child
+        (rootNode (Label := Label) (arity := arity))
+        (emptyParamTuple arity 0) c)
     simpa [rootNode, paramNodes, emptyParamTuple] using hs
 
 /-- All parameter-free events with one label are reachable from the
