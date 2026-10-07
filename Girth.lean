@@ -27,6 +27,7 @@ import Girth.ForestTreeRewire
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
 import Girth.ForestCarrierCorner
+import Girth.ForestFreshCarrier
 import Girth.ForestJoinLift
 import Girth.ForestJoinLiftLinear
 import Girth.CompletionBudget
