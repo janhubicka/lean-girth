@@ -45,11 +45,6 @@ theorem sameBirthEvent_of_fixed_inputs
   cases e with
   | mk base params label hex =>
       dsimp at hbase hparams
-      change
-        { base := F base, params := params.map F, label := label,
-          has_child := _ } =
-        { base := G base, params := params.map G, label := label,
-          has_child := _ }
       cases hbase
       cases hparams
       rfl
