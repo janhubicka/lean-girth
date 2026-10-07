@@ -398,3 +398,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.untouchedOwner_spec
 #print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point
 #print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point_mapped
+
+#print axioms StructuralRamsey.Girth.projectedFactorThroughStandard_spec
+#print axioms StructuralRamsey.Girth.projectedCopy_subset_standardActive
