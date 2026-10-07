@@ -183,6 +183,7 @@ theorem alternatingDart_eq_left_of_coord_zero
   unfold alternatingDart
   dsimp
   rw [if_pos h]
+  rfl
 
 theorem alternatingDart_eq_right_of_coord_ne_zero
     (d : CyclicIncidenceData edge)
@@ -194,6 +195,7 @@ theorem alternatingDart_eq_right_of_coord_ne_zero
   unfold alternatingDart
   dsimp
   rw [if_neg h]
+  rfl
 
 /-- The flattened incidence darts have pairwise distinct underlying graph
 edges. Distinct connectors rule out repetitions at different cyclic
