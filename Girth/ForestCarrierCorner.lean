@@ -132,4 +132,26 @@ theorem edge_eq_of_contains_incomparable
     ⟨hSe hxS, hSf hxS⟩
     ⟨hTe hyT, hTf hyT⟩
 
+
+/-- If the intersection of F and Y is subsingleton, an edge of F containing
+two distinct vertices cannot already be contained in Y.  This is the
+freshness step for the edge carrier in the successor-profile proof. -/
+theorem edge_not_subset_of_old_carrier_of_subsingleton_intersection
+    (F Y : HypergraphPiece W)
+    (hSmall : (F.carrier ∩ Y.carrier).Subsingleton)
+    (e : Set W) (he : e ∈ F.edges)
+    {x y : W} (hx : x ∈ e) (hy : y ∈ e)
+    (hxy : x ≠ y) :
+    ¬ e ⊆ Y.carrier := by
+  intro heY
+  have hxF : x ∈ F.carrier :=
+    F.edge_subset he hx
+  have hyF : y ∈ F.carrier :=
+    F.edge_subset he hy
+  have hxI : x ∈ F.carrier ∩ Y.carrier :=
+    ⟨hxF, heY hx⟩
+  have hyI : y ∈ F.carrier ∩ Y.carrier :=
+    ⟨hyF, heY hy⟩
+  exact hxy (hSmall hxI hyI)
+
 end StructuralRamsey.Girth
