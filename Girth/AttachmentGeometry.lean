@@ -122,4 +122,41 @@ theorem attachment_copy_copy_intersection_subset_core
   rcases hz.1 with ⟨x, hx⟩
   exact ⟨f i x, hx⟩
 
+
+/-- A point shared by two distinct standard copies is represented by one core
+vertex lying in both corresponding gluing-copy images.  This is the local
+incidence membership used after owner changes in the circulation proof. -/
+theorem attachment_shared_point_in_both_local_images
+    (B : RelStructure L V) (S : Set V) (D : RelStructure L W)
+    (f : I → Embedding (B.induce S) D)
+    {i j : I} (hij : i ≠ j)
+    {z : RelStructure.Attachment.Vertex S (W := W) (I := I)}
+    (hzi :
+      z ∈ copyCarrier
+        (RelStructure.Attachment.copyEmbedding B S D f i))
+    (hzj :
+      z ∈ copyCarrier
+        (RelStructure.Attachment.copyEmbedding B S D f j)) :
+    ∃ y : W,
+      RelStructure.Attachment.coreEmbedding B S D f y = z ∧
+      y ∈ copyCarrier (f i) ∧
+      y ∈ copyCarrier (f j) := by
+  classical
+  have hz :
+      z ∈
+        copyCarrier (RelStructure.Attachment.copyEmbedding B S D f i) ∩
+        copyCarrier (RelStructure.Attachment.copyEmbedding B S D f j) :=
+    ⟨hzi, hzj⟩
+  rw [attachment_copy_copy_intersection B S D f hij] at hz
+  rcases hz with ⟨⟨xi, hxi⟩, ⟨xj, hxj⟩⟩
+  let core := RelStructure.Attachment.coreEmbedding B S D f
+  have hcoreEq :
+      core (f i xi) = core (f j xj) :=
+    hxi.trans hxj.symm
+  have hlocalEq : f i xi = f j xj :=
+    core.injective hcoreEq
+  refine ⟨f i xi, hxi, ?_, ?_⟩
+  · exact ⟨xi, rfl⟩
+  · exact ⟨xj, hlocalEq.symm⟩
+
 end StructuralRamsey.Girth
