@@ -441,3 +441,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.preBirth_maps_agree_below_gap
 #print axioms StructuralRamsey.Girth.preBirthSplit_descendant_ne
 #print axioms StructuralRamsey.Girth.preBirthSplit_event_ne_after
+#print axioms StructuralRamsey.Girth.sameBirthEvent_of_fixed_inputs
+#print axioms StructuralRamsey.Girth.sameBirthEvent_after_reduction
