@@ -33,13 +33,13 @@ inductive NeutralGapTail
     (choose : History Label arity m → Code Label arity m) :
     (k : ℕ) → History Label arity (m + k + 1) → Prop
   | base (h : History Label arity m) :
-      NeutralGapTail 0 (History.step h (choose h))
+      NeutralGapTail m choose 0 (History.step h (choose h))
   | step {k : ℕ}
       {h : History Label arity (m + k + 1)}
-      (hh : NeutralGapTail k h)
+      (hh : NeutralGapTail m choose k h)
       (c : Code Label arity (m + k + 1))
       (hc : ∀ j : Fin c.params.len.val, (c.params.value j).val ≠ m) :
-      NeutralGapTail (k + 1) (History.step h c)
+      NeutralGapTail m choose (k + 1) (History.step h c)
 
 /-- The one-gap map transports the deleted source code to the required
 target transition, including every preserved ancestral parameter. -/
