@@ -30,6 +30,25 @@ universe u
 variable {Label : Type u} {arity : ℕ}
 variable [Fintype Label] [Nonempty Label]
 
+/-- Extensionality of intrinsic events; proof of successor existence
+is irrelevant once their three recorded fields agree. -/
+private theorem intrinsicEvent_ext
+    {e f : IntrinsicEvent
+      (freeSTree (Label := Label) (arity := arity))}
+    (hb : e.base = f.base)
+    (hp : e.params = f.params)
+    (hc : e.label = f.label) :
+    e = f := by
+  cases e with
+  | mk a p c ha =>
+    cases f with
+    | mk a' p' c' hf =>
+      dsimp at hb hp hc
+      subst a'
+      subst p'
+      subst c'
+      rfl
+
 /-- Necessity of splitting the carrier ORIGIN rather than only a later
 history endpoint. If two shape maps agree on the base and intrinsic
 parameters of the same birth event, then their transported event is
@@ -42,12 +61,10 @@ theorem sameBirthEvent_of_fixed_inputs
     (hbase : F e.base = G e.base)
     (hparams : e.params.map F = e.params.map G) :
     F.mapEvent e = G.mapEvent e := by
-  cases e with
-  | mk base params label hex =>
-      dsimp at hbase hparams
-      cases hbase
-      cases hparams
-      rfl
+  apply intrinsicEvent_ext
+  · exact hbase
+  · exact hparams
+  · rfl
 
 /-- Once the birth inputs are frozen, a further successor reduction
 cannot manufacture two different birth events. -/
