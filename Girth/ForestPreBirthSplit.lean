@@ -98,7 +98,8 @@ theorem preBirthSplit_descendant_ne
   have h1le : D1 x ≤ D1 a := D1.map_le_of_le hua
   have hlev : LevelTree.lev (D0 x) = LevelTree.lev (D1 x) := by
     change (D0 x).level = (D1 x).level
-    rw [h0Eq, h1Eq, child_level, child_level]
+    rw [h0Eq, h1Eq]
+    rfl
   intro heq
   have h0le' : D0 x ≤ D1 a := by
     rw [← heq]
