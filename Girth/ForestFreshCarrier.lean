@@ -69,7 +69,7 @@ theorem exists_incomparable_fresh_carrier
   have hCrossAllowed' :
       ∀ i : ι, AllowedIntersection (Y i) F := by
     intro i
-    exact AllowedIntersection.symm (hCrossAllowed i)
+    exact allowedIntersection_symm (hCrossAllowed i)
   by_cases hAllSmall :
       ∀ k : ι, (F.carrier ∩ (Y k).carrier).Subsingleton
   · obtain ⟨i, j, hij, hji⟩ :=
@@ -99,7 +99,7 @@ theorem exists_incomparable_fresh_carrier
   · push_neg at hAllSmall
     obtain ⟨k, hkBig⟩ := hAllSmall
     rcases hCrossAllowed k with hkSmall | ⟨d, hdF, _hdY, hkEq⟩
-    · exact (hkBig (by simpa [Set.inter_comm] using hkSmall)).elim
+    · exact (hkBig.not_subsingleton (by simpa [Set.inter_comm] using hkSmall)).elim
     · have hSk :
           F.carrier ∩ (Y k).carrier = d := by
         simpa [Set.inter_comm] using hkEq
