@@ -206,25 +206,36 @@ theorem alternatingDart_edge_injective
     exact
       (finProdFinEquiv (m := d.length) (n := 2)).symm.injective hq
 
-/-- The cyclic incidence data determines a nonempty closed trail in the
-boundary incidence graph. -/
-noncomputable def incidenceCircuit
+/-- The ordered list of the two incidence darts contributed by every
+connector. -/
+def incidenceDarts
     (d : CyclicIncidenceData edge) :
-    (boundaryIncidenceGraph edge).Walk
-      (Sum.inl (d.label 0)) (Sum.inl (d.label 0)) := by
-  classical
-  let darts := List.ofFn (alternatingDart d)
-  have hdarts : darts ≠ [] := by
-    rw [List.ofFn_eq_nil_iff]
-    omega
-  have hchain :
-      darts.IsChain (boundaryIncidenceGraph edge).DartAdj := by
-    simpa [darts] using alternatingDarts_chain d
-  let raw := SimpleGraph.Walk.ofDarts darts hdarts hchain
-  have hhead :
-      (darts.head hdarts).fst = Sum.inl (d.label 0) := by
-    rw [List.head_eq_getElem_zero]
-    simp [darts, alternatingDart, leftDart, finProdFinEquiv]
+    List (boundaryIncidenceGraph edge).Dart :=
+  List.ofFn (alternatingDart d)
+
+theorem incidenceDarts_ne_nil
+    (d : CyclicIncidenceData edge) :
+    d.incidenceDarts ≠ [] := by
+  rw [incidenceDarts, List.ofFn_eq_nil_iff]
+  omega
+
+theorem incidenceDarts_chain
+    (d : CyclicIncidenceData edge) :
+    d.incidenceDarts.IsChain
+      (boundaryIncidenceGraph edge).DartAdj := by
+  simpa [incidenceDarts] using alternatingDarts_chain d
+
+theorem incidenceDarts_head_fst
+    (d : CyclicIncidenceData edge) :
+    (d.incidenceDarts.head d.incidenceDarts_ne_nil).fst =
+      Sum.inl (d.label 0) := by
+  rw [List.head_eq_getElem_zero]
+  simp [incidenceDarts, alternatingDart, leftDart, finProdFinEquiv]
+
+theorem incidenceDarts_last_snd
+    (d : CyclicIncidenceData edge) :
+    (d.incidenceDarts.getLast d.incidenceDarts_ne_nil).snd =
+      Sum.inl (d.label 0) := by
   have hlastIndex :
       finProdFinEquiv (m := d.length) (n := 2)
           (Fin.last d.length, (1 : Fin 2)) =
@@ -238,59 +249,71 @@ noncomputable def incidenceCircuit
     change ((d.length - 1) + 1) % d.length = 0
     rw [Nat.sub_add_cancel (by omega : 1 ≤ d.length)]
     exact Nat.mod_self d.length
-  have hlast :
-      (darts.getLast hdarts).snd = Sum.inl (d.label 0) := by
-    rw [List.getLast_eq_getElem hdarts]
-    have hlen : darts.length = d.length * 2 := by
-      simp [darts]
-    have hpos : 0 < darts.length := List.length_pos_iff.mpr hdarts
-    have hidx :
-        darts.length - 1 = (Fin.last (d.length * 2)).1 := by
-      simp [hlen, Fin.last]
-    simp only [hidx, darts, List.getElem_ofFn]
-    rw [← hlastIndex, alternatingDart_pair_one]
-    change Sum.inl (d.label (cyclicSucc (Fin.last d.length))) =
-      Sum.inl (d.label 0)
-    rw [hsuccLast]
-  exact raw.copy hhead hlast
+  rw [List.getLast_eq_getElem d.incidenceDarts_ne_nil]
+  have hlen : d.incidenceDarts.length = d.length * 2 := by
+    simp [incidenceDarts]
+  have hidx :
+      d.incidenceDarts.length - 1 =
+        (Fin.last (d.length * 2)).1 := by
+    simp [hlen, Fin.last]
+  simp only [hidx, incidenceDarts, List.getElem_ofFn]
+  rw [← hlastIndex, alternatingDart_pair_one]
+  change Sum.inl (d.label (cyclicSucc (Fin.last d.length))) =
+    Sum.inl (d.label 0)
+  rw [hsuccLast]
+
+/-- Raw walk before changing its definitionally computed endpoints to the
+common starting label. -/
+noncomputable def incidenceRawWalk
+    (d : CyclicIncidenceData edge) :=
+  SimpleGraph.Walk.ofDarts
+    d.incidenceDarts d.incidenceDarts_ne_nil d.incidenceDarts_chain
+
+theorem incidenceRawWalk_isTrail
+    (d : CyclicIncidenceData edge) :
+    d.incidenceRawWalk.IsTrail := by
+  classical
+  refine ⟨?_⟩
+  unfold incidenceRawWalk
+  rw [SimpleGraph.Walk.edges_ofDarts]
+  simpa [incidenceDarts, List.map_ofFn] using
+    (List.nodup_ofFn.mpr (alternatingDart_edge_injective d))
+
+@[simp]
+theorem incidenceRawWalk_length
+    (d : CyclicIncidenceData edge) :
+    d.incidenceRawWalk.length = d.length * 2 := by
+  classical
+  unfold incidenceRawWalk
+  simp [incidenceDarts]
+
+/-- The cyclic incidence data determines a nonempty closed walk in the
+boundary incidence graph. -/
+noncomputable def incidenceCircuit
+    (d : CyclicIncidenceData edge) :
+    (boundaryIncidenceGraph edge).Walk
+      (Sum.inl (d.label 0)) (Sum.inl (d.label 0)) :=
+  d.incidenceRawWalk.copy
+    d.incidenceDarts_head_fst d.incidenceDarts_last_snd
 
 /-- The constructed closed walk is a circuit. -/
 theorem incidenceCircuit_isCircuit
     (d : CyclicIncidenceData edge) :
     (d.incidenceCircuit).IsCircuit := by
   classical
-  let darts := List.ofFn (alternatingDart d)
-  have hdarts : darts ≠ [] := by
-    rw [List.ofFn_eq_nil_iff]
-    omega
-  have hchain :
-      darts.IsChain (boundaryIncidenceGraph edge).DartAdj := by
-    simpa [darts] using alternatingDarts_chain d
-  let raw := SimpleGraph.Walk.ofDarts darts hdarts hchain
-  have htrailRaw : raw.IsTrail := by
-    refine ⟨?_⟩
-    rw [SimpleGraph.Walk.edges_ofDarts]
-    simpa [darts, List.map_ofFn] using
-      (List.nodup_ofFn.mpr (alternatingDart_edge_injective d))
   have htrail : (d.incidenceCircuit).IsTrail := by
-    unfold incidenceCircuit
-    simp only
     exact
       (SimpleGraph.Walk.isTrail_copy
-        raw
-        (by
-          rw [List.head_eq_getElem_zero]
-          simp [darts, alternatingDart, leftDart, finProdFinEquiv])
-        (by
-          -- endpoint equality is proof-irrelevant for trail preservation
-          rfl)).2 htrailRaw
+        d.incidenceRawWalk
+        d.incidenceDarts_head_fst
+        d.incidenceDarts_last_snd).2
+        d.incidenceRawWalk_isTrail
   refine ⟨htrail, ?_⟩
   intro hnil
-  have hlen : (d.incidenceCircuit).length = d.length * 2 := by
-    unfold incidenceCircuit
-    simp [raw, darts, SimpleGraph.Walk.length_ofDarts]
-  have : (d.incidenceCircuit).length = 0 := by
-    exact hnil.length_eq
+  have hzero : d.incidenceCircuit.length = 0 :=
+    hnil.length_eq_zero
+  have hlen : d.incidenceCircuit.length = d.length * 2 := by
+    simp [incidenceCircuit]
   omega
 
 /-- Acyclic incidence graphs forbid cyclic incidence data. -/
