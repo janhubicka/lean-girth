@@ -469,3 +469,7 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ABMember.a_supportPiece_isOneEdge
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_mixed_of_auxiliary_A
+
+#print axioms StructuralRamsey.Girth.projectedCopy_of_base_carrier_subset
+#print axioms StructuralRamsey.Girth.orderedProjectedCopy_of_base_carrier_subset
+#print axioms StructuralRamsey.Girth.orderedBergeCycle_edges_have_fixed_projection
