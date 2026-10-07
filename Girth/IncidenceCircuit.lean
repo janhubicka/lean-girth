@@ -1,4 +1,4 @@
-import Girth.BoundaryIncidence
+import Girth.ForestIncidenceAcyclic
 import Mathlib.Data.List.ChainOfFn
 import Mathlib.Data.List.FinRange
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -301,6 +301,45 @@ theorem no_cyclicIncidenceData_of_acyclic
   exact
     hAcyc (d.incidenceCircuit.cycleBypass)
       d.incidenceCircuit_isCircuit.isCycle_cycleBypass
+
+
+/-- Direct endpoint for the circulation proof.  A forest restricted to a set
+meeting every common support edge subsingletonly cannot carry cyclic
+copy-label/connector data. -/
+theorem no_cyclicIncidenceData_of_forest_restriction
+    {ι : Type v}
+    {F : ι → HypergraphPiece W}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set W)
+    (hEdgePart :
+      ∀ ⦃i j : ι⦄, i ≠ j → ∀ ⦃e : Set W⦄,
+        e ∈ (F i).edges → e ∈ (F j).edges →
+          (e ∩ P).Subsingleton)
+    (d : CyclicIncidenceData
+      (fun i => ((F i).restrictCarrier P).carrier)) :
+    False :=
+  no_cyclicIncidenceData_of_acyclic
+    (boundaryIncidenceGraph_isAcyclic_of_forest_restriction
+      hForest P hEdgePart)
+    d
+
+/-- One-part specialization of
+`no_cyclicIncidenceData_of_forest_restriction`. -/
+theorem no_cyclicIncidenceData_of_forest_part
+    {ι : Type v}
+    {F : ι → HypergraphPiece W}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set W)
+    (hPart : EdgesMeetPartAtMostOne F P)
+    (d : CyclicIncidenceData
+      (fun i => ((F i).restrictCarrier P).carrier)) :
+    False :=
+  no_cyclicIncidenceData_of_acyclic
+    (boundaryIncidenceGraph_isAcyclic_of_forest_part
+      hForest P hPart)
+    d
 
 end CyclicIncidenceData
 
