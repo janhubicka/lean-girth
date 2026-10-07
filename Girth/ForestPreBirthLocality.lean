@@ -131,4 +131,23 @@ theorem preBirth_maps_agree_on_frozen_front
   exact preBirth_maps_agree_outside_cone
     m hmpos h0 c0 c1 (hPrivate x hx)
 
+/-- A predecessor-closed old front avoids every private cone whose
+origin u is not itself in the front.  Thus the test maps really agree
+on the complete old front, not only on the levels below u. -/
+theorem preBirth_maps_agree_on_predClosed_front
+    (m : ℕ) (hmpos : 0 < m)
+    (h0 : History Label arity m) (c0 c1 : Label)
+    (K : Set (Node Label arity))
+    (hClosed :
+      ∀ ⦃x y : Node Label arity⦄,
+        x ≤ y → y ∈ K → x ∈ K)
+    (hu : (⟨m, h0⟩ : Node Label arity) ∉ K) :
+    ∀ x ∈ K,
+      preBirthZero (arity := arity) m c0 x =
+        preBirthOne (arity := arity) m h0 c0 c1 x := by
+  apply preBirth_maps_agree_on_frozen_front
+    m hmpos h0 c0 c1 K
+  intro x hx hux
+  exact hu (hClosed hux hx)
+
 end StructuralRamsey.Girth
