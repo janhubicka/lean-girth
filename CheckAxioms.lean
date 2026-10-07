@@ -385,3 +385,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeAntichain
 #print axioms StructuralRamsey.Girth.FreshCarrierAlternative
 #print axioms StructuralRamsey.Girth.exists_incomparable_fresh_carrier
+
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.incidenceCircuit_isCircuit
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
