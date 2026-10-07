@@ -179,7 +179,8 @@ theorem alternatingDart_eq_left_of_coord_zero
     (h : (d.dartCoordinates k).2.1 = 0) :
     alternatingDart d k =
       leftDart d (d.dartCoordinates k).1 := by
-  unfold alternatingDart dartCoordinates at h ⊢
+  unfold dartCoordinates at h
+  unfold alternatingDart
   dsimp
   rw [if_pos h]
 
@@ -189,7 +190,8 @@ theorem alternatingDart_eq_right_of_coord_ne_zero
     (h : (d.dartCoordinates k).2.1 ≠ 0) :
     alternatingDart d k =
       rightDart d (d.dartCoordinates k).1 := by
-  unfold alternatingDart dartCoordinates at h ⊢
+  unfold dartCoordinates at h
+  unfold alternatingDart
   dsimp
   rw [if_neg h]
 
@@ -229,7 +231,7 @@ theorem alternatingDart_edge_injective
           · exact hk2.trans hl2.symm
         apply (finProdFinEquiv (m := d.length) (n := 2)).symm.injective
         simpa [qk, ql, dartCoordinates] using hq
-      · exact (Sum.noConfusion h.1)
+      · cases h.1
     · have hkD : alternatingDart d k = leftDart d qk.1 := by
         simpa [qk] using d.alternatingDart_eq_left_of_coord_zero k hk0
       have hlD : alternatingDart d l = rightDart d ql.1 := by
@@ -243,7 +245,7 @@ theorem alternatingDart_edge_injective
         s(Sum.inr (d.connector ql.1),
           Sum.inl (d.label (cyclicSucc ql.1))) at hkl
       rcases Sym2.eq_iff.mp hkl with h | h
-      · exact (Sum.noConfusion h.1)
+      · cases h.1
       · have hc : d.connector qk.1 = d.connector ql.1 :=
           Sum.inr.inj h.2
         have hi : qk.1 = ql.1 := d.connector_injective hc
@@ -267,7 +269,7 @@ theorem alternatingDart_edge_injective
           Sum.inl (d.label (cyclicSucc qk.1))) =
         s(Sum.inl (d.label ql.1), Sum.inr (d.connector ql.1)) at hkl
       rcases Sym2.eq_iff.mp hkl with h | h
-      · exact (Sum.noConfusion h.1)
+      · cases h.1
       · have hc : d.connector qk.1 = d.connector ql.1 :=
           Sum.inr.inj h.1
         have hi : qk.1 = ql.1 := d.connector_injective hc
@@ -306,7 +308,7 @@ theorem alternatingDart_edge_injective
           · exact hk2.trans hl2.symm
         apply (finProdFinEquiv (m := d.length) (n := 2)).symm.injective
         simpa [qk, ql, dartCoordinates] using hq
-      · exact (Sum.noConfusion h.1)
+      · cases h.1
 
 /-- The ordered list of the two incidence darts contributed by every
 connector. -/
@@ -319,8 +321,7 @@ theorem incidenceDarts_ne_nil
     (d : CyclicIncidenceData edge) :
     d.incidenceDarts ≠ [] := by
   rw [← List.length_pos_iff]
-  simp [incidenceDarts]
-  exact d.dartLength_pos
+  simpa [incidenceDarts] using d.length_pos
 
 theorem incidenceDarts_chain
     (d : CyclicIncidenceData edge) :
@@ -397,8 +398,12 @@ theorem incidenceRawWalk_isTrail
   unfold incidenceRawWalk
   rw [SimpleGraph.Walk.edges_ofDarts]
   rw [incidenceDarts, List.map_ofFn]
-  simpa only [Function.comp_apply] using
-    (List.nodup_ofFn.mpr (alternatingDart_edge_injective d))
+  apply List.nodup_ofFn.mpr
+  intro i j hij
+  apply alternatingDart_edge_injective d
+  change (alternatingDart d i).edge =
+    (alternatingDart d j).edge at hij
+  exact hij
 
 @[simp]
 theorem incidenceRawWalk_length
