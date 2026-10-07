@@ -380,3 +380,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.supportCopy_mem_mappedSupportCopies_of_subset
 #print axioms StructuralRamsey.Girth.bergeCycle_mappedSupportCopies_of_edge_subset
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
+
+#print axioms StructuralRamsey.Girth.attachment_shared_point_in_both_local_images
