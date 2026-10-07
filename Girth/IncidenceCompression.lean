@@ -104,6 +104,108 @@ theorem rotate_succ_last_label_eq_zero
   rw [d.finCycle_last_cyclicSucc i]
   simpa [finCycle_apply] using heq
 
+
+/-- Inclusion of all indices except the last one. -/
+def keepBeforeLast
+    (d : RawCyclicIncidenceData edge)
+    (i : Fin (d.length - 1)) :
+    Fin d.length :=
+  ⟨i.1, by omega⟩
+
+theorem keepBeforeLast_injective
+    (d : RawCyclicIncidenceData edge) :
+    Function.Injective d.keepBeforeLast := by
+  intro i j hij
+  apply Fin.ext
+  exact congrArg Fin.val hij
+
+/-- If the last and first labels agree, delete the redundant last label and
+last connector.  Nonconstancy guarantees this operation is only used when at
+least three positions remain. -/
+def dropLast
+    (d : RawCyclicIncidenceData edge)
+    (h3 : 3 ≤ d.length)
+    (hwrap : d.label d.last = d.label 0) :
+    RawCyclicIncidenceData edge := by
+  classical
+  let keep := d.keepBeforeLast
+  refine
+    { length := d.length - 1
+      hlength := by omega
+      label := fun i => d.label (keep i)
+      connector := fun i => d.connector (keep i)
+      connector_injective := ?_
+      left_mem := ?_
+      right_mem := ?_
+      nonconstant := ?_ }
+  · intro i j hij
+    apply d.keepBeforeLast_injective
+    exact d.connector_injective hij
+  · intro i
+    exact d.left_mem (keep i)
+  · intro i
+    let oi : Fin d.length := keep i
+    by_cases hnext : i.1 + 1 < d.length - 1
+    · let j : Fin (d.length - 1) := ⟨i.1 + 1, hnext⟩
+      have hsuccNew : cyclicSucc i = j := by
+        apply Fin.ext
+        change (i.1 + 1) % (d.length - 1) = i.1 + 1
+        rw [Nat.mod_eq_of_lt hnext]
+      have hsuccOld : cyclicSucc oi = keep j := by
+        apply Fin.ext
+        change (i.1 + 1) % d.length = j.1
+        dsimp [j]
+        rw [Nat.mod_eq_of_lt (by omega)]
+      have h := d.right_mem oi
+      rw [hsuccOld] at h
+      simpa [hsuccNew, oi] using h
+    · have hilast : i.1 + 1 = d.length - 1 := by
+        omega
+      have hsuccNew :
+          cyclicSucc i = (0 : Fin (d.length - 1)) := by
+        apply Fin.ext
+        change (i.1 + 1) % (d.length - 1) = 0
+        rw [hilast, Nat.mod_self]
+      have hsuccOld : cyclicSucc oi = d.last := by
+        apply Fin.ext
+        change (i.1 + 1) % d.length = d.length - 1
+        rw [hilast, Nat.mod_eq_of_lt (by omega)]
+      have h := d.right_mem oi
+      rw [hsuccOld, hwrap] at h
+      simpa [hsuccNew, oi, keep, keepBeforeLast] using h
+  · by_contra hconst
+    push_neg at hconst
+    have hAll : ∀ i : Fin d.length, d.label i = d.label 0 := by
+      intro i
+      by_cases hi : i = d.last
+      · subst i
+        exact hwrap
+      · have hvalne : i.1 ≠ d.length - 1 := by
+          intro hval
+          apply hi
+          apply Fin.ext
+          simpa [RawCyclicIncidenceData.last] using hval
+        have hlt : i.1 < d.length - 1 := by
+          omega
+        let i' : Fin (d.length - 1) := ⟨i.1, hlt⟩
+        have hEq :=
+          hconst i' (0 : Fin (d.length - 1))
+        change
+          d.label (keep i') =
+            d.label (keep (0 : Fin (d.length - 1))) at hEq
+        simpa [i', keep, keepBeforeLast] using hEq
+    rcases d.nonconstant with ⟨i, j, hij⟩
+    exact hij ((hAll i).trans (hAll j).symm)
+
+/-- Dropping the redundant wrap-around strictly decreases the length. -/
+theorem dropLast_length_lt
+    (d : RawCyclicIncidenceData edge)
+    (h3 : 3 ≤ d.length)
+    (hwrap : d.label d.last = d.label 0) :
+    (d.dropLast h3 hwrap).length < d.length := by
+  dsimp [dropLast]
+  omega
+
 end RawCyclicIncidenceData
 
 end StructuralRamsey.Girth
