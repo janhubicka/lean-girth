@@ -466,3 +466,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_in_target
 #print axioms StructuralRamsey.Girth.localForestSupportPiece_carrier_eq_copy
 #print axioms StructuralRamsey.Girth.strongSupportPieces_meetPartAtMostOne
+
+#print axioms StructuralRamsey.Girth.ABMember.a_supportPiece_isOneEdge
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_mixed_of_auxiliary_A
