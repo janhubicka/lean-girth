@@ -380,3 +380,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.supportCopy_mem_mappedSupportCopies_of_subset
 #print axioms StructuralRamsey.Girth.bergeCycle_mappedSupportCopies_of_edge_subset
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
+#print axioms StructuralRamsey.Girth.EdgeAntichain
+#print axioms StructuralRamsey.Girth.FreshCarrierAlternative
+#print axioms StructuralRamsey.Girth.exists_incomparable_fresh_carrier
