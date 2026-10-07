@@ -401,3 +401,15 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.forestHistorySMTree
 #print axioms StructuralRamsey.Girth.forestHistoryFiniteRamsey
+
+#print axioms StructuralRamsey.Girth.linearEdge_eq_of_two_shared_vertices
+#print axioms StructuralRamsey.Girth.no_private_edge_replay_through_two_vertices
+#print axioms StructuralRamsey.Girth.private_replay_overlap_classification
+#print axioms StructuralRamsey.Girth.no_private_replay_of_nonedge_boundary
+#print axioms StructuralRamsey.Girth.forestProfileElimination_of_twoCopyTests
+#print axioms StructuralRamsey.Girth.no_linear_amalgam_of_incompatible_pair_owners
+#print axioms StructuralRamsey.Girth.linearEdgeSet_union_of_pairClosedOverlap
+#print axioms StructuralRamsey.Girth.unique_piece_containing_nonedge_pair
+#print axioms StructuralRamsey.Girth.allowedIntersection_of_oneSeparator_boundary
+#print axioms StructuralRamsey.Girth.allowedIntersection_oldFamily_of_oneSeparator
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_of_common_oneSeparator
