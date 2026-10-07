@@ -452,3 +452,8 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_free_shape_from_root
 #print axioms StructuralRamsey.Girth.parameterFreeEvent_rootOrbit
+
+#print axioms StructuralRamsey.Girth.no_three_distinct_edges_in_triangle
+#print axioms StructuralRamsey.Girth.shadowClique_subset_edge
+#print axioms StructuralRamsey.Girth.shadowClique_contained_in_edge
+#print axioms StructuralRamsey.Girth.piece_boundary_is_whole_edge_of_two
