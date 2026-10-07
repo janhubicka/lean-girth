@@ -460,3 +460,10 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_compl_of_oneEdge
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_of_oneEdge_outside
+
+#print axioms StructuralRamsey.Girth.gapNode_replay_deleted_code
+#print axioms StructuralRamsey.Girth.neutralGapTail_has_preimage
+#print axioms StructuralRamsey.Girth.pairwiseClean_from_pairClosedShadow
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_append_pairClosedShadow
+#print axioms StructuralRamsey.Girth.forestInvariantProfileColour_constant
+#print axioms StructuralRamsey.Girth.forestDistinctProfiles_not_fullyEquivariant
