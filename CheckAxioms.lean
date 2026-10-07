@@ -449,3 +449,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.deleteGapFin_shiftFin
 #print axioms StructuralRamsey.Girth.shiftParamTuple_deleteGapParamTuple
 #print axioms StructuralRamsey.Girth.shiftCode_deleteGapCode
+
+#print axioms StructuralRamsey.Girth.exists_free_shape_from_root
+#print axioms StructuralRamsey.Girth.parameterFreeEvent_rootOrbit
