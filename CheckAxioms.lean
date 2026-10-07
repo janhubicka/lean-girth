@@ -434,3 +434,4 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.preBirthSplit_descendant_ne
 #print axioms StructuralRamsey.Girth.preBirthSplit_event_ne_after
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_below_gap
