@@ -371,3 +371,8 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_of_base_aLinear
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_ordered
+
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.incidenceCircuit_isCircuit
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
+#print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
