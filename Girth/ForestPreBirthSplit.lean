@@ -66,6 +66,29 @@ theorem preBirthOne_at_gap
   classical
   simp [preBirthOne, oneGapShapeMap_apply, gapNode_at_level]
 
+/-- The two test embeddings agree on every old-front node below
+the private insertion level.  The stronger locality assertion for nodes
+above the gap but outside the private cone is handled separately. -/
+theorem preBirth_maps_agree_below_gap
+    (m : ℕ) (h0 : History Label arity m) (c0 c1 : Label)
+    (x : Node Label arity) (hx : x.level < m) :
+    preBirthZero (arity := arity) m c0 x =
+      preBirthOne (arity := arity) m h0 c0 c1 x := by
+  have hz :
+      preBirthZero (arity := arity) m c0 x = x := by
+    change gapNode m
+      (fun _ => ⟨c0, emptyParamTuple arity m⟩) x = x
+    exact gapNode_eq_self_of_lt m _ hx
+  have ho :
+      preBirthOne (arity := arity) m h0 c0 c1 x = x := by
+    classical
+    change gapNode m
+      (fun h : History Label arity m =>
+        if h = h0 then ⟨c1, emptyParamTuple arity m⟩
+        else ⟨c0, emptyParamTuple arity m⟩) x = x
+    exact gapNode_eq_self_of_lt m _ hx
+  exact hz.trans ho.symm
+
 /-- Splitting strictly before a marked carrier's birth separates
 all its future event bases, and not merely a padded endpoint. -/
 theorem preBirthSplit_descendant_ne
