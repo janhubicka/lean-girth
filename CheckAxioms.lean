@@ -469,3 +469,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ABMember.a_supportPiece_isOneEdge
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_mixed_of_auxiliary_A
+
+#print axioms StructuralRamsey.Girth.exists_unique_finePart
+#print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle_all_parts
