@@ -97,7 +97,7 @@ theorem projectedFactorThroughStandard_spec
   exact (Classical.choose_spec (hFactor u)).symm
 
 /-- The standard embedding restricted to the old beta-active subsystem. -/
-def standardActiveEmbedding
+noncomputable def standardActiveEmbedding
     (A : RelStructure L UA)
     (C : StructuralRamsey.Partite.System L P X)
     (S : Set X)
@@ -109,7 +109,7 @@ def standardActiveEmbedding
       (C.induce (activeCarrier A C β))
       (StructuralRamsey.Partite.Attachment.attach C S E f) :=
   (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).comp
-    (StructuralRamsey.Partite.inclusion C (activeCarrier A C β))
+    (StructuralRamsey.Partite.System.inclusion C (activeCarrier A C β))
 
 /-- A beta-projected A-copy contained in standard copy i is in fact contained
 in the beta-active restriction of standard copy i. -/
