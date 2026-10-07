@@ -449,3 +449,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.deleteGapFin_shiftFin
 #print axioms StructuralRamsey.Girth.shiftParamTuple_deleteGapParamTuple
 #print axioms StructuralRamsey.Girth.shiftCode_deleteGapCode
+
+#print axioms StructuralRamsey.Girth.no_three_distinct_edges_in_triangle
+#print axioms StructuralRamsey.Girth.shadowClique_subset_edge
+#print axioms StructuralRamsey.Girth.shadowClique_contained_in_edge
+#print axioms StructuralRamsey.Girth.piece_boundary_is_whole_edge_of_two
