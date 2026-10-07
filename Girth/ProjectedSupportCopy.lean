@@ -21,7 +21,7 @@ variable {UA P X : Type v}
 
 /-- A rigid base A-copy absorbs any irreducible projected A-copy whose parts
 all lie inside its base carrier. -/
-theorem projectedCopy_of_base_carrier_subset
+noncomputable def projectedCopy_of_base_carrier_subset
     (A : RelStructure L UA)
     [Finite UA]
     (D : RelStructure L P)
@@ -36,8 +36,10 @@ theorem projectedCopy_of_base_carrier_subset
     StructuralRamsey.Partite.ProjectedEmbedding A C
       β.toFunctionEmbedding := by
   classical
-  obtain ⟨b, hb⟩ :=
-    hPartite.after_irreducible_embedding hA a
+  have hExists := hPartite.after_irreducible_embedding hA a
+  let b : Embedding A D := Classical.choose hExists
+  have hb : ∀ x : UA, b x = C.part (a x) :=
+    Classical.choose_spec hExists
   have hFactor : ∀ x : UA, ∃ y : UA, b x = β y := by
     intro x
     rcases hSupport x with ⟨y, hy⟩
@@ -52,7 +54,7 @@ theorem projectedCopy_of_base_carrier_subset
   exact hproj.symm
 
 /-- Ordered A has a unique base embedding with each image carrier. -/
-theorem orderedProjectedCopy_of_base_carrier_subset
+noncomputable def orderedProjectedCopy_of_base_carrier_subset
     (A₀ : RelStructure L UA)
     [LinearOrder UA] [Finite UA]
     (D : RelStructure L.withOrder P)
@@ -98,6 +100,8 @@ theorem orderedBergeCycle_edges_have_fixed_projection
   let projected :=
     orderedProjectedCopy_of_base_carrier_subset
       A₀ D C hPartite β a hPartA
-  exact ⟨projected, ha⟩
+  refine ⟨projected, ?_⟩
+  change c.edge j = copyCarrier a
+  exact ha
 
 end StructuralRamsey.Girth
