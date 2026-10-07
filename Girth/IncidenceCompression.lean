@@ -82,13 +82,19 @@ def rotate
     refine ⟨i', j', ?_⟩
     change d.label ((finCycle s) i') ≠
       d.label ((finCycle s) j')
-    simpa [i', j'] using hij
+    have hi' : (finCycle s) i' = i := by
+      exact Equiv.apply_symm_apply (finCycle s) i
+    have hj' : (finCycle s) j' = j := by
+      exact Equiv.apply_symm_apply (finCycle s) j
+    rw [hi', hj']
+    exact hij
 
 /-- Canonical last index of nonempty raw cyclic data. -/
 def last
     (d : RawCyclicIncidenceData edge) :
     Fin d.length :=
-  ⟨d.length - 1, Nat.sub_lt d.length_pos (by decide)⟩
+  letI : NeZero d.length := ⟨d.length_pos.ne'⟩
+  (-1 : Fin d.length)
 
 /-- Rotating by the successor of an old index sends the last new
 position back to that old index. -/
@@ -96,15 +102,12 @@ theorem finCycle_last_cyclicSucc
     (d : RawCyclicIncidenceData edge)
     (i : Fin d.length) :
     (finCycle (cyclicSucc i)) d.last = i := by
-  haveI : NeZero d.length := ⟨d.length_pos.ne'⟩
-  have hlast : d.last = (-1 : Fin d.length) := by
-    apply Fin.ext
-    change d.length - 1 = ((-1 : Fin d.length) : ℕ)
-    rw [Fin.coe_neg_one]
-  rw [hlast, finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply]
+  letI : NeZero d.length := ⟨d.length_pos.ne'⟩
+  rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply]
+  change (-1 : Fin d.length) + (i + 1) = i
   calc
     (-1 : Fin d.length) + (i + 1) =
-        i + ((-1 : Fin d.length) + 1) := by ac_rfl
+        ((-1 : Fin d.length) + 1) + i := by ac_rfl
     _ = i := by simp
 
 /-- If the transition at i is redundant, rotate it to the wrap-around:
@@ -121,11 +124,14 @@ theorem rotate_succ_last_label_eq_zero
     d.label ((finCycle (cyclicSucc i)) d.last) =
       d.label ((finCycle (cyclicSucc i)) d.zeroIndex)
   rw [d.finCycle_last_cyclicSucc i]
+  have hz0 : d.zeroIndex = (0 : Fin d.length) := by
+    apply Fin.ext
+    rfl
   have hz :
       (finCycle (cyclicSucc i)) d.zeroIndex =
         cyclicSucc i := by
-    apply Fin.ext
-    simp [finCycle_apply, zeroIndex]
+    rw [finCycle_apply, hz0]
+    simp
   rw [hz]
   exact heq
 
@@ -279,6 +285,7 @@ theorem three_le_length_of_label_eq_succ
     3 ≤ d.length := by
   by_contra h3
   have hlt3 : d.length < 3 := Nat.lt_of_not_ge h3
+  have h2 := d.hlength
   have hlen : d.length = 2 := by
     omega
   have hne : i ≠ cyclicSucc i :=
