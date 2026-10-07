@@ -497,6 +497,94 @@ theorem no_cyclicIncidenceData_of_forest_part
       hForest P hPart)
     d
 
+
+/-- Pull cyclic incidence data back through an injective map when every
+labelled edge is represented by its image.  The surviving connector is chosen
+from its left incident edge; injectivity shows that the same preimage also
+lies in the right incident edge. -/
+noncomputable def pullbackImage
+    {Y Z : Type v}
+    (ι : Y ↪ Z)
+    (edgeY : E → Set Y)
+    (d : CyclicIncidenceData
+      (fun e => ι '' edgeY e)) :
+    CyclicIncidenceData edgeY := by
+  classical
+  have hpre (j : Fin d.length) :
+      ∃ y : Y, y ∈ edgeY (d.label j) ∧
+        ι y = d.connector j := by
+    simpa only [Set.mem_image] using d.left_mem j
+  let conn : Fin d.length → Y :=
+    fun j => Classical.choose (hpre j)
+  have hconnMem (j : Fin d.length) :
+      conn j ∈ edgeY (d.label j) :=
+    (Classical.choose_spec (hpre j)).1
+  have hconnMap (j : Fin d.length) :
+      ι (conn j) = d.connector j :=
+    (Classical.choose_spec (hpre j)).2
+  refine
+    { length := d.length
+      hlength := d.hlength
+      label := d.label
+      connector := conn
+      connector_injective := ?_
+      label_ne_succ := d.label_ne_succ
+      left_mem := hconnMem
+      right_mem := ?_ }
+  · intro i j hij
+    apply d.connector_injective
+    calc
+      d.connector i = ι (conn i) := (hconnMap i).symm
+      _ = ι (conn j) := congrArg ι hij
+      _ = d.connector j := hconnMap j
+  · intro j
+    have hr := d.right_mem j
+    rcases hr with ⟨y, hy, hyMap⟩
+    have hyEq : y = conn j := by
+      apply ι.injective
+      exact hyMap.trans (hconnMap j).symm
+    simpa [hyEq] using hy
+
+/-- Forest-restriction contradiction for incidence data whose labelled sets
+have first been embedded injectively into a larger ambient type. -/
+theorem no_cyclicIncidenceData_of_mapped_forest_restriction
+    {Y Z ι : Type v}
+    {F : ι → HypergraphPiece Y}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set Y)
+    (hEdgePart :
+      ∀ ⦃i j : ι⦄, i ≠ j → ∀ ⦃e : Set Y⦄,
+        e ∈ (F i).edges → e ∈ (F j).edges →
+          (e ∩ P).Subsingleton)
+    (emb : Y ↪ Z)
+    (d : CyclicIncidenceData
+      (fun i =>
+        emb '' ((F i).restrictCarrier P).carrier)) :
+    False :=
+  no_cyclicIncidenceData_of_forest_restriction
+    hForest P hEdgePart
+    (pullbackImage emb
+      (fun i => ((F i).restrictCarrier P).carrier) d)
+
+/-- One-part specialization of the mapped forest contradiction. -/
+theorem no_cyclicIncidenceData_of_mapped_forest_part
+    {Y Z ι : Type v}
+    {F : ι → HypergraphPiece Y}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set Y)
+    (hPart : EdgesMeetPartAtMostOne F P)
+    (emb : Y ↪ Z)
+    (d : CyclicIncidenceData
+      (fun i =>
+        emb '' ((F i).restrictCarrier P).carrier)) :
+    False :=
+  no_cyclicIncidenceData_of_forest_part
+    hForest P hPart
+    (pullbackImage emb
+      (fun i => ((F i).restrictCarrier P).carrier) d)
+
 end CyclicIncidenceData
 
 end StructuralRamsey.Girth
