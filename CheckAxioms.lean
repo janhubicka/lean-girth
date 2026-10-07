@@ -467,3 +467,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_append_pairClosedShadow
 #print axioms StructuralRamsey.Girth.forestInvariantProfileColour_constant
 #print axioms StructuralRamsey.Girth.forestDistinctProfiles_not_fullyEquivariant
+#print axioms StructuralRamsey.Girth.neutralGapTail_finite_preimages
