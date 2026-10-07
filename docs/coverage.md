@@ -28,6 +28,9 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | Structural local-forest translation | transversal decoration, exact support, and irreducible containment encoded in `Decoration`/`HypergraphClique`; lifting strong partite embeddings remains |
 | §5 initial/active picture | designated initial components and irreducible coverage formalized; true active subsystem, custom local witness, projection/actual irreducible coverage, Ramsey picture property, standard-copy geometry, designated B-copy preservation, active-subsystem A-generation, shared-support core mechanism, and the bridge from strong local-forest support families to the designated local hypothesis now encoded through CI |
 | §§3–6 induced picture/local-forest construction | remaining global completion/shared-support induction not yet formalized |
+| §5 incidence circuit and cyclic run compression | `CyclicIncidenceData.incidenceCircuit_isCircuit` and `RawCyclicIncidenceData.exists_compressed_le` are complete and axiom-audited; the compression assumes core incidence only at genuine changes of standard-copy label |
+| §5 untouched-subsystem girth step | `no_short_untouched_projected_cycle` is proved and axiom-audited on main. It uses the exact projected-edge, fine-part and finite local-forest hypotheses; the surrounding global construction must still discharge those hypotheses |
+| §5 forest completion | `forestOfCopies_lift_local_of_linear` proves local-forest gluing and `ownerFiber_card_add_degree_le` the degree budget. Selecting all augmented local completions, deleting auxiliary edge members and packaging full preservation remain unverified |
 | Main Theorem 1.1 | not yet formalized |
 
 The dependency on `partite-construction` is pinned deliberately.  As the EHN
