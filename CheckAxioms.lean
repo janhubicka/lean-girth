@@ -455,3 +455,5 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_compl_of_oneEdge
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_of_oneEdge_outside
+
+#print axioms StructuralRamsey.Girth.forestCompletion_assemble
