@@ -100,3 +100,4 @@ import Girth.ForestPreBirthSplit
 import Girth.ForestNeutralGap
 import Girth.ForestParameterFreeOrbit
 import Girth.ForestShadowClique
+import Girth.ForestRootColourCanon
