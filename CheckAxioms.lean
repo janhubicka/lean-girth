@@ -457,3 +457,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.shadowClique_subset_edge
 #print axioms StructuralRamsey.Girth.shadowClique_contained_in_edge
 #print axioms StructuralRamsey.Girth.piece_boundary_is_whole_edge_of_two
+
+#print axioms StructuralRamsey.Girth.forestInvariantProfileColour_constant
+#print axioms StructuralRamsey.Girth.forestDistinctProfiles_not_fullyEquivariant
