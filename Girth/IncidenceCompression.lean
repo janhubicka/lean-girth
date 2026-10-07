@@ -3,10 +3,11 @@ import Girth.CyclicRun
 
 /-! # Compressing cyclic incidence runs
 
-Before the final incidence contradiction, the circulation proof has one label
-for every edge of the original Berge cycle.  Consecutive labels may agree.
-This file formalizes the elementary cyclic compression which removes such
-redundant transitions while preserving the connector incidences.
+Before the final incidence contradiction, the circulation proof has one owner
+label for every edge of the original Berge cycle. Consecutive labels may
+agree. Only owner changes are forced through the local witness; connectors
+inside one owner run may remain private. This file compresses equal-label runs
+and retains precisely the change connectors.
 -/
 
 namespace StructuralRamsey.Girth
@@ -14,21 +15,30 @@ namespace StructuralRamsey.Girth
 universe v
 variable {W E : Type v}
 
-/-- Cyclic incidence data before maximal equal-label runs have been
-compressed.  The label word is required to be nonconstant. -/
+/-- Cyclic owner data before maximal equal-label runs have been compressed.
+Incidence in the target labelled family is required only at genuine owner
+changes. -/
 structure RawCyclicIncidenceData (edge : E → Set W) where
   length : ℕ
   hlength : 2 ≤ length
   label : Fin length → E
   connector : Fin length → W
   connector_injective : Function.Injective connector
-  left_mem : ∀ i, connector i ∈ edge (label i)
-  right_mem : ∀ i, connector i ∈ edge (label (cyclicSucc i))
+  boundary_mem :
+    ∀ i, label i ≠ label (cyclicSucc i) →
+      connector i ∈ edge (label i) ∧
+      connector i ∈ edge (label (cyclicSucc i))
   nonconstant : ∃ i j, label i ≠ label j
 
 namespace RawCyclicIncidenceData
 
 variable {edge : E → Set W}
+
+theorem length_pos (d : RawCyclicIncidenceData edge) : 0 < d.length :=
+  lt_of_lt_of_le (by decide) d.hlength
+
+def zeroIndex (d : RawCyclicIncidenceData edge) : Fin d.length :=
+  ⟨0, d.length_pos⟩
 
 /-- Cyclic translation commutes with cyclic successor. -/
 theorem finCycle_cyclicSucc
@@ -39,7 +49,7 @@ theorem finCycle_cyclicSucc
   simp only [finRotate_apply, finCycle_apply]
   ac_rfl
 
-/-- Rotate the cyclic indexing without changing any incidence data. -/
+/-- Rotate the cyclic indexing without changing owner-change incidence data. -/
 def rotate
     (d : RawCyclicIncidenceData edge)
     (s : Fin d.length) :
@@ -52,11 +62,18 @@ def rotate
     intro i j hij
     apply (finCycle s).injective
     exact d.connector_injective hij
-  left_mem i := d.left_mem (finCycle i s)
-  right_mem i := by
-    have h := d.right_mem (finCycle i s)
-    rw [← finCycle_cyclicSucc i s] at h
-    exact h
+  boundary_mem := by
+    intro i hne
+    have hneOld :
+        d.label (finCycle i s) ≠
+          d.label (cyclicSucc (finCycle i s)) := by
+      intro heq
+      apply hne
+      simpa [finCycle_cyclicSucc] using heq
+    have h := d.boundary_mem (finCycle i s) hneOld
+    constructor
+    · exact h.1
+    · simpa [finCycle_cyclicSucc] using h.2
   nonconstant := by
     rcases d.nonconstant with ⟨i, j, hij⟩
     let i' : Fin d.length := (finCycle s).symm i
@@ -68,7 +85,7 @@ def rotate
 def last
     (d : RawCyclicIncidenceData edge) :
     Fin d.length :=
-  ⟨d.length - 1, by omega⟩
+  ⟨d.length - 1, Nat.sub_lt d.length_pos (by decide)⟩
 
 /-- Rotating to the successor of an index sends the last new position back to
 that index. -/
@@ -76,12 +93,13 @@ theorem finCycle_last_cyclicSucc
     (d : RawCyclicIncidenceData edge)
     (i : Fin d.length) :
     finCycle d.last (cyclicSucc i) = i := by
-  haveI : NeZero d.length := ⟨by omega⟩
+  haveI : NeZero d.length := ⟨d.length_pos.ne'⟩
   have hlast : d.last = (-1 : Fin d.length) := by
     apply Fin.ext
     change d.length - 1 = ((-1 : Fin d.length) : ℕ)
     conv_rhs =>
-      rw [show d.length = (d.length - 1) + 1 by omega]
+      rw [show d.length = (d.length - 1) + 1 by
+        exact (Nat.sub_add_cancel (Nat.succ_le_iff.mpr d.length_pos)).symm]
     rw [Fin.coe_neg_one]
   rw [finCycle_apply, cyclicSucc_eq_finRotate, finRotate_apply, hlast]
   calc
@@ -97,20 +115,22 @@ theorem rotate_succ_last_label_eq_zero
     (heq : d.label i = d.label (cyclicSucc i)) :
     (d.rotate (cyclicSucc i)).label
         (d.rotate (cyclicSucc i)).last =
-      (d.rotate (cyclicSucc i)).label 0 := by
+      (d.rotate (cyclicSucc i)).label
+        (d.rotate (cyclicSucc i)).zeroIndex := by
   change
     d.label (finCycle d.last (cyclicSucc i)) =
-      d.label (finCycle 0 (cyclicSucc i))
+      d.label (finCycle d.zeroIndex (cyclicSucc i))
   rw [d.finCycle_last_cyclicSucc i]
-  simpa [finCycle_apply] using heq
-
+  simpa [finCycle_apply, zeroIndex] using heq
 
 /-- Inclusion of all indices except the last one. -/
 def keepBeforeLast
     (d : RawCyclicIncidenceData edge)
     (i : Fin (d.length - 1)) :
     Fin d.length :=
-  ⟨i.1, by omega⟩
+  ⟨i.1, by
+    have := d.hlength
+    omega⟩
 
 theorem keepBeforeLast_injective
     (d : RawCyclicIncidenceData edge) :
@@ -120,30 +140,28 @@ theorem keepBeforeLast_injective
   exact congrArg Fin.val hij
 
 /-- If the last and first labels agree, delete the redundant last label and
-last connector.  Nonconstancy guarantees this operation is only used when at
-least three positions remain. -/
+last connector. Incidence is only transported for transitions which remain
+genuine owner changes. -/
 def dropLast
     (d : RawCyclicIncidenceData edge)
     (h3 : 3 ≤ d.length)
-    (hwrap : d.label d.last = d.label 0) :
+    (hwrap : d.label d.last = d.label d.zeroIndex) :
     RawCyclicIncidenceData edge := by
   classical
   let keep := d.keepBeforeLast
+  let z : Fin (d.length - 1) := ⟨0, by omega⟩
   refine
     { length := d.length - 1
       hlength := by omega
       label := fun i => d.label (keep i)
       connector := fun i => d.connector (keep i)
       connector_injective := ?_
-      left_mem := ?_
-      right_mem := ?_
+      boundary_mem := ?_
       nonconstant := ?_ }
   · intro i j hij
     apply d.keepBeforeLast_injective
     exact d.connector_injective hij
-  · intro i
-    exact d.left_mem (keep i)
-  · intro i
+  · intro i hneNew
     let oi : Fin d.length := keep i
     by_cases hnext : i.1 + 1 < d.length - 1
     · let j : Fin (d.length - 1) := ⟨i.1 + 1, hnext⟩
@@ -156,13 +174,19 @@ def dropLast
         change (i.1 + 1) % d.length = j.1
         dsimp [j]
         rw [Nat.mod_eq_of_lt (by omega)]
-      have h := d.right_mem oi
-      rw [hsuccOld] at h
-      simpa [hsuccNew, oi] using h
+      have hneOld :
+          d.label oi ≠ d.label (cyclicSucc oi) := by
+        intro heq
+        apply hneNew
+        simpa [hsuccNew, hsuccOld, oi] using heq
+      have h := d.boundary_mem oi hneOld
+      constructor
+      · exact h.1
+      · simpa [hsuccNew, hsuccOld, oi] using h.2
     · have hilast : i.1 + 1 = d.length - 1 := by
         omega
       have hsuccNew :
-          cyclicSucc i = (0 : Fin (d.length - 1)) := by
+          cyclicSucc i = z := by
         apply Fin.ext
         change (i.1 + 1) % (d.length - 1) = 0
         rw [hilast, Nat.mod_self]
@@ -170,12 +194,26 @@ def dropLast
         apply Fin.ext
         change (i.1 + 1) % d.length = d.length - 1
         rw [hilast, Nat.mod_eq_of_lt (by omega)]
-      have h := d.right_mem oi
-      rw [hsuccOld, hwrap] at h
-      simpa [hsuccNew, oi, keep, keepBeforeLast] using h
+      have hkeepZero : keep z = d.zeroIndex := by
+        apply Fin.ext
+        rfl
+      have hneOld :
+          d.label oi ≠ d.label (cyclicSucc oi) := by
+        intro heq
+        apply hneNew
+        have heq' : d.label (keep i) = d.label d.zeroIndex := by
+          simpa [oi, hsuccOld, hwrap] using heq
+        simpa [hsuccNew, hkeepZero] using heq'
+      have h := d.boundary_mem oi hneOld
+      constructor
+      · exact h.1
+      · have hright :
+            d.connector oi ∈ edge (d.label d.zeroIndex) := by
+          simpa [hsuccOld, hwrap] using h.2
+        simpa [hsuccNew, hkeepZero, oi] using hright
   · by_contra hconst
     push_neg at hconst
-    have hAll : ∀ i : Fin d.length, d.label i = d.label 0 := by
+    have hAll : ∀ i : Fin d.length, d.label i = d.label d.zeroIndex := by
       intro i
       by_cases hi : i = d.last
       · subst i
@@ -188,12 +226,12 @@ def dropLast
         have hlt : i.1 < d.length - 1 := by
           omega
         let i' : Fin (d.length - 1) := ⟨i.1, hlt⟩
-        have hEq :=
-          hconst i' (0 : Fin (d.length - 1))
-        change
-          d.label (keep i') =
-            d.label (keep (0 : Fin (d.length - 1))) at hEq
-        simpa [i', keep, keepBeforeLast] using hEq
+        have hEq := hconst i' z
+        change d.label (keep i') = d.label (keep z) at hEq
+        have hkeepZero : keep z = d.zeroIndex := by
+          apply Fin.ext
+          rfl
+        simpa [i', hkeepZero] using hEq
     rcases d.nonconstant with ⟨i, j, hij⟩
     exact hij ((hAll i).trans (hAll j).symm)
 
@@ -201,11 +239,10 @@ def dropLast
 theorem dropLast_length_lt
     (d : RawCyclicIncidenceData edge)
     (h3 : 3 ≤ d.length)
-    (hwrap : d.label d.last = d.label 0) :
+    (hwrap : d.label d.last = d.label d.zeroIndex) :
     (d.dropLast h3 hwrap).length < d.length := by
   dsimp [dropLast]
   omega
-
 
 /-- Cyclic successor has no fixed point once there are at least two indices. -/
 theorem cyclicSucc_ne_self_of_two_le
@@ -233,7 +270,7 @@ theorem three_le_length_of_label_eq_succ
   have hlen : d.length = 2 := by
     omega
   have hne : i ≠ cyclicSucc i :=
-    (cyclicSucc_ne_self_of_two_le d.hlength i)
+    cyclicSucc_ne_self_of_two_le d.hlength i
   have hpair :
       ({i, cyclicSucc i} : Finset (Fin d.length)) = Finset.univ := by
     apply Finset.eq_univ_of_card
@@ -252,7 +289,7 @@ theorem three_le_length_of_label_eq_succ
   exact hjk ((hall j).trans (hall k).symm)
 
 /-- Repeatedly delete redundant equal-label transitions until every cyclic
-transition changes label.  The resulting compressed cycle never has more
+transition changes label. The resulting compressed cycle never has more
 positions than the original one. -/
 theorem exists_compressed_le
     (d : RawCyclicIncidenceData edge) :
@@ -277,15 +314,15 @@ theorem exists_compressed_le
           connector := d.connector
           connector_injective := d.connector_injective
           label_ne_succ := hgood
-          left_mem := d.left_mem
-          right_mem := d.right_mem
+          left_mem := fun i => (d.boundary_mem i (hgood i)).1
+          right_mem := fun i => (d.boundary_mem i (hgood i)).2
         }, le_rfl⟩
       · push_neg at hgood
         obtain ⟨i, heq⟩ := hgood
         have h3 : 3 ≤ d.length :=
           d.three_le_length_of_label_eq_succ i heq
         let r := d.rotate (cyclicSucc i)
-        have hwrap : r.label r.last = r.label 0 := by
+        have hwrap : r.label r.last = r.label r.zeroIndex := by
           simpa [r] using d.rotate_succ_last_label_eq_zero i heq
         let d' := r.dropLast h3 hwrap
         have hltD : d'.length < d.length := by
@@ -294,11 +331,10 @@ theorem exists_compressed_le
         have hltN : d'.length < n := by
           simpa [hlen] using hltD
         obtain ⟨c, hc⟩ := ih d'.length hltN d' rfl
-        refine ⟨c, hc.trans ?_⟩
-        exact Nat.le_of_lt hltD
+        refine ⟨c, hc.trans (Nat.le_of_lt hltD)⟩
 
-/-- Every nonconstant raw cyclic incidence pattern therefore yields the
-compressed cyclic incidence data consumed by the circuit theorem. -/
+/-- Every nonconstant raw cyclic owner pattern therefore yields the compressed
+cyclic incidence data consumed by the circuit theorem. -/
 noncomputable def compress
     (d : RawCyclicIncidenceData edge) :
     CyclicIncidenceData edge :=
@@ -309,18 +345,17 @@ theorem compress_length_le
     d.compress.length ≤ d.length :=
   Classical.choose_spec d.exists_compressed_le
 
-
-/-- Raw cyclic incidence data extracted from a Berge cycle and an arbitrary
-owner assignment.  The hyperedges of the Berge cycle are only used to supply
-distinct connector vertices; the owner pieces may repeat. -/
+/-- Raw owner data extracted from a Berge cycle. Only connectors across actual
+owner changes need to lie in the two corresponding labelled pieces. -/
 def ofBergeCycle
     {H : Set (Set W)}
     (c : BergeCycle H)
     (owner : Fin c.length → E)
     (edge : E → Set W)
-    (hLeft : ∀ i, c.vertex i ∈ edge (owner i))
-    (hRight :
-      ∀ i, c.vertex i ∈ edge (owner (cyclicSucc i)))
+    (hBoundary :
+      ∀ i, owner i ≠ owner (cyclicSucc i) →
+        c.vertex i ∈ edge (owner i) ∧
+        c.vertex i ∈ edge (owner (cyclicSucc i)))
     (hOwnerNonconstant :
       ∃ i j : Fin c.length, owner i ≠ owner j) :
     RawCyclicIncidenceData edge where
@@ -329,33 +364,29 @@ def ofBergeCycle
   label := owner
   connector := c.vertex
   connector_injective := c.vertex_injective
-  left_mem := hLeft
-  right_mem := hRight
+  boundary_mem := hBoundary
   nonconstant := hOwnerNonconstant
 
-/-- End-to-end combinatorial form of maximal run compression: a Berge cycle
-with a nonconstant owner word and adjacent connector incidence yields
-compressed cyclic incidence data, of no greater length. -/
+/-- End-to-end maximal run compression for a Berge owner word. -/
 theorem exists_compressed_ofBergeCycle
     {H : Set (Set W)}
     (c : BergeCycle H)
     (owner : Fin c.length → E)
     (edge : E → Set W)
-    (hLeft : ∀ i, c.vertex i ∈ edge (owner i))
-    (hRight :
-      ∀ i, c.vertex i ∈ edge (owner (cyclicSucc i)))
+    (hBoundary :
+      ∀ i, owner i ≠ owner (cyclicSucc i) →
+        c.vertex i ∈ edge (owner i) ∧
+        c.vertex i ∈ edge (owner (cyclicSucc i)))
     (hOwnerNonconstant :
       ∃ i j : Fin c.length, owner i ≠ owner j) :
     ∃ d : CyclicIncidenceData edge,
-      d.length ≤ c.length := by
-  exact
-    (ofBergeCycle c owner edge hLeft hRight hOwnerNonconstant).
-      exists_compressed_le
+      d.length ≤ c.length :=
+  (ofBergeCycle c owner edge hBoundary hOwnerNonconstant).
+    exists_compressed_le
 
 /-- Direct contradiction used for untouched subsystems in the circulation
-proof.  If the owner pieces form a forest after restriction, a Berge cycle
-cannot have a nonconstant owner word whose connector at every transition lies
-in both adjacent owner pieces. -/
+proof. A forest restricted to the fine part cannot support the change
+connectors of a nonconstant owner word around a Berge cycle. -/
 theorem no_nonconstant_owner_cycle_of_forest_restriction
     {H : Set (Set W)}
     {ι : Type v}
@@ -369,12 +400,9 @@ theorem no_nonconstant_owner_cycle_of_forest_restriction
           (e ∩ P).Subsingleton)
     (c : BergeCycle H)
     (owner : Fin c.length → ι)
-    (hLeft :
-      ∀ i,
-        c.vertex i ∈
-          ((F (owner i)).restrictCarrier P).carrier)
-    (hRight :
-      ∀ i,
+    (hBoundary :
+      ∀ i, owner i ≠ owner (cyclicSucc i) →
+        c.vertex i ∈ ((F (owner i)).restrictCarrier P).carrier ∧
         c.vertex i ∈
           ((F (owner (cyclicSucc i))).restrictCarrier P).carrier)
     (hOwnerNonconstant :
@@ -384,13 +412,12 @@ theorem no_nonconstant_owner_cycle_of_forest_restriction
       (fun i => ((F i).restrictCarrier P).carrier) :=
     ofBergeCycle c owner
       (fun i => ((F i).restrictCarrier P).carrier)
-      hLeft hRight hOwnerNonconstant
+      hBoundary hOwnerNonconstant
   exact
     no_cyclicIncidenceData_of_forest_restriction
       hForest P hEdgePart raw.compress
 
-/-- One-part specialization of
-`no_nonconstant_owner_cycle_of_forest_restriction`. -/
+/-- One-part specialization of the preceding contradiction. -/
 theorem no_nonconstant_owner_cycle_of_forest_part
     {H : Set (Set W)}
     {ι : Type v}
@@ -401,12 +428,9 @@ theorem no_nonconstant_owner_cycle_of_forest_part
     (hPart : EdgesMeetPartAtMostOne F P)
     (c : BergeCycle H)
     (owner : Fin c.length → ι)
-    (hLeft :
-      ∀ i,
-        c.vertex i ∈
-          ((F (owner i)).restrictCarrier P).carrier)
-    (hRight :
-      ∀ i,
+    (hBoundary :
+      ∀ i, owner i ≠ owner (cyclicSucc i) →
+        c.vertex i ∈ ((F (owner i)).restrictCarrier P).carrier ∧
         c.vertex i ∈
           ((F (owner (cyclicSucc i))).restrictCarrier P).carrier)
     (hOwnerNonconstant :
@@ -416,7 +440,7 @@ theorem no_nonconstant_owner_cycle_of_forest_part
       (fun i => ((F i).restrictCarrier P).carrier) :=
     ofBergeCycle c owner
       (fun i => ((F i).restrictCarrier P).carrier)
-      hLeft hRight hOwnerNonconstant
+      hBoundary hOwnerNonconstant
   exact
     no_cyclicIncidenceData_of_forest_part
       hForest P hPart raw.compress
