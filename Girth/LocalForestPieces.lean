@@ -94,4 +94,29 @@ theorem strongSupportPieces_meetPartAtMostOne
   exact (huniq x ⟨hx.1, hx.2⟩).trans
     (huniq y ⟨hy.1, hy.2⟩).symm
 
+/-- Injectively relabelling the parts of a transversal support hypergraph
+preserves the one-vertex-per-part condition for all fine base parts.  This
+is the form used by the local witness after relabelling along the active
+base embedding. -/
+theorem strongSupportPieces_meetRelabelPartAtMostOne
+    {H : Set (Set X)} {K : Set (Set Y)}
+    {partY : Y → UA}
+    (family : ι → StrongSupportEmbedding H K)
+    (hTransK : EdgeTransversal K partY)
+    {P₀ : Type v} (α : UA ↪ P₀)
+    (p : P₀) :
+    EdgesMeetPartAtMostOne
+      (fun i : ι => (family i).supportPiece)
+      {y : Y | α (partY y) = p} := by
+  intro i e he
+  have heK : e ∈ K :=
+    (family i).supportPiece_edges_in_target he
+  intro x hx y hy
+  have hPartEq : partY x = partY y :=
+    α.injective (hx.2.trans hy.2.symm)
+  obtain ⟨z, hz, huniq⟩ := hTransK e heK (partY x)
+  exact (huniq x ⟨hx.1, rfl⟩).trans
+    (huniq y ⟨hy.1, hPartEq.symm⟩).symm
+
+
 end StructuralRamsey.Girth
