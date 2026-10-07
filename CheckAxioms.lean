@@ -413,3 +413,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_of_oneSeparator_boundary
 #print axioms StructuralRamsey.Girth.allowedIntersection_oldFamily_of_oneSeparator
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_of_common_oneSeparator
+
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_le
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.compress_length_le
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_ofBergeCycle
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_restriction
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.no_nonconstant_owner_cycle_of_forest_part
