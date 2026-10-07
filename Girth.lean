@@ -57,6 +57,7 @@ import Girth.IncidenceCircuit
 import Girth.IncidenceCompression
 import Girth.OwnerGirth
 import Girth.MappedOwnerGirth
+import Girth.UntouchedGirthStep
 import Girth.PartRestrictedForestGirth
 import Girth.HypergraphClique
 import Girth.FunctionalEHNClass
@@ -71,6 +72,7 @@ import Girth.AttachmentLinearity
 import Girth.PictureProjectionGeometry
 import Girth.UntouchedOwner
 import Girth.UntouchedOwnerBoundary
+import Girth.StandardActiveFactor
 import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
 import Girth.ActiveBoundary
