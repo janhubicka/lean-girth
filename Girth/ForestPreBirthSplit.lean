@@ -78,10 +78,10 @@ theorem preBirthSplit_descendant_ne
   let x : Node Label arity := ⟨m, h0⟩
   let D0 := preBirthZero (arity := arity) m c0
   let D1 := preBirthOne (arity := arity) m h0 c0 c1
-  have h0 :
+  have h0Eq :
       D0 x = child x (emptyParamTuple arity m) c0 :=
     preBirthZero_at_gap m h0 c0
-  have h1 :
+  have h1Eq :
       D1 x = child x (emptyParamTuple arity m) c1 :=
     preBirthOne_at_gap m h0 c0 c1
   have hdist : D0 x ≠ D1 x := by
@@ -90,15 +90,15 @@ theorem preBirthSplit_descendant_ne
         child x (emptyParamTuple arity m) c0 =
           child x (emptyParamTuple arity m) c1 := by
       calc
-        child x (emptyParamTuple arity m) c0 = D0 x := h0.symm
+        child x (emptyParamTuple arity m) c0 = D0 x := h0Eq.symm
         _ = D1 x := heq
-        _ = child x (emptyParamTuple arity m) c1 := h1
+        _ = child x (emptyParamTuple arity m) c1 := h1Eq
     exact hne (child_eq_data heqChild).2
   have h0le : D0 x ≤ D0 a := D0.map_le_of_le hua
   have h1le : D1 x ≤ D1 a := D1.map_le_of_le hua
   have hlev : LevelTree.lev (D0 x) = LevelTree.lev (D1 x) := by
     change (D0 x).level = (D1 x).level
-    rw [h0, h1, child_level, child_level]
+    rw [h0Eq, h1Eq, child_level, child_level]
   intro heq
   have h0le' : D0 x ≤ D1 a := by
     rw [← heq]
