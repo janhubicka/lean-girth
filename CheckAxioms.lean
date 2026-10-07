@@ -437,3 +437,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.predecessorSpineCode_succ_parameter
 #print axioms StructuralRamsey.Girth.forestDiarySkeleton_card_le
 #print axioms StructuralRamsey.Girth.forestDiarySkeleton_bound
+
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_below_gap
+#print axioms StructuralRamsey.Girth.preBirthSplit_descendant_ne
+#print axioms StructuralRamsey.Girth.preBirthSplit_event_ne_after
