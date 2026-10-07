@@ -112,7 +112,7 @@ theorem finCycle_last_cyclicSucc
         d.length - 1 + (i.1 + 1) =
           d.length + i.1 := by
       omega
-    rw [hsum, Nat.add_mod_right, Nat.mod_eq_of_lt i.2]
+    rw [hsum, Nat.add_mod_left, Nat.mod_eq_of_lt i.2]
   · have hlast : i.1 + 1 = d.length := by
       omega
     rw [hlast, Nat.mod_self, Nat.add_zero,
