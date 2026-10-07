@@ -65,6 +65,7 @@ import Girth.AttachmentStrongness
 import Girth.AttachmentLinearity
 import Girth.PictureProjectionGeometry
 import Girth.UntouchedOwner
+import Girth.UntouchedOwnerBoundary
 import Girth.ActivePictureInvariant
 import Girth.DesignatedPicture
 import Girth.ActiveBoundary
