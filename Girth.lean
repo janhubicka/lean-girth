@@ -87,3 +87,4 @@ import Girth.ForestProfileElimination
 import Girth.ForestPairClosedUnion
 import Girth.ForestNonEdgeOwner
 import Girth.ForestOneSeparatorReplay
+import Girth.ForestObservableProfile
