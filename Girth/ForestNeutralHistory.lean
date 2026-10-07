@@ -128,8 +128,13 @@ theorem neutralGapTail_has_preimage
             sc.params sc.label) =
           child (⟨n + 1, h⟩ : Node Label arity)
             c.params c.label
+      have hmn :
+          m ≤ (⟨n, s⟩ : Node Label arity).level := by
+        change m ≤ n
+        dsimp [n]
+        omega
       rw [gapNode_child_of_ge m choose
-        (⟨n, s⟩ : Node Label arity) sc.params sc.label (by omega)]
+        (⟨n, s⟩ : Node Label arity) sc.params sc.label hmn]
       rw [hs]
       congr 1
       apply levelList_injective
