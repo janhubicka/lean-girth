@@ -470,3 +470,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.preBirthOne_at_other_gap
 #print axioms StructuralRamsey.Girth.preBirth_maps_agree_outside_cone
 #print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_frozen_front
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_predClosed_front
