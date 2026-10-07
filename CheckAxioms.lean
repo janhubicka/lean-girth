@@ -376,3 +376,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
+
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.exists_compressed_le
+#print axioms StructuralRamsey.Girth.RawCyclicIncidenceData.compress_length_le
