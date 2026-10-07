@@ -35,8 +35,7 @@ theorem ForestOfCopies.restrict_compl_of_oneEdge
             intro i
             exact Subtype.ext rfl
           right_inv := by intro i; rfl }
-      simpa only [Finset.not_mem_empty, not_false_eq_true]
-        using hF.reindex e
+      simpa [e] using hF.reindex e
   | @insert center removed hnot ih =>
       have hOneRest :
           ∀ i : ι, i ∈ removed → (F i).IsOneEdge := by
@@ -76,7 +75,8 @@ theorem ForestOfCopies.restrict_compl_of_oneEdge
           invFun := fun i =>
             ⟨i.1.1, by
               have hne : i.1 ≠ c := by
-                simpa using i.2
+                simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+                  using i.2
               have hval : i.1.1 ≠ center := by
                 intro hv
                 apply hne
