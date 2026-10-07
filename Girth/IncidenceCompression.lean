@@ -309,6 +309,118 @@ theorem compress_length_le
     d.compress.length ≤ d.length :=
   Classical.choose_spec d.exists_compressed_le
 
+
+/-- Raw cyclic incidence data extracted from a Berge cycle and an arbitrary
+owner assignment.  The hyperedges of the Berge cycle are only used to supply
+distinct connector vertices; the owner pieces may repeat. -/
+def ofBergeCycle
+    {H : Set (Set W)}
+    (c : BergeCycle H)
+    (owner : Fin c.length → E)
+    (edge : E → Set W)
+    (hLeft : ∀ i, c.vertex i ∈ edge (owner i))
+    (hRight :
+      ∀ i, c.vertex i ∈ edge (owner (cyclicSucc i)))
+    (hOwnerNonconstant :
+      ∃ i j : Fin c.length, owner i ≠ owner j) :
+    RawCyclicIncidenceData edge where
+  length := c.length
+  hlength := c.hlength
+  label := owner
+  connector := c.vertex
+  connector_injective := c.vertex_injective
+  left_mem := hLeft
+  right_mem := hRight
+  nonconstant := hOwnerNonconstant
+
+/-- End-to-end combinatorial form of maximal run compression: a Berge cycle
+with a nonconstant owner word and adjacent connector incidence yields
+compressed cyclic incidence data, of no greater length. -/
+theorem exists_compressed_ofBergeCycle
+    {H : Set (Set W)}
+    (c : BergeCycle H)
+    (owner : Fin c.length → E)
+    (edge : E → Set W)
+    (hLeft : ∀ i, c.vertex i ∈ edge (owner i))
+    (hRight :
+      ∀ i, c.vertex i ∈ edge (owner (cyclicSucc i)))
+    (hOwnerNonconstant :
+      ∃ i j : Fin c.length, owner i ≠ owner j) :
+    ∃ d : CyclicIncidenceData edge,
+      d.length ≤ c.length := by
+  exact
+    (ofBergeCycle c owner edge hLeft hRight hOwnerNonconstant).
+      exists_compressed_le
+
+/-- Direct contradiction used for untouched subsystems in the circulation
+proof.  If the owner pieces form a forest after restriction, a Berge cycle
+cannot have a nonconstant owner word whose connector at every transition lies
+in both adjacent owner pieces. -/
+theorem no_nonconstant_owner_cycle_of_forest_restriction
+    {H : Set (Set W)}
+    {ι : Type v}
+    {F : ι → HypergraphPiece W}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set W)
+    (hEdgePart :
+      ∀ ⦃i j : ι⦄, i ≠ j → ∀ ⦃e : Set W⦄,
+        e ∈ (F i).edges → e ∈ (F j).edges →
+          (e ∩ P).Subsingleton)
+    (c : BergeCycle H)
+    (owner : Fin c.length → ι)
+    (hLeft :
+      ∀ i,
+        c.vertex i ∈
+          ((F (owner i)).restrictCarrier P).carrier)
+    (hRight :
+      ∀ i,
+        c.vertex i ∈
+          ((F (owner (cyclicSucc i))).restrictCarrier P).carrier)
+    (hOwnerNonconstant :
+      ∃ i j : Fin c.length, owner i ≠ owner j) :
+    False := by
+  let raw : RawCyclicIncidenceData
+      (fun i => ((F i).restrictCarrier P).carrier) :=
+    ofBergeCycle c owner
+      (fun i => ((F i).restrictCarrier P).carrier)
+      hLeft hRight hOwnerNonconstant
+  exact
+    no_cyclicIncidenceData_of_forest_restriction
+      hForest P hEdgePart raw.compress
+
+/-- One-part specialization of
+`no_nonconstant_owner_cycle_of_forest_restriction`. -/
+theorem no_nonconstant_owner_cycle_of_forest_part
+    {H : Set (Set W)}
+    {ι : Type v}
+    {F : ι → HypergraphPiece W}
+    [Fintype ι] [Nonempty ι]
+    (hForest : ForestOfCopies F)
+    (P : Set W)
+    (hPart : EdgesMeetPartAtMostOne F P)
+    (c : BergeCycle H)
+    (owner : Fin c.length → ι)
+    (hLeft :
+      ∀ i,
+        c.vertex i ∈
+          ((F (owner i)).restrictCarrier P).carrier)
+    (hRight :
+      ∀ i,
+        c.vertex i ∈
+          ((F (owner (cyclicSucc i))).restrictCarrier P).carrier)
+    (hOwnerNonconstant :
+      ∃ i j : Fin c.length, owner i ≠ owner j) :
+    False := by
+  let raw : RawCyclicIncidenceData
+      (fun i => ((F i).restrictCarrier P).carrier) :=
+    ofBergeCycle c owner
+      (fun i => ((F i).restrictCarrier P).carrier)
+      hLeft hRight hOwnerNonconstant
+  exact
+    no_cyclicIncidenceData_of_forest_part
+      hForest P hPart raw.compress
+
 end RawCyclicIncidenceData
 
 end StructuralRamsey.Girth
