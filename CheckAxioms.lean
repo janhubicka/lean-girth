@@ -410,3 +410,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_linear_amalgam_of_incompatible_pair_owners
 #print axioms StructuralRamsey.Girth.linearEdgeSet_union_of_pairClosedOverlap
 #print axioms StructuralRamsey.Girth.unique_piece_containing_nonedge_pair
+#print axioms StructuralRamsey.Girth.allowedIntersection_of_oneSeparator_boundary
+#print axioms StructuralRamsey.Girth.allowedIntersection_oldFamily_of_oneSeparator
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_of_common_oneSeparator
