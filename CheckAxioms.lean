@@ -390,3 +390,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_restriction
 #print axioms StructuralRamsey.Girth.CyclicIncidenceData.no_cyclicIncidenceData_of_forest_part
+
+#print axioms StructuralRamsey.Girth.untouchedOwner_spec
+#print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point
+#print axioms StructuralRamsey.Girth.untouchedOwner_change_shared_point_mapped
