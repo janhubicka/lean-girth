@@ -7,5 +7,11 @@ name = "partite-construction"
 git = "https://github.com/janhubicka/partite-construction.git"
 rev = "d2394f65861528f27d68c4a42042285dafef301d"
 
+
+[[require]]
+name = "successor-tree-lean"
+git = "https://github.com/janhubicka/lean-successors.git"
+rev = "f9513be1d92782e7a8c45916d32e6e11dc0e0dcf"
+
 [[lean_lib]]
 name = "Girth"
