@@ -112,11 +112,17 @@ theorem untouchedOwner_change_shared_point
       A C S E f α β hA hCoreSupport hInter u v huv b hzB
   have hIJ : ia ≠ ib := by
     simpa [ia, ib] using hOwner
-  simpa [ia, ib] using
+  obtain ⟨y, hy, hyI, hyJ⟩ :=
     attachment_shared_point_in_both_local_images
       C.toRelStructure S E.toRelStructure
       (fun k => (f k).toEmbedding)
       hIJ hzI hzJ
+  refine ⟨y, ?_, ?_, ?_⟩
+  · change Sum.inl y = z
+    change Sum.inl y = z at hy
+    exact hy
+  · simpa [ia] using hyI
+  · simpa [ib] using hyJ
 
 /-- The same owner-change statement as membership in the core images of the
 two gluing copies. -/
