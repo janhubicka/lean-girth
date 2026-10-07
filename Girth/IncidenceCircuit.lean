@@ -34,17 +34,25 @@ variable {edge : E → Set W}
 
 /-- First and last cyclic indices, made explicit so we never rely on a
 `NeZero` instance inferred from inequalities. -/
+theorem length_pos (d : CyclicIncidenceData edge) : 0 < d.length :=
+  lt_of_lt_of_le (by decide) d.hlength
+
+theorem dartLength_pos (d : CyclicIncidenceData edge) :
+    0 < d.length * 2 :=
+  Nat.mul_pos d.length_pos (by decide)
+
 def zeroIndex (d : CyclicIncidenceData edge) : Fin d.length :=
-  ⟨0, by omega⟩
+  ⟨0, d.length_pos⟩
 
 def lastIndex (d : CyclicIncidenceData edge) : Fin d.length :=
-  ⟨d.length - 1, by omega⟩
+  ⟨d.length - 1, Nat.sub_lt d.length_pos (by decide)⟩
 
 def zeroDartIndex (d : CyclicIncidenceData edge) : Fin (d.length * 2) :=
-  ⟨0, by omega⟩
+  ⟨0, d.dartLength_pos⟩
 
 def lastDartIndex (d : CyclicIncidenceData edge) : Fin (d.length * 2) :=
-  ⟨d.length * 2 - 1, by omega⟩
+  ⟨d.length * 2 - 1,
+    Nat.sub_lt d.dartLength_pos (by decide)⟩
 
 /-- The first incidence dart at connector `i`: label `i` to connector
 `i`. -/
@@ -113,17 +121,15 @@ theorem alternatingDarts_chain
         k0 =
           finProdFinEquiv (m := d.length) (n := 2)
             (q.1, (0 : Fin 2)) := by
-      calc
-        k0 = finProdFinEquiv (m := d.length) (n := 2) q := hq.symm
-        _ = _ := congrArg
-          (finProdFinEquiv (m := d.length) (n := 2))
-          (Prod.ext rfl hq0)
+      apply Fin.ext
+      simp [k0, finProdFinEquiv]
+      omega
     have hk1 :
         k1 =
           finProdFinEquiv (m := d.length) (n := 2)
             (q.1, (1 : Fin 2)) := by
       apply Fin.ext
-      change k + 1 = 1 + 2 * q.1.1
+      simp [k1, finProdFinEquiv]
       omega
     change
       (boundaryIncidenceGraph edge).DartAdj
@@ -139,18 +145,15 @@ theorem alternatingDarts_chain
         k0 =
           finProdFinEquiv (m := d.length) (n := 2)
             (q.1, (1 : Fin 2)) := by
-      calc
-        k0 = finProdFinEquiv (m := d.length) (n := 2) q := hq.symm
-        _ = _ := congrArg
-          (finProdFinEquiv (m := d.length) (n := 2))
-          (Prod.ext rfl hq1)
+      apply Fin.ext
+      simp [k0, finProdFinEquiv]
+      omega
     have hk1 :
         k1 =
           finProdFinEquiv (m := d.length) (n := 2)
             (i1, (0 : Fin 2)) := by
       apply Fin.ext
-      change k + 1 = 2 * i1.1
-      dsimp [i1]
+      simp [k1, i1, finProdFinEquiv]
       omega
     have hsucc : cyclicSucc q.1 = i1 := by
       apply Fin.ext
@@ -176,7 +179,9 @@ theorem alternatingDart_eq_left_of_coord_zero
     (h : (d.dartCoordinates k).2.1 = 0) :
     alternatingDart d k =
       leftDart d (d.dartCoordinates k).1 := by
-  simp [alternatingDart, dartCoordinates, h]
+  unfold alternatingDart dartCoordinates at h ⊢
+  dsimp
+  rw [if_pos h]
 
 theorem alternatingDart_eq_right_of_coord_ne_zero
     (d : CyclicIncidenceData edge)
@@ -184,7 +189,9 @@ theorem alternatingDart_eq_right_of_coord_ne_zero
     (h : (d.dartCoordinates k).2.1 ≠ 0) :
     alternatingDart d k =
       rightDart d (d.dartCoordinates k).1 := by
-  simp [alternatingDart, dartCoordinates, h]
+  unfold alternatingDart dartCoordinates at h ⊢
+  dsimp
+  rw [if_neg h]
 
 /-- The flattened incidence darts have pairwise distinct underlying graph
 edges. Distinct connectors rule out repetitions at different cyclic
@@ -203,6 +210,9 @@ theorem alternatingDart_edge_injective
         simpa [qk] using d.alternatingDart_eq_left_of_coord_zero k hk0
       have hlD : alternatingDart d l = leftDart d ql.1 := by
         simpa [ql] using d.alternatingDart_eq_left_of_coord_zero l hl0
+      change
+        (alternatingDart d k).edge =
+          (alternatingDart d l).edge at hkl
       rw [hkD, hlD] at hkl
       change
         s(Sum.inl (d.label qk.1), Sum.inr (d.connector qk.1)) =
@@ -224,6 +234,9 @@ theorem alternatingDart_edge_injective
         simpa [qk] using d.alternatingDart_eq_left_of_coord_zero k hk0
       have hlD : alternatingDart d l = rightDart d ql.1 := by
         simpa [ql] using d.alternatingDart_eq_right_of_coord_ne_zero l hl0
+      change
+        (alternatingDart d k).edge =
+          (alternatingDart d l).edge at hkl
       rw [hkD, hlD] at hkl
       change
         s(Sum.inl (d.label qk.1), Sum.inr (d.connector qk.1)) =
@@ -245,6 +258,9 @@ theorem alternatingDart_edge_injective
         simpa [qk] using d.alternatingDart_eq_right_of_coord_ne_zero k hk0
       have hlD : alternatingDart d l = leftDart d ql.1 := by
         simpa [ql] using d.alternatingDart_eq_left_of_coord_zero l hl0
+      change
+        (alternatingDart d k).edge =
+          (alternatingDart d l).edge at hkl
       rw [hkD, hlD] at hkl
       change
         s(Sum.inr (d.connector qk.1),
@@ -265,6 +281,9 @@ theorem alternatingDart_edge_injective
         simpa [qk] using d.alternatingDart_eq_right_of_coord_ne_zero k hk0
       have hlD : alternatingDart d l = rightDart d ql.1 := by
         simpa [ql] using d.alternatingDart_eq_right_of_coord_ne_zero l hl0
+      change
+        (alternatingDart d k).edge =
+          (alternatingDart d l).edge at hkl
       rw [hkD, hlD] at hkl
       change
         s(Sum.inr (d.connector qk.1),
@@ -299,10 +318,9 @@ def incidenceDarts
 theorem incidenceDarts_ne_nil
     (d : CyclicIncidenceData edge) :
     d.incidenceDarts ≠ [] := by
-  intro h
-  have hlen := congrArg List.length h
-  simp [incidenceDarts] at hlen
-  omega
+  rw [← List.length_pos_iff]
+  simp [incidenceDarts]
+  exact d.dartLength_pos
 
 theorem incidenceDarts_chain
     (d : CyclicIncidenceData edge) :
@@ -325,6 +343,7 @@ theorem lastDartIndex_eq_pair
         (d.lastIndex, (1 : Fin 2)) := by
   apply Fin.ext
   simp [lastDartIndex, lastIndex, finProdFinEquiv]
+  have := d.hlength
   omega
 
 theorem cyclicSucc_lastIndex
@@ -332,7 +351,7 @@ theorem cyclicSucc_lastIndex
     cyclicSucc d.lastIndex = d.zeroIndex := by
   apply Fin.ext
   change ((d.length - 1) + 1) % d.length = 0
-  rw [Nat.sub_add_cancel (by omega : 1 ≤ d.length)]
+  rw [Nat.sub_add_cancel (d.hlength.trans (by decide))]
   exact Nat.mod_self d.length
 
 theorem incidenceDarts_head_fst
@@ -340,9 +359,11 @@ theorem incidenceDarts_head_fst
     (d.incidenceDarts.head d.incidenceDarts_ne_nil).fst =
       Sum.inl (d.label d.zeroIndex) := by
   rw [List.head_eq_getElem_zero]
-  change (alternatingDart d d.zeroDartIndex).fst =
-    Sum.inl (d.label d.zeroIndex)
-  rw [d.zeroDartIndex_eq_pair, alternatingDart_pair_zero]
+  simp only [incidenceDarts, List.getElem_ofFn]
+  have hidx :
+      (⟨0, d.dartLength_pos⟩ : Fin (d.length * 2)) =
+        d.zeroDartIndex := by rfl
+  rw [hidx, d.zeroDartIndex_eq_pair, alternatingDart_pair_zero]
   rfl
 
 theorem incidenceDarts_last_snd
@@ -350,25 +371,11 @@ theorem incidenceDarts_last_snd
     (d.incidenceDarts.getLast d.incidenceDarts_ne_nil).snd =
       Sum.inl (d.label d.zeroIndex) := by
   rw [List.getLast_eq_getElem d.incidenceDarts_ne_nil]
-  have hlen : d.incidenceDarts.length = d.length * 2 := by
-    simp [incidenceDarts]
-  change
-    (alternatingDart d
-      ⟨d.incidenceDarts.length - 1, by
-        have : 0 < d.incidenceDarts.length := by
-          rw [List.length_pos_iff]
-          exact d.incidenceDarts_ne_nil
-        omega⟩).snd =
-      Sum.inl (d.label d.zeroIndex)
+  simp only [incidenceDarts, List.length_ofFn, List.getElem_ofFn]
   have hidx :
-      (⟨d.incidenceDarts.length - 1, by
-          have : 0 < d.incidenceDarts.length := by
-            rw [List.length_pos_iff]
-            exact d.incidenceDarts_ne_nil
-          omega⟩ : Fin (d.length * 2)) =
-        d.lastDartIndex := by
-    apply Fin.ext
-    simp [hlen, lastDartIndex]
+      (⟨d.length * 2 - 1, d.lastDartIndex.isLt⟩ :
+        Fin (d.length * 2)) = d.lastDartIndex := by
+    rfl
   rw [hidx, d.lastDartIndex_eq_pair, alternatingDart_pair_one]
   change
     Sum.inl (d.label (cyclicSucc d.lastIndex)) =
@@ -389,11 +396,9 @@ theorem incidenceRawWalk_isTrail
   refine ⟨?_⟩
   unfold incidenceRawWalk
   rw [SimpleGraph.Walk.edges_ofDarts]
-  change
-    (List.ofFn
-      (fun k : Fin (d.length * 2) =>
-        (alternatingDart d k).edge)).Nodup
-  exact List.nodup_ofFn.mpr (alternatingDart_edge_injective d)
+  rw [incidenceDarts, List.map_ofFn]
+  simpa only [Function.comp_apply] using
+    (List.nodup_ofFn.mpr (alternatingDart_edge_injective d))
 
 @[simp]
 theorem incidenceRawWalk_length
@@ -428,10 +433,13 @@ theorem incidenceCircuit_isCircuit
         d.incidenceRawWalk_isTrail
   refine ⟨htrail, ?_⟩
   intro hnil
-  have hzero : d.incidenceCircuit.length = 0 :=
-    hnil.length_eq_zero
+  have hzero : d.incidenceCircuit.length = 0 := by
+    rw [hnil]
+    rfl
   have hlen : d.incidenceCircuit.length = d.length * 2 := by
-    simp [incidenceCircuit]
+    rw [incidenceCircuit, SimpleGraph.Walk.length_copy,
+      d.incidenceRawWalk_length]
+  have := d.hlength
   omega
 
 /-- Acyclic incidence graphs forbid cyclic incidence data. -/
