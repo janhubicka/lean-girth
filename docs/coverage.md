@@ -30,7 +30,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | §§3–6 induced picture/local-forest construction | remaining global completion/shared-support induction not yet formalized |
 | §5 incidence circuit and cyclic run compression | `CyclicIncidenceData.incidenceCircuit_isCircuit` and `RawCyclicIncidenceData.exists_compressed_le` are complete and axiom-audited; the compression assumes core incidence only at genuine changes of standard-copy label |
 | §5 untouched-subsystem girth step | `no_short_untouched_projected_cycle` is proved and axiom-audited on main. It uses the exact projected-edge, fine-part and finite local-forest hypotheses; the surrounding global construction must still discharge those hypotheses |
-| §5 forest completion | `forestOfCopies_lift_local_of_linear` proves local-forest gluing and `ownerFiber_card_add_degree_le` the degree budget. Selecting all augmented local completions, deleting auxiliary edge members and packaging full preservation remain unverified |
+| §5 forest completion | `forestOfCopies_lift_local_of_linear` proves local-forest gluing and `ownerFiber_card_add_degree_le` the degree budget. `ForestOfCopies.erase_oneEdge` also proves one-edge deletion. The remaining obligation is to select the augmented local completions and assemble these verified operations into preservation of the full certification invariant |
 | Main Theorem 1.1 | not yet formalized |
 
 The dependency on `partite-construction` is pinned deliberately.  As the EHN
