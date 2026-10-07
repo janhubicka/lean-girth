@@ -424,3 +424,10 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.forestObservableProfile_finite
 #print axioms StructuralRamsey.Girth.forestObservableProfile_map_injective
+
+#print axioms StructuralRamsey.Girth.no_short_support_cycle_of_owner_mapped_forest
+#print axioms StructuralRamsey.Girth.projectedFactorThroughStandard
+#print axioms StructuralRamsey.Girth.projectedFactorThroughStandard_spec
+#print axioms StructuralRamsey.Girth.standardActiveEmbedding
+#print axioms StructuralRamsey.Girth.projectedCopy_subset_standardActive
+#print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle
