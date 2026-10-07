@@ -372,3 +372,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_of_base_aLinear
 #print axioms StructuralRamsey.Girth.activeAttachment_geometry_ordered
 #print axioms StructuralRamsey.Girth.edge_not_subset_of_old_carrier_of_subsingleton_intersection
+
+#print axioms StructuralRamsey.Girth.supportCopy_mem_mappedSupportCopies_of_subset
+#print axioms StructuralRamsey.Girth.bergeCycle_mappedSupportCopies_of_edge_subset
+#print axioms StructuralRamsey.Girth.no_short_support_cycle_in_embedding
