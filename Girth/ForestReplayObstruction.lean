@@ -85,4 +85,36 @@ theorem no_private_replay_of_nonedge_boundary
   · exact hxy (hSmall hx hy)
   · exact hNotEdge e heF heG heEq
 
+/-- An incompatibility of *different* two-contact extensions, not just
+two repetitions of one record. In one extension the two old vertex pairs
+have a common third vertex z; in another their completing edges are
+disjoint. Each extension can separately be linear, but no linear support
+can contain both over the same old vertices. -/
+theorem no_linear_amalgam_of_incompatible_pair_owners
+    (E : Set (Set W))
+    (hLinear : LinearEdgeSet E)
+    {p₁ p₂ q₁ q₂ : Set W}
+    (hp₁ : p₁ ∈ E) (hp₂ : p₂ ∈ E)
+    (hq₁ : q₁ ∈ E) (hq₂ : q₂ ∈ E)
+    {a b c d z : W}
+    (hab : a ≠ b) (hcd : c ≠ d)
+    (hap₁ : a ∈ p₁) (hbp₁ : b ∈ p₁)
+    (haq₁ : a ∈ q₁) (hbq₁ : b ∈ q₁)
+    (hcp₂ : c ∈ p₂) (hdp₂ : d ∈ p₂)
+    (hcq₂ : c ∈ q₂) (hdq₂ : d ∈ q₂)
+    (hzp₁ : z ∈ p₁) (hzp₂ : z ∈ p₂)
+    (hQDisjoint : Disjoint q₁ q₂) :
+    False := by
+  have hPairOne : p₁ = q₁ :=
+    linearEdge_eq_of_two_shared_vertices
+      E hLinear hp₁ hq₁ hab hap₁ haq₁ hbp₁ hbq₁
+  have hPairTwo : p₂ = q₂ :=
+    linearEdge_eq_of_two_shared_vertices
+      E hLinear hp₂ hq₂ hcd hcp₂ hcq₂ hdp₂ hdq₂
+  have hzq₁ : z ∈ q₁ := by
+    simpa [hPairOne] using hzp₁
+  have hzq₂ : z ∈ q₂ := by
+    simpa [hPairTwo] using hzp₂
+  exact Set.disjoint_left.mp hQDisjoint hzq₁ hzq₂
+
 end StructuralRamsey.Girth
