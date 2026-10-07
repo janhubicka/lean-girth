@@ -61,6 +61,7 @@ import Girth.IncidenceCompression
 import Girth.OwnerGirth
 import Girth.MappedOwnerGirth
 import Girth.UntouchedGirthStep
+import Girth.UntouchedGirthAllParts
 import Girth.PartRestrictedForestGirth
 import Girth.HypergraphClique
 import Girth.FunctionalEHNClass
