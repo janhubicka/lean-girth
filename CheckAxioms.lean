@@ -448,3 +448,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.shiftFin_deleteGapFin
 #print axioms StructuralRamsey.Girth.deleteGapFin_shiftFin
 #print axioms StructuralRamsey.Girth.shiftParamTuple_deleteGapParamTuple
+#print axioms StructuralRamsey.Girth.shiftCode_deleteGapCode
