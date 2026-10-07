@@ -452,3 +452,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_free_shape_from_root
 #print axioms StructuralRamsey.Girth.parameterFreeEvent_rootOrbit
+
+#print axioms StructuralRamsey.Girth.gapNode_replay_deleted_code
+#print axioms StructuralRamsey.Girth.neutralGapTail_has_preimage
