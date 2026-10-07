@@ -30,6 +30,42 @@ universe u
 variable {Label : Type u} {arity : ℕ}
 variable [Fintype Label] [Nonempty Label]
 
+/-- Necessity of splitting the carrier ORIGIN rather than only a later
+history endpoint. If two shape maps agree on the base and intrinsic
+parameters of the same birth event, then their transported event is
+identical, regardless of how the maps stretch the event's child. -/
+theorem sameBirthEvent_of_fixed_inputs
+    (F G : ShapeMap
+      (freeSTree (Label := Label) (arity := arity)))
+    (e : IntrinsicEvent
+      (freeSTree (Label := Label) (arity := arity)))
+    (hbase : F e.base = G e.base)
+    (hparams : e.params.map F = e.params.map G) :
+    F.mapEvent e = G.mapEvent e := by
+  cases e with
+  | mk base params label hex =>
+      dsimp at hbase hparams
+      change
+        { base := F base, params := params.map F, label := label,
+          has_child := _ } =
+        { base := G base, params := params.map G, label := label,
+          has_child := _ }
+      cases hbase
+      cases hparams
+      rfl
+
+/-- Once the birth inputs are frozen, a further successor reduction
+cannot manufacture two different birth events. -/
+theorem sameBirthEvent_after_reduction
+    (F G W : ShapeMap
+      (freeSTree (Label := Label) (arity := arity)))
+    (e : IntrinsicEvent
+      (freeSTree (Label := Label) (arity := arity)))
+    (hbase : F e.base = G e.base)
+    (hparams : e.params.map F = e.params.map G) :
+    W.mapEvent (F.mapEvent e) = W.mapEvent (G.mapEvent e) :=
+  congrArg W.mapEvent (sameBirthEvent_of_fixed_inputs F G e hbase hparams)
+
 /-- First neutral insertion: always choose c0 at the selected gap level. -/
 noncomputable def preBirthZero
     (m : ℕ) (c0 : Label) :
