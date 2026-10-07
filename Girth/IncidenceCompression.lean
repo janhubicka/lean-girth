@@ -206,6 +206,109 @@ theorem dropLast_length_lt
   dsimp [dropLast]
   omega
 
+
+/-- Cyclic successor has no fixed point once there are at least two indices. -/
+theorem cyclicSucc_ne_self_of_two_le
+    {n : ℕ} (hn : 2 ≤ n) (i : Fin n) :
+    cyclicSucc i ≠ i := by
+  intro h
+  have hv := congrArg Fin.val h
+  change (i.1 + 1) % n = i.1 at hv
+  by_cases hi : i.1 + 1 < n
+  · rw [Nat.mod_eq_of_lt hi] at hv
+    omega
+  · have hieq : i.1 + 1 = n := by
+      omega
+    rw [hieq, Nat.mod_self] at hv
+    omega
+
+/-- A nonconstant cyclic word with one equal adjacent pair has length at least
+three. -/
+theorem three_le_length_of_label_eq_succ
+    (d : RawCyclicIncidenceData edge)
+    (i : Fin d.length)
+    (heq : d.label i = d.label (cyclicSucc i)) :
+    3 ≤ d.length := by
+  by_contra h3
+  have hlen : d.length = 2 := by
+    omega
+  have hne : i ≠ cyclicSucc i :=
+    (cyclicSucc_ne_self_of_two_le d.hlength i)
+  have hpair :
+      ({i, cyclicSucc i} : Finset (Fin d.length)) = Finset.univ := by
+    apply Finset.eq_univ_of_card
+    rw [Finset.card_pair hne]
+    simp [hlen]
+  have hall : ∀ j : Fin d.length, d.label j = d.label i := by
+    intro j
+    have hjmem :
+        j ∈ ({i, cyclicSucc i} : Finset (Fin d.length)) := by
+      rw [hpair]
+      simp
+    rcases Finset.mem_pair.mp hjmem with hj | hj
+    · simpa [hj]
+    · simpa [hj] using heq.symm
+  rcases d.nonconstant with ⟨j, k, hjk⟩
+  exact hjk ((hall j).trans (hall k).symm)
+
+/-- Repeatedly delete redundant equal-label transitions until every cyclic
+transition changes label.  The resulting compressed cycle never has more
+positions than the original one. -/
+theorem exists_compressed_le
+    (d : RawCyclicIncidenceData edge) :
+    ∃ c : CyclicIncidenceData edge, c.length ≤ d.length := by
+  classical
+  suffices hAux :
+      ∀ n : ℕ, ∀ d : RawCyclicIncidenceData edge,
+        d.length = n →
+        ∃ c : CyclicIncidenceData edge, c.length ≤ d.length by
+    exact hAux d.length d rfl
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+      intro d hlen
+      by_cases hgood :
+          ∀ i : Fin d.length,
+            d.label i ≠ d.label (cyclicSucc i)
+      · refine ⟨{
+          length := d.length
+          hlength := d.hlength
+          label := d.label
+          connector := d.connector
+          connector_injective := d.connector_injective
+          label_ne_succ := hgood
+          left_mem := d.left_mem
+          right_mem := d.right_mem
+        }, le_rfl⟩
+      · push_neg at hgood
+        obtain ⟨i, heq⟩ := hgood
+        have h3 : 3 ≤ d.length :=
+          d.three_le_length_of_label_eq_succ i heq
+        let r := d.rotate (cyclicSucc i)
+        have hwrap : r.label r.last = r.label 0 := by
+          simpa [r] using d.rotate_succ_last_label_eq_zero i heq
+        let d' := r.dropLast h3 hwrap
+        have hltD : d'.length < d.length := by
+          dsimp [d']
+          exact r.dropLast_length_lt h3 hwrap
+        have hltN : d'.length < n := by
+          simpa [hlen] using hltD
+        obtain ⟨c, hc⟩ := ih d'.length hltN d' rfl
+        refine ⟨c, hc.trans ?_⟩
+        exact Nat.le_of_lt hltD
+
+/-- Every nonconstant raw cyclic incidence pattern therefore yields the
+compressed cyclic incidence data consumed by the circuit theorem. -/
+noncomputable def compress
+    (d : RawCyclicIncidenceData edge) :
+    CyclicIncidenceData edge :=
+  Classical.choose d.exists_compressed_le
+
+theorem compress_length_le
+    (d : RawCyclicIncidenceData edge) :
+    d.compress.length ≤ d.length :=
+  Classical.choose_spec d.exists_compressed_le
+
 end RawCyclicIncidenceData
 
 end StructuralRamsey.Girth
