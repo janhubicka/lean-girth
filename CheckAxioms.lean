@@ -649,3 +649,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_commonNextPrefix
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
 #print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
+
+#print axioms StructuralRamsey.Girth.ownerTagged_carrier_eq_image
+#print axioms StructuralRamsey.Girth.ownerTagged_image_atom
+#print axioms StructuralRamsey.Girth.ownerTagged_edges_eq_atoms
+#print axioms StructuralRamsey.Girth.ownerTagged_sameMarkedSupportPresentation
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_jointKernel
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_crossOwnerAgreement
