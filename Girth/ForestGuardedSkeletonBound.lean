@@ -28,7 +28,7 @@ universe u
 
 /-- Levels of all marked terminal histories and all pairwise meets.
 The ordered-pair formulation also handles repeated selected leaves. -/
-def forestTerminalMeetLevels
+noncomputable def forestTerminalMeetLevels
     {Label : Type u} [Fintype Label] {arity : ℕ}
     (q : ℕ) (leaves : Fin q → Node Label arity) :
     Finset ℕ :=
