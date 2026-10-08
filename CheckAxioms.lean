@@ -639,3 +639,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.strongSupport_edges_eq_marked_atoms
 #print axioms StructuralRamsey.Girth.strongSupport_sameMarkedPresentation
 #print axioms StructuralRamsey.Girth.strongSupport_forest_iff_of_sameObservableProfile
+
+#print axioms StructuralRamsey.Girth.retainedLevelRankCount_lt_card
+#print axioms StructuralRamsey.Girth.retainedLevelRankCount_strict
+#print axioms StructuralRamsey.Girth.retainedLevelRank_strictMono
