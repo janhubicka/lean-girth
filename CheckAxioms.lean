@@ -527,3 +527,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.ForestOfCopies.transfer_of_pair_intersections
+
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapped_supportPiece_edges_nonempty
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapped_supportPiece_vertex_covered
+#print axioms StructuralRamsey.Girth.strongSupportForest_map_core
