@@ -523,3 +523,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_piece_classification
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_compatible_local_completions
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_joinTree
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.oneEdge_isOneEdge
+#print axioms StructuralRamsey.Girth.exists_support_edge_covering_separator
+#print axioms StructuralRamsey.Girth.separator_edge_exact_of_ambient_girth
+#print axioms StructuralRamsey.Girth.exists_oneEdge_separator_requests
