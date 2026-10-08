@@ -596,3 +596,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edgesSaturated
 #print axioms StructuralRamsey.Girth.strongSupport_allAllowed_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.strongSupport_markedRepresentatives_card_le
+#print axioms StructuralRamsey.Girth.badForest_two_incomparable_marked_contacts
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_of_comparable_marked_contacts
