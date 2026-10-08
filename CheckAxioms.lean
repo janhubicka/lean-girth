@@ -523,3 +523,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_piece_classification
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_compatible_local_completions
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_joinTree
+
+#print axioms StructuralRamsey.Girth.JoinTree.transfer_of_pair_intersections
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_transfer_of_pair_intersections
+#print axioms StructuralRamsey.Girth.ForestOfCopies.transfer_of_pair_intersections
