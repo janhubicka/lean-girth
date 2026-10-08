@@ -20,9 +20,9 @@ nor show that successor shape maps preserve the mask profile.
 
 namespace StructuralRamsey.Girth
 
-universe u v w
+universe v
 
-variable {W : Type v} {ι : Type u} [Fintype ι]
+variable {W ι : Type v} [Fintype ι]
 
 /-- The set of copy labels whose carriers contain the given vertex. -/
 noncomputable def forestVertexMask
@@ -117,7 +117,7 @@ theorem nonempty_joinTree_iff_finiteMasks
 realised incidence masks, they admit join trees simultaneously.
 The ambient vertex types may be unrelated. -/
 theorem nonempty_joinTree_iff_sameMaskPalette
-    {Z : Type w}
+    {Z : Type v}
     (F : ι → HypergraphPiece W)
     (G : ι → HypergraphPiece Z)
     (hMasks : forestVertexMaskPalette F = forestVertexMaskPalette G) :
@@ -146,7 +146,7 @@ theorem nonempty_joinTree_iff_sameMaskPalette
 mask profile determines *full* foresthood, rather than only individual
 attachment tests or dominated-leaf sufficiency. -/
 theorem forestOfCopies_iff_sameMaskPalette
-    {Z : Type w}
+    {Z : Type v}
     (F : ι → HypergraphPiece W)
     (G : ι → HypergraphPiece Z)
     (hMasks : forestVertexMaskPalette F = forestVertexMaskPalette G)
