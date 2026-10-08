@@ -572,3 +572,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedCarrierMask_boundary_inter_eq
 #print axioms StructuralRamsey.Girth.freshCarrier_inter_eq_of_sameMask
 #print axioms StructuralRamsey.Girth.freshCarrier_allContacts_iff_representatives
+
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_subset
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_mono
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_card_le
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_subset
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_mono
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_card_le
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_realised_iff
