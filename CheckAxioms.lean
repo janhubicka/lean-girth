@@ -510,3 +510,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionWitness.map
 #print axioms StructuralRamsey.Girth.mapped_auxiliary_oneEdge
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.map
+
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_local_completions
