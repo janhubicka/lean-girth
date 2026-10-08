@@ -547,3 +547,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ownerCoincidencePairs_mono
 #print axioms StructuralRamsey.Girth.ownerCoincidencePairs_strict_of_firstAgree
 #print axioms StructuralRamsey.Girth.firstOwnerAgreementEvents_bound
+
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_card_le
+#print axioms StructuralRamsey.Girth.forestObservableDiarySkeleton_card_le
