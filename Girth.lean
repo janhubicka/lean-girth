@@ -134,3 +134,4 @@ import Girth.ForestMarkedTransport
 import Girth.ForestBoundaryShadow
 import Girth.BergeFreshEdge
 import Girth.ForestBoundaryPathShadow
+import Girth.ForestBoundaryPathCore
