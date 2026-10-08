@@ -100,6 +100,7 @@ import Girth.InitialForestCompletion
 import Girth.InitialComponentForest
 import Girth.LocalForestBridge
 import Girth.LocalForestPieces
+import Girth.LocalForestCoreMap
 import Girth.ForestSuccessorBridge
 import Girth.ForestReplayObstruction
 import Girth.ForestProfileElimination
