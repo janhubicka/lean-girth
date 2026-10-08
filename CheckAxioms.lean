@@ -612,3 +612,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_preimage
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.oneEdge_transported_of_factor
 #print axioms StructuralRamsey.Girth.allGluingOneEdges_transported_of_factor
+
+#print axioms StructuralRamsey.Girth.mem_forestVertexMask
+#print axioms StructuralRamsey.Girth.mem_forestVertexMaskPalette
+#print axioms StructuralRamsey.Girth.forestVertexMaskPalette_card_le
+#print axioms StructuralRamsey.Girth.forestVertex_occurrence_eq_mask
+#print axioms StructuralRamsey.Girth.forestRunning_iff_realisedMasks
+#print axioms StructuralRamsey.Girth.nonempty_joinTree_iff_finiteMasks
+#print axioms StructuralRamsey.Girth.nonempty_joinTree_iff_sameMaskPalette
+#print axioms StructuralRamsey.Girth.forestOfCopies_iff_sameMaskPalette
