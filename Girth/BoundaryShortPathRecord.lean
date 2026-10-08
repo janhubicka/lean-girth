@@ -164,4 +164,28 @@ theorem markedShortPathChanges_bound
     (fun n hn => markedShortPathRecord_mono _ _ (hMono n hn) f g) hActive
   simpa using h
 
+/-- The finite boundary certificate, rather than a pointwise family of
+propositions, can be used directly to replay a one-edge girth test.  The
+contact and old-girth assumptions remain indispensable. -/
+theorem freshEdge_girth_iff_of_equalShortPathRecords
+    {I : Type u} [Fintype I] {W : Type v} {Z : Type w}
+    (H : Set (Set W)) (K : Set (Set Z))
+    (f : I → W) (f' : I → Z) (S : Set I)
+    (e : Set W) (e' : Set Z) (g : ℕ)
+    (hOld : GirthGT H g) (hOld' : GirthGT K g)
+    (hNew : e ∉ H) (hNew' : e' ∉ K)
+    (hContact : ∀ a ∈ H, e ∩ a = (f '' S) ∩ a)
+    (hContact' : ∀ a ∈ K, e' ∩ a = (f' '' S) ∩ a)
+    (hRecord : markedShortPathRecord H f g =
+      markedShortPathRecord K f' g) :
+    GirthGT (insert e H) g ↔ GirthGT (insert e' K) g := by
+  apply freshEdge_girth_iff_of_sameShortPaths
+    H K f f' S e e' g hOld hOld' hNew hNew' hContact hContact'
+  intro i j
+  have hPair :
+      ((i, j) : I × I) ∈ markedShortPathRecord H f g ↔
+        ((i, j) : I × I) ∈ markedShortPathRecord K f' g := by
+    rw [hRecord]
+  simpa only [mem_markedShortPathRecord] using hPair
+
 end StructuralRamsey.Girth
