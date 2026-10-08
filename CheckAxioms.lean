@@ -475,3 +475,7 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.freeHistoryFiniteRoot_agrees
 #print axioms StructuralRamsey.Girth.freeHistoryRootColour_homogeneous
+
+#print axioms StructuralRamsey.Girth.AllowedIntersection.map
+#print axioms StructuralRamsey.Girth.JoinTree.map
+#print axioms StructuralRamsey.Girth.ForestOfCopies.map
