@@ -144,8 +144,8 @@ import Girth.ForestMarkedCarrierHistory
 import Girth.ForestStrongMaskBridge
 import Girth.ForestCoherentOwnerCore
 import Girth.ForestCanonicalTransport
-import Girth/ForestFiniteJoinMasks
-import Girth/ForestMarkedJoinTransport
-import Girth/ForestMarkedSupportTransport
-import Girth/ForestObservableForestColour
+import Girth.ForestFiniteJoinMasks
+import Girth.ForestMarkedJoinTransport
+import Girth.ForestMarkedSupportTransport
+import Girth.ForestObservableForestColour
 import Girth.ForestStrongObservableProfile
