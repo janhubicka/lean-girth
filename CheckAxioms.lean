@@ -527,3 +527,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.ForestOfCopies.transfer_of_pair_intersections
+
+#print axioms StructuralRamsey.Girth.OwnerImage.owner_surjective
+#print axioms StructuralRamsey.Girth.OwnerImage.val_owner
+#print axioms StructuralRamsey.Girth.OwnerImage.card_le
