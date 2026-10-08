@@ -527,3 +527,13 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_transfer_of_pair_intersections
 #print axioms StructuralRamsey.Girth.ForestOfCopies.transfer_of_pair_intersections
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.oneEdge_isOneEdge
+#print axioms StructuralRamsey.Girth.exists_support_edge_covering_separator
+#print axioms StructuralRamsey.Girth.separator_edge_exact_of_ambient_girth
+#print axioms StructuralRamsey.Girth.exists_oneEdge_separator_requests
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_two_carrier_joinTree
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_nonempty
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_vertex_covered
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_strongSupportForest
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_transported_strongSupportForest
