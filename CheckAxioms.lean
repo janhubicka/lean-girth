@@ -577,3 +577,21 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_congr_of_sameOverlap
 #print axioms StructuralRamsey.Girth.allAllowedIntersections_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.allowedIntersectionRepresentative_card_le
+
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_subset
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_mono
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_card_le
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_mono
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_card_le
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_girth_iff
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_subset
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_mono
+#print axioms StructuralRamsey.Girth.firstCarrierMaskWitnessAt_card_le
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_subset
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_mono
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_card_le
+#print axioms StructuralRamsey.Girth.coherentCarrierMaskCore_realised_iff
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edgesSaturated
+#print axioms StructuralRamsey.Girth.strongSupport_allAllowed_iff_markedRepresentatives
+#print axioms StructuralRamsey.Girth.strongSupport_markedRepresentatives_card_le
