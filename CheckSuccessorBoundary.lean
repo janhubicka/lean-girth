@@ -42,19 +42,23 @@ theorem clearHost_linear : LinearEdgeSet clearHost := by
   simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
   rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
   · exact False.elim (hab rfl)
-  · decide
-  · decide
+  · intro x hx y hy
+    fin_cases x <;> fin_cases y <;> norm_num [leftEdge, rightEdge] at *
+  · intro x hx y hy
+    fin_cases x <;> fin_cases y <;> norm_num [leftEdge, rightEdge] at *
   · exact False.elim (hab rfl)
 
 theorem blocker_boundary_free : BoundaryPairFree clearHost blocker := by
   intro a ha
   simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
-  rcases ha with rfl | rfl <;> decide
+  rcases ha with rfl | rfl <;> intro x hx y hy <;>
+    fin_cases x <;> fin_cases y <;> norm_num [blocker, leftEdge, rightEdge] at *
 
 theorem candidate_boundary_free : BoundaryPairFree clearHost candidate := by
   intro a ha
   simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
-  rcases ha with rfl | rfl <;> decide
+  rcases ha with rfl | rfl <;> intro x hx y hy <;>
+    fin_cases x <;> fin_cases y <;> norm_num [candidate, leftEdge, rightEdge] at *
 
 theorem blockedHost_linear : LinearEdgeSet blockedHost :=
   linearEdgeSet_insert_of_boundaryPairFree clearHost_linear blocker_boundary_free
@@ -83,8 +87,8 @@ theorem new_shadow_contact :
   · rintro ⟨_, a, ha, hZero, hThree⟩
     simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
     rcases ha with rfl | rfl
-    · norm_num [leftEdge] at hThree
-    · norm_num [rightEdge] at hZero
+    · norm_num [leftEdge, id] at hThree
+    · norm_num [rightEdge, id] at hZero
 
 end StructuralRamsey.Girth.BoundaryShadowExample
 
