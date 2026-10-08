@@ -479,3 +479,24 @@ import Girth
 #print axioms StructuralRamsey.Girth.outerEdgesLinear_of_ambient_girth
 #print axioms StructuralRamsey.Girth.forestCompletion_assemble_of_ambient_girth
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_assembly
+
+#print axioms StructuralRamsey.Girth.gapNode_replay_deleted_code
+#print axioms StructuralRamsey.Girth.neutralGapTail_has_preimage
+#print axioms StructuralRamsey.Girth.neutralGapTail_finite_preimages
+#print axioms StructuralRamsey.Girth.pairwiseClean_from_pairClosedShadow
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_append_pairClosedShadow
+#print axioms StructuralRamsey.Girth.forestInvariantProfileColour_constant
+#print axioms StructuralRamsey.Girth.forestDistinctProfiles_not_fullyEquivariant
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_outside_cone
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_predClosed_front
+#print axioms StructuralRamsey.Girth.preBirth_twoCopy_syntax
+#print axioms StructuralRamsey.Girth.preBirth_twoCopy_of_faithfulOrigins
+#print axioms StructuralRamsey.Girth.finiteHistoryCompatibleChoice_iff
+#print axioms StructuralRamsey.Girth.exists_commonNeutralGapChoice
+#print axioms StructuralRamsey.Girth.finiteMarkedNeutralGap_preimages
+#print axioms StructuralRamsey.Girth.map_emptyEventAtNode
+#print axioms StructuralRamsey.Girth.parameterFreeEventColour_homogeneous
+#print axioms StructuralRamsey.Girth.edge_carriers_equal_of_incomparable_contacts
+#print axioms StructuralRamsey.Girth.badForest_twoCopy_geometry_contradiction
+#print axioms StructuralRamsey.Girth.fixedRootLevelColour_homogeneous
+#print axioms StructuralRamsey.Girth.noUniformAllWidthRootHomogeneity
