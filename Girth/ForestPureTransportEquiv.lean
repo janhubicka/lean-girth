@@ -120,9 +120,10 @@ theorem ForestOfCopies.unmap
   · intro i j hij
     exact AllowedIntersection.of_map (F i) (F j) φ
       (hForest.pairwiseAllowed hij)
-  · rcases hForest.2 with hEmpty | ⟨J⟩
+  · rcases hForest.2 with hEmpty | hTree
     · exact Or.inl hEmpty
-    · exact Or.inr ⟨JoinTree.unmap φ J⟩
+    · obtain ⟨J⟩ := hTree
+      exact Or.inr ⟨JoinTree.unmap φ J⟩
 
 /-- A pure injective standard-copy transport has NO effect on full
 foresthood. In particular a finite chain of such transport-only steps
