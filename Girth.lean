@@ -149,3 +149,4 @@ import Girth.ForestMarkedJoinTransport
 import Girth.ForestMarkedSupportTransport
 import Girth.ForestObservableForestColour
 import Girth.ForestStrongObservableProfile
+import Girth.ForestRetainedLevelRank
