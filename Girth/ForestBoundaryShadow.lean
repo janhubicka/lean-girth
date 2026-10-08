@@ -30,7 +30,7 @@ theorem linearEdgeSet_insert_of_boundaryPairFree
     {W : Type v} {E : Set (Set W)} {e : Set W}
     (hOld : LinearEdgeSet E) (hCross : BoundaryPairFree E e) :
     LinearEdgeSet (insert e E) := by
-  intro a ha b hb hab
+  intro a b ha hb hab
   rcases Set.mem_insert_iff.mp ha with rfl | ha
   · rcases Set.mem_insert_iff.mp hb with rfl | hb
     · exact False.elim (hab rfl)
@@ -46,7 +46,7 @@ theorem linearEdgeSet_insert_iff
   constructor
   · intro h
     constructor
-    · intro a ha b hb hab
+    · intro a b ha hb hab
       exact h (Set.mem_insert_of_mem e ha) (Set.mem_insert_of_mem e hb) hab
     · intro a ha
       have hea : e ≠ a := by
