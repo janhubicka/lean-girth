@@ -108,10 +108,11 @@ def JoinTree.map
         · rintro ⟨w, hw, heq⟩
           exact (hz ⟨w, heq⟩).elim
         · intro hi
-          exact (Set.not_mem_empty i hi).elim
+          simp at hi
       rw [hEmpty]
       intro a b
-      exact (Set.not_mem_empty a.1 a.2).elim
+      have absurd : False := by simpa using a.2
+      exact absurd.elim
 
 /-- The image of a forest under an injective map is again a forest. -/
 theorem ForestOfCopies.map
@@ -122,8 +123,9 @@ theorem ForestOfCopies.map
   refine ⟨?_, ?_⟩
   · intro i j hij
     exact AllowedIntersection.map (hF.pairwiseAllowed hij) φ
-  · rcases hF.2 with hEmpty | ⟨J⟩
+  · rcases hF.2 with hEmpty | hTree
     · exact Or.inl hEmpty
-    · exact Or.inr ⟨J.map φ⟩
+    · cases hTree with
+      | intro J => exact Or.inr ⟨J.map φ⟩
 
 end StructuralRamsey.Girth
