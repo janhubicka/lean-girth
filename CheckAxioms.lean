@@ -565,3 +565,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_subset
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_card_le
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_girth_iff
+
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_subset
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_mono
+#print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_card_le
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_mono
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_card_le
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_girth_iff
