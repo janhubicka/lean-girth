@@ -572,3 +572,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedCarrierMask_boundary_inter_eq
 #print axioms StructuralRamsey.Girth.freshCarrier_inter_eq_of_sameMask
 #print axioms StructuralRamsey.Girth.freshCarrier_allContacts_iff_representatives
+
+#print axioms StructuralRamsey.Girth.allowedIntersection_iff_newPieceOverlapAllowed
+#print axioms StructuralRamsey.Girth.allowedIntersection_congr_of_sameOverlap
+#print axioms StructuralRamsey.Girth.allAllowedIntersections_iff_markedRepresentatives
+#print axioms StructuralRamsey.Girth.allowedIntersectionRepresentative_card_le
