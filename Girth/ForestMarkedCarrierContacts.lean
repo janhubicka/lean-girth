@@ -43,10 +43,11 @@ def MarkedCarrierMaskRealised
 /-- One representative per realised mask. Values on unrealised masks
 are irrelevant, as only realised masks are indexed by the finite sample. -/
 noncomputable def markedCarrierChoice
-    (family : Set (Set W)) (f : I → W) (mask : Finset I) : Set W :=
-  if h : MarkedCarrierMaskRealised family f mask
-  then Classical.choose h
-  else ∅
+    (family : Set (Set W)) (f : I → W) (mask : Finset I) : Set W := by
+  classical
+  exact if h : MarkedCarrierMaskRealised family f mask
+    then Classical.choose h
+    else ∅
 
 theorem markedCarrierChoice_mem
     (family : Set (Set W)) (f : I → W) (mask : Finset I)
@@ -101,16 +102,15 @@ theorem markedCarrierRepresentatives_card_le
     (markedCarrierRepresentatives family f).card ≤
       Fintype.card (Finset I) := by
   classical
-  unfold markedCarrierRepresentatives
+  let masks : Finset (Finset I) :=
+    Finset.univ.filter (fun mask => MarkedCarrierMaskRealised family f mask)
+  change (masks.image (markedCarrierChoice family f)).card ≤
+    Fintype.card (Finset I)
   calc
-    (Finset.univ.filter
-      (fun mask : Finset I => MarkedCarrierMaskRealised family f mask)).image
-        (markedCarrierChoice family f) |>.card ≤
-      (Finset.univ.filter
-        (fun mask : Finset I => MarkedCarrierMaskRealised family f mask)).card :=
+    (masks.image (markedCarrierChoice family f)).card ≤ masks.card :=
       Finset.card_image_le
-    _ ≤ (Finset.univ : Finset (Finset I)).card :=
-      Finset.card_le_card (Finset.filter_subset _ _)
+    _ ≤ (Finset.univ : Finset (Finset I)).card := by
+      exact Finset.card_le_card (Finset.filter_subset _ _)
     _ = Fintype.card (Finset I) := Finset.card_univ
 
 /-- Two old carriers with the same mask have the same intersection with
