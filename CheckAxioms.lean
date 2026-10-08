@@ -547,3 +547,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ownerCoincidencePairs_mono
 #print axioms StructuralRamsey.Girth.ownerCoincidencePairs_strict_of_firstAgree
 #print axioms StructuralRamsey.Girth.firstOwnerAgreementEvents_bound
+
+#print axioms StructuralRamsey.Girth.attachment_unique_standard_owner_off_core
+#print axioms StructuralRamsey.Girth.attachment_irreducible_unique_owner_off_core
