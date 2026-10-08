@@ -39,5 +39,8 @@ jobs:
         run: lake build
       - name: Check theorem axioms
         run: |
+          set -o pipefail
           lake env lean CheckAxioms.lean | tee axioms.log
           python3 scripts/check_axioms.py axioms.log
+          lake env lean CheckSuccessorBoundary.lean | tee successor-boundary-axioms.log
+          python3 scripts/check_axioms.py successor-boundary-axioms.log CheckSuccessorBoundary.lean
