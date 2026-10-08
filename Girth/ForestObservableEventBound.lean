@@ -91,8 +91,8 @@ theorem activeRecordSteps_le
               ((Finset.range n).filter active).card +
                 (if active n then 1 else 0) := by
           by_cases ha : active n
-          · simp [Finset.range_add_one, ha]
-          · simp [Finset.range_add_one, ha]
+          · simp [Finset.range_add_one, Finset.filter_insert, ha]
+          · simp [Finset.range_add_one, Finset.filter_insert, ha]
         rw [hStep]
         by_cases ha : active n
         · have hIncrease :
