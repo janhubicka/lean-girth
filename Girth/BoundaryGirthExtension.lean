@@ -59,7 +59,9 @@ theorem girthGT_insert_iff_no_shortBergePath
     classical
     by_cases hfresh : ∃ j : Fin c.length, c.edge j = e
     · obtain ⟨j, hj⟩ := hfresh
+      letI : NeZero c.length := j.neZero
       let k : ℕ := c.length - 1
+      have hclength : 2 ≤ c.length := c.hlength
       have hkpos : 0 < k := by
         dsimp [k]
         omega
@@ -73,8 +75,10 @@ theorem girthGT_insert_iff_no_shortBergePath
         let off : Fin c.length := Fin.castLE (Nat.le_of_lt hklt) i
         have hproper : off.val + 1 < c.length := by
           change i.val + 1 < c.length
-          have hi := i.isLt
-          dsimp [k] at hi
+          have hi : i.val < k := i.isLt
+          have heq : k + 1 = c.length := by
+            dsimp [k]
+            omega
           omega
         have hidx : cyclicRunIndex j off ≠ j :=
           cyclicRunIndex_ne_before j off hproper
@@ -84,7 +88,9 @@ theorem girthGT_insert_iff_no_shortBergePath
             apply hidx
             exact c.edge_injective (he.trans hj.symm)
           · exact he
-        simpa only [q, BergeCycle.cyclicPath_edge] using hmem
+        change (c.cyclicPath j k hkpos hklt).edge i ∈ H
+        rw [BergeCycle.cyclicPath_edge]
+        exact hmem
       let p : BergePath H := q.ofEdgeMem hOldEdges
       apply hno
       refine ⟨p, ?_, ?_, ?_⟩
@@ -96,12 +102,12 @@ theorem girthGT_insert_iff_no_shortBergePath
         simpa only [hj] using c.left_mem j
       · change (c.cyclicPath j k hkpos hklt).vertex (Fin.last k) ∈ e
         rw [BergeCycle.cyclicPath_vertex_last]
+        have hkEq : k + 1 = c.length := by
+          dsimp [k]
+          omega
         have hOffset : ((⟨k, hklt⟩ : Fin c.length) + 1) = 0 := by
           apply Fin.ext
-          change (k + 1 % c.length) % c.length = 0
-          rw [Nat.mod_eq_of_lt (show 1 < c.length by omega)]
-          rw [show k + 1 = c.length by dsimp [k]; omega]
-          exact Nat.mod_self _
+          simp [Fin.val_add, Fin.val_one', hkEq]
         have hSucc :
             cyclicSucc (j + (⟨k, hklt⟩ : Fin c.length)) = j := by
           calc
