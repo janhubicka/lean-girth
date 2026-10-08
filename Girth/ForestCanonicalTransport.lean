@@ -41,6 +41,63 @@ theorem transportedPiece_map
     TransportedPiece old φ (S.map φ) :=
   ⟨S, hS, rfl⟩
 
+/-- Two hypergraph pieces with equal carriers and equal edge families
+are equal; the proof of edge containment is irrelevant. -/
+private theorem hypergraphPiece_ext
+    {F G : HypergraphPiece W}
+    (hCarrier : F.carrier = G.carrier)
+    (hEdges : F.edges = G.edges) : F = G := by
+  cases F with
+  | mk FC FE Fh =>
+    cases G with
+    | mk GC GE Gh =>
+      dsimp at hCarrier hEdges
+      cases hCarrier
+      cases hEdges
+      rfl
+
+/-- A source auxiliary one-edge A-piece transports to the corresponding
+one-edge piece on the image edge; it has no extra support edges. -/
+theorem HypergraphPiece.oneEdge_map
+    (e : Set Old) (φ : Old ↪ W) :
+    (HypergraphPiece.oneEdge e).map φ =
+      HypergraphPiece.oneEdge (φ '' e) := by
+  apply hypergraphPiece_ext
+  · rfl
+  · ext F
+    constructor
+    · rintro ⟨e₀, he₀, hF⟩
+      have heq : e₀ = e := by
+        simpa [HypergraphPiece.oneEdge] using he₀
+      subst e₀
+      exact hF
+    · intro hF
+      have hEq : F = φ '' e := by
+        simpa [HypergraphPiece.oneEdge] using hF
+      exact ⟨e, by simp [HypergraphPiece.oneEdge], hEq⟩
+
+/-- Testing the source one-A-edge piece makes its image a canonical
+local tested piece. This is the elementary part of the local connector
+preimage obligation in the circulation proof. -/
+theorem transportedOneEdge_of_source_test
+    (tested : HypergraphPiece Old → Prop)
+    (φ : Old ↪ W) (e : Set Old)
+    (hTest : tested (HypergraphPiece.oneEdge e)) :
+    TransportedPiece tested φ (HypergraphPiece.oneEdge (φ '' e)) := by
+  refine ⟨HypergraphPiece.oneEdge e, hTest, ?_⟩
+  exact (HypergraphPiece.oneEdge_map e φ).symm
+
+/-- The local gluing connector is tested whenever its support edge is
+the image of one tested old A-edge. -/
+theorem transportedOneEdge_of_source_preimage
+    (tested : HypergraphPiece Old → Prop)
+    (φ : Old ↪ W) (e : Set W)
+    (hPreimage : ∃ e₀ : Set Old,
+      tested (HypergraphPiece.oneEdge e₀) ∧ e = φ '' e₀) :
+    TransportedPiece tested φ (HypergraphPiece.oneEdge e) := by
+  obtain ⟨e₀, hTest, rfl⟩ := hPreimage
+  exact transportedOneEdge_of_source_test tested φ e₀ hTest
+
 /-- The full old completion property transfers to its *canonical*
 image predicates without any extra hypothesis about the predicates. -/
 theorem ForestCompletionProperty.map_to_canonical_image
