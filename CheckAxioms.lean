@@ -636,3 +636,8 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_localNeutralGapTail_of_global
 #print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages
+
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.insertedPrefix
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_commonNextPrefix
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
