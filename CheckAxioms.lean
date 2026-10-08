@@ -475,3 +475,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.freeHistoryFiniteRoot_agrees
 #print axioms StructuralRamsey.Girth.freeHistoryRootColour_homogeneous
+
+#print axioms StructuralRamsey.Girth.edge_carriers_equal_of_incomparable_contacts
+#print axioms StructuralRamsey.Girth.badForest_twoCopy_geometry_contradiction
