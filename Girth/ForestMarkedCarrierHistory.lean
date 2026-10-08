@@ -35,13 +35,17 @@ noncomputable def markedCarrierFirstRepresentative
 
 theorem markedCarrierFirstRepresentative_spec
     (H : ℕ → Set (Set W)) (f : I → W) (mask : Finset I)
-    (h : ∃ t, MarkedCarrierMaskRealised (H t) f mask) :
-    markedCarrierFirstRepresentative H f mask ∈ H (Nat.find h) ∧
+    (t : ℕ) (hAt : MarkedCarrierMaskRealised (H t) f mask) :
+    ∃ s ≤ t,
+      markedCarrierFirstRepresentative H f mask ∈ H s ∧
       markedCarrierMask f (markedCarrierFirstRepresentative H f mask) =
         mask := by
   classical
-  simp only [markedCarrierFirstRepresentative, dif_pos h]
-  exact Classical.choose_spec (Nat.find_spec h)
+  have hex : ∃ s, MarkedCarrierMaskRealised (H s) f mask := ⟨t, hAt⟩
+  have hFirstLe : Nat.find hex ≤ t := Nat.find_le hAt
+  refine ⟨Nat.find hex, hFirstLe, ?_⟩
+  simp only [markedCarrierFirstRepresentative, dif_pos hex]
+  exact Classical.choose_spec (Nat.find_spec hex)
 
 /-- At time t, retain the fixed first-birth representative of each mask
 which has appeared by t. -/
@@ -64,9 +68,9 @@ theorem coherentMarkedCarrierCore_subset
   obtain ⟨mask, hmask, rfl⟩ := Finset.mem_image.mp hD
   have hAt : MarkedCarrierMaskRealised (H t) f mask :=
     (Finset.mem_filter.mp hmask).2
-  have hex : ∃ s, MarkedCarrierMaskRealised (H s) f mask := ⟨t, hAt⟩
-  have hFirst := (markedCarrierFirstRepresentative_spec H f mask hex).1
-  exact hMono (Nat.find_le hex hAt) hFirst
+  obtain ⟨s, hst, hFirst, _⟩ :=
+    markedCarrierFirstRepresentative_spec H f mask t hAt
+  exact hMono hst hFirst
 
 /-- At each stage the finite core contains an actual representative of
 every boundary mask realised by an old carrier at that stage. -/
@@ -79,8 +83,9 @@ theorem coherentMarkedCarrierCore_cover
   let mask := markedCarrierMask f D
   have hAt : MarkedCarrierMaskRealised (H t) f mask :=
     ⟨D, hD, rfl⟩
-  refine ⟨markedCarrierFirstRepresentative H f mask, ?_,
-    (markedCarrierFirstRepresentative_spec H f mask ⟨t, hAt⟩).2⟩
+  obtain ⟨s, hst, hFirst, hMask⟩ :=
+    markedCarrierFirstRepresentative_spec H f mask t hAt
+  refine ⟨markedCarrierFirstRepresentative H f mask, ?_, hMask⟩
   apply Finset.mem_image.mpr
   exact ⟨mask,
     Finset.mem_filter.mpr ⟨Finset.mem_univ _, hAt⟩, rfl⟩
