@@ -1,4 +1,4 @@
-import Girth.Forest
+import Girth.ForestSingleEdge
 
 /-! # Transporting a finite forest through an injective embedding
 
@@ -25,6 +25,25 @@ def HypergraphPiece.map
     rcases he with ⟨e₀, he₀, rfl⟩
     rcases hz with ⟨w, hw, rfl⟩
     exact ⟨w, F.edge_subset he₀ hw, rfl⟩
+
+/-- Transport also preserves the special one-edge auxiliary pieces that
+the circulation proof is allowed to remove after assembly. -/
+theorem HypergraphPiece.map_isOneEdge
+    (F : HypergraphPiece W) (φ : W ↪ Z)
+    (hF : F.IsOneEdge) :
+    (F.map φ).IsOneEdge := by
+  unfold HypergraphPiece.IsOneEdge
+  ext e
+  constructor
+  · rintro ⟨e₀, he₀, rfl⟩
+    have heq : e₀ = F.carrier := by
+      rw [hF] at he₀
+      simpa using he₀
+    simp [HypergraphPiece.map, heq]
+  · intro he
+    have heq : e = φ '' F.carrier := by
+      simpa [HypergraphPiece.map] using he
+    exact ⟨F.carrier, by rw [hF]; simp, heq⟩
 
 @[simp] theorem HypergraphPiece.map_carrier
     (F : HypergraphPiece W) (φ : W ↪ Z) :
