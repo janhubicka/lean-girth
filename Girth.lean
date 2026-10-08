@@ -130,3 +130,5 @@ import Girth.ForestDiaryMultiGap
 import Girth.ForestObservableEventBound
 import Girth.ForestOwnerGenealogy
 import Girth.ForestGuardedSkeletonBound
+import Girth.ForestMarkedTransport
+import Girth.ForestBoundaryShadow
