@@ -23,6 +23,20 @@ universe u
 variable {Label : Type u} {arity : ℕ}
 variable [Fintype Label] [Nonempty Label]
 
+/-- Dependent child congruence, used when the mapped base changes
+but the two ancestral parameter level lists coincide. -/
+private theorem child_eq_of_base_and_levels
+    (a b : Node Label arity)
+    (t : ParamTuple arity a.level)
+    (u : ParamTuple arity b.level)
+    (label : Label)
+    (hab : a = b)
+    (ht : levelList t = levelList u) :
+    child a t label = child b u label := by
+  cases hab
+  have htu : t = u := levelList_injective ht
+  rw [htu]
+
 theorem preBirthOne_at_other_gap
     (m : ℕ) (h0 h : History Label arity m)
     (c0 c1 : Label) (hne : h ≠ h0) :
@@ -112,10 +126,9 @@ theorem preBirth_maps_agree_outside_cone
                         else
                           ⟨c0, emptyParamTuple arity m⟩)
                       a code.params hge) code.label
-              rw [heqParent]
-              congr 1
-              apply levelList_injective
-              simp [levelList_gapShiftParamTuple]
+              apply child_eq_of_base_and_levels
+              · exact heqParent
+              · simp only [levelList_gapShiftParamTuple]
 
 /-- Any finite old front disjoint from the private cone remains
 pointwise identical under the two test embeddings. -/
