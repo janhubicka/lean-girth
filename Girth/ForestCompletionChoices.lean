@@ -130,4 +130,52 @@ theorem ForestCompletionProperty.choose_neighbor_local_completions_dependent
   choose K finite family hFamily using hEach
   exact ⟨K, finite, family, hFamily⟩
 
+/-- Extract actual labels witnessing the inclusion of every local request
+in its completed family.  This is what the outer join-tree assembly needs
+to identify the selected pieces and to name one local separator connector
+at each oriented tree edge. -/
+theorem ForestCompletionProperty.choose_neighbor_local_completions_with_labels
+    {N : Type v}
+    [Fintype N] [Fintype Q] [DecidableEq Q]
+    (tested designated : Q → HypergraphPiece W → Prop)
+    {m : ℕ}
+    (hOld :
+      ∀ q : Q,
+        ForestCompletionProperty (tested q) (designated q) m)
+    (owner : N → Q)
+    (hSurj : Function.Surjective owner)
+    (G : SimpleGraph Q)
+    [DecidableRel G.Adj]
+    (selected :
+      (q : Q) →
+        ({n : N // owner n = q} ⊕ G.neighborSet q) →
+          HypergraphPiece W)
+    (hTest :
+      ∀ q (n : {n : N // owner n = q} ⊕ G.neighborSet q),
+        tested q (selected q n))
+    (hCard : Fintype.card N ≤ m) :
+    ∃ (K : Q → Type v),
+      ∃ (finite : ∀ q, Fintype (K q)),
+      ∃ (family : (q : Q) → K q → HypergraphPiece W),
+      ∃ (label : (q : Q) →
+        ({n : N // owner n = q} ⊕ G.neighborSet q) → K q),
+        ∀ q,
+          letI : Fintype (K q) := finite q
+          ForestCompletionWitness
+            (selected q) (designated q) (family q) ∧
+          ∀ n, family q (label q n) = selected q n := by
+  classical
+  obtain ⟨K, finite, family, hFamily⟩ :=
+    ForestCompletionProperty.choose_neighbor_local_completions_dependent
+      tested designated hOld owner hSurj G selected hTest hCard
+  letI : ∀ q : Q, Fintype (K q) := finite
+  have hLabel (q : Q)
+      (n : {n : N // owner n = q} ⊕ G.neighborSet q) :
+      ∃ k : K q, family q k = selected q n :=
+    (hFamily q).2.1 n
+  choose label hLabelSpec using hLabel
+  refine ⟨K, finite, family, label, ?_⟩
+  intro q
+  exact ⟨hFamily q, hLabelSpec q⟩
+
 end StructuralRamsey.Girth
