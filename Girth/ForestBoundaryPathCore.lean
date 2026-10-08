@@ -1,4 +1,4 @@
-import Girth.ForestBoundaryPathShadow
+import Girth.BoundaryShortPathRecord
 import Mathlib.Tactic
 
 /-!
@@ -24,7 +24,7 @@ noncomputable def boundaryPathWitnessEdges
     (E : Set (Set W)) (vertex : I → W) (m : ℕ) (ij : I × I) :
     Finset (Set W) := by
   classical
-  exact if h : markedBoundaryPath E vertex m ij.1 ij.2 then
+  exact if h : MarkedShortBergePath E vertex m ij.1 ij.2 then
     (Finset.univ : Finset (Fin (Classical.choose h).length)).image
       (Classical.choose h).edge
   else ∅
@@ -61,12 +61,12 @@ inside the finite core. -/
 theorem boundaryPathCore_complete
     {I : Type u} {W : Type v} [Fintype I]
     (E : Set (Set W)) (vertex : I → W) (m : ℕ) (i j : I)
-    (h : markedBoundaryPath E vertex m i j) :
-    markedBoundaryPath
+    (h : MarkedShortBergePath E vertex m i j) :
+    MarkedShortBergePath
       (↑(boundaryPathCore E vertex m) : Set (Set W)) vertex m i j := by
   classical
   let p : BergePath E := Classical.choose h
-  have hp : p.length + 1 ≤ m ∧
+  have hp : p.length < m ∧
       p.vertex 0 = vertex i ∧ p.vertex (Fin.last p.length) = vertex j :=
     Classical.choose_spec h
   have hEdges (t : Fin p.length) :
@@ -84,11 +84,11 @@ boundary exactly as the entire ambient host. -/
 theorem boundaryPathCore_profile_iff
     {I : Type u} {W : Type v} [Fintype I]
     (E : Set (Set W)) (vertex : I → W) (m : ℕ) (i j : I) :
-    markedBoundaryPath
+    MarkedShortBergePath
       (↑(boundaryPathCore E vertex m) : Set (Set W)) vertex m i j ↔
-    markedBoundaryPath E vertex m i j := by
+    MarkedShortBergePath E vertex m i j := by
   constructor
-  · exact markedBoundaryPath_mono (boundaryPathCore_subset E vertex m)
+  · exact markedShortBergePath_mono _ E (boundaryPathCore_subset E vertex m)
       vertex m i j
   · exact boundaryPathCore_complete E vertex m i j
 
@@ -149,7 +149,7 @@ theorem freshEdge_girth_iff_finiteBoundaryCore
   have hNewF : e ∉ F := fun he => hNew (hSub he)
   have hContactF : ∀ a ∈ F, e ∩ a = (vertex '' S) ∩ a :=
     fun a ha => hContact a (hSub ha)
-  exact freshEdge_girth_iff_of_sameBoundaryPathShadow
+  exact freshEdge_girth_iff_of_sameShortPaths
     E F vertex vertex S e e m
     hOld hGirthF hNew hNewF hContact hContactF
     (fun i j => (boundaryPathCore_profile_iff E vertex m i j).symm)
