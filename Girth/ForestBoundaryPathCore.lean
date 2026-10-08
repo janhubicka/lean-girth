@@ -54,6 +54,7 @@ theorem boundaryPathCore_subset
   · obtain ⟨i, _, hEq⟩ := Finset.mem_image.mp ha
     rw [← hEq]
     exact (Classical.choose h).edge_mem i
+  · simpa using ha
 
 /-- All positive marked-path facts have their entire witness
 inside the finite core. -/
