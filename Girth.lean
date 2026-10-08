@@ -46,6 +46,7 @@ import Girth.ForestJoinLiftLinear
 import Girth.CompletionBudget
 import Girth.ForestDisjoint
 import Girth.ForestCarrierLift
+import Girth.ForestOverlapTransfer
 import Girth.ForestEnumeration
 import Girth.ForestReindex
 import Girth.RankedParentTree
