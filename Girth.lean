@@ -148,3 +148,4 @@ import Girth.ForestFiniteJoinMasks
 import Girth.ForestMarkedJoinTransport
 import Girth.ForestMarkedSupportTransport
 import Girth.ForestObservableForestColour
+import Girth.ForestMixedKernelPalette
