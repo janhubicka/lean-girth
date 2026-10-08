@@ -620,3 +620,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedFamily_nonemptyMasks_iff
 #print axioms StructuralRamsey.Girth.markedFamily_joinTree_iff
 #print axioms StructuralRamsey.Girth.markedFamily_forest_iff
+
+#print axioms StructuralRamsey.Girth.markedImage_inter_eq_image_iff
+#print axioms StructuralRamsey.Girth.markedImage_inter_subsingleton_iff
+#print axioms StructuralRamsey.Girth.markedFamily_allowedIntersection_iff
+#print axioms StructuralRamsey.Girth.markedFamily_pairwiseAllowed_iff
+#print axioms StructuralRamsey.Girth.markedFamily_forest_iff_of_supportPresentation
