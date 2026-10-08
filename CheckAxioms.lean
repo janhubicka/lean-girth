@@ -530,3 +530,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_oneEdge_separator_requests
 
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_joinTree_of_supported_separators
+
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_nonempty
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_vertex_covered
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_strongSupportForest
