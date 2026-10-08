@@ -132,4 +132,8 @@ import Girth.ForestOwnerGenealogy
 import Girth.ForestGuardedSkeletonBound
 import Girth.BoundaryGirthExtension
 import Girth.BoundaryShortPathRecord
+import Girth.ForestMarkedTransport
+import Girth.ForestBoundaryShadow
+import Girth.ForestBoundaryPathCore
+import Girth.ForestFiniteCycleCore
 import Girth.ForestMarkedCarrierContacts
