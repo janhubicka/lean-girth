@@ -102,3 +102,4 @@ import Girth.ForestNeutralGap
 import Girth.ForestParameterFreeOrbit
 import Girth.ForestShadowClique
 import Girth.ForestRootColourCanon
+import Girth.ForestTwoCopyGeometry
