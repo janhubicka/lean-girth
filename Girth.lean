@@ -118,3 +118,4 @@ import Girth.ForestParameterFreeColour
 import Girth.ForestTwoCopyGeometry
 import Girth.ForestAllWidthNoGo
 import Girth.ForestDiaryMultiGap
+import Girth.ForestObservableEventBudget
