@@ -502,3 +502,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.noUniformAllWidthRootHomogeneity
 
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_classification
+
+#print axioms StructuralRamsey.Girth.FiniteGapReplaySchedule.exists_shape
+#print axioms StructuralRamsey.Girth.finiteMarkedFamily_oneStepSchedule
