@@ -604,6 +604,14 @@ import Girth
 #print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset_ownerSupport
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_subset_old
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_girth_iff
+#print axioms StructuralRamsey.Girth.transportedPiece_map
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.map_to_canonical_image
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_canonical_standard_pictures
+#print axioms StructuralRamsey.Girth.HypergraphPiece.oneEdge_map
+#print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_test
+#print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_preimage
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.oneEdge_transported_of_factor
+#print axioms StructuralRamsey.Girth.allGluingOneEdges_transported_of_factor
 
 #print axioms StructuralRamsey.Girth.mem_forestVertexMask
 #print axioms StructuralRamsey.Girth.mem_forestVertexMaskPalette
