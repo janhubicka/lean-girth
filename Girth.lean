@@ -19,6 +19,7 @@ import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore
 import Girth.Forest
+import Girth.ForestImage
 import Girth.ForestSingleEdge
 import Girth.ForestLeafDeletion
 import Girth.ForestDeletionGeometry
