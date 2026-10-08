@@ -479,3 +479,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.outerEdgesLinear_of_ambient_girth
 #print axioms StructuralRamsey.Girth.forestCompletion_assemble_of_ambient_girth
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_assembly
+
+#print axioms StructuralRamsey.Girth.fixedRootLevelColour_homogeneous
+#print axioms StructuralRamsey.Girth.noUniformAllWidthRootHomogeneity
