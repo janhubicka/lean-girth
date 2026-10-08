@@ -19,6 +19,7 @@ import Girth.TreeGeometry
 import Girth.TreeSupport
 import Girth.StructuralCore
 import Girth.Forest
+import Girth.ForestImage
 import Girth.ForestSingleEdge
 import Girth.ForestLeafDeletion
 import Girth.ForestDeletionGeometry
@@ -29,6 +30,8 @@ import Girth.MixedForestAuxiliaryDeletion
 import Girth.ForestCompletionAssembly
 import Girth.ForestCompletionGirthBridge
 import Girth.ForestCompletionWitness
+import Girth.ForestCompletionTransport
+import Girth.ForestCompletionProperty
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
 import Girth.ForestCarrierCorner
