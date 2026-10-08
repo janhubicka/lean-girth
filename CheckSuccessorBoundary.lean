@@ -22,3 +22,76 @@ import Girth
 #print axioms StructuralRamsey.Girth.mem_boundaryShadowRecord
 #print axioms StructuralRamsey.Girth.boundaryShadowRecord_mono
 #print axioms StructuralRamsey.Girth.boundaryShadowChanges_bound
+
+/-!
+Regression: the retained copies are the disjoint triples {0,1,2} and
+{3,4,5}. Adding the unmarked triple {0,3,6} leaves their marked equality
+profile unchanged, but blocks the later fresh triple {0,3,7}.
+-/
+namespace StructuralRamsey.Girth.BoundaryShadowExample
+
+def leftEdge : Set (Fin 8) := {0, 1, 2}
+def rightEdge : Set (Fin 8) := {3, 4, 5}
+def blocker : Set (Fin 8) := {0, 3, 6}
+def candidate : Set (Fin 8) := {0, 3, 7}
+def clearHost : Set (Set (Fin 8)) := {leftEdge, rightEdge}
+def blockedHost : Set (Set (Fin 8)) := insert blocker clearHost
+
+theorem clearHost_linear : LinearEdgeSet clearHost := by
+  intro a ha b hb hab
+  simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
+  rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
+  · exact False.elim (hab rfl)
+  · decide
+  · decide
+  · exact False.elim (hab rfl)
+
+theorem blocker_boundary_free : BoundaryPairFree clearHost blocker := by
+  intro a ha
+  simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
+  rcases ha with rfl | rfl <;> decide
+
+theorem candidate_boundary_free : BoundaryPairFree clearHost candidate := by
+  intro a ha
+  simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
+  rcases ha with rfl | rfl <;> decide
+
+theorem blockedHost_linear : LinearEdgeSet blockedHost :=
+  linearEdgeSet_insert_of_boundaryPairFree clearHost_linear blocker_boundary_free
+
+theorem candidate_clear_linear : LinearEdgeSet (insert candidate clearHost) :=
+  linearEdgeSet_insert_of_boundaryPairFree clearHost_linear candidate_boundary_free
+
+theorem candidate_blocked_not_linear : ¬ LinearEdgeSet (insert candidate blockedHost) := by
+  intro hLinear
+  have hEq : blocker = candidate :=
+    linearEdge_eq_of_two_shared_vertices
+      (insert candidate blockedHost) hLinear
+      (by simp [blockedHost]) (by simp)
+      (x := (0 : Fin 8)) (y := (3 : Fin 8)) (by decide)
+      (by simp [blocker]) (by simp [candidate])
+      (by simp [blocker]) (by simp [candidate])
+  have hSix : (6 : Fin 8) ∈ candidate := hEq ▸ (by simp [blocker])
+  norm_num [candidate] at hSix
+
+/-- This is the contact missed by a profile of the retained copies alone. -/
+theorem new_shadow_contact :
+    markedBoundaryShadow blockedHost (id : Fin 8 → Fin 8) 0 3 ∧
+      ¬ markedBoundaryShadow clearHost (id : Fin 8 → Fin 8) 0 3 := by
+  constructor
+  · refine ⟨by decide, blocker, ?_, ?_, ?_⟩ <;> simp [blockedHost, blocker]
+  · rintro ⟨_, a, ha, hZero, hThree⟩
+    simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha
+    rcases ha with rfl | rfl
+    · norm_num [leftEdge] at hThree
+    · norm_num [rightEdge] at hZero
+
+end StructuralRamsey.Girth.BoundaryShadowExample
+
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.clearHost_linear
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.blocker_boundary_free
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.candidate_boundary_free
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.blockedHost_linear
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.candidate_clear_linear
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.candidate_blocked_not_linear
+#print axioms StructuralRamsey.Girth.BoundaryShadowExample.new_shadow_contact
