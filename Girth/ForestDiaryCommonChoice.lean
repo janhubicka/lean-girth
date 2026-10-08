@@ -72,6 +72,10 @@ theorem exists_commonNeutralGapChoice
       SuccessorTree.FreeAncestral.History Label arity m →
         SuccessorTree.FreeAncestral.Code Label arity m,
       ∀ i : Fin q, choose (stem i) = code i := by
+  classical
+  letI : Nonempty (SuccessorTree.FreeAncestral.Code Label arity m) :=
+    ⟨⟨Classical.choice (inferInstance : Nonempty Label),
+      SuccessorTree.FreeAncestral.emptyParamTuple arity m⟩⟩
   exact (finiteHistoryCompatibleChoice_iff q stem code).2 h
 
 end StructuralRamsey.Girth
