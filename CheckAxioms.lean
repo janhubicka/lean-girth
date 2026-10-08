@@ -641,3 +641,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_commonNextPrefix
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
 #print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
+
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_contains_meet
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_unmarked_not_meet
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_skeleton
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_diarySkeleton
