@@ -10,6 +10,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | §1 A-strongly induced | `Girth.AStrong` |
 | §1 Berge cycle / girth (>g) | `Girth.BergeCycle`, `Girth.GirthGT` |
 | girth (>2) implies linear support | proved by `pairwise_subsingleton_of_girthGT_two`, `aLinear_of_girthGT_two` |
+| A-linearity implies no Berge 2-cycles | `girthGT_two_of_linearEdgeSet`, `girthGT_two_of_aLinear` convert picture-step linearity directly to `GirthGT` at cutoff 2, the exact ambient hypothesis of the generic forest-completion assembly; no finiteness of the ambient vertex type. |
 | subhypergraphs preserve a girth lower bound | proved by `girthGT_of_subset` |
 | adding one fresh edge preserves Berge girth | exact old-short-path equivalence `girthGT_insert_iff_no_shortBergePath` in `BoundaryGirthExtension`; both directions proved, including length-two cycles |
 | finite marked boundary record for girth | `hasShortBergePathToEdge_iff_marked`, `freshEdge_girth_iff_of_sameShortPaths`, `freshEdge_girth_iff_of_equalShortPathRecords`, `markedShortPathRecord_mono`, `markedShortPathChanges_bound`; these assume all attachment contacts are marked and an increasing old edge process for event bounds |
