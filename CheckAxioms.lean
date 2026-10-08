@@ -512,3 +512,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.map
 
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_piece_classification
+
+#print axioms StructuralRamsey.Girth.forestCompletion_witness_of_compatible_local_completions
