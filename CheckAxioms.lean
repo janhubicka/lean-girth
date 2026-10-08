@@ -500,3 +500,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.badForest_twoCopy_geometry_contradiction
 #print axioms StructuralRamsey.Girth.fixedRootLevelColour_homogeneous
 #print axioms StructuralRamsey.Girth.noUniformAllWidthRootHomogeneity
+
+#print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_classification
