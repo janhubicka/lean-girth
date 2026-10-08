@@ -72,6 +72,7 @@ theorem strongMarked_image_atom
   ext y
   constructor
   · rintro ⟨⟨j, x⟩, ⟨hj, hx⟩, hEq⟩
+    change j = i at hj
     subst j
     exact ⟨x, hx, hEq⟩
   · rintro ⟨x, hx, hEq⟩
