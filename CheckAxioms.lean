@@ -486,3 +486,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.map
 #print axioms StructuralRamsey.Girth.ForestCompletionWitness.map
 #print axioms StructuralRamsey.Girth.mapped_auxiliary_oneEdge
+
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.map
