@@ -98,6 +98,58 @@ theorem transportedOneEdge_of_source_preimage
   obtain ⟨e₀, hTest, rfl⟩ := hPreimage
   exact transportedOneEdge_of_source_test tested φ e₀ hTest
 
+/-- A gluing edge from a strong support embedding has a tested
+one-edge preimage inside the full old standard picture, provided the
+gluing embedding factors through that standard embedding and old active
+support edges are tested. -/
+theorem StrongSupportEmbedding.oneEdge_transported_of_factor
+    {H : Set (Set Src)} {K : Set (Set W)}
+    (outer : StrongSupportEmbedding H K)
+    (active : Src ↪ Old) (standard : Old ↪ W)
+    (hFactor : ∀ x : Src, outer x = standard (active x))
+    (tested : HypergraphPiece Old → Prop)
+    (hOldEdges : ∀ e₀ : Set Src, e₀ ∈ H →
+      tested (HypergraphPiece.oneEdge (active '' e₀)))
+    (e : Set W) (he : e ∈ outer.supportPiece.edges) :
+    TransportedPiece tested standard (HypergraphPiece.oneEdge e) := by
+  obtain ⟨e₀, he₀, hEq⟩ := he
+  apply transportedOneEdge_of_source_preimage tested standard e
+  refine ⟨active '' e₀, hOldEdges e₀ he₀, ?_⟩
+  calc
+    e = outer '' e₀ := hEq
+    _ = standard '' (active '' e₀) := by
+      apply Set.ext
+      intro z
+      constructor
+      · rintro ⟨x, hx, rfl⟩
+        exact ⟨active x, ⟨x, hx, rfl⟩, (hFactor x).symm⟩
+      · rintro ⟨y, ⟨x, hx, hxy⟩, hzy⟩
+        refine ⟨x, hx, ?_⟩
+        calc
+          outer x = standard (active x) := hFactor x
+          _ = standard y := congrArg standard hxy
+          _ = z := hzy
+
+/-- All connector one-edge pieces are canonical transported tests when
+the local gluing maps for every standard copy factor through its full
+old-picture embedding. -/
+theorem allGluingOneEdges_transported_of_factor
+    {H : Set (Set Src)} {K : Set (Set W)}
+    (outer : Q → StrongSupportEmbedding H K)
+    (active : Q → Src ↪ Old)
+    (standard : Q → Old ↪ W)
+    (hFactor : ∀ q x, outer q x = standard q (active q x))
+    (tested : HypergraphPiece Old → Prop)
+    (hOldEdges : ∀ q (e₀ : Set Src), e₀ ∈ H →
+      tested (HypergraphPiece.oneEdge ((active q) '' e₀))) :
+    ∀ q (e : Set W), e ∈ (outer q).supportPiece.edges →
+      TransportedPiece tested (standard q)
+        (HypergraphPiece.oneEdge e) := by
+  intro q e he
+  exact (outer q).oneEdge_transported_of_factor
+    (active q) (standard q) (hFactor q) tested
+    (hOldEdges q) e he
+
 /-- The full old completion property transfers to its *canonical*
 image predicates without any extra hypothesis about the predicates. -/
 theorem ForestCompletionProperty.map_to_canonical_image
