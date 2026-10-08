@@ -472,3 +472,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_unique_finePart
 #print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle_all_parts
+
+#print axioms StructuralRamsey.Girth.outerEdgesLinear_of_ambient_girth
+#print axioms StructuralRamsey.Girth.forestCompletion_assemble_of_ambient_girth
