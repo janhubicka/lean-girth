@@ -528,3 +528,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_support_edge_covering_separator
 #print axioms StructuralRamsey.Girth.separator_edge_exact_of_ambient_girth
 #print axioms StructuralRamsey.Girth.exists_oneEdge_separator_requests
+
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_joinTree_of_supported_separators
