@@ -633,3 +633,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedFamily_pairwiseAllowed_iff
 #print axioms StructuralRamsey.Girth.markedFamily_forest_iff_of_supportPresentation
 #print axioms StructuralRamsey.Girth.forestObservableProfile_determines_forest
+
+#print axioms StructuralRamsey.Girth.exists_localNeutralGapTail_of_global
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages
