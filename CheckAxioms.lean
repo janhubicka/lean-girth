@@ -550,3 +550,5 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_card_le
 #print axioms StructuralRamsey.Girth.forestObservableDiarySkeleton_card_le
+#print axioms StructuralRamsey.Girth.no_shortBergePath_of_girthGT_insert
+#print axioms StructuralRamsey.Girth.girthGT_insert_iff_no_shortBergePath
