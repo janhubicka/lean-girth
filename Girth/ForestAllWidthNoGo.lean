@@ -34,9 +34,9 @@ theorem fixedRootLevelColour_homogeneous
       ∀ F G : ShapeMap
         (freeSTree (Label := Label) (arity := arity)),
         decide ((W (F (rootNode (Label := Label)
-          (arity := arity))).level = k) =
+          (arity := arity)))).level = k) =
         decide ((W (G (rootNode (Label := Label)
-          (arity := arity))).level = k) := by
+          (arity := arity)))).level = k) := by
   exact freeHistoryRootColour_homogeneous
     (Label := Label) arity
     (χ := fun a : Node Label arity => decide (a.level = k))
@@ -52,9 +52,9 @@ theorem noUniformAllWidthRootHomogeneity
         ∀ F G : ShapeMap
           (freeSTree (Label := Label) (arity := arity)),
         decide ((W (F (rootNode (Label := Label)
-          (arity := arity))).level = k) =
+          (arity := arity)))).level = k) =
         decide ((W (G (rootNode (Label := Label)
-          (arity := arity))).level = k) := by
+          (arity := arity)))).level = k) := by
   rintro ⟨W, hW⟩
   let c : Label := Classical.choice
     (inferInstance : Nonempty Label)
