@@ -4,7 +4,8 @@ import re
 import sys
 
 text = pathlib.Path(sys.argv[1]).read_text()
-expected = set(re.findall(r"^#print axioms (\S+)", pathlib.Path("CheckAxioms.lean").read_text(), re.M))
+audit_source = pathlib.Path(sys.argv[2] if len(sys.argv) > 2 else "CheckAxioms.lean")
+expected = set(re.findall(r"^#print axioms (\S+)", audit_source.read_text(), re.M))
 found = {}
 for name, axioms in re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", text):
     found[name] = {a.strip() for a in axioms.split(",") if a.strip()}
