@@ -577,3 +577,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_congr_of_sameOverlap
 #print axioms StructuralRamsey.Girth.allAllowedIntersections_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.allowedIntersectionRepresentative_card_le
+
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edgesSaturated
+#print axioms StructuralRamsey.Girth.strongSupport_allAllowed_iff_markedRepresentatives
+#print axioms StructuralRamsey.Girth.strongSupport_markedRepresentatives_card_le
