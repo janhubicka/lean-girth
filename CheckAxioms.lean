@@ -472,3 +472,14 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.exists_unique_finePart
 #print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle_all_parts
+
+#print axioms StructuralRamsey.Girth.gapNode_replay_deleted_code
+#print axioms StructuralRamsey.Girth.neutralGapTail_has_preimage
+#print axioms StructuralRamsey.Girth.neutralGapTail_finite_preimages
+#print axioms StructuralRamsey.Girth.pairwiseClean_from_pairClosedShadow
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_append_pairClosedShadow
+#print axioms StructuralRamsey.Girth.forestInvariantProfileColour_constant
+#print axioms StructuralRamsey.Girth.forestDistinctProfiles_not_fullyEquivariant
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_outside_cone
+#print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_predClosed_front
+#print axioms StructuralRamsey.Girth.preBirth_twoCopy_syntax
