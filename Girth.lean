@@ -48,6 +48,7 @@ import Girth.ForestFreshCarrier
 import Girth.ForestJoinLift
 import Girth.ForestJoinLiftLinear
 import Girth.CompletionBudget
+import Girth.ForestCompletionOwnerImage
 import Girth.ForestDisjoint
 import Girth.ForestCarrierLift
 import Girth.ForestOverlapTransfer

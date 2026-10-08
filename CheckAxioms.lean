@@ -537,3 +537,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_vertex_covered
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_strongSupportForest
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_transported_strongSupportForest
+
+#print axioms StructuralRamsey.Girth.OwnerImage.owner_surjective
+#print axioms StructuralRamsey.Girth.OwnerImage.val_owner
+#print axioms StructuralRamsey.Girth.OwnerImage.card_le
