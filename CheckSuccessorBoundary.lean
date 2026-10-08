@@ -32,6 +32,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.mem_boundaryPathRecord
 #print axioms StructuralRamsey.Girth.boundaryPathRecord_mono
 #print axioms StructuralRamsey.Girth.boundaryPathChanges_bound
+#print axioms StructuralRamsey.Girth.boundaryPathCore_subset
+#print axioms StructuralRamsey.Girth.boundaryPathCore_complete
+#print axioms StructuralRamsey.Girth.boundaryPathCore_profile_iff
+#print axioms StructuralRamsey.Girth.boundaryPathWitnessEdges_card_le
+#print axioms StructuralRamsey.Girth.boundaryPathCore_card_le
+#print axioms StructuralRamsey.Girth.freshEdge_girth_iff_finiteBoundaryCore
 
 /-!
 Regression: the retained copies are the disjoint triples {0,1,2} and
