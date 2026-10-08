@@ -572,3 +572,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedCarrierMask_boundary_inter_eq
 #print axioms StructuralRamsey.Girth.freshCarrier_inter_eq_of_sameMask
 #print axioms StructuralRamsey.Girth.freshCarrier_allContacts_iff_representatives
+#print axioms StructuralRamsey.Girth.freshCarrier_dominated_iff_representatives
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated_of_marked_contacts
+#print axioms StructuralRamsey.Girth.no_marked_dominating_representative_of_bad_attachment
