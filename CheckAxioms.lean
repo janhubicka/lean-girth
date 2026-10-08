@@ -596,3 +596,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edgesSaturated
 #print axioms StructuralRamsey.Girth.strongSupport_allAllowed_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.strongSupport_markedRepresentatives_card_le
+#print axioms StructuralRamsey.Girth.firstDesignatedEdgeOwner_spec
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerCore_subset
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerCore_covers
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerCore_mono
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerCore_card_le
+#print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset_ownerSupport
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_subset_old
+#print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_girth_iff
