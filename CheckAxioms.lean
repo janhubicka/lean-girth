@@ -502,3 +502,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.noUniformAllWidthRootHomogeneity
 
 #print axioms StructuralRamsey.Girth.forestCompletion_witness_of_local_classification
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.map_isOneEdge
+#print axioms StructuralRamsey.Girth.AllowedIntersection.map
+#print axioms StructuralRamsey.Girth.JoinTree.map
+#print axioms StructuralRamsey.Girth.ForestOfCopies.map
+#print axioms StructuralRamsey.Girth.ForestCompletionWitness.map
+#print axioms StructuralRamsey.Girth.mapped_auxiliary_oneEdge
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.map
