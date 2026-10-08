@@ -633,3 +633,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedFamily_pairwiseAllowed_iff
 #print axioms StructuralRamsey.Girth.markedFamily_forest_iff_of_supportPresentation
 #print axioms StructuralRamsey.Girth.forestObservableProfile_determines_forest
+
+#print axioms StructuralRamsey.Girth.strongSupport_carrier_eq_marked_image
+#print axioms StructuralRamsey.Girth.strongMarked_image_atom
+#print axioms StructuralRamsey.Girth.strongSupport_edges_eq_marked_atoms
+#print axioms StructuralRamsey.Girth.strongSupport_sameMarkedPresentation
+#print axioms StructuralRamsey.Girth.strongSupport_forest_iff_of_sameObservableProfile
