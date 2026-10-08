@@ -31,6 +31,7 @@ import Girth.ForestCompletionAssembly
 import Girth.ForestCompletionGirthBridge
 import Girth.ForestCompletionWitness
 import Girth.ForestCompletionTransport
+import Girth.ForestCompletionProperty
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
 import Girth.ForestCarrierCorner
