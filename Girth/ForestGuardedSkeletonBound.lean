@@ -29,7 +29,7 @@ universe u
 /-- Levels of all marked terminal histories and all pairwise meets.
 The ordered-pair formulation also handles repeated selected leaves. -/
 def forestTerminalMeetLevels
-    {Label : Type u} {arity : ℕ}
+    {Label : Type u} [Fintype Label] {arity : ℕ}
     (q : ℕ) (leaves : Fin q → Node Label arity) :
     Finset ℕ :=
   let I : Finset (Fin q) := Finset.univ
@@ -41,7 +41,7 @@ def forestTerminalMeetLevels
 /-- A q-tuple has at most q distinct terminal levels and q² ordered
 pairwise meet levels, with no assumption on the ambient history depth. -/
 theorem forestTerminalMeetLevels_card_le
-    {Label : Type u} {arity : ℕ}
+    {Label : Type u} [Fintype Label] {arity : ℕ}
     (q : ℕ) (leaves : Fin q → Node Label arity) :
     (forestTerminalMeetLevels q leaves).card ≤ q + q * q := by
   classical
@@ -87,7 +87,7 @@ level set retaining those stages, their immediate predecessors and
 all marked terminal/meet levels is bounded independently of the
 length of the history construction. -/
 theorem forestObservableDiarySkeleton_card_le
-    {Label : Type u} {arity : ℕ}
+    {Label : Type u} [Fintype Label] {arity : ℕ}
     (q v e N : ℕ)
     (leaves : Fin q → Node Label arity)
     (R : ℕ → Finset (ForestObservableAtom q v e))
