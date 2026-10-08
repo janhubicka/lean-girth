@@ -20,7 +20,7 @@ variable {W Q N : Type v}
 /-- A labelled completed family is a forest containing every selected piece,
 and has no extra members beyond the permitted designated pieces. -/
 def ForestCompletionWitness
-    {K : Type v}
+    {K : Type v} [Fintype K]
     (selected : N → HypergraphPiece W)
     (designated : HypergraphPiece W → Prop)
     (family : K → HypergraphPiece W) : Prop :=
