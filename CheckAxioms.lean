@@ -639,3 +639,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.strongSupport_edges_eq_marked_atoms
 #print axioms StructuralRamsey.Girth.strongSupport_sameMarkedPresentation
 #print axioms StructuralRamsey.Girth.strongSupport_forest_iff_of_sameObservableProfile
+
+#print axioms StructuralRamsey.Girth.AllowedIntersection.of_map
+#print axioms StructuralRamsey.Girth.ForestOfCopies.unmap
+#print axioms StructuralRamsey.Girth.forestOfCopies_map_iff
