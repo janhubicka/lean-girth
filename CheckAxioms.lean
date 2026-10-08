@@ -514,3 +514,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteGapReplaySchedule.exists_shape
 #print axioms StructuralRamsey.Girth.finiteMarkedFamily_oneStepSchedule
 #print axioms StructuralRamsey.Girth.finiteTerminalPresentations_of_gapSchedules
+
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_local_completions
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions_dependent
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions_with_labels
