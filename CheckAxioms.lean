@@ -484,3 +484,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.preBirth_maps_agree_on_predClosed_front
 #print axioms StructuralRamsey.Girth.preBirth_twoCopy_syntax
 #print axioms StructuralRamsey.Girth.preBirth_twoCopy_of_faithfulOrigins
+
+#print axioms StructuralRamsey.Girth.finiteHistoryCompatibleChoice_iff
+#print axioms StructuralRamsey.Girth.exists_commonNeutralGapChoice
+#print axioms StructuralRamsey.Girth.finiteMarkedNeutralGap_preimages
