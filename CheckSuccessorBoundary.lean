@@ -38,7 +38,7 @@ def clearHost : Set (Set (Fin 8)) := {leftEdge, rightEdge}
 def blockedHost : Set (Set (Fin 8)) := insert blocker clearHost
 
 theorem clearHost_linear : LinearEdgeSet clearHost := by
-  intro a ha b hb hab
+  intro a b ha hb hab
   simp only [clearHost, Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
   rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
   · exact False.elim (hab rfl)
