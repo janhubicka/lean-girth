@@ -30,6 +30,7 @@ import Girth.ForestCompletionAssembly
 import Girth.ForestCompletionGirthBridge
 import Girth.ForestCompletionWitness
 import Girth.ForestCompletionProperty
+import Girth.ForestCompletionChoices
 import Girth.ForestCompletionTransport
 import Girth.ForestImage
 import Girth.ForestCompletionKeep
