@@ -534,3 +534,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_nonempty
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_vertex_covered
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_strongSupportForest
+
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_transported_strongSupportForest
