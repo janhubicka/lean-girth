@@ -514,3 +514,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteGapReplaySchedule.exists_shape
 #print axioms StructuralRamsey.Girth.finiteMarkedFamily_oneStepSchedule
 #print axioms StructuralRamsey.Girth.finiteTerminalPresentations_of_gapSchedules
+
+#print axioms StructuralRamsey.Girth.strictlyGrowingAgreementEvents_bounded
+#print axioms StructuralRamsey.Girth.observableDiaryEvents_bound
