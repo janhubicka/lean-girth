@@ -25,6 +25,20 @@ universe u
 
 variable {Label : Type u} {arity : ℕ} [Fintype Label]
 
+/-- Dependent congruence for children: after their parents are
+identified, equality of ancestral level lists identifies their codes. -/
+private theorem child_eq_of_parent_and_levelList
+    (a b : Node Label arity)
+    (t : ParamTuple arity a.level)
+    (u : ParamTuple arity b.level)
+    (label : Label)
+    (hab : a = b)
+    (ht : levelList t = levelList u) :
+    child a t label = child b u label := by
+  cases hab
+  have htu : t = u := levelList_injective ht
+  rw [htu]
+
 /-- A history obtained by inserting one prescribed transition at level m
 and then appending only codes that do not name target level m as
 an ancestor parameter. -/
@@ -135,12 +149,15 @@ theorem neutralGapTail_has_preimage
         omega
       rw [gapNode_child_of_ge m choose
         (⟨n, s⟩ : Node Label arity) sc.params sc.label hmn]
-      rw [hs]
-      congr 1
-      apply levelList_injective
-      have hv := (gapNode_replay_deleted_code m n
-        (by omega) choose s c hc).2
-      exact hv
+      change
+        child (gapNode m choose (⟨n, s⟩ : Node Label arity))
+          (gapShiftParamTuple m choose (⟨n, s⟩ : Node Label arity)
+            sc.params hmn) c.label =
+        child (⟨n + 1, h⟩ : Node Label arity) c.params c.label
+      apply child_eq_of_parent_and_levelList
+      · exact hs
+      · exact (gapNode_replay_deleted_code m n
+          (by omega) choose s c hc).2
 
 /-- A finite family of marked histories compatible with ONE common
 gap-choice function is simultaneously reconstructed by the SAME global
