@@ -139,3 +139,4 @@ import Girth.ForestFiniteCycleCore
 import Girth.ForestMarkedCarrierContacts
 import Girth.ForestMarkedAllowedIntersections
 import Girth.ForestMarkedLeafAttachment
+import Girth.ForestCanonicalTransport
