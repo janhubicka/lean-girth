@@ -542,3 +542,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.strictRecordChain_length_le
 #print axioms StructuralRamsey.Girth.activeRecordSteps_le
 #print axioms StructuralRamsey.Girth.markedObservableEvent_bound
+
+#print axioms StructuralRamsey.Girth.mem_ownerCoincidencePairs
+#print axioms StructuralRamsey.Girth.ownerCoincidencePairs_mono
+#print axioms StructuralRamsey.Girth.ownerCoincidencePairs_strict_of_firstAgree
+#print axioms StructuralRamsey.Girth.firstOwnerAgreementEvents_bound
