@@ -138,9 +138,10 @@ theorem no_dominating_member_of_not_forest
 
 
 /-- A finite family of boundary intersections which is totally ordered by
-inclusion has a dominating member. -/
+inclusion has a dominating member. Finiteness of the ambient vertex set
+is unnecessary: we maximize by scanning the finite family of labels. -/
 theorem exists_dominating_member_of_comparable
-    [Fintype ι] [Nonempty ι] [Finite W]
+    [Fintype ι] [Nonempty ι]
     {Y : ι → HypergraphPiece W}
     (F : HypergraphPiece W)
     (hComp :
@@ -153,24 +154,37 @@ theorem exists_dominating_member_of_comparable
       F.carrier ∩ (Y i).carrier ⊆
         F.carrier ∩ (Y p).carrier := by
   classical
-  obtain ⟨p, hp⟩ :=
-    Finite.exists_max
-      (fun i : ι => (F.carrier ∩ (Y i).carrier).ncard)
-  refine ⟨p, ?_⟩
-  intro i
-  rcases hComp i p with hip | hpi
-  · exact hip
-  · have heq :
-        F.carrier ∩ (Y p).carrier =
-          F.carrier ∩ (Y i).carrier :=
-      Set.eq_of_subset_of_ncard_le hpi (hp i)
-    exact heq.symm.subset
+  let root : ι := Classical.choice (inferInstance : Nonempty ι)
+  have hFin (s : Finset ι) :
+      ∃ p : ι, ∀ i : ι, i ∈ s →
+        F.carrier ∩ (Y i).carrier ⊆
+          F.carrier ∩ (Y p).carrier := by
+    induction s using Finset.induction_on with
+    | empty =>
+        refine ⟨root, ?_⟩
+        intro i hi
+        simp at hi
+    | @insert j s hjs ih =>
+        obtain ⟨p, hp⟩ := ih
+        rcases hComp j p with hjp | hpj
+        · refine ⟨p, ?_⟩
+          intro i hi
+          rcases Finset.mem_insert.mp hi with rfl | his
+          · exact hjp
+          · exact hp i his
+        · refine ⟨j, ?_⟩
+          intro i hi
+          rcases Finset.mem_insert.mp hi with rfl | his
+          · exact Set.Subset.rfl
+          · exact (hp i his).trans hpj
+  obtain ⟨p, hp⟩ := hFin Finset.univ
+  exact ⟨p, fun i => hp i (Finset.mem_univ i)⟩
 
 /-- Exact finite form used in the successor-profile proof: if attaching a new
 piece to a forest is bad, then two of its old boundary intersections are
 incomparable. -/
 theorem exists_incomparable_intersections_of_not_forest
-    [Fintype ι] [Nonempty ι] [Finite W]
+    [Fintype ι] [Nonempty ι]
     {Y : ι → HypergraphPiece W}
     (hY : ForestOfCopies Y)
     (F : HypergraphPiece W)
