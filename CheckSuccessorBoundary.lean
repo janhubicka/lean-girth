@@ -22,6 +22,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.mem_boundaryShadowRecord
 #print axioms StructuralRamsey.Girth.boundaryShadowRecord_mono
 #print axioms StructuralRamsey.Girth.boundaryShadowChanges_bound
+#print axioms StructuralRamsey.Girth.girthGT_insert_iff_noShortBergePath
 
 /-!
 Regression: the retained copies are the disjoint triples {0,1,2} and
