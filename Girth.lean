@@ -35,6 +35,7 @@ import Girth.ForestCompletionTransport
 import Girth.ForestImage
 import Girth.ForestCompletionKeep
 import Girth.ForestCompletionGlobalBridge
+import Girth.ForestCompletionSeparatorRequests
 import Girth.ForestCompletionOwnerAssembly
 import Girth.ForestCompletionKeepPieces
 import Girth.ForestJoinGlue
