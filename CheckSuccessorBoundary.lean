@@ -23,6 +23,15 @@ import Girth
 #print axioms StructuralRamsey.Girth.boundaryShadowRecord_mono
 #print axioms StructuralRamsey.Girth.boundaryShadowChanges_bound
 #print axioms StructuralRamsey.Girth.girthGT_insert_iff_noShortBergePath
+#print axioms StructuralRamsey.Girth.markedBoundaryPath_mono
+#print axioms StructuralRamsey.Girth.hasShortBergePath_image_iff
+#print axioms StructuralRamsey.Girth.hasShortBergePath_image_congr
+#print axioms StructuralRamsey.Girth.BergePath.endpoint_old_edges
+#print axioms StructuralRamsey.Girth.hasShortBergePath_contact_iff
+#print axioms StructuralRamsey.Girth.freshEdge_girth_iff_of_sameBoundaryPathShadow
+#print axioms StructuralRamsey.Girth.mem_boundaryPathRecord
+#print axioms StructuralRamsey.Girth.boundaryPathRecord_mono
+#print axioms StructuralRamsey.Girth.boundaryPathChanges_bound
 
 /-!
 Regression: the retained copies are the disjoint triples {0,1,2} and
