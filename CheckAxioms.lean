@@ -612,3 +612,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_preimage
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.oneEdge_transported_of_factor
 #print axioms StructuralRamsey.Girth.allGluingOneEdges_transported_of_factor
+#print axioms StructuralRamsey.Girth.badForest_two_incomparable_marked_contacts
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_of_comparable_marked_contacts
+#print axioms StructuralRamsey.Girth.girthGT_two_of_linearEdgeSet
+#print axioms StructuralRamsey.Girth.girthGT_two_of_aLinear
+#print axioms StructuralRamsey.Girth.factorized_support_image
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_carrier_subset_standard
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_subset_standard
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_sub_standard
+#print axioms StructuralRamsey.Girth.HypergraphPiece.map_edges_subset_ambient
