@@ -33,6 +33,7 @@ import Girth.ForestCompletionProperty
 import Girth.ForestCompletionTransport
 import Girth.ForestImage
 import Girth.ForestCompletionKeep
+import Girth.ForestCompletionKeepPieces
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
 import Girth.ForestCarrierCorner
