@@ -31,13 +31,15 @@ theorem linearEdgeSet_insert_of_boundaryPairFree
     (hOld : LinearEdgeSet E) (hCross : BoundaryPairFree E e) :
     LinearEdgeSet (insert e E) := by
   intro a b ha hb hab
-  rcases Set.mem_insert_iff.mp ha with rfl | ha
-  · rcases Set.mem_insert_iff.mp hb with rfl | hb
-    · exact False.elim (hab rfl)
-    · exact hCross b hb
-  · rcases Set.mem_insert_iff.mp hb with rfl | hb
-    · simpa only [Set.inter_comm] using hCross a ha
-    · exact hOld ha hb hab
+  rcases Set.mem_insert_iff.mp ha with haEq | haOld
+  · rcases Set.mem_insert_iff.mp hb with hbEq | hbOld
+    · exact False.elim (hab (haEq.trans hbEq.symm))
+    · subst a
+      exact hCross b hbOld
+  · rcases Set.mem_insert_iff.mp hb with hbEq | hbOld
+    · subst b
+      simpa only [Set.inter_comm] using hCross a haOld
+    · exact hOld haOld hbOld hab
 
 /-- For a genuinely new edge, the boundary criterion is also necessary. -/
 theorem linearEdgeSet_insert_iff
