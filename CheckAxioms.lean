@@ -475,3 +475,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.freeHistoryFiniteRoot_agrees
 #print axioms StructuralRamsey.Girth.freeHistoryRootColour_homogeneous
+
+#print axioms StructuralRamsey.Girth.map_emptyEventAtNode
+#print axioms StructuralRamsey.Girth.parameterFreeEventColour_homogeneous
