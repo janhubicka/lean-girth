@@ -94,7 +94,7 @@ theorem attachment_irreducible_unique_owner_off_core
       exact ⟨z, hz.symm⟩
     refine ⟨i, hOwner, ?_⟩
     intro j hj
-    exact attachment_unique_standard_owner_off_core
-      B S D f T hNotCore hOwner hj
+    exact (attachment_unique_standard_owner_off_core
+      B S D f T hNotCore hOwner hj).symm
 
 end StructuralRamsey.Girth
