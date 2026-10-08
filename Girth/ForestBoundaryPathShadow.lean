@@ -66,6 +66,7 @@ theorem BergePath.endpoint_old_edges
     {W : Type v} {E : Set (Set W)} (p : BergePath E) :
     (∃ a ∈ E, p.vertex 0 ∈ a) ∧
       (∃ b ∈ E, p.vertex (Fin.last p.length) ∈ b) := by
+  have hpPos : 1 ≤ p.length := p.hlength
   let first : Fin p.length := ⟨0, by omega⟩
   let last : Fin p.length := ⟨p.length - 1, by omega⟩
   have hStart : p.vertex 0 ∈ p.edge first := by
