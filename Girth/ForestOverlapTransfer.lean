@@ -21,7 +21,7 @@ variable {W ι : Type v}
 /-- Enlarge the carriers of a family without changing any pairwise
 intersection.  The join tree on the smaller carriers remains a join tree
 on the enlarged carriers. -/
-theorem JoinTree.transfer_of_pair_intersections
+def JoinTree.transfer_of_pair_intersections
     {small large : ι → HypergraphPiece W}
     (J : JoinTree small)
     (hSub : ∀ i, (small i).carrier ⊆ (large i).carrier)
