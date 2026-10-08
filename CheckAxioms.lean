@@ -542,3 +542,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.strictRecordChain_length_le
 #print axioms StructuralRamsey.Girth.activeRecordSteps_le
 #print axioms StructuralRamsey.Girth.markedObservableEvent_bound
+
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_card_le
+#print axioms StructuralRamsey.Girth.forestObservableDiarySkeleton_card_le
