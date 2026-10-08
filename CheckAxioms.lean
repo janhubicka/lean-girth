@@ -583,3 +583,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedPiece_map
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.map_to_canonical_image
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_canonical_standard_pictures
+#print axioms StructuralRamsey.Girth.HypergraphPiece.oneEdge_map
+#print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_test
+#print axioms StructuralRamsey.Girth.transportedOneEdge_of_source_preimage
