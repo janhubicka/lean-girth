@@ -577,7 +577,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_congr_of_sameOverlap
 #print axioms StructuralRamsey.Girth.allAllowedIntersections_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.allowedIntersectionRepresentative_card_le
-
+#print axioms StructuralRamsey.Girth.freshCarrier_dominated_iff_representatives
+#print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated_of_marked_contacts
+#print axioms StructuralRamsey.Girth.no_marked_dominating_representative_of_bad_attachment
 #print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_subset
 #print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_mono
 #print axioms StructuralRamsey.Girth.firstBadCycleOldEdgesAt_card_le
@@ -591,9 +593,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.coherentMarkedCarrierCore_mono
 #print axioms StructuralRamsey.Girth.coherentMarkedCarrierCore_card_le
 #print axioms StructuralRamsey.Girth.freshCarrier_allContacts_iff_coherentCore
-#print axioms StructuralRamsey.Girth.freshCarrier_dominated_iff_representatives
-#print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated_of_marked_contacts
-#print axioms StructuralRamsey.Girth.no_marked_dominating_representative_of_bad_attachment
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edgesSaturated
 #print axioms StructuralRamsey.Girth.strongSupport_allAllowed_iff_markedRepresentatives
 #print axioms StructuralRamsey.Girth.strongSupport_markedRepresentatives_card_le
