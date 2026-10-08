@@ -580,3 +580,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.freshCarrier_dominated_iff_representatives
 #print axioms StructuralRamsey.Girth.forestOfCopies_attach_dominated_of_marked_contacts
 #print axioms StructuralRamsey.Girth.no_marked_dominating_representative_of_bad_attachment
+#print axioms StructuralRamsey.Girth.transportedPiece_map
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.map_to_canonical_image
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_canonical_standard_pictures
