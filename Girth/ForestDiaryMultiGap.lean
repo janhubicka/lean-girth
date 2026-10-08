@@ -106,4 +106,39 @@ theorem finiteMarkedFamily_oneStepSchedule
     FiniteGapReplaySchedule.insert
       hIdentity m choose (fun i => (P i).history) hMaps⟩
 
+/-- Uniform bounded-history *terminal* presentations follow whenever
+every guarded marked family can be reached by a compatible finite gap
+schedule from a fixed source height. This is the finite-list conclusion,
+without silently claiming that the actual train histories satisfy the
+reachability premise or that carrier birth roles are preserved. -/
+theorem finiteTerminalPresentations_of_gapSchedules
+    (q d : ℕ)
+    (Guarded :
+      (N : ℕ) → (Fin q → History Label arity N) → Prop)
+    (hSchedules :
+      ∀ (N : ℕ) (target : Fin q → History Label arity N),
+        Guarded N target →
+        ∃ initial : Fin q → History Label arity d,
+          FiniteGapReplaySchedule
+            (Label := Label) (arity := arity)
+            q d initial N target) :
+    ∃ representatives :
+        Finset (Fin q → History Label arity d),
+      ∀ (N : ℕ) (target : Fin q → History Label arity N),
+        Guarded N target →
+          ∃ initial ∈ representatives,
+            ∃ F : ShapeMap
+              (freeSTree (Label := Label) (arity := arity)),
+              ∀ i : Fin q,
+                F (⟨d, initial i⟩ : Node Label arity) =
+                  (⟨N, target i⟩ : Node Label arity) := by
+  classical
+  refine ⟨Finset.univ, ?_⟩
+  intro N target hGuard
+  obtain ⟨initial, hSched⟩ := hSchedules N target hGuard
+  obtain ⟨F, hF⟩ :=
+    FiniteGapReplaySchedule.exists_shape
+      (Label := Label) (arity := arity) q d initial hSched
+  exact ⟨initial, Finset.mem_univ _, F, hF⟩
+
 end StructuralRamsey.Girth
