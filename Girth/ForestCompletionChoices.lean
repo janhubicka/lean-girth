@@ -41,4 +41,44 @@ theorem ForestCompletionProperty.choose_local_completions
   choose K finite family hFamily using hEach
   exact ⟨K, finite, family, hFamily⟩
 
+/-- The exact local cardinal budget in the circulation induction.  At an
+outer-tree owner q the request family consists of the selected members
+assigned to q plus one connector request per adjacent owner.  Surjectivity
+of the owner map pays for all connector requests out of the global budget. -/
+theorem ForestCompletionProperty.choose_neighbor_local_completions
+    {N : Type v}
+    [Fintype N] [Fintype Q] [DecidableEq Q]
+    {tested designated : HypergraphPiece W → Prop}
+    {m : ℕ}
+    (hOld : ForestCompletionProperty tested designated m)
+    (owner : N → Q)
+    (hSurj : Function.Surjective owner)
+    (G : SimpleGraph Q)
+    [DecidableRel G.Adj]
+    (selected :
+      (q : Q) →
+        ({n : N // owner n = q} ⊕ G.neighborSet q) →
+          HypergraphPiece W)
+    (hTest :
+      ∀ q (n : {n : N // owner n = q} ⊕ G.neighborSet q),
+        tested (selected q n))
+    (hCard : Fintype.card N ≤ m) :
+    ∃ (K : Q → Type v),
+      ∃ (finite : ∀ q, Fintype (K q)),
+      ∃ (family : (q : Q) → K q → HypergraphPiece W),
+        ∀ q,
+          letI : Fintype (K q) := finite q
+          ForestCompletionWitness (selected q) designated (family q) := by
+  classical
+  have hBound (q : Q) :
+      Fintype.card
+        ({n : N // owner n = q} ⊕ G.neighborSet q) ≤ m := by
+    rw [Fintype.card_sum, G.card_neighborSet_eq_degree q]
+    exact (ownerFiber_card_add_degree_le owner hSurj G q).trans hCard
+  exact ForestCompletionProperty.choose_local_completions
+    hOld
+    (fun q : Q =>
+      {n : N // owner n = q} ⊕ G.neighborSet q)
+    selected hTest hBound
+
 end StructuralRamsey.Girth
