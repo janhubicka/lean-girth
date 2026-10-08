@@ -1,0 +1,24 @@
+import Girth
+
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.refl
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.symm
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.trans
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.of_injective
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.image_subset_iff
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.image_eq_iff
+#print axioms StructuralRamsey.Girth.SameMarkedKernel.carrier_injective_iff
+#print axioms StructuralRamsey.Girth.markedRangeMap_mk
+#print axioms StructuralRamsey.Girth.markedRangeEquiv
+#print axioms StructuralRamsey.Girth.markedRangeEquiv_mk
+#print axioms StructuralRamsey.Girth.markedRangeEquiv_unique
+#print axioms StructuralRamsey.Girth.markedRangeEquiv_trans
+#print axioms StructuralRamsey.Girth.markedRangeEquiv_fixed
+#print axioms StructuralRamsey.Girth.sameMarkedKernel_of_observableProfile_eq
+#print axioms StructuralRamsey.Girth.linearEdgeSet_insert_of_boundaryPairFree
+#print axioms StructuralRamsey.Girth.linearEdgeSet_insert_iff
+#print axioms StructuralRamsey.Girth.boundaryPairFree_image_iff
+#print axioms StructuralRamsey.Girth.boundaryPairFree_iff_of_sameShadow
+#print axioms StructuralRamsey.Girth.freshEdge_linearity_iff_of_sameBoundaryShadow
+#print axioms StructuralRamsey.Girth.mem_boundaryShadowRecord
+#print axioms StructuralRamsey.Girth.boundaryShadowRecord_mono
+#print axioms StructuralRamsey.Girth.boundaryShadowChanges_bound
