@@ -41,12 +41,10 @@ theorem girthGT_two_of_linearEdgeSet
     apply Fin.ext
     change (0 + 1) % c.length = 1
     rw [hcLength]
-    norm_num
   have hNext₁ : cyclicSucc i₁ = i₀ := by
     apply Fin.ext
     change (1 + 1) % c.length = 0
     rw [hcLength]
-    norm_num
   have hAt₀ : c.vertex i₀ ∈ c.edge i₀ ∩ c.edge i₁ := by
     constructor
     · exact c.left_mem i₀
