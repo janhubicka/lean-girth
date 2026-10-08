@@ -43,8 +43,9 @@ theorem preBirth_maps_agree_outside_cone
     (hx : ¬ (⟨m, h0⟩ : Node Label arity) ≤ x) :
     preBirthZero (arity := arity) m c0 x =
       preBirthOne (arity := arity) m h0 c0 c1 x := by
+  classical
   rcases x with ⟨n, h⟩
-  induction n generalizing h with
+  induction n with
   | zero =>
       exact preBirth_maps_agree_below_gap
         m h0 c0 c1 (⟨0, h⟩ : Node Label arity) hmpos
