@@ -479,3 +479,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.AllowedIntersection.map
 #print axioms StructuralRamsey.Girth.JoinTree.map
 #print axioms StructuralRamsey.Girth.ForestOfCopies.map
+
+#print axioms StructuralRamsey.Girth.HypergraphPiece.map_isOneEdge
