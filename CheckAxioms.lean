@@ -519,3 +519,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions_dependent
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.choose_neighbor_local_completions_with_labels
+
+#print axioms StructuralRamsey.Girth.JoinTree.transfer_of_pair_intersections
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_transfer_of_pair_intersections
+#print axioms StructuralRamsey.Girth.ForestOfCopies.transfer_of_pair_intersections
