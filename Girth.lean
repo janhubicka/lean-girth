@@ -38,6 +38,7 @@ import Girth.ForestCompletionGlobalBridge
 import Girth.ForestCompletionSeparatorRequests
 import Girth.ForestCompletionSupportedBridge
 import Girth.LocalForestCompletionBridge
+import Girth.ForestCompletionTransportedBridge
 import Girth.ForestCompletionOwnerAssembly
 import Girth.ForestCompletionKeepPieces
 import Girth.ForestJoinGlue
