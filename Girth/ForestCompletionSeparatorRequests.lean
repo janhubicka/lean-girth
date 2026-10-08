@@ -135,7 +135,7 @@ theorem exists_oneEdge_separator_requests
       ∃ e : Set W, e ∈ (P q).edges ∧
         (P q).carrier ∩ (P r.1).carrier ⊆ e :=
     exists_support_edge_covering_separator
-      hOuter hNonempty hCover r.2.ne.symm
+      hOuter hNonempty hCover r.2.ne
   let edge (q : Q) (r : J.tree.neighborSet q) : Set W :=
     Classical.choose (hChoice q r)
   let separator (q : Q) (r : J.tree.neighborSet q) :
@@ -149,6 +149,6 @@ theorem exists_oneEdge_separator_requests
   · exact hs.2
   · intro hBig
     exact separator_edge_exact_of_ambient_girth
-      hOuter hEdges hGirth r.2.ne.symm hs.1 hs.2 hBig
+      hOuter hEdges hGirth r.2.ne hs.1 hs.2 hBig
 
 end StructuralRamsey.Girth
