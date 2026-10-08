@@ -131,3 +131,4 @@ import Girth.ForestObservableEventBound
 import Girth.ForestOwnerGenealogy
 import Girth.ForestGuardedSkeletonBound
 import Girth.BoundaryGirthExtension
+import Girth.BoundaryShortPathRecord
