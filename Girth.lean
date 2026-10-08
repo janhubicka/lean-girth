@@ -29,6 +29,7 @@ import Girth.MixedForestAuxiliaryDeletion
 import Girth.ForestCompletionAssembly
 import Girth.ForestCompletionGirthBridge
 import Girth.ForestCompletionWitness
+import Girth.ForestCompletionKeep
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
 import Girth.ForestCarrierCorner
