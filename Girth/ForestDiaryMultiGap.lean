@@ -98,10 +98,12 @@ theorem finiteMarkedFamily_oneStepSchedule
           (fun i => (P i).history) := by
   obtain ⟨choose, initial, hMaps⟩ :=
     finiteMarkedNeutralGap_preimages m k q P hConsistent
+  have hIdentity :
+      FiniteGapReplaySchedule (Label := Label) (arity := arity)
+        q (m + k) initial (m + k) initial := by
+    exact .identity
   exact ⟨initial,
     FiniteGapReplaySchedule.insert
-      (FiniteGapReplaySchedule.identity
-        (Label := Label) (arity := arity) q (m + k) initial)
-      m choose (fun i => (P i).history) hMaps⟩
+      hIdentity m choose (fun i => (P i).history) hMaps⟩
 
 end StructuralRamsey.Girth
