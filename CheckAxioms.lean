@@ -613,3 +613,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.nonempty_joinTree_iff_finiteMasks
 #print axioms StructuralRamsey.Girth.nonempty_joinTree_iff_sameMaskPalette
 #print axioms StructuralRamsey.Girth.forestOfCopies_iff_sameMaskPalette
+
+#print axioms StructuralRamsey.Girth.markedImage_mem_iff_sameKernel
+#print axioms StructuralRamsey.Girth.joinTree_iff_sameNonemptyMasks
+#print axioms StructuralRamsey.Girth.markedFamily_vertexMask_eq
+#print axioms StructuralRamsey.Girth.markedFamily_nonemptyMasks_iff
+#print axioms StructuralRamsey.Girth.markedFamily_joinTree_iff
+#print axioms StructuralRamsey.Girth.markedFamily_forest_iff

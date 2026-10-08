@@ -144,3 +144,4 @@ import Girth.ForestMarkedCarrierHistory
 import Girth.ForestStrongMaskBridge
 import Girth.ForestCoherentOwnerCore
 import Girth.ForestFiniteJoinMasks
+import Girth.ForestMarkedJoinTransport
