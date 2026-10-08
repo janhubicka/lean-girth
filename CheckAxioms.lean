@@ -633,3 +633,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedFamily_pairwiseAllowed_iff
 #print axioms StructuralRamsey.Girth.markedFamily_forest_iff_of_supportPresentation
 #print axioms StructuralRamsey.Girth.forestObservableProfile_determines_forest
+
+#print axioms StructuralRamsey.Girth.mixedForestKernelPalette_finite
+#print axioms StructuralRamsey.Girth.sameMarkedKernel_of_mixedColour_eq
+#print axioms StructuralRamsey.Girth.mixedForestKernelColour_determines_forest
