@@ -505,3 +505,4 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.FiniteGapReplaySchedule.exists_shape
 #print axioms StructuralRamsey.Girth.finiteMarkedFamily_oneStepSchedule
+#print axioms StructuralRamsey.Girth.finiteTerminalPresentations_of_gapSchedules
