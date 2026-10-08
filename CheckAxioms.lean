@@ -558,3 +558,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.markedShortPathRecord_mono
 #print axioms StructuralRamsey.Girth.markedShortPathChanges_bound
 #print axioms StructuralRamsey.Girth.freshEdge_girth_iff_of_equalShortPathRecords
+
+#print axioms StructuralRamsey.Girth.oldShortCycleWitnessEdges_subset
+#print axioms StructuralRamsey.Girth.oldShortCycleWitnessEdges_card_le
+#print axioms StructuralRamsey.Girth.oldShortCycleWitnessEdges_covers
+#print axioms StructuralRamsey.Girth.finiteBatchCycleCore_subset
+#print axioms StructuralRamsey.Girth.finiteBatchCycleCore_card_le
+#print axioms StructuralRamsey.Girth.finiteBatchCycleCore_girth_iff
