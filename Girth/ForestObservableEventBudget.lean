@@ -8,10 +8,12 @@ Fix q abstract B-copies and let B have v named vertices. Their
 complete equality profile is determined by a relation on at most
 (q*v)^2 ordered pairs of named vertex slots.
 
-During a *monotone* history, if each interesting event really adds
-some previously absent equality relation between those slots, then
+During a *monotone information record*, if each interesting event
+reveals some previously unrecorded agreement of those slots, then
 the number of interesting events is at most (q*v)^2, independently
-of the length of the unobserved historical genealogy.
+of the length of the unobserved historical genealogy. This is about
+knowledge becoming recorded, NOT about two distinct vertices of an
+already embedded old structure later becoming equal.
 
 The theorem is a finite potential argument. It does not show that
 all actual successor events are such observable merges, or that
@@ -24,8 +26,10 @@ namespace StructuralRamsey.Girth
 /-- Vertex slots in q abstract copies of a v-vertex template. -/
 abbrev MarkedVertexSlot (q v : ℕ) := Fin q × Fin v
 
-/-- Equality pairs which have become determined at a history stage.
-No equivalence axiom is required for the elementary counting bound. -/
+/-- Equality facts *recorded so far* at a history stage. A new
+entry means disclosure of an old equality, not an identification of
+vertices in an injective stage embedding. No equivalence axiom is
+required for the elementary counting bound. -/
 abbrev ObservedPairSet (q v : ℕ) :=
   Finset (MarkedVertexSlot q v × MarkedVertexSlot q v)
 
