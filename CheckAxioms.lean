@@ -552,3 +552,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.forestObservableDiarySkeleton_card_le
 #print axioms StructuralRamsey.Girth.no_shortBergePath_of_girthGT_insert
 #print axioms StructuralRamsey.Girth.girthGT_insert_iff_no_shortBergePath
+#print axioms StructuralRamsey.Girth.hasShortBergePathToEdge_iff_marked
+#print axioms StructuralRamsey.Girth.markedShortBergePath_mono
+#print axioms StructuralRamsey.Girth.freshEdge_girth_iff_of_sameShortPaths
+#print axioms StructuralRamsey.Girth.markedShortPathRecord_mono
+#print axioms StructuralRamsey.Girth.markedShortPathChanges_bound
