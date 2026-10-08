@@ -656,3 +656,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.ownerTagged_sameMarkedSupportPresentation
 #print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_jointKernel
 #print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_crossOwnerAgreement
+
+#print axioms StructuralRamsey.Girth.ownerGluingEmbedding_eq_iff
+#print axioms StructuralRamsey.Girth.ownerGluingToHost_mk
+#print axioms StructuralRamsey.Girth.ownerGluingToHost_injective
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerQuotient_iff
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerQuotient_of_actualMaps
