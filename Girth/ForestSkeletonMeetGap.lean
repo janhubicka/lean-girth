@@ -53,8 +53,10 @@ theorem forestTerminalMeetLevels_unmarked_not_meet
     (meetNode (leaves i) (leaves j)).level ≠ m := by
   intro hEq
   have hMem := forestTerminalMeetLevels_contains_meet q leaves i j
-  apply hm
-  simpa only [hEq] using hMem
+  change (meetNode (leaves i) (leaves j)).level ∈
+    forestTerminalMeetLevels q leaves at hMem
+  rw [hEq] at hMem
+  exact hm hMem
 
 /-- A locally neutral gap outside the actual finite pairwise meet
 skeleton always has common global one-gap preimages. -/
