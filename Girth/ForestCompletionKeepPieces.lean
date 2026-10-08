@@ -100,6 +100,6 @@ theorem forestCompletion_witness_of_local_piece_classification
     obtain ⟨z, hz, _⟩ := hSelected n
     exact ⟨z, congrArg (fun s : Sigma K => F s.1 s.2) hz⟩
   · intro z
-    simpa [keep] using z.property
+    exact (Finset.mem_filter.mp z.property).2
 
 end StructuralRamsey.Girth
