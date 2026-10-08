@@ -112,8 +112,9 @@ theorem girthGT_insert_iff_no_shortBergePath
               rw [finRotate_apply]
             _ = j + ((⟨k, hklt⟩ : Fin c.length) + 1) := by ac_rfl
             _ = j := by rw [hOffset]; simp
-        rw [← hj, ← hSucc]
-        exact c.right_mem (j + (⟨k, hklt⟩ : Fin c.length))
+        have hRight := c.right_mem (j + (⟨k, hklt⟩ : Fin c.length))
+        rw [hSucc, hj] at hRight
+        exact hRight
     · have hOldEdges : ∀ i, c.edge i ∈ H := by
         intro i
         rcases Set.mem_insert_iff.mp (c.edge_mem i) with he | he
