@@ -557,3 +557,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.freshEdge_girth_iff_of_sameShortPaths
 #print axioms StructuralRamsey.Girth.markedShortPathRecord_mono
 #print axioms StructuralRamsey.Girth.markedShortPathChanges_bound
+#print axioms StructuralRamsey.Girth.freshEdge_girth_iff_of_equalShortPathRecords
