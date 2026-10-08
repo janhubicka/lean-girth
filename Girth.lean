@@ -137,4 +137,5 @@ import Girth.ForestBoundaryShadow
 import Girth.ForestBoundaryPathCore
 import Girth.ForestFiniteCycleCore
 import Girth.ForestMarkedCarrierContacts
+import Girth.ForestMarkedAllowedIntersections
 import Girth.ForestMarkedLeafAttachment
