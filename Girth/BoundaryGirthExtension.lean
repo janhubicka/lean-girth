@@ -88,8 +88,6 @@ theorem girthGT_insert_iff_no_shortBergePath
             apply hidx
             exact c.edge_injective (he.trans hj.symm)
           · exact he
-        change (c.cyclicPath j k hkpos hklt).edge i ∈ H
-        rw [BergeCycle.cyclicPath_edge]
         exact hmem
       let p : BergePath H := q.ofEdgeMem hOldEdges
       apply hno
@@ -107,7 +105,7 @@ theorem girthGT_insert_iff_no_shortBergePath
           omega
         have hOffset : ((⟨k, hklt⟩ : Fin c.length) + 1) = 0 := by
           apply Fin.ext
-          simp [Fin.val_add, Fin.val_one', hkEq]
+          simp [Fin.val_add, hkEq]
         have hSucc :
             cyclicSucc (j + (⟨k, hklt⟩ : Fin c.length)) = j := by
           calc
