@@ -136,3 +136,4 @@ import Girth.ForestMarkedTransport
 import Girth.ForestBoundaryShadow
 import Girth.ForestBoundaryPathCore
 import Girth.ForestFiniteCycleCore
+import Girth.ForestCoherentCycleCore
