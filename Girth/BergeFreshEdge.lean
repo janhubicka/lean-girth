@@ -51,6 +51,8 @@ theorem girthGT_insert_iff_noShortBergePath
     rintro ⟨c, hcLen⟩
     by_cases hHit : ∃ i : Fin c.length, c.edge i = e
     · obtain ⟨before, hBefore⟩ := hHit
+      have hcPos : 2 ≤ c.length := c.hlength
+      letI : NeZero c.length := ⟨by omega⟩
       let k := c.length - 1
       have hkPos : 0 < k := by
         dsimp [k]
@@ -81,8 +83,7 @@ theorem girthGT_insert_iff_noShortBergePath
         exact hMem
       have hStart : pFull.vertex 0 ∈ e := by
         rw [c.cyclicPath_vertex_zero before k hkPos hkLt]
-        rw [← hBefore]
-        exact c.left_mem before
+        simpa only [hBefore] using c.left_mem before
       have hkZero :
           (⟨k, hkLt⟩ : Fin c.length) + 1 = 0 := by
         apply Fin.ext
