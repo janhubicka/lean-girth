@@ -74,7 +74,7 @@ theorem ForestCompletionProperty.assemble_over_joinTree_of_supported_separators
       ∃ e : Set W, e ∈ (P q).edges ∧
         (P q).carrier ∩ (P r.1).carrier ⊆ e :=
     exists_support_edge_covering_separator
-      hOuter hNonempty hVertexCover r.2.ne.symm
+      hOuter hNonempty hVertexCover r.2.ne
   let separatorEdge :
       (q : Q) → JOuter.tree.neighborSet q → Set W :=
     fun q r => Classical.choose (hChoice q r)
@@ -128,7 +128,7 @@ theorem ForestCompletionProperty.assemble_over_joinTree_of_supported_separators
             (P q).carrier ∩ (P r).carrier := by
     intro q r hadj hBig
     exact separator_edge_exact_of_ambient_girth
-      hOuter hEdges hGirth hadj.ne.symm
+      hOuter hEdges hGirth hadj.ne
       (hSeparatorSpec q ⟨r, hadj⟩).1
       (hSeparatorSpec q ⟨r, hadj⟩).2 hBig
   have hTest :
