@@ -537,3 +537,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_vertex_covered
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_over_strongSupportForest
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_transported_strongSupportForest
+
+#print axioms StructuralRamsey.Girth.forestObservableAtom_card
+#print axioms StructuralRamsey.Girth.strictRecordChain_length_le
+#print axioms StructuralRamsey.Girth.activeRecordSteps_le
+#print axioms StructuralRamsey.Girth.markedObservableEvent_bound
