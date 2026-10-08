@@ -149,4 +149,7 @@ import Girth.ForestMarkedJoinTransport
 import Girth.ForestMarkedSupportTransport
 import Girth.ForestObservableForestColour
 import Girth.ForestStrongObservableProfile
+import Girth.ForestMixedKernelPalette
+import Girth.ForestLocalNeutralTail
+import Girth.ForestMeetGuardGap
 import Girth.ForestPureTransportEquiv

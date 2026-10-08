@@ -640,6 +640,16 @@ import Girth
 #print axioms StructuralRamsey.Girth.strongSupport_sameMarkedPresentation
 #print axioms StructuralRamsey.Girth.strongSupport_forest_iff_of_sameObservableProfile
 
+#print axioms StructuralRamsey.Girth.mixedForestKernelPalette_finite
+#print axioms StructuralRamsey.Girth.sameMarkedKernel_of_mixedColour_eq
+#print axioms StructuralRamsey.Girth.mixedForestKernelColour_determines_forest
+#print axioms StructuralRamsey.Girth.exists_localNeutralGapTail_of_global
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.insertedPrefix
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_commonNextPrefix
+#print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
+
 #print axioms StructuralRamsey.Girth.AllowedIntersection.of_map
 #print axioms StructuralRamsey.Girth.ForestOfCopies.unmap
 #print axioms StructuralRamsey.Girth.forestOfCopies_map_iff
