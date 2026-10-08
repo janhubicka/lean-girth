@@ -604,3 +604,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset_ownerSupport
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_subset_old
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_girth_iff
+#print axioms StructuralRamsey.Girth.girthGT_two_of_linearEdgeSet
+#print axioms StructuralRamsey.Girth.girthGT_two_of_aLinear
