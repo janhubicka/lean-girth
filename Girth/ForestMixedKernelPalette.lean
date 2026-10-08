@@ -63,8 +63,8 @@ families of designated B-copies and auxiliary A-edge pieces. Each
 named member may have an independent size and intrinsic edge pattern,
 so there is no uniform B template required. -/
 theorem mixedForestKernelColour_determines_forest
-    {I : Type u} {C : Type v} [Fintype C]
-    {W Z : Type v} [DecidableEq W] [DecidableEq Z]
+    {I C W Z : Type v} [Fintype C]
+    [DecidableEq W] [DecidableEq Z]
     (F : C → HypergraphPiece W)
     (G : C → HypergraphPiece Z)
     (f : I → W) (g : I → Z)
