@@ -604,3 +604,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.coherentBatchCycleCore_subset_ownerSupport
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_subset_old
 #print axioms StructuralRamsey.Girth.coherentCycleOwnerSupport_girth_iff
+#print axioms StructuralRamsey.Girth.factorized_support_image
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_carrier_subset_standard
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_edges_subset_standard
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_sub_standard
+#print axioms StructuralRamsey.Girth.HypergraphPiece.map_edges_subset_ambient
