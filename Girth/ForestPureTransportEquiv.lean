@@ -89,9 +89,9 @@ theorem AllowedIntersection.of_map
 /-- The join tree of a transported family already has the correct
 occurrence subtrees in the original family. -/
 def JoinTree.unmap
+    (φ : W ↪ Z)
     {F : ι → HypergraphPiece W}
-    (J : JoinTree (fun i => (F i).map φ))
-    (φ : W ↪ Z) : JoinTree F where
+    (J : JoinTree (fun i => (F i).map φ)) : JoinTree F where
   tree := J.tree
   isTree := J.isTree
   running := by
@@ -122,7 +122,7 @@ theorem ForestOfCopies.unmap
       (hForest.pairwiseAllowed hij)
   · rcases hForest.2 with hEmpty | ⟨J⟩
     · exact Or.inl hEmpty
-    · exact Or.inr ⟨J.unmap φ⟩
+    · exact Or.inr ⟨JoinTree.unmap φ J⟩
 
 /-- A pure injective standard-copy transport has NO effect on full
 foresthood. In particular a finite chain of such transport-only steps
