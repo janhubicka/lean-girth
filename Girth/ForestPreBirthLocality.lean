@@ -128,7 +128,7 @@ theorem preBirth_maps_agree_outside_cone
                       a code.params hge) code.label
               apply child_eq_of_base_and_levels
               · exact heqParent
-              · simp only [levelList_gapShiftParamTuple]
+              · rfl
 
 /-- Any finite old front disjoint from the private cone remains
 pointwise identical under the two test embeddings. -/
