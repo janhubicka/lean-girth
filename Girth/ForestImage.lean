@@ -110,9 +110,7 @@ def JoinTree.map
         · intro hi
           simp at hi
       rw [hEmpty]
-      intro a b
-      have absurd : False := by simpa using a.2
-      exact absurd.elim
+      exact SimpleGraph.Preconnected.of_subsingleton
 
 /-- The image of a forest under an injective map is again a forest. -/
 theorem ForestOfCopies.map
