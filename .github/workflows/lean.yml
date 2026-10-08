@@ -36,7 +36,10 @@ jobs:
       - name: Download Mathlib cache
         run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
       - name: Build all project modules
-        run: lake build
+        run: |
+          # Reuse dependencies but do not trust restored project-local objects.
+          rm -rf .lake/build
+          lake build
       - name: Check theorem axioms
         run: |
           set -o pipefail
@@ -44,3 +47,5 @@ jobs:
           python3 scripts/check_axioms.py axioms.log
           lake env lean CheckSuccessorBoundary.lean | tee successor-boundary-axioms.log
           python3 scripts/check_axioms.py successor-boundary-axioms.log CheckSuccessorBoundary.lean
+      - name: Run finite boundary regressions
+        run: python3 scripts/check_boundary_transport.py
