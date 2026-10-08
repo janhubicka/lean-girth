@@ -13,6 +13,7 @@ Source manuscript: `janhubicka/girth`, current `main.tex` entry point.
 | subhypergraphs preserve a girth lower bound | proved by `girthGT_of_subset` |
 | adding one fresh edge preserves Berge girth | exact old-short-path equivalence `girthGT_insert_iff_no_shortBergePath` in `BoundaryGirthExtension`; both directions proved, including length-two cycles |
 | finite marked boundary record for girth | `hasShortBergePathToEdge_iff_marked`, `freshEdge_girth_iff_of_sameShortPaths`, `freshEdge_girth_iff_of_equalShortPathRecords`, `markedShortPathRecord_mono`, `markedShortPathChanges_bound`; these assume all attachment contacts are marked and an increasing old edge process for event bounds |
+| finite marked B-carrier contact certificates | `markedCarrierRepresentatives_card_le`, `markedCarrierRepresentatives_cover`, and `freshCarrier_allContacts_iff_representatives` reduce all one-new-carrier intersection tests to finitely many old carriers, assuming every old contact lies on marked vertices; they do **not** produce an outer join tree or bound histories |
 | §1 A-supported tree amalgam | `Girth.ASupportedTreeAmalgam` |
 | A-supported ⇒ generic tree amalgam | proved by `ASupportedTreeAmalgam.toTreeAmalgam` |
 | irreducibles / A-copies in supported trees lie in constituent B-copies | proved by `irreducible_contained_in_copy`, `aCopy_contained_in_copy` |

@@ -565,3 +565,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_subset
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_card_le
 #print axioms StructuralRamsey.Girth.finiteBatchCycleCore_girth_iff
+
+#print axioms StructuralRamsey.Girth.markedCarrierRepresentatives_subset
+#print axioms StructuralRamsey.Girth.markedCarrierRepresentatives_cover
+#print axioms StructuralRamsey.Girth.markedCarrierRepresentatives_card_le
+#print axioms StructuralRamsey.Girth.markedCarrierMask_boundary_inter_eq
+#print axioms StructuralRamsey.Girth.freshCarrier_inter_eq_of_sameMask
+#print axioms StructuralRamsey.Girth.freshCarrier_allContacts_iff_representatives
