@@ -797,3 +797,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.no_short_untouched_cycle_of_transversal_local_support
 #print axioms StructuralRamsey.Girth.projectedSupportCopies_subset_support
 #print axioms StructuralRamsey.Girth.untouched_projectedSupport_girthGT_of_transversal_local
+#print axioms StructuralRamsey.Girth.girthGT_source_of_mappedSupportCopies
+#print axioms StructuralRamsey.Girth.girthGT_mappedSupportCopies_iff
