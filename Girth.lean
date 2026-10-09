@@ -181,3 +181,4 @@ import Girth.ForestFactoredStandardCompletion
 import Girth.ForestRelationalAttachmentCompletion
 import Girth.ForestSelectedPieceTransport
 import Girth.ForestUsedOwners
+import Girth.ForestUsedOwnerLocalForest
