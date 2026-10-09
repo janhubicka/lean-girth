@@ -106,4 +106,56 @@ theorem attached_core_aCopy_in_local_supportPiece
       _ = (outer i) '' e₀ := hImages
   exact ⟨i, ⟨e₀, he₀, hEdge⟩⟩
 
+/-- Every ambient A-copy in the actual free attachment admits an exact
+tested old A-support preimage in a standard picture, provided the local
+decorated Ramsey witness covers its core support edges.
+
+The standard-picture case needs no local-forest property. The core case
+uses only support equality, designated gluing edge coverage, and the
+actual gluing factorization. -/
+theorem attached_aCopy_tested_owner_of_local_edge_cover
+    (A : RelStructure L UA)
+    (hA : A.Irreducible)
+    (B : RelStructure L Old)
+    (S : Set Old)
+    (D : RelStructure L Core)
+    (f : I → RelStructure.Embedding (B.induce S) D)
+    {H : Set (Set Src)} {K : Set (Set Core)}
+    (local : I → StrongSupportEmbedding H K)
+    (hLocalEdgeCover :
+      ∀ e : Set Core, e ∈ K →
+        ∃ i : I, ∃ e₀ : Set Src, e₀ ∈ H ∧
+          e = (local i) '' e₀)
+    (hCoreSupport : supportCopies A D = K)
+    {KWhole : Set (Set (RelStructure.Attachment.Vertex S
+      (W := Core) (I := I)))}
+    (outer : I → StrongSupportEmbedding H KWhole)
+    (hOuterCore :
+      ∀ i (x : Src), outer i x =
+        (RelStructure.Attachment.coreEmbedding B S D f) (local i x))
+    (active : I → Src ↪ Old)
+    (hFactor :
+      ∀ i (x : Src), outer i x =
+        (RelStructure.Attachment.copyEmbedding B S D f i) (active i x))
+    (testedOld : HypergraphPiece Old → Prop)
+    (hTestA :
+      ∀ aOld : RelStructure.Embedding A B,
+        testedOld (HypergraphPiece.oneEdge (copyCarrier aOld)))
+    (hTestActiveEdge :
+      ∀ i (e : Set Src), e ∈ H →
+        testedOld (HypergraphPiece.oneEdge ((active i) '' e)))
+    (a : RelStructure.Embedding A (RelStructure.Attachment.attach B S D f)) :
+    ∃ i : I, TransportedPiece testedOld
+      (relationEmbeddingToFunction
+        (RelStructure.Attachment.copyEmbedding B S D f i))
+      (HypergraphPiece.oneEdge (copyCarrier a)) := by
+  apply attached_aCopy_has_tested_standard_owner
+    A hA B S D f outer active hFactor
+    testedOld hTestA hTestActiveEdge
+  · intro aCore hInside
+    exact attached_core_aCopy_in_local_supportPiece
+      A B S D f local hLocalEdgeCover hCoreSupport
+      outer hOuterCore aCore hInside
+  · exact a
+
 end StructuralRamsey.Girth
