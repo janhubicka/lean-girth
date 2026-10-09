@@ -91,6 +91,6 @@ theorem attachment_core_aCopy_covered_of_local_relational_cover
       exact ⟨aActive u, ⟨u, rfl⟩, (hEq u).symm⟩
     · rintro ⟨s, ⟨u, rfl⟩, hz⟩
       exact ⟨u, (hEq u).trans hz⟩
-  exact ⟨i, aActive, hEdge, hCarrier⟩
+  exact ⟨i, copyCarrier aActive, hEdge, hCarrier⟩
 
 end StructuralRamsey.Girth
