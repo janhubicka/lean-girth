@@ -717,3 +717,5 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
 #print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
+#print axioms StructuralRamsey.Girth.attachment_full_supportPiece_carrier
+#print axioms StructuralRamsey.Girth.attachment_full_small_support_pair_eq
