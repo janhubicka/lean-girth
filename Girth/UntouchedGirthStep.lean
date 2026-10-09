@@ -33,8 +33,9 @@ theorem no_short_untouched_projected_cycle
     (hCoreSupport : ∀ y : Y, E.part y ∈ Set.range α)
     (hInter : (Set.range α ∩ Set.range β).Subsingleton)
     (u v : UA) (huv : u ≠ v)
-    [Fintype I] [Nonempty I]
+    [Nonempty I]
     (F : I → HypergraphPiece Y)
+    (g : ℕ)
     (hLocalForest : LocalForestThrough F g)
     (hCarrier : ∀ i : I,
       (F i).carrier = copyCarrier ((f i).toEmbedding))
@@ -42,7 +43,6 @@ theorem no_short_untouched_projected_cycle
     (hFineUniq : ∀ w : P,
       w ∈ Set.range α ∩ Set.range β → w = p)
     (hPart : EdgesMeetPartAtMostOne F {y | E.part y = p})
-    (g : ℕ)
     (hOldBeta :
       GirthGT
         (supportCopies A
