@@ -50,7 +50,7 @@ def ofIntersectingSets (U V : Set W) : PortGluing U V where
 /-- The physical map from the explicit pushout of the two subsets
 into their actual ambient union. -/
 def overlapToUnion (U V : Set W) :
-    (ofIntersectingSets U V).Vertex → (U ∪ V)
+    (ofIntersectingSets U V).Vertex → {w : W // w ∈ U ∪ V}
   | .inl x => ⟨x.1, Or.inl x.2⟩
   | .inr y => ⟨y.1.1, Or.inr y.1.2⟩
 
@@ -105,7 +105,7 @@ theorem overlapToUnion_surjective (U V : Set W) :
 physical old-plus-new union. No choice, finiteness or cardinality
 argument is necessary. -/
 noncomputable def overlapToUnionEquiv (U V : Set W) :
-    (ofIntersectingSets U V).Vertex ≃ (U ∪ V) :=
+    (ofIntersectingSets U V).Vertex ≃ {w : W // w ∈ U ∪ V} :=
   Equiv.ofBijective (overlapToUnion U V)
     ⟨overlapToUnion_injective U V,
       overlapToUnion_surjective U V⟩
