@@ -103,7 +103,7 @@ theorem twoCopyPort_allowedIntersection_iff
           _ = (twoCopyPortLeft S) '' a := hImageA
       have hS : S = a :=
         (twoCopyPort_left_image_eq_iff S S a).mp hImageEq
-      exact Or.inr (hS ▸ ha)
+      exact Or.inr (by simpa only [hS] using ha)
   · intro hGood
     exact twoCopyPort_allowedIntersection P S hSub hGood
 
