@@ -717,3 +717,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_images_cover
 #print axioms StructuralRamsey.Girth.PortGluing.lift_unique
 #print axioms StructuralRamsey.Girth.PortGluing.existsUnique_lift
+
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_injective
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_surjective
