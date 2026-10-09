@@ -84,6 +84,19 @@ noncomputable def newEmbedding (G : PortGluing Old New) :
         simpa [hx, hy] using hxy
       exact congrArg Subtype.val hp
 
+@[simp] theorem oldEmbedding_apply
+    (G : PortGluing Old New) (x : Old) :
+    G.oldEmbedding x = (Sum.inl x : G.Vertex) := rfl
+
+@[simp] theorem newEmbedding_apply
+    (G : PortGluing Old New) (y : New) :
+    G.newEmbedding y =
+      (if h : y ∈ G.newPort then
+        (Sum.inl (G.identify ⟨y, h⟩).1 : G.Vertex)
+       else (Sum.inr ⟨y, h⟩ : G.Vertex)) := by
+  classical
+  rfl
+
 /-- Equality across the two embedded pictures is EXACTLY the
 prescribed identification of one new-port vertex with its old mate. -/
 theorem oldEmbedding_eq_newEmbedding_iff
@@ -96,18 +109,15 @@ theorem oldEmbedding_eq_newEmbedding_iff
     by_cases hy : y ∈ G.newPort
     · refine ⟨hy, ?_⟩
       have heq :
-          Sum.inl x = Sum.inl (G.identify ⟨y, hy⟩).1 := by
-        simpa [oldEmbedding, newEmbedding, hy] using h
+          (Sum.inl x : G.Vertex) =
+            Sum.inl (G.identify ⟨y, hy⟩).1 := by
+        simpa [hy] using h
       exact Sum.inl.inj heq
     · have hFalse : False := by
-        simpa [oldEmbedding, newEmbedding, hy] using h
+        simpa [hy] using h
       exact hFalse.elim
   · rintro ⟨hy, hEq⟩
-    change Sum.inl x =
-      (if h : y ∈ G.newPort then
-        Sum.inl (G.identify ⟨y, h⟩).1
-       else Sum.inr ⟨y, h⟩)
-    rw [dif_pos hy, hEq]
+    simp [hy, hEq]
 
 /-- The two embeddings coincide at corresponding chosen port
 vertices, with no additional quotient identifications. -/
