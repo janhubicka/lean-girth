@@ -711,3 +711,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestOfCopies.exists_permitted_leaf
 
 #print axioms StructuralRamsey.Girth.girthGT_union_of_forest
+
+#print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
+#print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
