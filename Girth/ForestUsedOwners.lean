@@ -83,7 +83,7 @@ theorem emptySelected_forestCompletionWitness
     (selected : N → HypergraphPiece W)
     (designated : HypergraphPiece W → Prop) :
     ForestCompletionWitness selected designated
-      (fun k : PEmpty.{v} => isEmptyElim k) := by
+      (fun k : PEmpty.{v+1} => isEmptyElim k) := by
   refine ⟨?_, ?_, ?_⟩
   · refine ⟨?_, Or.inl inferInstance⟩
     intro i
@@ -102,8 +102,8 @@ theorem emptySelected_hasForestCompletion
     ∃ (K : Type v), ∃ (_ : Fintype K),
       ∃ completed : K → HypergraphPiece W,
         ForestCompletionWitness selected designated completed := by
-  refine ⟨PEmpty.{v}, inferInstance, ?_⟩
-  exact ⟨(fun k : PEmpty.{v} => isEmptyElim k),
+  refine ⟨PEmpty.{v+1}, inferInstance, ?_⟩
+  exact ⟨(fun k : PEmpty.{v+1} => isEmptyElim k),
     emptySelected_forestCompletionWitness selected designated⟩
 
 end StructuralRamsey.Girth
