@@ -168,3 +168,4 @@ import Girth.ForestPermittedLeafGirth
 import Girth.ForestAllSupportGirth
 import Girth.ForestPermittedAttachmentGirth
 import Girth.ForestAmbientSupportCoverage
+import Girth.ForestAttachmentSupportPairs
