@@ -56,13 +56,14 @@ theorem twoCopyPort_cross_eq_iff
     subst y
     have hs : x ∈ S := by
       by_contra hnot
-      have hf : (x, false) = (x, true) := by
-        simpa [twoCopyPortLeft, twoCopyPortRight, hnot] using h
-      have he : false = true := congrArg Prod.snd hf
-      cases he
+      have hBool := congrArg Prod.snd h
+      have hContra : False := by
+        simpa [twoCopyPortLeft, twoCopyPortRight, hnot] using hBool
+      exact hContra
     exact ⟨rfl, hs⟩
   · rintro ⟨rfl, hs⟩
-    simp [twoCopyPortLeft, twoCopyPortRight, hs]
+    change (x, false) = (x, if x ∈ S then false else true)
+    simp [hs]
 
 /-- Every point of the separator has the same physical image under
 both embeddings. -/
@@ -100,7 +101,7 @@ theorem twoCopyPort_carriers_distinct
     ⟨x, hx, rfl⟩
   rw [hEqual] at hxLeft
   obtain ⟨y, _, hCross⟩ := hxLeft
-  exact hPrivate ((twoCopyPort_cross_eq_iff S x y).mp hCross).2
+  exact hPrivate ((twoCopyPort_cross_eq_iff S x y).mp hCross.symm).2
 
 /-- On the separator itself, the sets of physical images coincide. -/
 theorem twoCopyPort_image_separator
