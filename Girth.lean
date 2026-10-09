@@ -152,4 +152,9 @@ import Girth.ForestStrongObservableProfile
 import Girth.ForestMixedKernelPalette
 import Girth.ForestLocalNeutralTail
 import Girth.ForestMeetGuardGap
+import Girth.ForestPureTransportEquiv
+import Girth.ForestSkeletonMeetGap
+import Girth.ForestRetainedLevelRank
+import Girth.ForestMultiOwnerKernel
+import Girth.ForestOwnerGluingQuotient
 import Girth.ForestTwoCopyPortGlue

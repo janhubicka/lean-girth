@@ -650,6 +650,28 @@ import Girth
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
 #print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
 
+#print axioms StructuralRamsey.Girth.AllowedIntersection.of_map
+#print axioms StructuralRamsey.Girth.ForestOfCopies.unmap
+#print axioms StructuralRamsey.Girth.forestOfCopies_map_iff
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_contains_meet
+#print axioms StructuralRamsey.Girth.forestTerminalMeetLevels_unmarked_not_meet
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_skeleton
+#print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_diarySkeleton
+#print axioms StructuralRamsey.Girth.retainedLevelRankCount_lt_card
+#print axioms StructuralRamsey.Girth.retainedLevelRankCount_strict
+#print axioms StructuralRamsey.Girth.retainedLevelRank_strictMono
+#print axioms StructuralRamsey.Girth.ownerTagged_carrier_eq_image
+#print axioms StructuralRamsey.Girth.ownerTagged_image_atom
+#print axioms StructuralRamsey.Girth.ownerTagged_edges_eq_atoms
+#print axioms StructuralRamsey.Girth.ownerTagged_sameMarkedSupportPresentation
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_jointKernel
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerMaps_iff_of_crossOwnerAgreement
+#print axioms StructuralRamsey.Girth.ownerGluingEmbedding_eq_iff
+#print axioms StructuralRamsey.Girth.ownerGluingToHost_mk
+#print axioms StructuralRamsey.Girth.ownerGluingToHost_injective
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerQuotient_iff
+#print axioms StructuralRamsey.Girth.forestOfCopies_ownerQuotient_of_actualMaps
+
 #print axioms StructuralRamsey.Girth.twoCopyPort_cross_eq_iff
 #print axioms StructuralRamsey.Girth.twoCopyPort_agree_on_separator
 #print axioms StructuralRamsey.Girth.twoCopyPort_images_inter
