@@ -762,3 +762,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_attachment
 #print axioms StructuralRamsey.Girth.selectedPiece_transported_of_standard_or_gluing
 #print axioms StructuralRamsey.Girth.selectedFamily_transported_of_standard_or_gluing
+#print axioms StructuralRamsey.Girth.usedOwnerMap_surjective
+#print axioms StructuralRamsey.Girth.usedOwner_finite
+#print axioms StructuralRamsey.Girth.usedOwner_card_le
+#print axioms StructuralRamsey.Girth.usedOwner_nonempty
+#print axioms StructuralRamsey.Girth.emptySelected_forestCompletionWitness
+#print axioms StructuralRamsey.Girth.emptySelected_hasForestCompletion
