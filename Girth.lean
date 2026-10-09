@@ -165,4 +165,5 @@ import Girth.ForestTwoCopyGirthFanout
 import Girth.ForestSafeFanoutInvariants
 import Girth.ForestAEdgeFanoutFromGirth
 import Girth.ForestPermittedLeafGirth
+import Girth.ForestAllSupportGirth
 import Girth.ForestPermittedAttachmentGirth
