@@ -167,3 +167,4 @@ import Girth.ForestAEdgeFanoutFromGirth
 import Girth.ForestPermittedLeafGirth
 import Girth.ForestAllSupportGirth
 import Girth.ForestPermittedAttachmentGirth
+import Girth.ForestAmbientSupportCoverage
