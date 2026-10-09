@@ -172,3 +172,4 @@ import Girth.ForestArbitraryPortPushout
 import Girth.ForestGeneralPortFanout
 import Girth.ForestPortPushoutUniversal
 import Girth.ForestGeneralPortGirth
+import Girth.ForestPortPushoutActualUnion

@@ -744,3 +744,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.PortGluing.girth_Aedge_port
 #print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants
 #print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants_of_ambientGirth
+
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_injective
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_surjective
