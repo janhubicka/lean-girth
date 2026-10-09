@@ -704,3 +704,9 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ownerLinear_of_ambientGirthTwo
 #print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_of_ambientGirth
+
+#print axioms StructuralRamsey.Girth.PortGluing.oldEmbedding_eq_newEmbedding_iff
+#print axioms StructuralRamsey.Girth.PortGluing.agree_on_port
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_image_inter_subset_port
+#print axioms StructuralRamsey.Girth.PortGluing.oldPort_image_subset_newPort_image
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_full_images_inter
