@@ -172,3 +172,9 @@ import Girth.ForestArbitraryPortPushout
 import Girth.ForestGeneralPortFanout
 import Girth.ForestPortPushoutUniversal
 import Girth.ForestGeneralPortGirth
+import Girth.ForestMarkedBadContacts
+import Girth.LinearityGirthTwo
+import Girth.ForestStandardSupportFactor
+import Girth.ForestCanonicalFullRange
+import Girth.ForestAttachmentSupportPairs
+import Girth.ForestFactoredStandardCompletion
