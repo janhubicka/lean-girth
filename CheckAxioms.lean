@@ -790,3 +790,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.bSupportPiece_map_exact
 #print axioms StructuralRamsey.Girth.designated_bSupportPiece_transported
 #print axioms StructuralRamsey.Girth.designated_bSupportPiece_has_standard_owner
+#print axioms StructuralRamsey.Girth.transportedDesignatedCoversIrreducibles_partiteAttachment
+#print axioms StructuralRamsey.Girth.bSupportPiece_eq_of_sameCopy
+#print axioms StructuralRamsey.Girth.actualBCopy_is_transported_designated
