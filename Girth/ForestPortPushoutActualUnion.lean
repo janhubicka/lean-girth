@@ -64,12 +64,12 @@ theorem overlapToUnion_injective (U V : Set W) :
       cases b with
       | inl y =>
           have hval : x.1 = y.1 :=
-            congrArg Subtype.val hab
+            congrArg (fun z : {w : W // w ∈ U ∪ V} => z.1) hab
           exact congrArg Sum.inl (Subtype.ext hval)
       | inr y =>
           exfalso
           have hval : x.1 = y.1.1 :=
-            congrArg Subtype.val hab
+            congrArg (fun z : {w : W // w ∈ U ∪ V} => z.1) hab
           have hyNot : y.1.1 ∉ U := y.2
           exact hyNot (by simpa only [← hval] using x.2)
   | inr x =>
@@ -77,12 +77,12 @@ theorem overlapToUnion_injective (U V : Set W) :
       | inl y =>
           exfalso
           have hval : x.1.1 = y.1 :=
-            congrArg Subtype.val hab
+            congrArg (fun z : {w : W // w ∈ U ∪ V} => z.1) hab
           have hxNot : x.1.1 ∉ U := x.2
           exact hxNot (by simpa only [hval] using y.2)
       | inr y =>
           have hval : x.1.1 = y.1.1 :=
-            congrArg Subtype.val hab
+            congrArg (fun z : {w : W // w ∈ U ∪ V} => z.1) hab
           have hxy : x = y := by
             apply Subtype.ext
             apply Subtype.ext
