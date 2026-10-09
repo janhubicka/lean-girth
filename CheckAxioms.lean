@@ -698,3 +698,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.twoCopyPort_edgeFamilies_cross_subset
 #print axioms StructuralRamsey.Girth.twoCopyPort_girth_singleton_fanout
 #print axioms StructuralRamsey.Girth.twoCopyPort_girth_Aedge_fanout
+
+#print axioms StructuralRamsey.Girth.twoCopyPort_singleton_fanout_invariants
+#print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_invariants
