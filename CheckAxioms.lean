@@ -771,3 +771,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForest_usedOwners
 #print axioms StructuralRamsey.Girth.localForest_of_finite_embedding
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_on_used_owners
+#print axioms StructuralRamsey.Girth.attachment_aCopy_core_or_standard
+#print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
+#print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
