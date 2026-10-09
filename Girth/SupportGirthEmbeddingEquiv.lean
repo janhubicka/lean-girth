@@ -40,14 +40,16 @@ theorem girthGT_source_of_mappedSupportCopies
     apply Set.Subset.antisymm
     · intro x hx
       have hImg : φ x ∈ φ '' S := ⟨x, hx, rfl⟩
-      rw [heq] at hImg
-      obtain ⟨y, hy, hyx⟩ := hImg
+      have hImgT : φ x ∈ φ '' T :=
+        Eq.mp (congrArg (fun V : Set Tgt => φ x ∈ V) heq) hImg
+      obtain ⟨y, hy, hyx⟩ := hImgT
       have he : y = x := φ.injective hyx
       simpa [he] using hy
     · intro x hx
       have hImg : φ x ∈ φ '' T := ⟨x, hx, rfl⟩
-      rw [← heq] at hImg
-      obtain ⟨y, hy, hyx⟩ := hImg
+      have hImgS : φ x ∈ φ '' S :=
+        Eq.mpr (congrArg (fun V : Set Tgt => φ x ∈ V) heq) hImg
+      obtain ⟨y, hy, hyx⟩ := hImgS
       have he : y = x := φ.injective hyx
       simpa [he] using hy
   have hImageEdge (j : Fin cyc.length) :
