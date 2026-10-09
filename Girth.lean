@@ -184,4 +184,7 @@ import Girth.ForestUsedOwners
 import Girth.ForestUsedOwnerLocalForest
 import Girth.ForestUsedOwnerCompletion
 import Girth.ForestRelationalUsedOwnerCompletion
+import Girth.ForestTrueActiveCompletion
+import Girth.ForestTrueActiveQuantified
+import Girth.ForestActualACopyOwner
 import Girth.MappedOwnerLocalForest

@@ -772,5 +772,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForest_of_finite_embedding
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_on_used_owners
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_used_owners
+#print axioms StructuralRamsey.Girth.attachment_core_gluing_eq_standard
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_true_active_used_owners
+#print axioms StructuralRamsey.Girth.strongSupport_core_gluing_carrier
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_true_active_quantified
+#print axioms StructuralRamsey.Girth.attachment_aCopy_core_or_standard
+#print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
+#print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_of_mapped_bounded_forest
-#print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle_all_parts
