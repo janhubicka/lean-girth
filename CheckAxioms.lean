@@ -704,3 +704,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ownerLinear_of_ambientGirthTwo
 #print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_of_ambientGirth
+
+#print axioms StructuralRamsey.Girth.girthGT_pieceList_of_permittedAttachments
+#print axioms StructuralRamsey.Girth.singletonAttachmentList_implies_permitted
