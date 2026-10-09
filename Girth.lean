@@ -199,3 +199,6 @@ import Girth.ActiveCarrierProjectedSupport
 import Girth.SupportGirthEmbeddingEquiv
 import Girth.UntouchedActiveGirth
 import Girth.ActiveSupportProjectionExact
+import Girth.ProcessedCoreProjection
+import Girth.ProcessedActiveGirth
+import Girth.PictureStepAllSubsystemGirth
