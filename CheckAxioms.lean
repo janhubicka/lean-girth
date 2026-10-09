@@ -701,3 +701,6 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.twoCopyPort_singleton_fanout_invariants
 #print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_invariants
+
+#print axioms StructuralRamsey.Girth.ownerLinear_of_ambientGirthTwo
+#print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_of_ambientGirth
