@@ -50,7 +50,7 @@ theorem processedActiveCarrier_subset_core
   obtain ⟨a, ⟨u, hu⟩⟩ := hz
   obtain ⟨y, hy⟩ :=
     processedProjectedACopy_in_core A hA C α E f a u
-  exact ⟨y, hu.symm.trans hy⟩
+  exact ⟨y, hy.symm.trans hu⟩
 
 /-- The full A-support of the ACTUAL processed active subsystem has
 girth >g whenever the local core witness does. This is a genuine
@@ -87,7 +87,8 @@ theorem processed_activeSubsystem_girthGT_of_local
     processedActiveCarrier_subset_core A hA C α E f
   have hInto : ∀ t : T, ∃ y : Y, incl t = core y := by
     intro t
-    exact hCore t.2
+    obtain ⟨y, hy⟩ := hCore t.2
+    exact ⟨y, hy.symm⟩
   let back : RelStructure.Embedding (W.induce T).toRelStructure
       E.toRelStructure :=
     incl.factorThroughRange core hInto
