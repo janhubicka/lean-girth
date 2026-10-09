@@ -726,3 +726,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedPiece_carrier_subset_range
 #print axioms StructuralRamsey.Girth.transportedPiece_carrier_subset_full
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_canonical_full_range
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_factored_full_standards
