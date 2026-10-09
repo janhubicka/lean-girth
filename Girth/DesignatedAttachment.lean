@@ -78,10 +78,12 @@ noncomputable def DesignatedCopy.transportToStandard
   lift := q.lift.comp
     (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i)
 
-/-- Actual designated-copy coverage is preserved by an active/free attachment
-when every core irreducible lies in an A-copy inside one designated local
-copy. -/
-theorem designatedCoversIrreducibles_partiteAttachment
+/-- Every irreducible in the new partite picture lies not merely in
+some designated B-copy, but in a specified *transport* of a genuine old
+designated B-copy along a specified standard-picture embedding.
+Keeping the index and old copy is essential for exact B-support ownership
+in the circulation forest-completion invariant. -/
+theorem transportedDesignatedCoversIrreducibles_partiteAttachment
     (A : RelStructure L UA)
     (B : RelStructure L VB)
     (D : RelStructure L P)
@@ -93,8 +95,11 @@ theorem designatedCoversIrreducibles_partiteAttachment
     (hA : A.Irreducible)
     (hOld : DesignatedCoversIrreducibles B D C family)
     (hLocal : LocalIrreduciblesCoveredByAInCopies A E f) :
-    DesignatedCoversIrreducibles B D
-      (StructuralRamsey.Partite.Attachment.attach C S E f) family := by
+    ∀ (T : Set _),
+      ((StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure.induce T).Irreducible →
+        ∃ (i : I) (q : DesignatedCopy B D C family),
+          ∀ z : T, ∃ b : VB,
+            z.1 = (q.transportToStandard f i).embedding b := by
   classical
   let Whole :=
     (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure
@@ -140,7 +145,7 @@ theorem designatedCoversIrreducibles_partiteAttachment
     have hRngC : (C.toRelStructure.induce RngC).Irreducible :=
       hA.range_embedding aC
     obtain ⟨q, hq⟩ := hOld RngC hRngC
-    refine ⟨q.transportToStandard f i, ?_⟩
+    refine ⟨i, q, ?_⟩
     intro z
     have hzE := Classical.choose_spec (hrangeE z)
     let ze : RngE := ⟨eE z, ⟨z, rfl⟩⟩
@@ -185,7 +190,7 @@ theorem designatedCoversIrreducibles_partiteAttachment
     have hRngC : (C.toRelStructure.induce RngC).Irreducible :=
       hT.range_embedding eC
     obtain ⟨q, hq⟩ := hOld RngC hRngC
-    refine ⟨q.transportToStandard f i, ?_⟩
+    refine ⟨i, q, ?_⟩
     intro z
     let qz : RngC := ⟨eC z, ⟨z, rfl⟩⟩
     obtain ⟨b, hb⟩ := hq qz
@@ -199,4 +204,26 @@ theorem designatedCoversIrreducibles_partiteAttachment
       _ = copy i (eC z) := hz
       _ = copy i (q.embedding b) := congrArg (copy i) hb
 
+/-- Actual designated-copy coverage is preserved by an active/free attachment
+when every core irreducible lies in an A-copy inside one designated local
+copy. -/
+theorem designatedCoversIrreducibles_partiteAttachment
+    (A : RelStructure L UA)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (S : Set X)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E)
+    (hA : A.Irreducible)
+    (hOld : DesignatedCoversIrreducibles B D C family)
+    (hLocal : LocalIrreduciblesCoveredByAInCopies A E f) :
+    DesignatedCoversIrreducibles B D
+      (StructuralRamsey.Partite.Attachment.attach C S E f) family := by
+  intro T hT
+  obtain ⟨i, q, hq⟩ :=
+    transportedDesignatedCoversIrreducibles_partiteAttachment
+      A B D C family S E f hA hOld hLocal T hT
+  exact ⟨q.transportToStandard f i, hq⟩
 end StructuralRamsey.Girth
