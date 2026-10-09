@@ -196,3 +196,4 @@ import Girth.DesignatedBCopyTransportExact
 import Girth.UntouchedGirthTransversalBridge
 import Girth.UntouchedProjectedGirth
 import Girth.ActiveCarrierProjectedSupport
+import Girth.SupportGirthEmbeddingEquiv
