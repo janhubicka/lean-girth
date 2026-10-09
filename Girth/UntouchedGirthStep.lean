@@ -1,4 +1,4 @@
-import Girth.MappedOwnerGirth
+import Girth.MappedOwnerLocalForest
 import Girth.StandardActiveFactor
 import Girth.UntouchedOwnerBoundary
 
@@ -20,7 +20,7 @@ variable {L : RelLanguage.{u}}
 variable {UA P X Y I : Type v}
 
 /-- Conditional untouched-subsystem girth preservation for one standard
-attachment, with the exact local-forest and projected-edge hypotheses used by
+attachment, with the bounded local-forest and projected-edge hypotheses used by
 the circulation manuscript. -/
 theorem no_short_untouched_projected_cycle
     (A : RelStructure L UA)
@@ -33,16 +33,16 @@ theorem no_short_untouched_projected_cycle
     (hCoreSupport : ∀ y : Y, E.part y ∈ Set.range α)
     (hInter : (Set.range α ∩ Set.range β).Subsingleton)
     (u v : UA) (huv : u ≠ v)
-    [Fintype I] [Nonempty I]
+    [Nonempty I]
     (F : I → HypergraphPiece Y)
-    (hForest : ForestOfCopies F)
+    (g : ℕ)
+    (hLocalForest : LocalForestThrough F g)
     (hCarrier : ∀ i : I,
       (F i).carrier = copyCarrier ((f i).toEmbedding))
     (p : P)
     (hFineUniq : ∀ w : P,
       w ∈ Set.range α ∩ Set.range β → w = p)
     (hPart : EdgesMeetPartAtMostOne F {y | E.part y = p})
-    (g : ℕ)
     (hOldBeta :
       GirthGT
         (supportCopies A
@@ -154,9 +154,9 @@ theorem no_short_untouched_projected_cycle
       exact hCore
     · refine ⟨y, ⟨hyFR, hFine⟩, ?_⟩
       exact hCore
-  exact no_short_support_cycle_of_owner_mapped_forest
-    A oldβ whole standard hForest
-    {y | E.part y = p} hPart core g
+  exact no_short_support_cycle_of_mapped_bounded_forest
+    A oldβ whole standard F
+    {y | E.part y = p} core g hLocalForest hPart
     hOldBeta c hLen owner hEdgeOwner hBoundary
 
 end StructuralRamsey.Girth
