@@ -760,3 +760,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_full_supportPiece_carrier
 #print axioms StructuralRamsey.Girth.attachment_full_small_support_pair_eq
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_attachment
+#print axioms StructuralRamsey.Girth.selectedPiece_transported_of_standard_or_gluing
+#print axioms StructuralRamsey.Girth.selectedFamily_transported_of_standard_or_gluing
