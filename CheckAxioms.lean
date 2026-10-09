@@ -747,3 +747,5 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_injective
 #print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_surjective
+
+#print axioms StructuralRamsey.Girth.PortGluing.swapTwoLeafUnionSubtype_val
