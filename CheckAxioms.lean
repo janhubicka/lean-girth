@@ -705,11 +705,32 @@ import Girth
 #print axioms StructuralRamsey.Girth.ownerLinear_of_ambientGirthTwo
 #print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_of_ambientGirth
 
+#print axioms StructuralRamsey.Girth.forestEdges_eq_leaf_union_rest
+#print axioms StructuralRamsey.Girth.JoinTree.leaf_support_cross_subset
+#print axioms StructuralRamsey.Girth.JoinTree.girthGT_of_leaf_deletion
+#print axioms StructuralRamsey.Girth.ForestOfCopies.exists_permitted_leaf
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_forest
+
+#print axioms StructuralRamsey.Girth.girthGT_pieceList_of_permittedAttachments
+#print axioms StructuralRamsey.Girth.singletonAttachmentList_implies_permitted
+
+#print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
+#print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
+
 #print axioms StructuralRamsey.Girth.PortGluing.oldEmbedding_eq_newEmbedding_iff
 #print axioms StructuralRamsey.Girth.PortGluing.agree_on_port
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_image_inter_subset_port
 #print axioms StructuralRamsey.Girth.PortGluing.oldPort_image_subset_newPort_image
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_full_images_inter
+#print axioms StructuralRamsey.Girth.PortGluing.newPort_image_eq_oldPort_image
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_inter_subset_member_port
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_inter_eq_full_port
+#print axioms StructuralRamsey.Girth.PortGluing.allowedIntersection_of_small_port_member
+#print axioms StructuralRamsey.Girth.PortGluing.allowedIntersection_of_shared_full_port
+#print axioms StructuralRamsey.Girth.PortGluing.new_piece_contacts_dominated
+#print axioms StructuralRamsey.Girth.PortGluing.safe_cross_allowed
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout
 
 #print axioms StructuralRamsey.Girth.PortGluing.lift_old
 #print axioms StructuralRamsey.Girth.PortGluing.lift_new
@@ -717,6 +738,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_images_cover
 #print axioms StructuralRamsey.Girth.PortGluing.lift_unique
 #print axioms StructuralRamsey.Girth.PortGluing.existsUnique_lift
+#print axioms StructuralRamsey.Girth.PortGluing.old_port_image_subsingleton
+#print axioms StructuralRamsey.Girth.PortGluing.injected_edges_cross_subset
+#print axioms StructuralRamsey.Girth.PortGluing.girth_singleton_port
+#print axioms StructuralRamsey.Girth.PortGluing.girth_Aedge_port
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants_of_ambientGirth
 
 #print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_injective
 #print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_surjective

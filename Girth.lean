@@ -164,6 +164,12 @@ import Girth.ForestAEdgeFanout
 import Girth.ForestTwoCopyGirthFanout
 import Girth.ForestSafeFanoutInvariants
 import Girth.ForestAEdgeFanoutFromGirth
+import Girth.ForestPermittedLeafGirth
+import Girth.ForestAllSupportGirth
+import Girth.ForestPermittedAttachmentGirth
+import Girth.ForestAmbientSupportCoverage
 import Girth.ForestArbitraryPortPushout
+import Girth.ForestGeneralPortFanout
 import Girth.ForestPortPushoutUniversal
+import Girth.ForestGeneralPortGirth
 import Girth.ForestPortPushoutActualUnion
