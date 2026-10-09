@@ -162,3 +162,4 @@ import Girth.ForestTwoCopySeparatorIff
 import Girth.ForestOnePortFanout
 import Girth.ForestAEdgeFanout
 import Girth.ForestTwoCopyGirthFanout
+import Girth.ForestSafeFanoutInvariants
