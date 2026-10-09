@@ -769,3 +769,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForest_of_finite_embedding
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_on_used_owners
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_used_owners
+#print axioms StructuralRamsey.Girth.attachment_core_gluing_eq_standard
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_true_active_used_owners
