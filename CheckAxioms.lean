@@ -709,3 +709,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.JoinTree.leaf_support_cross_subset
 #print axioms StructuralRamsey.Girth.JoinTree.girthGT_of_leaf_deletion
 #print axioms StructuralRamsey.Girth.ForestOfCopies.exists_permitted_leaf
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_forest
