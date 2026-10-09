@@ -731,3 +731,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.PortGluing.new_piece_contacts_dominated
 #print axioms StructuralRamsey.Girth.PortGluing.safe_cross_allowed
 #print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout
+
+#print axioms StructuralRamsey.Girth.PortGluing.old_port_image_subsingleton
+#print axioms StructuralRamsey.Girth.PortGluing.injected_edges_cross_subset
+#print axioms StructuralRamsey.Girth.PortGluing.girth_singleton_port
+#print axioms StructuralRamsey.Girth.PortGluing.girth_Aedge_port
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout_invariants_of_ambientGirth
