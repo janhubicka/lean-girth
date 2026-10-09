@@ -710,3 +710,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_image_inter_subset_port
 #print axioms StructuralRamsey.Girth.PortGluing.oldPort_image_subset_newPort_image
 #print axioms StructuralRamsey.Girth.PortGluing.old_new_full_images_inter
+
+#print axioms StructuralRamsey.Girth.PortGluing.lift_old
+#print axioms StructuralRamsey.Girth.PortGluing.lift_new
+#print axioms StructuralRamsey.Girth.PortGluing.portCompatible_of_factor
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_images_cover
+#print axioms StructuralRamsey.Girth.PortGluing.lift_unique
+#print axioms StructuralRamsey.Girth.PortGluing.existsUnique_lift
