@@ -714,6 +714,9 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.girthGT_pieceList_of_permittedAttachments
 #print axioms StructuralRamsey.Girth.singletonAttachmentList_implies_permitted
+
+#print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
+#print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
 #print axioms StructuralRamsey.Girth.badForest_two_incomparable_marked_contacts
 #print axioms StructuralRamsey.Girth.forestOfCopies_attach_of_comparable_marked_contacts
 #print axioms StructuralRamsey.Girth.girthGT_two_of_linearEdgeSet

@@ -167,6 +167,7 @@ import Girth.ForestAEdgeFanoutFromGirth
 import Girth.ForestPermittedLeafGirth
 import Girth.ForestAllSupportGirth
 import Girth.ForestPermittedAttachmentGirth
+import Girth.ForestAmbientSupportCoverage
 import Girth.ForestMarkedBadContacts
 import Girth.LinearityGirthTwo
 import Girth.ForestStandardSupportFactor
