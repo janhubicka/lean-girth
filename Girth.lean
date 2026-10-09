@@ -157,3 +157,8 @@ import Girth.ForestSkeletonMeetGap
 import Girth.ForestRetainedLevelRank
 import Girth.ForestMultiOwnerKernel
 import Girth.ForestOwnerGluingQuotient
+import Girth.ForestTwoCopyPortGlue
+import Girth.ForestTwoCopySeparatorIff
+import Girth.ForestOnePortFanout
+import Girth.ForestAEdgeFanout
+import Girth.ForestTwoCopyGirthFanout
