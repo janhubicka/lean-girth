@@ -171,3 +171,4 @@ import Girth.ForestMarkedBadContacts
 import Girth.LinearityGirthTwo
 import Girth.ForestStandardSupportFactor
 import Girth.ForestCanonicalFullRange
+import Girth.ForestFactoredStandardCompletion
