@@ -1,5 +1,5 @@
 import Girth.SupportForestToTree
-import Girth.ForestCanonicalTransport
+import Girth.ForestRelationalABCompletion
 
 /-!
 # Exact transport of the A-support of an embedded designated B-copy
@@ -96,7 +96,7 @@ theorem bSupportPiece_map_relational_standard
           ∀ u : UA, ∃ x : Old, aWhole u = std x := by
         intro u
         obtain ⟨v, hv⟩ := hSub ⟨u, rfl⟩
-        exact ⟨b v, hv⟩
+        exact ⟨b v, hv.symm⟩
       let aOld : RelStructure.Embedding A OldStruct :=
         aWhole.factorThroughRange std hFactor
       have hSpec (u : UA) : aWhole u = std (aOld u) :=
@@ -105,7 +105,7 @@ theorem bSupportPiece_map_relational_standard
         rintro x ⟨u, rfl⟩
         obtain ⟨v, hv⟩ := hSub ⟨u, rfl⟩
         refine ⟨v, std.injective ?_⟩
-        exact (hSpec u).symm.trans hv
+        exact (hSpec u).symm.trans hv.symm
       have hComp : std.comp aOld = aWhole := by
         apply RelStructure.Embedding.ext
         intro u
