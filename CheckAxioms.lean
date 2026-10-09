@@ -787,3 +787,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_core_aCopy_covered_of_local_relational_cover
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_actual_AB_from_local_copy_cover
 #print axioms StructuralRamsey.Girth.transportedDesignatedCoversIrreducibles_partiteAttachment
+#print axioms StructuralRamsey.Girth.bSupportPiece_eq_of_sameCopy
+#print axioms StructuralRamsey.Girth.actualBCopy_is_transported_designated
