@@ -46,7 +46,8 @@ theorem girthGT_pieceList_of_permittedAttachments
   | nil =>
       intro hBad
       rcases hBad with ⟨c, _⟩
-      have hLen : 0 < c.length := by omega
+      have hLen : 0 < c.length :=
+        lt_of_lt_of_le (by decide : 0 < 2) c.hlength
       have hImpossible := c.edge_mem (⟨0, hLen⟩ : Fin c.length)
       simpa [pieceListEdges] using hImpossible
   | cons F Fs ih =>
