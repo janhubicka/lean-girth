@@ -799,3 +799,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.untouched_projectedSupport_girthGT_of_transversal_local
 #print axioms StructuralRamsey.Girth.activeInduced_ACopy_projects_ordered
 #print axioms StructuralRamsey.Girth.mapped_activeSupport_subset_projected_ordered
+#print axioms StructuralRamsey.Girth.projectedSupportCopies_subset_mapped_activeSupport
+#print axioms StructuralRamsey.Girth.mapped_activeSupport_eq_projected_ordered
