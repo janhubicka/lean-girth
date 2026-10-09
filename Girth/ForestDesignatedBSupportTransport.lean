@@ -34,7 +34,7 @@ theorem copyCarrier_comp_eq_image
     {D : RelStructure L Old} {E : RelStructure L W}
     (std : Embedding D E) (a : Embedding A D) :
     copyCarrier (std.comp a) =
-      (relationEmbeddingToFunction std) '' copyCarrier a := by
+      (std.toFunctionEmbedding) '' copyCarrier a := by
   ext z
   constructor
   · rintro ⟨u, rfl⟩
@@ -66,10 +66,10 @@ theorem bSupportPiece_map_exact
     {D : RelStructure L Old} {E : RelStructure L W}
     (b : Embedding B D)
     (std : Embedding D E) :
-    (bSupportPiece A b).map (relationEmbeddingToFunction std) =
+    (bSupportPiece A b).map (std.toFunctionEmbedding) =
       bSupportPiece A (std.comp b) := by
   classical
-  let φ := relationEmbeddingToFunction std
+  let φ := std.toFunctionEmbedding
   apply supportPiece_eq_of_carrier_edges
   · change φ '' copyCarrier b = copyCarrier (std.comp b)
     exact (copyCarrier_comp_eq_image std b).symm
@@ -126,7 +126,7 @@ theorem designated_bSupportPiece_transported
     (testedOld : HypergraphPiece Old → Prop)
     (hTest : testedOld (bSupportPiece A b)) :
     TransportedPiece testedOld
-      (relationEmbeddingToFunction std)
+      (std.toFunctionEmbedding)
       (bSupportPiece A (std.comp b)) := by
   exact ⟨bSupportPiece A b, hTest,
     (bSupportPiece_map_exact A b std).symm⟩
@@ -154,7 +154,7 @@ theorem designated_bSupportPiece_has_standard_owner
         designatedOld bOld ∧ b = (standard i).comp bOld) :
     ∃ i : I,
       TransportedPiece testedOld
-        (relationEmbeddingToFunction (standard i))
+        ((standard i).toFunctionEmbedding)
         (bSupportPiece A b) := by
   obtain ⟨i, bOld, hOld, rfl⟩ := hDesignated
   exact ⟨i,
