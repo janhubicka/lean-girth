@@ -773,3 +773,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_on_used_owners
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_used_owners
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_of_mapped_bounded_forest
+#print axioms StructuralRamsey.Girth.no_short_untouched_projected_cycle_bounded
