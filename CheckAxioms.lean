@@ -776,3 +776,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_true_active_used_owners
 #print axioms StructuralRamsey.Girth.strongSupport_core_gluing_carrier
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_true_active_quantified
+#print axioms StructuralRamsey.Girth.attachment_aCopy_core_or_standard
+#print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
+#print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
