@@ -193,3 +193,4 @@ import Girth.ForestCoreACopyCoverage
 import Girth.ForestStructuralABCompletion
 import Girth.ForestDesignatedBSupportTransport
 import Girth.DesignatedBCopyTransportExact
+import Girth.UntouchedGirthTransversalBridge
