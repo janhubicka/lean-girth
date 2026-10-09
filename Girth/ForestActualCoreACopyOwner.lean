@@ -1,0 +1,109 @@
+import Girth.ForestActualACopyOwner
+import Girth.LocalForestPieces
+
+/-!
+# Exact coverage of ambient core A-copies by local witness edges
+
+The local-forest partite witness explicitly covers every A-support edge
+of its relational core by a designated local copy.  In the actual free
+attachment, an ambient A-copy whose entire carrier is in the core
+factors through the core embedding as an old A-copy of the local witness.
+
+Combining these facts, it is an exact edge of a gluing-copy support piece.
+This discharges the remaining core-edge clause of the actual A-copy owner
+theorem, rather than postulating it separately.
+
+The full local Ramsey witness's existence is still a separate theorem:
+this file consumes its exact A-support and edge-cover properties, not an
+unproved global Ramsey arrow.
+-/
+
+namespace StructuralRamsey.Girth
+
+open StructuralRamsey.RelStructure
+
+universe u v
+variable {L : RelLanguage.{u}}
+variable {UA Old Core I Src : Type v}
+
+/-- Every core-contained A-copy of the actual attached structure is
+an exact A-edge of some local designated gluing-copy support piece.
+
+We assume only that the core support of A is exactly the declared local
+edge family K and that every edge of K is in the image of some designated
+strong-support copy. -/
+theorem attached_core_aCopy_in_local_supportPiece
+    (A : RelStructure L UA)
+    (B : RelStructure L Old)
+    (S : Set Old)
+    (D : RelStructure L Core)
+    (f : I → RelStructure.Embedding (B.induce S) D)
+    {H : Set (Set Src)}
+    {K : Set (Set Core)}
+    (local : I → StrongSupportEmbedding H K)
+    (hLocalEdgeCover :
+      ∀ e : Set Core, e ∈ K →
+        ∃ i : I, ∃ e₀ : Set Src, e₀ ∈ H ∧
+          e = (local i) '' e₀)
+    (hCoreSupport : supportCopies A D = K)
+    {KWhole : Set (Set (RelStructure.Attachment.Vertex S
+      (W := Core) (I := I)))}
+    (outer : I → StrongSupportEmbedding H KWhole)
+    (hOuterCore :
+      ∀ i (x : Src), outer i x =
+        (RelStructure.Attachment.coreEmbedding B S D f) (local i x))
+    (a : RelStructure.Embedding A (RelStructure.Attachment.attach B S D f))
+    (hInside :
+      copyCarrier a ⊆
+        Set.range (RelStructure.Attachment.coreEmbedding B S D f)) :
+    ∃ i : I, copyCarrier a ∈ (outer i).supportPiece.edges := by
+  classical
+  let core : RelStructure.Embedding D
+      (RelStructure.Attachment.attach B S D f) :=
+    RelStructure.Attachment.coreEmbedding B S D f
+  have hFactorA :
+      ∀ u : UA, ∃ x : Core, a u = core x := by
+    intro u
+    exact hInside ⟨u, rfl⟩
+  let aCore : RelStructure.Embedding A D :=
+    a.factorThroughRange core hFactorA
+  have hSpec (u : UA) : a u = core (aCore u) :=
+    Classical.choose_spec (hFactorA u)
+  have hCarrier :
+      copyCarrier a = core '' copyCarrier aCore := by
+    ext z
+    constructor
+    · rintro ⟨u, rfl⟩
+      exact ⟨aCore u, ⟨u, rfl⟩, (hSpec u).symm⟩
+    · rintro ⟨x, ⟨u, rfl⟩, hx⟩
+      exact ⟨u, (hSpec u).trans hx⟩
+  have heK : copyCarrier aCore ∈ K := by
+    rw [← hCoreSupport]
+    exact ⟨aCore, rfl⟩
+  obtain ⟨i, e₀, he₀, heq⟩ :=
+    hLocalEdgeCover (copyCarrier aCore) heK
+  have hImages :
+      core '' ((local i) '' e₀) = (outer i) '' e₀ := by
+    ext z
+    constructor
+    · rintro ⟨y, ⟨x, hx, hxy⟩, hyz⟩
+      refine ⟨x, hx, ?_⟩
+      calc
+        outer i x = core (local i x) := hOuterCore i x
+        _ = core y := congrArg core hxy
+        _ = z := hyz
+    · rintro ⟨x, hx, hxz⟩
+      refine ⟨local i x, ⟨x, hx, rfl⟩, ?_⟩
+      calc
+        core (local i x) = outer i x := (hOuterCore i x).symm
+        _ = z := hxz
+  have hEdge :
+      copyCarrier a = (outer i) '' e₀ := by
+    calc
+      copyCarrier a = core '' copyCarrier aCore := hCarrier
+      _ = core '' ((local i) '' e₀) :=
+        congrArg (fun U : Set Core => core '' U) heq
+      _ = (outer i) '' e₀ := hImages
+  exact ⟨i, ⟨e₀, he₀, hEdge⟩⟩
+
+end StructuralRamsey.Girth
