@@ -84,7 +84,7 @@ theorem no_short_support_cycle_of_mapped_bounded_forest
   have hPartUsed :
       EdgesMeetPartAtMostOne (fun q : Q => F q.1) P := by
     intro q e he
-    exact hPart q.1 e he
+    exact hPart q.1 he
   apply no_short_support_cycle_of_owner_mapped_forest
     A Old Whole
     (fun q : Q => standard q.1)
