@@ -173,3 +173,4 @@ import Girth.ForestGeneralPortFanout
 import Girth.ForestPortPushoutUniversal
 import Girth.ForestGeneralPortGirth
 import Girth.ForestPortPushoutActualUnion
+import Girth.ForestPortPushoutDiamond
