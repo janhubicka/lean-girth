@@ -765,3 +765,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.usedOwner_nonempty
 #print axioms StructuralRamsey.Girth.emptySelected_forestCompletionWitness
 #print axioms StructuralRamsey.Girth.emptySelected_hasForestCompletion
+#print axioms StructuralRamsey.Girth.localForest_usedOwners
+#print axioms StructuralRamsey.Girth.localForest_of_finite_embedding
