@@ -178,4 +178,6 @@ import Girth.ForestStandardSupportFactor
 import Girth.ForestCanonicalFullRange
 import Girth.ForestAttachmentSupportPairs
 import Girth.ForestFactoredStandardCompletion
+import Girth.ForestRelationalAttachmentCompletion
+import Girth.ForestSelectedPieceTransport
 import Girth.ForestUsedOwners
