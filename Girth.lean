@@ -166,3 +166,4 @@ import Girth.ForestSafeFanoutInvariants
 import Girth.ForestAEdgeFanoutFromGirth
 import Girth.ForestArbitraryPortPushout
 import Girth.ForestPortPushoutUniversal
+import Girth.ForestPortPushoutActualUnion
