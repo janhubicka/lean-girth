@@ -185,4 +185,3 @@ import Girth.ForestUsedOwnerLocalForest
 import Girth.ForestUsedOwnerCompletion
 import Girth.ForestRelationalUsedOwnerCompletion
 import Girth.MappedOwnerLocalForest
-import Girth.UntouchedGirthBounded
