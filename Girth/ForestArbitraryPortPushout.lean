@@ -88,14 +88,19 @@ noncomputable def newEmbedding (G : PortGluing Old New) :
     (G : PortGluing Old New) (x : Old) :
     G.oldEmbedding x = (Sum.inl x : G.Vertex) := rfl
 
-@[simp] theorem newEmbedding_apply
-    (G : PortGluing Old New) (y : New) :
+@[simp] theorem newEmbedding_apply_of_mem
+    (G : PortGluing Old New) (y : New) (hy : y ∈ G.newPort) :
     G.newEmbedding y =
-      (if h : y ∈ G.newPort then
-        (Sum.inl (G.identify ⟨y, h⟩).1 : G.Vertex)
-       else (Sum.inr ⟨y, h⟩ : G.Vertex)) := by
+      (Sum.inl (G.identify ⟨y, hy⟩).1 : G.Vertex) := by
   classical
-  rfl
+  simp [newEmbedding, hy]
+
+@[simp] theorem newEmbedding_apply_of_not_mem
+    (G : PortGluing Old New) (y : New) (hy : y ∉ G.newPort) :
+    G.newEmbedding y =
+      (Sum.inr (⟨y, hy⟩ : {z : New // z ∉ G.newPort}) : G.Vertex) := by
+  classical
+  simp [newEmbedding, hy]
 
 /-- Equality across the two embedded pictures is EXACTLY the
 prescribed identification of one new-port vertex with its old mate. -/
@@ -111,13 +116,17 @@ theorem oldEmbedding_eq_newEmbedding_iff
       have heq :
           (Sum.inl x : G.Vertex) =
             Sum.inl (G.identify ⟨y, hy⟩).1 := by
-        simpa [hy] using h
+        simpa only [oldEmbedding_apply,
+          newEmbedding_apply_of_mem G y hy] using h
       exact Sum.inl.inj heq
-    · have hFalse : False := by
-        simpa [hy] using h
-      exact hFalse.elim
+    · have hBad :
+          (Sum.inl x : G.Vertex) =
+            Sum.inr (⟨y, hy⟩ : {z : New // z ∉ G.newPort}) := by
+        simpa only [oldEmbedding_apply,
+          newEmbedding_apply_of_not_mem G y hy] using h
+      cases hBad
   · rintro ⟨hy, hEq⟩
-    simp [hy, hEq]
+    rw [oldEmbedding_apply, newEmbedding_apply_of_mem G y hy, hEq]
 
 /-- The two embeddings coincide at corresponding chosen port
 vertices, with no additional quotient identifications. -/
