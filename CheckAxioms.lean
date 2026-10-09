@@ -785,3 +785,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeASupport_image_in_old
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_actual_AB
 #print axioms StructuralRamsey.Girth.attachment_core_aCopy_covered_of_local_relational_cover
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_actual_AB_from_local_copy_cover
