@@ -38,6 +38,33 @@ theorem attachment_core_gluing_eq_standard
       (RelStructure.Attachment.copyEmbedding B S D f i) s.1 :=
   (RelStructure.Attachment.copy_extends B S D f i s).symm
 
+/-- Pointwise equality of the local strong-support map and the core
+gluing embedding automatically identifies their entire support-piece
+carriers. No independent carrier equality is needed. -/
+theorem strongSupport_core_gluing_carrier
+    (B : RelStructure L Old)
+    (S : Set Old)
+    (D : RelStructure L Core)
+    (f : I → RelStructure.Embedding (B.induce S) D)
+    {H : Set (Set S)}
+    {K : Set (Set (RelStructure.Attachment.Vertex S
+      (W := Core) (I := I)))}
+    (outer : I → StrongSupportEmbedding H K)
+    (hOuterCore :
+      ∀ i (s : S), outer i s =
+        (RelStructure.Attachment.coreEmbedding B S D f) (f i s))
+    (i : I) :
+    (outer i).supportPiece.carrier =
+      copyCarrier
+        ((RelStructure.Attachment.coreEmbedding B S D f).comp (f i)) := by
+  apply Set.ext
+  intro z
+  constructor
+  · rintro ⟨s, hs⟩
+    exact ⟨s, (hOuterCore i s).symm.trans hs⟩
+  · rintro ⟨s, hs⟩
+    exact ⟨s, (hOuterCore i s).trans hs⟩
+
 /-- Completion on the genuine active subtype. The standard-copy
 factorization and all per-owner active-inclusion identities are
 derived from attachment_core_gluing_eq_standard, not assumed.
@@ -74,10 +101,6 @@ theorem ForestCompletionProperty.assemble_true_active_used_owners
     (m : ℕ)
     (hLocalForest :
       LocalForestThrough (fun i : I => (outer i).supportPiece) m)
-    (hSmallCarrier :
-      ∀ i : I, (outer i).supportPiece.carrier =
-        copyCarrier
-          ((RelStructure.Attachment.coreEmbedding B S D f).comp (f i)))
     (hALinear :
       ALinear A (RelStructure.Attachment.attach B S D f))
     (owner : N → I)
@@ -131,6 +154,11 @@ theorem ForestCompletionProperty.assemble_true_active_used_owners
       _ = relationEmbeddingToFunction
           (RelStructure.Attachment.copyEmbedding B S D f i)
           (activeInclusion s) := rfl
+  have hSmallCarrier :
+      ∀ i : I, (outer i).supportPiece.carrier =
+        copyCarrier
+          ((RelStructure.Attachment.coreEmbedding B S D f).comp (f i)) :=
+    strongSupport_core_gluing_carrier B S D f outer hOuterCore
   exact ForestCompletionProperty.assemble_relational_used_owners
     A B S D f
     hSourceNonempty hSourceCover
