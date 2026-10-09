@@ -180,3 +180,4 @@ import Girth.ForestAttachmentSupportPairs
 import Girth.ForestFactoredStandardCompletion
 import Girth.ForestUsedOwners
 import Girth.ForestUsedOwnerLocalForest
+import Girth.ForestUsedOwnerCompletion
