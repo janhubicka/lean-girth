@@ -179,3 +179,4 @@ import Girth.ForestCanonicalFullRange
 import Girth.ForestAttachmentSupportPairs
 import Girth.ForestFactoredStandardCompletion
 import Girth.ForestUsedOwners
+import Girth.ForestUsedOwnerLocalForest
