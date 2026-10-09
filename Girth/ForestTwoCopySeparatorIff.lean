@@ -56,7 +56,7 @@ theorem twoCopyPort_left_image_eq_iff
         rw [← h]
         exact ⟨x, hx, rfl⟩
       obtain ⟨y, hy, hxy⟩ := him
-      have hEq : x = y := (twoCopyPortLeft S).injective hxy
+      have hEq : x = y := (twoCopyPortLeft S).injective hxy.symm
       simpa [hEq] using hy
     · intro x hx
       have him : twoCopyPortLeft S x ∈
@@ -64,7 +64,7 @@ theorem twoCopyPort_left_image_eq_iff
         rw [h]
         exact ⟨x, hx, rfl⟩
       obtain ⟨y, hy, hxy⟩ := him
-      have hEq : x = y := (twoCopyPortLeft S).injective hxy
+      have hEq : x = y := (twoCopyPortLeft S).injective hxy.symm
       simpa [hEq] using hy
   · intro h
     rw [h]
