@@ -793,3 +793,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedDesignatedCoversIrreducibles_partiteAttachment
 #print axioms StructuralRamsey.Girth.bSupportPiece_eq_of_sameCopy
 #print axioms StructuralRamsey.Girth.actualBCopy_is_transported_designated
+#print axioms StructuralRamsey.Girth.strongSupportPieces_meet_baseFinePartAtMostOne
+#print axioms StructuralRamsey.Girth.no_short_untouched_cycle_of_transversal_local_support
