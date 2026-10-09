@@ -759,3 +759,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_factored_full_standards
 #print axioms StructuralRamsey.Girth.attachment_full_supportPiece_carrier
 #print axioms StructuralRamsey.Girth.attachment_full_small_support_pair_eq
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_relational_attachment
