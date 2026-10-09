@@ -131,4 +131,34 @@ theorem designated_bSupportPiece_transported
   exact ⟨bSupportPiece A b, hTest,
     (bSupportPiece_map_exact A b std).symm⟩
 
+/-- Every new designated B-copy built as a transported old
+designated B-copy has an exact old tested support-piece preimage.
+
+Unlike a carrier-only factorization, this carries the entire A-support
+family and is therefore the exact B-piece ownership interface expected
+by finite forest completion. -/
+theorem designated_bSupportPiece_has_standard_owner
+    (A : RelStructure L UA)
+    {B : RelStructure L VB}
+    {D : RelStructure L Old} {E : RelStructure L W}
+    {I : Type v}
+    (standard : I → Embedding D E)
+    (designatedOld : Embedding B D → Prop)
+    (testedOld : HypergraphPiece Old → Prop)
+    (hOldTested :
+      ∀ bOld : Embedding B D, designatedOld bOld →
+        testedOld (bSupportPiece A bOld))
+    (b : Embedding B E)
+    (hDesignated :
+      ∃ i : I, ∃ bOld : Embedding B D,
+        designatedOld bOld ∧ b = (standard i).comp bOld) :
+    ∃ i : I,
+      TransportedPiece testedOld
+        (relationEmbeddingToFunction (standard i))
+        (bSupportPiece A b) := by
+  obtain ⟨i, bOld, hOld, rfl⟩ := hDesignated
+  exact ⟨i,
+    designated_bSupportPiece_transported
+      A (standard i) bOld testedOld (hOldTested bOld hOld)⟩
+
 end StructuralRamsey.Girth
