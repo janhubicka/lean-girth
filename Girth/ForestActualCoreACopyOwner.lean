@@ -64,7 +64,8 @@ theorem attached_core_aCopy_in_local_supportPiece
   have hFactorA :
       ∀ u : UA, ∃ x : Core, a u = core x := by
     intro u
-    exact hInside ⟨u, rfl⟩
+    obtain ⟨x, hx⟩ := hInside ⟨u, rfl⟩
+    exact ⟨x, hx.symm⟩
   let aCore : RelStructure.Embedding A D :=
     a.factorThroughRange core hFactorA
   have hSpec (u : UA) : a u = core (aCore u) :=
