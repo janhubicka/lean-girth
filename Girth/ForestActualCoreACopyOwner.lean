@@ -40,18 +40,18 @@ theorem attached_core_aCopy_in_local_supportPiece
     (f : I → RelStructure.Embedding (B.induce S) D)
     {H : Set (Set Src)}
     {K : Set (Set Core)}
-    (local : I → StrongSupportEmbedding H K)
+    (localCopy : I → StrongSupportEmbedding H K)
     (hLocalEdgeCover :
       ∀ e : Set Core, e ∈ K →
         ∃ i : I, ∃ e₀ : Set Src, e₀ ∈ H ∧
-          e = (local i) '' e₀)
+          e = (localCopy i) '' e₀)
     (hCoreSupport : supportCopies A D = K)
     {KWhole : Set (Set (RelStructure.Attachment.Vertex S
       (W := Core) (I := I)))}
     (outer : I → StrongSupportEmbedding H KWhole)
     (hOuterCore :
       ∀ i (x : Src), outer i x =
-        (RelStructure.Attachment.coreEmbedding B S D f) (local i x))
+        (RelStructure.Attachment.coreEmbedding B S D f) (localCopy i x))
     (a : RelStructure.Embedding A (RelStructure.Attachment.attach B S D f))
     (hInside :
       copyCarrier a ⊆
@@ -83,25 +83,25 @@ theorem attached_core_aCopy_in_local_supportPiece
   obtain ⟨i, e₀, he₀, heq⟩ :=
     hLocalEdgeCover (copyCarrier aCore) heK
   have hImages :
-      core '' ((local i) '' e₀) = (outer i) '' e₀ := by
+      core '' ((localCopy i) '' e₀) = (outer i) '' e₀ := by
     ext z
     constructor
     · rintro ⟨y, ⟨x, hx, hxy⟩, hyz⟩
       refine ⟨x, hx, ?_⟩
       calc
-        outer i x = core (local i x) := hOuterCore i x
+        outer i x = core (localCopy i x) := hOuterCore i x
         _ = core y := congrArg core hxy
         _ = z := hyz
     · rintro ⟨x, hx, hxz⟩
-      refine ⟨local i x, ⟨x, hx, rfl⟩, ?_⟩
+      refine ⟨localCopy i x, ⟨x, hx, rfl⟩, ?_⟩
       calc
-        core (local i x) = outer i x := (hOuterCore i x).symm
+        core (localCopy i x) = outer i x := (hOuterCore i x).symm
         _ = z := hxz
   have hEdge :
       copyCarrier a = (outer i) '' e₀ := by
     calc
       copyCarrier a = core '' copyCarrier aCore := hCarrier
-      _ = core '' ((local i) '' e₀) :=
+      _ = core '' ((localCopy i) '' e₀) :=
         congrArg (fun U : Set Core => core '' U) heq
       _ = (outer i) '' e₀ := hImages
   exact ⟨i, ⟨e₀, he₀, hEdge⟩⟩
@@ -121,18 +121,18 @@ theorem attached_aCopy_tested_owner_of_local_edge_cover
     (D : RelStructure L Core)
     (f : I → RelStructure.Embedding (B.induce S) D)
     {H : Set (Set Src)} {K : Set (Set Core)}
-    (local : I → StrongSupportEmbedding H K)
+    (localCopy : I → StrongSupportEmbedding H K)
     (hLocalEdgeCover :
       ∀ e : Set Core, e ∈ K →
         ∃ i : I, ∃ e₀ : Set Src, e₀ ∈ H ∧
-          e = (local i) '' e₀)
+          e = (localCopy i) '' e₀)
     (hCoreSupport : supportCopies A D = K)
     {KWhole : Set (Set (RelStructure.Attachment.Vertex S
       (W := Core) (I := I)))}
     (outer : I → StrongSupportEmbedding H KWhole)
     (hOuterCore :
       ∀ i (x : Src), outer i x =
-        (RelStructure.Attachment.coreEmbedding B S D f) (local i x))
+        (RelStructure.Attachment.coreEmbedding B S D f) (localCopy i x))
     (active : I → Src ↪ Old)
     (hFactor :
       ∀ i (x : Src), outer i x =
@@ -154,7 +154,7 @@ theorem attached_aCopy_tested_owner_of_local_edge_cover
     testedOld hTestA hTestActiveEdge
     (fun aCore hInside =>
       attached_core_aCopy_in_local_supportPiece
-        A B S D f local hLocalEdgeCover hCoreSupport
+        A B S D f localCopy hLocalEdgeCover hCoreSupport
         outer hOuterCore aCore hInside) a
 
 end StructuralRamsey.Girth
