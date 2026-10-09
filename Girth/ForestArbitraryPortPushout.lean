@@ -93,14 +93,22 @@ noncomputable def newEmbedding (G : PortGluing Old New) :
     G.newEmbedding y =
       (Sum.inl (G.identify ⟨y, hy⟩).1 : G.Vertex) := by
   classical
-  simp [newEmbedding, hy]
+  change (if h : y ∈ G.newPort then
+      (Sum.inl (G.identify ⟨y, h⟩).1 : G.Vertex)
+    else Sum.inr (⟨y, h⟩ : {z : New // z ∉ G.newPort})) =
+      Sum.inl (G.identify ⟨y, hy⟩).1
+  simp [hy]
 
 @[simp] theorem newEmbedding_apply_of_not_mem
     (G : PortGluing Old New) (y : New) (hy : y ∉ G.newPort) :
     G.newEmbedding y =
       (Sum.inr (⟨y, hy⟩ : {z : New // z ∉ G.newPort}) : G.Vertex) := by
   classical
-  simp [newEmbedding, hy]
+  change (if h : y ∈ G.newPort then
+      (Sum.inl (G.identify ⟨y, h⟩).1 : G.Vertex)
+    else Sum.inr (⟨y, h⟩ : {z : New // z ∉ G.newPort})) =
+      Sum.inr (⟨y, hy⟩ : {z : New // z ∉ G.newPort})
+  simp [hy]
 
 /-- Equality across the two embedded pictures is EXACTLY the
 prescribed identification of one new-port vertex with its old mate. -/
