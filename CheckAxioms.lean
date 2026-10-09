@@ -780,4 +780,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
 #print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
 #print axioms StructuralRamsey.Girth.no_short_support_cycle_of_mapped_bounded_forest
+#print axioms StructuralRamsey.Girth.fullASupportPiece
+#print axioms StructuralRamsey.Girth.aSupport_image_of_embedding
+#print axioms StructuralRamsey.Girth.activeASupport_image_in_old
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_actual_AB
 #print axioms StructuralRamsey.Girth.attachment_core_aCopy_covered_of_local_relational_cover
