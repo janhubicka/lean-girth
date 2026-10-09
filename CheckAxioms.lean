@@ -704,3 +704,8 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.ownerLinear_of_ambientGirthTwo
 #print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout_of_ambientGirth
+
+#print axioms StructuralRamsey.Girth.forestEdges_eq_leaf_union_rest
+#print axioms StructuralRamsey.Girth.JoinTree.leaf_support_cross_subset
+#print axioms StructuralRamsey.Girth.JoinTree.girthGT_of_leaf_deletion
+#print axioms StructuralRamsey.Girth.ForestOfCopies.exists_permitted_leaf
