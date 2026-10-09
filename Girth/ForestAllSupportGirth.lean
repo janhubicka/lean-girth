@@ -1,4 +1,5 @@
 import Girth.ForestPermittedLeafGirth
+import Girth.ForestReindex
 import Mathlib.Tactic
 
 /-!
