@@ -784,3 +784,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.aSupport_image_of_embedding
 #print axioms StructuralRamsey.Girth.activeASupport_image_in_old
 #print axioms StructuralRamsey.Girth.ForestCompletionProperty.assemble_actual_AB
+#print axioms StructuralRamsey.Girth.copyCarrier_relational_comp_image
+#print axioms StructuralRamsey.Girth.bSupportPiece_map_relational_standard
