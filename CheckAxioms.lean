@@ -717,3 +717,17 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
 #print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
+
+#print axioms StructuralRamsey.Girth.PortGluing.oldEmbedding_eq_newEmbedding_iff
+#print axioms StructuralRamsey.Girth.PortGluing.agree_on_port
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_image_inter_subset_port
+#print axioms StructuralRamsey.Girth.PortGluing.oldPort_image_subset_newPort_image
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_full_images_inter
+#print axioms StructuralRamsey.Girth.PortGluing.newPort_image_eq_oldPort_image
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_inter_subset_member_port
+#print axioms StructuralRamsey.Girth.PortGluing.old_new_inter_eq_full_port
+#print axioms StructuralRamsey.Girth.PortGluing.allowedIntersection_of_small_port_member
+#print axioms StructuralRamsey.Girth.PortGluing.allowedIntersection_of_shared_full_port
+#print axioms StructuralRamsey.Girth.PortGluing.new_piece_contacts_dominated
+#print axioms StructuralRamsey.Girth.PortGluing.safe_cross_allowed
+#print axioms StructuralRamsey.Girth.PortGluing.safe_port_fanout
