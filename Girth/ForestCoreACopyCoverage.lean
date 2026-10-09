@@ -60,7 +60,8 @@ theorem attachment_core_aCopy_covered_of_local_relational_cover
   have hFactorCore :
       ∀ u : UA, ∃ y : Core, a u = core y := by
     intro u
-    simpa [core] using hCore ⟨u, rfl⟩
+    obtain ⟨y, hy⟩ := hCore ⟨u, rfl⟩
+    exact ⟨y, hy.symm⟩
   let aCore : RelStructure.Embedding A D :=
     a.factorThroughRange core hFactorCore
   have hCoreSpec (u : UA) : a u = core (aCore u) :=
@@ -69,7 +70,8 @@ theorem attachment_core_aCopy_covered_of_local_relational_cover
   have hFactorLocal :
       ∀ u : UA, ∃ s : S, aCore u = f i s := by
     intro u
-    simpa [copyCarrier] using hLocal ⟨u, rfl⟩
+    obtain ⟨s, hs⟩ := hLocal ⟨u, rfl⟩
+    exact ⟨s, hs.symm⟩
   let aActive : RelStructure.Embedding A (B.induce S) :=
     aCore.factorThroughRange (f i) hFactorLocal
   have hLocalSpec (u : UA) :
