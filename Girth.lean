@@ -195,3 +195,4 @@ import Girth.ForestDesignatedBSupportTransport
 import Girth.DesignatedBCopyTransportExact
 import Girth.UntouchedGirthTransversalBridge
 import Girth.UntouchedProjectedGirth
+import Girth.SupportGirthEmbeddingEquiv
