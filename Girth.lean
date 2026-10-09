@@ -187,3 +187,4 @@ import Girth.ForestRelationalUsedOwnerCompletion
 import Girth.ForestTrueActiveCompletion
 import Girth.ForestTrueActiveQuantified
 import Girth.ForestActualACopyOwner
+import Girth.ForestActualCoreACopyOwner
