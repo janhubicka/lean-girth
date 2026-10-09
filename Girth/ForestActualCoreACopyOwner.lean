@@ -149,13 +149,12 @@ theorem attached_aCopy_tested_owner_of_local_edge_cover
       (relationEmbeddingToFunction
         (RelStructure.Attachment.copyEmbedding B S D f i))
       (HypergraphPiece.oneEdge (copyCarrier a)) := by
-  apply attached_aCopy_has_tested_standard_owner
+  exact attached_aCopy_has_tested_standard_owner
     A hA B S D f outer active hFactor
     testedOld hTestA hTestActiveEdge
-  · intro aCore hInside
-    exact attached_core_aCopy_in_local_supportPiece
-      A B S D f local hLocalEdgeCover hCoreSupport
-      outer hOuterCore aCore hInside
-  · exact a
+    (fun aCore hInside =>
+      attached_core_aCopy_in_local_supportPiece
+        A B S D f local hLocalEdgeCover hCoreSupport
+        outer hOuterCore aCore hInside) a
 
 end StructuralRamsey.Girth
