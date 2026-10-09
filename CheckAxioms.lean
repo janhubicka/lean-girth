@@ -663,3 +663,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.twoCopyPort_fanout_of_allowed
 #print axioms StructuralRamsey.Girth.twoCopyPort_singleton_cross_allowed
 #print axioms StructuralRamsey.Girth.twoCopyPort_singleton_fanout
+
+#print axioms StructuralRamsey.Girth.forest_Aedge_old_member_portClean
+#print axioms StructuralRamsey.Girth.twoCopyPort_images_inter_general
+#print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_cross_allowed
+#print axioms StructuralRamsey.Girth.twoCopyPort_Aedge_fanout
