@@ -780,3 +780,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
 #print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
 #print axioms StructuralRamsey.Girth.attached_core_aCopy_in_local_supportPiece
+#print axioms StructuralRamsey.Girth.attached_aCopy_tested_owner_of_local_edge_cover
