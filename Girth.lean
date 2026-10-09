@@ -190,4 +190,5 @@ import Girth.ForestActualACopyOwner
 import Girth.MappedOwnerLocalForest
 import Girth.ForestRelationalABCompletion
 import Girth.ForestCoreACopyCoverage
+import Girth.ForestStructuralABCompletion
 import Girth.ForestDesignatedBSupportTransport
