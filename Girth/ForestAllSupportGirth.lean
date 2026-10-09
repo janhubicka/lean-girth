@@ -73,37 +73,46 @@ theorem girthGT_union_of_forest
           have hRestForest :
               ForestOfCopies (erasePiece G leaf) :=
             hG.erase_leaf T hadj huniq
-          let J' := {j : J // j ∈ (({leaf} : Set J)ᶜ)}
+          let J' := {j : J // j ≠ leaf}
+          let e : J' ≃ {j : J // j ∈ (({leaf} : Set J)ᶜ)} :=
+            { toFun := fun j => ⟨j.1, by
+                simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+                  using j.2⟩
+              invFun := fun j => ⟨j.1, by
+                simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+                  using j.2⟩
+              left_inv := by
+                intro j
+                apply Subtype.ext
+                rfl
+              right_inv := by
+                intro j
+                apply Subtype.ext
+                rfl }
+          have hRestForest' :
+              ForestOfCopies (fun j : J' => G j.1) :=
+            hRestForest.reindex e
           have hCardLt :
               Fintype.card J' < Fintype.card J := by
             apply Fintype.card_lt_of_injective_not_surjective
               (fun j : J' => j.1) Subtype.val_injective
             intro hSurj
             obtain ⟨j, hj⟩ := hSurj leaf
-            have hNe : j.1 ≠ leaf := by
-              simpa using j.2
-            exact hNe hj
+            exact j.2 hj
           have hRestGirth :
               GirthGT
                 (⋃ j : {i : J // i ≠ leaf}, (G j.1).edges) g := by
-            have hStep : GirthGT
-                (⋃ j : J', (erasePiece G leaf j).edges) g := by
-              apply ih (Fintype.card J')
-              · omega
-              · exact J'
-              · rfl
-              · exact erasePiece G leaf
-              · exact hRestForest
-              · intro j
-                exact hPieces j.1
-            simpa only [J', erasePiece, Set.mem_compl_iff,
-              Set.mem_singleton_iff] using hStep
+            exact ih (Fintype.card J')
+              (by omega : Fintype.card J' < n)
+              J' rfl (fun j => G j.1)
+              hRestForest' (fun j => hPieces j.1)
           exact T.girthGT_of_leaf_deletion
             hG.pairwiseAllowed hadj huniq g
             hRestGirth (hPieces leaf)
       · haveI : IsEmpty J := ⟨fun j => hNonempty ⟨j⟩⟩
         rintro ⟨c, _⟩
-        have hlen : 0 < c.length := by omega
+        have hlen : 0 < c.length :=
+          lt_of_lt_of_le (by decide : 0 < 2) c.hlength
         have hEdge := c.edge_mem (⟨0, hlen⟩ : Fin c.length)
         obtain ⟨j, _⟩ := Set.mem_iUnion.mp hEdge
         exact isEmptyElim j
