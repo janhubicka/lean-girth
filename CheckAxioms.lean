@@ -657,3 +657,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.twoCopyPort_image_separator
 #print axioms StructuralRamsey.Girth.twoCopyPort_allowedIntersection
 #print axioms StructuralRamsey.Girth.twoCopyPort_forest
+
+#print axioms StructuralRamsey.Girth.twoCopyPort_piece_inter
+#print axioms StructuralRamsey.Girth.twoCopyPort_left_image_eq_iff
+#print axioms StructuralRamsey.Girth.twoCopyPort_allowedIntersection_iff
+#print axioms StructuralRamsey.Girth.twoCopyPort_forest_iff
+#print axioms StructuralRamsey.Girth.twoCopyPort_nonforest_of_forbiddenSeparator
