@@ -795,3 +795,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualBCopy_is_transported_designated
 #print axioms StructuralRamsey.Girth.strongSupportPieces_meet_baseFinePartAtMostOne
 #print axioms StructuralRamsey.Girth.no_short_untouched_cycle_of_transversal_local_support
+#print axioms StructuralRamsey.Girth.projectedSupportCopies_subset_support
+#print axioms StructuralRamsey.Girth.untouched_projectedSupport_girthGT_of_transversal_local
