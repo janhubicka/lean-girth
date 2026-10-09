@@ -649,3 +649,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_commonNextPrefix
 #print axioms StructuralRamsey.Girth.LocalNeutralGapTail.code_eq_of_meetAbove
 #print axioms StructuralRamsey.Girth.finiteLocalNeutralGap_preimages_of_unmarkedMeets
+
+#print axioms StructuralRamsey.Girth.twoCopyPort_cross_eq_iff
+#print axioms StructuralRamsey.Girth.twoCopyPort_agree_on_separator
+#print axioms StructuralRamsey.Girth.twoCopyPort_images_inter
+#print axioms StructuralRamsey.Girth.twoCopyPort_carriers_distinct
+#print axioms StructuralRamsey.Girth.twoCopyPort_image_separator
+#print axioms StructuralRamsey.Girth.twoCopyPort_allowedIntersection
+#print axioms StructuralRamsey.Girth.twoCopyPort_forest
