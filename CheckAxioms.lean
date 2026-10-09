@@ -712,5 +712,8 @@ import Girth
 
 #print axioms StructuralRamsey.Girth.girthGT_union_of_forest
 
+#print axioms StructuralRamsey.Girth.girthGT_pieceList_of_permittedAttachments
+#print axioms StructuralRamsey.Girth.singletonAttachmentList_implies_permitted
+
 #print axioms StructuralRamsey.Girth.girthGT_of_forest_support_coverage
 #print axioms StructuralRamsey.Girth.union_supportCoveredByFamily
