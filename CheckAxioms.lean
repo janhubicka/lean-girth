@@ -779,3 +779,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_aCopy_core_or_standard
 #print axioms StructuralRamsey.Girth.attached_standard_aCopy_transported
 #print axioms StructuralRamsey.Girth.attached_aCopy_has_tested_standard_owner
+#print axioms StructuralRamsey.Girth.copyCarrier_comp_eq_image
+#print axioms StructuralRamsey.Girth.bSupportPiece_map_exact
+#print axioms StructuralRamsey.Girth.designated_bSupportPiece_transported
