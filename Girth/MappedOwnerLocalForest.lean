@@ -59,28 +59,40 @@ theorem no_short_support_cycle_of_mapped_bounded_forest
   have hPositive : 0 < c.length :=
     lt_of_lt_of_le (by decide) c.hlength
   letI : Nonempty (Fin c.length) := ⟨⟨0, hPositive⟩⟩
-  letI : Fintype (UsedOwner owner) := usedOwnerFintype owner
-  letI : Nonempty (UsedOwner owner) := usedOwner_nonempty owner
-  have hCard : Fintype.card (Fin c.length) ≤ g := by
-    simpa using hLen
-  have hUsed : ForestOfCopies
-      (fun q : UsedOwner owner => F q.1) :=
-    localForest_usedOwners owner F g hLocal hCard
+  -- The index type of actually used local copies lives at the universe
+  -- level of I, whereas the edge index Fin c.length is finite in Type 0.
+  -- Construct the finite range directly, without identifying their levels.
+  let Q : Type v := {i : I // i ∈ Set.range owner}
+  let select : Fin c.length → Q :=
+    fun j => ⟨owner j, ⟨j, rfl⟩⟩
+  have hSurj : Function.Surjective select := by
+    rintro ⟨i, ⟨j, hj⟩⟩
+    refine ⟨j, ?_⟩
+    apply Subtype.ext
+    exact hj
+  have hFinite : Finite Q :=
+    Finite.of_surjective select hSurj
+  letI : Fintype Q := Fintype.ofFinite Q
+  letI : Nonempty Q := ⟨select ⟨0, hPositive⟩⟩
+  have hCardUsed : Fintype.card Q ≤ g := by
+    have hLE := Fintype.card_le_of_surjective select hSurj
+    exact hLE.trans (by simpa using hLen)
+  let incl : Q ↪ I :=
+    ⟨Subtype.val, Subtype.val_injective⟩
+  have hUsed : ForestOfCopies (fun q : Q => F q.1) :=
+    hLocal Q incl hCardUsed
   have hPartUsed :
-      EdgesMeetPartAtMostOne
-        (fun q : UsedOwner owner => F q.1) P := by
+      EdgesMeetPartAtMostOne (fun q : Q => F q.1) P := by
     intro q e he
     exact hPart q.1 e he
   apply no_short_support_cycle_of_owner_mapped_forest
     A Old Whole
-    (fun q : UsedOwner owner => standard q.1)
-    hUsed P hPartUsed core g hOld c hLen
-    (usedOwnerMap owner)
+    (fun q : Q => standard q.1)
+    hUsed P hPartUsed core g hOld c hLen select
   · intro j
     exact hEdgeOwner j
   · intro j hNe
-    have hNeOriginal :
-        owner j ≠ owner (cyclicSucc j) := by
+    have hNeOriginal : owner j ≠ owner (cyclicSucc j) := by
       intro hEq
       apply hNe
       exact Subtype.ext hEq
