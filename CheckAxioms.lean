@@ -906,3 +906,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.selectedForest_of_directPictureIncrement
 #print axioms StructuralRamsey.Girth.oneEdge_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerDirectIncrement
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.toLocalForestThrough
+#print axioms StructuralRamsey.Girth.mixedOwnerSmall_injective
+#print axioms StructuralRamsey.Girth.localForestThrough_mixedOwners_of_finiteMixed
+#print axioms StructuralRamsey.Girth.mixedOwnerChoice_exists
+#print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerClassification
