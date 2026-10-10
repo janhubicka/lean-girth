@@ -203,3 +203,4 @@ import Girth.ProcessedCoreProjection
 import Girth.ProcessedActiveGirth
 import Girth.PictureStepAllSubsystemGirth
 import Girth.ActualDesignatedSupportBridge
+import Girth.DecorationPartiteBridge
