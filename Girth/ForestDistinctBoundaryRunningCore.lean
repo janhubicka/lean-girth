@@ -85,7 +85,7 @@ theorem augmentedBoundary_running_core_of_incidence_links
                 (selected i).carrier ∩ S = ∅ := by
               simpa [BoundaryPortExact, hp] using hPort i
             rw [hEmpty] at hxBoundary
-            exact False.elim (Set.not_mem_empty x hxBoundary)
+            exact False.elim (by simpa using hxBoundary)
         | some z =>
             cases z with
             | inl e =>
