@@ -862,3 +862,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_canonicalBoundaryPorts
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_localGirth
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_girthOnly
+#print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_twoCarrier
