@@ -237,3 +237,5 @@ import Girth.ForestDistinctLocalRequestJoin
 import Girth.ForestSmallSeparatorChoice
 import Girth.ForestCoreFactorBoundary
 import Girth.ForestActualPartiteBoundary
+import Girth.ForestActualACopyOneEdge
+import Girth.LabelledWagonCutRestriction
