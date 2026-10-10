@@ -1,5 +1,5 @@
 import Girth.ForestRelationalBoundarySupport
-import Girth.ForestSingleEdge
+import Girth.ForestCompletionSeparatorRequests
 
 /-!
 # The complete A-support of a genuine finite A-copy is one-edge
