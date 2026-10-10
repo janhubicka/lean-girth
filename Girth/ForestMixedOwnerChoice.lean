@@ -80,7 +80,7 @@ theorem mixedOwnerChoice_exists
     | inr e =>
         rw [h] at hh
         change selected n = HypergraphPiece.oneEdge (coreEdge e) at hh
-        rw [h, hh]
+        rw [hh]
         exact Set.Subset.rfl
   · intro n i hi
     have hh := hCert n
