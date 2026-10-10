@@ -852,3 +852,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_tree_over_boundaryPortSkeleton
 #print axioms StructuralRamsey.Girth.augmentedBoundary_forest_of_skeletonAcyclic
 #print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_physicalInduced
+#print axioms StructuralRamsey.Girth.usedOwner_card_lt_of_not_injective
+#print axioms StructuralRamsey.Girth.usedOwner_card_le_prev_of_not_injective
+#print axioms StructuralRamsey.Girth.owner_injective_or_usedOwner_card_le_prev
