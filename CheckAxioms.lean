@@ -804,3 +804,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.untouched_activeSubsystem_girthGT_of_transversal_local
 #print axioms StructuralRamsey.Girth.projectedSupportCopies_subset_mapped_activeSupport
 #print axioms StructuralRamsey.Girth.mapped_activeSupport_eq_projected_ordered
+#print axioms StructuralRamsey.Girth.processedProjectedACopy_in_core
+#print axioms StructuralRamsey.Girth.processedActiveCarrier_subset_core
+#print axioms StructuralRamsey.Girth.processed_activeSubsystem_girthGT_of_local
+#print axioms StructuralRamsey.Girth.pictureStep_allActiveSubsystems_girthGT
