@@ -1,5 +1,6 @@
 import Girth.LocalForestBridge
 import Girth.LocalForestPieces
+import Girth.ForestUsedOwnerLocalForest
 import Girth.Berge
 
 /-!
@@ -160,5 +161,34 @@ theorem strongSupportEdgeArrow_covered
     hMono e he
   simpa [oldColour, g, hRetained,
     StrongSupportEmbedding.restrictCovered] using hOld
+
+
+/-- Every bounded designated-copy forest statement is inherited by
+the same labelled image family after covered-edge normalization.
+Its pieces and their support edges are literally unchanged. -/
+theorem localForestThrough_restrictCovered
+    {I : Type v}
+    (H : Set (Set X)) {K : Set (Set Y)}
+    (family : Set (StrongSupportEmbedding H K))
+    (copies : I → StrongSupportEmbedding H K)
+    (hCopies : ∀ i, copies i ∈ family)
+    (m : ℕ)
+    (hLocal :
+      LocalForestThrough
+        (fun i : I => (copies i).supportPiece) m) :
+    LocalForestThrough
+      (fun i : I =>
+        ((copies i).restrictCovered H family (hCopies i)).supportPiece) m := by
+  intro J hFinite idx hBound
+  have hEq :
+      (fun j : J =>
+        ((copies (idx j)).restrictCovered H family
+          (hCopies (idx j))).supportPiece) =
+      (fun j : J => (copies (idx j)).supportPiece) := by
+    funext j
+    exact (copies (idx j)).restrictCovered_supportPiece
+      H family (hCopies (idx j))
+  rw [hEq]
+  exact hLocal J idx hBound
 
 end StructuralRamsey.Girth
