@@ -873,3 +873,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.distinctOwnerRequests
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwnerRequestImages
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.restrict
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonCarrier_restrict_subset
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.restrict_rel_iff
