@@ -28,12 +28,13 @@ invariant; it does not require the picture's own order to be total. -/
 def PartiteOrderCompatible
     [LT P]
     (C : StructuralRamsey.Partite.System L.withOrder P X) : Prop :=
-  ∀ x y : X,
-    C.toRelStructure.rel (.inr ()) ![x, y] → C.part x < C.part y
+  ∀ z : Fin 2 → X,
+    C.toRelStructure.rel (.inr ()) z →
+      C.part (z 0) < C.part (z 1)
 
-/-- Free attachment preserves order compatibility exactly, assuming it
-for the old standard picture and the new local core. No total order or
-transitivity on the picture vertices is imposed. -/
+/-- A free picture attachment preserves compatibility with the
+auxiliary base order, assuming compatibility of the old picture
+and the new local core. -/
 theorem partiteOrderCompatible_attachment
     [LT P]
     (C : StructuralRamsey.Partite.System L.withOrder P X)
@@ -44,52 +45,24 @@ theorem partiteOrderCompatible_attachment
     (hCore : PartiteOrderCompatible E) :
     PartiteOrderCompatible
       (StructuralRamsey.Partite.Attachment.attach C S E f) := by
-  intro x y hxy
+  let W := StructuralRamsey.Partite.Attachment.attach C S E f
+  intro z hz
   change (StructuralRamsey.RelStructure.Attachment.attach
     C.toRelStructure S E.toRelStructure
-    (fun i => (f i).toEmbedding)).rel (.inr ()) ![x, y] at hxy
-  rcases hxy with ⟨z, hz, heq⟩ | ⟨i, z, hz, heq⟩
-  · have hx : x = Sum.inl (z 0) := by
-      have h := congrFun heq (0 : Fin 2)
-      simpa using h
-    have hy : y = Sum.inl (z 1) := by
-      have h := congrFun heq (1 : Fin 2)
-      simpa using h
-    simpa [StructuralRamsey.Partite.Attachment.attach,
-      StructuralRamsey.Partite.Attachment.part, hx, hy] using
-      hCore (z 0) (z 1) hz
-  · let W := StructuralRamsey.Partite.Attachment.attach C S E f
-    have hx :
-        x = StructuralRamsey.RelStructure.Attachment.copyMap
-          C.toRelStructure S E.toRelStructure
-          (fun j => (f j).toEmbedding) i (z 0) := by
-      have h := congrFun heq (0 : Fin 2)
-      simpa using h
-    have hy :
-        y = StructuralRamsey.RelStructure.Attachment.copyMap
-          C.toRelStructure S E.toRelStructure
-          (fun j => (f j).toEmbedding) i (z 1) := by
-      have h := congrFun heq (1 : Fin 2)
-      simpa using h
-    calc
-      W.part x = C.part (z 0) := by
-        rw [hx]
-        exact StructuralRamsey.Partite.Attachment.part_copyMap
-          C S E f i (z 0)
-      _ < C.part (z 1) := hOld (z 0) (z 1) hz
-      _ = W.part y := by
-        rw [hy]
-        exact (StructuralRamsey.Partite.Attachment.part_copyMap
-          C S E f i (z 1)).symm
-
+    (fun i => (f i).toEmbedding)).rel (.inr ()) z at hz
+  rcases hz with ⟨w, hw, hwz⟩ | ⟨i, w, hw, hwz⟩
+  · subst z
+    exact hCore w hw
+  · subst z
+    simpa only [Function.comp_apply,
+      StructuralRamsey.Partite.Attachment.part_copyMap] using
+      hOld w hw
 
 /-- The local core is automatically compatible with the auxiliary
-base order when all its parts lie above one ordered base A-copy and
-the partite projection preserves the distinguished order relation.
+base order when its parts lie over one ordered base A-copy and the
+original order of that copy agrees with the auxiliary base order.
 
-The hypothesis on the base embedding says that its ORIGINAL order
-agrees with the auxiliary base order on the chosen base copy.
-No A-generation or local Ramsey hypothesis is used. -/
+No A-generation or local Ramsey hypothesis is needed. -/
 theorem partiteOrderCompatible_localOfBaseCopy
     {UA : Type v} [LinearOrder UA] [LT P]
     (A₀ : StructuralRamsey.RelStructure L UA)
@@ -101,15 +74,17 @@ theorem partiteOrderCompatible_localOfBaseCopy
     (part : Y → UA)
     (hFine : ∀ y : Y, E.part y = α (part y)) :
     PartiteOrderCompatible E := by
-  intro x y hxy
-  have hBase := hPartite.map_rel hxy
-  have hD : D.rel (.inr ()) ![α (part x), α (part y)] := by
-    simpa [Function.comp_apply, hFine] using hBase
-  have hA : part x < part y := by
-    exact (α.map_rel_iff (.inr ()) ![part x, part y]).mp hD
+  intro z hz
+  have hBase := hPartite.map_rel hz
+  have hFun : (E.part ∘ z) = α ∘ (part ∘ z) := by
+    funext i
+    exact hFine (z i)
+  rw [hFun] at hBase
+  have hLt : part (z 0) < part (z 1) :=
+    (α.map_rel_iff (.inr ()) (part ∘ z)).mp hBase
   calc
-    E.part x = α (part x) := hFine x
-    _ < α (part y) := hα (part x) (part y) hA
-    _ = E.part y := (hFine y).symm
+    E.part (z 0) = α (part (z 0)) := hFine (z 0)
+    _ < α (part (z 1)) := hα (part (z 0)) (part (z 1)) hLt
+    _ = E.part (z 1) := (hFine (z 1)).symm
 
 end StructuralRamsey.Girth
