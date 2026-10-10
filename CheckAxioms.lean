@@ -826,3 +826,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualActiveSupport_vertexCovered
 #print axioms StructuralRamsey.Girth.actualActiveSupport_edgeTransversal
 #print axioms StructuralRamsey.Girth.actualActiveSupport_nonempty
+#print axioms StructuralRamsey.Girth.actualActiveSubsystemPartite
+#print axioms StructuralRamsey.Girth.actualActiveSubsystem_toDecorated
