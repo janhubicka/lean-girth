@@ -808,3 +808,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.processedActiveCarrier_subset_core
 #print axioms StructuralRamsey.Girth.processed_activeSubsystem_girthGT_of_local
 #print axioms StructuralRamsey.Girth.pictureStep_allActiveSubsystems_girthGT
+#print axioms StructuralRamsey.Girth.oldDesignatedBCopySupport
+#print axioms StructuralRamsey.Girth.actualBCopy_support_exact_standard_image
+#print axioms StructuralRamsey.Girth.actualBCopy_mem_attachedDesignatedSupport
