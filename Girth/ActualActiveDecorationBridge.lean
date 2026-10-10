@@ -73,8 +73,8 @@ theorem activeSourcePart_isHomomorphism
   have hD' : D.rel R (beta ∘ (part ∘ z)) := by
     convert hD using 1
     funext i
-    exact (activeSourcePart_spec A₀.ordered C
-      beta.toFunctionEmbedding (z i)).symm
+    exact activeSourcePart_spec A₀.ordered C
+      beta.toFunctionEmbedding (z i)
   exact (beta.map_rel_iff R (part ∘ z)).mp hD'
 
 /-- Every A-copy actually contained in the ordered beta-active source
