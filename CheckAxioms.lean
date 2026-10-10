@@ -902,3 +902,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.restrictedTrain_siblingIntersection
 #print axioms StructuralRamsey.Girth.forestOfCopies_of_subsingleton
 #print axioms StructuralRamsey.Girth.finiteMixedForestThrough_singleEdge
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.toLocalForestThrough
+#print axioms StructuralRamsey.Girth.mixedOwnerSmall_injective
+#print axioms StructuralRamsey.Girth.localForestThrough_mixedOwners_of_finiteMixed
