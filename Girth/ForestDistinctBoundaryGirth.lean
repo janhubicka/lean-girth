@@ -44,7 +44,8 @@ theorem boundaryPortSkeleton_isAcyclic_of_incidenceAcyclic
       a.1 = Sum.inr (label a) := (hLabel a).symm
       _ = Sum.inr (label b) := congrArg Sum.inr hab
       _ = b.1 := hLabel b
-  let physical : E ⊕ V → E ⊕ W
+  let physical : E ⊕ V → E ⊕ W := fun z =>
+    match z with
     | .inl e => .inl e
     | .inr v => .inr (vertex v)
   have hPhysicalInj : Function.Injective physical := by
@@ -68,7 +69,7 @@ theorem boundaryPortSkeleton_isAcyclic_of_incidenceAcyclic
             cases hVertexInj hvw
             rfl
   let f : (G.induce s) →g (boundaryIncidenceGraph edge) where
-    toFun z := physical (label z)
+    toFun := fun z => physical (label z)
     map_rel' := by
       intro a b hab
       have hab' :
