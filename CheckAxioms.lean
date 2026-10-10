@@ -902,3 +902,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.restrictedTrain_siblingIntersection
 #print axioms StructuralRamsey.Girth.forestOfCopies_of_subsingleton
 #print axioms StructuralRamsey.Girth.finiteMixedForestThrough_singleEdge
+#print axioms StructuralRamsey.Girth.selectedForest_of_repeatedOwners_mixed
+#print axioms StructuralRamsey.Girth.selectedForest_of_directPictureIncrement
+#print axioms StructuralRamsey.Girth.oneEdge_smallOrWholeBoundary
+#print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerDirectIncrement
