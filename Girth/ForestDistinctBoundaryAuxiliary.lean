@@ -56,13 +56,15 @@ theorem allowedIntersection_selected_boundaryEdge
         have hSub : (f ∩ e).Subsingleton :=
           hLinear hfK heK hne
         exact hxy (hSub ⟨hxF, hx.2⟩ ⟨hyF, hy.2⟩)
-      subst f
+      have heF : e ∈ F.edges := by
+        rw [← hSame]
+        exact hfF
       right
-      refine ⟨e, hfF, by simp, ?_⟩
+      refine ⟨e, heF, by simp, ?_⟩
       apply Set.Subset.antisymm
       · exact Set.inter_subset_right
       · intro z hz
-        exact ⟨F.edge_subset hfF hz, hz⟩
+        exact ⟨F.edge_subset heF hz, hz⟩
 
 /-- A purely formal singleton auxiliary piece has allowed intersection
 with every original selected member. -/
