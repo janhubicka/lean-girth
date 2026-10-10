@@ -204,3 +204,4 @@ import Girth.ProcessedActiveGirth
 import Girth.PictureStepAllSubsystemGirth
 import Girth.ActualDesignatedSupportBridge
 import Girth.AGeneratedDecorationIdentity
+import Girth.OrderedAGeneratedDecoration
