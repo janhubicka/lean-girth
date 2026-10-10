@@ -208,3 +208,4 @@ import Girth.AGeneratedDecorationIdentity
 import Girth.OrderedAGeneratedDecoration
 import Girth.PartiteOrderCompatibility
 import Girth.DecoratedPictureOrderStep
+import Girth.ForestDistinctBoundaryAllowed
