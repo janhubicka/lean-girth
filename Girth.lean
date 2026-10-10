@@ -208,3 +208,6 @@ import Girth.AGeneratedDecorationIdentity
 import Girth.OrderedAGeneratedDecoration
 import Girth.PartiteOrderCompatibility
 import Girth.DecoratedPictureOrderStep
+import Girth.ActualActiveDecorationBridge
+import Girth.ActualActiveSupportGeometry
+import Girth.ActualActivePartitePresentation
