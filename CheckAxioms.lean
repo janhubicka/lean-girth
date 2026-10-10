@@ -878,3 +878,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.girthGT_coveredLocalEdges
 #print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_covered
 #print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.of_tested_subset
