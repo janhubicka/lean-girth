@@ -235,3 +235,5 @@ import Girth.ForestOwnerMixedRequests
 import Girth.ForestRelationalBoundarySupport
 import Girth.ForestDistinctLocalRequestJoin
 import Girth.ForestMixedRequestJoin
+import Girth.ForestSmallSeparatorChoice
+import Girth.ForestRepeatedOwnerMixed

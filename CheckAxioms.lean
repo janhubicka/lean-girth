@@ -874,3 +874,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwnerRequestImages
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedRequestJoin
+#print axioms StructuralRamsey.Girth.exists_smallSupport_separatorEdges
+#print axioms StructuralRamsey.Girth.selectedForest_of_repeatedOwners_mixed
