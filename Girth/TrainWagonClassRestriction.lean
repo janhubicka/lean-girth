@@ -48,8 +48,10 @@ def EdgeTrainLevels.wagonClassEmbedding
           have hOld :
               (Quotient.mk (T.wagonSetoid μ) (keep a)) =
                 Quotient.mk (T.wagonSetoid μ) (keep b) := by
-            simpa [map] using hxy
-          exact Quotient.sound (Quotient.exact hOld)
+            simpa only [map, Quotient.map_mk] using hxy
+          have hOldRel : T.rel μ (keep a) (keep b) :=
+            Quotient.exact hOld
+          exact Quotient.sound hOldRel
 
 /-- Equivalent wagon representatives determine the same carrier. -/
 theorem EdgeTrainLevels.wagonCarrier_eq_of_rel
