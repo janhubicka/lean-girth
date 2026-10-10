@@ -1,6 +1,7 @@
 import Girth.LocalForestBridge
 import Girth.LocalForestPieces
 import Girth.ForestUsedOwnerLocalForest
+import Girth.ForestMixedSetBound
 import Girth.Berge
 
 /-!
@@ -190,5 +191,20 @@ theorem localForestThrough_restrictCovered
       H family (hCopies (idx j))
   rw [hEq]
   exact hLocal J idx hBound
+
+
+/-- An old mixed forest property on sets of permitted support pieces
+is inherited whenever the new permitted-piece predicate implies
+the old one. Coverage pruning has exactly this direction: original
+designated B supports remain and surviving ambient A-edges are a
+subset of the old ones. -/
+theorem FiniteMixedForestThrough.of_tested_subset
+    (oldTest newTest : HypergraphPiece Y → Prop)
+    (m : ℕ)
+    (hIncluded : ∀ P, newTest P → oldTest P)
+    (hOld : FiniteMixedForestThrough oldTest m) :
+    FiniteMixedForestThrough newTest m := by
+  intro s hTest hBound
+  exact hOld s (fun P hP => hIncluded P (hTest P hP)) hBound
 
 end StructuralRamsey.Girth
