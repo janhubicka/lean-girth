@@ -30,10 +30,11 @@ selected piece and the one-edge separators for all outer-tree
 neighbours, assemble into exactly the original selected forest.
 No duplicated separator labels or arbitrary subfamily restrictions. -/
 theorem selectedForest_of_distinctOwnerRequestImages
-    [Fintype Q] [Nonempty Q] [Fintype N]
+    [Fintype Q] [Nonempty Q] [DecidableEq Q] [Fintype N]
     {P : Q → HypergraphPiece W}
     (hOuter : PairwiseAllowed P)
     (JOuter : JoinTree P)
+    [DecidableRel JOuter.tree.Adj]
     (hLinear : OuterEdgesLinear P)
     (owner : N → Q) (hSurj : Function.Surjective owner)
     (selected : N → HypergraphPiece W)
@@ -108,9 +109,11 @@ theorem selectedForest_of_distinctOwnerRequestImages
         exact hh
     | inr r =>
         exact hSeparatorContain q r
-  let defaultMember (q : Q) : K q := by
-    obtain ⟨n, hn⟩ := hSurj q
-    exact ⟨selected n, hRequestMem q (.inl ⟨n, hn⟩)⟩
+  let defaultMember (q : Q) : K q :=
+    ⟨selected (Classical.choose (hSurj q)),
+      hRequestMem q (.inl
+        ⟨Classical.choose (hSurj q),
+          Classical.choose_spec (hSurj q)⟩)⟩
   let connector (q r : Q) : K q :=
     if hadj : JOuter.tree.Adj q r then
       ⟨separator q ⟨r, hadj⟩,
