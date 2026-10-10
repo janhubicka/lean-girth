@@ -212,3 +212,5 @@ import Girth.ActualActiveDecorationBridge
 import Girth.ActualActiveSupportGeometry
 import Girth.ActualActivePartitePresentation
 import Girth.ForestDistinctBoundaryAllowed
+import Girth.ForestDistinctBoundaryAuxiliary
+import Girth.ForestDistinctBoundaryAugmented
