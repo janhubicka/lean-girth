@@ -55,7 +55,7 @@ theorem FiniteMixedForestThrough.image
   · calc
       (Finset.univ.image F).card ≤ (Finset.univ : Finset J).card :=
         Finset.card_image_le
-      _ = Fintype.card J := Fintype.card_univ
+      _ = Fintype.card J := Finset.card_univ
       _ ≤ m := hCount
 
 end StructuralRamsey.Girth
