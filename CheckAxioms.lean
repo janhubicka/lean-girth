@@ -833,3 +833,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualActiveSupport_nonempty
 #print axioms StructuralRamsey.Girth.actualActiveSubsystemPartite
 #print axioms StructuralRamsey.Girth.actualActiveSubsystem_toDecorated
+#print axioms StructuralRamsey.Girth.SmallOrWholeEdgeBoundary
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_of_distinctOwner_boundaries
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_of_distinctOwner_girthTwo
