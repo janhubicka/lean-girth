@@ -143,15 +143,17 @@ theorem exists_canonicalBoundaryPorts
         exact ⟨⟨i, rfl⟩, hSmall⟩
       exact ⟨some (.inl (⟨b, hMem⟩ :
         UsedWholeBoundaryEdge selected S)), rfl⟩
-  let port : I → Option (UsedWholeBoundaryEdge selected S ⊕ S) :=
-    fun i => Classical.choose (hOne i)
+  choose port hPort using hOne
   refine ⟨port, ?_⟩
   intro i
-  change
-    match Classical.choose (hOne i) with
-    | none => (selected i).carrier ∩ S = ∅
-    | some (.inl e) => (selected i).carrier ∩ S = (e : Set W)
-    | some (.inr v) => (selected i).carrier ∩ S = {(v : W)}
-  exact Classical.choose_spec (hOne i)
+  cases hp : port i with
+  | none =>
+      simpa [BoundaryPortExact, hp] using hPort i
+  | some z =>
+      cases z with
+      | inl e =>
+          simpa [BoundaryPortExact, hp] using hPort i
+      | inr v =>
+          simpa [BoundaryPortExact, hp] using hPort i
 
 end StructuralRamsey.Girth
