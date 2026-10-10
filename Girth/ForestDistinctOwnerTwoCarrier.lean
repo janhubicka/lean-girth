@@ -52,8 +52,9 @@ theorem selectedForest_of_distinctOwners_twoCarrier
       ∀ ⦃i j : N⦄, i ≠ j →
         (selected i).carrier ∩ (selected j).carrier ⊆ S := by
     intro i j hij x hx
-    have hDifferent : owner i ≠ owner j :=
-      hOwnerInj hij
+    have hDifferent : owner i ≠ owner j := by
+      intro hEq
+      exact hij (hOwnerInj hEq)
     have hxFull :
         x ∈ (full (owner i)).carrier ∩
           (full (owner j)).carrier :=
