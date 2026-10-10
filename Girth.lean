@@ -233,3 +233,4 @@ import Girth.ForestDuplicateOneEdge
 import Girth.ForestMixedSetBound
 import Girth.ForestOwnerMixedRequests
 import Girth.ForestRelationalBoundarySupport
+import Girth.LocalCoveredWitnessReduction
