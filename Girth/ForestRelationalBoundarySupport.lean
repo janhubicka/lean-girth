@@ -28,7 +28,8 @@ variable {UA VB W : Type v}
 hypergraph piece on the ambient vertex set. -/
 def embeddedACopySupportPiece
     (A : RelStructure L UA)
-    {B : RelStructure L VB} (b : RelStructure.Embedding B (RelStructure L W)) :
+    {B : RelStructure L VB} {D : RelStructure L W}
+    (b : RelStructure.Embedding B D) :
     HypergraphPiece W where
   carrier := copyCarrier b
   edges := {e | ∃ a : RelStructure.Embedding A B,
@@ -41,7 +42,8 @@ def embeddedACopySupportPiece
 
 @[simp] theorem embeddedACopySupportPiece_carrier
     (A : RelStructure L UA)
-    {B : RelStructure L VB} (b : RelStructure.Embedding B (RelStructure L W)) :
+    {B : RelStructure L VB} {D : RelStructure L W}
+    (b : RelStructure.Embedding B D) :
     (embeddedACopySupportPiece A b).carrier = copyCarrier b := rfl
 
 /-- A small-or-embedded-A-copy relational boundary translates to the
@@ -50,7 +52,8 @@ Unlike a carrier-only statement, this certifies the selected member's
 OWN support-edge membership. -/
 theorem embeddedACopySupportPiece_smallOrWholeBoundary
     (A : RelStructure L UA)
-    {B : RelStructure L VB} (b : RelStructure.Embedding B (RelStructure L W))
+    {B : RelStructure L VB} {D : RelStructure L W}
+    (b : RelStructure.Embedding B D)
     (S : Set W) (K : Set (Set W))
     (hClassify :
       (copyCarrier b ∩ S).Subsingleton ∨
