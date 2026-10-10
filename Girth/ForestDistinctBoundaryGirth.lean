@@ -68,17 +68,17 @@ theorem boundaryPortSkeleton_isAcyclic_of_incidenceAcyclic
               simpa [physical] using hab
             cases hVertexInj hvw
             rfl
-  let f : (G.induce s) →g (boundaryIncidenceGraph edge) where
-    toFun := fun z => physical (label z)
-    map_rel' := by
-      intro a b hab
-      have hab' :
-          G.Adj (Sum.inr (label a)) (Sum.inr (label b)) := by
-        rw [hLabel a, hLabel b]
-        exact hab
-      cases ha : label a <;> cases hb : label b <;>
-        simpa [G, physical, boundaryPortSkeleton,
-          boundaryIncidenceGraph, ha, hb] using hab'
+  let f : (G.induce s) →g (boundaryIncidenceGraph edge) :=
+    { toFun := fun z => physical (label z)
+      map_rel' := by
+        intro a b hab
+        have hab' :
+            G.Adj (Sum.inr (label a)) (Sum.inr (label b)) := by
+          rw [hLabel a, hLabel b]
+          exact hab
+        cases ha : label a <;> cases hb : label b <;>
+          simpa [G, physical, boundaryPortSkeleton,
+            boundaryIncidenceGraph, ha, hb] using hab' }
   have hMapInj : Function.Injective f := by
     intro a b hab
     change physical (label a) = physical (label b) at hab
