@@ -874,3 +874,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.embeddedACopy_mem_mappedCoreSupport
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_boundary_of_core
+#print axioms StructuralRamsey.Girth.attachedProjectedBCopy_smallOrWholeBoundary
