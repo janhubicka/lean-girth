@@ -822,3 +822,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.PartiteOrderCompatible
 #print axioms StructuralRamsey.Girth.partiteOrderCompatible_attachment
 #print axioms StructuralRamsey.Girth.partiteOrderCompatible_localOfBaseCopy
+#print axioms StructuralRamsey.Girth.decoratedLocalWitness_orderCompatible
+#print axioms StructuralRamsey.Girth.pictureStep_orderCompatible_of_decoratedLocal
