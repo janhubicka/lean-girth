@@ -808,3 +808,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.processedActiveCarrier_subset_core
 #print axioms StructuralRamsey.Girth.processed_activeSubsystem_girthGT_of_local
 #print axioms StructuralRamsey.Girth.pictureStep_allActiveSubsystems_girthGT
+#print axioms StructuralRamsey.Girth.PartiteOrderCompatible
+#print axioms StructuralRamsey.Girth.partiteOrderCompatible_attachment
