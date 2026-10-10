@@ -876,3 +876,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.restrict
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonCarrier_restrict_subset
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.restrict_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassEmbedding
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonCarrier_eq_of_rel
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_restrict_subset
