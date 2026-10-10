@@ -247,3 +247,5 @@ import Girth.ForestOneEdgeOwnerLocalTest
 import Girth.ForestRepeatedOwnerMixed
 import Girth.ForestDirectIncrementConditional
 import Girth.ForestMixedDirectIncrement
+import Girth.ForestMixedLocalForestBridge
+import Girth.ForestMixedOwnerChoice
