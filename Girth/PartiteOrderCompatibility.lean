@@ -82,4 +82,34 @@ theorem partiteOrderCompatible_attachment
         exact (StructuralRamsey.Partite.Attachment.part_copyMap
           C S E f i (z 1)).symm
 
+
+/-- The local core is automatically compatible with the auxiliary
+base order when all its parts lie above one ordered base A-copy and
+the partite projection preserves the distinguished order relation.
+
+The hypothesis on the base embedding says that its ORIGINAL order
+agrees with the auxiliary base order on the chosen base copy.
+No A-generation or local Ramsey hypothesis is used. -/
+theorem partiteOrderCompatible_localOfBaseCopy
+    {UA : Type v} [LinearOrder UA] [LT P]
+    (A₀ : StructuralRamsey.RelStructure L UA)
+    (D : StructuralRamsey.RelStructure L.withOrder P)
+    (E : StructuralRamsey.Partite.System L.withOrder P Y)
+    (hPartite : E.IsPartiteOver D)
+    (α : StructuralRamsey.RelStructure.Embedding A₀.ordered D)
+    (hα : ∀ u v : UA, u < v → α u < α v)
+    (part : Y → UA)
+    (hFine : ∀ y : Y, E.part y = α (part y)) :
+    PartiteOrderCompatible E := by
+  intro x y hxy
+  have hBase := hPartite.map_rel hxy
+  have hD : D.rel (.inr ()) ![α (part x), α (part y)] := by
+    simpa [Function.comp_apply, hFine] using hBase
+  have hA : part x < part y := by
+    exact (α.map_rel_iff (.inr ()) ![part x, part y]).mp hD
+  calc
+    E.part x = α (part x) := hFine x
+    _ < α (part y) := hα (part x) (part y) hA
+    _ = E.part y := (hFine y).symm
+
 end StructuralRamsey.Girth
