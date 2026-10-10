@@ -230,3 +230,4 @@ import Girth.ForestRepeatedOwnerOuter
 import Girth.ForestDistinctOwnersGirthOnly
 import Girth.ForestDistinctOwnerTwoCarrier
 import Girth.ForestDuplicateOneEdge
+import Girth.ForestManyOneEdgeClones
