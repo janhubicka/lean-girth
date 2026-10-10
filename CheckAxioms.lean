@@ -872,3 +872,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.image
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.distinctOwnerRequests
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_smallOrWholeBoundary
+#print axioms StructuralRamsey.Girth.coveredLocalEdges_subset
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.restrictCovered_supportPiece
+#print axioms StructuralRamsey.Girth.coveredLocalFamily_covers
+#print axioms StructuralRamsey.Girth.girthGT_coveredLocalEdges
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_covered
