@@ -867,3 +867,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForest_repeatedOwners
 #print axioms StructuralRamsey.Girth.fullStandardForest_repeatedOwners
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.image
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.distinctOwnerRequests
