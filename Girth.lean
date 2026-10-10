@@ -239,3 +239,6 @@ import Girth.ForestCoreFactorBoundary
 import Girth.ForestActualPartiteBoundary
 import Girth.ForestActualACopyOneEdge
 import Girth.LabelledWagonCutRestriction
+import Girth.TrainEquivalenceRestriction
+import Girth.TrainWagonClassRestriction
+import Girth.TrainLabelledCutGirth
