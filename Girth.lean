@@ -241,3 +241,5 @@ import Girth.ForestActualACopyOneEdge
 import Girth.LabelledWagonCutRestriction
 import Girth.LocalCoveredWitnessReduction
 import Girth.ForestMixedRequestJoin
+import Girth.ForestRepeatedOwnerMixed
+import Girth.ForestDirectIncrementConditional
