@@ -214,3 +214,7 @@ import Girth.ActualActivePartitePresentation
 import Girth.ForestDistinctBoundaryAllowed
 import Girth.ForestDistinctBoundaryAuxiliary
 import Girth.ForestDistinctBoundaryAugmented
+import Girth.ForestDistinctBoundaryAuxDelete
+import Girth.ForestDistinctBoundaryRunningCore
+import Girth.ForestDistinctBoundaryRunningAll
+import Girth.ForestUsedBoundaryIncidenceTree
