@@ -134,6 +134,6 @@ theorem selectedForest_of_ownerRequests
         (fun z : Sigma (fun q : Q => {n : N // owner n = q}) =>
           selected z.2.1) := by
     simpa only [F, L] using hDependent
-  exact hSelected.of_ownerFibers owner selected
+  exact ForestOfCopies.of_ownerFibers owner selected hSelected
 
 end StructuralRamsey.Girth
