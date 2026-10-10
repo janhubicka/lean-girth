@@ -878,3 +878,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_boundary_of_core
 #print axioms StructuralRamsey.Girth.attachedProjectedBCopy_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.attachedProjectedACopy_smallOrWholeBoundary
+#print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_self_isOneEdge
+#print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_self_eq_oneEdge
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_shrinking
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_carrier_shrinking
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_reindex
