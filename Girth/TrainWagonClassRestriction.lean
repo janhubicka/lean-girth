@@ -36,21 +36,22 @@ def EdgeTrainLevels.wagonClassEmbedding
       Quotient (T.wagonSetoid μ) := by
   let map : Quotient ((T.restrict keep).wagonSetoid μ) →
       Quotient (T.wagonSetoid μ) :=
-    Quotient.map (fun f : F => keep f) (by
-      intro a b hab
-      exact hab)
+    fun c => Quotient.liftOn c
+      (fun a : F => Quotient.mk (T.wagonSetoid μ) (keep a))
+      (by
+        intro a b hab
+        exact Quotient.sound hab)
   refine ⟨map, ?_⟩
   intro x y hxy
   induction x using Quotient.inductionOn with
   | h a =>
       induction y using Quotient.inductionOn with
       | h b =>
-          have hOld :
-              (Quotient.mk (T.wagonSetoid μ) (keep a)) =
-                Quotient.mk (T.wagonSetoid μ) (keep b) := by
-            simpa only [map, Quotient.map_mk] using hxy
+          change
+            (Quotient.mk (T.wagonSetoid μ) (keep a)) =
+              Quotient.mk (T.wagonSetoid μ) (keep b) at hxy
           have hOldRel : T.rel μ (keep a) (keep b) :=
-            Quotient.exact hOld
+            Quotient.exact hxy
           exact Quotient.sound hOldRel
 
 /-- Equivalent wagon representatives determine the same carrier. -/
