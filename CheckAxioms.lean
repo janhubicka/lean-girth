@@ -877,3 +877,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.coveredLocalFamily_covers
 #print axioms StructuralRamsey.Girth.girthGT_coveredLocalEdges
 #print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_covered
+#print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
