@@ -202,3 +202,4 @@ import Girth.ActiveSupportProjectionExact
 import Girth.ProcessedCoreProjection
 import Girth.ProcessedActiveGirth
 import Girth.PictureStepAllSubsystemGirth
+import Girth.PartiteOrderCompatibility
