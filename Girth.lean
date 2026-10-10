@@ -237,3 +237,4 @@ import Girth.ForestDistinctLocalRequestJoin
 import Girth.ForestSmallSeparatorChoice
 import Girth.ForestCoreFactorBoundary
 import Girth.ForestActualPartiteBoundary
+import Girth.LocalCoveredWitnessReduction
