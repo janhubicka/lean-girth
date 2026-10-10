@@ -234,3 +234,6 @@ import Girth.ForestMixedSetBound
 import Girth.ForestOwnerMixedRequests
 import Girth.ForestRelationalBoundarySupport
 import Girth.ForestDistinctLocalRequestJoin
+import Girth.ForestSmallSeparatorChoice
+import Girth.ForestCoreFactorBoundary
+import Girth.ForestActualPartiteBoundary
