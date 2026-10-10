@@ -891,3 +891,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.of_tested_subset
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedRequestJoin
+#print axioms StructuralRamsey.Girth.mixedOwner_regularEdge_overlap
+#print axioms StructuralRamsey.Girth.mixedOwner_pair_overlap
+#print axioms StructuralRamsey.Girth.mixedOwner_carrier_subset
+#print axioms StructuralRamsey.Girth.mixedOwner_edges_subset
+#print axioms StructuralRamsey.Girth.mixedFullStandardForest_repeatedOwners
