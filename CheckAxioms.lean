@@ -811,3 +811,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.oldDesignatedBCopySupport
 #print axioms StructuralRamsey.Girth.actualBCopy_support_exact_standard_image
 #print axioms StructuralRamsey.Girth.actualBCopy_mem_attachedDesignatedSupport
+#print axioms StructuralRamsey.Girth.aGenerated_relation_iff_decorated
+#print axioms StructuralRamsey.Girth.aSupport_edgeTransversal_of_exact_projection
+#print axioms StructuralRamsey.Girth.aGenerated_partite_toDecorated
