@@ -34,6 +34,14 @@ def FiniteMixedForestThrough
       ForestOfCopies
         (fun P : {P : HypergraphPiece W // P ∈ s} => P.1)
 
+/-- Finite set of DISTINCT values of a labelled family, with
+classical equality kept inside this construction rather than imposed
+as a theorem-wide decidability assumption. -/
+noncomputable def finitePieceImage [Fintype J]
+    (F : J → HypergraphPiece W) : Finset (HypergraphPiece W) := by
+  classical
+  exact Finset.univ.image F
+
 /-- A labelled family of at most m tested pieces gives a forest
 on its DISTINCT image pieces. No foresthood of the possibly
 duplicated original labels is claimed. -/
@@ -46,15 +54,19 @@ theorem FiniteMixedForestThrough.image
     (hCount : Fintype.card J ≤ m) :
     ForestOfCopies
       (fun P : {P : HypergraphPiece W // P ∈
-        (Finset.univ.image F)} => P.1) := by
+        (finitePieceImage F)} => P.1) := by
   classical
-  apply hProperty (Finset.univ.image F)
+  apply hProperty (finitePieceImage F)
   · intro P hP
-    obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp hP
+    have hImage : P ∈ Finset.univ.image F := by
+      simpa [finitePieceImage] using hP
+    obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp hImage
     exact hTest j
   · calc
-      (Finset.univ.image F).card ≤ (Finset.univ : Finset J).card :=
-        Finset.card_image_le
+      (finitePieceImage F).card ≤ (Finset.univ : Finset J).card := by
+        simpa [finitePieceImage] using
+          (Finset.card_image_le :
+            (Finset.univ.image F).card ≤ (Finset.univ : Finset J).card)
       _ = Fintype.card J := Finset.card_univ
       _ ≤ m := hCount
 
