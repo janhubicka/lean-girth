@@ -114,7 +114,7 @@ theorem augmentedBoundary_running_core_of_incidence_links
                     hBoundary ▸ hxBoundary
                   simpa using hh
                 have huv : u = v :=
-                  hVertexInj (hVal.symm.trans hv)
+                  hVertexInj (hVal.symm.trans hv.symm)
                 subst u
                 have hFirst :
                     (G.induce occ).Adj
@@ -133,7 +133,7 @@ theorem augmentedBoundary_running_core_of_incidence_links
         | inr u =>
             change x ∈ ({vertex u} : Set W) at hz
             have hVal : x = vertex u := by simpa using hz
-            have huv : u = v := hVertexInj (hVal.symm.trans hv)
+            have huv : u = v := hVertexInj (hVal.symm.trans hv.symm)
             subst u
             exact SimpleGraph.Reachable.refl _
   exact (hReach a).trans (hReach b).symm
