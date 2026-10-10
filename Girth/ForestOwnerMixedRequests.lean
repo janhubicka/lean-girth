@@ -44,7 +44,7 @@ theorem FiniteMixedForestThrough.distinctOwnerRequests
         | .inr r => separator q r
     ForestOfCopies
       (fun P : {P : HypergraphPiece W // P ∈
-          Finset.univ.image requests} => P.1) := by
+          finitePieceImage requests} => P.1) := by
   classical
   let requests :
       ({n : N // owner n = q} ⊕ G.neighborSet q) →
