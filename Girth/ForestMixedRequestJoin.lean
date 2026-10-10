@@ -67,10 +67,50 @@ theorem selectedForest_of_mixedRequestJoin
                 JOuter.tree.neighborSet q =>
               match t with
               | .inl n => selected n.1
-              | .inr r => separator q r)} => z.1) :=
-    FiniteMixedForestThrough.distinctOwnerRequests
-      owner hSurj JOuter.tree m hCard tested hOld
-      selected hSelectedTest separator hSeparatorTest q
+              | .inr r => separator q r)} => z.1) := by
+    classical
+    apply hOld
+    · intro P hP
+      have hImage : P ∈ Finset.univ.image
+          (fun t : {n : N // owner n = q} ⊕
+              JOuter.tree.neighborSet q =>
+            match t with
+            | .inl n => selected n.1
+            | .inr r => separator q r) := by
+        simpa [finitePieceImage] using hP
+      obtain ⟨t, _, ht⟩ := Finset.mem_image.mp hImage
+      cases t with
+      | inl n =>
+          rw [← ht]
+          exact hSelectedTest n.1
+      | inr r =>
+          rw [← ht]
+          exact hSeparatorTest q r
+    · have hBound :
+          Fintype.card ({n : N // owner n = q} ⊕
+            JOuter.tree.neighborSet q) ≤ m := by
+        rw [Fintype.card_sum, JOuter.tree.card_neighborSet_eq_degree q]
+        exact
+          (ownerFiber_card_add_degree_le owner hSurj JOuter.tree q).trans hCard
+      have hImageCard :
+          (Finset.univ.image
+            (fun t : {n : N // owner n = q} ⊕
+                JOuter.tree.neighborSet q =>
+              match t with
+              | .inl n => selected n.1
+              | .inr r => separator q r)).card ≤
+            Fintype.card ({n : N // owner n = q} ⊕
+              JOuter.tree.neighborSet q) := by
+        simpa only [Finset.card_univ] using
+          (Finset.card_image_le
+            (s := (Finset.univ :
+              Finset ({n : N // owner n = q} ⊕
+                JOuter.tree.neighborSet q)))
+            (f := fun t =>
+              match t with
+              | .inl n => selected n.1
+              | .inr r => separator q r))
+      simpa [finitePieceImage] using hImageCard.trans hBound
   exact selectedForest_of_distinctOwnerRequestImages
     hOuter JOuter hLinear owner hSurj selected hSelectedInj
     separator hDistinctRequestForest
