@@ -54,6 +54,15 @@ theorem partiteOrderCompatible_attachment
   · subst z
     exact hCore w hw
   · subst z
+    change
+      (StructuralRamsey.Partite.Attachment.part C S E f
+        ((StructuralRamsey.RelStructure.Attachment.copyMap
+          C.toRelStructure S E.toRelStructure
+          (fun j => (f j).toEmbedding) i ∘ w) 0)) <
+      (StructuralRamsey.Partite.Attachment.part C S E f
+        ((StructuralRamsey.RelStructure.Attachment.copyMap
+          C.toRelStructure S E.toRelStructure
+          (fun j => (f j).toEmbedding) i ∘ w) 1))
     simpa only [Function.comp_apply,
       StructuralRamsey.Partite.Attachment.part_copyMap] using
       hOld w hw
@@ -79,9 +88,11 @@ theorem partiteOrderCompatible_localOfBaseCopy
   have hFun : (E.part ∘ z) = α ∘ (part ∘ z) := by
     funext i
     exact hFine (z i)
-  rw [hFun] at hBase
+  have hD : D.rel (.inr ()) (α ∘ part ∘ z) :=
+    Eq.mp (congrArg
+      (fun t : Fin 2 → P => D.rel (.inr ()) t) hFun) hBase
   have hLt : part (z 0) < part (z 1) :=
-    (α.map_rel_iff (.inr ()) (part ∘ z)).mp hBase
+    (α.map_rel_iff (.inr ()) (part ∘ z)).mp hD
   calc
     E.part (z 0) = α (part (z 0)) := hFine (z 0)
     _ < α (part (z 1)) := hα (part (z 0)) (part (z 1)) hLt
