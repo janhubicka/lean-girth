@@ -896,3 +896,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.mixedOwner_carrier_subset
 #print axioms StructuralRamsey.Girth.mixedOwner_edges_subset
 #print axioms StructuralRamsey.Girth.mixedFullStandardForest_repeatedOwners
+#print axioms StructuralRamsey.Girth.restrictedTrainParent_val
+#print axioms StructuralRamsey.Girth.restrictedTrainParent_surjective
+#print axioms StructuralRamsey.Girth.restrictedTrainWagonCarrier_subset
+#print axioms StructuralRamsey.Girth.restrictedTrain_siblingIntersection
+#print axioms StructuralRamsey.Girth.forestOfCopies_of_subsingleton
+#print axioms StructuralRamsey.Girth.finiteMixedForestThrough_singleEdge
