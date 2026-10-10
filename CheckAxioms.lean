@@ -906,3 +906,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.selectedForest_of_directPictureIncrement
 #print axioms StructuralRamsey.Girth.oneEdge_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerDirectIncrement
+#print axioms StructuralRamsey.Girth.attached_aCopy_coreEdge_or_tested_standard
