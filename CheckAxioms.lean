@@ -852,3 +852,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.exists_tree_over_boundaryPortSkeleton
 #print axioms StructuralRamsey.Girth.augmentedBoundary_forest_of_skeletonAcyclic
 #print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_physicalInduced
+#print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_incidenceAcyclic
+#print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_localGirth
