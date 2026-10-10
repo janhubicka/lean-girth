@@ -819,3 +819,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.aGenerated_partite_toDecorated
 #print axioms StructuralRamsey.Girth.orderedPartite_ACopies_project_identity
 #print axioms StructuralRamsey.Girth.orderedAGenerated_partite_toDecorated
+#print axioms StructuralRamsey.Girth.activeSourcePart_spec
+#print axioms StructuralRamsey.Girth.activeSourcePart_isHomomorphism
+#print axioms StructuralRamsey.Girth.activeSourceACopy_part_identity
+#print axioms StructuralRamsey.Girth.actualActiveSubsystem_relation_iff_decorated
