@@ -10,10 +10,10 @@ auxiliary linear order of the Ramsey base. This is preserved under
 the standard free picture attachment because every relation tuple
 comes entirely from its local core or one old standard picture.
 
-The result is independent of the local Ramsey arrow and foresthood.
-The separate local-witness obligation is to prove compatibility of
-the new core, using its A-generation and the agreement of the base
-order with the original order on the processed A-copy.
+Both the gluing theorem and the local-core order argument are
+independent of the local Ramsey arrow, foresthood and A-generation.
+They require the base A-copy's original order to agree with the
+auxiliary base order.
 -/
 
 namespace StructuralRamsey.Girth
