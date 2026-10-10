@@ -170,7 +170,10 @@ theorem selectedForest_of_distinctOwnerRequestImages
             selectedLabel idx := by
           apply congrArg (Sigma.mk (owner idx))
           exact Subtype.ext hkPiece
-        exact (hz (hzLabel ▸ hKeep idx)).elim
+        have hzKeep : (⟨owner idx, k⟩ : Sigma K) ∈ keep := by
+          rw [hzLabel]
+          exact hKeep idx
+        exact (hz hzKeep).elim
     | inr r =>
         have hkPiece : (k.1 : HypergraphPiece W) = separator q r := by
           simpa [R] using ht.symm
