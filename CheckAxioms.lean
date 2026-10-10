@@ -876,3 +876,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedRequestJoin
 #print axioms StructuralRamsey.Girth.exists_smallSupport_separatorEdges
 #print axioms StructuralRamsey.Girth.selectedForest_of_repeatedOwners_mixed
+#print axioms StructuralRamsey.Girth.selectedForest_of_directPictureIncrement
