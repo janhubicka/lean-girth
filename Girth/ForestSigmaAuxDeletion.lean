@@ -60,10 +60,9 @@ theorem ForestOfCopies.sigmaSum_left_of_oneEdge_right
   let relabel : Sigma L ≃ {z : T // z ∈ keep} :=
     { toFun := fun z => ⟨⟨z.1, .inl z.2⟩, hInl z.1 z.2⟩
       invFun := fun z =>
-        match hx : z.1.2 with
-        | .inl i => ⟨z.1.1, i⟩
-        | .inr r => False.elim (hInr z.1.1 r (by
-            simpa [hx] using z.2))
+        match z with
+        | ⟨⟨q, .inl i⟩, _⟩ => ⟨q, i⟩
+        | ⟨⟨q, .inr r⟩, hz⟩ => False.elim (hInr q r hz)
       left_inv := by
         intro z
         rcases z with ⟨q, i⟩
