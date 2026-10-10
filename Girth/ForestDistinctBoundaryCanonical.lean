@@ -147,6 +147,11 @@ theorem exists_canonicalBoundaryPorts
     fun i => Classical.choose (hOne i)
   refine ⟨port, ?_⟩
   intro i
+  change
+    match Classical.choose (hOne i) with
+    | none => (selected i).carrier ∩ S = ∅
+    | some (.inl e) => (selected i).carrier ∩ S = (e : Set W)
+    | some (.inr v) => (selected i).carrier ∩ S = {(v : W)}
   exact Classical.choose_spec (hOne i)
 
 end StructuralRamsey.Girth
