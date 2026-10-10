@@ -891,3 +891,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.of_tested_subset
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedRequestJoin
+#print axioms StructuralRamsey.Girth.forestOfCopies_of_subsingleton
+#print axioms StructuralRamsey.Girth.finiteMixedForestThrough_singleEdge
