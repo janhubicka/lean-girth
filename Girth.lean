@@ -244,3 +244,4 @@ import Girth.ForestMixedRequestJoin
 import Girth.ForestMixedOneEdgeOwners
 import Girth.TrainCoveredRestrictionParents
 import Girth.ForestOneEdgeOwnerLocalTest
+import Girth.ForestMixedLocalForestBridge
