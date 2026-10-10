@@ -87,6 +87,6 @@ theorem selectedForest_of_augmentedBoundaryForest
             | inr j =>
                 exact (hInr j hz).elim }
   have hResult := hRestrict.reindex relabel
-  simpa only [augmentedBoundaryPieces] using hResult
+  simpa [relabel, augmentedBoundaryPieces] using hResult
 
 end StructuralRamsey.Girth
