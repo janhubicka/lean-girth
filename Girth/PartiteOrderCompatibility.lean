@@ -55,17 +55,17 @@ theorem partiteOrderCompatible_attachment
     exact hCore w hw
   · subst z
     change
-      (StructuralRamsey.Partite.Attachment.part C S E
-        ((StructuralRamsey.RelStructure.Attachment.copyMap
+      StructuralRamsey.Partite.Attachment.part C S E
+        (StructuralRamsey.RelStructure.Attachment.copyMap
           C.toRelStructure S E.toRelStructure
-          (fun j => (f j).toEmbedding) i ∘ w) (0 : Fin 2))) <
-      (StructuralRamsey.Partite.Attachment.part C S E
-        ((StructuralRamsey.RelStructure.Attachment.copyMap
+          (fun j => (f j).toEmbedding) i (w (0 : Fin 2))) <
+      StructuralRamsey.Partite.Attachment.part C S E
+        (StructuralRamsey.RelStructure.Attachment.copyMap
           C.toRelStructure S E.toRelStructure
-          (fun j => (f j).toEmbedding) i ∘ w) (1 : Fin 2)))
-    simpa only [Function.comp_apply,
-      StructuralRamsey.Partite.Attachment.part_copyMap] using
-      hOld w hw
+          (fun j => (f j).toEmbedding) i (w (1 : Fin 2)))
+    rw [StructuralRamsey.Partite.Attachment.part_copyMap C S E f i (w (0 : Fin 2)),
+        StructuralRamsey.Partite.Attachment.part_copyMap C S E f i (w (1 : Fin 2))]
+    exact hOld w hw
 
 /-- The local core is automatically compatible with the auxiliary
 base order when its parts lie over one ordered base A-copy and the
