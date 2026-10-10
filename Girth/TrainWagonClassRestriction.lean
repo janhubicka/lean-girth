@@ -60,10 +60,10 @@ theorem EdgeTrainLevels.wagonCarrier_eq_of_rel
   ext x
   constructor
   · rintro ⟨c, hac, hxc⟩
-    exact ⟨c, (T.equivalent μ).2.2
-      ((T.equivalent μ).2.1 hab) hac, hxc⟩
+    exact ⟨c, (T.equivalent μ).trans
+      ((T.equivalent μ).symm hab) hac, hxc⟩
   · rintro ⟨c, hbc, hxc⟩
-    exact ⟨c, (T.equivalent μ).2.2 hab hbc, hxc⟩
+    exact ⟨c, (T.equivalent μ).trans hab hbc, hxc⟩
 
 /-- The vertex carrier of a wagon, well defined on the QUOTIENT of
 edge labels by the relevant train equivalence. -/
