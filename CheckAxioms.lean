@@ -866,3 +866,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.owner_injective_or_usedOwner_card_le_prev
 #print axioms StructuralRamsey.Girth.localForest_repeatedOwners
 #print axioms StructuralRamsey.Girth.fullStandardForest_repeatedOwners
+#print axioms StructuralRamsey.Girth.ForestOfCopies.append_duplicate_oneEdge
