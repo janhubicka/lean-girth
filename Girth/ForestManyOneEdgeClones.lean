@@ -98,12 +98,12 @@ theorem ForestOfCopies.sum_finite_oneEdgeClones
             | inr o => cases o <;> rfl
           right_inv := by
             intro z
-            rcases z with ⟨i | a⟩ | u
-            · cases i with
-              | inl i => rfl
-              | inr a => rfl
-            · cases u
-              rfl }
+            cases z with
+            | inl t =>
+                cases t <;> rfl
+            | inr u =>
+                cases u
+                rfl }
       have hNew := hApp.reindex ren
       have hEq :
           (fun z : I ⊕ Option α =>
