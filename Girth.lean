@@ -239,3 +239,5 @@ import Girth.ForestCoreFactorBoundary
 import Girth.ForestActualPartiteBoundary
 import Girth.ForestActualACopyOneEdge
 import Girth.LabelledWagonCutRestriction
+import Girth.LocalCoveredWitnessReduction
+import Girth.ForestMixedRequestJoin

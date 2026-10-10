@@ -883,3 +883,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_shrinking
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_carrier_shrinking
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_reindex
+#print axioms StructuralRamsey.Girth.coveredLocalEdges_subset
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.restrictCovered_supportPiece
+#print axioms StructuralRamsey.Girth.coveredLocalFamily_covers
+#print axioms StructuralRamsey.Girth.girthGT_coveredLocalEdges
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_covered
+#print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.of_tested_subset
+#print axioms StructuralRamsey.Girth.selectedForest_of_mixedRequestJoin
