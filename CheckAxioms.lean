@@ -846,3 +846,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.augmentedBoundary_running_core_of_incidence_links
 #print axioms StructuralRamsey.Girth.augmentedBoundary_running_outside_core
 #print axioms StructuralRamsey.Girth.augmentedBoundary_forest_of_incidenceTree
+#print axioms StructuralRamsey.Girth.boundaryPortSkeleton
+#print axioms StructuralRamsey.Girth.exists_tree_over_boundaryPortSkeleton
+#print axioms StructuralRamsey.Girth.augmentedBoundary_forest_of_skeletonAcyclic
