@@ -878,3 +878,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_boundary_of_core
 #print axioms StructuralRamsey.Girth.attachedProjectedBCopy_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.attachedProjectedACopy_smallOrWholeBoundary
+#print axioms StructuralRamsey.Girth.coveredLocalEdges_subset
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.restrictCovered_supportPiece
+#print axioms StructuralRamsey.Girth.coveredLocalFamily_covers
+#print axioms StructuralRamsey.Girth.girthGT_coveredLocalEdges
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_covered
+#print axioms StructuralRamsey.Girth.localForestThrough_restrictCovered
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.of_tested_subset
