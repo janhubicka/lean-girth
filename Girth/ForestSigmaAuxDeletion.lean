@@ -80,4 +80,31 @@ theorem ForestOfCopies.sigmaSum_left_of_oneEdge_right
   have hSelected := hRestricted.reindex relabel
   simpa [relabel] using hSelected
 
+
+/-- Reindex the dependent sum of the exact fibers of a selected
+owner map by the original selected-label type. There are no
+duplicate or omitted selected labels. -/
+theorem ForestOfCopies.of_ownerFibers
+    {N Q : Type v}
+    (owner : N → Q)
+    (selected : N → HypergraphPiece W)
+    (hForest :
+      ForestOfCopies
+        (fun z : Sigma (fun q : Q => {n : N // owner n = q}) =>
+          selected z.2.1)) :
+    ForestOfCopies selected := by
+  let e : N ≃ Sigma (fun q : Q => {n : N // owner n = q}) :=
+    { toFun := fun n => ⟨owner n, ⟨n, rfl⟩⟩
+      invFun := fun z => z.2.1
+      left_inv := by
+        intro n
+        rfl
+      right_inv := by
+        intro z
+        rcases z with ⟨q, n, hn⟩
+        cases hn
+        rfl }
+  have h := hForest.reindex e
+  simpa [e] using h
+
 end StructuralRamsey.Girth
