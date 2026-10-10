@@ -836,3 +836,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.SmallOrWholeEdgeBoundary
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_of_distinctOwner_boundaries
 #print axioms StructuralRamsey.Girth.pairwiseAllowed_of_distinctOwner_girthTwo
+#print axioms StructuralRamsey.Girth.exists_usedBoundaryIncidenceTree_of_localGirth
