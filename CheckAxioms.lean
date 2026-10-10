@@ -861,3 +861,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.usedWholeBoundary_subset_core
 #print axioms StructuralRamsey.Girth.exists_canonicalBoundaryPorts
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_localGirth
+#print axioms StructuralRamsey.Girth.usedOwner_card_lt_of_not_injective
+#print axioms StructuralRamsey.Girth.usedOwner_card_le_prev_of_not_injective
+#print axioms StructuralRamsey.Girth.owner_injective_or_usedOwner_card_le_prev
