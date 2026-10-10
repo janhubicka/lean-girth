@@ -45,9 +45,9 @@ def EdgeTrainLevels.restrict
   equivalent := by
     intro μ
     let h := T.equivalent μ
-    exact ⟨fun x => h.1 (keep x),
-      fun x y hxy => h.2.1 hxy,
-      fun x y z hxy hyz => h.2.2 hxy hyz⟩
+    exact ⟨fun x => h.refl (keep x),
+      fun x y hxy => h.symm hxy,
+      fun x y z hxy hyz => h.trans hxy hyz⟩
   nested := by
     intro μ ν hle e f hef
     exact T.nested μ ν hle (keep e) (keep f) hef
