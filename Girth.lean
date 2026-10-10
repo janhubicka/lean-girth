@@ -235,3 +235,4 @@ import Girth.ForestOwnerMixedRequests
 import Girth.ForestRelationalBoundarySupport
 import Girth.ForestDistinctLocalRequestJoin
 import Girth.TrainEquivalenceRestriction
+import Girth.TrainWagonClassRestriction
