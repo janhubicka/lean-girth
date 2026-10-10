@@ -824,3 +824,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.partiteOrderCompatible_localOfBaseCopy
 #print axioms StructuralRamsey.Girth.decoratedLocalWitness_orderCompatible
 #print axioms StructuralRamsey.Girth.pictureStep_orderCompatible_of_decoratedLocal
+#print axioms StructuralRamsey.Girth.activeSourcePart_spec
+#print axioms StructuralRamsey.Girth.activeSourcePart_isHomomorphism
+#print axioms StructuralRamsey.Girth.activeSourceACopy_part_identity
+#print axioms StructuralRamsey.Girth.actualActiveSubsystem_relation_iff_decorated
+#print axioms StructuralRamsey.Girth.actualActiveSupport_vertexCovered
+#print axioms StructuralRamsey.Girth.actualActiveSupport_edgeTransversal
+#print axioms StructuralRamsey.Girth.actualActiveSupport_nonempty
+#print axioms StructuralRamsey.Girth.actualActiveSubsystemPartite
+#print axioms StructuralRamsey.Girth.actualActiveSubsystem_toDecorated
