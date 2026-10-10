@@ -55,11 +55,11 @@ theorem partiteOrderCompatible_attachment
     exact hCore w hw
   · subst z
     change
-      (StructuralRamsey.Partite.Attachment.part C S E f
+      (StructuralRamsey.Partite.Attachment.part C S E
         ((StructuralRamsey.RelStructure.Attachment.copyMap
           C.toRelStructure S E.toRelStructure
           (fun j => (f j).toEmbedding) i ∘ w) 0)) <
-      (StructuralRamsey.Partite.Attachment.part C S E f
+      (StructuralRamsey.Partite.Attachment.part C S E
         ((StructuralRamsey.RelStructure.Attachment.copyMap
           C.toRelStructure S E.toRelStructure
           (fun j => (f j).toEmbedding) i ∘ w) 1))
