@@ -38,10 +38,10 @@ theorem selectedForest_of_mixedRequestJoin
     (separator : (q : Q) → JOuter.tree.neighborSet q → HypergraphPiece W)
     (m : ℕ)
     (hCard : Fintype.card N ≤ m)
-    (tested : HypergraphPiece W → Prop)
-    (hOld : FiniteMixedForestThrough tested m)
-    (hSelectedTest : ∀ n, tested (selected n))
-    (hSeparatorTest : ∀ q r, tested (separator q r))
+    (tested : Q → HypergraphPiece W → Prop)
+    (hOld : ∀ q, FiniteMixedForestThrough (tested q) m)
+    (hSelectedTest : ∀ n, tested (owner n) (selected n))
+    (hSeparatorTest : ∀ q r, tested q (separator q r))
     (hSelectedContain :
       ∀ n, (selected n).carrier ⊆ (P (owner n)).carrier)
     (hSeparatorContain :
@@ -69,7 +69,7 @@ theorem selectedForest_of_mixedRequestJoin
               | .inl n => selected n.1
               | .inr r => separator q r)} => z.1) := by
     classical
-    apply hOld
+    apply hOld q
     · intro P hP
       have hImage : P ∈ Finset.univ.image
           (fun t : {n : N // owner n = q} ⊕
@@ -82,7 +82,9 @@ theorem selectedForest_of_mixedRequestJoin
       cases t with
       | inl n =>
           rw [← ht]
-          exact hSelectedTest n.1
+          have hn := hSelectedTest n.1
+          rw [n.2] at hn
+          exact hn
       | inr r =>
           rw [← ht]
           exact hSeparatorTest q r
