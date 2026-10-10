@@ -823,3 +823,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.activeSourcePart_isHomomorphism
 #print axioms StructuralRamsey.Girth.activeSourceACopy_part_identity
 #print axioms StructuralRamsey.Girth.actualActiveSubsystem_relation_iff_decorated
+#print axioms StructuralRamsey.Girth.actualActiveSupport_vertexCovered
+#print axioms StructuralRamsey.Girth.actualActiveSupport_edgeTransversal
+#print axioms StructuralRamsey.Girth.actualActiveSupport_nonempty
