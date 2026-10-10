@@ -855,3 +855,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_incidenceAcyclic
 #print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_localGirth
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctBoundary_localGirth
+#print axioms StructuralRamsey.Girth.selectedForest_of_distinctBoundary_allCoreVertices
