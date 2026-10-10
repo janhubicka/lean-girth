@@ -108,9 +108,11 @@ def aGenerated_partite_toDecorated
     injective := fun _ _ h => h
     map_rel_iff := by
       intro R z
-      simpa only [Function.id_comp] using
-        (aGenerated_relation_iff_decorated
-          A C.toRelStructure C.part hGen hPartite.1 hCopyPart R z).symm
+      change
+        (decorateSupport A (supportCopies A C.toRelStructure) C.part).rel R z ↔
+          C.toRelStructure.rel R z
+      exact (aGenerated_relation_iff_decorated
+        A C.toRelStructure C.part hGen hPartite.1 hCopyPart R z).symm
   }
   map_part _ := rfl
 
