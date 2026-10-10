@@ -840,3 +840,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.allowedIntersection_selected_boundaryVertex
 #print axioms StructuralRamsey.Girth.allowedIntersection_boundaryEdges
 #print axioms StructuralRamsey.Girth.allowedIntersection_boundaryVertex_any
+#print axioms StructuralRamsey.Girth.augmentedBoundaryPieces
+#print axioms StructuralRamsey.Girth.pairwiseAllowed_augmentedBoundaryPieces
