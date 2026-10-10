@@ -74,7 +74,7 @@ theorem selectedForest_of_ownerRequests
     exact ⟨.inl ⟨n, hn⟩⟩
   letI : ∀ q : Q, Nonempty (L q ⊕ R q) := hNonempty
   have hForest (q : Q) : ForestOfCopies (F q) := by
-    simpa only [F, L, R] using hLocal q
+    exact hLocal q
   have hLocalAllowed : ∀ q, PairwiseAllowed (F q) :=
     fun q => (hForest q).pairwiseAllowed
   let JLocal : ∀ q, JoinTree (F q) :=
