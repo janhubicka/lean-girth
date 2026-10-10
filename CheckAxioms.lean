@@ -814,3 +814,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.decorateSupportSystem_isPartiteOver
 #print axioms StructuralRamsey.Girth.decorateSupportRelabel_isPartiteOver
 #print axioms StructuralRamsey.Girth.decorateSupportRelabel_part
+#print axioms StructuralRamsey.Girth.aGenerated_relation_iff_decorated
+#print axioms StructuralRamsey.Girth.aSupport_edgeTransversal_of_exact_projection
+#print axioms StructuralRamsey.Girth.aGenerated_partite_toDecorated
+#print axioms StructuralRamsey.Girth.orderedPartite_ACopies_project_identity
+#print axioms StructuralRamsey.Girth.orderedAGenerated_partite_toDecorated
