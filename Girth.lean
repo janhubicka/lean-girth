@@ -206,3 +206,4 @@ import Girth.ActualDesignatedSupportBridge
 import Girth.DecorationPartiteBridge
 import Girth.AGeneratedDecorationIdentity
 import Girth.OrderedAGeneratedDecoration
+import Girth.PartiteOrderCompatibility

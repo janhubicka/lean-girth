@@ -819,3 +819,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.aGenerated_partite_toDecorated
 #print axioms StructuralRamsey.Girth.orderedPartite_ACopies_project_identity
 #print axioms StructuralRamsey.Girth.orderedAGenerated_partite_toDecorated
+#print axioms StructuralRamsey.Girth.PartiteOrderCompatible
+#print axioms StructuralRamsey.Girth.partiteOrderCompatible_attachment
+#print axioms StructuralRamsey.Girth.partiteOrderCompatible_localOfBaseCopy
