@@ -872,3 +872,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.image
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.distinctOwnerRequests
 #print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_smallOrWholeBoundary
+#print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_self_isOneEdge
+#print axioms StructuralRamsey.Girth.embeddedACopySupportPiece_self_eq_oneEdge
