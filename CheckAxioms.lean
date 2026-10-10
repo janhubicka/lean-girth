@@ -811,3 +811,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.oldDesignatedBCopySupport
 #print axioms StructuralRamsey.Girth.actualBCopy_support_exact_standard_image
 #print axioms StructuralRamsey.Girth.actualBCopy_mem_attachedDesignatedSupport
+#print axioms StructuralRamsey.Girth.decorateSupportSystem_isPartiteOver
+#print axioms StructuralRamsey.Girth.decorateSupportRelabel_isPartiteOver
+#print axioms StructuralRamsey.Girth.decorateSupportRelabel_part
