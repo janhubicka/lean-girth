@@ -246,3 +246,4 @@ import Girth.TrainCoveredRestrictionParents
 import Girth.ForestOneEdgeOwnerLocalTest
 import Girth.ForestRepeatedOwnerMixed
 import Girth.ForestDirectIncrementConditional
+import Girth.ForestMixedDirectIncrement
