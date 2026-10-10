@@ -883,3 +883,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_shrinking
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_carrier_shrinking
 #print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_reindex
+#print axioms StructuralRamsey.Girth.restrictedTrainParent_val
+#print axioms StructuralRamsey.Girth.restrictedTrainParent_surjective
+#print axioms StructuralRamsey.Girth.restrictedTrainWagonCarrier_subset
+#print axioms StructuralRamsey.Girth.restrictedTrain_siblingIntersection
