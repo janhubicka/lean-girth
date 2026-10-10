@@ -856,3 +856,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.boundaryPortSkeleton_isAcyclic_of_localGirth
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctBoundary_localGirth
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctBoundary_allCoreVertices
+#print axioms StructuralRamsey.Girth.usedWholeBoundary_card_le
+#print axioms StructuralRamsey.Girth.usedWholeBoundary_mem_local
+#print axioms StructuralRamsey.Girth.usedWholeBoundary_subset_core
+#print axioms StructuralRamsey.Girth.exists_canonicalBoundaryPorts
