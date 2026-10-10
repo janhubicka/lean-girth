@@ -810,3 +810,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.pictureStep_allActiveSubsystems_girthGT
 #print axioms StructuralRamsey.Girth.PartiteOrderCompatible
 #print axioms StructuralRamsey.Girth.partiteOrderCompatible_attachment
+#print axioms StructuralRamsey.Girth.partiteOrderCompatible_localOfBaseCopy
