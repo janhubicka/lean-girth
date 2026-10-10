@@ -869,3 +869,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_girthOnly
 #print axioms StructuralRamsey.Girth.selectedForest_of_distinctOwners_twoCarrier
 #print axioms StructuralRamsey.Girth.ForestOfCopies.append_duplicate_oneEdge
+#print axioms StructuralRamsey.Girth.ForestOfCopies.sum_finite_oneEdgeClones
