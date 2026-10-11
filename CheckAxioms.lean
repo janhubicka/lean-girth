@@ -916,3 +916,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_notIsOneEdge_of_twoSourceEdges
 #print axioms StructuralRamsey.Girth.strongSupportFamily_notIsOneEdge
 #print axioms StructuralRamsey.Girth.bSupportPiece_eq_embeddedACopySupportPiece
+#print axioms StructuralRamsey.Girth.completeBSupport_smallOrWholeBoundary_of_intrinsic
+#print axioms StructuralRamsey.Girth.attachedProjectedBCopy_completeSupportBoundary
