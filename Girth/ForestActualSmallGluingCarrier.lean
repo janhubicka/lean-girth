@@ -34,7 +34,8 @@ has precisely the core image carrier. -/
 theorem actualSmallGluing_supportCarrier_eq_coreCopy
     (A : RelStructure L UA)
     (C : StructuralRamsey.Partite.System L P X)
-    (e : RelStructure.Embedding A (RelStructure L P))
+    (D : RelStructure L P)
+    (e : RelStructure.Embedding A D)
     (E : StructuralRamsey.Partite.System L P Y)
     (f : I → StructuralRamsey.Partite.Embedding
       (C.induce (activeCarrier A C e.toFunctionEmbedding)) E)
