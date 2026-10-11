@@ -923,3 +923,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.mixedOwnerCertificate_of_canonicalCases
 #print axioms StructuralRamsey.Girth.mixedOwnerFamilyCases_of_canonicalTransport
 #print axioms StructuralRamsey.Girth.actualBCopy_testedOwner_and_completeBoundary
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.canonicalTransport
+#print axioms StructuralRamsey.Girth.finiteMixedForestThrough_canonicalStandardFamily
