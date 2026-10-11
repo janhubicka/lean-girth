@@ -257,3 +257,5 @@ import Girth.ForestCanonicalMixedOwnerCases
 import Girth.ForestActualBCompleteOwnerBoundary
 import Girth.ForestCanonicalMixedForestTransport
 import Girth.ForestCanonicalMixedIncrement
+import Girth.ForestGluingSourceCoverage
+import Girth.ForestFactoredCanonicalIncrement
