@@ -918,3 +918,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.bSupportPiece_eq_embeddedACopySupportPiece
 #print axioms StructuralRamsey.Girth.completeBSupport_smallOrWholeBoundary_of_intrinsic
 #print axioms StructuralRamsey.Girth.attachedProjectedBCopy_completeSupportBoundary
+#print axioms StructuralRamsey.Girth.physicalGluingPieces_injective
+#print axioms StructuralRamsey.Girth.physicalGluingPieces_notOneEdge
+#print axioms StructuralRamsey.Girth.physicalMixedOwners_localForest_of_twoSourceEdges
