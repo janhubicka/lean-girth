@@ -53,6 +53,26 @@ theorem hasAmbientPairEdge_iff_on_of_A2_noLoss
     exact hNoLoss (x, y) hPair hOld
   · exact hasAmbientPairEdge_mono hSub
 
+/-- Pair-edge existence agrees for all listed side-vertex pairs. -/
+def A2PairShadowInvariant
+    (old new : Set (Set V)) (pairs : Set (V × V)) : Prop :=
+  ∀ p ∈ pairs,
+    hasAmbientPairEdge old p.1 p.2 ↔
+      hasAmbientPairEdge new p.1 p.2
+
+/-- With an actual edge restriction, witness retention is necessary
+and sufficient for the entire side-pair shadow to be unchanged. -/
+theorem A2_noLoss_iff_pairShadowInvariant
+    {old new : Set (Set V)} {pairs : Set (V × V)}
+    (hSub : new ⊆ old) :
+    A2PairShadowNoLoss old new pairs ↔
+      A2PairShadowInvariant old new pairs := by
+  constructor
+  · intro hNoLoss p hp
+    exact hasAmbientPairEdge_iff_on_of_A2_noLoss hSub hNoLoss hp
+  · intro hInvariant p hp hOld
+    exact (hInvariant p hp).mp hOld
+
 /-- Therefore the A2 *absence* clause for every retained side pair
 has exactly the same truth value before and after guarded pruning. -/
 theorem A2_absence_iff_on_of_shadow_noLoss
