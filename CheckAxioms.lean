@@ -974,3 +974,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualDesignatedAB_piece_canonicalOwnerCases
 #print axioms StructuralRamsey.Girth.actualDesignatedAB_family_canonicalOwnerCases
 #print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated_of_mixedCoverage
+#print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_one_le
+#print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_le_two
+#print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_join_le
+#print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_join_three_le
