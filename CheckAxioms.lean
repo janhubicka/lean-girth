@@ -987,3 +987,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.owner_surjective
 #print axioms StructuralRamsey.Girth.OwnerImage.val_owner
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
+#print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_selectedForest_of_factoredCanonical
