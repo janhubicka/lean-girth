@@ -987,3 +987,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.owner_surjective
 #print axioms StructuralRamsey.Girth.OwnerImage.val_owner
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
+#print axioms StructuralRamsey.Girth.hasAmbientPairEdge_mono
+#print axioms StructuralRamsey.Girth.hasAmbientPairEdge_iff_on_of_A2_noLoss
+#print axioms StructuralRamsey.Girth.A2_absence_iff_on_of_shadow_noLoss
