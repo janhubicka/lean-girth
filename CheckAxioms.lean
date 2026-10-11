@@ -958,3 +958,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.noEmbeddingBA_of_two_distinct_ACopies
 #print axioms StructuralRamsey.Girth.attached_bCopy_standard_of_multiACopyB
 #print axioms StructuralRamsey.Girth.actualBCopy_testedOwner_and_completeBoundary_noLocalCover
+#print axioms StructuralRamsey.Girth.designatedBorACoversIrreducibles_partiteAttachment
+#print axioms StructuralRamsey.Girth.actualBCopy_designated_of_mixedCoverage
+#print axioms StructuralRamsey.Girth.actualBCopy_testedOwner_and_completeBoundary_fromMixedCover
