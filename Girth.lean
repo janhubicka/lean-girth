@@ -271,3 +271,7 @@ import Girth.ForestActualTwoCarrierGeometry
 import Girth.RefinementRunCount
 import Girth.ForestActualPartiteGeometryIncrement
 import Girth.ForestActualOldFullIncrement
+import Girth.TrainEquivalenceRestriction
+import Girth.TrainWagonClassRestriction
+import Girth.TrainLabelledCutGirth
+import Girth.TrainParameterRestriction
