@@ -915,3 +915,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.HypergraphPiece.not_isOneEdge_of_twoEdges
 #print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_notIsOneEdge_of_twoSourceEdges
 #print axioms StructuralRamsey.Girth.strongSupportFamily_notIsOneEdge
+#print axioms StructuralRamsey.Girth.TransportedPiece.carrier_subset_standardRange
+#print axioms StructuralRamsey.Girth.mixedOwnerCertificate_of_canonicalCases
+#print axioms StructuralRamsey.Girth.mixedOwnerFamilyCases_of_canonicalTransport
