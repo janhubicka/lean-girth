@@ -165,7 +165,7 @@ theorem actualAB_family_canonicalOwnerCases
       (∃ ce : {ce : Set (StructuralRamsey.Partite.Attachment.Vertex S
           (W := Y) (I := I)) // ce ∈ K},
         selected n = HypergraphPiece.oneEdge ce.1) := by
-  intro n
+  intro S core K n
   exact actualAB_piece_canonicalOwnerCases
     A hA B hB D C hPartite hLinear family e E f
     hOld hLocal hBaseStrong testedOld hTestA hTestB
