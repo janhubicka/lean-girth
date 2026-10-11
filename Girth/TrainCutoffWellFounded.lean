@@ -65,8 +65,9 @@ theorem TrainCutoffRankDrop.toTrainCountLex
         exact Prod.Lex.left _ _ hDrop.2
       · have hLower : q ≤ M := by omega
         have hHigher : q < M + 1 := by omega
-        exact Prod.Lex.right (hDrop.1 (M+1) hHigher)
-          (ih hLower)
+        have hSame := hDrop.1 (M+1) hHigher
+        rw [hSame]
+        exact Prod.Lex.right _ (ih hLower)
 
 /-- The q>2 recursive request strictly decreases the fixed
 well-founded rank, independent of inserted depth d. -/
