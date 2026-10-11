@@ -264,3 +264,4 @@ import Girth/ForestCanonicalMixedIncrement
 import Girth/ForestGluingSourceCoverage
 import Girth/ForestFactoredCanonicalIncrement
 import Girth/ForestPhysicalRepresentativeForest
+import Girth.ForestActualPartiteDirectIncrement
