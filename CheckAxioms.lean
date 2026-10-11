@@ -989,3 +989,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_selectedForest_of_factoredCanonical
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull
+#print axioms StructuralRamsey.Girth.hasAmbientPairEdge_mono
+#print axioms StructuralRamsey.Girth.hasAmbientPairEdge_iff_on_of_A2_noLoss
+#print axioms StructuralRamsey.Girth.A2_noLoss_iff_pairShadowInvariant
+#print axioms StructuralRamsey.Girth.A2_absence_iff_on_of_shadow_noLoss
+#print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_segment_le
