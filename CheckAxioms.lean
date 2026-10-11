@@ -965,3 +965,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.trainCutoffReplacement_wfRankDecrease
 #print axioms StructuralRamsey.Girth.trainCutoffDropTwo_wfRankDecrease
 #print axioms StructuralRamsey.Girth.actualSmallGluing_supportCarrier_eq_coreCopy
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonCarrier_restrict_subset
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_restrict_subset
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCutGirth_restrict
+#print axioms StructuralRamsey.Girth.trainParentIntersectionBound_restrict
+#print axioms StructuralRamsey.Girth.trainParentPartBound_restrict
