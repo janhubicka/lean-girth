@@ -952,3 +952,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualAttachment_fullSmallCarrierGeometry
 #print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
 #print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
+#print axioms StructuralRamsey.Girth.actualPartiteAB_selectedForest_of_attachmentGeometry
