@@ -907,3 +907,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.oneEdge_smallOrWholeBoundary
 #print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerDirectIncrement
 #print axioms StructuralRamsey.Girth.attached_aCopy_coreEdge_or_tested_standard
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.toLocalForestThrough
+#print axioms StructuralRamsey.Girth.mixedOwnerSmall_injective
+#print axioms StructuralRamsey.Girth.localForestThrough_mixedOwners_of_finiteMixed
+#print axioms StructuralRamsey.Girth.mixedOwnerChoice_exists
+#print axioms StructuralRamsey.Girth.selectedForest_of_mixedOwnerClassification
+#print axioms StructuralRamsey.Girth.HypergraphPiece.not_isOneEdge_of_twoEdges
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.supportPiece_notIsOneEdge_of_twoSourceEdges
+#print axioms StructuralRamsey.Girth.strongSupportFamily_notIsOneEdge
