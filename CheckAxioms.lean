@@ -926,3 +926,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.canonicalTransport
 #print axioms StructuralRamsey.Girth.finiteMixedForestThrough_canonicalStandardFamily
 #print axioms StructuralRamsey.Girth.selectedForest_of_canonicalMixedCases
+#print axioms StructuralRamsey.Girth.selectedForest_of_factoredCanonicalMixedCases
