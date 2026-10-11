@@ -918,3 +918,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.bSupportPiece_eq_embeddedACopySupportPiece
 #print axioms StructuralRamsey.Girth.completeBSupport_smallOrWholeBoundary_of_intrinsic
 #print axioms StructuralRamsey.Girth.attachedProjectedBCopy_completeSupportBoundary
+#print axioms StructuralRamsey.Girth.attached_actualACopy_coreOr_testedStandardBoundary
