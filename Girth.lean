@@ -271,3 +271,4 @@ import Girth.ForestActualTwoCarrierGeometry
 import Girth.RefinementRunCount
 import Girth.ForestActualPartiteGeometryIncrement
 import Girth.ForestNoCoreBCopy
+import Girth.ForestNoCoreBFromTwoEdges
