@@ -273,3 +273,5 @@ import Girth.ForestActualPartiteGeometryIncrement
 import Girth.ForestNoCoreBCopy
 import Girth.ForestNoCoreBFromTwoEdges
 import Girth.ForestActualBNoLocalCoverage
+import Girth.ForestMixedIrreducibleCoverage
+import Girth.ForestActualBMixedOwner
