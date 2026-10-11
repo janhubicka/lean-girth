@@ -918,3 +918,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.bSupportPiece_eq_embeddedACopySupportPiece
 #print axioms StructuralRamsey.Girth.completeBSupport_smallOrWholeBoundary_of_intrinsic
 #print axioms StructuralRamsey.Girth.attachedProjectedBCopy_completeSupportBoundary
+#print axioms StructuralRamsey.Girth.actualBCopy_has_tested_standard_owner
+#print axioms StructuralRamsey.Girth.TransportedPiece.carrier_subset_standardRange
+#print axioms StructuralRamsey.Girth.mixedOwnerCertificate_of_canonicalCases
+#print axioms StructuralRamsey.Girth.mixedOwnerFamilyCases_of_canonicalTransport
+#print axioms StructuralRamsey.Girth.actualBCopy_testedOwner_and_completeBoundary
