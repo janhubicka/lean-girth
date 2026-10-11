@@ -931,3 +931,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_range_subset
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_surjective_support
 #print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_physicalRepresentatives
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_of_subsingleton_edge_target
+#print axioms StructuralRamsey.Girth.singleEdge_localWitness_arrow_and_forests
