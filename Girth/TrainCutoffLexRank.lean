@@ -35,7 +35,7 @@ def countTrainCutoff (t : List ℕ) (q : ℕ) : ℕ :=
     countTrainCutoff (a :: t) q =
       (if a = q then 1 else 0) + countTrainCutoff t q := by
   by_cases h : a = q
-  · simp [countTrainCutoff, h]
+  · simp [countTrainCutoff, h, Nat.add_comm]
   · simp [countTrainCutoff, h]
 
 theorem countTrainCutoff_append
