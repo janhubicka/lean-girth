@@ -926,3 +926,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalGluingPieces_injective
 #print axioms StructuralRamsey.Girth.physicalGluingPieces_notOneEdge
 #print axioms StructuralRamsey.Girth.physicalMixedOwners_localForest_of_twoSourceEdges
+#print axioms StructuralRamsey.Girth.trainCutoffReplacement_rankDrop
+#print axioms StructuralRamsey.Girth.trainCutoffDropTwo_rankDrop
