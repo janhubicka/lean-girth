@@ -102,7 +102,7 @@ theorem attached_actualACopy_coreOr_testedStandardBoundary
     obtain ⟨b, hb⟩ :=
       hPartite.after_irreducible_embedding hA aOld
     let q : StructuralRamsey.Partite.ProjectedEmbedding A C b :=
-      ⟨aOld, hb⟩
+      ⟨aOld, fun u => (hb u).symm⟩
     have hEquals : std.comp q.val = aNew := by
       apply RelStructure.Embedding.ext
       intro u
