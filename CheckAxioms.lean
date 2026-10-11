@@ -944,3 +944,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalSupportPieces_representative_range
 #print axioms StructuralRamsey.Girth.physicalMixedSupportTest_representatives_iff
 #print axioms StructuralRamsey.Girth.finiteMixedForestThrough_physicalRepresentatives_iff
+#print axioms StructuralRamsey.Girth.actualPartiteAB_selectedForest_of_factoredCanonical
+#print axioms StructuralRamsey.Girth.trainCutoffReplacement_rankDrop
+#print axioms StructuralRamsey.Girth.trainCutoffDropTwo_rankDrop
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_of_subsingleton_edge_target
+#print axioms StructuralRamsey.Girth.singleEdge_localWitness_arrow_and_forests
+#print axioms StructuralRamsey.Girth.actualAttachment_fullSmallCarrierGeometry
+#print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
+#print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
