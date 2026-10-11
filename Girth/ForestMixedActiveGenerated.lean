@@ -271,7 +271,7 @@ theorem activeSubsystem_aGenerated_of_mixedCoverage
           refine ⟨u, ?_⟩
           calc
             b u = C.part (aC u) := hb u
-            _ = C.part ((t i).1) := congrArg C.part hu
+            _ = C.part ((t i).1) := congrArg C.part hu.symm
         have hPartNonSub :
             ¬ (copyCarrier e ∩ copyCarrier b).Subsingleton := by
           intro hs
