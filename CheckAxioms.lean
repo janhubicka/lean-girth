@@ -988,3 +988,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.val_owner
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_selectedForest_of_factoredCanonical
+#print axioms StructuralRamsey.Girth.pruning_old_new_linear
+#print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
+#print axioms StructuralRamsey.Girth.pruning_A2_toggles
+#print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
