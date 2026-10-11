@@ -953,3 +953,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
 #print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
 #print axioms StructuralRamsey.Girth.actualPartiteAB_selectedForest_of_attachmentGeometry
+#print axioms StructuralRamsey.Girth.no_core_B_of_irreduciblesExtendTo
+#print axioms StructuralRamsey.Girth.attached_bCopy_standard_of_noCoreB
+#print axioms StructuralRamsey.Girth.noEmbeddingBA_of_two_distinct_ACopies
+#print axioms StructuralRamsey.Girth.attached_bCopy_standard_of_multiACopyB
+#print axioms StructuralRamsey.Girth.trainCountLex_wellFounded
+#print axioms StructuralRamsey.Girth.trainCutoffReplacement_wfRankDecrease
+#print axioms StructuralRamsey.Girth.trainCutoffDropTwo_wfRankDecrease
