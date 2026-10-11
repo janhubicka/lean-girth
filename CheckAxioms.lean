@@ -955,3 +955,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualPartiteAB_selectedForest_of_attachmentGeometry
 #print axioms StructuralRamsey.Girth.designatedBorACoversIrreducibles_partiteAttachment
 #print axioms StructuralRamsey.Girth.actualBCopy_designated_of_mixedCoverage
+#print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated_of_mixedCoverage
