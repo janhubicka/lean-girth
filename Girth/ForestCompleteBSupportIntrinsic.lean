@@ -1,5 +1,6 @@
 import Girth.SupportForestToTree
 import Girth.ForestRelationalBoundarySupport
+import Girth.ForestActualPartiteBoundary
 
 /-!
 # Complete ambient B-support equals intrinsic transported A-support
@@ -74,5 +75,58 @@ theorem bSupportPiece_eq_embeddedACopySupportPiece
           cases hCarrier
           cases hEdges
           rfl
+
+/-- Boundary data established on the intrinsic support of a B-embedding
+also governs its COMPLETE ambient A-support piece. -/
+theorem completeBSupport_smallOrWholeBoundary_of_intrinsic
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {D : RelStructure L W}
+    (b : RelStructure.Embedding B D)
+    (K : Set (Set W)) (S : Set W)
+    (hBoundary :
+      SmallOrWholeEdgeBoundary K S (embeddedACopySupportPiece A b)) :
+    SmallOrWholeEdgeBoundary K S (bSupportPiece A b) := by
+  rw [bSupportPiece_eq_embeddedACopySupportPiece A b]
+  exact hBoundary
+
+/-- The checked ACTUAL partite B-copy boundary statement, upgraded to
+the full ambient A-support notion consumed by the circulation theorem.
+The intrinsic and ambient support notions coincide by factorization
+through the relational standard-copy embedding. -/
+theorem attachedProjectedBCopy_completeSupportBoundary
+    {P X Y I : Type v}
+    (A : RelStructure L UA)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (e : RelStructure.Embedding A D)
+    (b : RelStructure.Embedding B D)
+    (q : StructuralRamsey.Partite.ProjectedEmbedding B C b)
+    (hStrong : AStrong A D (copyCarrier b))
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (C.induce (activeCarrier A C e.toFunctionEmbedding)) E)
+    (i : I) :
+    let S := activeCarrier A C e.toFunctionEmbedding
+    let copyI :=
+      (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
+    let core :=
+      (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
+    SmallOrWholeEdgeBoundary
+      {t : Set (StructuralRamsey.Partite.Attachment.Vertex S
+          (W := Y) (I := I)) |
+        ∃ aE : RelStructure.Embedding A E.toRelStructure,
+          t = copyCarrier (core.comp aE)}
+      (copyCarrier core)
+      (bSupportPiece A (copyI.comp q.val)) := by
+  let S := activeCarrier A C e.toFunctionEmbedding
+  let copyI :=
+    (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
+  let core :=
+    (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
+  exact completeBSupport_smallOrWholeBoundary_of_intrinsic
+    A (copyI.comp q.val) _ _
+    (attachedProjectedBCopy_smallOrWholeBoundary
+      A B D C e b q hStrong E f i)
 
 end StructuralRamsey.Girth
