@@ -931,3 +931,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_range_subset
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_surjective_support
 #print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_physicalRepresentatives
+#print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
+#print axioms StructuralRamsey.Girth.refinementRun_length_ge_two_g_plus_two
+#print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
