@@ -988,3 +988,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.val_owner
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
 #print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut
+#print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_cut_girth
