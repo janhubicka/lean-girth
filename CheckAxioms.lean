@@ -931,3 +931,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_range_subset
 #print axioms StructuralRamsey.Girth.physicalSupportRepresentative_surjective_support
 #print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_physicalRepresentatives
+#print axioms StructuralRamsey.Girth.actualAttachment_fullSmallCarrierGeometry
