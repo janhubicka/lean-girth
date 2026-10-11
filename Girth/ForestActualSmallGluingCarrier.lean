@@ -66,17 +66,18 @@ theorem actualSmallGluing_supportCarrier_eq_coreCopy
   constructor
   · rintro ⟨x, rfl⟩
     have hxin : active i x ∈ S := by
+      change active i x ∈ activeCarrier A C e.toFunctionEmbedding
       rw [← hActiveRange i]
       exact ⟨x, rfl⟩
     let y : S := ⟨active i x, hxin⟩
     refine ⟨y, ?_⟩
-    change outer i x = core (f i y)
+    change core (f i y) = outer i x
     calc
-      outer i x =
+      core (f i y) =
         (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding
-          (active i x) := hFactor i x
-      _ = core (f i y) :=
-        StructuralRamsey.Partite.Attachment.copy_extends C S E f i y
+          (active i x) :=
+        (StructuralRamsey.Partite.Attachment.copy_extends C S E f i y).symm
+      _ = outer i x := (hFactor i x).symm
   · rintro ⟨y, rfl⟩
     have hyin : y.val ∈ Set.range (active i) := by
       rw [hActiveRange i]
