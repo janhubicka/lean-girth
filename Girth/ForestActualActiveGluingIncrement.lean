@@ -98,7 +98,10 @@ theorem actualPartiteAB_selectedForest_of_actualActiveGluing
     {Ambient : Set (Set (StructuralRamsey.Partite.Attachment.Vertex
         (activeCarrier A C e.toFunctionEmbedding)
         (W := Y) (I := I)))}
-    (hRegularAmbient : ∀ i : I, (full i).edges ⊆ Ambient)
+    (hRegularAmbient : ∀ i : I,
+      (oldFull.map
+        ((StructuralRamsey.Partite.Attachment.copyEmbedding C
+          (activeCarrier A C e.toFunctionEmbedding) E f i).toEmbedding.toFunctionEmbedding)).edges ⊆ Ambient)
     (hCoreAmbient :
       {t : Set (StructuralRamsey.Partite.Attachment.Vertex
           (activeCarrier A C e.toFunctionEmbedding)
