@@ -923,3 +923,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.mixedOwnerCertificate_of_canonicalCases
 #print axioms StructuralRamsey.Girth.mixedOwnerFamilyCases_of_canonicalTransport
 #print axioms StructuralRamsey.Girth.actualBCopy_testedOwner_and_completeBoundary
+#print axioms StructuralRamsey.Girth.physicalGluingPieces_injective
+#print axioms StructuralRamsey.Girth.physicalGluingPieces_notOneEdge
+#print axioms StructuralRamsey.Girth.physicalMixedOwners_localForest_of_twoSourceEdges
