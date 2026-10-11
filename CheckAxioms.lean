@@ -988,3 +988,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.OwnerImage.val_owner
 #print axioms StructuralRamsey.Girth.OwnerImage.card_le
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_selectedForest_of_factoredCanonical
+#print axioms StructuralRamsey.Girth.gluedCoreNode_generated
+#print axioms StructuralRamsey.Girth.gluedStandardNode_generated
+#print axioms StructuralRamsey.Girth.gluedStandardNode_injective
+#print axioms StructuralRamsey.Girth.gluedStandardNode_eq_core_iff
+#print axioms StructuralRamsey.Girth.gluedStandardNode_shared_of_distinct_indices
+#print axioms StructuralRamsey.Girth.gluedWagonParent_core
+#print axioms StructuralRamsey.Girth.gluedWagonParent_standard
