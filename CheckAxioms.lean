@@ -970,3 +970,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCutGirth_restrict
 #print axioms StructuralRamsey.Girth.trainParentIntersectionBound_restrict
 #print axioms StructuralRamsey.Girth.trainParentPartBound_restrict
+#print axioms StructuralRamsey.Girth.transportedDesignatedB_testedOwner_and_boundary
+#print axioms StructuralRamsey.Girth.actualDesignatedAB_piece_canonicalOwnerCases
+#print axioms StructuralRamsey.Girth.actualDesignatedAB_family_canonicalOwnerCases
