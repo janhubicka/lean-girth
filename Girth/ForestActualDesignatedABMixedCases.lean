@@ -75,13 +75,10 @@ theorem transportedDesignatedB_testedOwner_and_boundary
   let core :=
     (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
   let bNew := (q.transportToStandard f i).embedding
-  have hEq : bNew = std.comp q.embedding := rfl
   constructor
-  · rw [hEq]
-    exact designated_bSupportPiece_transported
+  · exact designated_bSupportPiece_transported
       A std q.embedding testedOld hTest
-  · rw [hEq]
-    exact attachedProjectedBCopy_completeSupportBoundary
+  · exact attachedProjectedBCopy_completeSupportBoundary
       A B D C e q.base q.lift hStrong E f i
 
 /-- A selected support piece in the ACTUAL partite picture is either
