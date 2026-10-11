@@ -54,8 +54,7 @@ theorem actualBCopy_has_tested_standard_owner
       (StructuralRamsey.Partite.Attachment.attach C S E f).toRelStructure) :
     ∃ i : I,
       TransportedPiece testedOld
-        (relationEmbeddingToFunction
-          (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding)
+        ((StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding.toFunctionEmbedding)
         (bSupportPiece A bNew) := by
   classical
   obtain ⟨i, q, _hSame, hSupportEq⟩ :=
@@ -70,7 +69,7 @@ theorem actualBCopy_has_tested_standard_owner
     rfl
   have hOwned :
       TransportedPiece testedOld
-        (relationEmbeddingToFunction std)
+        std.toFunctionEmbedding
         (bSupportPiece A (std.comp q.embedding)) :=
     designated_bSupportPiece_transported
       A std q.embedding testedOld (hTest q)
