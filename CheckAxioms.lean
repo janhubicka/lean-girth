@@ -952,3 +952,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualAttachment_fullSmallCarrierGeometry
 #print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
 #print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
+#print axioms StructuralRamsey.Girth.trainCountLex_wellFounded
+#print axioms StructuralRamsey.Girth.TrainCutoffRankDrop.toTrainCountLex
+#print axioms StructuralRamsey.Girth.trainCutoffReplacement_wfRankDecrease
+#print axioms StructuralRamsey.Girth.trainCutoffDropTwo_wfRankDecrease
