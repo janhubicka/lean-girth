@@ -276,3 +276,7 @@ import Girth.ForestNoCoreBCopy
 import Girth.ForestNoCoreBFromTwoEdges
 import Girth.TrainCutoffWellFounded
 import Girth.ForestActualSmallGluingCarrier
+import Girth.TrainEquivalenceRestriction
+import Girth.TrainWagonClassRestriction
+import Girth.TrainLabelledCutGirth
+import Girth.TrainParameterRestriction
