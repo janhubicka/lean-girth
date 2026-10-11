@@ -61,8 +61,7 @@ theorem actualBCopy_testedOwner_and_completeBoundary
       (StructuralRamsey.Partite.Attachment.coreEmbedding C S E f).toEmbedding
     ∃ i : I,
       TransportedPiece testedOld
-        (relationEmbeddingToFunction
-          (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding)
+        ((StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding.toFunctionEmbedding)
         (bSupportPiece A bNew) ∧
       SmallOrWholeEdgeBoundary
         {t : Set (StructuralRamsey.Partite.Attachment.Vertex S
@@ -87,7 +86,7 @@ theorem actualBCopy_testedOwner_and_completeBoundary
     rfl
   have hTestedStd :
       TransportedPiece testedOld
-        (relationEmbeddingToFunction std)
+        std.toFunctionEmbedding
         (bSupportPiece A (std.comp q.embedding)) :=
     designated_bSupportPiece_transported
       A std q.embedding testedOld (hTestOld q)
