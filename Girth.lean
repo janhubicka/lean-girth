@@ -281,3 +281,4 @@ import Girth.TrainWagonClassRestriction
 import Girth.TrainLabelledCutGirth
 import Girth.TrainParameterRestriction
 import Girth.ForestActualDesignatedABMixedCases
+import Girth.ForestMixedActiveGenerated

@@ -973,3 +973,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.transportedDesignatedB_testedOwner_and_boundary
 #print axioms StructuralRamsey.Girth.actualDesignatedAB_piece_canonicalOwnerCases
 #print axioms StructuralRamsey.Girth.actualDesignatedAB_family_canonicalOwnerCases
+#print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated_of_mixedCoverage
