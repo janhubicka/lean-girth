@@ -926,3 +926,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalGluingPieces_injective
 #print axioms StructuralRamsey.Girth.physicalGluingPieces_notOneEdge
 #print axioms StructuralRamsey.Girth.physicalMixedOwners_localForest_of_twoSourceEdges
+#print axioms StructuralRamsey.Girth.physicalSupportRepresentative_spec
+#print axioms StructuralRamsey.Girth.physicalSupportRepresentative_injective
+#print axioms StructuralRamsey.Girth.physicalSupportRepresentative_range_subset
+#print axioms StructuralRamsey.Girth.physicalSupportRepresentative_surjective_support
+#print axioms StructuralRamsey.Girth.strongSupportEdgeArrow_physicalRepresentatives
