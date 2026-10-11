@@ -978,3 +978,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_le_two
 #print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_join_le
 #print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_join_three_le
+#print axioms StructuralRamsey.Girth.projectedCopy_of_base_carrier_subset
+#print axioms StructuralRamsey.Girth.orderedProjectedCopy_of_base_carrier_subset
+#print axioms StructuralRamsey.Girth.orderedBergeCycle_edges_have_fixed_projection
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapped_supportPiece_edges_nonempty
+#print axioms StructuralRamsey.Girth.StrongSupportEmbedding.mapped_supportPiece_vertex_covered
+#print axioms StructuralRamsey.Girth.strongSupportForest_map_core
+#print axioms StructuralRamsey.Girth.OwnerImage.owner_surjective
+#print axioms StructuralRamsey.Girth.OwnerImage.val_owner
+#print axioms StructuralRamsey.Girth.OwnerImage.card_le
