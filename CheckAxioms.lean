@@ -953,3 +953,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.refinementRun_sum_ge_two_length
 #print axioms StructuralRamsey.Girth.refinementRun_length_gt_g_plus_one
 #print axioms StructuralRamsey.Girth.actualPartiteAB_selectedForest_of_attachmentGeometry
+#print axioms StructuralRamsey.Girth.transportedDesignatedB_testedOwner_and_boundary
+#print axioms StructuralRamsey.Girth.actualDesignatedAB_piece_canonicalOwnerCases
+#print axioms StructuralRamsey.Girth.actualDesignatedAB_family_canonicalOwnerCases
