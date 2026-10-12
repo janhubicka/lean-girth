@@ -1080,3 +1080,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.genuineACarrierEval_injective
 #print axioms StructuralRamsey.Girth.genuineACarrierEval_surjective
 #print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
+#print axioms StructuralRamsey.Girth.actualAPictureGenuineEquiv
+#print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
