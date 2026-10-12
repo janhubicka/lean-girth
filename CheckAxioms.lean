@@ -994,3 +994,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.A2_noLoss_iff_pairShadowInvariant
 #print axioms StructuralRamsey.Girth.A2_absence_iff_on_of_shadow_noLoss
 #print axioms StructuralRamsey.Girth.twiceOccurrenceWeight_segment_le
+#print axioms StructuralRamsey.Girth.gluedCoreNode_generated
+#print axioms StructuralRamsey.Girth.gluedStandardNode_generated
+#print axioms StructuralRamsey.Girth.gluedStandardNode_injective
+#print axioms StructuralRamsey.Girth.gluedStandardNode_eq_core_iff
+#print axioms StructuralRamsey.Girth.gluedStandardNode_shared_of_distinct_indices
+#print axioms StructuralRamsey.Girth.gluedWagonParent_core
+#print axioms StructuralRamsey.Girth.gluedWagonParent_standard
+#print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut

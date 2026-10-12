@@ -290,3 +290,5 @@ import Girth.ForestActualDesignatedDirectIncrement
 import Girth.ForestActualDesignatedTrueActiveIncrement
 import Girth.TrainA2PairShadow
 import Girth.TrainCycleSegmentWeight
+import Girth.TrainWagonNodeGluing
+import Girth.TrainCutAcyclicProjection
