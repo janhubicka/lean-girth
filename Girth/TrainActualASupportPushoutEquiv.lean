@@ -133,8 +133,9 @@ theorem genuineACarrierEval_surjective
         ((fun y : Core =>
           (RelStructure.Attachment.coreEmbedding B S D f) y) ''
             copyCarrier aCore) = e
-      rw [← copyCarrier_comp_eq_image]
-      exact (ha.trans hCore).symm
+      exact (copyCarrier_comp_eq_image
+        (RelStructure.Attachment.coreEmbedding B S D f) aCore).symm.trans
+          (ha.trans hCore).symm
   · by_cases hInside : ∀ u : UA, aOld u ∈ S
     · obtain ⟨aCore, hShared⟩ :=
         (attached_standardACopy_is_shared_iff
@@ -146,8 +147,9 @@ theorem genuineACarrierEval_surjective
           ((fun y : Core =>
             (RelStructure.Attachment.coreEmbedding B S D f) y) ''
               copyCarrier aCore) = e
-        rw [← copyCarrier_comp_eq_image]
-        exact (ha.trans (hStd.trans hShared)).symm
+        exact (copyCarrier_comp_eq_image
+          (RelStructure.Attachment.coreEmbedding B S D f) aCore).symm.trans
+            (ha.trans (hStd.trans hShared)).symm
     · push_neg at hInside
       obtain ⟨u, hu⟩ := hInside
       let T : PrivateSupportCarrier S :=
@@ -159,8 +161,9 @@ theorem genuineACarrierEval_surjective
           ((fun x : Old =>
             (RelStructure.Attachment.copyEmbedding B S D f i) x) ''
               copyCarrier aOld) = e
-        rw [← copyCarrier_comp_eq_image]
-        exact (ha.trans hStd).symm
+        exact (copyCarrier_comp_eq_image
+          (RelStructure.Attachment.copyEmbedding B S D f i) aOld).symm.trans
+            (ha.trans hStd).symm
 
 /-- Every genuine A-support edge has a unique genuine carrier
 presentation. In particular, this equivalence identifies actual
