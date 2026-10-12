@@ -301,3 +301,4 @@ import Girth.TrainCutGirthProjection
 import Girth.TrainWagonContactGluing
 import Girth.TrainWagonSharedEdgeContact
 import Girth.TrainA2PruningCounterexample
+import Girth.TrainSharedEdgeQuotients
