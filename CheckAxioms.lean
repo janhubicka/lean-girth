@@ -1035,3 +1035,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.trainEdgeGenerated_tag_safe
 #print axioms StructuralRamsey.Girth.trainEdgeGenerated_iff_sameTag
 #print axioms StructuralRamsey.Girth.sharedWagonContact_has_physicalBridge
+#print axioms StructuralRamsey.Girth.privatePictureTag_has_standard_owner
+#print axioms StructuralRamsey.Girth.pictureWagonStep_tag_safe
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag
