@@ -46,10 +46,11 @@ theorem bergeCycle_partition_constant_of_cut_girth
       part (c.edge i) = part (c.edge j) := by
   classical
   by_contra hConstant
-  push_neg at hConstant
+  push Not at hConstant
   obtain ⟨i, j, hij⟩ := hConstant
   let raw : Fin c.length → I := fun k => part (c.edge k)
-  letI : Fintype (OwnerImage raw) := OwnerImage.fintype raw
+  letI : Fintype (OwnerImage raw) := by
+    exact OwnerImage.fintype raw
   let carrier : OwnerImage raw → Set W :=
     fun t => edgePartitionClassCarrier H part t.val
   have hCard : Fintype.card (OwnerImage raw) ≤ g := by
