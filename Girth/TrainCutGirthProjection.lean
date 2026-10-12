@@ -70,7 +70,7 @@ theorem bergeCycle_partition_constant_of_cut_girth
       simpa using hShort
     exact hc.trans hn
   have hCarrierLinear :
-      ∀ ⦃a b : OwnerImage raw⦄, a ≠ b →
+      ∀ ⦃a b : J⦄, a ≠ b →
         (carrier a ∩ carrier b).Subsingleton := by
     intro a b hab
     have hne : a.val ≠ b.val := by
