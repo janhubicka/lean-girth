@@ -1080,3 +1080,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.genuineACarrierEval_injective
 #print axioms StructuralRamsey.Girth.genuineACarrierEval_surjective
 #print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
+#print axioms StructuralRamsey.Girth.TrainEdgeGenerated.of_step_mono
+#print axioms StructuralRamsey.Girth.physicalPictureCutStep_mono
+#print axioms StructuralRamsey.Girth.physicalPictureGeneratedTrain_rel_iff
