@@ -21,7 +21,7 @@ cycle A1--A3 is inferred merely from the train hierarchy.
 namespace StructuralRamsey.Girth
 
 universe v
-variable {Shared OldEdge CoreEdge I : Type v}
+variable {Shared OldEdge CoreEdge I E : Type v}
 
 /-- Inclusion of elementary edge relations lifts through the
 reflexive/symmetric/transitive generated equivalence closure. -/
@@ -70,14 +70,14 @@ theorem physicalPictureCutStep_mono
       physicalPictureCutStep oldTrain coreTrain ν inOld inCore a b := by
   intro a b hab
   cases hab with
-  | core a b h =>
-      apply PictureWagonStep.core a b
-      apply Quotient.sound
-      exact coreTrain.nested μ ν hμν a b (Quotient.exact h)
-  | standard i a b h =>
-      apply PictureWagonStep.standard i a b
-      apply Quotient.sound
-      exact oldTrain.nested μ ν hμν a b (Quotient.exact h)
+  | core x y h =>
+      exact PictureWagonStep.core x y
+        (Quotient.sound
+          (coreTrain.nested μ ν hμν x y (Quotient.exact h)))
+  | standard i x y h =>
+      exact PictureWagonStep.standard i x y
+        (Quotient.sound
+          (oldTrain.nested μ ν hμν x y (Quotient.exact h)))
 
 /-- The generated wagon hierarchy on one actual physical
 picture-edge pushout. Each level is the least equivalence generated
