@@ -1049,3 +1049,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.oldSharedWagonLabel_parent
 #print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_parent
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag_of_sharedEdges
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_shared
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_private
+#print axioms StructuralRamsey.Girth.physicalPictureEdge_covered
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_tag
+#print axioms StructuralRamsey.Girth.physicalPictureGenerated_iff_tag
