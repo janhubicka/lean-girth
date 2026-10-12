@@ -1028,3 +1028,10 @@ import Girth
 #print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
 #print axioms StructuralRamsey.Girth.pruning_A2_toggles
 #print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_respects_tag
+#print axioms StructuralRamsey.Girth.sameEdgeTag_rel_of_bridges
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_iff_sameTag
+#print axioms StructuralRamsey.Girth.TrainEdgeGenerated.least
+#print axioms StructuralRamsey.Girth.trainEdgeGenerated_tag_safe
+#print axioms StructuralRamsey.Girth.trainEdgeGenerated_iff_sameTag
+#print axioms StructuralRamsey.Girth.sharedWagonContact_has_physicalBridge
