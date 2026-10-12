@@ -1002,3 +1002,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.gluedWagonParent_core
 #print axioms StructuralRamsey.Girth.gluedWagonParent_standard
 #print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_link
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_minimal
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_iff_of_generated
