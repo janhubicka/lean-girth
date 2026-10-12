@@ -1061,3 +1061,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.attached_actualACopyCarriers_eq_core_union_standard
 #print axioms StructuralRamsey.Girth.attached_standardACopy_subset_core_iff
 #print axioms StructuralRamsey.Girth.attached_standardACopy_is_shared_iff
+#print axioms StructuralRamsey.Girth.supportCarrier_image_eq_of_injective
+#print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_ne_core
+#print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_unique_index
+#print axioms StructuralRamsey.Girth.attachment_standardCarrier_image_eq_iff
+#print axioms StructuralRamsey.Girth.physicalSupportCarrierEval_injective
