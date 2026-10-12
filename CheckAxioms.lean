@@ -1028,3 +1028,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
 #print axioms StructuralRamsey.Girth.pruning_A2_toggles
 #print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
+#print axioms StructuralRamsey.Girth.normalForm_restrict_core
+#print axioms StructuralRamsey.Girth.normalForm_restrict_standard
+#print axioms StructuralRamsey.Girth.normalForm_core_contraction
+#print axioms StructuralRamsey.Girth.normalForm_private_not_core
+#print axioms StructuralRamsey.Girth.normalForm_cross_standard_core_contact
