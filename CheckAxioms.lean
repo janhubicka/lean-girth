@@ -1070,3 +1070,13 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_reflect
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_wagonCarrier_eq
 #print axioms StructuralRamsey.Girth.physicalPictureGenerated_restrict_standard
+#print axioms StructuralRamsey.Girth.oldACarrier_mem_shared_range_iff
+#print axioms StructuralRamsey.Girth.oldACarrier_not_shared_iff_private
+#print axioms StructuralRamsey.Girth.oldACarrier_shared_iff_actual_core
+#print axioms StructuralRamsey.Girth.sharedOldACarrier_exists_coreImage
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreMap_image
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreMap_injective
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_mem
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_injective
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_surjective
+#print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
