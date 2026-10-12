@@ -1048,3 +1048,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.sharedWagonQuotient_glue_injective
 #print axioms StructuralRamsey.Girth.oldSharedWagonLabel_parent
 #print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_parent
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag_of_sharedEdges
