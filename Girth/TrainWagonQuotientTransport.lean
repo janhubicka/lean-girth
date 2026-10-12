@@ -152,8 +152,9 @@ theorem wagonTransport_parentIntersectionBound
       have heq : (T.wagonTransportEquiv ϕ μ) b = a :=
         (T.wagonTransportEquiv ϕ μ).apply_symm_apply a
       rw [← heq]
-      exact T.wagonTransport_carrier_eq
-        ϕ oldCarrier newCarrier hCarrier μ b
+      simpa only [Equiv.symm_apply_apply] using
+        (T.wagonTransport_carrier_eq
+          ϕ oldCarrier newCarrier hCarrier μ b)
     change (T.transport ϕ).wagonClassCarrier newCarrier μ a ⊆
       T.wagonClassCarrier oldCarrier μ
         ((T.wagonTransportEquiv ϕ μ).symm a)
