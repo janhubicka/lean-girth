@@ -1054,3 +1054,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalPictureEdge_covered
 #print axioms StructuralRamsey.Girth.physicalStandardEdge_tag
 #print axioms StructuralRamsey.Girth.physicalPictureGenerated_iff_tag
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_bottom_eq
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_top_universal
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_top_noShared_counterexample
