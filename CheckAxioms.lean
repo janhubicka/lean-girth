@@ -1039,3 +1039,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.pictureWagonStep_tag_safe
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag_of_sharedEdges
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_shared
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_private
+#print axioms StructuralRamsey.Girth.physicalPictureEdge_covered
+#print axioms StructuralRamsey.Girth.physicalStandardEdge_tag
+#print axioms StructuralRamsey.Girth.physicalPictureGenerated_iff_tag
