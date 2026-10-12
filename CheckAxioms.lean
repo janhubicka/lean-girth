@@ -1069,3 +1069,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.oldACarrier_mem_shared_range_iff
 #print axioms StructuralRamsey.Girth.oldACarrier_not_shared_iff_private
 #print axioms StructuralRamsey.Girth.oldACarrier_shared_iff_actual_core
+#print axioms StructuralRamsey.Girth.sharedOldACarrier_exists_coreImage
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreMap_image
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreMap_injective
