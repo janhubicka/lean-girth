@@ -1024,3 +1024,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_parent
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_glue_injective
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_glue_parent
+#print axioms StructuralRamsey.Girth.sharedWagonContact_has_physicalBridge
