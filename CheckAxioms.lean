@@ -1010,3 +1010,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.strictlyGrowingAgreementEvents_bounded
 #print axioms StructuralRamsey.Girth.observableDiaryEvents_bound
 #print axioms StructuralRamsey.Girth.strongSupportPieces_meetRelabelPartAtMostOne
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_respects_tag
+#print axioms StructuralRamsey.Girth.sameEdgeTag_rel_of_bridges
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_iff_sameTag
