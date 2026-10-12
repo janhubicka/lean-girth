@@ -78,9 +78,8 @@ theorem wagonAncestorKernel_minimal
   | inl c =>
       cases y with
       | inl d =>
-          have hcd : c = d :=
-            Sum.inl.inj (by
-              simpa [wagonAncestorNormalForm, gluedCoreNode] using hEq)
+          have hcd : c = d := by
+            simpa [wagonAncestorNormalForm, gluedCoreNode] using hEq
           subst d
           exact hRefl _
       | inr z =>
