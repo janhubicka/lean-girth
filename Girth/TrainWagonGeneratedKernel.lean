@@ -138,4 +138,40 @@ theorem wagonAncestorKernel_minimal
                     (hLink i a c ha)
                     (hSymm _ _ (hLink j b c hb))
 
+
+/-- The genuinely generated gluing equivalence is the tagged kernel.
+This formulation asks that R be the LEAST equivalence relation containing
+the explicit core links, not merely an arbitrary extension of them.
+To apply the theorem to physical edge equivalences one must show that
+the actual edge generators induce exactly these ancestor links. -/
+theorem wagonAncestorKernel_iff_of_generated
+    (glue : I → Old → Option Core)
+    (R : (Core ⊕ (I × Old)) → (Core ⊕ (I × Old)) → Prop)
+    (hRefl : ∀ x, R x x)
+    (hSymm : ∀ x y, R x y → R y x)
+    (hTrans : ∀ x y z, R x y → R y z → R x z)
+    (hLink : ∀ i a c, glue i a = some c →
+      R (Sum.inr (i, a)) (Sum.inl c))
+    (hLeast : ∀ S : (Core ⊕ (I × Old)) →
+        (Core ⊕ (I × Old)) → Prop,
+      (∀ x, S x x) →
+      (∀ x y, S x y → S y x) →
+      (∀ x y z, S x y → S y z → S x z) →
+      (∀ i a c, glue i a = some c →
+        S (Sum.inr (i, a)) (Sum.inl c)) →
+      ∀ x y, R x y → S x y) :
+    ∀ x y, R x y ↔ wagonAncestorKernel glue x y := by
+  intro x y
+  constructor
+  · intro hxy
+    exact hLeast (wagonAncestorKernel glue)
+      (wagonAncestorKernel_refl glue)
+      (fun u v h => wagonAncestorKernel_symm glue h)
+      (fun u v z huv hvz => wagonAncestorKernel_trans glue huv hvz)
+      (fun i a c h => wagonAncestorKernel_link glue i a c h)
+      x y hxy
+  · intro hxy
+    exact wagonAncestorKernel_minimal
+      glue R hRefl hSymm hTrans hLink x y hxy
+
 end StructuralRamsey.Girth
