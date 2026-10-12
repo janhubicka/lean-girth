@@ -1082,3 +1082,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_rel_iff
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parent
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parent_symm
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_carrier_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parentIntersectionBound
