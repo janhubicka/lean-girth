@@ -1002,3 +1002,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.gluedWagonParent_core
 #print axioms StructuralRamsey.Girth.gluedWagonParent_standard
 #print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_injective
+#print axioms StructuralRamsey.Girth.PortGluing.overlapToUnion_surjective
+#print axioms StructuralRamsey.Girth.PortGluing.swapTwoLeafUnionSubtype_val
+#print axioms StructuralRamsey.Girth.attachment_unique_standard_owner_off_core
+#print axioms StructuralRamsey.Girth.attachment_irreducible_unique_owner_off_core
+#print axioms StructuralRamsey.Girth.strictlyGrowingAgreementEvents_bounded
+#print axioms StructuralRamsey.Girth.observableDiaryEvents_bound
+#print axioms StructuralRamsey.Girth.strongSupportPieces_meetRelabelPartAtMostOne
