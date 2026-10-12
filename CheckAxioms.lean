@@ -1082,3 +1082,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_rel_iff
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.actualAPictureGenuineEquiv
+#print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
