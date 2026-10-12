@@ -47,8 +47,9 @@ noncomputable def physicalStandardEdge
     (inOld : Shared ↪ OldEdge)
     (inCore : I → Shared ↪ CoreEdge)
     (i : I) (a : OldEdge) :
-    PhysicalPictureEdge inOld I CoreEdge :=
-  if h : a ∈ Set.range inOld then
+    PhysicalPictureEdge inOld I CoreEdge := by
+  classical
+  exact if h : a ∈ Set.range inOld then
     Sum.inl (inCore i (Classical.choose h))
   else
     Sum.inr (i, ⟨a, h⟩)
