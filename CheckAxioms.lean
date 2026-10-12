@@ -1066,3 +1066,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_unique_index
 #print axioms StructuralRamsey.Girth.attachment_standardCarrier_image_eq_iff
 #print axioms StructuralRamsey.Girth.physicalSupportCarrierEval_injective
+#print axioms StructuralRamsey.Girth.copyCarrier_comp_eq_image
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_mem
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_injective
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_surjective
+#print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
