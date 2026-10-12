@@ -41,13 +41,11 @@ def pruningNewWagon : Finset (Finset PruningVertex) :=
 
 /-- Two different edges have at most one common vertex. -/
 def pruningLinear (E : Finset (Finset PruningVertex)) : Prop :=
-  (E.all (fun e =>
-    E.all (fun f => decide (e = f ∨ (e ∩ f).card ≤ 1)))) = true
+  ∀ e ∈ E, ∀ f ∈ E, e = f ∨ (e ∩ f).card ≤ 1
 
 /-- The A2 restriction for the two side vertex connectors 0 and 1. -/
 def pruningA2SideCondition (E : Finset (Finset PruningVertex)) : Prop :=
-  (E.all (fun e =>
-    decide (¬ ((0 : PruningVertex) ∈ e ∧ (1 : PruningVertex) ∈ e)))) = true
+  ∀ e ∈ E, ¬ ((0 : PruningVertex) ∈ e ∧ (1 : PruningVertex) ∈ e)
 
 theorem pruning_old_new_linear :
     pruningLinear pruningOldEdges ∧ pruningLinear pruningNewEdges := by
