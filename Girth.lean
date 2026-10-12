@@ -319,3 +319,4 @@ import Girth.TrainPhysicalPictureExactRestriction
 import Girth.TrainActualSharedACarrierSubfamily
 import Girth.TrainSharedOldACarrierCoreEmbedding
 import Girth.TrainActualASupportPushoutEquiv
+import Girth.TrainActualPhysicalAEdgePushout
