@@ -1024,3 +1024,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_parent
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_glue_injective
 #print axioms StructuralRamsey.Girth.wagonSharedEdgeContact_glue_parent
+#print axioms StructuralRamsey.Girth.pruning_old_new_linear
+#print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
+#print axioms StructuralRamsey.Girth.pruning_A2_toggles
+#print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
