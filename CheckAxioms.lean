@@ -1066,3 +1066,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_unique_index
 #print axioms StructuralRamsey.Girth.attachment_standardCarrier_image_eq_iff
 #print axioms StructuralRamsey.Girth.physicalSupportCarrierEval_injective
+#print axioms StructuralRamsey.Girth.oldACarrier_mem_shared_range_iff
+#print axioms StructuralRamsey.Girth.oldACarrier_not_shared_iff_private
+#print axioms StructuralRamsey.Girth.oldACarrier_shared_iff_actual_core
