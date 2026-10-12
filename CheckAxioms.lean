@@ -1061,3 +1061,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.attached_actualACopyCarriers_eq_core_union_standard
 #print axioms StructuralRamsey.Girth.attached_standardACopy_subset_core_iff
 #print axioms StructuralRamsey.Girth.attached_standardACopy_is_shared_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_reflect
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_wagonCarrier_eq
