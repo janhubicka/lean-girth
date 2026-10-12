@@ -314,3 +314,4 @@ import Girth.TrainActualACopyEdgeCover
 import Girth.TrainActualASharedEdges
 import Girth.TrainActualSupportCarrierUniqueness
 import Girth.TrainPhysicalSupportCarrierPushout
+import Girth.TrainEdgeEquivalenceTransport
