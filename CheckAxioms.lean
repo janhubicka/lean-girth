@@ -1069,3 +1069,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_rel_iff
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_reflect
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_mem
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_injective
+#print axioms StructuralRamsey.Girth.genuineACarrierEval_surjective
+#print axioms StructuralRamsey.Girth.actualACarrierPushoutEquiv
