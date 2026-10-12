@@ -1022,3 +1022,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.generatedEdgeRel_respects_tag
 #print axioms StructuralRamsey.Girth.sameEdgeTag_rel_of_bridges
 #print axioms StructuralRamsey.Girth.generatedEdgeRel_iff_sameTag
+#print axioms StructuralRamsey.Girth.TrainEdgeGenerated.least
+#print axioms StructuralRamsey.Girth.trainEdgeGenerated_tag_safe
+#print axioms StructuralRamsey.Girth.trainEdgeGenerated_iff_sameTag
