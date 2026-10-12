@@ -296,3 +296,6 @@ import Girth.ForestPortPushoutActualUnion
 import Girth.ForestPortPushoutDiamond
 import Girth.ForestUniqueStandardOwner
 import Girth.ForestObservableEventBudget
+import Girth.TrainWagonGeneratedKernel
+import Girth.TrainCutGirthProjection
+import Girth.TrainWagonContactGluing
