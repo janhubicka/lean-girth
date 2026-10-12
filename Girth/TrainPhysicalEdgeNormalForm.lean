@@ -68,7 +68,7 @@ theorem sameEdgeTag_rel_of_bridges
     R e f := by
   cases htag : tag e with
   | inl c =>
-      have hf : tag f = Sum.inl c := htag.symm.trans hEq
+      have hf : tag f = Sum.inl c := hEq.symm.trans htag
       obtain ⟨g, hgCore, hgTag, heg⟩ := hBridge e c htag
       obtain ⟨h, hhCore, hhTag, hfh⟩ := hBridge f c hf
       have hgh : R g h :=
@@ -77,7 +77,7 @@ theorem sameEdgeTag_rel_of_bridges
         (hTrans g h f hgh (hSymm f h hfh))
   | inr z =>
       rcases z with ⟨i, a⟩
-      have hf : tag f = Sum.inr (i, a) := htag.symm.trans hEq
+      have hf : tag f = Sum.inr (i, a) := hEq.symm.trans htag
       exact hPrivate i a e f htag hf
 
 /-- The actual generated edge relation is exactly equality of its
