@@ -1002,3 +1002,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.gluedWagonParent_core
 #print axioms StructuralRamsey.Girth.gluedWagonParent_standard
 #print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut
+#print axioms StructuralRamsey.Girth.pruning_old_new_linear
+#print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
+#print axioms StructuralRamsey.Girth.pruning_A2_toggles
+#print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
