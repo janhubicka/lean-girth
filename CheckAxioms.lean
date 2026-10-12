@@ -1054,3 +1054,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalPictureEdge_covered
 #print axioms StructuralRamsey.Girth.physicalStandardEdge_tag
 #print axioms StructuralRamsey.Girth.physicalPictureGenerated_iff_tag
+#print axioms StructuralRamsey.Girth.attached_actualACopyCarrier_core_or_standard
+#print axioms StructuralRamsey.Girth.attached_actualACopyCarriers_eq_core_union_standard
