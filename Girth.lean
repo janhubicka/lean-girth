@@ -320,3 +320,4 @@ import Girth.TrainActualSharedACarrierSubfamily
 import Girth.TrainSharedOldACarrierCoreEmbedding
 import Girth.TrainActualASupportPushoutEquiv
 import Girth.TrainActualASupportTrainTransport
+import Girth.TrainWagonQuotientTransport
