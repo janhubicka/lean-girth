@@ -1019,3 +1019,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.gluedStandardNode_injective_of_contacts
 #print axioms StructuralRamsey.Girth.wagonContactGlue_parent
 #print axioms StructuralRamsey.Girth.gluedWagonParent_standard_of_contacts
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_respects_tag
+#print axioms StructuralRamsey.Girth.sameEdgeTag_rel_of_bridges
+#print axioms StructuralRamsey.Girth.generatedEdgeRel_iff_sameTag
