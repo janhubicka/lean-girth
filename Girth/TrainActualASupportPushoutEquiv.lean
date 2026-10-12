@@ -1,6 +1,7 @@
 import Girth.TrainPhysicalSupportCarrierPushout
 import Girth.TrainActualASharedEdges
 import Girth.TrainActualACopyEdgeCover
+import Girth.ForestDesignatedBSupportTransport
 
 /-!
 # Actual A-support hypergraph edges are the canonical core/private carrier pushout
@@ -29,24 +30,6 @@ open StructuralRamsey.RelStructure
 universe u v
 variable {L : RelLanguage.{u}}
 variable {UA Old Core I : Type v}
-
-/-- Carrier of a composite copy is the image of the old carrier
-under its ambient structure embedding. -/
-theorem copyCarrier_comp_eq_image
-    {W X : Type v}
-    {A : RelStructure L UA}
-    {D : RelStructure L W}
-    {E : RelStructure L X}
-    (g : RelStructure.Embedding D E)
-    (a : RelStructure.Embedding A D) :
-    (fun x : W => g x) '' copyCarrier a =
-      copyCarrier (g.comp a) := by
-  ext x
-  constructor
-  · rintro ⟨w, ⟨t, rfl⟩, rfl⟩
-    exact ⟨t, rfl⟩
-  · rintro ⟨t, rfl⟩
-    exact ⟨a t, ⟨t, rfl⟩, rfl⟩
 
 /-- Genuine physical A-support edge presentations: a genuine
 core A-copy carrier, or one genuinely private old A-copy carrier
@@ -95,8 +78,8 @@ theorem genuineACarrierEval_mem
           (RelStructure.Attachment.coreEmbedding B S D f) y) '' U) =
           copyCarrier ((RelStructure.Attachment.coreEmbedding B S D f).comp aCore)
       rw [hU]
-      exact copyCarrier_comp_eq_image
-        (RelStructure.Attachment.coreEmbedding B S D f) aCore
+      exact (copyCarrier_comp_eq_image
+        (RelStructure.Attachment.coreEmbedding B S D f) aCore).symm
   | inr z =>
       rcases z with ⟨i, T⟩
       change T.1 ∈ actualACopyCarriers A B at hp
@@ -107,8 +90,8 @@ theorem genuineACarrierEval_mem
           (RelStructure.Attachment.copyEmbedding B S D f i) x) '' T.1) =
           copyCarrier ((RelStructure.Attachment.copyEmbedding B S D f i).comp aOld)
       rw [hT]
-      exact copyCarrier_comp_eq_image
-        (RelStructure.Attachment.copyEmbedding B S D f i) aOld
+      exact (copyCarrier_comp_eq_image
+        (RelStructure.Attachment.copyEmbedding B S D f i) aOld).symm
 
 /-- The physical carrier evaluation is injective on all genuine
 core/private presentations, as it is on all carrier sets. -/
@@ -150,7 +133,7 @@ theorem genuineACarrierEval_surjective
         ((fun y : Core =>
           (RelStructure.Attachment.coreEmbedding B S D f) y) ''
             copyCarrier aCore) = e
-      rw [copyCarrier_comp_eq_image]
+      rw [← copyCarrier_comp_eq_image]
       exact (ha.trans hCore).symm
   · by_cases hInside : ∀ u : UA, aOld u ∈ S
     · obtain ⟨aCore, hShared⟩ :=
@@ -163,7 +146,7 @@ theorem genuineACarrierEval_surjective
           ((fun y : Core =>
             (RelStructure.Attachment.coreEmbedding B S D f) y) ''
               copyCarrier aCore) = e
-        rw [copyCarrier_comp_eq_image]
+        rw [← copyCarrier_comp_eq_image]
         exact (ha.trans (hStd.trans hShared)).symm
     · push_neg at hInside
       obtain ⟨u, hu⟩ := hInside
@@ -176,7 +159,7 @@ theorem genuineACarrierEval_surjective
           ((fun x : Old =>
             (RelStructure.Attachment.copyEmbedding B S D f i) x) ''
               copyCarrier aOld) = e
-        rw [copyCarrier_comp_eq_image]
+        rw [← copyCarrier_comp_eq_image]
         exact (ha.trans hStd).symm
 
 /-- Every genuine A-support edge has a unique genuine carrier
