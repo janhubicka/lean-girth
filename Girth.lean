@@ -320,3 +320,5 @@ import Girth.TrainActualSharedACarrierSubfamily
 import Girth.TrainSharedOldACarrierCoreEmbedding
 import Girth.TrainActualASupportPushoutEquiv
 import Girth.TrainPhysicalPictureGeneratedTrain
+import Girth.TrainActualPhysicalAEdgePushout
+import Girth.TrainGeneratedActualASupportTrain
