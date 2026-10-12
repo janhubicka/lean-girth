@@ -1002,3 +1002,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.gluedWagonParent_core
 #print axioms StructuralRamsey.Girth.gluedWagonParent_standard
 #print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_acyclic_cut
+#print axioms StructuralRamsey.Girth.wagonContactGlue_eq_some_iff
+#print axioms StructuralRamsey.Girth.wagonContactGlue_injective
+#print axioms StructuralRamsey.Girth.gluedStandardNode_injective_of_contacts
+#print axioms StructuralRamsey.Girth.wagonContactGlue_parent
+#print axioms StructuralRamsey.Girth.gluedWagonParent_standard_of_contacts
