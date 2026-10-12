@@ -309,3 +309,4 @@ import Girth.TrainNormalFormRestriction
 import Girth.TrainSharedEdgeQuotients
 import Girth.TrainPictureWagonFromSharedEdges
 import Girth.TrainPhysicalPictureEdgePushout
+import Girth.TrainPictureExtremeCuts
