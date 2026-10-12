@@ -1035,3 +1035,13 @@ import Girth
 #print axioms StructuralRamsey.Girth.trainEdgeGenerated_tag_safe
 #print axioms StructuralRamsey.Girth.trainEdgeGenerated_iff_sameTag
 #print axioms StructuralRamsey.Girth.sharedWagonContact_has_physicalBridge
+#print axioms StructuralRamsey.Girth.normalForm_restrict_core
+#print axioms StructuralRamsey.Girth.normalForm_restrict_standard
+#print axioms StructuralRamsey.Girth.normalForm_core_contraction
+#print axioms StructuralRamsey.Girth.normalForm_private_not_core
+#print axioms StructuralRamsey.Girth.normalForm_cross_standard_core_contact
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonParent_mk
+#print axioms StructuralRamsey.Girth.sharedWagonLabel_eq_iff
+#print axioms StructuralRamsey.Girth.sharedWagonQuotient_glue_injective
+#print axioms StructuralRamsey.Girth.oldSharedWagonLabel_parent
+#print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_parent
