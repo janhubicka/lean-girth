@@ -51,6 +51,7 @@ def pruningA2SideCondition (E : Finset (Finset PruningVertex)) : Prop :=
 
 theorem pruning_old_new_linear :
     pruningLinear pruningOldEdges ∧ pruningLinear pruningNewEdges := by
+  unfold pruningLinear
   decide
 
 /-- Even deleting the chord from W does not change its carrier. -/
@@ -62,6 +63,7 @@ theorem pruning_wagon_carriers_identical :
 theorem pruning_A2_toggles :
     ¬ pruningA2SideCondition pruningOldEdges ∧
       pruningA2SideCondition pruningNewEdges := by
+  unfold pruningA2SideCondition
   decide
 
 /-- All four remaining cycle edges survive and the extra chord vanishes. -/
