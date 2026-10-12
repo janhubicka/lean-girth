@@ -1,6 +1,7 @@
 import Girth.TrainPictureExtremeCuts
 import Girth.TrainPhysicalPictureEdgePushout
 import Girth.TrainEquivalenceRestriction
+import Girth.TrainWagonClassRestriction
 
 /-!
 # The complete hierarchy of generated wagon equivalences in one picture
