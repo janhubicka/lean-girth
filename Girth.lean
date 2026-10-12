@@ -304,3 +304,5 @@ import Girth.TrainA2PruningCounterexample
 import Girth.TrainPhysicalEdgeNormalForm
 import Girth.TrainEdgeGeneratedClosure
 import Girth.TrainPhysicalWagonBridge
+import Girth.TrainNormalFormRestriction
+import Girth.TrainSharedEdgeQuotients
