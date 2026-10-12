@@ -316,3 +316,6 @@ import Girth.TrainActualSupportCarrierUniqueness
 import Girth.TrainPhysicalSupportCarrierPushout
 import Girth.TrainEdgeEquivalenceTransport
 import Girth.TrainPhysicalPictureExactRestriction
+import Girth.TrainActualSharedACarrierSubfamily
+import Girth.TrainSharedOldACarrierCoreEmbedding
+import Girth.TrainActualASupportPushoutEquiv
