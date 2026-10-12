@@ -310,3 +310,5 @@ import Girth.TrainSharedEdgeQuotients
 import Girth.TrainPictureWagonFromSharedEdges
 import Girth.TrainPhysicalPictureEdgePushout
 import Girth.TrainPictureExtremeCuts
+import Girth.TrainActualACopyEdgeCover
+import Girth.TrainActualASharedEdges

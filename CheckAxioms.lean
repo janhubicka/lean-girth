@@ -1057,3 +1057,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_bottom_eq
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_top_universal
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_top_noShared_counterexample
+#print axioms StructuralRamsey.Girth.attached_actualACopyCarrier_core_or_standard
+#print axioms StructuralRamsey.Girth.attached_actualACopyCarriers_eq_core_union_standard
+#print axioms StructuralRamsey.Girth.attached_standardACopy_subset_core_iff
+#print axioms StructuralRamsey.Girth.attached_standardACopy_is_shared_iff
