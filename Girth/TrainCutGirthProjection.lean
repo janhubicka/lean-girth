@@ -49,14 +49,26 @@ theorem bergeCycle_partition_constant_of_cut_girth
   push Not at hConstant
   obtain ⟨i, j, hij⟩ := hConstant
   let raw : Fin c.length → I := fun k => part (c.edge k)
-  letI : Fintype (OwnerImage raw) := by
-    exact OwnerImage.fintype raw
-  let carrier : OwnerImage raw → Set W :=
+  -- The finite cycle labels may inhabit a different universe from Fin.
+  -- Construct their finite image directly, without the same-universe
+  -- assumption of the general OwnerImage interface.
+  let J : Type v := Set.range raw
+  let picked : Fin c.length → J :=
+    fun k => ⟨raw k, ⟨k, rfl⟩⟩
+  have hOnto : Function.Surjective picked := by
+    rintro ⟨j, ⟨k, hk⟩⟩
+    refine ⟨k, ?_⟩
+    exact Subtype.ext hk
+  haveI : Finite J := Finite.of_surjective picked hOnto
+  letI : Fintype J := Fintype.ofFinite J
+  let carrier : J → Set W :=
     fun t => edgePartitionClassCarrier H part t.val
-  have hCard : Fintype.card (OwnerImage raw) ≤ g := by
+  have hCard : Fintype.card J ≤ g := by
+    have hc : Fintype.card J ≤ Fintype.card (Fin c.length) :=
+      Fintype.card_le_of_surjective picked hOnto
     have hn : Fintype.card (Fin c.length) ≤ g := by
       simpa using hShort
-    exact (OwnerImage.card_le raw).trans hn
+    exact hc.trans hn
   have hCarrierLinear :
       ∀ ⦃a b : OwnerImage raw⦄, a ≠ b →
         (carrier a ∩ carrier b).Subsingleton := by
@@ -75,8 +87,6 @@ theorem bergeCycle_partition_constant_of_cut_girth
   have hAcyclic : (boundaryIncidenceGraph carrier).IsAcyclic :=
     boundaryIncidenceGraph_isAcyclic_of_pairwiseSubsingleton_of_girthGT
       carrier hCarrierLinear g hCard hRestrictedGirth
-  let picked : Fin c.length → OwnerImage raw :=
-    OwnerImage.owner raw
   have hBoundary :
       ∀ k, picked k ≠ picked (cyclicSucc k) →
         c.vertex k ∈ carrier (picked k) ∧
