@@ -1058,3 +1058,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_ne_core
 #print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_unique_index
 #print axioms StructuralRamsey.Girth.attachment_standardCarrier_image_eq_iff
+#print axioms StructuralRamsey.Girth.physicalSupportCarrierEval_injective
