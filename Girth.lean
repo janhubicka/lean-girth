@@ -305,3 +305,4 @@ import Girth.TrainPhysicalEdgeNormalForm
 import Girth.TrainEdgeGeneratedClosure
 import Girth.TrainPhysicalWagonBridge
 import Girth.TrainPictureWagonGenerators
+import Girth.TrainPictureWagonFromSharedEdges
