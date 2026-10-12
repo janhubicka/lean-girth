@@ -292,3 +292,7 @@ import Girth.TrainA2PairShadow
 import Girth.TrainCycleSegmentWeight
 import Girth.TrainWagonNodeGluing
 import Girth.TrainCutAcyclicProjection
+import Girth.ForestPortPushoutActualUnion
+import Girth.ForestPortPushoutDiamond
+import Girth.ForestUniqueStandardOwner
+import Girth.ForestObservableEventBudget
