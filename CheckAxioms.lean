@@ -1066,3 +1066,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_unique_index
 #print axioms StructuralRamsey.Girth.attachment_standardCarrier_image_eq_iff
 #print axioms StructuralRamsey.Girth.physicalSupportCarrierEval_injective
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_reflect
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transport_wagonCarrier_eq
