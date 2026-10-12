@@ -1049,3 +1049,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.oldSharedWagonLabel_parent
 #print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_parent
 #print axioms StructuralRamsey.Girth.pictureWagonGenerated_iff_sameTag_of_sharedEdges
+#print axioms StructuralRamsey.Girth.attached_standardACopy_subset_core_iff
+#print axioms StructuralRamsey.Girth.attached_standardACopy_is_shared_iff
