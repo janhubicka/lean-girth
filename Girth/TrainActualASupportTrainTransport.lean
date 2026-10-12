@@ -94,13 +94,10 @@ theorem actualAttachedATrain_wagonCarrier_eq
         (fun x : ActualAttachedAEdge A B S D f => x.1)
         μ (actualACarrierPushoutEquiv A hA B S D f e) =
       T.wagonCarrier (genuineACarrierEval A B S D f) μ e := by
-  apply EdgeTrainLevels.transport_wagonCarrier_eq
+  exact EdgeTrainLevels.transport_wagonCarrier_eq
     T (actualACarrierPushoutEquiv A hA B S D f)
     (genuineACarrierEval A B S D f)
     (fun x : ActualAttachedAEdge A B S D f => x.1)
-  · intro q
-    rfl
-  · exact μ
-  · exact e
+    (by intro q; rfl) μ e
 
 end StructuralRamsey.Girth
