@@ -1028,3 +1028,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.pruning_wagon_carriers_identical
 #print axioms StructuralRamsey.Girth.pruning_A2_toggles
 #print axioms StructuralRamsey.Girth.pruning_cycle_pieces_survive
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonParent_mk
+#print axioms StructuralRamsey.Girth.sharedWagonLabel_eq_iff
+#print axioms StructuralRamsey.Girth.sharedWagonQuotient_glue_injective
+#print axioms StructuralRamsey.Girth.oldSharedWagonLabel_parent
+#print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_parent
