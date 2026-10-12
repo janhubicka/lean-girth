@@ -89,10 +89,9 @@ theorem wagonAncestorKernel_minimal
               simp [wagonAncestorNormalForm, gluedCoreNode,
                 gluedStandardNode, hb] at hEq
           | some d =>
-              have hcd : c = d :=
-                Sum.inl.inj (by
+              have hcd : c = d := by
                   simpa [wagonAncestorNormalForm, gluedCoreNode,
-                    gluedStandardNode, hb] using hEq)
+                    gluedStandardNode, hb] using hEq
               subst d
               exact hSymm _ _ (hLink j b c hb)
   | inr z =>
@@ -104,10 +103,9 @@ theorem wagonAncestorKernel_minimal
               simp [wagonAncestorNormalForm, gluedCoreNode,
                 gluedStandardNode, ha] at hEq
           | some c =>
-              have hcd : c = d :=
-                Sum.inl.inj (by
+              have hcd : c = d := by
                   simpa [wagonAncestorNormalForm, gluedCoreNode,
-                    gluedStandardNode, ha] using hEq)
+                    gluedStandardNode, ha] using hEq
               subst d
               exact hLink i a c ha
       | inr z =>
@@ -132,10 +130,9 @@ theorem wagonAncestorKernel_minimal
                   simp [wagonAncestorNormalForm,
                     gluedStandardNode, ha, hb] at hEq
               | some d =>
-                  have hcd : c = d :=
-                    Sum.inl.inj (by
+                  have hcd : c = d := by
                       simpa [wagonAncestorNormalForm,
-                        gluedStandardNode, ha, hb] using hEq)
+                        gluedStandardNode, ha, hb] using hEq
                   subst d
                   exact hTrans _ _ _
                     (hLink i a c ha)
