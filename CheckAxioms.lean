@@ -1010,3 +1010,12 @@ import Girth
 #print axioms StructuralRamsey.Girth.strictlyGrowingAgreementEvents_bounded
 #print axioms StructuralRamsey.Girth.observableDiaryEvents_bound
 #print axioms StructuralRamsey.Girth.strongSupportPieces_meetRelabelPartAtMostOne
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_link
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_minimal
+#print axioms StructuralRamsey.Girth.wagonAncestorKernel_iff_of_generated
+#print axioms StructuralRamsey.Girth.bergeCycle_partition_constant_of_cut_girth
+#print axioms StructuralRamsey.Girth.wagonContactGlue_eq_some_iff
+#print axioms StructuralRamsey.Girth.wagonContactGlue_injective
+#print axioms StructuralRamsey.Girth.gluedStandardNode_injective_of_contacts
+#print axioms StructuralRamsey.Girth.wagonContactGlue_parent
+#print axioms StructuralRamsey.Girth.gluedWagonParent_standard_of_contacts
