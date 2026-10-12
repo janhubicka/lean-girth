@@ -300,3 +300,4 @@ import Girth.TrainWagonGeneratedKernel
 import Girth.TrainCutGirthProjection
 import Girth.TrainWagonContactGluing
 import Girth.TrainPhysicalEdgeNormalForm
+import Girth.TrainEdgeGeneratedClosure
