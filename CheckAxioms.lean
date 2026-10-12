@@ -1083,3 +1083,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.TrainEdgeGenerated.of_step_mono
 #print axioms StructuralRamsey.Girth.physicalPictureCutStep_mono
 #print axioms StructuralRamsey.Girth.physicalPictureGeneratedTrain_rel_iff
+#print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_rel_iff
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_wagonCarrier_eq
