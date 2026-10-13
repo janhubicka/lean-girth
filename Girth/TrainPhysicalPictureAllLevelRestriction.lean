@@ -75,7 +75,11 @@ theorem physicalPictureGeneratedTrain_restrict_standard
       (physicalStandardEdge inOld inCore i a)
       (physicalStandardEdge inOld inCore i b) ↔
         oldTrain.rel μ a b
-  exact hOld.trans ⟨Quotient.exact, Quotient.sound⟩
+  refine hOld.trans ⟨?_, ?_⟩
+  · intro h
+    exact Quotient.exact h
+  · intro h
+    exact Quotient.sound h
 
 /-- Exact restriction to the core holds under preservation of the
 shared train relations; no reflection is needed on the core side. -/
@@ -127,6 +131,10 @@ theorem physicalPictureGeneratedTrain_restrict_core
   change
     R (physicalCoreEdge inOld I a) (physicalCoreEdge inOld I b) ↔
       coreTrain.rel μ a b
-  exact hCore.trans ⟨Quotient.exact, Quotient.sound⟩
+  refine hCore.trans ⟨?_, ?_⟩
+  · intro h
+    exact Quotient.exact h
+  · intro h
+    exact Quotient.sound h
 
 end StructuralRamsey.Girth
