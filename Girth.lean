@@ -327,3 +327,4 @@ import Girth.TrainWagonCutGirthTransport
 import Girth.TrainGeneratedActualASupportTrain
 import Girth.TrainPhysicalPictureAllLevelRestriction
 import Girth.TrainGeneratedActualAllLevelRestriction
+import Girth.TrainCoreForbiddenVertexBridge
