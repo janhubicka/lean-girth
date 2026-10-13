@@ -1098,3 +1098,7 @@ import Girth
 #print axioms StructuralRamsey.Girth.physicalPictureGeneratedTrain_restrict_core
 #print axioms StructuralRamsey.Girth.generatedActualASupportTrain_restrict_standard
 #print axioms StructuralRamsey.Girth.generatedActualASupportTrain_restrict_core
+#print axioms StructuralRamsey.Girth.parentCoreBridge_forbidden_oldChild_is_shared
+#print axioms StructuralRamsey.Girth.parentCoreBridge_two_oldChildren_same_core
+#print axioms StructuralRamsey.Girth.parentCoreIncidentTag_has_core_representative
+#print axioms StructuralRamsey.Girth.parentCoreIncidentTag_unique_of_bridge
