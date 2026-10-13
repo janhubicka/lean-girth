@@ -87,4 +87,23 @@ theorem generatedTaggedWagonCarrier_parent_subset
         gluedWagonParent_standard
           childGlue parentGlue coreParent oldParent hCompat i u
 
+
+/-- At any two nested cuts of a REAL edge train, the complete
+vertex carrier of an old/core quotient child wagon is contained in
+that of its canonical quotient parent.  There is no need to choose
+a representative, and no injectivity claim for carrier sets. -/
+theorem EdgeTrainLevels.wagonClassCarrier_parent_subset
+    {m : ℕ} {E : Type v}
+    (T : EdgeTrainLevels E m)
+    (edge : E → Set W)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+    (u : Quotient (T.wagonSetoid μ)) :
+    T.wagonClassCarrier edge μ u ⊆
+      T.wagonClassCarrier edge ν (T.wagonParent μ ν hμν u) := by
+  induction u using Quotient.inductionOn with
+  | h a =>
+    change T.wagonCarrier edge μ a ⊆ T.wagonCarrier edge ν a
+    rintro x ⟨b, hab, hbx⟩
+    exact ⟨b, T.nested μ ν hμν a b hab, hbx⟩
+
 end StructuralRamsey.Girth
