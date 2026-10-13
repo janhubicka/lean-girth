@@ -1092,3 +1092,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_carrier_eq
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parentIntersectionBound
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_labelledCutGirth_iff
+#print axioms StructuralRamsey.Girth.sharedOldACarrier_nonempty_of_oldCopy
+#print axioms StructuralRamsey.Girth.activeCarrier_has_sharedOldAEdge
+#print axioms StructuralRamsey.Girth.activeCarrier_all_standard_copies_meet_core
+#print axioms StructuralRamsey.Girth.picturePrivateWagonCarrier_subset_standard
+#print axioms StructuralRamsey.Girth.pictureDistinctPrivateWagons_intersect_subset_core
