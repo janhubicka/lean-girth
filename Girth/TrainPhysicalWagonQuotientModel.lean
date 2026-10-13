@@ -49,8 +49,10 @@ variable (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
     Tcore.rel κ (inCore i s) (inCore i t))
 
 /-- The established edge normal form, expressed with genuine quotient labels. -/
-include hRel in
-theorem rel_iff_edgeTag (μ : Fin (m + 1))
+theorem rel_iff_edgeTag
+    (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
+  Told.rel κ (inOld s) (inOld t) ↔
+    Tcore.rel κ (inCore i s) (inCore i t)) (μ : Fin (m + 1))
     (a b : PhysicalPictureEdge inOld I CoreEdge) :
     (physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).rel μ a b ↔
       edgeTag Told Tcore inOld inCore μ a =
@@ -62,8 +64,10 @@ theorem rel_iff_edgeTag (μ : Fin (m + 1))
 
 /-- Different actual wagon classes remain different source labels, even
 when their vertex carriers are equal. Unused labels need not be retained. -/
-include hRel in
-noncomputable def classTag (μ : Fin (m + 1)) :
+noncomputable def classTag
+    (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
+  Told.rel κ (inOld s) (inOld t) ↔
+    Tcore.rel κ (inCore i s) (inCore i t)) (μ : Fin (m + 1)) :
     Quotient ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonSetoid μ) ↪
       Quotient (Tcore.wagonSetoid μ) ⊕
         (I × Quotient (Told.wagonSetoid μ)) where
@@ -93,8 +97,10 @@ noncomputable def parentTag (μ ν : Fin (m + 1)) (hμν : μ ≤ ν) :
     (Tcore.wagonParent μ ν hμν) (Told.wagonParent μ ν hμν)
 
 /-- Parent compatibility on every real physical edge. -/
-include hRel in
-theorem edgeTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+theorem edgeTag_parent
+    (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
+  Told.rel κ (inOld s) (inOld t) ↔
+    Tcore.rel κ (inCore i s) (inCore i t)) (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
     (a : PhysicalPictureEdge inOld I CoreEdge) :
     parentTag Told Tcore inOld inCore μ ν hμν
         (edgeTag Told Tcore inOld inCore μ a) =
@@ -111,7 +117,6 @@ theorem edgeTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
       z.1 (Quotient.mk (Told.wagonSetoid μ) z.2.1)
 
 /-- The quotient-class identification commutes with every parent map. -/
-include hRel in
 theorem classTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
     (q : Quotient ((physicalPictureGeneratedTrain
       Told Tcore inOld inCore hShared).wagonSetoid μ)) :
@@ -134,7 +139,6 @@ noncomputable def sourceCarrier
     (contact Told Tcore inOld inCore μ)
 
 /-- Complete carriers agree on actual wagon classes, not only on edges. -/
-include hRel in
 theorem classTag_carrier_eq
     (oldCarrier : I → OldEdge → Set W)
     (coreCarrier : CoreEdge → Set W)
@@ -157,8 +161,10 @@ theorem classTag_carrier_eq
 
 /-- Transfer the source-label parent bound to the ACTUAL generated train.
 The geometric bound is an explicit hypothesis, not a consequence of nesting. -/
-include hRel in
 theorem parentIntersectionBound
+    (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
+  Told.rel κ (inOld s) (inOld t) ↔
+    Tcore.rel κ (inCore i s) (inCore i t))
     (oldCarrier : I → OldEdge → Set W)
     (coreCarrier : CoreEdge → Set W)
     (physicalCarrier : PhysicalPictureEdge inOld I CoreEdge → Set W)
