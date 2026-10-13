@@ -12,15 +12,15 @@ sibling-intersection parameter as the old/core trains, provided:
 * incident standard edges outside the core have one standard index;
 * shared parent contacts reflect old parent labels within each copy;
 * unary child/parent gluing maps commute;
-* the witness gives an order-one bridge for each old child at a
-  forbidden core vertex under a shared parent.
+* the witness gives a PAIRWISE bridge, after two different local
+  source labels have been identified at the forbidden core vertex.
 
 This splits into precisely three elementary cases:
 (1) private generated parent: old standard parameter;
 (2) shared parent at off-core vertex: unique standard owner,
     parent-contact reflection, then old standard parameter;
-(3) shared parent at core vertex: the witness bridge and core
-    forbidden-child uniqueness (TrainGeneratedTagCoreParameter).
+(3) shared parent at core vertex: the competing-label witness bridge
+    and core forbidden-child uniqueness (TrainCompetingCoreBridge).
 
 The difficult geometric assumption is the ORDER-ONE WITNESS BRIDGE.
 The proof does not infer it from A1--A3/system-Girth and makes no
@@ -263,12 +263,12 @@ theorem generatedTag_forbidden_privateParent_unique
 /-- COMPLETE generated tagged wagon parent-intersection parameter
 under the genuine witness bridge and physical ownership hypotheses.
 
-The core/shared-parent branch is discharged by the bridge, the
-off-core/shared-parent branch by unique standard ownership and
-parent reflection, and private parents by the old parameters.
+The core/shared-parent branch is discharged by the competing-label
+bridge, the off-core/shared-parent branch by unique standard ownership
+and parent reflection, and private parents by the old parameters.
 
 This remains a CONDITIONAL train parameter lemma: the actual witness
-must supply ParentCoreVertexBridge from the pairwise order-one system-girth lemma,
+must supply ParentCoreCompetingBridge (or the weaker two-source version)
 and the concrete physical picture must supply the stated ownership
 and partial-injection properties at every relevant level. -/
 theorem generatedTaggedWagon_parentIntersectionBound
