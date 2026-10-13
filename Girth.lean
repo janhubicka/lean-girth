@@ -332,3 +332,7 @@ import Girth.TrainActualActiveSharedEdge
 import Girth.TrainPicturePrivateWagonIncidence
 import Girth.TrainPictureNormalFormContractions
 import Girth.TrainPictureOffCoreEdgeOwners
+import Girth.TrainCoreForbiddenVertexBridge
+import Girth.TrainGeneratedTagCoreParameter
+import Girth.TrainCompetingCoreBridge
+import Girth.TrainGeneratedTagParentBound
