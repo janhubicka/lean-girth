@@ -1,4 +1,5 @@
 import Girth.TrainGeneratedTagCoreParameter
+import Girth.TrainSharedEdgeQuotients
 
 /-!
 # Generated wagon carriers respect the unary parent map
