@@ -292,7 +292,7 @@ theorem generatedTaggedWagon_parentIntersectionBound
       glueParent i a = some p →
       glueParent i b = some p → a = b)
     (hBridge : ParentCoreCompetingBridge oldCarrier oldParent
-      coreCarrier coreParent glueChild glueParent coreVertices)
+      coreCarrier coreParent glueChild glueParent coreVertices allowed)
     (hCompat : ∀ i u c,
       glueChild i u = some c →
       glueParent i (oldParent u) = some (coreParent c)) :
