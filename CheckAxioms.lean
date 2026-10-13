@@ -1084,3 +1084,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_wagonCarrier_eq
 #print axioms StructuralRamsey.Girth.actualAPictureGenuineEquiv
 #print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
+#print axioms StructuralRamsey.Girth.picturePrivateWagonCarrier_subset_standard
+#print axioms StructuralRamsey.Girth.pictureDistinctPrivateWagons_intersect_subset_core
