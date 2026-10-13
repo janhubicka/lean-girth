@@ -1102,3 +1102,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.parentCoreBridge_two_oldChildren_same_core
 #print axioms StructuralRamsey.Girth.parentCoreIncidentTag_has_core_representative
 #print axioms StructuralRamsey.Girth.parentCoreIncidentTag_unique_of_bridge
+#print axioms StructuralRamsey.Girth.generatedTaggedWagon_coreParent_incidence
+#print axioms StructuralRamsey.Girth.generatedTaggedWagon_unique_at_forbidden_coreParent
