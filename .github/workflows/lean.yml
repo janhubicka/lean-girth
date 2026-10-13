@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           lake build
-          lake build Girth.TrainPhysicalWagonQuotientModel
+          lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge
       - name: Check theorem axioms
         run: |
           set -o pipefail
@@ -54,3 +54,4 @@ jobs:
         run: |
           python3 scripts/check_boundary_transport.py
           python3 scripts/check_boundary_girth.py
+          python3 scripts/check_order_one_bridge.py
