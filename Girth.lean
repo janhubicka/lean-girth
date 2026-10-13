@@ -324,3 +324,6 @@ import Girth.TrainActualPhysicalAEdgePushout
 import Girth.TrainPhysicalPictureGeneratedTrain
 import Girth.TrainWagonQuotientTransport
 import Girth.TrainWagonCutGirthTransport
+import Girth.TrainGeneratedActualASupportTrain
+import Girth.TrainPhysicalPictureAllLevelRestriction
+import Girth.TrainGeneratedActualAllLevelRestriction
