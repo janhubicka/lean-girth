@@ -1084,3 +1084,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_wagonCarrier_eq
 #print axioms StructuralRamsey.Girth.actualAPictureGenuineEquiv
 #print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
+#print axioms StructuralRamsey.Girth.sharedOldACarrier_nonempty_of_oldCopy
+#print axioms StructuralRamsey.Girth.activeCarrier_has_sharedOldAEdge
+#print axioms StructuralRamsey.Girth.activeCarrier_all_standard_copies_meet_core
