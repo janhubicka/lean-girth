@@ -38,10 +38,11 @@ def ParentCoreCompetingBridge
     (coreParent : Core → CoreP)
     (glueChild : I → Old → Option Core)
     (glueParent : I → OldP → Option CoreP)
-    (coreVertices : Set W) : Prop :=
+    (coreVertices allowed : Set W) : Prop :=
   ∀ (x : W) (p : CoreP)
     (t s : Core ⊕ (I × Old)),
     x ∈ coreVertices →
+    x ∉ allowed →
     t ≠ s →
     ParentCoreIncidentTag oldCarrier oldParent
       coreCarrier coreParent glueChild glueParent x p t →
@@ -73,7 +74,7 @@ theorem competingBridge_forces_core_child
       TrainParentIntersectionBound (oldCarrier i) oldParent allowed)
     (hBridge : ParentCoreCompetingBridge
       oldCarrier oldParent coreCarrier coreParent
-      glueChild glueParent coreVertices)
+      glueChild glueParent coreVertices allowed)
     (hParent : ∀ i u c,
       glueChild i u = some c →
       glueParent i (oldParent u) = some (coreParent c))
@@ -98,7 +99,7 @@ theorem competingBridge_forces_core_child
         coreCarrier coreParent glueChild glueParent x p t :=
       Or.inr ⟨i, u, htu, hpu, hux⟩
     obtain ⟨v, c, hvParent, hvx, hvGlue, hcx⟩ :=
-      hBridge x p t s hxCore hne ht hs i u htu hpu hux
+      hBridge x p t s hxCore hxForbidden hne ht hs i u htu hpu hux
     have huv : u = v := by
       by_contra hneOld
       have hAllowed : x ∈ allowed :=
@@ -130,7 +131,7 @@ theorem competingBridge_coreIncidentTags_unique
       TrainParentIntersectionBound coreCarrier coreParent allowed)
     (hBridge : ParentCoreCompetingBridge
       oldCarrier oldParent coreCarrier coreParent
-      glueChild glueParent coreVertices)
+      glueChild glueParent coreVertices allowed)
     (hParent : ∀ i u c,
       glueChild i u = some c →
       glueParent i (oldParent u) = some (coreParent c))
@@ -180,7 +181,7 @@ theorem generatedTaggedWagon_coreParent_unique_of_pairwiseBridge
       TrainParentIntersectionBound coreCarrier coreParent allowed)
     (hBridge : ParentCoreCompetingBridge
       oldCarrier oldParent coreCarrier coreParent
-      glueChild glueParent coreVertices)
+      glueChild glueParent coreVertices allowed)
     (hParent : ∀ i u c,
       glueChild i u = some c →
       glueParent i (oldParent u) = some (coreParent c))
