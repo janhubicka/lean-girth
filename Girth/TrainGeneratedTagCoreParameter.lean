@@ -9,13 +9,14 @@ an indexed private old ancestor. Its physical carrier is the union
 of the actual core and old-child carriers bearing that tag.
 
 For any vertex x in the witness core but outside the allowed parts,
-the order-one witness bridge ensures that every child tag incident
-with x below a shared core parent is actually a core child tag
+the STRONGER singleton bridge hypothesis in this module ensures that
+every child tag incident below a shared core parent is a core child tag
 incident with x. The core parameter therefore forces uniqueness.
 
-This verifies the ENTIRE shared-parent/core-vertex case of the
-generated train parameter argument, subject only to the true
-order-one bridge and old/core parameter hypotheses.
+This verifies a CONDITIONAL shared-parent/core-vertex case, but the
+singleton bridge assumed here does not follow from the manuscript's
+two-label order-one lemma. The corrected pairwise proof is in
+TrainCompetingCoreBridge.lean and TrainTwoSourceBridge.lean.
 
 Off-core vertices and private parent labels are treated separately.
 This module does not construct the witness bridges from system-Girth
