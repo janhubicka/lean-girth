@@ -49,6 +49,7 @@ variable (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
     Tcore.rel κ (inCore i s) (inCore i t))
 
 /-- The established edge normal form, expressed with genuine quotient labels. -/
+include hRel in
 theorem rel_iff_edgeTag (μ : Fin (m + 1))
     (a b : PhysicalPictureEdge inOld I CoreEdge) :
     (physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).rel μ a b ↔
@@ -61,9 +62,9 @@ theorem rel_iff_edgeTag (μ : Fin (m + 1))
 
 /-- Different actual wagon classes remain different source labels, even
 when their vertex carriers are equal. Unused labels need not be retained. -/
+include hRel in
 noncomputable def classTag (μ : Fin (m + 1)) :
-    Quotient ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).
-      wagonSetoid μ) ↪
+    Quotient ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonSetoid μ) ↪
       Quotient (Tcore.wagonSetoid μ) ⊕
         (I × Quotient (Told.wagonSetoid μ)) where
   toFun := fun q => Quotient.liftOn q
@@ -92,6 +93,7 @@ noncomputable def parentTag (μ ν : Fin (m + 1)) (hμν : μ ≤ ν) :
     (Tcore.wagonParent μ ν hμν) (Told.wagonParent μ ν hμν)
 
 /-- Parent compatibility on every real physical edge. -/
+include hRel in
 theorem edgeTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
     (a : PhysicalPictureEdge inOld I CoreEdge) :
     parentTag Told Tcore inOld inCore μ ν hμν
@@ -109,14 +111,14 @@ theorem edgeTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
       z.1 (Quotient.mk (Told.wagonSetoid μ) z.2.1)
 
 /-- The quotient-class identification commutes with every parent map. -/
+include hRel in
 theorem classTag_parent (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
     (q : Quotient ((physicalPictureGeneratedTrain
       Told Tcore inOld inCore hShared).wagonSetoid μ)) :
     parentTag Told Tcore inOld inCore μ ν hμν
         (classTag Told Tcore inOld inCore hShared hRel μ q) =
       classTag Told Tcore inOld inCore hShared hRel ν
-        ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).
-          wagonParent μ ν hμν q) := by
+        ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonParent μ ν hμν q) := by
   induction q using Quotient.inductionOn with
   | h a => exact edgeTag_parent Told Tcore inOld inCore hRel μ ν hμν a
 
@@ -132,6 +134,7 @@ noncomputable def sourceCarrier
     (contact Told Tcore inOld inCore μ)
 
 /-- Complete carriers agree on actual wagon classes, not only on edges. -/
+include hRel in
 theorem classTag_carrier_eq
     (oldCarrier : I → OldEdge → Set W)
     (coreCarrier : CoreEdge → Set W)
@@ -142,8 +145,7 @@ theorem classTag_carrier_eq
     (μ : Fin (m + 1))
     (q : Quotient ((physicalPictureGeneratedTrain
       Told Tcore inOld inCore hShared).wagonSetoid μ)) :
-    (physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).
-        wagonClassCarrier physicalCarrier μ q =
+    (physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonClassCarrier physicalCarrier μ q =
       sourceCarrier Told Tcore inOld inCore oldCarrier coreCarrier μ
         (classTag Told Tcore inOld inCore hShared hRel μ q) := by
   induction q using Quotient.inductionOn with
@@ -155,6 +157,7 @@ theorem classTag_carrier_eq
 
 /-- Transfer the source-label parent bound to the ACTUAL generated train.
 The geometric bound is an explicit hypothesis, not a consequence of nesting. -/
+include hRel in
 theorem parentIntersectionBound
     (oldCarrier : I → OldEdge → Set W)
     (coreCarrier : CoreEdge → Set W)
@@ -167,10 +170,8 @@ theorem parentIntersectionBound
       (sourceCarrier Told Tcore inOld inCore oldCarrier coreCarrier μ)
       (parentTag Told Tcore inOld inCore μ ν hμν) allowed) :
     TrainParentIntersectionBound
-      ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).
-        wagonClassCarrier physicalCarrier μ)
-      ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).
-        wagonParent μ ν hμν) allowed := by
+      ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonClassCarrier physicalCarrier μ)
+      ((physicalPictureGeneratedTrain Told Tcore inOld inCore hShared).wagonParent μ ν hμν) allowed := by
   apply trainParentIntersectionBound_restrict
     (sourceCarrier Told Tcore inOld inCore oldCarrier coreCarrier μ)
     (parentTag Told Tcore inOld inCore μ ν hμν)
