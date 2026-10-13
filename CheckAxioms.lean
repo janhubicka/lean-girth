@@ -1092,3 +1092,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_carrier_eq
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parentIntersectionBound
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_labelledCutGirth_iff
+#print axioms StructuralRamsey.Girth.trainParentIntersectionBound_iff_uniqueChildFibres
+#print axioms StructuralRamsey.Girth.trainParentIntersectionBound_of_fibreEmbeddings
