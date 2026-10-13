@@ -1119,3 +1119,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.generatedTag_forbidden_offCore_sharedParent_unique
 #print axioms StructuralRamsey.Girth.generatedTag_forbidden_privateParent_unique
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound
+#print axioms StructuralRamsey.Girth.parentCoreCompetingBridge_of_twoSource
+#print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound_of_twoSource
