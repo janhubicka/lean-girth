@@ -327,3 +327,8 @@ import Girth.TrainWagonCutGirthTransport
 import Girth.TrainGeneratedActualASupportTrain
 import Girth.TrainPhysicalPictureAllLevelRestriction
 import Girth.TrainGeneratedActualAllLevelRestriction
+import Girth.TrainParentUniqueChildFibres
+import Girth.TrainActualActiveSharedEdge
+import Girth.TrainPicturePrivateWagonIncidence
+import Girth.TrainPictureNormalFormContractions
+import Girth.TrainPictureOffCoreEdgeOwners
