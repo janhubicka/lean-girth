@@ -329,3 +329,4 @@ import Girth.TrainPhysicalPictureAllLevelRestriction
 import Girth.TrainGeneratedActualAllLevelRestriction
 import Girth.TrainCoreForbiddenVertexBridge
 import Girth.TrainGeneratedTagCoreParameter
+import Girth.TrainGeneratedTagParentBound
