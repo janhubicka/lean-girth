@@ -310,7 +310,7 @@ theorem generatedTaggedWagon_parentIntersectionBound
       have hpb :
           gluedWagonParent glueChild glueParent
             coreParent oldParent b = Sum.inl p :=
-        hpa.symm.trans hParent
+        hParent.symm.trans hpa
       have hEq : a = b := by
         by_cases hxCore : x ∈ coreVertices
         · exact generatedTaggedWagon_coreParent_unique_of_pairwiseBridge
@@ -331,7 +331,7 @@ theorem generatedTaggedWagon_parentIntersectionBound
       have hpb :
           gluedWagonParent glueChild glueParent
             coreParent oldParent b = Sum.inr (i, p) :=
-        hpa.symm.trans hParent
+        hParent.symm.trans hpa
       have hEq : a = b :=
         generatedTag_forbidden_privateParent_unique
           oldCarrier oldParent coreCarrier coreParent
