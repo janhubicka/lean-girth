@@ -57,7 +57,9 @@ theorem trainParentIntersectionBound_iff_uniqueChildFibres
       ⟨a, rfl, hx.1⟩
     let qb : WagonChildAtVertex carrier parent x (parent a) :=
       ⟨b, hParent.symm, hx.2⟩
-    have heq : qa = qb := (h x hxForbidden (parent a)).allEq qa qb
+    letI : Subsingleton (WagonChildAtVertex carrier parent x (parent a)) :=
+      h x hxForbidden (parent a)
+    have heq : qa = qb := Subsingleton.elim qa qb
     exact hab (congrArg Subtype.val heq)
 
 /-- It is sufficient to embed each forbidden-vertex child
@@ -78,8 +80,7 @@ theorem trainParentIntersectionBound_of_fibreEmbeddings
     newCarrier newParent allowed).mpr
   intro x hx p
   obtain ⟨q, e⟩ := hOwner x hx p
-  have hSingle :
-      Subsingleton (WagonChildAtVertex oldCarrier oldParent x q) :=
+  letI : Subsingleton (WagonChildAtVertex oldCarrier oldParent x q) :=
     (trainParentIntersectionBound_iff_uniqueChildFibres
       oldCarrier oldParent allowed).mp hOld x hx q
   constructor
