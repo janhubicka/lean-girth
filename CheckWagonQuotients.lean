@@ -1,0 +1,17 @@
+import Girth.TrainPhysicalWagonQuotientModel
+import Girth.TrainActualInteriorParentQuotientBridge
+
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.rel_iff_edgeTag
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.edgeTag_parent
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag_parent
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag_carrier_eq
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.parentIntersectionBound
+#print axioms StructuralRamsey.Girth.OrderOneData.edge_bridge
+#print axioms StructuralRamsey.Girth.OrderOneData.bridge_of_incident_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.both_bridges
+#print axioms StructuralRamsey.Girth.OrderOneData.bound_iff_both_bridges
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.exists_incident_representative
+#print axioms StructuralRamsey.Girth.sharedWagonQuotient_contact_iff
+#print axioms StructuralRamsey.Girth.interiorParent_twoSourceBridge_of_orderOne
+#print axioms StructuralRamsey.Girth.activeAttached_interiorParent_twoSourceBridge
