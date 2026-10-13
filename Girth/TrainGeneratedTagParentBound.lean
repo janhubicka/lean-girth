@@ -268,7 +268,7 @@ bridge, the off-core/shared-parent branch by unique standard ownership
 and parent reflection, and private parents by the old parameters.
 
 This remains a CONDITIONAL train parameter lemma: the actual witness
-must supply ParentCoreCompetingBridge (or the weaker two-source version)
+must supply ParentCoreCompetingBridge (or a sufficient two-source bridge),
 and the concrete physical picture must supply the stated ownership
 and partial-injection properties at every relevant level. -/
 theorem generatedTaggedWagon_parentIntersectionBound
