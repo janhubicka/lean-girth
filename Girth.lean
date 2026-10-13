@@ -330,3 +330,4 @@ import Girth.TrainGeneratedActualAllLevelRestriction
 import Girth.TrainCoreForbiddenVertexBridge
 import Girth.TrainGeneratedTagCoreParameter
 import Girth.TrainCompetingCoreBridge
+import Girth.TrainGeneratedTagParentBound
