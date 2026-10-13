@@ -1,0 +1,8 @@
+import Girth.TrainPhysicalWagonQuotientModel
+
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.rel_iff_edgeTag
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.edgeTag_parent
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag_parent
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.classTag_carrier_eq
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.parentIntersectionBound
