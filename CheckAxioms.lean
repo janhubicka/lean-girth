@@ -1129,3 +1129,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.exists_incident_edge_of_wagonClassCarrier
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonParent_top_eq
 #print axioms StructuralRamsey.Girth.topParent_twoSourceBridge_of_sharedQuotientCoverage
+#print axioms StructuralRamsey.Girth.attachedSharedAEdgeCarrier_eq
+#print axioms StructuralRamsey.Girth.activeAttached_sharedOldAEdge_at_coreVertex
+#print axioms StructuralRamsey.Girth.activeAttached_topParent_twoSourceBridge
