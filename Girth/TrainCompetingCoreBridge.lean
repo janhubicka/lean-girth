@@ -156,7 +156,7 @@ theorem competingBridge_coreIncidentTags_unique
       oldCarrier oldParent coreCarrier coreParent
       glueChild glueParent coreVertices allowed
       hOld hBridge hParent x p hxCore hxForbidden
-      s t hne.symm hs ht
+      s t (fun h => hne h.symm) hs ht
   have hcd : c = d := by
     by_contra hcne
     have hAllowed : x ∈ allowed :=
