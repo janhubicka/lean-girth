@@ -1104,3 +1104,9 @@ import Girth
 #print axioms StructuralRamsey.Girth.parentCoreIncidentTag_unique_of_bridge
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_coreParent_incidence
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_unique_at_forbidden_coreParent
+#print axioms StructuralRamsey.Girth.generatedTag_offCore_has_oldOwner
+#print axioms StructuralRamsey.Girth.generatedTag_sharedParent_oldContact
+#print axioms StructuralRamsey.Girth.generatedTag_forbidden_offCore_sharedParent_unique
+#print axioms StructuralRamsey.Girth.generatedTag_privateParent_has_oldOwner
+#print axioms StructuralRamsey.Girth.generatedTag_forbidden_privateParent_unique
+#print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound
