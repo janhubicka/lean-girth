@@ -1123,3 +1123,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound_of_twoSource
 #print axioms StructuralRamsey.Girth.activeCarrier_vertex_has_sharedOldAEdge
 #print axioms StructuralRamsey.Girth.topParent_twoSourceBridge_of_vertexCoverage
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.mem_wagonClassCarrier_of_mem_edge
+#print axioms StructuralRamsey.Girth.sharedPhysicalEdge_contactingChildQuotients
