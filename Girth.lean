@@ -340,3 +340,4 @@ import Girth.TrainTwoSourceBridge
 import Girth.TrainActiveVertexSupport
 import Girth.TrainTopParentBridge
 import Girth.TrainSharedPhysicalChildOwner
+import Girth.TrainActualActiveCoreStandardBridge
