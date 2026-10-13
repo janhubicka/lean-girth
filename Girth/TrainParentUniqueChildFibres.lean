@@ -72,14 +72,14 @@ theorem trainParentIntersectionBound_of_fibreEmbeddings
     (allowed : Set W)
     (hOld : TrainParentIntersectionBound oldCarrier oldParent allowed)
     (hOwner : ∀ x : W, x ∉ allowed → ∀ p : J,
-      ∃ q : K,
-        (WagonChildAtVertex newCarrier newParent x p) ↪
-          (WagonChildAtVertex oldCarrier oldParent x q)) :
+      ∃ q : K, Nonempty
+        ((WagonChildAtVertex newCarrier newParent x p) ↪
+          (WagonChildAtVertex oldCarrier oldParent x q))) :
     TrainParentIntersectionBound newCarrier newParent allowed := by
   apply (trainParentIntersectionBound_iff_uniqueChildFibres
     newCarrier newParent allowed).mpr
   intro x hx p
-  obtain ⟨q, e⟩ := hOwner x hx p
+  obtain ⟨q, ⟨e⟩⟩ := hOwner x hx p
   letI : Subsingleton (WagonChildAtVertex oldCarrier oldParent x q) :=
     (trainParentIntersectionBound_iff_uniqueChildFibres
       oldCarrier oldParent allowed).mp hOld x hx q
