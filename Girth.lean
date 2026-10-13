@@ -324,3 +324,5 @@ import Girth.TrainActualPhysicalAEdgePushout
 import Girth.TrainPhysicalPictureGeneratedTrain
 import Girth.TrainWagonQuotientTransport
 import Girth.TrainWagonCutGirthTransport
+import Girth.TrainActualActiveSharedEdge
+import Girth.TrainPicturePrivateWagonIncidence
