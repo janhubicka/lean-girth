@@ -1121,3 +1121,5 @@ import Girth
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound
 #print axioms StructuralRamsey.Girth.parentCoreCompetingBridge_of_twoSource
 #print axioms StructuralRamsey.Girth.generatedTaggedWagon_parentIntersectionBound_of_twoSource
+#print axioms StructuralRamsey.Girth.activeCarrier_vertex_has_sharedOldAEdge
+#print axioms StructuralRamsey.Girth.topParent_twoSourceBridge_of_vertexCoverage
