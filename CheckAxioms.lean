@@ -1131,3 +1131,4 @@ import Girth
 #print axioms StructuralRamsey.Girth.topParent_twoSourceBridge_of_sharedQuotientCoverage
 #print axioms StructuralRamsey.Girth.generatedWagonNodes_parent_closed
 #print axioms StructuralRamsey.Girth.generatedTaggedWagonCarrier_parent_subset
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_parent_subset
