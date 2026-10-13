@@ -343,3 +343,4 @@ import Girth.TrainSharedPhysicalChildOwner
 import Girth.TrainActualActiveCoreStandardBridge
 import Girth.TrainTopParentSharedQuotientComposite
 import Girth.TrainGeneratedTagCarrierFibres
+import Girth.TrainPhysicalGeneratedTagCarrier
