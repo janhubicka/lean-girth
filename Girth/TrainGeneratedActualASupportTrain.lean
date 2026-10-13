@@ -1,4 +1,5 @@
 import Girth.TrainPhysicalPictureGeneratedTrain
+import Girth.TrainEdgeEquivalenceTransport
 import Girth.TrainActualPhysicalAEdgePushout
 
 /-!
