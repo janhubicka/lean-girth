@@ -1084,3 +1084,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.actualAttachedATrain_wagonCarrier_eq
 #print axioms StructuralRamsey.Girth.actualAPictureGenuineEquiv
 #print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv
+#print axioms StructuralRamsey.Girth.TrainEdgeGenerated.of_step_mono
+#print axioms StructuralRamsey.Girth.physicalPictureCutStep_mono
+#print axioms StructuralRamsey.Girth.physicalPictureGeneratedTrain_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parent
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parent_symm
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_carrier_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_parentIntersectionBound
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_labelledCutGirth_iff
