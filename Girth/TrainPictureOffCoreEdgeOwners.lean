@@ -64,18 +64,13 @@ theorem picture_offCore_incident_edges_same_standard
       subst j
       exact ⟨i, a, b, ha, hb⟩
 
-/-- The standard-copy index of ANY off-core incident support edge
-is unique. A different index would meet the first outside the core,
-contradicting the free-attachment geometry. -/
+/-- The standard-copy index at an off-core vertex is uniquely
+determined by free-attachment vertex geometry alone. -/
 theorem picture_offCore_standard_index_unique
-    (coreEmbed : CoreEdge → E)
     (std : I → OldEdge → E)
     (edgeCarrier : E → Set W)
     (copyCarrier : I → Set W)
     (coreCarrier : Set W)
-    (hCover : ∀ e : E,
-      (∃ c, e = coreEmbed c) ∨ ∃ i a, e = std i a)
-    (hCoreCarrier : ∀ c, edgeCarrier (coreEmbed c) ⊆ coreCarrier)
     (hStdCarrier : ∀ i a, edgeCarrier (std i a) ⊆ copyCarrier i)
     (hCopyInter : ∀ i j : I, i ≠ j →
       copyCarrier i ∩ copyCarrier j ⊆ coreCarrier)
@@ -84,22 +79,8 @@ theorem picture_offCore_standard_index_unique
     (hia : x ∈ edgeCarrier (std i a))
     (hjb : x ∈ edgeCarrier (std j b)) :
     i = j := by
-  obtain ⟨k, c, d, h1, h2⟩ :=
-    picture_offCore_incident_edges_same_standard
-      coreEmbed std edgeCarrier copyCarrier coreCarrier
-      hCover hCoreCarrier hStdCarrier hCopyInter x hx
-      (std i a) (std j b) hia hjb
-  have hxi : x ∈ copyCarrier i := hStdCarrier i a hia
-  have hxk : x ∈ copyCarrier k := hStdCarrier k c (by
-    rw [← h1]
-    exact hia)
-  have hik : i = k := by
-    by_contra hne
-    exact hx (hCopyInter i k hne ⟨hxi, hxk⟩)
-  have hxj : x ∈ copyCarrier j := hStdCarrier j b hjb
-  have hkj : k = j := by
-    by_contra hne
-    exact hx (hCopyInter k j hne ⟨hxk, hxj⟩)
-  exact hik.trans hkj
+  by_contra hij
+  exact hx (hCopyInter i j hij
+    ⟨hStdCarrier i a hia, hStdCarrier j b hjb⟩)
 
 end StructuralRamsey.Girth
