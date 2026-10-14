@@ -92,6 +92,8 @@ jobs:
           python3 scripts/check_axioms.py actual-three-link-axioms.log CheckTrainActualWagonThreeLink.lean
           lake env lean CheckTrainActualTwoStandardEdgeBlock.lean | tee edge-block-axioms.log
           python3 scripts/check_axioms.py edge-block-axioms.log CheckTrainActualTwoStandardEdgeBlock.lean
+          lake env lean CheckTrainActualTwoStandardEdgeBlockObstruction.lean | tee edge-block-obstruction-axioms.log
+          python3 scripts/check_axioms.py edge-block-obstruction-axioms.log CheckTrainActualTwoStandardEdgeBlockObstruction.lean
           lake env lean CheckTrainTwoCopyCommonWagon.lean | tee common-long-wagon-axioms.log
           python3 scripts/check_axioms.py common-long-wagon-axioms.log CheckTrainTwoCopyCommonWagon.lean
           lake env lean CheckTrainReplacementOrder.lean | tee replacement-order-axioms.log
