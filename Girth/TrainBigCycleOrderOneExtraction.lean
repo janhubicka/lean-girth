@@ -263,7 +263,7 @@ theorem bound_of_localPieceSystemBound
   intro C
   exact Cycle.hasSupreme_of_bigCycle_localSupreme D C
     (h 2 C.toBigCycle (C.toBigCycle_acceptable)
-      (by rw [C.toBigCycle_twiceOrder]; omega))
+      (by rw [C.toBigCycle_twiceOrder]))
 
 end OrderOneData
 end StructuralRamsey.Girth
