@@ -41,6 +41,7 @@ jobs:
           rm -rf .lake/build
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
+          lake build Girth.TrainPhysicalParameterBridgeComposite
       - name: Check theorem axioms
         run: |
           set -o pipefail
@@ -52,6 +53,8 @@ jobs:
           python3 scripts/check_axioms.py wagon-quotient-axioms.log CheckWagonQuotients.lean
           lake env lean CheckTaggedQuotients.lean | tee tagged-quotients-axioms.log
           python3 scripts/check_axioms.py tagged-quotients-axioms.log CheckTaggedQuotients.lean
+          lake env lean CheckPhysicalParameterComposite.lean | tee physical-parameter-axioms.log
+          python3 scripts/check_axioms.py physical-parameter-axioms.log CheckPhysicalParameterComposite.lean
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py
