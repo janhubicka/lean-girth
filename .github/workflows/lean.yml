@@ -39,13 +39,14 @@ jobs:
         run: |
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
+          # Check the new circulation cycle module before the full project build.
+          lake build Girth.TrainBigCycleOrderOneExtraction
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
           lake build Girth.TrainUniversalTopOrderOne
-          lake build Girth.TrainBigCycleOrderOneExtraction
       - name: Check theorem axioms
         run: |
           set -o pipefail
