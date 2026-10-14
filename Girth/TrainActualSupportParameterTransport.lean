@@ -76,13 +76,11 @@ theorem activeAttached_actualASupport_parentBound_of_orderOne
           (activeCarrier A B α) D f)).Bound) :
     TrainParentIntersectionBound
       ((generatedActualASupportTrain A hA B.toRelStructure
-        (activeCarrier A B α) D f oldTrain coreTrain hShared).
-        wagonClassCarrier
+        (activeCarrier A B α) D f oldTrain coreTrain hShared).wagonClassCarrier
           (fun e : ActualAttachedAEdge A B.toRelStructure
             (activeCarrier A B α) D f => e.1) μ)
       ((generatedActualASupportTrain A hA B.toRelStructure
-        (activeCarrier A B α) D f oldTrain coreTrain hShared).
-        wagonParent μ ν hμν) allowed := by
+        (activeCarrier A B α) D f oldTrain coreTrain hShared).wagonParent μ ν hμν) allowed := by
   let S := activeCarrier A B α
   let ϕ := actualAPictureEdgeEquiv A hA B.toRelStructure S D f
   let T := physicalPictureGeneratedTrain oldTrain coreTrain
@@ -98,16 +96,15 @@ theorem activeAttached_actualASupport_parentBound_of_orderOne
       A B α D f oldTrain coreTrain μ ν hμν hShared hRel
       (fun e : ActualAPicturePushoutEdge A B.toRelStructure S D I =>
         (ϕ e).1)
-    · intro b
-      exact actualAPictureEdgeEquiv_core_carrier
-        A hA B.toRelStructure S D f b
-    · intro i e
-      exact actualAPictureEdgeEquiv_standard_carrier
-        A hA B.toRelStructure S D f i e
-    · exact allowed
-    · exact hOld
-    · exact hCore
-    · exact hOrderOne
+      (by
+        intro b
+        exact actualAPictureEdgeEquiv_core_carrier
+          A hA B.toRelStructure S D f b)
+      (by
+        intro i e
+        exact actualAPictureEdgeEquiv_standard_carrier
+          A hA B.toRelStructure S D f i e)
+      allowed hOld hCore hOrderOne
   exact T.wagonTransport_parentIntersectionBound ϕ
     (fun e : ActualAPicturePushoutEdge A B.toRelStructure S D I =>
       (ϕ e).1)
