@@ -1,0 +1,4 @@
+import Girth.TrainReplacementOrder
+
+#print axioms StructuralRamsey.Girth.LongPieceConnectorInsertion.preserves_twiceWeight
+#print axioms StructuralRamsey.Girth.LongPieceConnectorExpansions.preserves_twiceWeight
