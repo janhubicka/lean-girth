@@ -346,3 +346,5 @@ import Girth.TrainGeneratedTagCarrierFibres
 import Girth.TrainPhysicalGeneratedTagCarrier
 import Girth.TrainActualTopParentQuotientBridge
 import Girth.TrainGeneratedCarrierParentMonotone
+import Girth.TrainTwoCopyGlobalFirst
+import Girth.TrainTwoCopyGlobalSecond
