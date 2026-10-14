@@ -1,5 +1,6 @@
 import Girth.TrainPhysicalParameterBridgeComposite
 import Girth.TrainActualWagonCarrierGeometry
+import Girth.TrainActualPhysicalAEdgePushout
 import Girth.TrainActualInteriorParentQuotientBridge
 
 /-!
