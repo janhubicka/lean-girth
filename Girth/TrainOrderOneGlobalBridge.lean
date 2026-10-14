@@ -147,4 +147,32 @@ theorem Cycle.both_indexed_global_of_bound
   exact ⟨Cycle.first_indexed_global_of_bridge D C hleft hBridgeLeft,
     Cycle.second_indexed_global_of_bridge D C hright hBridgeRight⟩
 
+/-- Every genuine mixed-boundary, two-occurrence order-one cycle
+has a globally legal simultaneous supreme plan under the bridge
+bound, even when only one of its labels is designated. -/
+theorem Cycle.hasSimultaneousSupreme_of_bound
+    (h : D.Bound) (C : D.Cycle) :
+    C.toBigCycle.HasSimultaneousSupreme := by
+  rcases h C with ⟨hDesignated, hBridge⟩ |
+      ⟨hDesignated, hBridge⟩
+  · exact BigCycle.hasSimultaneousSupreme_of_hasSupremeAt
+      D C.toBigCycle (0 : Fin 2)
+        (Cycle.first_indexed_global_of_bridge D C hDesignated hBridge)
+  · exact BigCycle.hasSimultaneousSupreme_of_hasSupremeAt
+      D C.toBigCycle (1 : Fin 2)
+        (Cycle.second_indexed_global_of_bridge D C hDesignated hBridge)
+
+/-- The elementary bridge bound is EXACTLY the complete, globally
+legal supreme-cycle property on the canonical mixed order-one
+fragment. This equivalence is intentionally not stated for general
+higher-order acceptable big cycles. -/
+theorem bound_iff_global_mixed_orderOne :
+    D.Bound ↔
+      ∀ C : D.Cycle, C.toBigCycle.HasSimultaneousSupreme := by
+  constructor
+  · exact Cycle.hasSimultaneousSupreme_of_bound D
+  · intro h C
+    exact Cycle.hasSupreme_of_bigCycle_localSupreme D C
+      (BigCycle.localSupreme_of_simultaneous D C.toBigCycle (h C))
+
 end StructuralRamsey.Girth.OrderOneData
