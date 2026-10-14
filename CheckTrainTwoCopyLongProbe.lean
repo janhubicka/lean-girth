@@ -1,0 +1,6 @@
+import Girth.TrainTwoCopyLongProbe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexLongProbe_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexLongProbe_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_long_piece_of_two_edge_probe
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_long_piece_of_other_long
