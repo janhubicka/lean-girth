@@ -1,0 +1,3 @@
+import Girth.TrainTwoCopyGlobalFirst
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_first_supreme_of_piece
