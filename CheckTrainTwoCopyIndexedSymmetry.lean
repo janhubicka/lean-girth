@@ -1,0 +1,7 @@
+import Girth.TrainTwoCopyIndexedSymmetry
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_hasSupremeAt
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_first_supreme_of_piece
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_second_supreme_of_reversed_piece
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_both_indexed_supreme
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_both_indexed_of_fullSystemGirth

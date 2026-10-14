@@ -350,3 +350,4 @@ import Girth.TrainTwoCopyGlobalFirst
 import Girth.TrainTwoCopyGlobalSecond
 import Girth.TrainWagonPairUniqueness
 import Girth.TrainWagonThreeLink
+import Girth.TrainTwoCopyIndexedSymmetry

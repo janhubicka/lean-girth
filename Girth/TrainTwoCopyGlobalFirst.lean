@@ -33,7 +33,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
     (hPiece :
       D.ShortPiece (.inl i) (.inl x) (.inl y) ∨
       D.LongPiece (.inl i) (.inl x) (.inl y)) :
-    (D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy).HasSimultaneousSupreme := by
+    (D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy).HasSupremeAt D (0 : Fin 2) := by
   let C := D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy
   rcases hPiece with ⟨e, he, hxe, hye⟩ |
       ⟨xx, yy, w, e, f, hx, hy, he, hf, hne,
@@ -43,7 +43,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
     have hye' : y ∈ D.edgeCarrier e := by
       simpa [Incident, carrier] using hye
     let pieces : Fin 2 → TrainSupremePiece E P := ![.keep, .short e]
-    refine ⟨(0 : Fin 2), ?_, pieces, ?_, ?_⟩
+    refine ⟨?_, pieces, ?_, ?_⟩
     · simp [C, twoVertexTwoCopyCycle, designated]
     · intro k
       fin_cases k
@@ -74,7 +74,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
     subst yy
     let pieces : Fin 2 → TrainSupremePiece E P :=
       ![.keep, .long e w f]
-    refine ⟨(0 : Fin 2), ?_, pieces, ?_, ?_⟩
+    refine ⟨?_, pieces, ?_, ?_⟩
     · simp [C, twoVertexTwoCopyCycle, designated]
     · intro k
       fin_cases k
