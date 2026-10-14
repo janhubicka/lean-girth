@@ -1,0 +1,5 @@
+import Girth.TrainLengthTwoBridgeLemma
+
+#print axioms StructuralRamsey.Girth.OrderOneData.bound_of_lengthTwoSupreme
+#print axioms StructuralRamsey.Girth.OrderOneData.both_bridges_of_lengthTwoSupreme
+#print axioms StructuralRamsey.Girth.OrderOneData.no_two_designated_two_wagons_of_lengthTwoSupreme
