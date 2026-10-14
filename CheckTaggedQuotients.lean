@@ -1,0 +1,4 @@
+import Girth.TrainTaggedQuotientCarrier
+
+#print axioms StructuralRamsey.Girth.taggedOldFiberCarrier_eq_wagonClassCarrier
+#print axioms StructuralRamsey.Girth.taggedCoreFiberCarrier_eq_wagonClassCarrier
