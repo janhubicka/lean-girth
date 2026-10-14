@@ -1,0 +1,6 @@
+import Girth.TrainTwoCopyLocalSymmetry
+
+#print axioms StructuralRamsey.Girth.OrderOneData.piece_vertices_reverse
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_piece_of_other_piece
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_both_local_pieces
