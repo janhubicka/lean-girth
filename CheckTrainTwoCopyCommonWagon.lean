@@ -1,0 +1,3 @@
+import Girth.TrainTwoCopyCommonWagon
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoVertexTwoCopyCycle_common_long_wagon
