@@ -1,0 +1,4 @@
+import Girth.TrainWagonPairUniqueness
+
+#print axioms StructuralRamsey.Girth.OrderOneData.wagon_eq_of_common_vertex_pair
+#print axioms StructuralRamsey.Girth.OrderOneData.longPiece_edges_in_given_wagon
