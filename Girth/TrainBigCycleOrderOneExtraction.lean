@@ -70,8 +70,8 @@ variable {D} {n : ℕ} (C : D.BigCycle n)
 /-- Twice the manuscript order, avoiding division by two. -/
 def twiceOrder : ℕ :=
   ∑ i : Fin n, twiceOccurrenceWeight
-    (D.connectorKind (C.connector i))
-    (D.connectorKind (C.connector (cyclicSucc i)))
+    (connectorKind (C.connector i))
+    (connectorKind (C.connector (cyclicSucc i)))
 
 /-- Locations M_C(W) of vertex connectors in the carrier of W. -/
 def InWagonAt (p : P) (j : Fin n) : Prop :=
@@ -261,7 +261,7 @@ order-one bridge. No axiom about bridges is inserted. -/
 theorem bound_of_localPieceSystemBound
     (h : D.LocalPieceSystemBound 1) : D.Bound := by
   intro C
-  exact C.hasSupreme_of_bigCycle_localSupreme
+  exact Cycle.hasSupreme_of_bigCycle_localSupreme D C
     (h 2 C.toBigCycle (C.toBigCycle_acceptable)
       (by rw [C.toBigCycle_twiceOrder]; omega))
 
