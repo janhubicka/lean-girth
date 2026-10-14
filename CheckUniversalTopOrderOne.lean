@@ -1,0 +1,5 @@
+import Girth.TrainUniversalTopOrderOne
+
+#print axioms StructuralRamsey.Girth.OrderOneData.bound_of_constant_parent
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOne_top_bound
+#print axioms StructuralRamsey.Girth.activeAttached_actualASupport_parentBound_at_top
