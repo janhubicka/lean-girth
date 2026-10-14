@@ -1,0 +1,5 @@
+import Girth.TrainFillingCarrierInvariant
+
+#print axioms StructuralRamsey.Girth.TrainFilling.filledCarrier_eq
+#print axioms StructuralRamsey.Girth.TrainFilling.filledCarrier_pairwise_subsingleton
+#print axioms StructuralRamsey.Girth.TrainFilling.filledTarget_strongInduced
