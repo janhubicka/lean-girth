@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalParameterBridgeComposite
+
+#print axioms StructuralRamsey.Girth.physicalGenerated_parentIntersectionBound_of_twoSource
+#print axioms StructuralRamsey.Girth.physicalGenerated_parentIntersectionBound_of_orderOne

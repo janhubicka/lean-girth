@@ -1,0 +1,6 @@
+import Girth.TrainActualPhysicalParameterComposite
+
+#print axioms StructuralRamsey.Girth.attachedOldAWagon_carrier_subset_copy
+#print axioms StructuralRamsey.Girth.attachedCoreAWagon_carrier_subset_core
+#print axioms StructuralRamsey.Girth.attachedOldAWagon_offCore_index_unique
+#print axioms StructuralRamsey.Girth.activeAttached_physicalGenerated_parentBound_of_orderOne
