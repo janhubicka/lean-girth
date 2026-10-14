@@ -118,6 +118,23 @@ def BigCycle.HasSimultaneousSupreme {n : ℕ}
       BigCycle.PlanValid D C k pieces ∧
       BigCycle.PlanProducesBigCycle D C pieces
 
+/-- An *indexed* simultaneous supreme plan keeps precisely the named
+designated occurrence. This retains the information deliberately forgotten
+by `HasSimultaneousSupreme`; in two-copy symmetry both indices matter. -/
+def BigCycle.HasSupremeAt {n : ℕ}
+    (C : D.BigCycle n) (k : Fin n) : Prop :=
+  D.designated (C.label k) ∧
+    ∃ pieces : Fin n → TrainSupremePiece E P,
+      BigCycle.PlanValid D C k pieces ∧
+      BigCycle.PlanProducesBigCycle D C pieces
+
+/-- Forgetting the designated index recovers the usual supreme property. -/
+theorem BigCycle.hasSimultaneousSupreme_of_hasSupremeAt
+    {n : ℕ} (C : D.BigCycle n) (k : Fin n)
+    (h : C.HasSupremeAt D k) : C.HasSimultaneousSupreme := by
+  rcases h with ⟨hk, pieces, hv, hg⟩
+  exact ⟨k, hk, pieces, hv, hg⟩
+
 /-- The complete supreme-cycle condition at a given cutoff, using
 the actual A1--A3 predicate and global simultaneous replacements. -/
 def SupremeCycleBound (q : ℕ) : Prop :=
