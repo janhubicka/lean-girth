@@ -1,0 +1,4 @@
+import Girth.TrainWagonStrongInduced
+
+#print axioms StructuralRamsey.Girth.OrderOneData.parent_eq_of_two_vertices_in_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.outside_edge_intersection_subsingleton
