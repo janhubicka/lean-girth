@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainWagonStrongInduced Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainWagonStrongInduced Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -84,6 +84,8 @@ jobs:
           python3 scripts/check_axioms.py replacement-order-axioms.log CheckTrainReplacementOrder.lean
           lake env lean CheckTrainTwoCopyVertexProbe.lean | tee two-copy-vertex-probe-axioms.log
           python3 scripts/check_axioms.py two-copy-vertex-probe-axioms.log CheckTrainTwoCopyVertexProbe.lean
+          lake env lean CheckTrainShortReplacement.lean | tee short-replacement-axioms.log
+          python3 scripts/check_axioms.py short-replacement-axioms.log CheckTrainShortReplacement.lean
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py

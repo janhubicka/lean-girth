@@ -1,0 +1,6 @@
+import Girth.TrainShortReplacementAcceptability
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twiceOrder_eq_of_same_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_same_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A3_of_same_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.acceptable_of_same_connectors
