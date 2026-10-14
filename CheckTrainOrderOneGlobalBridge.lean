@@ -1,0 +1,5 @@
+import Girth.TrainOrderOneGlobalBridge
+
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.first_indexed_global_of_bridge
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.second_indexed_global_of_bridge
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.both_indexed_global_of_bound
