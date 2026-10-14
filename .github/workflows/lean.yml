@@ -45,6 +45,7 @@ jobs:
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
           lake build Girth.TrainUniversalTopOrderOne
+          lake build Girth.TrainBigCycleOrderOneExtraction
       - name: Check theorem axioms
         run: |
           set -o pipefail
@@ -64,6 +65,8 @@ jobs:
           python3 scripts/check_axioms.py actual-support-transport-axioms.log CheckActualSupportTransport.lean
           lake env lean CheckUniversalTopOrderOne.lean | tee universal-top-axioms.log
           python3 scripts/check_axioms.py universal-top-axioms.log CheckUniversalTopOrderOne.lean
+          lake env lean CheckTrainBigCycleOrderOne.lean | tee full-big-cycle-order-one-axioms.log
+          python3 scripts/check_axioms.py full-big-cycle-order-one-axioms.log CheckTrainBigCycleOrderOne.lean
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py
