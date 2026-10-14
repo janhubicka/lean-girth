@@ -1,0 +1,3 @@
+import Girth.TrainAllAdjacentParametersBridge
+
+#print axioms StructuralRamsey.Girth.activeAttached_actualASupport_allAdjacentParameters_of_orderOne

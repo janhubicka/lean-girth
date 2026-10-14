@@ -355,3 +355,4 @@ import Girth.TrainOrderOneGlobalBridge
 import Girth.TrainTwoCopyCommonWagon
 import Girth.TrainLengthTwoBridgeLemma
 import Girth.TrainActualWagonThreeLink
+import Girth.TrainAllAdjacentParametersBridge
