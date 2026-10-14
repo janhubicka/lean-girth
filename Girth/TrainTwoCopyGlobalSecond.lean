@@ -127,7 +127,7 @@ theorem twoVertexTwoCopyCycle_second_supreme_of_reversed_piece
         D.twoVertexEdgeProbeRotated j e x y hxy hjx hjy hxe' hye', ?_⟩
       simp [BigCycle.resultWord, BigCycle.pieceWord, pieces,
         C, twoVertexTwoCopyCycle, twoVertexEdgeProbeRotated,
-        List.ofFn, Fin.foldr]
+        List.ofFn, Fin.foldr_succ, Fin.foldr_zero]
   · have hyy : yy = y := (Sum.inl.inj hy).symm
     have hxx : xx = x := (Sum.inl.inj hx).symm
     subst yy
@@ -163,6 +163,6 @@ theorem twoVertexTwoCopyCycle_second_supreme_of_reversed_piece
           hjx hjy hew hfw hye hxf, ?_⟩
       simp [BigCycle.resultWord, BigCycle.pieceWord, pieces,
         C, twoVertexTwoCopyCycle, twoVertexLongProbeRotated,
-        List.ofFn, Fin.foldr]
+        List.ofFn, Fin.foldr_succ, Fin.foldr_zero]
 
 end StructuralRamsey.Girth.OrderOneData
