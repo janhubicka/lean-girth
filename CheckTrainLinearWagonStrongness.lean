@@ -1,0 +1,3 @@
+import Girth.TrainLinearWagonStrongness
+
+#print axioms StructuralRamsey.Girth.OrderOneData.edge_parent_eq_of_two_wagon_vertices
