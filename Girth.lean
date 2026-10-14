@@ -354,3 +354,4 @@ import Girth.TrainTwoCopyIndexedSymmetry
 import Girth.TrainOrderOneGlobalBridge
 import Girth.TrainTwoCopyCommonWagon
 import Girth.TrainLengthTwoBridgeLemma
+import Girth.TrainActualWagonThreeLink

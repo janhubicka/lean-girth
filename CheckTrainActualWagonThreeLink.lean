@@ -1,0 +1,3 @@
+import Girth.TrainActualWagonThreeLink
+
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_three_link
