@@ -1,0 +1,8 @@
+import Girth.TrainBigCycleOrderOneExtraction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoCycle_A2
+#print axioms StructuralRamsey.Girth.OrderOneData.twoCycle_A3
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.toBigCycle_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.toBigCycle_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.Cycle.hasSupreme_of_bigCycle_localSupreme
+#print axioms StructuralRamsey.Girth.OrderOneData.bound_of_localPieceSystemBound
