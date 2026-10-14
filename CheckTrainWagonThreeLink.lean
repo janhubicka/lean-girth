@@ -1,0 +1,4 @@
+import Girth.TrainWagonThreeLink
+
+#print axioms StructuralRamsey.Girth.pictureWagonGenerated_three_link
+#print axioms StructuralRamsey.Girth.physicalPictureGeneratedTrain_three_link
