@@ -1,0 +1,7 @@
+import Girth.TrainBigCycleTwoWagonObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.piece_two_wagon_forces_eq
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonBigCycle_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonBigCycle_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonBigCycle_no_localSupreme
+#print axioms StructuralRamsey.Girth.OrderOneData.no_two_designated_meet_two_wagons
