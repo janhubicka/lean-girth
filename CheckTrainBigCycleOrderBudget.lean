@@ -1,0 +1,5 @@
+import Girth.TrainBigCycleOrderBudget
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.length_le_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.length_eq_two_of_order_one
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.connectors_mixed_of_order_one
