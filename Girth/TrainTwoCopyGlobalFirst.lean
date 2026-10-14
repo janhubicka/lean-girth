@@ -33,8 +33,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
     (hPiece :
       D.ShortPiece (.inl i) (.inl x) (.inl y) ∨
       D.LongPiece (.inl i) (.inl x) (.inl y)) :
-    (D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy).
-      HasSimultaneousSupreme := by
+    (D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy).HasSimultaneousSupreme := by
   let C := D.twoVertexTwoCopyCycle i j x y hij hxy hix hiy hjx hjy
   rcases hPiece with ⟨e, he, hxe, hye⟩ |
       ⟨xx, yy, w, e, f, hx, hy, he, hf, hne,
