@@ -55,7 +55,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
       · constructor
         · intro heq
           have hlabels : C.label 1 ≠ C.label 0 := by
-            simp [C, twoVertexTwoCopyCycle, hij]
+            simpa [C, twoVertexTwoCopyCycle] using hij.symm
           exact False.elim (hlabels heq)
         · intro _
           simpa [pieces, BigCycle.ShortValid, C,
@@ -67,7 +67,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
     · refine ⟨2,
         D.twoVertexEdgeProbe i e x y hxy hix hiy hxe' hye', ?_⟩
       simp [BigCycle.resultWord, BigCycle.pieceWord, pieces,
-        C, twoVertexTwoCopyCycle, twoVertexEdgeProbe, List.ofFn]
+        C, twoVertexTwoCopyCycle, twoVertexEdgeProbe, List.ofFn, Fin.foldr]
   · have hxx : xx = x := (Sum.inl.inj hx).symm
     have hyy : yy = y := (Sum.inl.inj hy).symm
     subst xx
@@ -86,7 +86,7 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
       · constructor
         · intro heq
           have hlabels : C.label 1 ≠ C.label 0 := by
-            simp [C, twoVertexTwoCopyCycle, hij]
+            simpa [C, twoVertexTwoCopyCycle] using hij.symm
           exact False.elim (hlabels heq)
         · intro _
           simpa [pieces, BigCycle.LongValid, C,
@@ -102,6 +102,6 @@ theorem twoVertexTwoCopyCycle_first_supreme_of_piece
         D.twoVertexLongProbe i e f w x y hne hxy
           hix hiy hew hfw hxe hyf hNonedge, ?_⟩
       simp [BigCycle.resultWord, BigCycle.pieceWord, pieces,
-        C, twoVertexTwoCopyCycle, twoVertexLongProbe, List.ofFn]
+        C, twoVertexTwoCopyCycle, twoVertexLongProbe, List.ofFn, Fin.foldr]
 
 end StructuralRamsey.Girth.OrderOneData
