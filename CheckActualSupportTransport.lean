@@ -1,0 +1,5 @@
+import Girth.TrainActualSupportParameterTransport
+
+#print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv_core_carrier
+#print axioms StructuralRamsey.Girth.actualAPictureEdgeEquiv_standard_carrier
+#print axioms StructuralRamsey.Girth.activeAttached_actualASupport_parentBound_of_orderOne
