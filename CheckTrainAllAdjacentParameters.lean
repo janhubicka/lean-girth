@@ -1,0 +1,4 @@
+import Girth.TrainAllAdjacentParameterPreservation
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.AdjacentParameters
+#print axioms StructuralRamsey.Girth.activeAttached_actualASupport_allAdjacentParameters
