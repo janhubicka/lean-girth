@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoStandardEdgeBlock
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.rel_of_crossing_edge_pairs
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_edgeBlocks_of_shared_pairs
