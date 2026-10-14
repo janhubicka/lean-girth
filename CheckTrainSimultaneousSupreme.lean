@@ -1,0 +1,5 @@
+import Girth.TrainSimultaneousSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.localSupreme_of_simultaneous
+#print axioms StructuralRamsey.Girth.OrderOneData.localPieceSystemBound_of_supremeCycleBound
+#print axioms StructuralRamsey.Girth.OrderOneData.orderOneBound_of_fullSystemGirth

@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -72,6 +72,8 @@ jobs:
           python3 scripts/check_axioms.py two-wagon-axioms.log CheckTrainBigCycleTwoWagon.lean
           lake env lean CheckTrainBigCycleOrderBudget.lean | tee order-budget-axioms.log
           python3 scripts/check_axioms.py order-budget-axioms.log CheckTrainBigCycleOrderBudget.lean
+          lake env lean CheckTrainSimultaneousSupreme.lean | tee simultaneous-supreme-axioms.log
+          python3 scripts/check_axioms.py simultaneous-supreme-axioms.log CheckTrainSimultaneousSupreme.lean
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py
