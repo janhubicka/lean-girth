@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainWagonStrongInduced Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainWagonStrongInduced Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -88,6 +88,8 @@ jobs:
           python3 scripts/check_axioms.py short-replacement-axioms.log CheckTrainShortReplacement.lean
           lake env lean CheckTrainFillingCarrierInvariant.lean | tee filling-carrier-axioms.log
           python3 scripts/check_axioms.py filling-carrier-axioms.log CheckTrainFillingCarrierInvariant.lean
+          lake env lean CheckTrainTwoCopyLongProbe.lean | tee two-copy-long-probe-axioms.log
+          python3 scripts/check_axioms.py two-copy-long-probe-axioms.log CheckTrainTwoCopyLongProbe.lean
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py
