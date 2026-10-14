@@ -1,0 +1,4 @@
+import Girth.TrainFullSystemGirthParameter
+
+#print axioms StructuralRamsey.Girth.OrderOneData.bound_of_fullSystemGirth_ge_one
+#print axioms StructuralRamsey.Girth.activeAttached_actualASupport_parentBound_of_fullSystemGirth
