@@ -348,3 +348,4 @@ import Girth.TrainActualTopParentQuotientBridge
 import Girth.TrainGeneratedCarrierParentMonotone
 import Girth.TrainTwoCopyGlobalFirst
 import Girth.TrainTwoCopyGlobalSecond
+import Girth.TrainWagonPairUniqueness
