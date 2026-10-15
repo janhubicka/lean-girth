@@ -95,6 +95,16 @@ theorem BigCycle.replaceOne_twiceOrder
     (C.replaceOne D k a hPrev hNext hLeft hRight).left_incident
     (C.replaceOne D k a hPrev hNext hLeft hRight).right_incident
 
+/-- Any big cycle of length at least three is not order one.  This is the
+exact numerical observation used in the manuscript before performing
+multi-segment short replacements. -/
+theorem BigCycle.twiceOrder_ne_two_of_three_le_length
+    {n : ℕ} (C : D.BigCycle n) (hn : 3 ≤ n) :
+    C.twiceOrder ≠ 2 := by
+  intro h
+  have hTwo := C.length_eq_two_of_order_one D h
+  omega
+
 /-- Above order one a legal one-occurrence short replacement preserves full
 acceptability without any designation bookkeeping. -/
 theorem BigCycle.replaceOne_acceptable_of_order_ne_one
@@ -134,6 +144,21 @@ theorem BigCycle.replaceOne_acceptable_of_other_designated
     refine ⟨r, ?_⟩
     simpa [BigCycle.replaceLabelAt, Function.update_noteq hrk] using hr
   · exact hAccept
+
+/-- In particular every legal one-occurrence short replacement of a cycle
+with at least three occurrences preserves acceptability automatically. -/
+theorem BigCycle.replaceOne_acceptable_of_three_le_length
+    {n : ℕ} (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E)
+    (hn : 3 ≤ n)
+    (hPrev : C.label (trainCyclicPred k) ≠ a)
+    (hNext : a ≠ C.label (cyclicSucc k))
+    (hLeft : D.Incident a (C.connector k))
+    (hRight : D.Incident a (C.connector (trainCyclicPred k)))
+    (hAccept : C.Acceptable) :
+    (C.replaceOne D k a hPrev hNext hLeft hRight).Acceptable :=
+  C.replaceOne_acceptable_of_order_ne_one D k a
+    hPrev hNext hLeft hRight
+    (C.twiceOrder_ne_two_of_three_le_length D hn) hAccept
 
 end OrderOneData
 end StructuralRamsey.Girth
