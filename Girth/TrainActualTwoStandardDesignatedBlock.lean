@@ -16,9 +16,10 @@ long-piece wagon. Applying this on both sides and using the checked actual
 old-core-old three-link theorem contradicts distinct OUTPUT wagon classes.
 No inference from merely meeting a wagon and containing a vertex is made.
 
-The source system bound, witness bound, witness-copy memberships and reflection
-of the shared train are explicit hypotheses. Instantiating these uniformly from
-the full picture-step record, and general cycle transfer, are separate tasks.
+Witness-copy memberships are derived from the actual two-standard intersection
+and active support coverage. The source/witness bounds and shared-train reflection
+remain explicit; their full picture-step instantiation and general cycle transfer
+are separate tasks.
 -/
 
 namespace StructuralRamsey.Girth
@@ -28,6 +29,29 @@ open StructuralRamsey.RelStructure
 universe u v
 variable {L : RelLanguage.{u}}
 variable {UA VB P X Y I : Type v}
+
+/-- In a true active attachment, every core/standard vertex lies in the
+actual shared-witness copy. This is geometric coverage, not an additional
+system-girth or designated-cover assumption. -/
+theorem activeAttached_mem_sharedWitness_of_standard_core
+    (A : RelStructure L UA) (C : StructuralRamsey.Partite.System L P X)
+    (α : UA → P) (R : RelStructure L Y)
+    (f : I → RelStructure.Embedding (C.toRelStructure.induce (activeCarrier A C α)) R)
+    {m : ℕ} (U : EdgeTrainLevels (OldACarrierEdge A R) m)
+    (μ : Fin (m + 1)) (i : I)
+    (z : RelStructure.Attachment.Vertex (activeCarrier A C α) (W := Y) (I := I))
+    (hzStandard : z ∈ copyCarrier (RelStructure.Attachment.copyEmbedding
+      C.toRelStructure (activeCarrier A C α) R f i))
+    (hzCore : z ∈ copyCarrier (RelStructure.Attachment.coreEmbedding
+      C.toRelStructure (activeCarrier A C α) R f)) :
+    z ∈ (sharedWitnessOrderOneData U μ
+      (sharedOldACarrierCoreEmbedding A C.toRelStructure (activeCarrier A C α) R f)
+      (attachedCoreAEdgeCarrier A C.toRelStructure (activeCarrier A C α) R f)).copyCarrier i := by
+  obtain ⟨s, _edge, hs, _hz, _hEq⟩ :=
+    activeAttached_coreStandard_pointwise_sharedAEdge A C α R f i z hzStandard hzCore
+  refine ⟨s, ?_⟩
+  rw [← attachedSharedAEdgeCarrier_eq A C.toRelStructure (activeCarrier A C α) R f i s]
+  exact hs
 
 /-- Under the old system bound, a retained block of arbitrary genuine labels
 and a shared long pair through the same physical endpoints must use the same
@@ -186,26 +210,6 @@ theorem actualTwoStandard_designatedBlocks_force_core_pairEdge
         (activeCarrier A C e.toFunctionEmbedding) R f)
       (attachedCoreAEdgeCarrier A C.toRelStructure
         (activeCarrier A C e.toFunctionEmbedding) R f)).LocalPieceSystemBound 2)
-    (hIx : x ∈ (sharedWitnessOrderOneData U μ
-      (sharedOldACarrierCoreEmbedding A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)
-      (attachedCoreAEdgeCarrier A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)).copyCarrier i)
-    (hIy : y ∈ (sharedWitnessOrderOneData U μ
-      (sharedOldACarrierCoreEmbedding A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)
-      (attachedCoreAEdgeCarrier A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)).copyCarrier i)
-    (hJx : x ∈ (sharedWitnessOrderOneData U μ
-      (sharedOldACarrierCoreEmbedding A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)
-      (attachedCoreAEdgeCarrier A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)).copyCarrier j)
-    (hJy : y ∈ (sharedWitnessOrderOneData U μ
-      (sharedOldACarrierCoreEmbedding A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)
-      (attachedCoreAEdgeCarrier A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f)).copyCarrier j)
     (hDistinctWagons : ¬ (generatedActualASupportTrain A hA C.toRelStructure
       (activeCarrier A C e.toFunctionEmbedding) R f T U hShared).rel μ
       (actualAPictureEdgeEquiv A hA C.toRelStructure
@@ -230,6 +234,30 @@ theorem actualTwoStandard_designatedBlocks_force_core_pairEdge
   let S := activeCarrier A C e.toFunctionEmbedding
   let emb := sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
   let car := attachedCoreAEdgeCarrier A C.toRelStructure S R f
+  have hXi : x ∈ copyCarrier (RelStructure.Attachment.copyEmbedding C.toRelStructure S R f i) := by
+    obtain ⟨z, _hz, hzx⟩ := hxB
+    exact ⟨z, hzx⟩
+  have hYi : y ∈ copyCarrier (RelStructure.Attachment.copyEmbedding C.toRelStructure S R f i) := by
+    obtain ⟨z, _hz, hzy⟩ := hyA
+    exact ⟨z, hzy⟩
+  have hXj : x ∈ copyCarrier (RelStructure.Attachment.copyEmbedding C.toRelStructure S R f j) := by
+    obtain ⟨z, _hz, hzx⟩ := hxD
+    exact ⟨z, hzx⟩
+  have hYj : y ∈ copyCarrier (RelStructure.Attachment.copyEmbedding C.toRelStructure S R f j) := by
+    obtain ⟨z, _hz, hzy⟩ := hyC
+    exact ⟨z, hzy⟩
+  have hXCore := attachment_copy_copy_intersection_subset_core
+    C.toRelStructure S R f hij ⟨hXi, hXj⟩
+  have hYCore := attachment_copy_copy_intersection_subset_core
+    C.toRelStructure S R f hij ⟨hYi, hYj⟩
+  have hIx := activeAttached_mem_sharedWitness_of_standard_core
+    A C e.toFunctionEmbedding R f U μ i x hXi hXCore
+  have hIy := activeAttached_mem_sharedWitness_of_standard_core
+    A C e.toFunctionEmbedding R f U μ i y hYi hYCore
+  have hJx := activeAttached_mem_sharedWitness_of_standard_core
+    A C e.toFunctionEmbedding R f U μ j x hXj hXCore
+  have hJy := activeAttached_mem_sharedWitness_of_standard_core
+    A C e.toFunctionEmbedding R f U μ j y hYj hYCore
   by_contra hNoEdge
   obtain ⟨sx, sy, tx, ty, hLongI, hLongJ, hCross, hxsi, hysi, hxtj, hytj⟩ :=
     sharedWitness_twoCopy_common_shared_pairs U μ emb car hCoreLinear hCoreBound
