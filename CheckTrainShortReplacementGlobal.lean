@@ -1,0 +1,5 @@
+import Girth.TrainShortReplacementGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.relabelSameConnectors_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.relabelSameConnectors_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.relabelSameConnectors_acceptable_of_order_ne_one
