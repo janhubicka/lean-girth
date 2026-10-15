@@ -1,0 +1,4 @@
+import Girth.TrainInsertedConnectorNodup
+
+#print axioms StructuralRamsey.Girth.optionalConnectorBlock_mem_cases
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_nodup
