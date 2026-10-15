@@ -60,8 +60,8 @@ theorem BigCycle.ofCheckedWord_word
     (word : List ((I ⊕ E) × (V ⊕ P)))
     (h : D.CyclicWordChecks word) :
     List.ofFn (fun i : Fin word.length =>
-      ((D.BigCycle.ofCheckedWord word h).label i,
-       (D.BigCycle.ofCheckedWord word h).connector i)) = word := by
+      ((BigCycle.ofCheckedWord D word h).label i,
+       (BigCycle.ofCheckedWord D word h).connector i)) = word := by
   simpa [BigCycle.ofCheckedWord] using (List.ofFn_get word)
 
 /-- Conversely every legal BigCycle satisfies all five checks on its
@@ -71,17 +71,21 @@ theorem BigCycle.toCyclicWordChecks
     D.CyclicWordChecks
       (List.ofFn (fun i : Fin n => (C.label i, C.connector i))) := by
   refine ⟨by simpa using C.length_ge_two, ?_, ?_, ?_, ?_⟩
-  · simpa only [List.length_ofFn, List.get_ofFn, Fin.cast_refl]
-      using C.connector_injective
+  · intro i j h
+    apply Fin.ext
+    have heq : (Fin.cast (by simp) i : Fin n) =
+        (Fin.cast (by simp) j : Fin n) :=
+      C.connector_injective (by simpa only [List.get_ofFn] using h)
+    simpa using congrArg Fin.val heq
   · intro i
-    simpa only [List.length_ofFn, List.get_ofFn, Fin.cast_refl]
-      using C.adjacent_ne i
+    have h := C.adjacent_ne (Fin.cast (by simp) i : Fin n)
+    simpa [List.get_ofFn, cyclicSucc, Fin.cast] using h
   · intro i
-    simpa only [List.length_ofFn, List.get_ofFn, Fin.cast_refl]
-      using C.left_incident i
+    have h := C.left_incident (Fin.cast (by simp) i : Fin n)
+    simpa [List.get_ofFn, Fin.cast] using h
   · intro i
-    simpa only [List.length_ofFn, List.get_ofFn, Fin.cast_refl]
-      using C.right_incident i
+    have h := C.right_incident (Fin.cast (by simp) i : Fin n)
+    simpa [List.get_ofFn, cyclicSucc, Fin.cast] using h
 
 /-- A simultaneous plan produces a BigCycle iff its exact flattened
 replacement word passes the intrinsic cyclic-word checks. -/
@@ -96,7 +100,7 @@ theorem BigCycle.planProducesBigCycle_iff_wordChecks
     exact B.toCyclicWordChecks D
   · intro h
     exact ⟨(C.resultWord D pieces).length,
-      D.BigCycle.ofCheckedWord (C.resultWord D pieces) h,
-      D.BigCycle.ofCheckedWord_word (C.resultWord D pieces) h⟩
+      BigCycle.ofCheckedWord D (C.resultWord D pieces) h,
+      BigCycle.ofCheckedWord_word D (C.resultWord D pieces) h⟩
 
 end StructuralRamsey.Girth.OrderOneData
