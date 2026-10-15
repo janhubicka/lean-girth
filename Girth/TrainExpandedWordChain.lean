@@ -66,7 +66,8 @@ theorem cyclicPairFollow_all_of_chain_wrap
       rw [hsum, Nat.mod_self]
     have hlast : i = ⟨word.length - 1, by omega⟩ :=
       Fin.ext heq
-    simpa [hlast, hz] using hWrap
+    rw [hz, hlast]
+    exact hWrap
 
 /-- From connector Nodup and a chain with cyclic wrap, construct the
 five EXACT tests needed to build the literal output BigCycle. -/
@@ -89,7 +90,9 @@ theorem cyclicWordChecks_of_chain_wrap
       (word.map Prod.snd).get
         ⟨j.val, by simpa using j.isLt⟩ := by
       simpa using hij
-    exact Fin.ext (congrArg Fin.val (hn heq))
+    apply Fin.ext
+    exact congrArg
+      (fun t : Fin (word.map Prod.snd).length => t.val) (hn heq)
   · intro i
     exact (hFollow i).1
   · intro i
