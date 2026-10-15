@@ -13,7 +13,7 @@ physical endpoints and absorbs old pair edges into the core. Two applications,
 followed by the old-core-old generator chain, give the obstruction.
 
 Source and witness FULL system-girth bounds are hypotheses. Witness-copy
-memberships, local-piece bounds, old frames and cross-label inequalities are
+memberships, local-piece bounds, old frames and all label inequalities are
 not hypotheses. Shared-train reflection and genuine source block incidences
 remain explicit. Recovering those incidences from a full output-cycle record,
 and general cycle transfer, are separate obligations.
@@ -27,12 +27,13 @@ universe u v
 
 /-- The four-occurrence argument is independent of the chosen copy index type.
 A block and a pair of incident edges cannot use different wagons if no edge
-joins the endpoints and every designated copy containing both supplies one. -/
+joins the endpoints and every designated copy containing both supplies one.
+Even distinctness of the two retained labels follows from these hypotheses. -/
 theorem OrderOneData.block_parent_eq_of_no_pairEdge
     {V E Q W : Type v} (D : OrderOneData V E Q W)
     (hFull : D.FullSystemGirthGT 2) (hCompat : D.CopyEdgeCarrierCompatible)
     (a b : Q ⊕ E) (e f : E) (p : W) (x y : V)
-    (hab : a ≠ b) (hxy : x ≠ y)
+    (hxy : x ≠ y)
     (ha : D.Meets a p) (hb : D.Meets b p)
     (hxB : x ∈ D.carrier b) (hxE : x ∈ D.edgeCarrier e)
     (hyF : y ∈ D.edgeCarrier f) (hyA : y ∈ D.carrier a)
@@ -41,9 +42,15 @@ theorem OrderOneData.block_parent_eq_of_no_pairEdge
       D.PairEdge x y) : p = D.parent e := by
   classical
   by_contra hpq
+  have hab : a ≠ b := by
+    intro h
+    have hxA : x ∈ D.carrier a := h.symm ▸ hxB
+    cases a with
+    | inl q => exact hNoPair (hBoundary q hxA hyA)
+    | inr edge => exact hNoPair ⟨edge, hxA, hyA⟩
   have hef : e ≠ f := by
-    rintro rfl
-    exact hNoPair ⟨e, hxE, hyF⟩
+    intro h
+    exact hNoPair ⟨e, hxE, h.symm ▸ hyF⟩
   let F := OrderOneData.FourWagonFrame.of_distinct_wagons
     D a b e f p (D.parent e) x y hab hef hpq hxy
     ha hb hxB hxE rfl hf hyF hyA
@@ -91,14 +98,15 @@ local notation "Emb" => sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
 local notation "CoreCar" => attachedCoreAEdgeCarrier A C.toRelStructure S R f
 
 /-- The retained labels belong to the selected family; all physical endpoints
-are pulled back along the actual standard embedding. No old frame is assumed. -/
+are pulled back along the actual standard embedding. No old frame or label
+inequality is assumed. -/
 theorem selectedPicture_block_rel_shared_of_no_core_pair
     (i : I)
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
       AStrong A D (copyCarrier b))
     (hActive : AStrong A C.toRelStructure S) (hFull : O.FullSystemGirthGT 2)
     (a b : Label) (r : OldEdge) (sx sy : Shared) (x y : Vertex)
-    (hab : a ≠ b) (hxy : x ≠ y)
+    (hxy : x ≠ y)
     (ha : O.Meets a (O.parent r)) (hb : O.Meets b (O.parent r))
     (hLong : T.rel μ sx.1 sy.1)
     (hyA : y ∈ (fun z : X => Std i z) '' O.carrier a)
@@ -139,7 +147,7 @@ theorem selectedPicture_block_rel_shared_of_no_core_pair
   have hEq : O.parent r = O.parent sx.1 :=
     OrderOneData.block_parent_eq_of_no_pairEdge O hFull
       (selectedPictureOrderOneData_copyEdgeCarrierCompatible A B D C family selected T μ)
-      a b sx.1 sy.1 (O.parent r) u w hab huw ha hb huB hu hw hwA hParent hNoPair
+      a b sx.1 sy.1 (O.parent r) u w huw ha hb huB hu hw hwA hParent hNoPair
       (fun q hxCopy hyCopy => standardPictureOrderOneData_pairEdge_of_two_active
         A B D C family T μ hStrong e q.1 u w huw hxCopy hyCopy (sx.2 hu) (sy.2 hw))
   exact Quotient.exact hEq
@@ -149,7 +157,8 @@ local notation "Witness" => sharedWitnessOrderOneData U μ Emb CoreCar
 
 /-- Actual two-standard obstruction using the SELECTED source system-girth
 bound and the FULL witness bound. The latter supplies its own linearity and
-local pieces. Both old frames and all witness memberships are constructed. -/
+local pieces. Both old frames, all label inequalities and all witness
+memberships are constructed. -/
 theorem selectedPicture_twoStandard_force_core_pairEdge
     (hA : A.Irreducible) (hShared : ∀ _i : I, Nonempty Shared)
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
@@ -157,7 +166,7 @@ theorem selectedPicture_twoStandard_force_core_pairEdge
     (hActive : AStrong A C.toRelStructure S)
     (hFull : O.FullSystemGirthGT 2) (hCore : Witness.FullSystemGirthGT 2)
     (i j : I) (a b c d : Label) (r s : OldEdge) (x y : Vertex)
-    (hij : i ≠ j) (hxy : x ≠ y) (hab : a ≠ b) (hcd : c ≠ d)
+    (hij : i ≠ j) (hxy : x ≠ y)
     (ha : O.Meets a (O.parent r)) (hb : O.Meets b (O.parent r))
     (hc : O.Meets c (O.parent s)) (hd : O.Meets d (O.parent s))
     (hReflect : ∀ (k : I) (p q : Shared),
@@ -208,11 +217,11 @@ theorem selectedPicture_twoStandard_force_core_pairEdge
       (attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f k t)) hz
   have hOldI := selectedPicture_block_rel_shared_of_no_core_pair
     A B D C family selected T μ e R f i hStrong hActive hFull a b r sx sy x y
-    hab hxy ha hb (hReflect i sx sy hLongI) hyA hxB
+    hxy ha hb (hReflect i sx sy hLongI) hyA hxB
     (toOld i sx x hxsi) (toOld i sy y hysi) hNoEdge
   have hOldJ := selectedPicture_block_rel_shared_of_no_core_pair
     A B D C family selected T μ e R f j hStrong hActive hFull c d s tx ty x y
-    hcd hxy hc hd (hReflect j tx ty hLongJ) hyC hxD
+    hxy hc hd (hReflect j tx ty hLongJ) hyC hxD
     (toOld j tx x hxtj) (toOld j ty y hytj) hNoEdge
   have hOldJq : Quotient.mk (T.wagonSetoid μ) s =
       Quotient.mk (T.wagonSetoid μ) tx.1 := Quotient.sound hOldJ
