@@ -1,0 +1,8 @@
+import Girth.TrainSelectedPictureOutputIncidence
+
+#print axioms StructuralRamsey.Girth.oldACarrierEdge_pullback_of_subset_image
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_carrier
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_edges
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_meets_iff
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_block_pullback
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_twoStandard_force_core_pairEdge

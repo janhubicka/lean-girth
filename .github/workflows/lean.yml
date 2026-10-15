@@ -39,11 +39,11 @@ jobs:
         run: |
           # Keep dependency caches, but never reuse unchecked project objects.
           rm -rf .lake/build
-          lake build Girth.TrainSelectedPictureTwoStandard
+          lake build Girth.TrainSelectedPictureOutputIncidence
       - name: Audit two-standard obstruction exports
         run: |
           set -euo pipefail
-          for check in CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard; do
+          for check in CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard CheckTrainSelectedPictureOutputIncidence; do
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
           done
@@ -74,6 +74,7 @@ jobs:
             CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
             CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
             CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard
+            CheckTrainSelectedPictureOutputIncidence
             CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
             CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
             CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
