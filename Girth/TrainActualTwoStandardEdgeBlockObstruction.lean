@@ -1,5 +1,6 @@
 import Girth.TrainActualTwoStandardEdgeBlock
 import Girth.TrainTwoCopyCommonWagon
+import Girth.TrainInteriorParentQuotientBridge
 import Girth.TrainActualTopParentQuotientBridge
 
 /-!
