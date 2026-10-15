@@ -158,10 +158,12 @@ theorem BigCycle.long_long_boundary_ne
       p = D.parent b := hbp.symm
       _ = D.parent c := congrArg D.parent hbc
       _ = q := hcq
-  subst q
+  have hLongJp : C.LongValid D k (cyclicSucc i) c p d := by
+    rw [hpq]
+    exact hLongJ
   exact C.longPieces_fresh_wagon_distinct D hAccept hn p hFresh
     i (cyclicSucc i) (C.ne_cyclicSucc D i) k k
-    a b c d hLongI hLongJ
+    a b c d hLongI hLongJp
 
 
 /-- Adjacent short pieces cannot choose the same edge at length ≥3:
@@ -204,13 +206,13 @@ theorem BigCycle.longValid_of_piece_eq_long
 
 /-- First and last physical/designated labels of one replacement piece,
 before any global indexing or cyclic-word construction. -/
-def BigCycle.pieceFirstLabel {n : ℕ} (C : D.BigCycle n) (a : I ⊕ E) :
+def BigCycle.pieceFirstLabel {n : ℕ} (_C : D.BigCycle n) (a : I ⊕ E) :
     TrainSupremePiece E P → I ⊕ E
   | .keep => a
   | .short e => .inr e
   | .long e _ _ => .inr e
 
-def BigCycle.pieceLastLabel {n : ℕ} (C : D.BigCycle n) (a : I ⊕ E) :
+def BigCycle.pieceLastLabel {n : ℕ} (_C : D.BigCycle n) (a : I ⊕ E) :
     TrainSupremePiece E P → I ⊕ E
   | .keep => a
   | .short e => .inr e
