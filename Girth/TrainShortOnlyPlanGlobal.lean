@@ -50,6 +50,12 @@ private theorem flatten_ofFn_singleton
 
 namespace OrderOneData
 
+/-- In a two-occurrence cycle each index is the chosen index or its successor.
+This prevents a two-short adjacency, because the supreme index is kept. -/
+private theorem fin_two_eq_or_successor (i k : Fin 2) :
+    k = i ∨ k = cyclicSucc i := by
+  fin_cases i <;> fin_cases k <;> simp [cyclicSucc]
+
 variable {V E I P : Type v} (D : OrderOneData V E I P)
 
 /-- The one-label output of a short-only replacement plan.  The long case is
@@ -100,11 +106,12 @@ theorem designated_ne_actualEdge
   | inr f =>
       simp [designated] at ha
 
-/-- Every short-only valid plan on an acceptable cycle of length at least three
-actually produces a globally legal BigCycle. -/
+/-- Every short-only valid plan on an acceptable cycle produces a globally
+legal BigCycle. For n ≥ 3, A2/A3 prohibit an edge at three connectors. For
+n = 2 the supreme occurrence is kept, so two neighbours cannot both be short. -/
 theorem BigCycle.planProducesBigCycle_of_shortOnly
     {n : ℕ} (C : D.BigCycle n)
-    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (hAccept : C.Acceptable)
     (k : Fin n) (hk : D.designated (C.label k))
     (pieces : Fin n → TrainSupremePiece E P)
     (hPlan : BigCycle.PlanValid D C k pieces)
@@ -124,8 +131,6 @@ theorem BigCycle.planProducesBigCycle_of_shortOnly
       have hs := cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two i
       rw [h] at hs
       exact hSuccSelf hs.symm
-    have hPredSucc : trainCyclicPred i ≠ cyclicSucc i :=
-      trainCyclicPred_ne_cyclicSucc_of_three_le hn i
     cases hp : pieces i with
     | keep =>
         have hi : C.label i = C.label k :=
@@ -159,12 +164,27 @@ theorem BigCycle.planProducesBigCycle_of_shortOnly
                 pieces hPlan f hq
             have hneEF : (Sum.inr e : I ⊕ E) ≠ Sum.inr f := by
               intro hef
-              have heq : e = f := Sum.inr.inj hef
-              subst f
-              exact C.not_edge_incident_three_distinct D hAccept e
-                (trainCyclicPred i) i (cyclicSucc i)
-                hPredSelf hPredSucc hSuccSelf
-                hValidI.2.1 hValidI.2.2 hValidQ.2.2
+              by_cases hn3 : 3 ≤ n
+              · have hPredSucc : trainCyclicPred i ≠ cyclicSucc i :=
+                  trainCyclicPred_ne_cyclicSucc_of_three_le hn3 i
+                have heq : e = f := Sum.inr.inj hef
+                subst f
+                exact C.not_edge_incident_three_distinct D hAccept e
+                  (trainCyclicPred i) i (cyclicSucc i)
+                  hPredSelf hPredSucc hSuccSelf
+                  hValidI.2.1 hValidI.2.2 hValidQ.2.2
+              · have hn2 : n = 2 := by
+                  have hn := C.length_ge_two
+                  omega
+                have hkpos : k = i ∨ k = cyclicSucc i := by
+                  subst n
+                  exact fin_two_eq_or_successor i k
+                have hkKeep := (hPlan k).1 rfl
+                rcases hkpos with hki | hks
+                · rw [hki, hp] at hkKeep
+                  cases hkKeep
+                · rw [hks, hq] at hkKeep
+                  cases hkKeep
             simpa [outLabel, BigCycle.shortPlanLabel, hp, hq] using hneEF
         | long e w f =>
             have hf : False := by
@@ -238,14 +258,14 @@ theorem BigCycle.planProducesBigCycle_of_shortOnly
 supreme property; no separate global-word premise remains. -/
 theorem BigCycle.hasSupremeAt_of_shortOnlyPlan
     {n : ℕ} (C : D.BigCycle n)
-    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (hAccept : C.Acceptable)
     (k : Fin n) (hk : D.designated (C.label k))
     (pieces : Fin n → TrainSupremePiece E P)
     (hPlan : BigCycle.PlanValid D C k pieces)
     (hShortOnly : ∀ j, (pieces j).IsShortOrKeep) :
     C.HasSupremeAt D k := by
   exact ⟨hk, pieces, hPlan,
-    C.planProducesBigCycle_of_shortOnly D hAccept hn k hk
+    C.planProducesBigCycle_of_shortOnly D hAccept k hk
       pieces hPlan hShortOnly⟩
 
 
@@ -256,7 +276,7 @@ transfer after long local pieces have been resolved into short pieces along
 existing wagon connectors. -/
 theorem BigCycle.hasSupremeAt_of_all_shortValid
     {n : ℕ} (C : D.BigCycle n)
-    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (hAccept : C.Acceptable)
     (k : Fin n) (hk : D.designated (C.label k))
     (hShort : ∀ j : Fin n, C.label j ≠ C.label k →
       ∃ e : E, BigCycle.ShortValid D C k j e) :
@@ -281,20 +301,20 @@ theorem BigCycle.hasSupremeAt_of_all_shortValid
     by_cases h : C.label j = C.label k
     · simp [pieces, h, TrainSupremePiece.IsShortOrKeep]
     · simp [pieces, h, TrainSupremePiece.IsShortOrKeep]
-  exact C.hasSupremeAt_of_shortOnlyPlan D hAccept hn
+  exact C.hasSupremeAt_of_shortOnlyPlan D hAccept
     k hk pieces hPlan hShortOnly
 
 
 /-- Unindexed form matching the literal conclusion used by SupremeCycleBound. -/
 theorem BigCycle.hasSimultaneousSupreme_of_all_shortValid
     {n : ℕ} (C : D.BigCycle n)
-    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (hAccept : C.Acceptable)
     (k : Fin n) (hk : D.designated (C.label k))
     (hShort : ∀ j : Fin n, C.label j ≠ C.label k →
       ∃ e : E, BigCycle.ShortValid D C k j e) :
     C.HasSimultaneousSupreme :=
   BigCycle.hasSimultaneousSupreme_of_hasSupremeAt D C k
-    (C.hasSupremeAt_of_all_shortValid D hAccept hn k hk hShort)
+    (C.hasSupremeAt_of_all_shortValid D hAccept k hk hShort)
 
 end OrderOneData
 end StructuralRamsey.Girth
