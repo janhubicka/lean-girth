@@ -274,26 +274,27 @@ theorem actualTwoStandard_designatedBlocks_force_core_pairEdge
   obtain ⟨sx, sy, tx, ty, hLongI, hLongJ, hCross, hxsi, hysi, hxtj, hytj⟩ :=
     sharedWitness_twoCopy_common_shared_pairs U μ emb car hCoreLinear hCoreBound
       i j x y hij hxy hIx hIy hJx hJy hNoEdge
-  have hSX : x ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sx.1 := by
-    rw [attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx]
-    exact hxsi
-  have hSY : y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sy.1 := by
-    rw [attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sy]
-    exact hysi
-  have hTX : x ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f j tx.1 := by
-    rw [attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f j tx]
-    exact hxtj
-  have hTY : y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f j ty.1 := by
-    rw [attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f j ty]
-    exact hytj
+  have hSX : x ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sx.1 :=
+    Eq.mpr (congrArg (fun carrier => x ∈ carrier)
+      (attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx)) hxsi
+  have hSY : y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sy.1 :=
+    Eq.mpr (congrArg (fun carrier => y ∈ carrier)
+      (attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sy)) hysi
+  have hTX : x ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f j tx.1 :=
+    Eq.mpr (congrArg (fun carrier => x ∈ carrier)
+      (attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f j tx)) hxtj
+  have hTY : y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f j ty.1 :=
+    Eq.mpr (congrArg (fun carrier => y ∈ carrier)
+      (attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f j ty)) hytj
   have hOldI := standardPicture_block_rel_shared_of_no_core_pair
     A B D C family T μ e R f i hStrong hActive hFull a b r sx sy x y
     hab hxy ha hb (hReflect i sx sy hLongI) hyA hxB hSX hSY hNoEdge
   have hOldJ := standardPicture_block_rel_shared_of_no_core_pair
     A B D C family T μ e R f j hStrong hActive hFull c d s tx ty x y
     hcd hxy hc hd (hReflect j tx ty hLongJ) hyC hxD hTX hTY hNoEdge
-  have hOldJ' : T.rel μ tx.1 s :=
-    Quotient.exact (Quotient.sound hOldJ).symm
+  have hOldJq : Quotient.mk (T.wagonSetoid μ) s =
+      Quotient.mk (T.wagonSetoid μ) tx.1 := Quotient.sound hOldJ
+  have hOldJ' : T.rel μ tx.1 s := Quotient.exact hOldJq.symm
   exact hDistinctWagons (generatedActualASupportTrain_three_link
     A hA C.toRelStructure S R f T U hShared μ i j r s sx tx hOldI hCross hOldJ')
 
