@@ -305,4 +305,35 @@ theorem BigCycle.plan_adjacent_piece_labels_ne
           simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj]
             using hNe
 
+
+/-- Fresh long-piece wagons in a single valid simultaneous plan are pairwise
+different at distinct original occurrences.  Together with the old connector
+injectivity and freshness, this is the complete CONNECTOR-distinctness
+interface for assembling the replacement word. -/
+theorem BigCycle.plan_fresh_long_wagons_pairwise
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hFresh : ∀ (j : Fin n) (e : E) (p : P) (f : E),
+      pieces j = .long e p f →
+      ∀ t : Fin n, C.connector t ≠ Sum.inr p)
+    (i j : Fin n) (hij : i ≠ j)
+    (e f g h : E) (p q : P)
+    (hi : pieces i = .long e p f)
+    (hj : pieces j = .long g q h) :
+    p ≠ q := by
+  intro hpq
+  have hLongI : C.LongValid D k i e p f :=
+    C.longValid_of_piece_eq_long D k i pieces hPlan e f p hi
+  have hLongJ : C.LongValid D k j g q h :=
+    C.longValid_of_piece_eq_long D k j pieces hPlan g h q hj
+  have hLongJp : C.LongValid D k j g p h := by
+    rw [hpq]
+    exact hLongJ
+  exact C.longPieces_fresh_wagon_distinct D hAccept hn
+    p (hFresh i e p f hi) i j hij k k
+    e f g h hLongI hLongJp
+
 end StructuralRamsey.Girth.OrderOneData
