@@ -75,8 +75,7 @@ theorem standardPictureOrderOneData_copyEdgeCarrierCompatible
     {m : ℕ}
     (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) m)
     (μ : Fin (m + 1)) :
-    (standardPictureOrderOneData A B D C family T μ)
-      .CopyEdgeCarrierCompatible := by
+    (standardPictureOrderOneData A B D C family T μ).CopyEdgeCarrierCompatible := by
   intro q edge hEdge
   exact hEdge
 
