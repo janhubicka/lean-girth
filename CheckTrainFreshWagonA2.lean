@@ -1,0 +1,4 @@
+import Girth.TrainFreshWagonA2
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fresh_wagon_contacts_of_longValid
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fresh_wagon_no_pair_of_longValid
