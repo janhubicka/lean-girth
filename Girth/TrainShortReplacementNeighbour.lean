@@ -107,20 +107,10 @@ theorem BigCycle.not_edge_incident_three_distinct
     have hxu := hAccept.2.1.1 w p hw u (inWagon hux hxe)
     have hyv := hAccept.2.1.1 w p hw v (inWagon hvy hye)
     have hNeighbors : trainCyclicPred w ≠ cyclicSucc w := by
-      intro h
-      have hwu : w = u := by
-        apply C.connector_injective
-        rw [hw, hux]
-        cases hxu with
-        | inl huPred =>
-            rw [huPred, h]
-            exact hvy.trans ?_ |>.symm
-        | inr huSucc =>
-            rw [huSucc]
-            exact hux.symm.trans hux
-      exact False.elim (huv (by
-        rcases hxu with hxu | hxu <;> rcases hyv with hyv | hyv <;>
-          aesop))
+      intro hps
+      apply huv
+      rcases hxu with huPred | huSucc <;>
+        rcases hyv with hvPred | hvSucc <;> aesop
     rcases hxu with huPred | huSucc <;>
       rcases hyv with hvPred | hvSucc
     · exact huv (huPred.trans hvPred.symm)
@@ -199,11 +189,11 @@ theorem BigCycle.shortEdge_ne_neighbors
         intro h
         have hs := cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two t
         rw [h] at hs
-        exact hPredSelf hs.symm)
+        exact C.adjacent_ne t (congrArg C.label hs))
       (by
         intro h
-        apply trainCyclicPred_ne_cyclicSucc_of_three_le hn t
-        rw [h, hSuccT])
+        exact (trainCyclicPred_ne_cyclicSucc_of_three_le hn t)
+          (h.trans hSuccT.symm))
       (by simpa [t] using hPredSelf)
       hPrevPrev hPred hHere
   · intro hEq
