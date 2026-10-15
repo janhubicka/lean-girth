@@ -80,12 +80,12 @@ theorem BigCycle.fresh_wagon_no_pair_of_longValid
     (hu : C.connector u = Sum.inl y)
     (htW : C.InWagonAt p t) (huW : C.InWagonAt p u) :
     ¬ D.PairEdge x y := by
-  obtain ⟨x₀, y₀, hPrev, hHere, _he, _hf, _hne,
-    _hep, _hfp, _hxe, _hyf, hNoPair⟩ := hLong
   have hT := C.fresh_wagon_contacts_of_longValid
     D hAccept k j e f p hLong hFresh t htW
   have hU := C.fresh_wagon_contacts_of_longValid
     D hAccept k j e f p hLong hFresh u huW
+  obtain ⟨x₀, y₀, hPrev, hHere, _he, _hf, _hne,
+    _hep, _hfp, _hxe, _hyf, hNoPair⟩ := hLong
   rcases hT with hT | hT
   · rcases hU with hU | hU
     · exact False.elim (htu (hT.trans hU.symm))
