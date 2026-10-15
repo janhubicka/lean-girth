@@ -1,0 +1,4 @@
+import Girth.TrainFreshLongWagon
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.nonconnector_wagon_boundary_occurrence_unique
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longPieces_fresh_wagon_distinct
