@@ -1,0 +1,5 @@
+import Girth.TrainExpandedWordChain
+
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicPairFollow_all_of_chain_wrap
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicWordChecks_of_chain_wrap
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicWordChecks_of_flattened_blocks
