@@ -34,6 +34,24 @@ theorem trainCyclicPred_cyclicSucc_of_two_le
     rw [Nat.zero_add, Nat.mod_eq_of_lt hlt]
     omega
 
+/-- The converse cyclic inverse follows from the left inverse on the finite
+index type. -/
+theorem cyclicSucc_trainCyclicPred_of_two_le
+    {n : ℕ} (hn : 2 ≤ n) (i : Fin n) :
+    cyclicSucc (trainCyclicPred i) = i := by
+  have hLeft : Function.LeftInverse
+      (trainCyclicPred : Fin n → Fin n) cyclicSucc :=
+    fun j => trainCyclicPred_cyclicSucc_of_two_le hn j
+  have hInj : Function.Injective (cyclicSucc : Fin n → Fin n) :=
+    hLeft.injective
+  have hSurj : Function.Surjective (cyclicSucc : Fin n → Fin n) :=
+    Finite.surjective_of_injective hInj
+  obtain ⟨j, hj⟩ := hSurj i
+  have hp : trainCyclicPred i = j := by
+    rw [← hj]
+    exact trainCyclicPred_cyclicSucc_of_two_le hn j
+  rw [hp, hj]
+
 namespace OrderOneData
 
 universe v
@@ -68,7 +86,14 @@ def BigCycle.replaceOne
           have h := congrArg trainCyclicPred hsk
           rw [trainCyclicPred_cyclicSucc_of_two_le C.length_ge_two i] at h
           exact h
-        simpa [BigCycle.replaceLabelAt, hik, hsk, hip] using hPrev
+        have hpk : trainCyclicPred k ≠ k := by
+          intro hp
+          have hs := congrArg cyclicSucc hp
+          rw [cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two k] at hs
+          exact (C.adjacent_ne k) (congrArg C.label hs.symm)
+        have hsp : cyclicSucc (trainCyclicPred k) = k :=
+          cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two k
+        simpa [BigCycle.replaceLabelAt, hik, hsk, hip, hpk, hsp] using hPrev
       · simpa [BigCycle.replaceLabelAt, hik, hsk] using C.adjacent_ne i
   · intro i
     by_cases hik : i = k
@@ -81,7 +106,9 @@ def BigCycle.replaceOne
         have h := congrArg trainCyclicPred hsk
         rw [trainCyclicPred_cyclicSucc_of_two_le C.length_ge_two i] at h
         exact h
-      simpa [BigCycle.replaceLabelAt, hsk, hip] using hRight
+      have hsp : cyclicSucc (trainCyclicPred k) = k :=
+        cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two k
+      simpa [BigCycle.replaceLabelAt, hsk, hip, hsp] using hRight
     · simpa [BigCycle.replaceLabelAt, hsk] using C.right_incident i
 
 /-- One legal short replacement preserves the numerical order exactly. -/
