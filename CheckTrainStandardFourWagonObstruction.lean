@@ -1,0 +1,3 @@
+import Girth.TrainStandardFourWagonObstruction
+
+#print axioms StructuralRamsey.Girth.standardPicture_fourWagonFrame_pairEdge
