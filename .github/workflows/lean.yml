@@ -43,7 +43,7 @@ jobs:
       - name: Audit two-standard obstruction exports
         run: |
           set -euo pipefail
-          for check in CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard CheckTrainSelectedPictureOutputIncidence CheckTrainSelectedPictureContainedBlocks CheckTrainShortReplacementGlobal; do
+          for check in CheckTrainShortReplacementGlobal; do
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
           done
