@@ -1,0 +1,4 @@
+import Girth.TrainSupremeVertexCoverage
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_copy_contains_vertex_connectors
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOneData_copyEdgeCarrierCompatible
