@@ -41,10 +41,11 @@ end TrainSupremePiece
 private theorem flatten_ofFn_singleton
     {α : Type v} {n : ℕ} (f : Fin n → α) :
     (List.ofFn (fun i => [f i])).flatten = List.ofFn f := by
-  rw [List.ofFn_comp']
-  induction List.ofFn f with
-  | nil => rfl
-  | cons a l ih =>
+  induction n with
+  | zero =>
+      simp
+  | succ n ih =>
+      rw [List.ofFn_succ', List.ofFn_succ']
       simp [ih]
 
 namespace OrderOneData
@@ -156,17 +157,15 @@ theorem BigCycle.planProducesBigCycle_of_shortOnly
             have hValidQ :=
               C.shortValid_of_piece_eq_short D k (cyclicSucc i)
                 pieces hPlan f hq
-            intro hef
-            have heq : e = f := Sum.inr.inj hef
-            subst f
-            have hQPred : D.Incident (.inr e) (C.connector i) := by
-              have h := hValidQ.2.1
-              rw [trainCyclicPred_cyclicSucc_of_two_le C.length_ge_two i] at h
-              exact h
-            exact C.not_edge_incident_three_distinct D hAccept e
-              (trainCyclicPred i) i (cyclicSucc i)
-              hPredSelf hPredSucc hSuccSelf
-              hValidI.2.1 hValidI.2.2 hValidQ.2.2
+            have hneEF : (Sum.inr e : I ⊕ E) ≠ Sum.inr f := by
+              intro hef
+              have heq : e = f := Sum.inr.inj hef
+              subst f
+              exact C.not_edge_incident_three_distinct D hAccept e
+                (trainCyclicPred i) i (cyclicSucc i)
+                hPredSelf hPredSucc hSuccSelf
+                hValidI.2.1 hValidI.2.2 hValidQ.2.2
+            simpa [outLabel, BigCycle.shortPlanLabel, hp, hq] using hneEF
         | long e w f =>
             have hf : False := by
               simpa [TrainSupremePiece.IsShortOrKeep, hq] using
@@ -228,21 +227,12 @@ theorem BigCycle.planProducesBigCycle_of_shortOnly
         exact False.elim hf
 
   refine ⟨n, B, ?_⟩
-  calc
-    List.ofFn (fun i : Fin n => (B.label i, B.connector i)) =
-        List.ofFn (fun i : Fin n => (outLabel i, C.connector i)) := by
-          rfl
-    _ = (List.ofFn (fun i : Fin n =>
-          [(outLabel i, C.connector i)])).flatten := by
-          symm
-          exact flatten_ofFn_singleton
-            (fun i : Fin n => (outLabel i, C.connector i))
-    _ = (List.ofFn (fun i : Fin n =>
-          BigCycle.pieceWord D C i (pieces i))).flatten := by
-          congr 2
-          funext i
-          exact (hPieceWord i).symm
-    _ = BigCycle.resultWord D C pieces := rfl
+  change List.ofFn (fun i : Fin n => (outLabel i, C.connector i)) =
+    BigCycle.resultWord D C pieces
+  rw [BigCycle.resultWord]
+  simp_rw [hPieceWord]
+  exact (flatten_ofFn_singleton
+    (fun i : Fin n => (outLabel i, C.connector i))).symm
 
 /-- Therefore a short-only PlanValid witness already gives the literal indexed
 supreme property; no separate global-word premise remains. -/
