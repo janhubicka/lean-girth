@@ -1,4 +1,5 @@
 import Girth.TrainCheckedCycleWord
+import Girth.TrainLongBoundaryCollision
 import Mathlib.Data.List.Chain
 import Mathlib.Data.List.Nodup
 import Mathlib.Tactic
@@ -120,5 +121,94 @@ theorem cyclicWordChecks_of_flattened_blocks
     hLength hNodup
   · exact (List.isChain_flatten hNonempty).mpr ⟨hInside, hBoundary⟩
   · exact hWrap
+
+
+/-- Every replacement piece produces at least one physical occurrence. -/
+theorem BigCycle.pieceWord_ne_nil
+    {n : ℕ} (C : D.BigCycle n) (j : Fin n)
+    (piece : TrainSupremePiece E P) :
+    C.pieceWord D j piece ≠ [] := by
+  cases piece <;> simp [BigCycle.pieceWord]
+
+/-- The local PlanValid conditions make each physical replacement piece a
+chain on the actual occurrence/connector word. Long pieces use their two
+distinct edges and common parent wagon; short and retained pieces are
+singletons. No global BigCycle witness is used. -/
+theorem BigCycle.pieceWord_isChain_of_plan
+    {n : ℕ} (C : D.BigCycle n) (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces) (j : Fin n) :
+    (C.pieceWord D j (pieces j)).IsChain D.CyclicPairFollow := by
+  classical
+  cases hp : pieces j with
+  | keep =>
+      simp [BigCycle.pieceWord, hp]
+  | short e =>
+      simp [BigCycle.pieceWord, hp]
+  | long e w f =>
+      have hv : C.LongValid D k j e w f :=
+        C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
+      obtain ⟨x, y, hx, hy, he, hf, hne, hpe, hpf, hxe, hyf, hno⟩ := hv
+      change ([(Sum.inr e, Sum.inr w),
+        (Sum.inr f, C.connector j)]).IsChain D.CyclicPairFollow
+      apply List.isChain_pair.mpr
+      refine ⟨?_, ?_, ?_⟩
+      · intro h
+        exact hne (Sum.inr.inj h)
+      · exact ⟨e, rfl, hpe⟩
+      · exact ⟨f, rfl, hpf⟩
+
+/-- The LAST label in any valid piece is incident with the ORIGINAL right
+connector of that occurrence. -/
+theorem BigCycle.pieceLast_incident_of_plan
+    {n : ℕ} (C : D.BigCycle n) (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces) (j : Fin n) :
+    D.Incident
+      (C.pieceLastLabel D (C.label j) (pieces j))
+      (C.connector j) := by
+  classical
+  cases hp : pieces j with
+  | keep =>
+      simpa [BigCycle.pieceLastLabel, hp] using C.left_incident j
+  | short e =>
+      have hv : C.ShortValid D k j e :=
+        C.shortValid_of_piece_eq_short D k j pieces hPlan e hp
+      simpa [BigCycle.pieceLastLabel, hp] using hv.2.2
+  | long e w f =>
+      have hv : C.LongValid D k j e w f :=
+        C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
+      obtain ⟨x, y, hx, hy, he, hf, hne, hpe, hpf, hxe, hyf, hno⟩ := hv
+      simp only [BigCycle.pieceLastLabel, hp]
+      rw [hy]
+      exact hyf
+
+/-- The FIRST label in any valid piece is incident with the ORIGINAL
+preceding connector; it is a real local edge probe in short/long pieces,
+or the unchanged source incidence in a kept occurrence. -/
+theorem BigCycle.pieceFirst_incident_of_plan
+    {n : ℕ} (C : D.BigCycle n) (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces) (j : Fin n) :
+    D.Incident
+      (C.pieceFirstLabel D (C.label j) (pieces j))
+      (C.connector (trainCyclicPred j)) := by
+  classical
+  cases hp : pieces j with
+  | keep =>
+      have h := C.right_incident (trainCyclicPred j)
+      rw [cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two j] at h
+      simpa [BigCycle.pieceFirstLabel, hp] using h
+  | short e =>
+      have hv : C.ShortValid D k j e :=
+        C.shortValid_of_piece_eq_short D k j pieces hPlan e hp
+      simpa [BigCycle.pieceFirstLabel, hp] using hv.2.1
+  | long e w f =>
+      have hv : C.LongValid D k j e w f :=
+        C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
+      obtain ⟨x, y, hx, hy, he, hf, hne, hpe, hpf, hxe, hyf, hno⟩ := hv
+      simp only [BigCycle.pieceFirstLabel, hp]
+      rw [hx]
+      exact hxe
 
 end StructuralRamsey.Girth.OrderOneData
