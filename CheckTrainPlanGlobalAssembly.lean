@@ -2,3 +2,5 @@ import Girth.TrainPlanGlobalAssembly
 
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_length_ge_source
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_wrap
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.plan_last_first_source_boundary
