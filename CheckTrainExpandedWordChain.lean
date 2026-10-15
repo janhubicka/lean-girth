@@ -1,0 +1,10 @@
+import Girth.TrainExpandedWordChain
+
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicPairFollow_all_of_chain_wrap
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicWordChecks_of_chain_wrap
+#print axioms StructuralRamsey.Girth.OrderOneData.cyclicWordChecks_of_flattened_blocks
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceWord_ne_nil
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceWord_isChain_of_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceLast_incident_of_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceFirst_incident_of_plan
