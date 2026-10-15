@@ -1,4 +1,5 @@
 import Girth.TrainCheckedCycleWord
+import Girth.TrainLongBoundaryCollision
 import Mathlib.Data.List.Nodup
 import Mathlib.Data.List.OfFn
 
@@ -98,4 +99,98 @@ theorem optionalConnectorWord_nodup
       · exact hFresh i j a ha (hi.symm.trans hj)
       · exact hDifferent i j a b hijne ha hb (hi.symm.trans hj)
 
+
+namespace OrderOneData
+
+variable {V E I P : Type v} (D : OrderOneData V E I P)
+
+/-- A long piece inserts its parent wagon immediately before its old right
+connector. Short and retained pieces do not insert any connector. -/
+def BigCycle.insertedConnector {n : ℕ} (C : D.BigCycle n)
+    (pieces : Fin n → TrainSupremePiece E P) (i : Fin n) :
+    Option (V ⊕ P) :=
+  match pieces i with
+  | .long _ p _ => some (Sum.inr p)
+  | .keep => none
+  | .short _ => none
+
+/-- The connector projection of the literal replacement word is exactly
+the old connector list with optional fresh wagon connectors inserted.
+This equality retains all cyclic positions, not merely the set of
+connectors. -/
+theorem BigCycle.resultWord_connectorList
+    {n : ℕ} (C : D.BigCycle n)
+    (pieces : Fin n → TrainSupremePiece E P) :
+    (C.resultWord D pieces).map Prod.snd =
+      optionalConnectorWord C.connector (C.insertedConnector D pieces) := by
+  unfold BigCycle.resultWord optionalConnectorWord
+  rw [List.map_flatten, ← List.ofFn_comp']
+  apply congrArg List.flatten
+  apply congrArg List.ofFn
+  funext i
+  cases hp : pieces i with
+  | keep =>
+      simp [BigCycle.pieceWord, BigCycle.insertedConnector,
+        optionalConnectorBlock, hp]
+  | short e =>
+      simp [BigCycle.pieceWord, BigCycle.insertedConnector,
+        optionalConnectorBlock, hp]
+  | long e p f =>
+      simp [BigCycle.pieceWord, BigCycle.insertedConnector,
+        optionalConnectorBlock, hp]
+
+/-- Freshness and pairwise distinctness proved by #520 imply a genuine
+Nodup property for the connector projection of the ACTUAL flattened
+replacement word. This discharges the output connector-injectivity
+requirement without assuming an output BigCycle. -/
+theorem BigCycle.resultWord_connectors_nodup
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hFresh : ∀ (j : Fin n) (e : E) (p : P) (f : E),
+      pieces j = .long e p f →
+      ∀ t : Fin n, C.connector t ≠ Sum.inr p) :
+    ((C.resultWord D pieces).map Prod.snd).Nodup := by
+  rw [C.resultWord_connectorList D pieces]
+  apply optionalConnectorWord_nodup
+    C.connector (C.insertedConnector D pieces)
+  · exact C.connector_injective
+  · intro i j a hi
+    cases hp : pieces i with
+    | keep =>
+        simp [BigCycle.insertedConnector, hp] at hi
+    | short e =>
+        simp [BigCycle.insertedConnector, hp] at hi
+    | long e p f =>
+        have ha : a = (Sum.inr p : V ⊕ P) := by
+          simpa [BigCycle.insertedConnector, hp] using hi.symm
+        subst a
+        exact (hFresh i e p f hp j).symm
+  · intro i j a b hij hi hj
+    cases hp : pieces i with
+    | keep =>
+        simp [BigCycle.insertedConnector, hp] at hi
+    | short e =>
+        simp [BigCycle.insertedConnector, hp] at hi
+    | long e p f =>
+        have ha : a = (Sum.inr p : V ⊕ P) := by
+          simpa [BigCycle.insertedConnector, hp] using hi.symm
+        cases hq : pieces j with
+        | keep =>
+            simp [BigCycle.insertedConnector, hq] at hj
+        | short g =>
+            simp [BigCycle.insertedConnector, hq] at hj
+        | long g q h =>
+            have hb : b = (Sum.inr q : V ⊕ P) := by
+              simpa [BigCycle.insertedConnector, hq] using hj.symm
+            have hpq : p ≠ q :=
+              C.plan_fresh_long_wagons_pairwise D hAccept hn k
+                pieces hPlan hFresh i j hij e f g h p q hp hq
+            intro hab
+            apply hpq
+            exact Sum.inr.inj (ha.symm.trans (hab.trans hb))
+
+end OrderOneData
 end StructuralRamsey.Girth
