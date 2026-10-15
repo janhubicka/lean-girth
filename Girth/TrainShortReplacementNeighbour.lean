@@ -79,11 +79,14 @@ theorem BigCycle.not_edge_incident_three_distinct
     | inl x =>
         left
         refine ⟨x, rfl, ?_⟩
-        simpa [Incident, carrier] using ht
+        have ht' := ht
+        rw [hct] at ht'
+        exact ht'
     | inr q =>
         right
-        have ht' : D.Meets (.inr e) q := by
-          simpa [Incident] using ht
+        have ht' := ht
+        rw [hct] at ht'
+        change D.Meets (.inr e) q at ht'
         rcases ht' with ⟨f, hf, hfp⟩
         have hfe : f = e := by simpa [OrderOneData.edges] using hf
         subst f
@@ -147,8 +150,8 @@ theorem BigCycle.not_edge_incident_three_distinct
       · exact oneWagon k i j hkW hij hiV hjV
     · rcases classify k hk with hkV | hkW
       · exact oneWagon j i k hjW hik hiV hkV
-      · exact hij (C.connector_injective
-          (Eq.trans hiW (Eq.symm hjW)))
+      · exact hjk (C.connector_injective
+          (Eq.trans hjW (Eq.symm hkW)))
   · rcases classify j hj with hjV | hjW
     · rcases classify k hk with hkV | hkW
       · exact oneWagon i j k hiW hjk hjV hkV
