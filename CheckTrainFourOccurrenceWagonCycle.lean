@@ -1,0 +1,7 @@
+import Girth.TrainFourOccurrenceWagonCycle
+
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.twiceOrder_eq_four
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.A2_of_no_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.A3_of_linear
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.pairEdge_of_system_bound_and_boundary
