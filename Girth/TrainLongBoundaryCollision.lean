@@ -162,4 +162,144 @@ theorem BigCycle.long_long_boundary_ne
     i (cyclicSucc i) (C.ne_cyclicSucc D i) k k
     a b c d hLongI hLongJ
 
+
+/-- Adjacent short pieces cannot choose the same edge at length ≥3:
+that edge would meet three different original connector positions. -/
+theorem BigCycle.short_short_boundary_ne
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k i : Fin n) (e f : E)
+    (hShortI : C.ShortValid D k i e)
+    (hShortJ : C.ShortValid D k (cyclicSucc i) f) :
+    e ≠ f := by
+  intro hef
+  subst f
+  have hSucc : i ≠ cyclicSucc i := C.ne_cyclicSucc D i
+  have hPred : trainCyclicPred i ≠ i := by
+    intro h
+    have hs := cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two i
+    rw [h] at hs
+    exact hSucc hs.symm
+  exact C.not_edge_incident_three_distinct D hAccept e
+    (trainCyclicPred i) i (cyclicSucc i)
+    hPred (trainCyclicPred_ne_cyclicSucc_of_three_le hn i) hSucc
+    hShortI.2.1 hShortI.2.2 hShortJ.2.2
+
+/-- The local long-piece data of a chosen replacement plan. -/
+theorem BigCycle.longValid_of_piece_eq_long
+    {n : ℕ} (C : D.BigCycle n) (k j : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (e f : E) (p : P)
+    (hPiece : pieces j = .long e p f) :
+    C.LongValid D k j e p f := by
+  have hne : C.label j ≠ C.label k := by
+    intro heq
+    have h := (hPlan j).1 heq
+    rw [hPiece] at h
+    cases h
+  have h := (hPlan j).2 hne
+  simpa [hPiece] using h
+
+/-- First and last physical/designated labels of one replacement piece,
+before any global indexing or cyclic-word construction. -/
+def BigCycle.pieceFirstLabel (a : I ⊕ E) :
+    TrainSupremePiece E P → I ⊕ E
+  | .keep => a
+  | .short e => .inr e
+  | .long e _ _ => .inr e
+
+def BigCycle.pieceLastLabel (a : I ⊕ E) :
+    TrainSupremePiece E P → I ⊕ E
+  | .keep => a
+  | .short e => .inr e
+  | .long _ _ f => .inr f
+
+/-- Global ADJACENT-LABEL inequality for any simultaneous replacement plan
+whose long-piece wagons are fresh. This combines the four physical-edge
+collisions with the disjointness of designated and edge labels.  It is
+independent of the difficult finite indexing for the complete output word. -/
+theorem BigCycle.plan_adjacent_piece_labels_ne
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n) (hk : D.designated (C.label k))
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hFresh : ∀ (j : Fin n) (e : E) (p : P) (f : E),
+      pieces j = .long e p f →
+      ∀ t : Fin n, C.connector t ≠ Sum.inr p) :
+    ∀ i : Fin n,
+      C.pieceLastLabel D (C.label i) (pieces i) ≠
+      C.pieceFirstLabel D (C.label (cyclicSucc i))
+        (pieces (cyclicSucc i)) := by
+  intro i
+  cases hi : pieces i with
+  | keep =>
+      have hI : C.label i = C.label k :=
+        C.label_eq_supreme_of_keep D k i pieces hPlan hi
+      cases hj : pieces (cyclicSucc i) with
+      | keep =>
+          have hJ : C.label (cyclicSucc i) = C.label k :=
+            C.label_eq_supreme_of_keep D k (cyclicSucc i) pieces hPlan hj
+          exact False.elim (C.adjacent_ne i (hI.trans hJ.symm))
+      | short f =>
+          have hNe := D.designated_ne_actualEdge (C.label k) f hk
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj, hI]
+            using hNe
+      | long e p f =>
+          have hNe := D.designated_ne_actualEdge (C.label k) e hk
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj, hI]
+            using hNe
+  | short e =>
+      have hShortI : C.ShortValid D k i e :=
+        C.shortValid_of_piece_eq_short D k i pieces hPlan e hi
+      cases hj : pieces (cyclicSucc i) with
+      | keep =>
+          have hJ : C.label (cyclicSucc i) = C.label k :=
+            C.label_eq_supreme_of_keep D k (cyclicSucc i) pieces hPlan hj
+          have hNe := (D.designated_ne_actualEdge (C.label k) e hk).symm
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj, hJ]
+            using hNe
+      | short f =>
+          have hShortJ : C.ShortValid D k (cyclicSucc i) f :=
+            C.shortValid_of_piece_eq_short D k (cyclicSucc i) pieces hPlan f hj
+          have hNe := C.short_short_boundary_ne D hAccept hn k i e f
+            hShortI hShortJ
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj]
+            using hNe
+      | long f p g =>
+          have hLongJ : C.LongValid D k (cyclicSucc i) f p g :=
+            C.longValid_of_piece_eq_long D k (cyclicSucc i) pieces hPlan
+              f g p hj
+          have hNe := C.short_long_boundary_ne D hAccept hn k i e f g p
+            hShortI hLongJ (hFresh (cyclicSucc i) f p g hj)
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj]
+            using hNe
+  | long e p f =>
+      have hLongI : C.LongValid D k i e p f :=
+        C.longValid_of_piece_eq_long D k i pieces hPlan e f p hi
+      have hFreshI := hFresh i e p f hi
+      cases hj : pieces (cyclicSucc i) with
+      | keep =>
+          have hJ : C.label (cyclicSucc i) = C.label k :=
+            C.label_eq_supreme_of_keep D k (cyclicSucc i) pieces hPlan hj
+          have hNe := (D.designated_ne_actualEdge (C.label k) f hk).symm
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj, hJ]
+            using hNe
+      | short g =>
+          have hShortJ : C.ShortValid D k (cyclicSucc i) g :=
+            C.shortValid_of_piece_eq_short D k (cyclicSucc i) pieces hPlan g hj
+          have hNe := C.long_short_boundary_ne D hAccept hn k i e f g p
+            hLongI hShortJ hFreshI
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj]
+            using hNe
+      | long g q h =>
+          have hLongJ : C.LongValid D k (cyclicSucc i) g q h :=
+            C.longValid_of_piece_eq_long D k (cyclicSucc i) pieces hPlan
+              g h q hj
+          have hNe := C.long_long_boundary_ne D hAccept hn k i
+            e f g h p q hLongI hLongJ hFreshI
+          simpa [BigCycle.pieceLastLabel, BigCycle.pieceFirstLabel, hi, hj]
+            using hNe
+
 end StructuralRamsey.Girth.OrderOneData
