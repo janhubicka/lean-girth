@@ -1,0 +1,5 @@
+import Girth.TrainCheckedCycleWord
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ofCheckedWord_word
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.toCyclicWordChecks
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_iff_wordChecks
