@@ -100,6 +100,7 @@ theorem standardPicture_block_rel_shared_of_no_core_pair
       y ∈ attachedCoreAEdgeCarrier A C.toRelStructure
         (activeCarrier A C e.toFunctionEmbedding) R f edge) :
     T.rel μ r sx.1 := by
+  classical
   let O := standardPictureOrderOneData A B D C family T μ
   let S := activeCarrier A C e.toFunctionEmbedding
   let std := RelStructure.Attachment.copyEmbedding C.toRelStructure S R f i
@@ -140,10 +141,10 @@ theorem standardPicture_block_rel_shared_of_no_core_pair
     A B D C family T μ hStrong e hActive F hFull (sx.2 hu) (sy.2 hw) R f i
   apply hNoEdge
   refine ⟨edge, ?_, ?_⟩
-  · change std u ∈ attachedCoreAEdgeCarrier A C.toRelStructure S R f edge at hxCore
-    rwa [hux] at hxCore
-  · change std w ∈ attachedCoreAEdgeCarrier A C.toRelStructure S R f edge at hyCore
-    rwa [hwy] at hyCore
+  · exact Eq.mp (congrArg
+      (fun z => z ∈ attachedCoreAEdgeCarrier A C.toRelStructure S R f edge) hux) hxCore
+  · exact Eq.mp (congrArg
+      (fun z => z ∈ attachedCoreAEdgeCarrier A C.toRelStructure S R f edge) hwy) hyCore
 
 /-- Actual two-standard obstruction with possibly designated retained labels.
 Both old frame extractions and the generated-wagon contradiction are proved;
@@ -231,6 +232,7 @@ theorem actualTwoStandard_designatedBlocks_force_core_pairEdge
         (activeCarrier A C e.toFunctionEmbedding) R f)
       (attachedCoreAEdgeCarrier A C.toRelStructure
         (activeCarrier A C e.toFunctionEmbedding) R f)).PairEdge x y := by
+  classical
   let S := activeCarrier A C e.toFunctionEmbedding
   let emb := sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
   let car := attachedCoreAEdgeCarrier A C.toRelStructure S R f
