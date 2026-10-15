@@ -1,0 +1,4 @@
+import Girth.TrainPlanCyclicWrap
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_wrap_of_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_fresh_long
