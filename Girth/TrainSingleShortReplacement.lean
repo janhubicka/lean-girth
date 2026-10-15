@@ -1,29 +1,38 @@
 import Girth.TrainShortReplacementGlobal
+import Girth.TrainBigCycleOrderBudget
 
 /-!
 # Circulation: one globally legal short replacement
 
-Short replacements do not change connectors.  Replacing one occurrence at a
+Short replacements do not change connectors. Replacing one occurrence at a
 time therefore needs only the genuinely local legality checks: the new label
 must differ from its two cyclic neighbours and must be incident with the two
 unchanged boundary connectors.
 
-The resulting word is a literal BigCycle.  Its order, A2 and A3 are inherited
-from the original cycle.  At order one, retaining any other designated
-occurrence discharges A1.  This is the iterative kernel used by the circulation
-cycle-transfer proof; it does not choose the replacement edge itself.
+The resulting word is a literal BigCycle. Its order, A2 and A3 are inherited
+from the original cycle. At order one, retaining any other designated
+occurrence discharges A1. The final inductive relation packages a finite
+sequence of such steps away from one retained supreme occurrence.
 -/
 
 namespace StructuralRamsey.Girth
 
-/-- Cyclic predecessor and successor are inverse once the cycle has at least
-two positions. -/
+/-- Cyclic predecessor and successor are inverse on a genuine cycle. -/
 theorem trainCyclicPred_cyclicSucc_of_two_le
     {n : ℕ} (hn : 2 ≤ n) (i : Fin n) :
     trainCyclicPred (cyclicSucc i) = i := by
   apply Fin.ext
-  simp [trainCyclicPred, cyclicSucc]
-  omega
+  simp only [trainCyclicPred, cyclicSucc, Fin.val_mk]
+  by_cases h : i.val + 1 < n
+  · rw [Nat.mod_eq_of_lt h]
+    have heq : i.val + 1 + n - 1 = i.val + n := by omega
+    rw [heq]
+    simpa [Nat.add_mod, Nat.mod_eq_of_lt i.isLt]
+  · have hs : i.val + 1 = n := by omega
+    rw [hs, Nat.mod_self]
+    have hlt : n - 1 < n := by omega
+    rw [Nat.zero_add, Nat.mod_eq_of_lt hlt]
+    omega
 
 namespace OrderOneData
 
@@ -31,14 +40,14 @@ universe v
 variable {V E I P : Type v} (D : OrderOneData V E I P)
 
 /-- The label function obtained by changing one cyclic occurrence. -/
-noncomputable def BigCycle.replaceLabelAt
+def BigCycle.replaceLabelAt
     {n : ℕ} (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E) :
     Fin n → I ⊕ E :=
-  Function.update C.label k a
+  fun i => if i = k then a else C.label i
 
 /-- Two neighbour inequalities and the two boundary incidences are enough to
 turn a one-occurrence short replacement into a genuine BigCycle. -/
-noncomputable def BigCycle.replaceOne
+def BigCycle.replaceOne
     {n : ℕ} (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E)
     (hPrev : C.label (trainCyclicPred k) ≠ a)
     (hNext : a ≠ C.label (cyclicSucc k))
@@ -53,23 +62,19 @@ noncomputable def BigCycle.replaceOne
       have hsk : cyclicSucc k ≠ k := by
         intro h
         exact C.adjacent_ne k (congrArg C.label h.symm)
-      simp [BigCycle.replaceLabelAt, Function.update_same,
-        Function.update_noteq hsk, hNext]
+      simpa [BigCycle.replaceLabelAt, hsk] using hNext
     · by_cases hsk : cyclicSucc i = k
       · have hip : i = trainCyclicPred k := by
           have h := congrArg trainCyclicPred hsk
           rw [trainCyclicPred_cyclicSucc_of_two_le C.length_ge_two i] at h
           exact h
-        simp [BigCycle.replaceLabelAt, Function.update_noteq hik,
-          hsk, hip, hPrev]
-      · simpa [BigCycle.replaceLabelAt, Function.update_noteq hik,
-          Function.update_noteq hsk] using C.adjacent_ne i
+        simpa [BigCycle.replaceLabelAt, hik, hsk, hip] using hPrev
+      · simpa [BigCycle.replaceLabelAt, hik, hsk] using C.adjacent_ne i
   · intro i
     by_cases hik : i = k
     · subst i
       simpa [BigCycle.replaceLabelAt] using hLeft
-    · simpa [BigCycle.replaceLabelAt, Function.update_noteq hik]
-        using C.left_incident i
+    · simpa [BigCycle.replaceLabelAt, hik] using C.left_incident i
   · intro i
     by_cases hsk : cyclicSucc i = k
     · have hip : i = trainCyclicPred k := by
@@ -77,8 +82,7 @@ noncomputable def BigCycle.replaceOne
         rw [trainCyclicPred_cyclicSucc_of_two_le C.length_ge_two i] at h
         exact h
       simpa [BigCycle.replaceLabelAt, hsk, hip] using hRight
-    · simpa [BigCycle.replaceLabelAt, Function.update_noteq hsk]
-        using C.right_incident i
+    · simpa [BigCycle.replaceLabelAt, hsk] using C.right_incident i
 
 /-- One legal short replacement preserves the numerical order exactly. -/
 theorem BigCycle.replaceOne_twiceOrder
@@ -95,9 +99,7 @@ theorem BigCycle.replaceOne_twiceOrder
     (C.replaceOne D k a hPrev hNext hLeft hRight).left_incident
     (C.replaceOne D k a hPrev hNext hLeft hRight).right_incident
 
-/-- Any big cycle of length at least three is not order one.  This is the
-exact numerical observation used in the manuscript before performing
-multi-segment short replacements. -/
+/-- A big cycle with at least three occurrences cannot have order one. -/
 theorem BigCycle.twiceOrder_ne_two_of_three_le_length
     {n : ℕ} (C : D.BigCycle n) (hn : 3 ≤ n) :
     C.twiceOrder ≠ 2 := by
@@ -124,8 +126,7 @@ theorem BigCycle.replaceOne_acceptable_of_order_ne_one
     hOrder hAccept
 
 /-- If another designated occurrence is retained, one legal short replacement
-preserves acceptability even at order one.  This is the form used when a
-chosen supreme copy is kept while the other occurrences are replaced. -/
+preserves acceptability even at order one. -/
 theorem BigCycle.replaceOne_acceptable_of_other_designated
     {n : ℕ} (C : D.BigCycle n) (k r : Fin n) (a : I ⊕ E)
     (hrk : r ≠ k) (hr : D.designated (C.label r))
@@ -142,11 +143,11 @@ theorem BigCycle.replaceOne_acceptable_of_other_designated
     (C.replaceOne D k a hPrev hNext hLeft hRight).right_incident
   · intro _
     refine ⟨r, ?_⟩
-    simpa [BigCycle.replaceLabelAt, Function.update_noteq hrk] using hr
+    simpa [BigCycle.replaceLabelAt, hrk] using hr
   · exact hAccept
 
-/-- In particular every legal one-occurrence short replacement of a cycle
-with at least three occurrences preserves acceptability automatically. -/
+/-- Every legal one-occurrence short replacement of a cycle with at least
+three occurrences preserves acceptability automatically. -/
 theorem BigCycle.replaceOne_acceptable_of_three_le_length
     {n : ℕ} (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E)
     (hn : 3 ≤ n)
@@ -160,13 +161,12 @@ theorem BigCycle.replaceOne_acceptable_of_three_le_length
     hPrev hNext hLeft hRight
     (C.twiceOrder_ne_two_of_three_le_length D hn) hAccept
 
-/-- A finite sequence of legal short replacements which never changes the
-chosen occurrence r.  Each step stores only the local legality checks for the
-CURRENT cycle, so neighbour changes caused by earlier replacements are handled
-honestly rather than by a simultaneous global assumption. -/
+/-- Finite legal short-replacement sequences which never replace r. -/
 inductive BigCycle.ShortReachableAwayFrom
-    {n : ℕ} (r : Fin n) : D.BigCycle n → D.BigCycle n → Prop
-  | refl (C : D.BigCycle n) : C.ShortReachableAwayFrom D r C
+    (D : OrderOneData V E I P) {n : ℕ} (r : Fin n) :
+    D.BigCycle n → D.BigCycle n → Prop
+  | refl (C : D.BigCycle n) :
+      BigCycle.ShortReachableAwayFrom D r C C
   | step (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E)
       (hrk : r ≠ k)
       (hPrev : C.label (trainCyclicPred k) ≠ a)
@@ -174,13 +174,14 @@ inductive BigCycle.ShortReachableAwayFrom
       (hLeft : D.Incident a (C.connector k))
       (hRight : D.Incident a (C.connector (trainCyclicPred k)))
       {B : D.BigCycle n}
-      (tail : (C.replaceOne D k a hPrev hNext hLeft hRight).ShortReachableAwayFrom D r B) :
-      C.ShortReachableAwayFrom D r B
+      (tail : BigCycle.ShortReachableAwayFrom D r
+        (C.replaceOne D k a hPrev hNext hLeft hRight) B) :
+      BigCycle.ShortReachableAwayFrom D r C B
 
-/-- A short-replacement sequence away from r keeps the literal label at r. -/
+/-- A sequence away from r keeps the literal label at r. -/
 theorem BigCycle.ShortReachableAwayFrom.label_fixed
     {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
-    (h : C.ShortReachableAwayFrom D r B) :
+    (h : BigCycle.ShortReachableAwayFrom D r C B) :
     B.label r = C.label r := by
   induction h with
   | refl C => rfl
@@ -190,12 +191,12 @@ theorem BigCycle.ShortReachableAwayFrom.label_fixed
             (C.replaceOne D k a hPrev hNext hLeft hRight).label r := ih
         _ = C.label r := by
           simp [BigCycle.replaceOne, BigCycle.relabelSameConnectors,
-            BigCycle.replaceLabelAt, Function.update_noteq hrk]
+            BigCycle.replaceLabelAt, hrk]
 
-/-- Every finite short-replacement sequence preserves the numerical order. -/
+/-- Every finite short-replacement sequence preserves numerical order. -/
 theorem BigCycle.ShortReachableAwayFrom.twiceOrder_eq
     {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
-    (h : C.ShortReachableAwayFrom D r B) :
+    (h : BigCycle.ShortReachableAwayFrom D r C B) :
     B.twiceOrder = C.twiceOrder := by
   induction h with
   | refl C => rfl
@@ -203,11 +204,11 @@ theorem BigCycle.ShortReachableAwayFrom.twiceOrder_eq
       exact ih.trans
         (C.replaceOne_twiceOrder D k a hPrev hNext hLeft hRight)
 
-/-- Keeping one designated supreme occurrence fixed makes arbitrary finite
-legal short replacements preserve acceptability, including at order one. -/
+/-- Keeping one designated occurrence fixed makes arbitrary finite legal
+short replacements preserve acceptability, including at order one. -/
 theorem BigCycle.ShortReachableAwayFrom.acceptable
     {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
-    (h : C.ShortReachableAwayFrom D r B)
+    (h : BigCycle.ShortReachableAwayFrom D r C B)
     (hr : D.designated (C.label r))
     (hAccept : C.Acceptable) :
     B.Acceptable := by
@@ -220,9 +221,8 @@ theorem BigCycle.ShortReachableAwayFrom.acceptable
           hrk hr hPrev hNext hLeft hRight hAccept
       have hr' : D.designated (C'.label r) := by
         simpa [C', BigCycle.replaceOne, BigCycle.relabelSameConnectors,
-          BigCycle.replaceLabelAt, Function.update_noteq hrk] using hr
+          BigCycle.replaceLabelAt, hrk] using hr
       exact ih hr' hAccept'
-
 
 end OrderOneData
 end StructuralRamsey.Girth
