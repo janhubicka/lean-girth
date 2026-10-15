@@ -53,7 +53,7 @@ theorem BigCycle.nonconnector_wagon_boundary_occurrence_unique
         exact False.elim (by
           have hSelf : cyclicSucc r ≠ r := by
             intro hr
-            exact C.adjacent_ne r (congrArg C.label hr)
+            exact C.adjacent_ne r (congrArg C.label hr.symm)
           exact hSelf hs.symm)
       · have hImpossible : trainCyclicPred t = cyclicSucc t := by
           rw [hRt] at hPs
