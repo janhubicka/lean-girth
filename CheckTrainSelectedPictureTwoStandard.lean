@@ -1,0 +1,6 @@
+import Girth.TrainSelectedPictureTwoStandard
+
+#print axioms StructuralRamsey.Girth.OrderOneData.block_parent_eq_of_no_pairEdge
+#print axioms StructuralRamsey.Girth.selectedPictureOrderOneData_copyEdgeCarrierCompatible
+#print axioms StructuralRamsey.Girth.selectedPicture_block_rel_shared_of_no_core_pair
+#print axioms StructuralRamsey.Girth.selectedPicture_twoStandard_force_core_pairEdge
