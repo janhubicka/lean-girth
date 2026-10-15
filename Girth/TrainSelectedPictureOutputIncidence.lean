@@ -20,9 +20,12 @@ block incidences or chosen representatives of the two output wagons.
 Active strongness follows from the usual partite, A-linear base and rigidity
 hypotheses. Shared-train reflection is taken from the shared-subtrain embedding
 interface, together with preservation; neither follows from relational
-embedding alone. Output wagon linearity is never assumed. General segmentation
-and cycle transfer, and identification with any deduplicated output copy index,
-are not asserted here.
+embedding alone. The final theorem extracts all incidences and connector
+inequalities from a literal four-occurrence output big cycle. Its two blocks
+are inherited from their specified standards; the cycle need not be acceptable.
+Output wagon linearity is never assumed. General segmentation and cycle
+transfer, and identification with any deduplicated output copy index, are
+not asserted here.
 -/
 
 namespace StructuralRamsey.Girth
@@ -61,8 +64,9 @@ theorem oldACarrierEdge_pullback_of_subset_image
   · apply Set.Subset.antisymm
     · rintro y ⟨x, hx, rfl⟩
       obtain ⟨u, rfl⟩ := hx
-      rw [hb u, ha]
-      exact ⟨u, rfl⟩
+      have hu : a u ∈ edge.1 :=
+        Eq.mpr (congrArg (fun Z : Set Y => a u ∈ Z) ha) ⟨u, rfl⟩
+      exact Eq.mpr (congrArg (fun z : Y => z ∈ edge.1) (hb u)) hu
     · intro y hy
       rw [ha] at hy
       obtain ⟨u, rfl⟩ := hy
@@ -239,6 +243,58 @@ theorem attachedSelectedPicture_twoStandard_force_core_pairEdge
     (activeCarrier_aStrong_of_base_aLinear A D C hA hPartite hBaseLinear e hRigid)
     hFull hCore i j a b c d r s x y hij hxy har hbr hcs hds
     (fun k p q h => (hRel μ k p q).mpr h) hyA hxB hyC hxD hDistinct
+
+/-- The displayed four-occurrence cycle of the circulation lemma, with both
+blocks inherited from their specified distinct standards. All incidences and
+connector inequalities come from the actual big cycle. Acceptability is not
+required. The second block is reversed when applying the symmetric endpoint
+interface, so both retained blocks are oriented from y to x. -/
+theorem attachedSelectedPicture_twoStandard_cycle_force_core_pairEdge
+    (hPartite : C.IsPartiteOver D) (hBaseLinear : ALinear A D)
+    (hRigid : ∀ b : RelStructure.Embedding A D, SameCopy b e → b = e)
+    (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family → AStrong A D (copyCarrier b))
+    (hFull : (Old).FullSystemGirthGT 2) (hCore : (Witness).FullSystemGirthGT 2)
+    (hRel : ∀ (ν : Fin (m + 1)) (k : I)
+      (p q : SharedOldACarrierEdge A C.toRelStructure S),
+      T.rel ν p.1 q.1 ↔ U.rel ν (Emb k p) (Emb k q))
+    (K : (Out).BigCycle 4)
+    (i j : I) (a b c d : Label) (x y : Vertex)
+    (W₁ W₂ : Quotient ((Train).wagonSetoid μ)) (hij : i ≠ j)
+    (hLabels : K.label = ![LabelMap i a, LabelMap i b, LabelMap j c, LabelMap j d])
+    (hConnectors : K.connector = ![Sum.inr W₁, Sum.inl x, Sum.inr W₂, Sum.inl y]) :
+    (Witness).PairEdge x y := by
+  have hxy : x ≠ y := by
+    intro h
+    have hc : K.connector (1 : Fin 4) = K.connector (3 : Fin 4) := by
+      simp [hConnectors, h]
+    have hi := K.connector_injective hc
+    norm_num at hi
+  have hW : W₁ ≠ W₂ := by
+    intro h
+    have hc : K.connector (0 : Fin 4) = K.connector (2 : Fin 4) := by
+      simp [hConnectors, h]
+    have hi := K.connector_injective hc
+    norm_num at hi
+  apply attachedSelectedPicture_twoStandard_force_core_pairEdge
+    A hA B D C family selected e R f T U hShared μ
+    hPartite hBaseLinear hRigid hStrong hFull hCore hRel
+    i j a b d c x y W₁ W₂ hij hxy hW
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.left_incident (0 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.right_incident (0 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.right_incident (2 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.left_incident (2 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.right_incident (3 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.left_incident (1 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.left_incident (3 : Fin 4)
+  · simpa [hLabels, hConnectors, OrderOneData.Incident, cyclicSucc] using
+      K.right_incident (1 : Fin 4)
 
 end SelectedAttachment
 end StructuralRamsey.Girth
