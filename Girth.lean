@@ -362,3 +362,4 @@ import Girth.TrainBoundaryPairCoreSupport
 import Girth.TrainSupremeVertexCoverage
 import Girth.TrainFourOccurrenceWagonCycle
 import Girth.TrainStandardPictureSystemGirth
+import Girth.TrainStandardFourWagonObstruction
