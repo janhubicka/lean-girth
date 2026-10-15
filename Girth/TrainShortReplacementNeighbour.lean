@@ -90,7 +90,7 @@ theorem BigCycle.not_edge_incident_three_distinct
         rcases ht' with ⟨f, hf, hfp⟩
         have hfe : f = e := by simpa [OrderOneData.edges] using hf
         subst f
-        simpa [p] using congrArg (fun z => Sum.inr z) hfp.symm
+        simpa [p] using congrArg (fun z : P => (Sum.inr z : V ⊕ P)) hfp.symm
   have inWagon {t : Fin n} {x : V}
       (hcx : C.connector t = .inl x) (hxe : x ∈ D.edgeCarrier e) :
       C.InWagonAt p t :=
@@ -158,8 +158,8 @@ theorem BigCycle.not_edge_incident_three_distinct
       · exact hik (C.connector_injective
           (Eq.trans hiW (Eq.symm hkW)))
     · rcases classify k hk with hkV | hkW
-      · exact hjk (C.connector_injective
-          (Eq.trans hjW (Eq.symm hkW)))
+      · exact hij (C.connector_injective
+          (Eq.trans hiW (Eq.symm hjW)))
       · exact hij (C.connector_injective
           (Eq.trans hiW (Eq.symm hjW)))
 
