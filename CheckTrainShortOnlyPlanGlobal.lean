@@ -7,3 +7,5 @@ import Girth.TrainShortOnlyPlanGlobal
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_shortOnlyPlan
 
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_all_shortValid
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_all_shortValid
