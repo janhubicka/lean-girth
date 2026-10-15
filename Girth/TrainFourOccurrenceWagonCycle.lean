@@ -171,7 +171,7 @@ theorem FourWagonFrame.acceptable
     (hLinear : D.LinearPretrain)
     (hNoEdge : ¬ D.PairEdge F.x F.y) :
     F.toBigCycle.Acceptable := by
-  refine ⟨?_, F.A2_of_no_edge hNoEdge, F.A3_of_linear hLinear⟩
+  refine ⟨?_, F.A2_of_no_edge D hNoEdge, F.A3_of_linear D hLinear⟩
   intro hOrder
   have hFour : F.toBigCycle.twiceOrder = 4 :=
     F.twiceOrder_eq_four
@@ -196,7 +196,7 @@ theorem FourWagonFrame.pairEdge_of_system_bound_and_boundary
     D.PairEdge F.x F.y := by
   by_contra hNoEdge
   have hAccept : F.toBigCycle.Acceptable :=
-    F.acceptable hFull.1 hNoEdge
+    F.acceptable D hFull.1 hNoEdge
   have hOrder : F.toBigCycle.twiceOrder ≤ 2 * 2 := by
     rw [F.twiceOrder_eq_four]
   have hSup : F.toBigCycle.HasSimultaneousSupreme :=
