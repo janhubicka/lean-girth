@@ -78,17 +78,26 @@ theorem sharedWitness_twoCopy_common_shared_pairs
   obtain ⟨tx, htx⟩ := hc
   obtain ⟨ty, hty⟩ := hd
   have hFirst : T.rel μ (embed i sx) (embed i sy) := by
-    apply Quotient.exact
-    rw [hsx, hsy]
-    exact haw.trans hbw.symm
+    have hEq :
+        (Quotient.mk (T.wagonSetoid μ) (embed i sx)) =
+          Quotient.mk (T.wagonSetoid μ) (embed i sy) := by
+      rw [hsx, hsy]
+      exact haw.trans hbw.symm
+    exact Quotient.exact hEq
   have hSecond : T.rel μ (embed j tx) (embed j ty) := by
-    apply Quotient.exact
-    rw [htx, hty]
-    exact hcw.trans hdw.symm
+    have hEq :
+        (Quotient.mk (T.wagonSetoid μ) (embed j tx)) =
+          Quotient.mk (T.wagonSetoid μ) (embed j ty) := by
+      rw [htx, hty]
+      exact hcw.trans hdw.symm
+    exact Quotient.exact hEq
   have hCross : T.rel μ (embed i sx) (embed j tx) := by
-    apply Quotient.exact
-    rw [hsx, htx]
-    exact haw.trans hcw.symm
+    have hEq :
+        (Quotient.mk (T.wagonSetoid μ) (embed i sx)) =
+          Quotient.mk (T.wagonSetoid μ) (embed j tx) := by
+      rw [hsx, htx]
+      exact haw.trans hcw.symm
+    exact Quotient.exact hEq
   refine ⟨sx, sy, tx, ty, hFirst, hSecond, hCross, ?_, ?_, ?_, ?_⟩
   · rw [hsx]
     exact hxa
