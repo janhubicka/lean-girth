@@ -1,0 +1,5 @@
+import Girth.TrainShortReplacementNeighbour
+
+#print axioms StructuralRamsey.Girth.trainCyclicPred_ne_cyclicSucc_of_three_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.not_edge_incident_three_distinct
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortEdge_ne_neighbors
