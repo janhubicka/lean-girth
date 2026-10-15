@@ -79,11 +79,12 @@ theorem BigCycle.not_edge_incident_three_distinct
     | inl x =>
         left
         refine ⟨x, rfl, ?_⟩
-        exact ht
+        simpa [Incident, carrier] using ht
     | inr q =>
         right
-        change D.Meets (.inr e) q at ht
-        rcases ht with ⟨f, hf, hfp⟩
+        have ht' : D.Meets (.inr e) q := by
+          simpa [Incident] using ht
+        rcases ht' with ⟨f, hf, hfp⟩
         have hfe : f = e := by simpa [OrderOneData.edges] using hf
         subst f
         simpa [p] using congrArg (fun z => Sum.inr z) hfp.symm
@@ -125,30 +126,39 @@ theorem BigCycle.not_edge_incident_three_distinct
       exact (hAccept.2.1.2 w p y x hw hleft hright hNeighbors
         ⟨e, rfl, hye⟩ ⟨e, rfl, hxe⟩) ⟨e, hye, hxe⟩
     · exact huv (huSucc.trans hvSucc.symm)
-  rcases classify i hi with hiV | hiW <;>
-    rcases classify j hj with hjV | hjW <;>
-    rcases classify k hk with hkV | hkW
-  · have wi := inWagon hiV.choose_spec.1 hiV.choose_spec.2
-    have wj := inWagon hjV.choose_spec.1 hjV.choose_spec.2
-    have wk := inWagon hkV.choose_spec.1 hkV.choose_spec.2
-    by_cases hc : ∃ t : Fin n, C.connector t = .inr p
-    · rcases hc with ⟨t, ht⟩
-      exact three_not_two hij hik hjk
-        (hAccept.2.1.1 t p ht i wi)
-        (hAccept.2.1.1 t p ht j wj)
-        (hAccept.2.1.1 t p ht k wk)
-    · have hc' : ∀ t : Fin n, C.connector t ≠ .inr p := by
-        intro t ht
-        exact hc ⟨t, ht⟩
-      rcases hAccept.2.2 p hc' with ⟨t, ht⟩
-      exact three_not_two hij hik hjk (ht i wi) (ht j wj) (ht k wk)
-  · exact oneWagon k i j hkW hij hiV hjV
-  · exact oneWagon j i k hjW hik hiV hkV
-  · exact hij (C.connector_injective (Eq.trans hiW (Eq.symm hjW)))
-  · exact oneWagon i j k hiW hjk hjV hkV
-  · exact hik (C.connector_injective (Eq.trans hiW (Eq.symm hkW)))
-  · exact hjk (C.connector_injective (Eq.trans hjW (Eq.symm hkW)))
-  · exact hij (C.connector_injective (Eq.trans hiW (Eq.symm hjW)))
+  rcases classify i hi with hiV | hiW
+  · rcases classify j hj with hjV | hjW
+    · rcases classify k hk with hkV | hkW
+      · have wi := inWagon hiV.choose_spec.1 hiV.choose_spec.2
+        have wj := inWagon hjV.choose_spec.1 hjV.choose_spec.2
+        have wk := inWagon hkV.choose_spec.1 hkV.choose_spec.2
+        by_cases hc : ∃ t : Fin n, C.connector t = .inr p
+        · rcases hc with ⟨t, ht⟩
+          exact three_not_two hij hik hjk
+            (hAccept.2.1.1 t p ht i wi)
+            (hAccept.2.1.1 t p ht j wj)
+            (hAccept.2.1.1 t p ht k wk)
+        · have hc' : ∀ t : Fin n, C.connector t ≠ .inr p := by
+            intro t ht
+            exact hc ⟨t, ht⟩
+          rcases hAccept.2.2 p hc' with ⟨t, ht⟩
+          exact three_not_two hij hik hjk
+            (ht i wi) (ht j wj) (ht k wk)
+      · exact oneWagon k i j hkW hij hiV hjV
+    · rcases classify k hk with hkV | hkW
+      · exact oneWagon j i k hjW hik hiV hkV
+      · exact hij (C.connector_injective
+          (Eq.trans hiW (Eq.symm hjW)))
+  · rcases classify j hj with hjV | hjW
+    · rcases classify k hk with hkV | hkW
+      · exact oneWagon i j k hiW hjk hjV hkV
+      · exact hik (C.connector_injective
+          (Eq.trans hiW (Eq.symm hkW)))
+    · rcases classify k hk with hkV | hkW
+      · exact hjk (C.connector_injective
+          (Eq.trans hjW (Eq.symm hkW)))
+      · exact hij (C.connector_injective
+          (Eq.trans hiW (Eq.symm hjW)))
 
 /-- On a cycle of length at least three, an actual edge incident with the two
 boundary connectors of occurrence j differs from both neighbouring labels. -/
