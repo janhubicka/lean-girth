@@ -58,7 +58,7 @@ theorem optionalConnectorBlock_mem_cases
       have heq : x = fresh ∨ x = base i := by
         simpa [optionalConnectorBlock, hi] using hx
       rcases heq with heq | heq
-      · exact Or.inr ⟨fresh, hi, heq⟩
+      · exact Or.inr ⟨fresh, rfl, heq⟩
       · exact Or.inl heq
 
 /-- The old connectors remain distinct after inserting arbitrary fresh
