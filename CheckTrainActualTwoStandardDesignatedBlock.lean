@@ -1,4 +1,5 @@
 import Girth.TrainActualTwoStandardDesignatedBlock
 
+#print axioms StructuralRamsey.Girth.activeAttached_mem_sharedWitness_of_standard_core
 #print axioms StructuralRamsey.Girth.standardPicture_block_rel_shared_of_no_core_pair
 #print axioms StructuralRamsey.Girth.actualTwoStandard_designatedBlocks_force_core_pairEdge
