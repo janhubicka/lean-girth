@@ -359,3 +359,4 @@ import Girth.TrainAllAdjacentParametersBridge
 import Girth.TrainActualTwoStandardEdgeBlock
 import Girth.TrainActualTwoStandardEdgeBlockObstruction
 import Girth.TrainBoundaryPairCoreSupport
+import Girth.TrainSupremeVertexCoverage
