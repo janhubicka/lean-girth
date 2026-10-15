@@ -48,8 +48,8 @@ theorem BigCycle.relabelSameConnectors_twiceOrder
     (hRight : ∀ i, D.Incident (label' (cyclicSucc i)) (C.connector i)) :
     (C.relabelSameConnectors D label' hAdjacent hLeft hRight).twiceOrder =
       C.twiceOrder := by
-  exact BigCycle.twiceOrder_eq_of_same_connectors D C
-    (C.relabelSameConnectors D label' hAdjacent hLeft hRight) (fun _ => rfl)
+  exact BigCycle.twiceOrder_eq_of_same_connectors D
+    (C.relabelSameConnectors D label' hAdjacent hLeft hRight) C (fun _ => rfl)
 
 /-- A globally legal short-only relabelling preserves acceptability.
 At order one the only extra obligation is the exact manuscript condition:

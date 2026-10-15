@@ -1,0 +1,13 @@
+import Girth.TrainSingleShortReplacement
+
+#print axioms StructuralRamsey.Girth.trainCyclicPred_cyclicSucc_of_two_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replaceOne_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replaceOne_acceptable_of_order_ne_one
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replaceOne_acceptable_of_other_designated
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twiceOrder_ne_two_of_three_le_length
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replaceOne_acceptable_of_three_le_length
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ShortReachableAwayFrom.label_fixed
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ShortReachableAwayFrom.twiceOrder_eq
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ShortReachableAwayFrom.acceptable
