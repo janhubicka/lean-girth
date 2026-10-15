@@ -41,7 +41,7 @@ end TrainSupremePiece
 private theorem flatten_ofFn_singleton
     {α : Type v} {n : ℕ} (f : Fin n → α) :
     (List.ofFn (fun i => [f i])).flatten = List.ofFn f := by
-  induction n generalizing f with
+  induction n with
   | zero =>
       simp
   | succ n ih =>
