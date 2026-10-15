@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -92,6 +92,8 @@ jobs:
           python3 scripts/check_axioms.py actual-three-link-axioms.log CheckTrainActualWagonThreeLink.lean
           lake env lean CheckTrainActualTwoStandardEdgeBlock.lean | tee edge-block-axioms.log
           python3 scripts/check_axioms.py edge-block-axioms.log CheckTrainActualTwoStandardEdgeBlock.lean
+          lake env lean CheckTrainActualTwoStandardEdgeBlockObstruction.lean | tee edge-block-obstruction-axioms.log
+          python3 scripts/check_axioms.py edge-block-obstruction-axioms.log CheckTrainActualTwoStandardEdgeBlockObstruction.lean
           lake env lean CheckTrainTwoCopyCommonWagon.lean | tee common-long-wagon-axioms.log
           python3 scripts/check_axioms.py common-long-wagon-axioms.log CheckTrainTwoCopyCommonWagon.lean
           lake env lean CheckTrainReplacementOrder.lean | tee replacement-order-axioms.log

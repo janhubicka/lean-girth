@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoStandardEdgeBlockObstruction
+
+#print axioms StructuralRamsey.Girth.sharedWitness_twoCopy_common_shared_pairs
+#print axioms StructuralRamsey.Girth.actualTwoStandard_edgeBlocks_force_core_pairEdge
