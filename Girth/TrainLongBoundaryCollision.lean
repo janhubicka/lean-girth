@@ -1,4 +1,5 @@
 import Girth.TrainFreshLongWagon
+import Girth.TrainShortOnlyPlanGlobal
 
 /-!
 # Circulation: noncollision at short/long replacement boundaries
