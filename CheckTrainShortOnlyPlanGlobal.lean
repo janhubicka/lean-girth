@@ -5,3 +5,5 @@ import Girth.TrainShortOnlyPlanGlobal
 #print axioms StructuralRamsey.Girth.OrderOneData.designated_ne_actualEdge
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_shortOnly
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_shortOnlyPlan
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_all_shortValid
