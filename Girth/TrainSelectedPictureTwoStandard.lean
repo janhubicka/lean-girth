@@ -82,7 +82,7 @@ local notation "Label" => ({q : DesignatedCopy B D C family // q ∈ selected} �
 
 /-- Restricting designated labels does not change source-edge coherence. -/
 theorem selectedPictureOrderOneData_copyEdgeCarrierCompatible :
-    O.CopyEdgeCarrierCompatible := by
+    (O).CopyEdgeCarrierCompatible := by
   intro q edge hEdge
   exact hEdge
 
@@ -104,13 +104,13 @@ theorem selectedPicture_block_rel_shared_of_no_core_pair
     (i : I)
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
       AStrong A D (copyCarrier b))
-    (hActive : AStrong A C.toRelStructure S) (hFull : O.FullSystemGirthGT 2)
+    (hActive : AStrong A C.toRelStructure S) (hFull : (O).FullSystemGirthGT 2)
     (a b : Label) (r : OldEdge) (sx sy : Shared) (x y : Vertex)
     (hxy : x ≠ y)
-    (ha : O.Meets a (O.parent r)) (hb : O.Meets b (O.parent r))
+    (ha : (O).Meets a ((O).parent r)) (hb : (O).Meets b ((O).parent r))
     (hLong : T.rel μ sx.1 sy.1)
-    (hyA : y ∈ (fun z : X => Std i z) '' O.carrier a)
-    (hxB : x ∈ (fun z : X => Std i z) '' O.carrier b)
+    (hyA : y ∈ (fun z : X => Std i z) '' (O).carrier a)
+    (hxB : x ∈ (fun z : X => Std i z) '' (O).carrier b)
     (hxS : x ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sx.1)
     (hyS : y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i sy.1)
     (hNoEdge : ¬ ∃ edge : OldACarrierEdge A R, x ∈ CoreCar edge ∧ y ∈ CoreCar edge) :
@@ -122,13 +122,13 @@ theorem selectedPicture_block_rel_shared_of_no_core_pair
   have huw : u ≠ w := by
     intro h
     exact hxy (hux.symm.trans ((congrArg (fun z : X => Std i z) h).trans hwy))
-  have huB : u ∈ O.carrier b := by
+  have huB : u ∈ (O).carrier b := by
     obtain ⟨z, hz, hzx⟩ := hxB
     exact (Std i).injective (hzx.trans hux.symm) ▸ hz
-  have hwA : w ∈ O.carrier a := by
+  have hwA : w ∈ (O).carrier a := by
     obtain ⟨z, hz, hzy⟩ := hyA
     exact (Std i).injective (hzy.trans hwy.symm) ▸ hz
-  have hNoPair : ¬ O.PairEdge u w := by
+  have hNoPair : ¬ (O).PairEdge u w := by
     rintro ⟨edge, huEdge, hwEdge⟩
     let shared : Shared := ⟨edge, oldACarrier_subset_of_two_mem_aStrong
       A C.toRelStructure S hActive edge u w huw huEdge hwEdge (sx.2 hu) (sy.2 hw)⟩
@@ -143,11 +143,11 @@ theorem selectedPicture_block_rel_shared_of_no_core_pair
     exact hNoEdge ⟨Emb i shared,
       Eq.mp (congrArg (fun z => z ∈ CoreCar (Emb i shared)) hux) huCore,
       Eq.mp (congrArg (fun z => z ∈ CoreCar (Emb i shared)) hwy) hwCore⟩
-  have hParent : O.parent sy.1 = O.parent sx.1 := (Quotient.sound hLong).symm
-  have hEq : O.parent r = O.parent sx.1 :=
+  have hParent : (O).parent sy.1 = (O).parent sx.1 := (Quotient.sound hLong).symm
+  have hEq : (O).parent r = (O).parent sx.1 :=
     OrderOneData.block_parent_eq_of_no_pairEdge O hFull
       (selectedPictureOrderOneData_copyEdgeCarrierCompatible A B D C family selected T μ)
-      a b sx.1 sy.1 (O.parent r) u w huw ha hb huB hu hw hwA hParent hNoPair
+      a b sx.1 sy.1 ((O).parent r) u w huw ha hb huB hu hw hwA hParent hNoPair
       (fun q hxCopy hyCopy => standardPictureOrderOneData_pairEdge_of_two_active
         A B D C family T μ hStrong e q.1 u w huw hxCopy hyCopy (sx.2 hu) (sy.2 hw))
   exact Quotient.exact hEq
@@ -164,23 +164,23 @@ theorem selectedPicture_twoStandard_force_core_pairEdge
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
       AStrong A D (copyCarrier b))
     (hActive : AStrong A C.toRelStructure S)
-    (hFull : O.FullSystemGirthGT 2) (hCore : Witness.FullSystemGirthGT 2)
+    (hFull : (O).FullSystemGirthGT 2) (hCore : (Witness).FullSystemGirthGT 2)
     (i j : I) (a b c d : Label) (r s : OldEdge) (x y : Vertex)
     (hij : i ≠ j) (hxy : x ≠ y)
-    (ha : O.Meets a (O.parent r)) (hb : O.Meets b (O.parent r))
-    (hc : O.Meets c (O.parent s)) (hd : O.Meets d (O.parent s))
+    (ha : (O).Meets a ((O).parent r)) (hb : (O).Meets b ((O).parent r))
+    (hc : (O).Meets c ((O).parent s)) (hd : (O).Meets d ((O).parent s))
     (hReflect : ∀ (k : I) (p q : Shared),
       U.rel μ (Emb k p) (Emb k q) → T.rel μ p.1 q.1)
-    (hyA : y ∈ (fun z : X => Std i z) '' O.carrier a)
-    (hxB : x ∈ (fun z : X => Std i z) '' O.carrier b)
-    (hyC : y ∈ (fun z : X => Std j z) '' O.carrier c)
-    (hxD : x ∈ (fun z : X => Std j z) '' O.carrier d)
+    (hyA : y ∈ (fun z : X => Std i z) '' (O).carrier a)
+    (hxB : x ∈ (fun z : X => Std i z) '' (O).carrier b)
+    (hyC : y ∈ (fun z : X => Std j z) '' (O).carrier c)
+    (hxD : x ∈ (fun z : X => Std j z) '' (O).carrier d)
     (hDistinct : ¬ (generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).rel μ
       (actualAPictureEdgeEquiv A hA C.toRelStructure S R f
         (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb i r))
       (actualAPictureEdgeEquiv A hA C.toRelStructure S R f
         (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb j s))) :
-    Witness.PairEdge x y := by
+    (Witness).PairEdge x y := by
   classical
   have hXi : x ∈ copyCarrier (Std i) := by
     obtain ⟨z, _, hz⟩ := hxB
@@ -209,7 +209,7 @@ theorem selectedPicture_twoStandard_force_core_pairEdge
   by_contra hNoEdge
   obtain ⟨sx, sy, tx, ty, hLongI, hLongJ, hCross, hxsi, hysi, hxtj, hytj⟩ :=
     sharedWitness_twoCopy_common_shared_pairs U μ Emb CoreCar hCore.1
-      (Witness.localPieceSystemBound_of_supremeCycleBound 2 hCore.2)
+      ((Witness).localPieceSystemBound_of_supremeCycleBound 2 hCore.2)
       i j x y hij hxy hIx hIy hJx hJy hNoEdge
   have toOld (k : I) (t : Shared) (z : Vertex) (hz : z ∈ CoreCar (Emb k t)) :
       z ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f k t.1 :=
