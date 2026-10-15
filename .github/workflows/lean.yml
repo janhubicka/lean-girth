@@ -51,7 +51,7 @@ jobs:
         run: |
           # Objects above were built from this checkout; no unchecked project cache remains.
           lake build Girth.TrainActualTwoStandardDesignatedBlock
-          lake build Girth.TrainSelectedPictureContainedBlocks Girth.TrainShortReplacementGlobal Girth.TrainSingleShortReplacement Girth.TrainShortReplacementNeighbour Girth.TrainShortOnlyPlanGlobal Girth.TrainFreshLongWagon Girth.TrainLongBoundaryCollision Girth.TrainCheckedCycleWord Girth.TrainInsertedConnectorNodup
+          lake build Girth.TrainSelectedPictureContainedBlocks Girth.TrainShortReplacementGlobal Girth.TrainSingleShortReplacement Girth.TrainShortReplacementNeighbour Girth.TrainShortOnlyPlanGlobal Girth.TrainFreshLongWagon Girth.TrainLongBoundaryCollision Girth.TrainFreshWagonA2 Girth.TrainRetainedEdgeBoundary Girth.TrainCheckedCycleWord Girth.TrainInsertedConnectorNodup
           lake build Girth.TrainStandardPictureFourWagonBoundary
           # Preserve the explicit circulation targets, including non-root imports.
           lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
@@ -75,7 +75,7 @@ jobs:
             CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
             CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
             CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard
-            CheckTrainSelectedPictureOutputIncidence CheckTrainSelectedPictureContainedBlocks CheckTrainShortReplacementGlobal CheckTrainSingleShortReplacement CheckTrainShortReplacementNeighbour CheckTrainShortOnlyPlanGlobal CheckTrainFreshLongWagon CheckTrainLongBoundaryCollision CheckTrainCheckedCycleWord CheckTrainInsertedConnectorNodup
+            CheckTrainSelectedPictureOutputIncidence CheckTrainSelectedPictureContainedBlocks CheckTrainShortReplacementGlobal CheckTrainSingleShortReplacement CheckTrainShortReplacementNeighbour CheckTrainShortOnlyPlanGlobal CheckTrainFreshLongWagon CheckTrainLongBoundaryCollision CheckTrainFreshWagonA2 CheckTrainRetainedEdgeBoundary CheckTrainCheckedCycleWord CheckTrainInsertedConnectorNodup
             CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
             CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
             CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
