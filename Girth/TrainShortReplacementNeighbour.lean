@@ -78,21 +78,15 @@ theorem BigCycle.not_edge_incident_three_distinct
     cases hct : C.connector t with
     | inl x =>
         left
-        refine ⟨x, hct, ?_⟩
-        have ht' := ht
-        rw [hct] at ht'
-        exact ht'
+        refine ⟨x, rfl, ?_⟩
+        exact ht
     | inr q =>
         right
-        have ht' := ht
-        rw [hct] at ht'
-        change D.Meets (.inr e) q at ht'
-        rcases ht' with ⟨f, hf, hfp⟩
+        change D.Meets (.inr e) q at ht
+        rcases ht with ⟨f, hf, hfp⟩
         have hfe : f = e := by simpa [OrderOneData.edges] using hf
         subst f
-        change C.connector t = Sum.inr (D.parent e)
-        rw [hfp]
-        exact hct
+        simpa [p] using congrArg (fun z => Sum.inr z) hfp.symm
   have inWagon {t : Fin n} {x : V}
       (hcx : C.connector t = .inl x) (hxe : x ∈ D.edgeCarrier e) :
       C.InWagonAt p t :=
@@ -143,15 +137,18 @@ theorem BigCycle.not_edge_incident_three_distinct
         (hAccept.2.1.1 t p ht i wi)
         (hAccept.2.1.1 t p ht j wj)
         (hAccept.2.1.1 t p ht k wk)
-    · rcases hAccept.2.2 p hc with ⟨t, ht⟩
+    · have hc' : ∀ t : Fin n, C.connector t ≠ .inr p := by
+        intro t ht
+        exact hc ⟨t, ht⟩
+      rcases hAccept.2.2 p hc' with ⟨t, ht⟩
       exact three_not_two hij hik hjk (ht i wi) (ht j wj) (ht k wk)
   · exact oneWagon k i j hkW hij hiV hjV
   · exact oneWagon j i k hjW hik hiV hkV
-  · exact hij (C.connector_injective (hiW.trans hjW.symm))
+  · exact hij (C.connector_injective (Eq.trans hiW (Eq.symm hjW)))
   · exact oneWagon i j k hiW hjk hjV hkV
-  · exact hik (C.connector_injective (hiW.trans hkW.symm))
-  · exact hjk (C.connector_injective (hjW.trans hkW.symm))
-  · exact hij (C.connector_injective (hiW.trans hjW.symm))
+  · exact hik (C.connector_injective (Eq.trans hiW (Eq.symm hkW)))
+  · exact hjk (C.connector_injective (Eq.trans hjW (Eq.symm hkW)))
+  · exact hij (C.connector_injective (Eq.trans hiW (Eq.symm hjW)))
 
 /-- On a cycle of length at least three, an actual edge incident with the two
 boundary connectors of occurrence j differs from both neighbouring labels. -/
@@ -189,7 +186,7 @@ theorem BigCycle.shortEdge_ne_neighbors
         intro h
         have hs := cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two t
         rw [h] at hs
-        exact C.adjacent_ne t (congrArg C.label hs))
+        exact C.adjacent_ne t (congrArg C.label hs.symm))
       (by
         intro h
         exact (trainCyclicPred_ne_cyclicSucc_of_three_le hn t)
