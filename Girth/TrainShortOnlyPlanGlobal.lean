@@ -248,5 +248,41 @@ theorem BigCycle.hasSupremeAt_of_shortOnlyPlan
     C.planProducesBigCycle_of_shortOnly D hAccept hn k hk
       pieces hPlan hShortOnly⟩
 
+
+/-- It is enough to prove occurrence-wise existence of short witnesses.
+The plan itself, all keep choices, and the global replacement word are then
+constructed automatically.  This is the convenient interface for cycle
+transfer after long local pieces have been resolved into short pieces along
+existing wagon connectors. -/
+theorem BigCycle.hasSupremeAt_of_all_shortValid
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n) (hk : D.designated (C.label k))
+    (hShort : ∀ j : Fin n, C.label j ≠ C.label k →
+      ∃ e : E, BigCycle.ShortValid D C k j e) :
+    C.HasSupremeAt D k := by
+  classical
+  let pieces : Fin n → TrainSupremePiece E P :=
+    fun j =>
+      if h : C.label j = C.label k then
+        .keep
+      else
+        .short (Classical.choose (hShort j h))
+  have hPlan : BigCycle.PlanValid D C k pieces := by
+    intro j
+    constructor
+    · intro heq
+      simp [pieces, heq]
+    · intro hne
+      have hs := Classical.choose_spec (hShort j hne)
+      simpa [pieces, hne] using hs
+  have hShortOnly : ∀ j, (pieces j).IsShortOrKeep := by
+    intro j
+    by_cases h : C.label j = C.label k
+    · simp [pieces, h, TrainSupremePiece.IsShortOrKeep]
+    · simp [pieces, h, TrainSupremePiece.IsShortOrKeep]
+  exact C.hasSupremeAt_of_shortOnlyPlan D hAccept hn
+    k hk pieces hPlan hShortOnly
+
 end OrderOneData
 end StructuralRamsey.Girth
