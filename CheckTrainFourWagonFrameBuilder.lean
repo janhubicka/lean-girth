@@ -1,0 +1,4 @@
+import Girth.TrainFourWagonFrameBuilder
+
+#print axioms StructuralRamsey.Girth.OrderOneData.parent_eq_of_edge_label_meets
+#print axioms StructuralRamsey.Girth.OrderOneData.FourWagonFrame.of_distinct_wagons
