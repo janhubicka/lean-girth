@@ -67,7 +67,10 @@ theorem cyclicPairFollow_all_of_chain_wrap
       rw [hsum, Nat.mod_self]
     have hlast : i = ⟨word.length - 1, by omega⟩ :=
       Fin.ext heq
-    rw [hz, hlast]
+    have hEntry : word.get i =
+        word.get ⟨word.length - 1, by omega⟩ :=
+      congrArg word.get hlast
+    rw [hz, hEntry]
     exact hWrap
 
 /-- From connector Nodup and a chain with cyclic wrap, construct the
@@ -142,9 +145,9 @@ theorem BigCycle.pieceWord_isChain_of_plan
   classical
   cases hp : pieces j with
   | keep =>
-      simp [BigCycle.pieceWord, hp]
+      simp [BigCycle.pieceWord]
   | short e =>
-      simp [BigCycle.pieceWord, hp]
+      simp [BigCycle.pieceWord]
   | long e w f =>
       have hv : C.LongValid D k j e w f :=
         C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
@@ -179,7 +182,7 @@ theorem BigCycle.pieceLast_incident_of_plan
       have hv : C.LongValid D k j e w f :=
         C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
       obtain ⟨x, y, hx, hy, he, hf, hne, hpe, hpf, hxe, hyf, hno⟩ := hv
-      simp only [BigCycle.pieceLastLabel, hp]
+      simp only [BigCycle.pieceLastLabel]
       rw [hy]
       exact hyf
 
@@ -207,7 +210,7 @@ theorem BigCycle.pieceFirst_incident_of_plan
       have hv : C.LongValid D k j e w f :=
         C.longValid_of_piece_eq_long D k j pieces hPlan e f w hp
       obtain ⟨x, y, hx, hy, he, hf, hne, hpe, hpf, hxe, hyf, hno⟩ := hv
-      simp only [BigCycle.pieceFirstLabel, hp]
+      simp only [BigCycle.pieceFirstLabel]
       rw [hx]
       exact hxe
 
