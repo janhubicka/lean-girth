@@ -35,6 +35,34 @@ theorem BigCycle.resultWord_length_ge_source
   simpa [BigCycle.resultWord, List.length_flatten,
     List.sum_ofFn, List.map_ofFn] using h
 
+/-- The final-to-first boundary between ORIGINAL replacement blocks
+is already an instance of the uniform PlanValid boundary theorem.
+Only transport from these literal block endpoints to the flattened
+word remains to be checked. -/
+theorem BigCycle.plan_last_first_source_boundary
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n) (hk : D.designated (C.label k))
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hFresh : ∀ (j : Fin n) (e : E) (p : P) (f : E),
+      pieces j = .long e p f →
+      ∀ t : Fin n, C.connector t ≠ Sum.inr p) :
+    ∀ᵉ (a ∈ (C.pieceWord D ⟨n-1, by omega⟩
+      (pieces ⟨n-1, by omega⟩)).getLast?)
+      (b ∈ (C.pieceWord D ⟨0, by omega⟩
+      (pieces ⟨0, by omega⟩)).head?),
+      D.CyclicPairFollow a b := by
+  let last : Fin n := ⟨n - 1, by omega⟩
+  have hs : cyclicSucc last = ⟨0, by omega⟩ := by
+    apply Fin.ext
+    change (n - 1 + 1) % n = 0
+    have h : n - 1 + 1 = n := by omega
+    rw [h, Nat.mod_self]
+  have hb := C.boundaryFollow_of_plan D hAccept hn
+    k hk pieces hPlan hFresh last
+  simpa [last, hs] using hb
+
 /-- Global legality of a mixed short/long plan is reduced to the one
 remaining last-to-first boundary relation on the ACTUAL output word.
 All other BigCycle checks are constructed from earlier proven lemmas. -/
