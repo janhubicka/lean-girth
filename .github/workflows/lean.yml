@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -78,6 +78,10 @@ jobs:
           python3 scripts/check_axioms.py simultaneous-supreme-axioms.log CheckTrainSimultaneousSupreme.lean
           lake env lean CheckTrainBoundaryPairCoreSupport.lean | tee boundary-pair-core-axioms.log
           python3 scripts/check_axioms.py boundary-pair-core-axioms.log CheckTrainBoundaryPairCoreSupport.lean
+          lake env lean CheckTrainBoundaryPairSharedOldACopy.lean | tee old-boundary-copy-axioms.log
+          python3 scripts/check_axioms.py old-boundary-copy-axioms.log CheckTrainBoundaryPairSharedOldACopy.lean
+          lake env lean CheckTrainPhysicalAEdgeCoreBoundary.lean | tee physical-boundary-A-edge-axioms.log
+          python3 scripts/check_axioms.py physical-boundary-A-edge-axioms.log CheckTrainPhysicalAEdgeCoreBoundary.lean
           lake env lean CheckTrainSupremeVertexCoverage.lean | tee supreme-vertex-axioms.log
           python3 scripts/check_axioms.py supreme-vertex-axioms.log CheckTrainSupremeVertexCoverage.lean
           lake env lean CheckTrainFourOccurrenceWagonCycle.lean | tee four-wagon-axioms.log

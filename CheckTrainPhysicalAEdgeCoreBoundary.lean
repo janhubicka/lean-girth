@@ -1,0 +1,3 @@
+import Girth.TrainPhysicalAEdgeCoreBoundary
+
+#print axioms StructuralRamsey.Girth.attachedProjectedACopy_two_core_vertices_have_coreACopy
