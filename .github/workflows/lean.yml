@@ -40,7 +40,7 @@ jobs:
           # Reuse dependencies but do not trust restored project-local objects.
           rm -rf .lake/build
           # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainStandardPictureSystemGirth Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
+          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainStandardPictureSystemGirth Girth.TrainStandardFourWagonObstruction Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -84,6 +84,8 @@ jobs:
           python3 scripts/check_axioms.py four-wagon-axioms.log CheckTrainFourOccurrenceWagonCycle.lean
           lake env lean CheckTrainStandardPictureSystemGirth.lean | tee standard-picture-axioms.log
           python3 scripts/check_axioms.py standard-picture-axioms.log CheckTrainStandardPictureSystemGirth.lean
+          lake env lean CheckTrainStandardFourWagonObstruction.lean | tee standard-four-cycle-axioms.log
+          python3 scripts/check_axioms.py standard-four-cycle-axioms.log CheckTrainStandardFourWagonObstruction.lean
           lake env lean CheckTrainFullSystemParameter.lean | tee full-system-parameter-axioms.log
           python3 scripts/check_axioms.py full-system-parameter-axioms.log CheckTrainFullSystemParameter.lean
           lake env lean CheckTrainAllAdjacentParameters.lean | tee all-adjacent-parameter-axioms.log
