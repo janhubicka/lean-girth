@@ -115,7 +115,7 @@ theorem standardPicture_block_rel_shared_of_no_core_pair
     · rw [← attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx]
       exact hxS
     · rw [← attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx]
-      rw [show sharedOldACarrierInclusion A C.toRelStructure S sx = sy.1 from h]
+      rw [h]
       exact hyS
   change x ∈ (fun z : X => std z) '' sx.1.1 at hxS
   change y ∈ (fun z : X => std z) '' sy.1.1 at hyS
