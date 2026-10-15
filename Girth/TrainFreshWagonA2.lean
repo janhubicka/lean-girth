@@ -105,4 +105,46 @@ theorem BigCycle.fresh_wagon_no_pair_of_longValid
       exact D.pairEdge_symm y₀ x₀ (by simpa [hx₀, hy₀] using hxy)
     · exact False.elim (htu (hT.trans hU.symm))
 
+
+/-- Wagon linearity forbids any OTHER wagon from containing both vertex
+boundaries of a valid long piece. This is the local A3 obstruction when
+inserting a fresh wagon between two old vertex connectors.  It uses the
+linearity of the SOURCE pretrain, not the yet-unproved output linearity. -/
+theorem BigCycle.other_wagon_not_both_long_boundaries
+    {n : ℕ} (C : D.BigCycle n)
+    (hLinear : D.LinearPretrain)
+    (k j : Fin n) (e f : E) (p q : P)
+    (hpq : p ≠ q)
+    (hLong : C.LongValid D k j e p f)
+    (x y : V)
+    (hx : C.connector (trainCyclicPred j) = Sum.inl x)
+    (hy : C.connector j = Sum.inl y) :
+    ¬ (D.WagonVertex q x ∧ D.WagonVertex q y) := by
+  obtain ⟨a, b, ha, hb, _he, _hf, _hne, hep, hfp,
+    hae, hbf, _hPair⟩ := hLong
+  have hxa : x = a :=
+    Sum.inl.inj (hx.symm.trans ha)
+  have hyb : y = b :=
+    Sum.inl.inj (hy.symm.trans hb)
+  subst x
+  subst y
+  have hab : a ≠ b := by
+    intro heq
+    have hSame : C.connector (trainCyclicPred j) = C.connector j := by
+      rw [ha, hb, heq]
+    have hPred : trainCyclicPred j = j := C.connector_injective hSame
+    have hs := cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two j
+    rw [hPred] at hs
+    exact (C.ne_cyclicSucc D j) hs.symm
+  intro hBoth
+  have hpa : D.WagonVertex p a := ⟨e, hep, hae⟩
+  have hpb : D.WagonVertex p b := ⟨f, hfp, hbf⟩
+  have haa : a ∈
+      ({z : V | D.WagonVertex p z} ∩ {z : V | D.WagonVertex q z}) :=
+    ⟨hpa, hBoth.1⟩
+  have hbb : b ∈
+      ({z : V | D.WagonVertex p z} ∩ {z : V | D.WagonVertex q z}) :=
+    ⟨hpb, hBoth.2⟩
+  exact hab (hLinear.2 p q hpq haa hbb)
+
 end StructuralRamsey.Girth.OrderOneData
