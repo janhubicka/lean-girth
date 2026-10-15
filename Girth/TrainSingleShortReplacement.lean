@@ -90,7 +90,7 @@ def BigCycle.replaceOne
           intro hp
           have hs := congrArg cyclicSucc hp
           rw [cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two k] at hs
-          exact (C.adjacent_ne k) (congrArg C.label hs.symm)
+          exact (C.adjacent_ne k) (congrArg C.label hs)
         have hsp : cyclicSucc (trainCyclicPred k) = k :=
           cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two k
         simpa [BigCycle.replaceLabelAt, hik, hsk, hip, hpk, hsp] using hPrev
