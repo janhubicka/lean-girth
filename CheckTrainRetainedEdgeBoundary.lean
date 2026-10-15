@@ -1,0 +1,8 @@
+import Girth.TrainRetainedEdgeBoundary
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retainedEdge_both_incident
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retainedEdge_fresh_wagon_boundaries
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retained_short_boundary_ne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.short_retained_boundary_ne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retained_long_boundary_ne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.long_retained_boundary_ne
