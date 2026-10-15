@@ -1,0 +1,11 @@
+import Girth.TrainShortOnlyPlanGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.label_eq_supreme_of_keep
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortValid_of_piece_eq_short
+#print axioms StructuralRamsey.Girth.OrderOneData.designated_ne_actualEdge
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_shortOnly
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_shortOnlyPlan
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_all_shortValid
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_all_shortValid
