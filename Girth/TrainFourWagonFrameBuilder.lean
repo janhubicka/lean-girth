@@ -38,7 +38,7 @@ theorem parent_eq_of_edge_label_meets
 /-- Build the legal two-wagon four-occurrence frame from source
 block data and a genuine long piece. No separate hypotheses
 asserting b != e+ or f+ != a are necessary. -/
-theorem FourWagonFrame.of_distinct_wagons
+def FourWagonFrame.of_distinct_wagons
     (a b : I ⊕ E) (e f : E) (p q : P) (x y : V)
     (hab : a ≠ b) (hef : e ≠ f)
     (hpq : p ≠ q) (hxy : x ≠ y)
