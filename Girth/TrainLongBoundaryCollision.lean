@@ -203,13 +203,13 @@ theorem BigCycle.longValid_of_piece_eq_long
 
 /-- First and last physical/designated labels of one replacement piece,
 before any global indexing or cyclic-word construction. -/
-def BigCycle.pieceFirstLabel (a : I ⊕ E) :
+def BigCycle.pieceFirstLabel {n : ℕ} (C : D.BigCycle n) (a : I ⊕ E) :
     TrainSupremePiece E P → I ⊕ E
   | .keep => a
   | .short e => .inr e
   | .long e _ _ => .inr e
 
-def BigCycle.pieceLastLabel (a : I ⊕ E) :
+def BigCycle.pieceLastLabel {n : ℕ} (C : D.BigCycle n) (a : I ⊕ E) :
     TrainSupremePiece E P → I ⊕ E
   | .keep => a
   | .short e => .inr e
