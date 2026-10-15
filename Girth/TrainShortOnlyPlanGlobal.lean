@@ -284,5 +284,17 @@ theorem BigCycle.hasSupremeAt_of_all_shortValid
   exact C.hasSupremeAt_of_shortOnlyPlan D hAccept hn
     k hk pieces hPlan hShortOnly
 
+
+/-- Unindexed form matching the literal conclusion used by SupremeCycleBound. -/
+theorem BigCycle.hasSimultaneousSupreme_of_all_shortValid
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (k : Fin n) (hk : D.designated (C.label k))
+    (hShort : ∀ j : Fin n, C.label j ≠ C.label k →
+      ∃ e : E, BigCycle.ShortValid D C k j e) :
+    C.HasSimultaneousSupreme :=
+  BigCycle.hasSimultaneousSupreme_of_hasSupremeAt D C k
+    (C.hasSupremeAt_of_all_shortValid D hAccept hn k hk hShort)
+
 end OrderOneData
 end StructuralRamsey.Girth
