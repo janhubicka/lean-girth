@@ -1,0 +1,9 @@
+import Girth.TrainLongBoundaryCollision
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.incident_edge_in_fresh_wagon_vertex
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortValid_fresh_wagon_boundaries
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_wagon_boundaries
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ne_cyclicSucc
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.short_long_boundary_ne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.long_short_boundary_ne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.long_long_boundary_ne
