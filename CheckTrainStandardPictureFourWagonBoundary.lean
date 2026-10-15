@@ -1,0 +1,7 @@
+import Girth.TrainStandardPictureFourWagonBoundary
+
+#print axioms StructuralRamsey.Girth.oldACarrier_subset_of_two_mem_aStrong
+#print axioms StructuralRamsey.Girth.standardPicture_fourWagonFrame_pairEdge
+#print axioms StructuralRamsey.Girth.standardPicture_fourWagonFrame_sharedEdge
+#print axioms StructuralRamsey.Girth.standardPicture_fourWagonFrame_coreEdge
+#print axioms StructuralRamsey.Girth.standardPicture_fourWagonFrame_sharedEdge_ordered

@@ -1,0 +1,4 @@
+import Girth.TrainStandardPictureSystemGirth
+
+#print axioms StructuralRamsey.Girth.standardPictureOrderOneData_copyEdgeCarrierCompatible
+#print axioms StructuralRamsey.Girth.standardPictureOrderOneData_pairEdge_of_two_active

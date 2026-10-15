@@ -37,10 +37,9 @@ jobs:
         run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
       - name: Build all project modules
         run: |
-          # Reuse dependencies but do not trust restored project-local objects.
+          # Keep dependency caches, but never reuse unchecked project objects.
           rm -rf .lake/build
-          # Check the new circulation cycle module before the full project build.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
+          lake build Girth.TrainStandardPictureFourWagonBoundary
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainPhysicalParameterBridgeComposite
@@ -49,83 +48,30 @@ jobs:
           lake build Girth.TrainUniversalTopOrderOne
       - name: Check theorem axioms
         run: |
-          set -o pipefail
-          lake env lean CheckAxioms.lean | tee axioms.log
-          python3 scripts/check_axioms.py axioms.log
-          lake env lean CheckSuccessorBoundary.lean | tee successor-boundary-axioms.log
-          python3 scripts/check_axioms.py successor-boundary-axioms.log CheckSuccessorBoundary.lean
-          lake env lean CheckWagonQuotients.lean | tee wagon-quotient-axioms.log
-          python3 scripts/check_axioms.py wagon-quotient-axioms.log CheckWagonQuotients.lean
-          lake env lean CheckTaggedQuotients.lean | tee tagged-quotients-axioms.log
-          python3 scripts/check_axioms.py tagged-quotients-axioms.log CheckTaggedQuotients.lean
-          lake env lean CheckPhysicalParameterComposite.lean | tee physical-parameter-axioms.log
-          python3 scripts/check_axioms.py physical-parameter-axioms.log CheckPhysicalParameterComposite.lean
-          lake env lean CheckActualPhysicalParameter.lean | tee actual-physical-parameter-axioms.log
-          python3 scripts/check_axioms.py actual-physical-parameter-axioms.log CheckActualPhysicalParameter.lean
-          lake env lean CheckActualSupportTransport.lean | tee actual-support-transport-axioms.log
-          python3 scripts/check_axioms.py actual-support-transport-axioms.log CheckActualSupportTransport.lean
-          lake env lean CheckUniversalTopOrderOne.lean | tee universal-top-axioms.log
-          python3 scripts/check_axioms.py universal-top-axioms.log CheckUniversalTopOrderOne.lean
-          lake env lean CheckTrainBigCycleOrderOne.lean | tee full-big-cycle-order-one-axioms.log
-          python3 scripts/check_axioms.py full-big-cycle-order-one-axioms.log CheckTrainBigCycleOrderOne.lean
-          lake env lean CheckTrainBigCycleTwoWagon.lean | tee two-wagon-axioms.log
-          python3 scripts/check_axioms.py two-wagon-axioms.log CheckTrainBigCycleTwoWagon.lean
-          lake env lean CheckTrainLengthTwoBridgeLemma.lean | tee length-two-bridge-axioms.log
-          python3 scripts/check_axioms.py length-two-bridge-axioms.log CheckTrainLengthTwoBridgeLemma.lean
-          lake env lean CheckTrainBigCycleOrderBudget.lean | tee order-budget-axioms.log
-          python3 scripts/check_axioms.py order-budget-axioms.log CheckTrainBigCycleOrderBudget.lean
-          lake env lean CheckTrainSimultaneousSupreme.lean | tee simultaneous-supreme-axioms.log
-          python3 scripts/check_axioms.py simultaneous-supreme-axioms.log CheckTrainSimultaneousSupreme.lean
-          lake env lean CheckTrainBoundaryPairCoreSupport.lean | tee boundary-pair-core-axioms.log
-          python3 scripts/check_axioms.py boundary-pair-core-axioms.log CheckTrainBoundaryPairCoreSupport.lean
-          lake env lean CheckTrainBoundaryPairSharedOldACopy.lean | tee old-boundary-copy-axioms.log
-          python3 scripts/check_axioms.py old-boundary-copy-axioms.log CheckTrainBoundaryPairSharedOldACopy.lean
-          lake env lean CheckTrainPhysicalAEdgeCoreBoundary.lean | tee physical-boundary-A-edge-axioms.log
-          python3 scripts/check_axioms.py physical-boundary-A-edge-axioms.log CheckTrainPhysicalAEdgeCoreBoundary.lean
-          lake env lean CheckTrainSupremeVertexCoverage.lean | tee supreme-vertex-axioms.log
-          python3 scripts/check_axioms.py supreme-vertex-axioms.log CheckTrainSupremeVertexCoverage.lean
-          lake env lean CheckTrainFourOccurrenceWagonCycle.lean | tee four-wagon-axioms.log
-          python3 scripts/check_axioms.py four-wagon-axioms.log CheckTrainFourOccurrenceWagonCycle.lean
-          lake env lean CheckTrainFullSystemParameter.lean | tee full-system-parameter-axioms.log
-          python3 scripts/check_axioms.py full-system-parameter-axioms.log CheckTrainFullSystemParameter.lean
-          lake env lean CheckTrainAllAdjacentParameters.lean | tee all-adjacent-parameter-axioms.log
-          python3 scripts/check_axioms.py all-adjacent-parameter-axioms.log CheckTrainAllAdjacentParameters.lean
-          lake env lean CheckTrainAllAdjacentParametersBridge.lean | tee all-adjacent-bridge-axioms.log
-          python3 scripts/check_axioms.py all-adjacent-bridge-axioms.log CheckTrainAllAdjacentParametersBridge.lean
-          lake env lean CheckTrainWagonStrongInduced.lean | tee wagon-strong-axioms.log
-          python3 scripts/check_axioms.py wagon-strong-axioms.log CheckTrainWagonStrongInduced.lean
-          lake env lean CheckTrainWagonPairUniqueness.lean | tee wagon-pair-axioms.log
-          python3 scripts/check_axioms.py wagon-pair-axioms.log CheckTrainWagonPairUniqueness.lean
-          lake env lean CheckTrainWagonThreeLink.lean | tee three-link-axioms.log
-          python3 scripts/check_axioms.py three-link-axioms.log CheckTrainWagonThreeLink.lean
-          lake env lean CheckTrainActualWagonThreeLink.lean | tee actual-three-link-axioms.log
-          python3 scripts/check_axioms.py actual-three-link-axioms.log CheckTrainActualWagonThreeLink.lean
-          lake env lean CheckTrainActualTwoStandardEdgeBlock.lean | tee edge-block-axioms.log
-          python3 scripts/check_axioms.py edge-block-axioms.log CheckTrainActualTwoStandardEdgeBlock.lean
-          lake env lean CheckTrainActualTwoStandardEdgeBlockObstruction.lean | tee edge-block-obstruction-axioms.log
-          python3 scripts/check_axioms.py edge-block-obstruction-axioms.log CheckTrainActualTwoStandardEdgeBlockObstruction.lean
-          lake env lean CheckTrainTwoCopyCommonWagon.lean | tee common-long-wagon-axioms.log
-          python3 scripts/check_axioms.py common-long-wagon-axioms.log CheckTrainTwoCopyCommonWagon.lean
-          lake env lean CheckTrainReplacementOrder.lean | tee replacement-order-axioms.log
-          python3 scripts/check_axioms.py replacement-order-axioms.log CheckTrainReplacementOrder.lean
-          lake env lean CheckTrainTwoCopyVertexProbe.lean | tee two-copy-vertex-probe-axioms.log
-          python3 scripts/check_axioms.py two-copy-vertex-probe-axioms.log CheckTrainTwoCopyVertexProbe.lean
-          lake env lean CheckTrainShortReplacement.lean | tee short-replacement-axioms.log
-          python3 scripts/check_axioms.py short-replacement-axioms.log CheckTrainShortReplacement.lean
-          lake env lean CheckTrainFillingCarrierInvariant.lean | tee filling-carrier-axioms.log
-          python3 scripts/check_axioms.py filling-carrier-axioms.log CheckTrainFillingCarrierInvariant.lean
-          lake env lean CheckTrainTwoCopyLongProbe.lean | tee two-copy-long-probe-axioms.log
-          python3 scripts/check_axioms.py two-copy-long-probe-axioms.log CheckTrainTwoCopyLongProbe.lean
-          lake env lean CheckTrainTwoCopyLocalSymmetry.lean | tee two-copy-local-axioms.log
-          python3 scripts/check_axioms.py two-copy-local-axioms.log CheckTrainTwoCopyLocalSymmetry.lean
-          lake env lean CheckTrainTwoCopyGlobalFirst.lean | tee two-copy-global-first-axioms.log
-          python3 scripts/check_axioms.py two-copy-global-first-axioms.log CheckTrainTwoCopyGlobalFirst.lean
-          lake env lean CheckTrainTwoCopyGlobalSecond.lean | tee two-copy-global-second-axioms.log
-          python3 scripts/check_axioms.py two-copy-global-second-axioms.log CheckTrainTwoCopyGlobalSecond.lean
-          lake env lean CheckTrainTwoCopyIndexedSymmetry.lean | tee two-copy-indexed-axioms.log
-          python3 scripts/check_axioms.py two-copy-indexed-axioms.log CheckTrainTwoCopyIndexedSymmetry.lean
-          lake env lean CheckTrainOrderOneGlobalBridge.lean | tee order-one-global-axioms.log
-          python3 scripts/check_axioms.py order-one-global-axioms.log CheckTrainOrderOneGlobalBridge.lean
+          set -euo pipefail
+          # Preserve every previous audit; keep additions in one explicit list.
+          checks=(
+            CheckAxioms CheckSuccessorBoundary CheckWagonQuotients CheckTaggedQuotients
+            CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
+            CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
+            CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
+            CheckTrainBoundaryPairCoreSupport CheckTrainBoundaryPairSharedOldACopy
+            CheckTrainPhysicalAEdgeCoreBoundary CheckTrainSupremeVertexCoverage
+            CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
+            CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
+            CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
+            CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
+            CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
+            CheckTrainActualTwoStandardEdgeBlock CheckTrainActualTwoStandardEdgeBlockObstruction
+            CheckTrainTwoCopyCommonWagon CheckTrainReplacementOrder CheckTrainTwoCopyVertexProbe
+            CheckTrainShortReplacement CheckTrainFillingCarrierInvariant CheckTrainTwoCopyLongProbe
+            CheckTrainTwoCopyLocalSymmetry CheckTrainTwoCopyGlobalFirst CheckTrainTwoCopyGlobalSecond
+            CheckTrainTwoCopyIndexedSymmetry CheckTrainOrderOneGlobalBridge
+          )
+          for check in "${checks[@]}"; do
+            lake env lean "${check}.lean" | tee "${check}.log"
+            python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
+          done
       - name: Run finite boundary regressions
         run: |
           python3 scripts/check_boundary_transport.py
