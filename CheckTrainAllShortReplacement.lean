@@ -1,0 +1,5 @@
+import Girth.TrainAllShortReplacement
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortRelabel_adjacent
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortRelabelCycle_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortRelabelCycle_acceptable
