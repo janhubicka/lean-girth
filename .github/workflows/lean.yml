@@ -39,6 +39,7 @@ jobs:
         run: |
           # Keep dependency caches, but never reuse unchecked project objects.
           rm -rf .lake/build
+          lake build Girth.TrainSelectedPictureTwoStandard
           lake build Girth.TrainActualTwoStandardDesignatedBlock
           lake build Girth.TrainStandardPictureFourWagonBoundary
           # Preserve the explicit circulation targets, including non-root imports.
@@ -62,7 +63,7 @@ jobs:
             CheckTrainPhysicalAEdgeCoreBoundary CheckTrainSupremeVertexCoverage
             CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
             CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
-            CheckTrainActualTwoStandardDesignatedBlock
+            CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard
             CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
             CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
             CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
