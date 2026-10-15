@@ -1,0 +1,8 @@
+import Girth.TrainSelectedPictureContainedBlocks
+
+#print axioms StructuralRamsey.Girth.oldACarrierEdge_eq_of_subset
+#print axioms StructuralRamsey.Girth.designated_active_vertex_mem_source_edge
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_edge_localize
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_mixed_localize
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_containedBlocks_force_core_pairEdge
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_contained_cycle_force_core_pairEdge
