@@ -115,8 +115,12 @@ theorem standardPicture_block_rel_shared_of_no_core_pair
     · rw [← attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx]
       exact hxS
     · rw [← attachedSharedAEdgeCarrier_eq A C.toRelStructure S R f i sx]
-      rw [h]
-      exact hyS
+      exact Eq.mp
+        (congrArg
+          (fun edge : OldACarrierEdge A C.toRelStructure =>
+            y ∈ attachedOldAEdgeCarrier A C.toRelStructure S R f i edge)
+          h.symm)
+        hyS
   change x ∈ (fun z : X => std z) '' sx.1.1 at hxS
   change y ∈ (fun z : X => std z) '' sy.1.1 at hyS
   obtain ⟨u, hu, hux⟩ := hxS
@@ -179,9 +183,9 @@ theorem actualTwoStandard_designatedBlocks_force_core_pairEdge
     (hb : (standardPictureOrderOneData A B D C family T μ).Meets b
       (Quotient.mk (T.wagonSetoid μ) r))
     (hc : (standardPictureOrderOneData A B D C family T μ).Meets c
-      (Quotient.mk (T.wagonSetoid μ) s))
+      (Quotient.mk (T.wagonSetoid μ) r))
     (hd : (standardPictureOrderOneData A B D C family T μ).Meets d
-      (Quotient.mk (T.wagonSetoid μ) s))
+      (Quotient.mk (T.wagonSetoid μ) r))
     (hReflect : ∀ (k : I) (p q : SharedOldACarrierEdge A C.toRelStructure
       (activeCarrier A C e.toFunctionEmbedding)),
       U.rel μ (sharedOldACarrierCoreEmbedding A C.toRelStructure
