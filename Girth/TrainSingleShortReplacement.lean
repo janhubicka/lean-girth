@@ -160,5 +160,69 @@ theorem BigCycle.replaceOne_acceptable_of_three_le_length
     hPrev hNext hLeft hRight
     (C.twiceOrder_ne_two_of_three_le_length D hn) hAccept
 
+/-- A finite sequence of legal short replacements which never changes the
+chosen occurrence r.  Each step stores only the local legality checks for the
+CURRENT cycle, so neighbour changes caused by earlier replacements are handled
+honestly rather than by a simultaneous global assumption. -/
+inductive BigCycle.ShortReachableAwayFrom
+    {n : ℕ} (r : Fin n) : D.BigCycle n → D.BigCycle n → Prop
+  | refl (C : D.BigCycle n) : C.ShortReachableAwayFrom D r C
+  | step (C : D.BigCycle n) (k : Fin n) (a : I ⊕ E)
+      (hrk : r ≠ k)
+      (hPrev : C.label (trainCyclicPred k) ≠ a)
+      (hNext : a ≠ C.label (cyclicSucc k))
+      (hLeft : D.Incident a (C.connector k))
+      (hRight : D.Incident a (C.connector (trainCyclicPred k)))
+      {B : D.BigCycle n}
+      (tail : (C.replaceOne D k a hPrev hNext hLeft hRight).ShortReachableAwayFrom D r B) :
+      C.ShortReachableAwayFrom D r B
+
+/-- A short-replacement sequence away from r keeps the literal label at r. -/
+theorem BigCycle.ShortReachableAwayFrom.label_fixed
+    {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
+    (h : C.ShortReachableAwayFrom D r B) :
+    B.label r = C.label r := by
+  induction h with
+  | refl C => rfl
+  | @step C k a hrk hPrev hNext hLeft hRight B tail ih =>
+      calc
+        B.label r =
+            (C.replaceOne D k a hPrev hNext hLeft hRight).label r := ih
+        _ = C.label r := by
+          simp [BigCycle.replaceOne, BigCycle.relabelSameConnectors,
+            BigCycle.replaceLabelAt, Function.update_noteq hrk]
+
+/-- Every finite short-replacement sequence preserves the numerical order. -/
+theorem BigCycle.ShortReachableAwayFrom.twiceOrder_eq
+    {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
+    (h : C.ShortReachableAwayFrom D r B) :
+    B.twiceOrder = C.twiceOrder := by
+  induction h with
+  | refl C => rfl
+  | @step C k a hrk hPrev hNext hLeft hRight B tail ih =>
+      exact ih.trans
+        (C.replaceOne_twiceOrder D k a hPrev hNext hLeft hRight)
+
+/-- Keeping one designated supreme occurrence fixed makes arbitrary finite
+legal short replacements preserve acceptability, including at order one. -/
+theorem BigCycle.ShortReachableAwayFrom.acceptable
+    {n : ℕ} {C B : D.BigCycle n} {r : Fin n}
+    (h : C.ShortReachableAwayFrom D r B)
+    (hr : D.designated (C.label r))
+    (hAccept : C.Acceptable) :
+    B.Acceptable := by
+  induction h with
+  | refl C => exact hAccept
+  | @step C k a hrk hPrev hNext hLeft hRight B tail ih =>
+      let C' := C.replaceOne D k a hPrev hNext hLeft hRight
+      have hAccept' : C'.Acceptable :=
+        C.replaceOne_acceptable_of_other_designated D k r a
+          hrk hr hPrev hNext hLeft hRight hAccept
+      have hr' : D.designated (C'.label r) := by
+        simpa [C', BigCycle.replaceOne, BigCycle.relabelSameConnectors,
+          BigCycle.replaceLabelAt, Function.update_noteq hrk] using hr
+      exact ih hr' hAccept'
+
+
 end OrderOneData
 end StructuralRamsey.Girth
