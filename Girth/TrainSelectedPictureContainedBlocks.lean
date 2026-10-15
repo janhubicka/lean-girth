@@ -183,8 +183,10 @@ theorem attachedSelectedPicture_mixed_localize [Finite UA]
           have hOther : Std k w ∈ copyCarrier (Std i) := hSub ⟨w, hw, rfl⟩
           obtain ⟨v, hv⟩ := hOther
           by_contra hwNot
-          exact hki (RelStructure.Attachment.index_eq_of_outside
-            (B := C.toRelStructure) (S := S) (D := R) (f := f) hwNot hv.symm)
+          have hMaps :
+              RelStructure.Attachment.copyMap C.toRelStructure S R f k w =
+                RelStructure.Attachment.copyMap C.toRelStructure S R f i v := hv.symm
+          exact hki (RelStructure.Attachment.index_eq_of_outside hwNot hMaps)
         obtain ⟨r, hr, hW⟩ := (attachedSelectedPicture_meets_iff
           A hA B D C family selected e R f T U hShared μ k (.inl q) W).mp hMeet
         obtain ⟨w, hw, hwz⟩ := hz
