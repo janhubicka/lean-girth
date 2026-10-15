@@ -39,6 +39,7 @@ jobs:
         run: |
           # Keep dependency caches, but never reuse unchecked project objects.
           rm -rf .lake/build
+          lake build Girth.TrainActualTwoStandardDesignatedBlock
           lake build Girth.TrainStandardPictureFourWagonBoundary
           # Preserve the explicit circulation targets, including non-root imports.
           lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
@@ -61,6 +62,7 @@ jobs:
             CheckTrainPhysicalAEdgeCoreBoundary CheckTrainSupremeVertexCoverage
             CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
             CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
+            CheckTrainActualTwoStandardDesignatedBlock
             CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
             CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
             CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
