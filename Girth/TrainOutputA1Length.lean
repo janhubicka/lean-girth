@@ -53,4 +53,44 @@ theorem BigCycle.output_A1_of_source_length_three
   have hTwo : m = 2 := B.length_eq_two_of_order_one D hOrder
   omega
 
+
+/-- The designated supreme occurrence really survives in the literal
+flattened replacement word whenever PlanValid holds: this is precisely
+what a kept label means, and no output-cycle indexing is assumed. -/
+theorem BigCycle.kept_supreme_occurrence_mem_resultWord
+    {n : ℕ} (C : D.BigCycle n)
+    (k : Fin n) (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces) :
+    (C.label k, C.connector k) ∈ C.resultWord D pieces := by
+  have hk : pieces k = .keep := (hPlan k).1 rfl
+  unfold BigCycle.resultWord
+  apply List.mem_flatten.mpr
+  refine ⟨C.pieceWord D k (pieces k), ?_, ?_⟩
+  · exact List.mem_ofFn.mpr ⟨k, rfl⟩
+  · simp [BigCycle.pieceWord, hk]
+
+/-- A1 holds for ANY globally assembled PlanValid supreme plan, not just
+for cycles of source length >= 3. The designated supreme label is kept
+and appears as an actual label in the new BigCycle's literal word.
+No A2/A3, freshness, linearity, or order-preservation hypothesis needed. -/
+theorem BigCycle.output_A1_of_kept_supreme
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (k : Fin n) (hk : D.designated (C.label k))
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hWord : List.ofFn (fun i : Fin m =>
+      (B.label i, B.connector i)) = C.resultWord D pieces) :
+    B.A1 := by
+  intro _hOrder
+  have hEntry : (C.label k, C.connector k) ∈
+      List.ofFn (fun i : Fin m => (B.label i, B.connector i)) := by
+    rw [hWord]
+    exact C.kept_supreme_occurrence_mem_resultWord D k pieces hPlan
+  obtain ⟨i, hi⟩ := List.mem_ofFn.mp hEntry
+  refine ⟨i, ?_⟩
+  have heq : B.label i = C.label k :=
+    congrArg Prod.fst hi
+  rw [heq]
+  exact hk
+
 end StructuralRamsey.Girth.OrderOneData
