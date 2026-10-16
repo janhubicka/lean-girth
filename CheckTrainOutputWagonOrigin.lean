@@ -1,0 +1,5 @@
+import Girth.TrainOutputWagonOrigin
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_wagon_old_or_long_of_literal_word
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_wagon_old_or_valid_long
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_old_wagon_inherited
