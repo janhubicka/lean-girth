@@ -1,0 +1,6 @@
+import Girth.TrainA3ContactTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A3_of_old_contacts_no_split
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_split_of_linear_inserted_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A3_of_preserved_contacts_and_insertions
