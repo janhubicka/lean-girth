@@ -161,7 +161,7 @@ theorem BigCycle.A3_of_preserved_contacts_and_insertions
         D.WagonVertex q x ∧ D.WagonVertex q y ∧
         ∃ j : Fin m, B.connector j = Sum.inr q) :
     B.A3 := by
-  apply B.A3_of_old_contacts_no_split D C oldPos hA3
+  apply C.A3_of_old_contacts_no_split D B oldPos hA3
     hConnector hContactPullback
   intro p i hNoOut hp hs
   exact C.no_split_of_linear_inserted_wagon D B oldPos
