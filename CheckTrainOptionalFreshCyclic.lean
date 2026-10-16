@@ -1,0 +1,5 @@
+import Girth.TrainOptionalFreshCyclic
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_getLast?_succ
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_fresh_not_last
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_fresh_cyclic_successor
