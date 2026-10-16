@@ -1,0 +1,5 @@
+import Girth.TrainOptionalFreshSuccessor
+
+#print axioms StructuralRamsey.Girth.optionalConnectorBlock_last?
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_freshSuccessor_chain
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_fresh_successor_of_nonlast
