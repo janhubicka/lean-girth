@@ -1,0 +1,3 @@
+import Girth.TrainA3ContactTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A3_of_old_contacts_no_split
