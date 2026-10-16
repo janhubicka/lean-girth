@@ -1,0 +1,5 @@
+import Girth.TrainOptionalOldHeadCyclic
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_oldHead_chain
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_old_head_of_nonlast
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_old_cyclic_head
