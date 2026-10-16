@@ -77,11 +77,11 @@ theorem BigCycle.two_keep0_long1_global
       fin_cases i
       · exact C.left_incident 0
       · exact ⟨e, rfl, hew⟩
-      · simpa [hy, Incident] using hyf
+      · simpa [hy, Incident, OrderOneData.carrier] using hyf
     right_incident := by
       intro i
       fin_cases i
-      · simpa [cyclicSucc, hx, Incident] using hxe
+      · simpa [cyclicSucc, hx, Incident, OrderOneData.carrier] using hxe
       · simpa [cyclicSucc, Incident] using
           (show D.Meets (.inr f) w from ⟨f, rfl, hfw⟩)
       · simpa [cyclicSucc] using C.right_incident 1
@@ -134,7 +134,7 @@ theorem BigCycle.two_long0_keep1_global
       intro i
       fin_cases i
       · exact ⟨e, rfl, hew⟩
-      · simpa [hy, Incident] using hyf
+      · simpa [hy, Incident, OrderOneData.carrier] using hyf
       · exact C.left_incident 1
     right_incident := by
       intro i
@@ -142,7 +142,7 @@ theorem BigCycle.two_long0_keep1_global
       · simpa [cyclicSucc, Incident] using
           (show D.Meets (.inr f) w from ⟨f, rfl, hfw⟩)
       · simpa [cyclicSucc] using C.right_incident 0
-      · simpa [cyclicSucc, hx, Incident] using hxe
+      · simpa [cyclicSucc, hx, Incident, OrderOneData.carrier] using hxe
   }
   refine ⟨3, B, ?_⟩
   simp [BigCycle.resultWord, BigCycle.pieceWord,
