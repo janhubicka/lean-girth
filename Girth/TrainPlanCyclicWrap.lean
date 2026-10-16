@@ -47,10 +47,8 @@ private theorem flatten_wrap_of_nonempty_blocks
     List.flatten_ne_nil_iff.mpr
       ⟨blocks.head hBlocks, List.head_mem hBlocks, hFirst⟩
   have hHeadOpt : (blocks.head hBlocks).head? =
-      some ((blocks.head hBlocks).head hFirst) := by
-    cases hh : blocks.head hBlocks with
-    | nil => exact False.elim (hFirst hh)
-    | cons a as => rfl
+      some ((blocks.head hBlocks).head hFirst) :=
+    List.head?_eq_some_head hFirst
   have hLastOpt : (blocks.getLast hBlocks).getLast? =
       some ((blocks.getLast hBlocks).getLast hLast) :=
     List.getLast?_eq_getLast_of_ne_nil hLast
@@ -58,15 +56,31 @@ private theorem flatten_wrap_of_nonempty_blocks
       ((blocks.getLast hBlocks).getLast hLast)
       ((blocks.head hBlocks).head hFirst) := by
     simpa [hHeadOpt, hLastOpt] using hWrap
-  have hTailEq := List.getLast_flatten_eq_getLast_getLast
-    (hl := hFlat) (hl' := hLast)
-  have hHeadEq := List.head_flatten_eq_head_head
-    (hl := hFlat) (hl' := hFirst)
-  have hIndexLast :=
-    List.get_length_sub_one (l := blocks.flatten)
-      (h := by have hp := List.length_pos_of_ne_nil hFlat; omega)
-  have hIndexFirst := List.head_eq_getElem_zero (hl := hFlat)
-  simpa [hIndexLast, hIndexFirst, hTailEq, hHeadEq] using hR
+  have hTailEq : blocks.flatten.getLast hFlat =
+      (blocks.getLast hBlocks).getLast hLast := by
+    exact List.getLast_flatten_eq_getLast_getLast (hl := hFlat) (hl' := hLast)
+  have hHeadEq : blocks.flatten.head hFlat =
+      (blocks.head hBlocks).head hFirst := by
+    exact List.head_flatten_eq_head_head (hl := hFlat) (hl' := hFirst)
+  have hLastWord : blocks.flatten.get
+        ⟨blocks.flatten.length - 1, by
+          have hp := List.length_pos_of_ne_nil hFlat
+          omega⟩ =
+      (blocks.getLast hBlocks).getLast hLast := by
+    calc
+      _ = blocks.flatten.getLast hFlat :=
+        List.get_length_sub_one (l := blocks.flatten)
+          (h := by have hp := List.length_pos_of_ne_nil hFlat; omega)
+      _ = _ := hTailEq
+  have hFirstWord : blocks.flatten.get
+        ⟨0, List.length_pos_of_ne_nil hFlat⟩ =
+      (blocks.head hBlocks).head hFirst := by
+    calc
+      _ = blocks.flatten.head hFlat :=
+        (List.head_eq_getElem_zero (hl := hFlat)).symm
+      _ = _ := hHeadEq
+  rw [hLastWord, hFirstWord]
+  exact hR
 
 namespace OrderOneData
 
