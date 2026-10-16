@@ -43,29 +43,36 @@ theorem BigCycle.three_vwv_acceptable
     constructor
     · intro i p hip j hj
       fin_cases i
-      · rw [h0] at hip
+      · change B.connector (0 : Fin 3) = Sum.inr p at hip
+        rw [h0] at hip
         cases hip
       · fin_cases j
         · exact Or.inl (by decide)
         · obtain ⟨z, hz, _⟩ := hj
+          change B.connector (1 : Fin 3) = Sum.inl z at hz
           rw [h1] at hz
           cases hz
         · exact Or.inr (by decide)
-      · rw [h2] at hip
+      · change B.connector (2 : Fin 3) = Sum.inr p at hip
+        rw [h2] at hip
         cases hip
     · intro i p u v hip hPrev hNext hDifferent _ _
       fin_cases i
-      · rw [h0] at hip
+      · change B.connector (0 : Fin 3) = Sum.inr p at hip
+        rw [h0] at hip
         cases hip
       · have hu : u = x := by
-          have h := hPrev
-          simpa [trainCyclicPred, h0] using h
+          have h : B.connector (0 : Fin 3) = Sum.inl u := by
+            simpa [trainCyclicPred] using hPrev
+          exact Sum.inl.inj (h.symm.trans h0)
         have hv : v = y := by
-          have h := hNext
-          simpa [cyclicSucc, h2] using h
+          have h : B.connector (2 : Fin 3) = Sum.inl v := by
+            simpa [cyclicSucc] using hNext
+          exact Sum.inl.inj (h.symm.trans h2)
         rw [hu, hv]
         exact hNoPair
-      · rw [h2] at hip
+      · change B.connector (2 : Fin 3) = Sum.inr p at hip
+        rw [h2] at hip
         cases hip
   have hA3 : B.A3 := by
     intro p _
@@ -74,6 +81,7 @@ theorem BigCycle.three_vwv_acceptable
     fin_cases j
     · exact Or.inr (by decide)
     · obtain ⟨z, hz, _⟩ := hj
+      change B.connector (1 : Fin 3) = Sum.inl z at hz
       rw [h1] at hz
       cases hz
     · exact Or.inl rfl
@@ -98,27 +106,34 @@ theorem BigCycle.three_wvv_acceptable
       fin_cases i
       · fin_cases j
         · obtain ⟨z, hz, _⟩ := hj
+          change B.connector (0 : Fin 3) = Sum.inl z at hz
           rw [h0] at hz
           cases hz
         · exact Or.inr (by decide)
         · exact Or.inl (by decide)
-      · rw [h1] at hip
+      · change B.connector (1 : Fin 3) = Sum.inr p at hip
+        rw [h1] at hip
         cases hip
-      · rw [h2] at hip
+      · change B.connector (2 : Fin 3) = Sum.inr p at hip
+        rw [h2] at hip
         cases hip
     · intro i p u v hip hPrev hNext hDifferent _ _
       fin_cases i
       · have hu : u = x := by
-          have h := hPrev
-          simpa [trainCyclicPred, h2] using h
+          have h : B.connector (2 : Fin 3) = Sum.inl u := by
+            simpa [trainCyclicPred] using hPrev
+          exact Sum.inl.inj (h.symm.trans h2)
         have hv : v = y := by
-          have h := hNext
-          simpa [cyclicSucc, h1] using h
+          have h : B.connector (1 : Fin 3) = Sum.inl v := by
+            simpa [cyclicSucc] using hNext
+          exact Sum.inl.inj (h.symm.trans h1)
         rw [hu, hv]
         exact hNoPair
-      · rw [h1] at hip
+      · change B.connector (1 : Fin 3) = Sum.inr p at hip
+        rw [h1] at hip
         cases hip
-      · rw [h2] at hip
+      · change B.connector (2 : Fin 3) = Sum.inr p at hip
+        rw [h2] at hip
         cases hip
   have hA3 : B.A3 := by
     intro p _
@@ -126,6 +141,7 @@ theorem BigCycle.three_wvv_acceptable
     intro j hj
     fin_cases j
     · obtain ⟨z, hz, _⟩ := hj
+      change B.connector (0 : Fin 3) = Sum.inl z at hz
       rw [h0] at hz
       cases hz
     · exact Or.inl rfl
