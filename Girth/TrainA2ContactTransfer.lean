@@ -147,4 +147,51 @@ theorem BigCycle.A2_of_inherited_and_fresh_long
       rw [hxx, hyy]
       exact hNoPair
 
+
+/-- No NEW vertex connectors is the only additional information needed
+to pull output wagon-vertex contacts back to their old source positions.
+Wagon membership itself is unchanged because source and output use
+the very same physical OrderOneData. -/
+theorem BigCycle.wagon_contacts_pullback_of_vertex_positions
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (oldPos : Fin n → Fin m)
+    (hConnector : ∀ i : Fin n,
+      B.connector (oldPos i) = C.connector i)
+    (hVertexPos : ∀ (j : Fin m) (x : V),
+      B.connector j = Sum.inl x →
+      ∃ i : Fin n, j = oldPos i) :
+    ∀ (p : P) (j : Fin m), B.InWagonAt p j →
+      ∃ i : Fin n, j = oldPos i ∧ C.InWagonAt p i := by
+  intro p j hj
+  obtain ⟨x, hBx, hPx⟩ := hj
+  obtain ⟨i, hPos⟩ := hVertexPos j x hBx
+  refine ⟨i, hPos, x, ?_, hPx⟩
+  calc
+    C.connector i = B.connector (oldPos i) := (hConnector i).symm
+    _ = B.connector j := congrArg B.connector hPos.symm
+    _ = Sum.inl x := hBx
+
+/-- Consequently the full source-to-output A2 transfer requires only
+the old connector-position map, the fact that every output VERTEX
+position is inherited, and the source origin of wagon connectors.
+No separate opaque contact-pullback assumption is necessary. -/
+theorem BigCycle.A2_of_preserved_vertex_positions_and_wagons
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (hAccept : C.Acceptable)
+    (oldPos : Fin n → Fin m)
+    (hConnector : ∀ i : Fin n,
+      B.connector (oldPos i) = C.connector i)
+    (hVertexPos : ∀ (j : Fin m) (x : V),
+      B.connector j = Sum.inl x →
+      ∃ i : Fin n, j = oldPos i)
+    (hWagonCase : ∀ (j : Fin m) (p : P),
+      B.connector j = Sum.inr p →
+      C.OutputWagonCase D B oldPos j p) :
+    B.A2 := by
+  apply C.A2_of_inherited_and_fresh_long D B hAccept oldPos
+    hConnector
+  · exact C.wagon_contacts_pullback_of_vertex_positions D B
+      oldPos hConnector hVertexPos
+  · exact hWagonCase
+
 end StructuralRamsey.Girth.OrderOneData
