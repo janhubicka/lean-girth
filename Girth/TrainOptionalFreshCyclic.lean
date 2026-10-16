@@ -51,6 +51,8 @@ theorem optionalConnectorWord_fresh_not_last
   classical
   let word := optionalConnectorWord base insert
   by_contra hLast
+  have hBound : j.val < word.length := j.isLt
+  have hNotLast : ¬ j.val + 1 < word.length := hLast
   have hPos : word.length - 1 = j.val := by omega
   have hGetLast : word.getLast? = some a := by
     rw [List.getLast?_eq_getElem?, hPos]
