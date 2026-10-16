@@ -63,7 +63,9 @@ theorem optionalConnectorWord_old_cyclic_successor
     rw [hSucc]
     exact optionalConnectorWord_old_successor_of_nonlast
       base insert hBase hFresh i hNone j hj hNext
-  · have hLastPos : word.length - 1 = j.val := by omega
+  · have hjLt : j.val < word.length := by
+      simpa [word] using j.isLt
+    have hLastPos : word.length - 1 = j.val := by omega
     have hGetLast : word.getLast? = some (word.get j) := by
       rw [List.getLast?_eq_getElem?, hLastPos]
       exact List.getElem?_eq_getElem j.isLt
