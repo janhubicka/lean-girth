@@ -1,5 +1,6 @@
 import Girth.TrainOutputWagonOrigin
 import Girth.TrainA3ContactTransfer
+import Girth.TrainA2ContactTransfer
 import Girth.TrainInsertedConnectorNodup
 
 /-!
