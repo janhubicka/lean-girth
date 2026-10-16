@@ -76,8 +76,10 @@ theorem BigCycle.output_wagon_old_or_long_of_literal_word
       exact Or.inl (hOldCase (congrArg Prod.snd heq).symm)
   | long e w f =>
       have hCases :
-          (B.label j, Sum.inr p) = (Sum.inr e, Sum.inr w) ∨
-          (B.label j, Sum.inr p) = (Sum.inr f, C.connector i) := by
+          (B.label j, (Sum.inr p : V ⊕ P)) =
+            ((Sum.inr e : I ⊕ E), (Sum.inr w : V ⊕ P)) ∨
+          (B.label j, (Sum.inr p : V ⊕ P)) =
+            ((Sum.inr f : I ⊕ E), C.connector i) := by
         simpa [BigCycle.pieceWord, hp] using hEntry
       rcases hCases with hNew | hOld
       · have hpw : p = w := Sum.inr.inj (congrArg Prod.snd hNew)
