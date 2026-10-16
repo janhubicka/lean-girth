@@ -141,4 +141,50 @@ theorem BigCycle.output_old_wagon_inherited
   · obtain ⟨t, ht⟩ := hOld
     exact False.elim ((hFresh i e p f hPiece t) ht)
 
+
+/-- Every selected long piece contributes its fresh wagon connector to
+the ACTUAL output word. The proof does not assume a preselected
+output index, wagon-covering condition or output acceptability. -/
+theorem BigCycle.selected_long_wagon_occurs_in_output
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hWord : List.ofFn (fun t : Fin m =>
+      (B.label t, B.connector t)) = C.resultWord D pieces)
+    (i : Fin n) (e f : E) (p : P)
+    (hPiece : pieces i = .long e p f) :
+    ∃ j : Fin m, B.connector j = Sum.inr p := by
+  classical
+  have hMem : (Sum.inr e, Sum.inr p) ∈ C.resultWord D pieces := by
+    unfold BigCycle.resultWord
+    apply List.mem_flatten.mpr
+    refine ⟨C.pieceWord D i (pieces i), ?_, ?_⟩
+    · exact List.mem_ofFn.mpr ⟨i, rfl⟩
+    · simp [BigCycle.pieceWord, hPiece]
+  rw [← hWord] at hMem
+  obtain ⟨j, hj⟩ := List.mem_ofFn.mp hMem
+  exact ⟨j, congrArg Prod.snd hj⟩
+
+/-- A real source LongValid piece provides all the geometric witness
+data demanded by the A3 split-transfer interface, including an
+ACTUAL output wagon connector, without assuming output A3. -/
+theorem BigCycle.selected_long_A3_split_witness
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hWord : List.ofFn (fun t : Fin m =>
+      (B.label t, B.connector t)) = C.resultWord D pieces)
+    (k i : Fin n) (e f : E) (p : P)
+    (hPiece : pieces i = .long e p f)
+    (hLong : C.LongValid D k i e p f) :
+    ∃ (q : P) (x y : V),
+      C.connector (trainCyclicPred i) = Sum.inl x ∧
+      C.connector i = Sum.inl y ∧
+      D.WagonVertex q x ∧ D.WagonVertex q y ∧
+      ∃ j : Fin m, B.connector j = Sum.inr q := by
+  obtain ⟨x, y, hx, hy, _he, _hf, _hne, hep, hfp,
+    hxe, hyf, _hNoPair⟩ := hLong
+  refine ⟨p, x, y, hx, hy, ⟨e, hep, hxe⟩,
+    ⟨f, hfp, hyf⟩, ?_⟩
+  exact C.selected_long_wagon_occurs_in_output
+    D B pieces hWord i e f p hPiece
+
 end StructuralRamsey.Girth.OrderOneData
