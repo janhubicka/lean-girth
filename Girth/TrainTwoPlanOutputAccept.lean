@@ -41,8 +41,8 @@ theorem BigCycle.two_short_only_output_accept_order
   have hNone (i : Fin 2) :
       C.insertedConnector D pieces i = none := by
     cases hp : pieces i with
-    | keep => rfl
-    | short e => rfl
+    | keep => simp [BigCycle.insertedConnector, hp]
+    | short e => simp [BigCycle.insertedConnector, hp]
     | long e p f =>
         have hBad := hShortOnly i
         simp [TrainSupremePiece.IsShortOrKeep, hp] at hBad
@@ -70,8 +70,13 @@ theorem BigCycle.two_short_only_output_accept_order
         congrArg (List.map Prod.snd) hWord
       _ = List.ofFn C.connector := hConnList
   have hConn (i : Fin 2) : B.connector i = C.connector i := by
-    have h := congrArg (fun l : List (V ⊕ P) => l.get i) hBConnList
-    simpa [List.get_ofFn] using h
+    fin_cases i
+    · have h := congrArg
+        (fun l : List (V ⊕ P) => l[0]?) hBConnList
+      simpa [List.ofFn_succ, List.ofFn_zero] using h
+    · have h := congrArg
+        (fun l : List (V ⊕ P) => l[1]?) hBConnList
+      simpa [List.ofFn_succ, List.ofFn_zero] using h
   have hA1 : B.A1 :=
     C.output_A1_of_kept_supreme D B k hk pieces hPlan hWord
   exact ⟨⟨hA1, D.twoCycle_A2 B, D.twoCycle_A3 B⟩,
