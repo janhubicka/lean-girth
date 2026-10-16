@@ -132,4 +132,36 @@ theorem BigCycle.three_wvv_acceptable
     · exact Or.inr (by decide)
   exact ⟨hA1, hA2, hA3⟩
 
+
+/-- The source of a two-occurrence long replacement has two vertex
+connectors, hence twice-order four. -/
+theorem BigCycle.two_vertices_twiceOrder
+    (C : D.BigCycle 2) (x y : V)
+    (h0 : C.connector 0 = Sum.inl x)
+    (h1 : C.connector 1 = Sum.inl y) :
+    C.twiceOrder = 4 := by
+  simp [BigCycle.twiceOrder, Fin.sum_univ_two,
+    cyclicSucc, connectorKind, twiceOccurrenceWeight, h0, h1]
+
+/-- One fresh wagon between two original vertices splits one V/V
+pair into V/W and W/V without changing twice-order. -/
+theorem BigCycle.three_vwv_twiceOrder
+    (B : D.BigCycle 3) (x y : V) (w : P)
+    (h0 : B.connector 0 = Sum.inl x)
+    (h1 : B.connector 1 = Sum.inr w)
+    (h2 : B.connector 2 = Sum.inl y) :
+    B.twiceOrder = 4 := by
+  simp [BigCycle.twiceOrder, Fin.sum_univ_three,
+    cyclicSucc, connectorKind, twiceOccurrenceWeight, h0, h1, h2]
+
+/-- The cyclic rotation has the same numerical order. -/
+theorem BigCycle.three_wvv_twiceOrder
+    (B : D.BigCycle 3) (x y : V) (w : P)
+    (h0 : B.connector 0 = Sum.inr w)
+    (h1 : B.connector 1 = Sum.inl y)
+    (h2 : B.connector 2 = Sum.inl x) :
+    B.twiceOrder = 4 := by
+  simp [BigCycle.twiceOrder, Fin.sum_univ_three,
+    cyclicSucc, connectorKind, twiceOccurrenceWeight, h0, h1, h2]
+
 end StructuralRamsey.Girth.OrderOneData
