@@ -1,0 +1,4 @@
+import Girth.TrainOutputA3SplitReduction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_split_has_actual_long_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A3_of_noInsertionSuccessor
