@@ -1,0 +1,6 @@
+import Girth.TrainComposeLongBridges
+
+#print axioms StructuralRamsey.Girth.OrderOneData.longPiece_of_two_bridges
+#print axioms StructuralRamsey.Girth.OrderOneData.longPiece_of_two_mixed_shorts
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.exists_longValid_of_two_bridges
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.compose_longValid_of_bridges
