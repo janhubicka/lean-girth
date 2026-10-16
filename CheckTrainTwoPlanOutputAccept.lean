@@ -1,0 +1,4 @@
+import Girth.TrainTwoPlanOutputAccept
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_short_only_output_accept_order
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_plan_output_accept_order
