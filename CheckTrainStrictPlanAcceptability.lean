@@ -1,0 +1,3 @@
+import Girth.TrainStrictPlanAcceptability
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesAcceptable_of_fresh_long
