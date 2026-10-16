@@ -1,0 +1,5 @@
+import Girth.TrainAllLengthPlanGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_fresh_long_all_lengths
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_planValid_fresh
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_planValid_fresh
