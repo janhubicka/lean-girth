@@ -1,3 +1,6 @@
 import Girth.TrainA2ContactTransfer
 
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_inherited_and_fresh_long
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.wagon_contacts_pullback_of_vertex_positions
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_preserved_vertex_positions_and_wagons
