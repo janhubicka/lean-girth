@@ -1,4 +1,4 @@
-import Girth.TrainBigCycleOrderOneExtraction
+import Girth.TrainSimultaneousSupreme
 
 /-!
 # Circulation: abstract A3 transfer under wagon insertions
@@ -79,5 +79,92 @@ theorem BigCycle.A3_of_old_contacts_no_split
     · exact False.elim (hi (hEq ▸ hContact))
     · rw [ht, hEq]
       exact Or.inl rfl
+
+
+/-- Source wagon linearity makes the no-splitting hypothesis automatic
+whenever a gap between two consecutive original positions is witnessed
+by a NEW output wagon containing both original boundary vertices.
+
+The inserted wagon cannot equal an output nonconnector wagon. Hence
+if both boundary vertices also lie in that nonconnector wagon, two
+distinct source wagons would share two vertices, contradicting
+LinearPretrain. This is exactly the geometric observation used in the
+circulation admissible-replacement proof. -/
+theorem BigCycle.no_split_of_linear_inserted_wagon
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (oldPos : Fin n → Fin m)
+    (hLinear : D.LinearPretrain)
+    (hInserted : ∀ i : Fin n,
+      oldPos (cyclicSucc i) ≠ cyclicSucc (oldPos i) →
+      ∃ (q : P) (x y : V),
+        C.connector i = Sum.inl x ∧
+        C.connector (cyclicSucc i) = Sum.inl y ∧
+        D.WagonVertex q x ∧ D.WagonVertex q y ∧
+        ∃ j : Fin m, B.connector j = Sum.inr q)
+    (p : P) (i : Fin n)
+    (hNoOut : ∀ j : Fin m, B.connector j ≠ Sum.inr p)
+    (hP : C.InWagonAt p i)
+    (hPSucc : C.InWagonAt p (cyclicSucc i)) :
+    oldPos (cyclicSucc i) = cyclicSucc (oldPos i) := by
+  by_contra hSplit
+  obtain ⟨q, x, y, hCx, hCy, hQx, hQy, j, hWagon⟩ :=
+    hInserted i hSplit
+  obtain ⟨x', hCx', hPx'⟩ := hP
+  obtain ⟨y', hCy', hPy'⟩ := hPSucc
+  have hXX : x' = x :=
+    Sum.inl.inj (hCx'.symm.trans hCx)
+  have hYY : y' = y :=
+    Sum.inl.inj (hCy'.symm.trans hCy)
+  have hPx : D.WagonVertex p x := by
+    simpa [hXX] using hPx'
+  have hPy : D.WagonVertex p y := by
+    simpa [hYY] using hPy'
+  have hxy : x ≠ y := by
+    intro heq
+    have hc : C.connector i = C.connector (cyclicSucc i) := by
+      rw [hCx, hCy, heq]
+    exact C.adjacent_ne i
+      (congrArg C.label (C.connector_injective hc))
+  have hpq : p ≠ q := by
+    intro heq
+    subst q
+    exact hNoOut j hWagon
+  have hOverlap :
+      ({z : V | D.WagonVertex p z} ∩
+        {z : V | D.WagonVertex q z}).Subsingleton :=
+    hLinear.2 p q hpq
+  exact hxy (hOverlap ⟨hPx, hQx⟩ ⟨hPy, hQy⟩)
+
+/-- A3 transfer under an actual connector-position map now needs only
+two geometric input facts: output vertex contacts come from source
+vertices, and every split of consecutive source positions is caused
+by an inserted wagon covering the boundary pair. The latter and
+SOURCE wagon linearity derive no-splitting automatically.
+
+This is an interface theorem: constructing the concrete oldPos and
+proving these two input facts for resultWord is a separate obligation,
+not smuggled into the hypotheses as output A3. -/
+theorem BigCycle.A3_of_preserved_contacts_and_insertions
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (oldPos : Fin n → Fin m)
+    (hA3 : C.A3) (hLinear : D.LinearPretrain)
+    (hConnector : ∀ i : Fin n,
+      B.connector (oldPos i) = C.connector i)
+    (hContactPullback : ∀ (p : P) (j : Fin m),
+      B.InWagonAt p j →
+      ∃ i : Fin n, j = oldPos i ∧ C.InWagonAt p i)
+    (hInserted : ∀ i : Fin n,
+      oldPos (cyclicSucc i) ≠ cyclicSucc (oldPos i) →
+      ∃ (q : P) (x y : V),
+        C.connector i = Sum.inl x ∧
+        C.connector (cyclicSucc i) = Sum.inl y ∧
+        D.WagonVertex q x ∧ D.WagonVertex q y ∧
+        ∃ j : Fin m, B.connector j = Sum.inr q) :
+    B.A3 := by
+  apply B.A3_of_old_contacts_no_split D C oldPos hA3
+    hConnector hContactPullback
+  intro p i hNoOut hp hs
+  exact C.no_split_of_linear_inserted_wagon D B oldPos
+    hLinear hInserted p i hNoOut hp hs
 
 end StructuralRamsey.Girth.OrderOneData
