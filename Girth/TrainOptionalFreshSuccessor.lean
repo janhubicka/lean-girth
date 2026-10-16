@@ -96,7 +96,9 @@ theorem optionalConnectorWord_freshSuccessor_chain
           optionalFreshFollows base insert x y := by
       intro x hx y _hy
       have hEq : x = base i := by
-        simpa [optionalConnectorBlock_last?] using hx
+        have hx' : base i = x := by
+          simpa [optionalConnectorBlock_last?] using hx
+        exact hx'.symm
       subst x
       intro j hj
       exact False.elim ((hFresh j i (base i) hj) rfl)
