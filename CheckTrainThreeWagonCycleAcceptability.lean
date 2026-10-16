@@ -1,0 +1,4 @@
+import Girth.TrainThreeWagonCycleAcceptability
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.three_vwv_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.three_wvv_acceptable
