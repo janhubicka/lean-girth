@@ -1,0 +1,5 @@
+import Girth.TrainOldWagonNoInsertion
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldWagon_not_long_same
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldWagon_not_long_next
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldWagon_no_adjacent_insertions
