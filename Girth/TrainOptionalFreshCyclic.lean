@@ -51,12 +51,13 @@ theorem optionalConnectorWord_fresh_not_last
   classical
   let word := optionalConnectorWord base insert
   by_contra hLast
-  have hPos : word.length - 1 = j.val := by
-    dsimp [word] at hLast
-    omega
+  have hPos : word.length - 1 = j.val := by omega
   have hGetLast : word.getLast? = some a := by
     rw [List.getLast?_eq_getElem?, hPos]
-    simpa [List.getElem?_eq_getElem] using congrArg some hj
+    have hGet : word[j.val]? = some (word.get j) := by
+      exact List.getElem?_eq_getElem j.isLt
+    rw [hGet]
+    exact congrArg some hj
   have hActualLast : word.getLast? = some (base (Fin.last n)) :=
     optionalConnectorWord_getLast?_succ base insert
   have hEq : a = base (Fin.last n) :=
