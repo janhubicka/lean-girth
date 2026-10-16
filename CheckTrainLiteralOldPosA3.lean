@@ -1,0 +1,4 @@
+import Girth.TrainLiteralOldPosA3
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_oldPos_successor_of_noInsertion
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A3_of_literal_resultWord
