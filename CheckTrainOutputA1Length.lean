@@ -1,0 +1,4 @@
+import Girth.TrainOutputA1Length
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_length_ge_source
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A1_of_source_length_three
