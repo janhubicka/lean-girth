@@ -1,0 +1,3 @@
+import Girth.TrainA2ContactTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_inherited_and_fresh_long
