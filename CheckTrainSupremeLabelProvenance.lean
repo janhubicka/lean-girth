@@ -1,0 +1,5 @@
+import Girth.TrainSupremeLabelProvenance
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_pieceWord_label_eq_target
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_resultWord_label_eq_target
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_designated_label_eq_target
