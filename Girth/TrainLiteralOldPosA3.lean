@@ -93,7 +93,7 @@ theorem BigCycle.literal_oldPos_successor_of_noInsertion
             cyclicSucc (Fin.cast hLen j) := by
         apply Fin.ext
         change (j.val + 1) % m = (j.val + 1) % w.length
-        rw [hLen]
+        exact congrArg (fun z : ℕ => (j.val + 1) % z) hLen
       have hj : w.get (Fin.cast hLen (oldPos i)) = C.connector i :=
         (hAt (oldPos i)).trans (hConnector i)
       have hSucc :
