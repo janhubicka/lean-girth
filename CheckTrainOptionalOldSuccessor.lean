@@ -1,0 +1,4 @@
+import Girth.TrainOptionalOldSuccessor
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_oldSuccessor_chain
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_old_successor_of_nonlast

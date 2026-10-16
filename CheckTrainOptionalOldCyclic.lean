@@ -1,0 +1,4 @@
+import Girth.TrainOptionalOldCyclic
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_head?_of_none_zero
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_old_cyclic_successor
