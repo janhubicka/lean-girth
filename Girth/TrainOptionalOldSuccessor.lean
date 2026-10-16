@@ -87,7 +87,7 @@ theorem optionalConnectorWord_oldSuccessor_chain
       have hNone : insert j = none := by
         simpa [hki, hSucc] using hNext
       have hbEq : b = base j := by
-        simpa [optionalConnectorBlock, hNone] using hb
+        simpa [optionalConnectorBlock, hNone] using hb.symm
       simpa [hki, hSucc] using hbEq
     simpa [List.get_ofFn, i, j] using hBoundary
 
