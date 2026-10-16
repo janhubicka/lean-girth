@@ -1,0 +1,6 @@
+import Girth.TrainOutputOldPos
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.source_connector_mem_resultWord
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_vertex_from_source
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldPos_exists_of_literal_resultWord
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldPos_contacts_of_literal_resultWord
