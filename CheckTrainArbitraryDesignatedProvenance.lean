@@ -1,0 +1,5 @@
+import Girth.TrainArbitraryDesignatedProvenance
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_pieceWord_from_keep
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_resultWord_from_keep
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_designated_from_kept_source
