@@ -84,6 +84,7 @@ theorem BigCycle.supreme_plan_transfer_sameConnectors
       later i = .long e p f →
       ∀ t : Fin n, B.connector t ≠ Sum.inr p) :
     C.HasSupremeAt D kC := by
+  classical
   let composed : Fin n → TrainSupremePiece E P :=
     fun i => if h : C.label i = C.label kC then .keep else later i
   have hkC : D.designated (C.label kC) := by
