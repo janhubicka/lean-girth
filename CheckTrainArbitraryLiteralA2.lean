@@ -1,0 +1,8 @@
+import Girth.TrainArbitraryLiteralA2
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_insertions_different_of_nodup
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oldWagon_no_adjacent_insertions_of_localGeometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_output_inserts_different
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A2_of_arbitrary_literal_geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A2_A3_order_of_arbitrary_geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_acceptable_order_of_arbitrary_geometry
