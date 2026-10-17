@@ -1,0 +1,3 @@
+import Girth.TrainNoInsertionStageCompose
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.local_witness_of_later_noInsertion
