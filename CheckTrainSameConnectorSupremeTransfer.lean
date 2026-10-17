@@ -1,0 +1,5 @@
+import Girth.TrainSameConnectorSupremeTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortValid_transport_sameConnectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_transport_sameConnectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_plan_transfer_sameConnectors
