@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalKindWord
+
+#print axioms StructuralRamsey.Girth.optionalKindWord_eq_flatten
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_kindList
