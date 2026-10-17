@@ -1,0 +1,6 @@
+import Girth.TrainLiteralMixedOrder
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_chain_of_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_first_of_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_cyclicWeight_preserved
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_resultWord_twiceOrder
