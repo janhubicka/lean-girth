@@ -130,4 +130,72 @@ theorem BigCycle.supreme_plan_transfer_sameConnectors
       D hAccept hLinear kC hkC composed hComposed hFreshC
   exact ⟨hkC, composed, hComposed, m, Out, hWord⟩
 
+
+/-- A literal first replacement which leaves every connector at the
+same index cannot introduce a new occurrence of ANY designated target.
+In particular, if the later supreme label is B.label kB, its source
+index kC satisfies the provenance implication required above. -/
+theorem BigCycle.literal_target_provenance_sameConnectors
+    {n : ℕ} (C B : D.BigCycle n)
+    (hConn : ∀ i : Fin n, B.connector i = C.connector i)
+    (first : Fin n → TrainSupremePiece E P)
+    (hWord : List.ofFn (fun i : Fin n =>
+      (B.label i, B.connector i)) = C.resultWord D first)
+    (kB : Fin n) (hkB : D.designated (B.label kB)) :
+    ∃ kC : Fin n,
+      B.label kB = C.label kC ∧
+      (∀ i : Fin n, B.label i = B.label kB →
+        C.label i = C.label kC) := by
+  obtain ⟨oldPos, hConnector, _hVertexPos⟩ :=
+    C.oldPos_exists_of_literal_resultWord D B first hWord
+  obtain ⟨kC, _hAt, _hKeep, hLabel⟩ :=
+    C.output_designated_origin_of_literalWord
+      D B first hWord oldPos hConnector kB hkB
+  refine ⟨kC, hLabel.symm, ?_⟩
+  intro i hBi
+  have hDi : D.designated (B.label i) := by
+    rw [hBi]
+    exact hkB
+  obtain ⟨t, hPos, _hKept, hLabelT⟩ :=
+    C.output_designated_origin_of_literalWord
+      D B first hWord oldPos hConnector i hDi
+  have hOldAt : oldPos t = t := by
+    apply B.connector_injective
+    calc
+      B.connector (oldPos t) = C.connector t := hConnector t
+      _ = B.connector t := (hConn t).symm
+  have hi : i = t := hPos.trans hOldAt
+  calc
+    C.label i = C.label t := congrArg C.label hi
+    _ = B.label i := hLabelT
+    _ = B.label kB := hBi
+    _ = C.label kC := hLabel.symm
+
+/-- Short-only first-stage composition, now with designated-label
+provenance derived automatically from the literal first output.
+Only freshness of the later pieces remains an explicit input; it is
+automatic from a legal later output by the separate converse-Nodup lemma. -/
+theorem BigCycle.supreme_plan_transfer_literal_sameConnectors
+    {n : ℕ} (C B : D.BigCycle n)
+    (hAccept : C.Acceptable) (hLinear : D.LinearPretrain)
+    (hConn : ∀ i : Fin n, B.connector i = C.connector i)
+    (first : Fin n → TrainSupremePiece E P)
+    (hWord : List.ofFn (fun i : Fin n =>
+      (B.label i, B.connector i)) = C.resultWord D first)
+    (kB : Fin n) (hkB : D.designated (B.label kB))
+    (later : Fin n → TrainSupremePiece E P)
+    (hPlan : B.PlanValid D kB later)
+    (hFresh : ∀ (i : Fin n) (e : E) (p : P) (f : E),
+      later i = .long e p f →
+      ∀ t : Fin n, B.connector t ≠ Sum.inr p) :
+    ∃ kC : Fin n,
+      B.label kB = C.label kC ∧ C.HasSupremeAt D kC := by
+  obtain ⟨kC, hTarget, hProvenance⟩ :=
+    C.literal_target_provenance_sameConnectors
+      D B hConn first hWord kB hkB
+  exact ⟨kC, hTarget,
+    C.supreme_plan_transfer_sameConnectors
+      D B hAccept hLinear hConn kC kB hTarget hkB
+        hProvenance later hPlan hFresh⟩
+
 end StructuralRamsey.Girth.OrderOneData
