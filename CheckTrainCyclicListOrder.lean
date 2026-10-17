@@ -1,0 +1,6 @@
+import Girth.TrainCyclicListOrder
+
+#print axioms StructuralRamsey.Girth.getLast?_cons_eq_kindLastOr
+#print axioms StructuralRamsey.Girth.zipWeight_append_terminal
+#print axioms StructuralRamsey.Girth.twiceSegmentWeight_eq_zipWeight
+#print axioms StructuralRamsey.Girth.cyclicKindTwiceWeight_eq_zipRotate
