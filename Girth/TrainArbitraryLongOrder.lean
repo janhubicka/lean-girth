@@ -104,15 +104,6 @@ theorem BigCycle.kindBlocks_first_of_localGeometry
       exact ⟨by simp [connectorKind, hx],
         by simp [connectorKind, hy]⟩
 
-/-- Forgetting the Boolean insertion flags in kindBlocks recovers
-precisely the old source connector-kind List in source index order. -/
-theorem BigCycle.kindBlocks_fst_localGeometry
-    {n : ℕ} (C : D.BigCycle n)
-    (pieces : Fin n → TrainSupremePiece E P) :
-    (C.kindBlocks D pieces).map Prod.fst =
-      List.ofFn (fun i : Fin n => connectorKind (C.connector i)) := by
-  simp [BigCycle.kindBlocks, List.map_ofFn, Function.comp_def]
-
 /-- The generic cyclic connector-kind numeric invariant holds for
 every actual strict PlanValid plan, including source length two. -/
 theorem BigCycle.kindBlocks_cyclicWeight_of_localGeometry
@@ -131,7 +122,7 @@ theorem BigCycle.kindBlocks_cyclicWeight_of_localGeometry
       have hLast :
           ((C.kindBlocks D pieces).map Prod.fst).getLast? =
             some enter := by
-        rw [C.kindBlocks_fst_localGeometry D pieces, List.ofFn_succ']
+        rw [C.kindBlocks_fst D pieces, List.ofFn_succ']
         simp [enter]
       exact optionalKindWord_cyclicWeight_preserved
         (C.kindBlocks D pieces) enter hLast
@@ -177,7 +168,7 @@ theorem BigCycle.literal_resultWord_twiceOrder_of_localGeometry
     _ = cyclicKindTwiceWeight
           (List.ofFn (fun i : Fin n =>
             connectorKind (C.connector i))) := by
-      rw [C.kindBlocks_fst_localGeometry D pieces]
+      rw [C.kindBlocks_fst D pieces]
     _ = C.twiceOrder := (C.twiceOrder_eq_cyclicKindList D).symm
 
 
