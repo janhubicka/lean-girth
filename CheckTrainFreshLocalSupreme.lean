@@ -1,0 +1,3 @@
+import Girth.TrainFreshLocalSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_fresh_local_witnesses

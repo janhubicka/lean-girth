@@ -1,0 +1,5 @@
+import Girth.TrainOldPosPieceTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_oldPos_pred_of_noInsertion
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortValid_transport_oldPos_noInsertion
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_transport_oldPos_noInsertion

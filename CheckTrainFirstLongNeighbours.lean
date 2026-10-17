@@ -1,0 +1,3 @@
+import Girth.TrainFirstLongNeighbours
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_long_fresh_neighbours
