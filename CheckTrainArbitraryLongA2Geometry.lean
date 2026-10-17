@@ -1,0 +1,6 @@
+import Girth.TrainArbitraryLongA2Geometry
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.nonconnector_two_contact_window
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.localLongBoundaryGeometry_of_A2
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fresh_wagon_contacts_of_localA2Geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A3_of_arbitrary_A2Geometry
