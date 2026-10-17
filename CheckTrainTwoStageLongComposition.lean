@@ -1,0 +1,3 @@
+import Girth.TrainTwoStageLongComposition
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.compose_first_long_from_two_later_shorts
