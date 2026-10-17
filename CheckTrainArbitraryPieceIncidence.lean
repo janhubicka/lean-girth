@@ -1,0 +1,5 @@
+import Girth.TrainArbitraryPieceIncidence
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceWord_isChain_of_localIncidence
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceLast_incident_of_localIncidence
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceFirst_incident_of_localIncidence
