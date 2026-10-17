@@ -1,0 +1,5 @@
+import Girth.TrainOptionalFreshnessConverse
+
+#print axioms StructuralRamsey.Girth.optionalConnectorWord_fresh_of_nodup
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longWagons_fresh_of_literalBigCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.freshness_of_hasSupremeAt
