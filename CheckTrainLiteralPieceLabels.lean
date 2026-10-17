@@ -1,0 +1,6 @@
+import Girth.TrainLiteralPieceLabels
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_oldPos_label
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_keep_label
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_long_last_label
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_long_first_entry
