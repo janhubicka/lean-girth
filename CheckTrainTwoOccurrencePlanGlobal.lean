@@ -1,0 +1,4 @@
+import Girth.TrainTwoOccurrencePlanGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesBigCycle_of_two
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesAcceptable_all_lengths
