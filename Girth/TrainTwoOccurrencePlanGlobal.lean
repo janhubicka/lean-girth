@@ -146,7 +146,7 @@ theorem BigCycle.planProducesBigCycle_of_two
           ⟨f, rfl, hpf⟩
         have hAv : D.Incident (C.label (1 : Fin 2))
             (C.connector (0 : Fin 2)) := by
-          simpa [cyclicSucc] using C.right_incident (1 : Fin 2)
+          simpa [cyclicSucc] using C.right_incident (0 : Fin 2)
         obtain ⟨B, hB⟩ := D.threeWordBigCycle
           (.inr e) (.inr f) (C.label 1)
           (.inr p) (C.connector 0) (C.connector 1)
