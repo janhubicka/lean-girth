@@ -37,7 +37,7 @@ theorem threeWordBigCycle
   let word : List ((I ⊕ E) × (V ⊕ P)) :=
     [(a, u), (b, v), (c, w)]
   have hCheck : D.CyclicWordChecks word := by
-    refine ⟨by decide, ?_, ?_, ?_, ?_⟩
+    refine ⟨by simp [word], ?_, ?_, ?_, ?_⟩
     · intro i j hij
       fin_cases i <;> fin_cases j <;> simp_all [word]
     · intro i
