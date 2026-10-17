@@ -45,7 +45,7 @@ theorem BigCycle.arbitrary_long_split_geometry
     {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
     (pieces : Fin n → TrainSupremePiece E P)
     (hGeom : C.LocalLongBoundaryGeometry D pieces)
-    (hFresh : ∀ (i : Fin n) (e f : E) (p : P),
+    (hFresh : ∀ (i : Fin n) (e : E) (p : P) (f : E),
       pieces i = .long e p f →
       ∀ t : Fin n, C.connector t ≠ Sum.inr p)
     (hWord : List.ofFn (fun j : Fin m =>
@@ -89,7 +89,7 @@ theorem BigCycle.output_A3_of_arbitrary_long_geometry
     (hA3 : C.A3) (hLinear : D.LinearPretrain)
     (pieces : Fin n → TrainSupremePiece E P)
     (hGeom : C.LocalLongBoundaryGeometry D pieces)
-    (hFresh : ∀ (i : Fin n) (e f : E) (p : P),
+    (hFresh : ∀ (i : Fin n) (e : E) (p : P) (f : E),
       pieces i = .long e p f →
       ∀ t : Fin n, C.connector t ≠ Sum.inr p)
     (hWord : List.ofFn (fun j : Fin m =>
