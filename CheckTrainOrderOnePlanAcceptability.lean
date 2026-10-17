@@ -1,0 +1,5 @@
+import Girth.TrainOrderOnePlanAcceptability
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.plan_shortOnly_of_orderOne
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_length_of_shortOnly
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesAcceptable_of_orderOne
