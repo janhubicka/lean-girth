@@ -1,0 +1,4 @@
+import Girth.TrainArbitraryConnectorNodup
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_long_wagons_pairwise
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_resultWord_connectors_nodup
