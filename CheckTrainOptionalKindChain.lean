@@ -1,0 +1,6 @@
+import Girth.TrainOptionalKindChain
+
+#print axioms StructuralRamsey.Girth.optionalKindValid_of_chain
+#print axioms StructuralRamsey.Girth.optionalKindWord_twiceSegmentWeight_of_chain
+#print axioms StructuralRamsey.Girth.optionalKindWord_getLast?
+#print axioms StructuralRamsey.Girth.optionalKindWord_cyclicWeight_preserved
