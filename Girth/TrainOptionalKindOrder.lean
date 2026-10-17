@@ -66,8 +66,7 @@ theorem OptionalKindValid.twiceSegmentWeight_preserved
           subst enter
           subst kind
           have hTail := ih CycleConnectorKind.vertex hRest
-          simpa [optionalKindWord, twiceSegmentWeight,
-            twiceOccurrenceWeight] using
-              congrArg (fun x : ℕ => 2 + x) hTail
+          simp [optionalKindWord, twiceSegmentWeight,
+            twiceOccurrenceWeight] <;> omega
 
 end StructuralRamsey.Girth
