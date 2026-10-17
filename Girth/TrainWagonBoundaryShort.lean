@@ -35,7 +35,7 @@ theorem BigCycle.short_piece_of_wagon_right
       rw [hp] at hf
       exact False.elim hf
   | short e =>
-      exact ⟨e, hp,
+      exact ⟨e, rfl,
         B.shortValid_of_piece_eq_short D k j pieces hPlan e hp⟩
   | long e q f =>
       have hv := B.longValid_of_piece_eq_long
@@ -63,7 +63,7 @@ theorem BigCycle.short_piece_of_wagon_left
       rw [hp] at hf
       exact False.elim hf
   | short e =>
-      exact ⟨e, hp,
+      exact ⟨e, rfl,
         B.shortValid_of_piece_eq_short D k j pieces hPlan e hp⟩
   | long e q f =>
       have hv := B.longValid_of_piece_eq_long
