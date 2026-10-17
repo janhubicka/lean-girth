@@ -72,14 +72,14 @@ theorem BigCycle.pieceLast_edge_boundary
       rw [hLabel] at hLeft hRight
       exact ⟨hLeft, hRight⟩
   | short f =>
-      have heq : f = e := Sum.inr.inj (by
-        simpa [BigCycle.pieceLastLabel, hp] using hLast)
+      have heq : f = e := by
+        simpa [BigCycle.pieceLastLabel, hp] using hLast
       subst e
       left
       simpa [BigCycle.LocalPieceIncidence, hp] using hInc i
   | long f p g =>
-      have heq : g = e := Sum.inr.inj (by
-        simpa [BigCycle.pieceLastLabel, hp] using hLast)
+      have heq : g = e := by
+        simpa [BigCycle.pieceLastLabel, hp] using hLast
       subst e
       have hv : f ≠ g ∧
           D.Incident (.inr f) (C.connector (trainCyclicPred i)) ∧
@@ -113,14 +113,14 @@ theorem BigCycle.pieceFirst_edge_boundary
       rw [hLabel] at hLeft hRight
       exact ⟨hLeft, hRight⟩
   | short f =>
-      have heq : f = e := Sum.inr.inj (by
-        simpa [BigCycle.pieceFirstLabel, hp] using hFirst)
+      have heq : f = e := by
+        simpa [BigCycle.pieceFirstLabel, hp] using hFirst
       subst e
       left
       simpa [BigCycle.LocalPieceIncidence, hp] using hInc i
   | long f p g =>
-      have heq : f = e := Sum.inr.inj (by
-        simpa [BigCycle.pieceFirstLabel, hp] using hFirst)
+      have heq : f = e := by
+        simpa [BigCycle.pieceFirstLabel, hp] using hFirst
       subst e
       have hv : f ≠ g ∧
           D.Incident (.inr f) (C.connector (trainCyclicPred i)) ∧
