@@ -1,3 +1,4 @@
 import Girth.TrainStrictPlanAcceptability
 
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_acceptable_of_literal_resultWord
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesAcceptable_of_fresh_long

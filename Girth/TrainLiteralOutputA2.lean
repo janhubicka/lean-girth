@@ -104,12 +104,41 @@ theorem BigCycle.literal_fresh_successor_oldPos
       apply B.connector_injective
       exact (hConnector i).trans hActual.symm
 
+/-- In a strict PlanValid plan the fresh wagons of distinct long
+pieces are distinct at EVERY source length. The established A3
+argument applies at length at least three. At length two one
+designated occurrence is kept, so two long pieces cannot coexist. -/
+theorem BigCycle.plan_fresh_long_wagons_pairwise_all_lengths
+    {n : ℕ} (C : D.BigCycle n)
+    (hAccept : C.Acceptable)
+    (k : Fin n)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hPlan : C.PlanValid D k pieces)
+    (hFresh : ∀ (r : Fin n) (e : E) (p : P) (f : E),
+      pieces r = .long e p f →
+      ∀ t : Fin n, C.connector t ≠ Sum.inr p)
+    (i j : Fin n) (hij : i ≠ j)
+    (e f g h : E) (p q : P)
+    (hi : pieces i = .long e p f)
+    (hj : pieces j = .long g q h) :
+    p ≠ q := by
+  by_cases hn : 3 ≤ n
+  · exact C.plan_fresh_long_wagons_pairwise D hAccept hn
+      k pieces hPlan hFresh i j hij e f g h p q hi hj
+  · have hn2 : n = 2 := by
+      have hlen := C.length_ge_two
+      omega
+    subst n
+    have hk : pieces k = .keep := (hPlan k).1 rfl
+    fin_cases i <;> fin_cases j <;> fin_cases k <;>
+      simp_all
+
 /-- The actual literal output of a fresh strict PlanValid replacement
 satisfies (A2), both for inherited and freshly inserted wagon connectors.
 No output acceptability or output wagon linearity is assumed. -/
 theorem BigCycle.output_A2_of_literal_resultWord
     {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
-    (hAccept : C.Acceptable) (hn : 3 ≤ n)
+    (hAccept : C.Acceptable)
     (k : Fin n)
     (pieces : Fin n → TrainSupremePiece E P)
     (hPlan : C.PlanValid D k pieces)
@@ -160,8 +189,8 @@ theorem BigCycle.output_A2_of_literal_resultWord
             have hbq : b = (Sum.inr q : V ⊕ P) := by
               simpa [BigCycle.insertedConnector, hq] using hb.symm
             have hpq : p ≠ q :=
-              C.plan_fresh_long_wagons_pairwise
-                D hAccept hn k pieces hPlan hFresh
+              C.plan_fresh_long_wagons_pairwise_all_lengths
+                D hAccept k pieces hPlan hFresh
                 r t hrt e f g h p q hp hq
             intro hab
             apply hpq
