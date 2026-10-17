@@ -1,0 +1,4 @@
+import Girth.TrainWagonBoundaryShort
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.short_piece_of_wagon_right
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.short_piece_of_wagon_left
