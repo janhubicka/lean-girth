@@ -1,0 +1,4 @@
+import Girth.TrainArbitraryGeometricA2
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_geometric_output_wagon_cases
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.A2_of_preserved_vertices_and_geometric_wagons
