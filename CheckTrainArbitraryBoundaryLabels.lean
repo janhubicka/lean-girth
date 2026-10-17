@@ -1,0 +1,5 @@
+import Girth.TrainArbitraryBoundaryLabels
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceLast_edge_boundary
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.pieceFirst_edge_boundary
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_adjacent_piece_labels_ne
