@@ -1,0 +1,5 @@
+import Girth.TrainArbitraryDesignatedOrigin
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_designated_origin_of_literalWord
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_designated_label_from_source
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_target_occurs_in_source
