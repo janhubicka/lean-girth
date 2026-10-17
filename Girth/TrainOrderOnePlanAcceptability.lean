@@ -36,9 +36,9 @@ theorem BigCycle.plan_shortOnly_of_orderOne
   intro i
   cases hp : pieces i with
   | keep =>
-      simp [TrainSupremePiece.IsShortOrKeep, hp]
+      simp [TrainSupremePiece.IsShortOrKeep]
   | short e =>
-      simp [TrainSupremePiece.IsShortOrKeep, hp]
+      simp [TrainSupremePiece.IsShortOrKeep]
   | long e w f =>
       have hLong : C.LongValid D k i e w f :=
         C.longValid_of_piece_eq_long D k i pieces hPlan e f w hp
@@ -51,6 +51,7 @@ theorem BigCycle.plan_shortOnly_of_orderOne
           connectorKind (C.connector (trainCyclicPred i)) =
             connectorKind (C.connector i) := by
         rw [hx, hy]
+        rfl
       exact False.elim (hMixed hSame)
 
 /-- A short-only plan contributes exactly one output entry per source
@@ -67,9 +68,9 @@ theorem BigCycle.resultWord_length_of_shortOnly
     intro i _
     cases hp : pieces i with
     | keep =>
-        simp [BigCycle.pieceWord, hp]
+        simp [BigCycle.pieceWord]
     | short e =>
-        simp [BigCycle.pieceWord, hp]
+        simp [BigCycle.pieceWord]
     | long e p f =>
         have hf : False := by
           simpa [TrainSupremePiece.IsShortOrKeep, hp] using hShort i
