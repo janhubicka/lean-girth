@@ -1,0 +1,4 @@
+import Girth.TrainArbitraryLongA3
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_long_split_geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A3_of_arbitrary_long_geometry
