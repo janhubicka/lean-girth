@@ -1,0 +1,4 @@
+import Girth.TrainArbitraryEdgeBoundaryCollision
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fresh_wagon_not_three_successive
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.physical_edge_boundary_ne_next
