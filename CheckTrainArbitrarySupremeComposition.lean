@@ -1,0 +1,4 @@
+import Girth.TrainArbitrarySupremeComposition
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.nonselected_oldPos_label_ne_target
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_arbitrary_literal_replacement
