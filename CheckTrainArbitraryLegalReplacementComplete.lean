@@ -1,0 +1,3 @@
+import Girth.TrainArbitraryLegalReplacementComplete
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_legal_replacement_all_conclusions
