@@ -47,7 +47,7 @@ theorem optionalKindValid_of_chain
       trivial
   | cons hd tail ih =>
       obtain ⟨hEdge, hTailChain⟩ :=
-        (List.isChain_cons OptionalKindFollow hd tail).mp hChain
+        (List.isChain_cons).mp hChain
       have hHd : OptionalKindFirst enter hd :=
         hFirst hd (by simp)
       have hTailFirst :
