@@ -1,0 +1,4 @@
+import Girth.TrainLiteralOldPosHead
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_oldPos_cyclic_head
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_oldPos_successor_inserted
