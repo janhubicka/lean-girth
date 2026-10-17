@@ -1,0 +1,7 @@
+import Girth.TrainArbitraryLongOrder
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_chain_of_localGeometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_first_of_localGeometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.kindBlocks_cyclicWeight_of_localGeometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_resultWord_twiceOrder_of_localGeometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_resultWord_twiceOrder_of_arbitrary_A2Geometry
