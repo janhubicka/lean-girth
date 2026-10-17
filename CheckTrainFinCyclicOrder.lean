@@ -1,0 +1,5 @@
+import Girth.TrainFinCyclicOrder
+
+#print axioms StructuralRamsey.Girth.zipKindRotate_ofFn
+#print axioms StructuralRamsey.Girth.cyclicKindTwiceWeight_ofFn
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twiceOrder_eq_cyclicKindList
