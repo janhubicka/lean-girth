@@ -1,4 +1,5 @@
 import Girth.TrainLiteralOutputA2
 
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.literal_fresh_successor_oldPos
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.plan_fresh_long_wagons_pairwise_all_lengths
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_A2_of_literal_resultWord

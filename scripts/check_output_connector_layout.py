@@ -14,10 +14,19 @@ length-two cases. FINITE REGRESSION ONLY, NOT A LEAN PROOF.
 from itertools import product
 import json
 
+
+def twice_order(word):
+    """Twice the cyclic order: equal connector kinds weigh 2, mixed kinds 1."""
+    kind = lambda x: "vertex" if x[0] == "vertex" else "wagon"
+    return sum(2 if kind(word[i]) == kind(word[(i + 1) % len(word)])
+               else 1 for i in range(len(word)))
+
+
 def check():
     results = {
         "configurations": 0, "valid": 0, "old_wagon_checks": 0,
-        "fresh_wagon_checks": 0, "split_checks": 0, "negative_controls": {},
+        "fresh_wagon_checks": 0, "split_checks": 0,
+        "twice_order_checks": 0, "negative_controls": {},
     }
     for n in range(2, 8):
         for mask in range(1 << n):
@@ -44,6 +53,8 @@ def check():
                 old_pos = [output.index(a) for a in old]
 
                 assert len(set(output)) == len(output)
+                assert twice_order(output) == twice_order(old)
+                results["twice_order_checks"] += 1
                 for j, w in enumerate(output):
                     prev = output[(j - 1) % len(output)]
                     succ = output[(j + 1) % len(output)]
@@ -72,7 +83,9 @@ def check():
     bad_old = [("wagon", 0), ("vertex", 1), ("vertex", 2)]
     bad_output = [bad_old[0], ("fresh", 1), bad_old[1], bad_old[2]]
     assert bad_output[1] != bad_old[1]
+    assert twice_order(bad_output) != twice_order(bad_old)
     results["negative_controls"]["allowing_long_beside_old_wagon_breaks_adjacency"] = True
+    results["negative_controls"]["invalid_long_boundary_changes_twice_order"] = True
 
     # Dropping freshness can make a purported new wagon identical with
     # an inherited wagon: no connector-injective output cycle exists.
@@ -85,6 +98,7 @@ def check():
     assert results["old_wagon_checks"] == 133940, results
     assert results["fresh_wagon_checks"] == 48167, results
     assert results["split_checks"] == 48167, results
+    assert results["twice_order_checks"] == 52628, results
     results["status"] = "passed finite regression; not a Lean certificate"
     return results
 
