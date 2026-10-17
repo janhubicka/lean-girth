@@ -1,0 +1,3 @@
+import Girth.TrainOptionalKindOrder
+
+#print axioms StructuralRamsey.Girth.OptionalKindValid.twiceSegmentWeight_preserved
