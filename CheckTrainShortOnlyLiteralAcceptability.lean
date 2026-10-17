@@ -1,0 +1,5 @@
+import Girth.TrainShortOnlyLiteralAcceptability
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortOnly_resultWord_connectorList
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_acceptable_order_of_shortOnly
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.planProducesAcceptableOrder_of_shortOnly
