@@ -308,6 +308,24 @@ theorem BigCycle.reduct_twiceOrder_le_of_segmented_words
     blocks closing hReducedLast hExpandedLast
 
 
+/-- Cyclic reduction budget for actual indexed BigCycles, with the closing
+kind derived from a *nonempty* segmentation rather than supplied separately.
+The existence, source/reduct word identities and legal connector geometry are
+still inputs, not consequences. -/
+theorem BigCycle.reduct_twiceOrder_le_of_nonempty_segmented_words
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (blocks : List CycleReductionBlock)
+    (hblocks : blocks ≠ [])
+    (hSource : List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i)) = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks) :
+    B.twiceOrder ≤ C.twiceOrder := by
+  rw [B.twiceOrder_eq_cyclicKindList D,
+      C.twiceOrder_eq_cyclicKindList D,
+      hReduct, hSource]
+  exact cyclicReducedSegmentWord_le_expanded_of_nonempty blocks hblocks
+
 /-- Length part of the circulated reduct lemma, provided the source and
 reduct have the indicated literal connector-kind segmentation. -/
 theorem BigCycle.reduct_length_le_of_segmented_words
