@@ -58,6 +58,7 @@ jobs:
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
           lake build Girth.TrainCrossStandardCoreWagon
+          lake build Girth.TrainCrossStandardCoreIncidence
           lake build Girth.TrainPhysicalParameterBridgeComposite
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
@@ -69,6 +70,7 @@ jobs:
           checks=(
             CheckAxioms CheckSuccessorBoundary CheckWagonQuotients CheckTaggedQuotients
             CheckTrainCrossStandardCoreWagon
+            CheckTrainCrossStandardCoreIncidence
             CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
             CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
             CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
