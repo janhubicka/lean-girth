@@ -1,0 +1,7 @@
+import Girth.TrainCrossStandardCoreIncidence
+
+open StructuralRamsey.Girth
+open StructuralRamsey.Girth.PhysicalWagonModel
+
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.edgeTag_standard_core_iff_shared_edge
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.cross_standard_wagon_two_core_incidence_witnesses
