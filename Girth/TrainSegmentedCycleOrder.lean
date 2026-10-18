@@ -118,7 +118,8 @@ theorem twiceExpandedSegmentBudget_eq_word
           twiceExpandedSegmentBudget right rest =
         twiceSegmentWeight left
           ((middle ++ [right]) ++ expandedSegmentWord rest)
-      rw [twiceSegmentWeight_append_path]
+      rw [twiceSegmentWeight_append_path left
+        (middle ++ [right]) (expandedSegmentWord rest)]
       rw [kindLastOr_segment]
       rw [← ih right]
 
