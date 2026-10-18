@@ -40,3 +40,14 @@ example :
          ([], .wagon)]) := by
   apply cyclicReducedSegmentWord_le_expanded_of_nonempty
   decide
+
+#print axioms StructuralRamsey.Girth.cyclicKindTwiceWeight_append_comm
+
+/-- The mixed-type order does not depend on which actual boundary
+starts the cyclic connector list. -/
+example :
+    cyclicKindTwiceWeight
+      ([CycleConnectorKind.vertex, .wagon] ++ [.wagon, .vertex, .wagon]) =
+    cyclicKindTwiceWeight
+      ([CycleConnectorKind.wagon, .vertex, .wagon] ++ [.vertex, .wagon]) :=
+  cyclicKindTwiceWeight_append_comm _ _
