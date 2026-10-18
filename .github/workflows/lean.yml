@@ -57,6 +57,7 @@ jobs:
           lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
           lake build
           lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
+          lake build Girth.TrainCrossStandardCoreWagon
           lake build Girth.TrainPhysicalParameterBridgeComposite
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
@@ -67,6 +68,7 @@ jobs:
           # Preserve every previous audit; keep additions in one explicit list.
           checks=(
             CheckAxioms CheckSuccessorBoundary CheckWagonQuotients CheckTaggedQuotients
+            CheckTrainCrossStandardCoreWagon
             CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
             CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
             CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
