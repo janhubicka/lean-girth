@@ -177,7 +177,7 @@ theorem reducedSegmentWord_length_le_expanded
     (reducedSegmentWord blocks).length ≤
       (expandedSegmentWord blocks).length := by
   induction blocks with
-  | nil => rfl
+  | nil => exact Nat.le_refl 0
   | cons block rest ih =>
       rcases block with ⟨middle, right⟩
       change (right :: reducedSegmentWord rest).length ≤
