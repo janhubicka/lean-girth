@@ -281,6 +281,52 @@ theorem cyclicReducedSegmentWord_le_expanded_of_nonempty
   exact cyclicReducedSegmentWord_le_expanded
     blocks closing hReducedLast hExpandedLast
 
+/-! ## Numerically harmless changes of the cyclic cut -/
+
+/-- A cyclic connector word has the same twice-order after moving any
+initial block to the end. This is the cut-independence required to
+start a physical segmentation at an arbitrary chosen boundary, before
+identifying the exact Fin-indexed source and reduct words. -/
+theorem cyclicKindTwiceWeight_append_comm
+    (first second : List CycleConnectorKind) :
+    cyclicKindTwiceWeight (first ++ second) =
+      cyclicKindTwiceWeight (second ++ first) := by
+  cases first with
+  | nil => simp
+  | cons a as =>
+      cases second with
+      | nil => simp
+      | cons b bs =>
+          have hLeftLast :
+              ((a :: as) ++ (b :: bs)).getLast? =
+                some (kindLastOr b bs) := by
+            rw [getLast?_eq_kindLastOr_of_nonempty .vertex
+              ((a :: as) ++ (b :: bs)) (by simp)]
+            rw [kindLastOr_append_segment]
+            rfl
+          have hRightLast :
+              ((b :: bs) ++ (a :: as)).getLast? =
+                some (kindLastOr a as) := by
+            rw [getLast?_eq_kindLastOr_of_nonempty .vertex
+              ((b :: bs) ++ (a :: as)) (by simp)]
+            rw [kindLastOr_append_segment]
+            rfl
+          simp only [cyclicKindTwiceWeight, hLeftLast, hRightLast]
+          calc
+            twiceSegmentWeight (kindLastOr b bs)
+                ((a :: as) ++ (b :: bs)) =
+              twiceSegmentWeight (kindLastOr b bs) (a :: as) +
+                twiceSegmentWeight (kindLastOr a as) (b :: bs) := by
+                  rw [twiceSegmentWeight_append_path]
+                  rfl
+            _ = twiceSegmentWeight (kindLastOr a as) (b :: bs) +
+                twiceSegmentWeight (kindLastOr b bs) (a :: as) := by
+                  omega
+            _ = twiceSegmentWeight (kindLastOr a as)
+                ((b :: bs) ++ (a :: as)) := by
+                  rw [twiceSegmentWeight_append_path]
+                  rfl
+
 namespace OrderOneData
 
 universe v
