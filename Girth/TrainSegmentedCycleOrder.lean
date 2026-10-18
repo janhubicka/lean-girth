@@ -1,4 +1,4 @@
-import Girth.TrainCyclicListOrder
+import Girth.TrainFinCyclicOrder
 import Mathlib.Tactic
 
 /-!
@@ -167,5 +167,34 @@ theorem cyclicReducedSegmentWord_le_expanded
       cyclicKindTwiceWeight (expandedSegmentWord blocks) := by
   simp only [cyclicKindTwiceWeight, hReducedLast, hExpandedLast]
   exact twiceReducedSegmentWord_le_expanded blocks closing
+
+
+namespace OrderOneData
+
+universe v
+variable {V E I P : Type v} (D : OrderOneData V E I P)
+
+/-- Numerical conclusion for two ACTUAL big cycles whose cyclic connector
+words are related by a finite geometric segment decomposition. This is the
+direct bridge from the List inequality to Section 12's order budget.
+It assumes (rather than constructs) the reduct big cycle and connector words. -/
+theorem BigCycle.reduct_twiceOrder_le_of_segmented_words
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (blocks : List CycleReductionBlock)
+    (hSource : List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i)) = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks)
+    (closing : CycleConnectorKind)
+    (hReducedLast : (reducedSegmentWord blocks).getLast? = some closing)
+    (hExpandedLast : (expandedSegmentWord blocks).getLast? = some closing) :
+    B.twiceOrder ≤ C.twiceOrder := by
+  rw [B.twiceOrder_eq_cyclicKindList D,
+      C.twiceOrder_eq_cyclicKindList D,
+      hReduct, hSource]
+  exact cyclicReducedSegmentWord_le_expanded
+    blocks closing hReducedLast hExpandedLast
+
+end OrderOneData
 
 end StructuralRamsey.Girth
