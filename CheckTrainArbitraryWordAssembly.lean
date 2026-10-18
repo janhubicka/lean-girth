@@ -1,0 +1,6 @@
+import Girth.TrainArbitraryWordAssembly
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_boundaryFollow
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_pieceBlocks_isChain
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_resultWord_wrap
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_planProducesBigCycle_of_localGeometry
