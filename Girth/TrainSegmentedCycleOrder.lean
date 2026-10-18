@@ -186,6 +186,101 @@ theorem reducedSegmentWord_length_le_expanded
       simp only [List.length_cons, List.length_append]
       omega
 
+/-! ## Automatic closing boundary for a genuine nonempty segmentation -/
+
+/-- Appending a kind word updates the terminal connector by first
+reading the prefix, then the suffix. -/
+theorem kindLastOr_append_segment
+    (enter : CycleConnectorKind)
+    (before after : List CycleConnectorKind) :
+    kindLastOr enter (before ++ after) =
+      kindLastOr (kindLastOr enter before) after := by
+  induction before generalizing enter with
+  | nil => rfl
+  | cons first rest ih =>
+      change kindLastOr first (rest ++ after) =
+        kindLastOr (kindLastOr first rest) after
+      exact ih first
+
+/-- The retained boundary word and its expanded source end at exactly
+the same kind, without an extra geometric closing-boundary assumption. -/
+theorem expandedSegmentWord_lastOr_eq_reduced
+    (enter : CycleConnectorKind) (blocks : List CycleReductionBlock) :
+    kindLastOr enter (expandedSegmentWord blocks) =
+      kindLastOr enter (reducedSegmentWord blocks) := by
+  induction blocks generalizing enter with
+  | nil => rfl
+  | cons block rest ih =>
+      rcases block with ⟨middle, right⟩
+      change kindLastOr enter
+          ((middle ++ [right]) ++ expandedSegmentWord rest) =
+        kindLastOr right (reducedSegmentWord rest)
+      rw [kindLastOr_append_segment, kindLastOr_segment]
+      exact ih right
+
+/-- An ordinary nonempty word's final kind agrees with its defaulted
+terminal kind, independently of the arbitrary entry kind. -/
+theorem getLast?_eq_kindLastOr_of_nonempty
+    (enter : CycleConnectorKind) (word : List CycleConnectorKind)
+    (hne : word ≠ []) :
+    word.getLast? = some (kindLastOr enter word) := by
+  cases word with
+  | nil => exact False.elim (hne rfl)
+  | cons first rest =>
+      exact getLast?_cons_eq_kindLastOr first rest
+
+/-- In every nonempty finite segmentation, both displayed words have
+the same actual final connector kind. It is unnecessary to require two
+independent closing-kind hypotheses in the numerical cyclic lemma. -/
+theorem segmented_words_last_agree
+    (blocks : List CycleReductionBlock) (hblocks : blocks ≠ []) :
+    (reducedSegmentWord blocks).getLast? =
+      (expandedSegmentWord blocks).getLast? := by
+  have hr : reducedSegmentWord blocks ≠ [] := by
+    cases blocks with
+    | nil => contradiction
+    | cons block rest =>
+        rcases block with ⟨middle, right⟩
+        simp [reducedSegmentWord]
+  have he : expandedSegmentWord blocks ≠ [] := by
+    cases blocks with
+    | nil => contradiction
+    | cons block rest =>
+        rcases block with ⟨middle, right⟩
+        simp [expandedSegmentWord]
+  let enter : CycleConnectorKind := .vertex
+  calc
+    (reducedSegmentWord blocks).getLast? =
+        some (kindLastOr enter (reducedSegmentWord blocks)) :=
+      getLast?_eq_kindLastOr_of_nonempty enter _ hr
+    _ = some (kindLastOr enter (expandedSegmentWord blocks)) := by
+      rw [expandedSegmentWord_lastOr_eq_reduced enter blocks]
+    _ = (expandedSegmentWord blocks).getLast? :=
+      (getLast?_eq_kindLastOr_of_nonempty enter _ he).symm
+
+/-- The cyclic numerical inequality requires only a nonempty list of
+segments: the shared cyclic closing boundary is proved above. -/
+theorem cyclicReducedSegmentWord_le_expanded_of_nonempty
+    (blocks : List CycleReductionBlock) (hblocks : blocks ≠ []) :
+    cyclicKindTwiceWeight (reducedSegmentWord blocks) ≤
+      cyclicKindTwiceWeight (expandedSegmentWord blocks) := by
+  let closing := kindLastOr .vertex (reducedSegmentWord blocks)
+  have hr : reducedSegmentWord blocks ≠ [] := by
+    cases blocks with
+    | nil => contradiction
+    | cons block rest =>
+        rcases block with ⟨middle, right⟩
+        simp [reducedSegmentWord]
+  have hReducedLast :
+      (reducedSegmentWord blocks).getLast? = some closing :=
+    getLast?_eq_kindLastOr_of_nonempty .vertex _ hr
+  have hExpandedLast :
+      (expandedSegmentWord blocks).getLast? = some closing := by
+    rw [← segmented_words_last_agree blocks hblocks]
+    exact hReducedLast
+  exact cyclicReducedSegmentWord_le_expanded
+    blocks closing hReducedLast hExpandedLast
+
 namespace OrderOneData
 
 universe v
@@ -212,6 +307,24 @@ theorem BigCycle.reduct_twiceOrder_le_of_segmented_words
   exact cyclicReducedSegmentWord_le_expanded
     blocks closing hReducedLast hExpandedLast
 
+
+/-- Cyclic reduction budget for actual indexed BigCycles, with the closing
+kind derived from a *nonempty* segmentation rather than supplied separately.
+The existence, source/reduct word identities and legal connector geometry are
+still inputs, not consequences. -/
+theorem BigCycle.reduct_twiceOrder_le_of_nonempty_segmented_words
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (blocks : List CycleReductionBlock)
+    (hblocks : blocks ≠ [])
+    (hSource : List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i)) = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks) :
+    B.twiceOrder ≤ C.twiceOrder := by
+  rw [B.twiceOrder_eq_cyclicKindList D,
+      C.twiceOrder_eq_cyclicKindList D,
+      hReduct, hSource]
+  exact cyclicReducedSegmentWord_le_expanded_of_nonempty blocks hblocks
 
 /-- Length part of the circulated reduct lemma, provided the source and
 reduct have the indicated literal connector-kind segmentation. -/
