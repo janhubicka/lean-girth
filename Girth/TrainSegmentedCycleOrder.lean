@@ -169,6 +169,23 @@ theorem cyclicReducedSegmentWord_le_expanded
   exact twiceReducedSegmentWord_le_expanded blocks closing
 
 
+
+/-- Replacing each nonempty segment by its retained terminal connector
+does not increase the number of occurrences. -/
+theorem reducedSegmentWord_length_le_expanded
+    (blocks : List CycleReductionBlock) :
+    (reducedSegmentWord blocks).length ≤
+      (expandedSegmentWord blocks).length := by
+  induction blocks with
+  | nil => rfl
+  | cons block rest ih =>
+      rcases block with ⟨middle, right⟩
+      change (right :: reducedSegmentWord rest).length ≤
+        ((middle ++ [right]) ++ expandedSegmentWord rest).length
+      simp only [List.length_cons, List.length_append,
+        List.length_singleton]
+      omega
+
 namespace OrderOneData
 
 universe v
@@ -194,6 +211,24 @@ theorem BigCycle.reduct_twiceOrder_le_of_segmented_words
       hReduct, hSource]
   exact cyclicReducedSegmentWord_le_expanded
     blocks closing hReducedLast hExpandedLast
+
+
+/-- Length part of the circulated reduct lemma, provided the source and
+reduct have the indicated literal connector-kind segmentation. -/
+theorem BigCycle.reduct_length_le_of_segmented_words
+    {n m : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (blocks : List CycleReductionBlock)
+    (hSource : List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i)) = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks) :
+    m ≤ n := by
+  have hn : n = (expandedSegmentWord blocks).length := by
+    simpa using congrArg List.length hSource
+  have hm : m = (reducedSegmentWord blocks).length := by
+    simpa using congrArg List.length hReduct
+  have h := reducedSegmentWord_length_le_expanded blocks
+  omega
 
 end OrderOneData
 
