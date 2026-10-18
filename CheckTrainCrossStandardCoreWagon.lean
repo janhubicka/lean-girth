@@ -1,0 +1,8 @@
+import Girth.TrainCrossStandardCoreWagon
+
+open StructuralRamsey.Girth
+open StructuralRamsey.Girth.PhysicalWagonModel
+
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.edgeTag_standard_of_reflection
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.cross_standard_wagon_has_core_tag
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.different_shared_classes_have_different_core_tags
