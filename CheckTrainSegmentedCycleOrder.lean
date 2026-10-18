@@ -1,5 +1,7 @@
 import Girth.TrainSegmentedCycleOrder
 
+open StructuralRamsey.Girth
+
 #print axioms StructuralRamsey.Girth.twiceReducedSegmentBudget_le_expanded
 #print axioms StructuralRamsey.Girth.twiceReducedSegmentWord_le_expanded
 #print axioms StructuralRamsey.Girth.cyclicReducedSegmentWord_le_expanded
