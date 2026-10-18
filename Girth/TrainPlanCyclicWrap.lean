@@ -23,7 +23,7 @@ universe v
 /-- A cyclic relation on the last entry of the last nonempty block
 and first entry of the first nonempty block is exactly the relation
 on the last and first entries of the flattened list. -/
-private theorem flatten_wrap_of_nonempty_blocks
+theorem flatten_wrap_of_nonempty_blocks
     {α : Type v} (R : α → α → Prop)
     (blocks : List (List α))
     (hBlocks : blocks ≠ [])
@@ -87,7 +87,7 @@ namespace OrderOneData
 variable {V E I P : Type v} (D : OrderOneData V E I P)
 
 /-- The first selected block is literally the replacement at old position 0. -/
-private theorem BigCycle.blockList_head_eq_first
+theorem BigCycle.blockList_head_eq_first
     {n : ℕ} (C : D.BigCycle n)
     (hn : 0 < n) (pieces : Fin n → TrainSupremePiece E P) :
     (List.ofFn (fun j : Fin n => C.pieceWord D j (pieces j))).head
@@ -99,7 +99,7 @@ private theorem BigCycle.blockList_head_eq_first
       simp [List.head_ofFn]
 
 /-- The last selected block is literally the replacement at old n-1. -/
-private theorem BigCycle.blockList_getLast_eq_last
+theorem BigCycle.blockList_getLast_eq_last
     {n : ℕ} (C : D.BigCycle n)
     (hn : 0 < n) (pieces : Fin n → TrainSupremePiece E P) :
     (List.ofFn (fun j : Fin n => C.pieceWord D j (pieces j))).getLast
