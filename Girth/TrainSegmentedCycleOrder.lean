@@ -61,7 +61,7 @@ theorem twiceSegmentWeight_append_path
       twiceSegmentWeight left before +
         twiceSegmentWeight (kindLastOr left before) after := by
   induction before generalizing left with
-  | nil => rfl
+  | nil => simp [twiceSegmentWeight, kindLastOr]
   | cons first rest ih =>
       change twiceOccurrenceWeight left first +
           twiceSegmentWeight first (rest ++ after) =
@@ -183,8 +183,7 @@ theorem reducedSegmentWord_length_le_expanded
       rcases block with ⟨middle, right⟩
       change (right :: reducedSegmentWord rest).length ≤
         ((middle ++ [right]) ++ expandedSegmentWord rest).length
-      simp only [List.length_cons, List.length_append,
-        List.length_singleton]
+      simp only [List.length_cons, List.length_append]
       omega
 
 namespace OrderOneData
