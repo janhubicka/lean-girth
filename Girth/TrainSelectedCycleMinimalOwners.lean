@@ -1,5 +1,6 @@
 import Girth.TrainMinimalCyclicOwners
 import Girth.TrainSelectedPictureOutputLabelCover
+import Girth.TrainSingleShortReplacement
 
 /-!
 # Circulation: actual selected-output cycles admit minimal legal owner assignments
