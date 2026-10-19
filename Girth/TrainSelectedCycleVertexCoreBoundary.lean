@@ -97,6 +97,47 @@ theorem attachedSelectedPicture_cycle_vertex_standard_core_local
   have hyt : y = f i t := (CoreEmb).injective (hyx.trans htx.symm)
   exact ⟨y, hyx, ⟨t, hyt.symm⟩, hy⟩
 
+
+/-- Reverse orientation: an actual core-left / standard-right vertex
+boundary lies in the singleton core edge and in the prescribed local
+witness copy. This does not construct a cyclic witness reduct. -/
+theorem attachedSelectedPicture_cycle_vertex_core_standard_local
+    {n : ℕ} (K : (Out).BigCycle n)
+    (k : Fin n) (x : Vertex) (i : I)
+    (a : Label) (b : CoreEdge)
+    (hx : K.connector k = Sum.inl x)
+    (hLeft : K.label k = Sum.inr (CoreActual b))
+    (hRight : K.label (cyclicSucc k) = LabelMap i a) :
+    ∃ y : Y,
+      CoreEmb y = x ∧ y ∈ copyCarrier (f i) ∧ y ∈ b.1 := by
+  have hBoth :=
+    OrderOneData.BigCycle.vertex_boundary_in_both_labels
+      Out K k x hx
+  have hxStandard : x ∈ copyCarrier (Std i) := by
+    have hCarrierA : x ∈ (Out).carrier (LabelMap i a) := by
+      simpa only [hRight] using hBoth.2
+    rw [attachedSelectedPicture_carrier
+      A hA B D C family selected e R f T U hShared μ i a] at hCarrierA
+    rcases hCarrierA with ⟨z, _hz, hzx⟩
+    exact ⟨z, hzx⟩
+  have hxCoreEdge : x ∈ (CoreActual b).1 := by
+    have hLeftMem := hBoth.1
+    rw [hLeft] at hLeftMem
+    change x ∈ (CoreActual b).1 at hLeftMem
+    exact hLeftMem
+  rw [actualAPictureEdgeEquiv_core_carrier
+    A hA C.toRelStructure S R f b] at hxCoreEdge
+  change x ∈ (fun y : Y => CoreEmb y) '' b.1 at hxCoreEdge
+  obtain ⟨y, hy, hyx⟩ := hxCoreEdge
+  have hxCore : x ∈ copyCarrier CoreEmb := ⟨y, hyx⟩
+  have hxLocal : x ∈ copyCarrier ((CoreEmb).comp (f i)) := by
+    rw [← attachment_copy_core_intersection
+      C.toRelStructure S R f i]
+    exact ⟨hxStandard, hxCore⟩
+  obtain ⟨t, htx⟩ := hxLocal
+  have hyt : y = f i t := (CoreEmb).injective (hyx.trans htx.symm)
+  exact ⟨y, hyx, ⟨t, hyt.symm⟩, hy⟩
+
 end SelectedVertexCoreBoundary
 
 end StructuralRamsey.Girth
