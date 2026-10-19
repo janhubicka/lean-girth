@@ -57,8 +57,8 @@ theorem actualAttachedAEdge_core_or_private
       left
       refine ⟨b, ?_⟩
       have hPhysical : pre = physicalCoreEdge inOld I b := hp
-      have h := congrArg Eqv hPhysical
-      simpa [pre] using h
+      apply (Eqv).symm.injective
+      simpa [pre] using hPhysical
   | inr ia =>
       rcases ia with ⟨i, a⟩
       right
@@ -67,8 +67,8 @@ theorem actualAttachedAEdge_core_or_private
           physicalStandardEdge inOld inCore i a.1 := by
         rw [physicalStandardEdge_private inOld inCore i a.1 a.2]
         exact hp
-      have h := congrArg Eqv hPhysical
-      simpa [pre] using h
+      apply (Eqv).symm.injective
+      simpa [pre] using hPhysical
 
 /-- Two representations of the SAME genuinely private output edge
 have identical standard indices and old physical edge labels.
