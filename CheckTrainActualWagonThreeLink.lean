@@ -1,3 +1,5 @@
 import Girth.TrainActualWagonThreeLink
 
 #print axioms StructuralRamsey.Girth.generatedActualASupportTrain_three_link
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreEmbedding_carrier_subset_local_copy
+#print axioms StructuralRamsey.Girth.cross_standard_wagon_copy_local_core_incidence
