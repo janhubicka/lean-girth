@@ -80,13 +80,16 @@ theorem attachedSelectedPicture_cycle_vertex_standard_core_local
     rcases hCarrierA with ⟨z, _hz, hzx⟩
     exact ⟨z, hzx⟩
   have hxCoreEdge : x ∈ (CoreActual b).1 := by
-    simpa only [hRight] using hBoth.2
+    have hRightMem := hBoth.2
+    rw [hRight] at hRightMem
+    change x ∈ (CoreActual b).1 at hRightMem
+    exact hRightMem
   rw [actualAPictureEdgeEquiv_core_carrier
     A hA C.toRelStructure S R f b] at hxCoreEdge
   change x ∈ (fun y : Y => CoreEmb y) '' b.1 at hxCoreEdge
   obtain ⟨y, hy, hyx⟩ := hxCoreEdge
   have hxCore : x ∈ copyCarrier CoreEmb := ⟨y, hyx⟩
-  have hxLocal : x ∈ copyCarrier (CoreEmb.comp (f i)) := by
+  have hxLocal : x ∈ copyCarrier ((CoreEmb).comp (f i)) := by
     rw [← attachment_copy_core_intersection
       C.toRelStructure S R f i]
     exact ⟨hxStandard, hxCore⟩
