@@ -1,0 +1,5 @@
+import Girth.TrainActualStandardCoreIncidence
+
+#print axioms StructuralRamsey.Girth.PhysicalWagonModel.standard_core_wagon_incidence_witness
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_standard_core_copy_local_incidence
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_cross_standard_copy_local_incidence
