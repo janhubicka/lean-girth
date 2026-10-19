@@ -205,7 +205,7 @@ theorem attachedSelectedPicture_geometric_designated_has_standard_owner
   have h := hAllowed k
   cases ho : owner k with
   | inl j =>
-      exact ⟨j, ho⟩
+      exact ⟨j, rfl⟩
   | inr b =>
       rw [ho] at h
       change K.label k = Sum.inr (CoreActual b) at h
