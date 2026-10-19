@@ -174,6 +174,26 @@ theorem attachedSelectedPicture_core_owner_isolated
       A hA B D C family selected e R f T U hShared μ
       K owner hAllowed k b hCore
 
+/-- If the cyclic assignment has NO owner changes, no occurrence can
+be assigned to a singleton witness-core edge. Every occurrence must
+therefore use a standard owner; it remains to identify their common
+index by successor connectedness in the typed cyclic segmentation. -/
+theorem attachedSelectedPicture_zero_change_excludes_core
+    {n : ℕ} (K : (Out).BigCycle n)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ k : Fin n, Allowed (K.label k) (owner k))
+    (hZero : cyclicOwnerChanges owner = 0)
+    (k : Fin n) (b : CoreEdge) :
+    owner k ≠ Sum.inr b := by
+  intro hCore
+  have hEqual :=
+    (cyclicOwnerChanges_eq_zero_iff owner).mp hZero k
+  have hNext : owner (cyclicSucc k) = Sum.inr b :=
+    hEqual.symm.trans hCore
+  exact (attachedSelectedPicture_core_owner_singleton_boundary
+    A hA B D C family selected e R f T U hShared μ
+    K owner hAllowed k b hCore) hNext
+
 /-- A designated output label carries its standard index literally.
 No admissible minimizer can reassign it to the core or to a different
 standard, independently of geometric containment elsewhere. -/
