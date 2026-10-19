@@ -108,6 +108,43 @@ theorem attachedSelectedPicture_cycle_wagon_standard_core_copy_local
       A hA C.toRelStructure S R f T U hShared hRel μ i old b hSame
   exact ⟨old, s, hOld, hsOld, hsCore, hsLocal⟩
 
+
+/-- Reverse physical orientation: the same wagon supports a singleton
+core edge on the left and an indexed standard on the right. The old
+standard edge and shared core bridge belong to the SPECIFIED local
+copy; hShared and hRel remain explicit. -/
+theorem attachedSelectedPicture_cycle_wagon_core_standard_copy_local
+    {n : ℕ} (K : (Out).BigCycle n)
+    (k : Fin n) (W : Quotient ((Train).wagonSetoid μ))
+    (i : I) (a : Label) (b : CoreEdge)
+    (hW : K.connector k = Sum.inr W)
+    (hb : K.label k = Sum.inr (CoreActual b))
+    (ha : K.label (cyclicSucc k) = LabelMap i a) :
+    ∃ (old : OldEdge) (s : SharedOldACarrierEdge A C.toRelStructure S),
+      old ∈ (Old).edges a ∧
+      T.rel μ (sharedOldACarrierInclusion A C.toRelStructure S s) old ∧
+      U.rel μ (Emb i s) b ∧
+      (Emb i s).1 ⊆ Set.range (f i) := by
+  obtain ⟨edgeB, edgeA, hEdgeB, hParentB, hEdgeA, hParentA⟩ :=
+    OrderOneData.BigCycle.wagon_boundary_incidence_edges Out K k W hW
+  have hMeetsA : (Out).Meets (LabelMap i a) W :=
+    ⟨edgeA, by simpa only [ha] using hEdgeA, hParentA⟩
+  obtain ⟨old, hOld, hWOld⟩ :=
+    (attachedSelectedPicture_meets_iff
+      A hA B D C family selected e R f T U hShared μ i a W).mp hMeetsA
+  have hCoreEq : edgeB = CoreActual b := by
+    rw [hb] at hEdgeB
+    change edgeB = CoreActual b at hEdgeB
+    exact hEdgeB
+  have hWCore : (Out).parent (CoreActual b) = W := by
+    simpa only [hCoreEq] using hParentB
+  have hSame : (Train).rel μ (StdEdge i old) (CoreActual b) :=
+    Quotient.exact (hWOld.trans hWCore.symm)
+  obtain ⟨s, hsOld, hsCore, hsLocal⟩ :=
+    generatedActualASupportTrain_standard_core_copy_local_incidence
+      A hA C.toRelStructure S R f T U hShared hRel μ i old b hSame
+  exact ⟨old, s, hOld, hsOld, hsCore, hsLocal⟩
+
 end SelectedCoreWagonBoundary
 
 end StructuralRamsey.Girth
