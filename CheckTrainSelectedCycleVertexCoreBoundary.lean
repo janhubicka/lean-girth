@@ -1,0 +1,3 @@
+import Girth.TrainSelectedCycleVertexCoreBoundary
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_vertex_standard_core_local
