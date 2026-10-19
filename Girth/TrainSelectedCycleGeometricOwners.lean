@@ -129,6 +129,36 @@ theorem attachedSelectedPicture_cycle_exists_minimal_geometric_owners
   exact exists_minimal_cyclic_owner
     (fun k owner => GeomAllowed (K.label k) owner) hExists
 
+/-- If the carriers of ALL selected output occurrences lie in one
+standard, the minimum geometric segmentation has zero cyclic cuts.
+This avoids requiring their literal source labels to come from that
+standard, the precise issue in the foreign designated-label case. -/
+theorem attachedSelectedPicture_geometric_zero_of_one_standard
+    {n : ℕ} (K : (Out).BigCycle n) (i : I)
+    (hContain : ∀ k : Fin n,
+      (Out).carrier (K.label k) ⊆ copyCarrier (Std i)) :
+    ∃ owner : Fin n → I ⊕ CoreEdge,
+      (∀ k : Fin n, GeomAllowed (K.label k) (owner k)) ∧
+      cyclicOwnerChanges owner = 0 := by
+  obtain ⟨owner, hAllowed, hMin⟩ :=
+    attachedSelectedPicture_cycle_exists_minimal_geometric_owners
+      A hA B D C family selected e R f T U hShared μ K
+  have hConst : ∀ k : Fin n,
+      GeomAllowed (K.label k) (Sum.inl i) := by
+    intro k
+    exact hContain k
+  have hZero :
+      cyclicOwnerChanges
+        (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge)) = 0 :=
+    (cyclicOwnerChanges_eq_zero_iff
+      (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge))).2
+      (by intro j; rfl)
+  refine ⟨owner, hAllowed, ?_⟩
+  have hBound := hMin
+    (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge)) hConst
+  rw [hZero] at hBound
+  exact Nat.eq_zero_of_le_zero hBound
+
 /-- Core-edge singleton owners remain isolated even for the BROADER
 geometric assignment. This is an actual BigCycle label-distinctness
 fact, and handles cyclic last-to-first adjacency in both directions. -/
