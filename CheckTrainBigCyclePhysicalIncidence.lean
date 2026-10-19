@@ -1,0 +1,4 @@
+import Girth.TrainBigCyclePhysicalIncidence
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.wagon_boundary_incidence_edges
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.vertex_boundary_in_both_labels
