@@ -1,0 +1,3 @@
+import Girth.TrainSelectedCycleBoundaryIncidence
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_wagon_boundary_source_edges
