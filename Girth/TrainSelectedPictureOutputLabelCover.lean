@@ -83,17 +83,15 @@ theorem attachedSelectedPicture_outputLabel_covered
       · right
         refine ⟨b, ?_⟩
         have hEdge : edge = CoreActual b := by
-          calc
-            edge = Eqv pre := by simp [pre]
-            _ = CoreActual b := congrArg Eqv hb
+          apply (Eqv).symm.injective
+          simpa [pre] using hb
         exact congrArg Sum.inr hEdge
       · left
         refine ⟨i, .inr old, ?_⟩
         change Sum.inr edge = Sum.inr (StdEdge i old)
         have hEdge : edge = StdEdge i old := by
-          calc
-            edge = Eqv pre := by simp [pre]
-            _ = StdEdge i old := congrArg Eqv hOld
+          apply (Eqv).symm.injective
+          simpa [pre] using hOld
         exact congrArg Sum.inr hEdge
 
 /-- Apply the exhaustive source-label classification to EVERY
