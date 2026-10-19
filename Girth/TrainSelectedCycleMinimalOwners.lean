@@ -118,6 +118,30 @@ theorem attachedSelectedPicture_core_owner_singleton_boundary
   change K.label (cyclicSucc k) = Sum.inr (CoreActual b) at hThere
   exact K.adjacent_ne k (hHere.trans hThere.symm)
 
+/-- A witness-core edge source forms a singleton cyclic segment:
+neither cyclic neighbour can carry the same core-edge owner. This
+uses the real cycle's two-occurrence lower bound, including wraparound. -/
+theorem attachedSelectedPicture_core_owner_isolated
+    {n : ℕ} (K : (Out).BigCycle n)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ k : Fin n, Allowed (K.label k) (owner k))
+    (k : Fin n) (b : CoreEdge)
+    (hCore : owner k = Sum.inr b) :
+    owner (trainCyclicPred k) ≠ Sum.inr b ∧
+    owner (cyclicSucc k) ≠ Sum.inr b := by
+  constructor
+  · intro hPrev
+    have hDifferent :=
+      attachedSelectedPicture_core_owner_singleton_boundary
+        A hA B D C family selected e R f T U hShared μ
+        K owner hAllowed (trainCyclicPred k) b hPrev
+    rw [cyclicSucc_trainCyclicPred_of_two_le K.length_ge_two k]
+      at hDifferent
+    exact hDifferent hCore
+  · exact attachedSelectedPicture_core_owner_singleton_boundary
+      A hA B D C family selected e R f T U hShared μ
+      K owner hAllowed k b hCore
+
 /-- A designated output label carries its standard index literally.
 No admissible minimizer can reassign it to the core or to a different
 standard, independently of geometric containment elsewhere. -/
