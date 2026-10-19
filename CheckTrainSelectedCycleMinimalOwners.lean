@@ -2,4 +2,5 @@ import Girth.TrainSelectedCycleMinimalOwners
 
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_exists_minimal_owners
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_owner_singleton_boundary
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_owner_isolated
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_designated_owner_index
