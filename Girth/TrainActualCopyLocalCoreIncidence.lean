@@ -1,5 +1,6 @@
 import Girth.TrainSharedOldACarrierCoreEmbedding
 import Girth.TrainCrossStandardCoreIncidence
+import Girth.TrainGeneratedActualASupportTrain
 
 /-!
 # Circulation: shared A-support is local to the prescribed witness copy
@@ -107,5 +108,64 @@ theorem cross_standard_wagon_copy_local_core_incidence
       A B S D f i s,
     sharedOldACarrierCoreEmbedding_carrier_subset_local_copy
       A B S D f j t⟩
+
+
+/-- The copy-local witness conclusion also holds for the actual relational
+attachment's generated support-edge wagon relation. The physical
+pushout presentation is eliminated by the checked edge equivalence.
+This remains conditional on shared-support reflection and does not
+build the indexed cyclic reduct. -/
+theorem generatedActualASupportTrain_cross_standard_copy_local_incidence
+    {m : ℕ}
+    (A : RelStructure L UA)
+    (hA : A.Irreducible)
+    (B : RelStructure L Old)
+    (S : Set Old)
+    (D : RelStructure L Core)
+    (f : I → RelStructure.Embedding (B.induce S) D)
+    (oldTrain : EdgeTrainLevels (OldACarrierEdge A B) m)
+    (coreTrain : EdgeTrainLevels (OldACarrierEdge A D) m)
+    (hShared : ∀ i : I, Nonempty (SharedOldACarrierEdge A B S))
+    (hRel : ∀ κ : Fin (m + 1), ∀ i s t,
+      oldTrain.rel κ
+        (sharedOldACarrierInclusion A B S s)
+        (sharedOldACarrierInclusion A B S t) ↔
+      coreTrain.rel κ
+        (sharedOldACarrierCoreEmbedding A B S D f i s)
+        (sharedOldACarrierCoreEmbedding A B S D f i t))
+    (μ : Fin (m + 1)) (i j : I) (hij : i ≠ j)
+    (a b : OldACarrierEdge A B)
+    (hSame :
+      (generatedActualASupportTrain A hA B S D f
+        oldTrain coreTrain hShared).rel μ
+        (actualAPictureEdgeEquiv A hA B S D f
+          (physicalStandardEdge
+            (sharedOldACarrierInclusion A B S)
+            (sharedOldACarrierCoreEmbedding A B S D f) i a))
+        (actualAPictureEdgeEquiv A hA B S D f
+          (physicalStandardEdge
+            (sharedOldACarrierInclusion A B S)
+            (sharedOldACarrierCoreEmbedding A B S D f) j b))) :
+    ∃ (c : Quotient (coreTrain.wagonSetoid μ))
+      (s t : SharedOldACarrierEdge A B S),
+      oldTrain.rel μ (sharedOldACarrierInclusion A B S s) a ∧
+      oldTrain.rel μ (sharedOldACarrierInclusion A B S t) b ∧
+      Quotient.mk (coreTrain.wagonSetoid μ)
+        (sharedOldACarrierCoreEmbedding A B S D f i s) = c ∧
+      Quotient.mk (coreTrain.wagonSetoid μ)
+        (sharedOldACarrierCoreEmbedding A B S D f j t) = c ∧
+      (sharedOldACarrierCoreEmbedding A B S D f i s).1 ⊆
+        Set.range (f i) ∧
+      (sharedOldACarrierCoreEmbedding A B S D f j t).1 ⊆
+        Set.range (f j) := by
+  apply cross_standard_wagon_copy_local_core_incidence
+    A B S D f oldTrain coreTrain hShared hRel μ i j hij a b
+  exact (physicalPictureGeneratedTrain_rel_iff
+    oldTrain coreTrain
+    (sharedOldACarrierInclusion A B S)
+    (sharedOldACarrierCoreEmbedding A B S D f)
+    hShared μ _ _).mpr
+      ((generatedActualASupportTrain_rel_iff
+        A hA B S D f oldTrain coreTrain hShared μ _ _).mp hSame)
 
 end StructuralRamsey.Girth
