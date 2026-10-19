@@ -1,5 +1,6 @@
 import Girth.TrainSelectedCycleBoundaryIncidence
 import Girth.TrainActualStandardCoreIncidence
+import Girth.TrainGeneratedActualAllLevelRestriction
 
 /-!
 # Circulation: actual standard/core wagon boundary of a selected big cycle
@@ -144,6 +145,40 @@ theorem attachedSelectedPicture_cycle_wagon_core_standard_copy_local
     generatedActualASupportTrain_standard_core_copy_local_incidence
       A hA C.toRelStructure S R f T U hShared hRel μ i old b hSame
   exact ⟨old, s, hOld, hsOld, hsCore, hsLocal⟩
+
+
+/-- For two genuine singleton witness-core edge labels at an actual
+wagon boundary, the original core witness edges belong to the SAME
+witness wagon. Only the preservation direction of hRel is used; this
+does not identify reduced connectors or prove A2/A3. -/
+theorem attachedSelectedPicture_cycle_wagon_core_core_relation
+    {n : ℕ} (K : (Out).BigCycle n)
+    (k : Fin n) (W : Quotient ((Train).wagonSetoid μ))
+    (b c : CoreEdge)
+    (hW : K.connector k = Sum.inr W)
+    (hb : K.label k = Sum.inr (CoreActual b))
+    (hc : K.label (cyclicSucc k) = Sum.inr (CoreActual c)) :
+    U.rel μ b c := by
+  obtain ⟨edgeB, edgeC, hEdgeB, hParentB, hEdgeC, hParentC⟩ :=
+    OrderOneData.BigCycle.wagon_boundary_incidence_edges Out K k W hW
+  have hEqB : edgeB = CoreActual b := by
+    rw [hb] at hEdgeB
+    change edgeB = CoreActual b at hEdgeB
+    exact hEdgeB
+  have hEqC : edgeC = CoreActual c := by
+    rw [hc] at hEdgeC
+    change edgeC = CoreActual c at hEdgeC
+    exact hEdgeC
+  have hB : (Out).parent (CoreActual b) = W := by
+    simpa only [hEqB] using hParentB
+  have hC : (Out).parent (CoreActual c) = W := by
+    simpa only [hEqC] using hParentC
+  have hSame : (Train).rel μ (CoreActual b) (CoreActual c) :=
+    Quotient.exact (hB.trans hC.symm)
+  exact (generatedActualASupportTrain_restrict_core
+    A hA C.toRelStructure S R f T U
+    (fun ν j s t h => (hRel ν j s t).mp h)
+    hShared μ b c).mp hSame
 
 end SelectedCoreWagonBoundary
 
