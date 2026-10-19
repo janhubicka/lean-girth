@@ -70,6 +70,8 @@ local notation "Out" => attachedSelectedPictureOrderOneData
 local notation "LabelMap" => attachedSelectedPictureLabel
   A hA B D C family selected e R f
 
+include hRel
+
 /-- Real standard/core wagon boundary of an actual selected BigCycle.
 Its standard label supplies an old physical edge and a genuinely
 shared local bridge whose core image belongs to Q_i and the wagon
@@ -94,10 +96,9 @@ theorem attachedSelectedPicture_cycle_wagon_standard_core_copy_local
     (attachedSelectedPicture_meets_iff
       A hA B D C family selected e R f T U hShared μ i a W).mp hMeetsA
   have hCoreEq : edgeB = CoreActual b := by
-    have hMem : edgeB ∈ (Out).edges (Sum.inr (CoreActual b)) := by
-      simpa only [hb] using hEdgeB
-    change edgeB = CoreActual b at hMem
-    exact hMem
+    rw [hb] at hEdgeB
+    change edgeB = CoreActual b at hEdgeB
+    exact hEdgeB
   have hWCore : (Out).parent (CoreActual b) = W := by
     simpa only [hCoreEq] using hParentB
   have hSame : (Train).rel μ (StdEdge i old) (CoreActual b) :=
