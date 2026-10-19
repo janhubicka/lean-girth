@@ -61,6 +61,7 @@ jobs:
           lake build Girth.TrainCrossStandardCoreIncidence
           lake build Girth.TrainBigCyclePhysicalIncidence
           lake build Girth.TrainSelectedCycleBoundaryIncidence
+          lake build Girth.TrainSelectedCycleVertexCoreBoundary
           lake build Girth.TrainPhysicalParameterBridgeComposite
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
@@ -75,6 +76,7 @@ jobs:
             CheckTrainCrossStandardCoreIncidence
             CheckTrainBigCyclePhysicalIncidence
             CheckTrainSelectedCycleBoundaryIncidence
+            CheckTrainSelectedCycleVertexCoreBoundary
             CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
             CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
             CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
