@@ -1,0 +1,3 @@
+import Girth.TrainSelectedCycleStandardCoreWagon
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_wagon_standard_core_copy_local
