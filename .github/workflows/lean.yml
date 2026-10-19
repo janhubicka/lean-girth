@@ -60,7 +60,7 @@ jobs:
           lake build Girth.TrainCrossStandardCoreWagon
           lake build Girth.TrainCrossStandardCoreIncidence
           lake build Girth.TrainActualStandardCoreIncidence
-          lake build Girth.TrainSharedSupportInteriorCompatibility Girth.TrainBigCyclePhysicalIncidence Girth.TrainSelectedCycleBoundaryIncidence Girth.TrainSelectedCycleVertexCoreBoundary Girth.TrainSelectedCycleStandardCoreWagon Girth.TrainSelectedCycleTwoStandardVertex Girth.TrainSelectedCycleCoreCoreVertex Girth.TrainSelectedCycleTwoStandardWagon Girth.TrainSelectedPictureOutputLabelCover
+          lake build Girth.TrainSharedSupportInteriorCompatibility Girth.TrainBigCyclePhysicalIncidence Girth.TrainSelectedCycleBoundaryIncidence Girth.TrainSelectedCycleVertexCoreBoundary Girth.TrainSelectedCycleStandardCoreWagon Girth.TrainSelectedCycleTwoStandardVertex Girth.TrainSelectedCycleCoreCoreVertex Girth.TrainSelectedCycleTwoStandardWagon Girth.TrainSelectedPictureOutputLabelCover Girth.TrainSelectedPictureCanonicalEdgeSource
           lake build Girth.TrainPhysicalParameterBridgeComposite
           lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
           lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
@@ -75,7 +75,7 @@ jobs:
             CheckTrainCrossStandardCoreIncidence
             CheckTrainActualStandardCoreIncidence
             CheckTrainSharedSupportInteriorCompatibility CheckTrainBigCyclePhysicalIncidence
-            CheckTrainSelectedCycleBoundaryIncidence CheckTrainSelectedCycleVertexCoreBoundary CheckTrainSelectedCycleStandardCoreWagon CheckTrainSelectedCycleTwoStandardVertex CheckTrainSelectedCycleCoreCoreVertex CheckTrainSelectedCycleTwoStandardWagon CheckTrainSelectedPictureOutputLabelCover
+            CheckTrainSelectedCycleBoundaryIncidence CheckTrainSelectedCycleVertexCoreBoundary CheckTrainSelectedCycleStandardCoreWagon CheckTrainSelectedCycleTwoStandardVertex CheckTrainSelectedCycleCoreCoreVertex CheckTrainSelectedCycleTwoStandardWagon CheckTrainSelectedPictureOutputLabelCover CheckTrainSelectedPictureCanonicalEdgeSource
             CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
             CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
             CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
