@@ -129,6 +129,39 @@ theorem attachedSelectedPicture_cycle_exists_minimal_geometric_owners
   exact exists_minimal_cyclic_owner
     (fun k owner => GeomAllowed (K.label k) owner) hExists
 
+/-- Core-edge singleton owners remain isolated even for the BROADER
+geometric assignment. This is an actual BigCycle label-distinctness
+fact, and handles cyclic last-to-first adjacency in both directions. -/
+theorem attachedSelectedPicture_geometric_core_owner_isolated
+    {n : ℕ} (K : (Out).BigCycle n)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
+    (k : Fin n) (b : CoreEdge)
+    (hCore : owner k = Sum.inr b) :
+    owner (trainCyclicPred k) ≠ Sum.inr b ∧
+    owner (cyclicSucc k) ≠ Sum.inr b := by
+  have hLabel : K.label k = Sum.inr (CoreActual b) := by
+    have h := hAllowed k
+    rw [hCore] at h
+    exact h
+  have hNext : owner (cyclicSucc k) ≠ Sum.inr b := by
+    intro heq
+    have h := hAllowed (cyclicSucc k)
+    rw [heq] at h
+    change K.label (cyclicSucc k) = Sum.inr (CoreActual b) at h
+    exact K.adjacent_ne k (hLabel.trans h.symm)
+  constructor
+  · intro heq
+    have h := hAllowed (trainCyclicPred k)
+    rw [heq] at h
+    change K.label (trainCyclicPred k) =
+      Sum.inr (CoreActual b) at h
+    have hDifferent := K.adjacent_ne (trainCyclicPred k)
+    rw [cyclicSucc_trainCyclicPred_of_two_le K.length_ge_two k]
+      at hDifferent
+    exact hDifferent (h.trans hLabel.symm)
+  · exact hNext
+
 /-- A designated occurrence can never be assigned a core-edge owner,
 even for the broader geometric admissibility relation. Its standard
 owner need not be its LITERAL source standard. -/
