@@ -1,0 +1,4 @@
+import Girth.TrainMinimalCyclicOwners
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_eq_zero_iff
+#print axioms StructuralRamsey.Girth.exists_minimal_cyclic_owner
