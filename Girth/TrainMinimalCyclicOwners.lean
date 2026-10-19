@@ -60,9 +60,12 @@ theorem cyclicOwnerChanges_eq_zero_iff
     have hEmpty :
         (Finset.univ.filter
           (fun j : Fin n => owner j ≠ owner (cyclicSucc j))) = ∅ := by
-      apply Finset.eq_empty_iff_forall_not_mem.mpr
-      intro i hi
-      exact (Finset.mem_filter.mp hi).2 (h i)
+      ext j
+      constructor
+      · intro hj
+        exact False.elim ((Finset.mem_filter.mp hj).2 (h j))
+      · intro hj
+        simp at hj
     change (Finset.univ.filter
       (fun j : Fin n => owner j ≠ owner (cyclicSucc j))).card = 0
     rw [hEmpty]
