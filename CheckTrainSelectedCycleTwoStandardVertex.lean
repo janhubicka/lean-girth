@@ -1,0 +1,3 @@
+import Girth.TrainSelectedCycleTwoStandardVertex
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_vertex_two_standard_local
