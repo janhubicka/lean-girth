@@ -73,11 +73,11 @@ theorem attachedSelectedPicture_cycle_vertex_standard_core_local
       Out K k x hx
   have hxStandard :
       x ∈ copyCarrier (Std i) := by
-    have hA : x ∈ (Out).carrier (LabelMap i a) := by
+    have hCarrierA : x ∈ (Out).carrier (LabelMap i a) := by
       simpa only [hLeft] using hBoth.1
     rw [attachedSelectedPicture_carrier
-      A hA B D C family selected e R f T U hShared μ i a] at hA
-    rcases hA with ⟨z, _hz, hzx⟩
+      A hA B D C family selected e R f T U hShared μ i a] at hCarrierA
+    rcases hCarrierA with ⟨z, _hz, hzx⟩
     exact ⟨z, hzx⟩
   have hxCoreEdge : x ∈ (CoreActual b).1 := by
     simpa only [hRight] using hBoth.2
