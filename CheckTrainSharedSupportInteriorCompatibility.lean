@@ -1,0 +1,3 @@
+import Girth.TrainSharedSupportInteriorCompatibility
+
+#print axioms StructuralRamsey.Girth.sharedSupportTrainRel_of_interior
