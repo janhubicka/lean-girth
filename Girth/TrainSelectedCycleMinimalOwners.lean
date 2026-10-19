@@ -99,6 +99,37 @@ theorem attachedSelectedPicture_cycle_exists_minimal_owners
   exact exists_minimal_cyclic_owner
     (fun k owner => Allowed (K.label k) owner) hNonempty
 
+/-- If EVERY actual output label already comes from one fixed
+standard, a minimal admissible assignment has no cyclic owner changes.
+This is the precise one-standard alternative to multi-segment
+witness reduction; it does not assume the standard owner was unique. -/
+theorem attachedSelectedPicture_cycle_minimal_zero_of_one_standard
+    {n : ℕ} (K : (Out).BigCycle n)
+    (i : I)
+    (hOne : ∀ k : Fin n, ∃ old : Label,
+      K.label k = LabelMap i old) :
+    ∃ owner : Fin n → I ⊕ CoreEdge,
+      (∀ k : Fin n, Allowed (K.label k) (owner k)) ∧
+      cyclicOwnerChanges owner = 0 := by
+  obtain ⟨owner, hAllowed, hMinimal⟩ :=
+    attachedSelectedPicture_cycle_exists_minimal_owners
+      A hA B D C family selected e R f T U hShared μ K
+  have hConstAllowed : ∀ k : Fin n,
+      Allowed (K.label k) (Sum.inl i) := by
+    intro k
+    exact hOne k
+  have hConstZero :
+      cyclicOwnerChanges
+        (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge)) = 0 :=
+    (cyclicOwnerChanges_eq_zero_iff
+      (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge))).2
+        (by intro j; rfl)
+  refine ⟨owner, hAllowed, ?_⟩
+  have hBound := hMinimal
+    (fun _ : Fin n => (Sum.inl i : I ⊕ CoreEdge)) hConstAllowed
+  rw [hConstZero] at hBound
+  exact Nat.eq_zero_of_le_zero hBound
+
 /-- A genuine core-edge singleton owner cannot own two successive
 occurrences in the actual output cycle: its image is one fixed physical
 edge label, and consecutive BigCycle labels are distinct. -/
