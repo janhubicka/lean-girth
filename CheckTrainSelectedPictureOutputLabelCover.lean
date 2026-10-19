@@ -1,0 +1,4 @@
+import Girth.TrainSelectedPictureOutputLabelCover
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_outputLabel_covered
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cycle_every_label_has_source
