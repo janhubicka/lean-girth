@@ -3,19 +3,26 @@ import Girth.TrainSelectedPictureOutputLabelCover
 import Girth.TrainSingleShortReplacement
 
 /-!
-# Circulation: actual selected-output cycles admit minimal legal owner assignments
+# Circulation: minimal literal source-owner assignments on actual cycles
 
-The minimum segmentation in Section 12 must be chosen among ALL allowed
-representations of a physical occurrence. Designated labels have their
-actual standard index; private physical edges have a unique standard
-owner; shared edges may legitimately be treated as a core singleton or
-as part of a standard. Choosing the canonical edge provenance as the
-segmentation in advance need not minimize the number of segments.
+The geometric minimum segmentation in Section 12 must not be confused
+with canonical physical edge provenance. This FIRST interface minimizes
+among LITERAL old-standard/core source representations of every actual
+output label. A private physical edge has a unique standard source;
+shared edges may have multiple such representations, including core
+and standard sources.
 
-This module combines the checked exhaustive physical source-label
-theorem with the general cyclic-minimizer theorem. It gives a minimal
-occurrence-wise assignment for an ACTUAL selected-picture BigCycle,
-not merely for an abstract owner predicate.
+A foreign designated label can be geometrically contained in another
+standard even when it is not the literal image of a designated old label
+there. The checked mixed-localization lemma can replace its incidence
+by a physical edge, but does NOT preserve designation. That broader
+geometric assignment/relabeling is NOT included in the owner predicate
+defined below; identifying its true minimum with this source minimum
+remains an OPEN obligation.
+
+This module combines the checked exhaustive source-label theorem with
+the general cyclic-minimizer theorem to obtain an actual BigCycle's
+minimum LITERAL source-owner assignment, not the full legal reduct.
 
 A singleton core-edge assignment cannot occupy two adjacent
 occurrences, because BigCycle requires adjacent labels to differ.
@@ -67,8 +74,9 @@ local notation "CoreActual" => (fun (b : CoreEdge) =>
   Eqv (physicalCoreEdge
     (sharedOldACarrierInclusion A C.toRelStructure S) I b))
 
-/-- Exact admissibility of a source owner for one real selected-picture
-output label. Unlike canonical core/private provenance, a shared edge
+/-- Exact admissibility of a LITERAL source owner for one real selected-picture
+output label. Geometric containment of a foreign designated copy in
+another standard is deliberately not encoded. A shared edge
 may have MULTIPLE permitted standard or core owners. -/
 def selectedOutputOwnerAllowed
     (a : (I × Selected) ⊕ ActualEdge) (owner : I ⊕ CoreEdge) : Prop :=
@@ -79,7 +87,7 @@ def selectedOutputOwnerAllowed
 local notation "Allowed" => selectedOutputOwnerAllowed
   A hA B D C family selected e R f
 
-/-- There is a genuinely minimal occurrence-wise provenance assignment
+/-- There is a genuinely minimal LITERAL source-owner assignment
 for EVERY actual selected-picture output big cycle. No finiteness of
 the standard-index or core-edge types is used. The number of cyclic
 source changes is minimized among all admissible assignments. -/
