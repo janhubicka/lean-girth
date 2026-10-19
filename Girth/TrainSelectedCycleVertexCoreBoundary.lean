@@ -94,7 +94,7 @@ theorem attachedSelectedPicture_cycle_vertex_standard_core_local
       C.toRelStructure S R f i]
     exact ⟨hxStandard, hxCore⟩
   obtain ⟨t, htx⟩ := hxLocal
-  have hyt : y = f i t := CoreEmb.injective (hyx.trans htx.symm)
+  have hyt : y = f i t := (CoreEmb).injective (hyx.trans htx.symm)
   exact ⟨y, hyx, ⟨t, hyt.symm⟩, hy⟩
 
 end SelectedVertexCoreBoundary
