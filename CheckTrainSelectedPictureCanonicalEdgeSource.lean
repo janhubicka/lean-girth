@@ -1,0 +1,5 @@
+import Girth.TrainSelectedPictureCanonicalEdgeSource
+
+#print axioms StructuralRamsey.Girth.actualAttachedAEdge_core_or_private
+#print axioms StructuralRamsey.Girth.actualAttachedAEdge_private_owner_unique
+#print axioms StructuralRamsey.Girth.actualAttachedAEdge_core_ne_private
