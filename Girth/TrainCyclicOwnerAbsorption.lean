@@ -106,6 +106,76 @@ theorem cyclicOwnerChanges_absorb_right
     _ < (cyclicOwnerCutPositions owner).card := hCard
     _ = cyclicOwnerChanges owner := cyclicOwnerCutPositions_card owner
 
+/-- The symmetric one-point move absorbs an occurrence into its
+LEFT neighbour. The changed boundary at its predecessor disappears;
+the other boundary was already a cut and cannot become a new one.
+This proof also includes cyclic wraparound at n=2. -/
+theorem cyclicOwnerChanges_absorb_left
+    (hn : 2 ≤ n) (owner : Fin n → Owner)
+    (k : Fin n) (a : Owner)
+    (hPrev : owner (trainCyclicPred k) = a)
+    (hOld : owner k ≠ a)
+    (hNext : owner k ≠ owner (cyclicSucc k)) :
+    cyclicOwnerChanges (cyclicReplaceOwner owner k a) <
+      cyclicOwnerChanges owner := by
+  classical
+  let changed := cyclicReplaceOwner owner k a
+  let newCuts := cyclicOwnerCutPositions changed
+  let oldCuts := cyclicOwnerCutPositions owner
+  have hPredNe : trainCyclicPred k ≠ k := by
+    intro hp
+    have hh := cyclicSucc_trainCyclicPred_of_two_le hn k
+    rw [hp] at hh
+    exact (cyclicSucc_ne_self_of_two_le hn k) hh
+  have hChangedK : changed k = a := by
+    simp [changed, cyclicReplaceOwner]
+  have hChangedPred : changed (trainCyclicPred k) = a := by
+    simp [changed, cyclicReplaceOwner, hPredNe, hPrev]
+  have hSub : newCuts ⊆ oldCuts := by
+    intro j hj
+    have hNew := (mem_cyclicOwnerCutPositions_iff changed j).mp hj
+    by_cases hjk : j = k
+    · subst j
+      exact (mem_cyclicOwnerCutPositions_iff owner k).mpr hNext
+    · by_cases hsk : cyclicSucc j = k
+      · have hjPred : j = trainCyclicPred k := by
+          have hh := congrArg trainCyclicPred hsk
+          rw [trainCyclicPred_cyclicSucc_of_two_le hn j] at hh
+          exact hh
+        have hHere : changed j = a := by
+          rw [hjPred]
+          exact hChangedPred
+        have hThere : changed (cyclicSucc j) = a := by
+          rw [hsk]
+          exact hChangedK
+        exact False.elim (hNew (hHere.trans hThere.symm))
+      · apply (mem_cyclicOwnerCutPositions_iff owner j).mpr
+        simpa [changed, cyclicReplaceOwner, hjk, hsk] using hNew
+  have hOldPred : trainCyclicPred k ∈ oldCuts := by
+    apply (mem_cyclicOwnerCutPositions_iff owner (trainCyclicPred k)).mpr
+    rw [cyclicSucc_trainCyclicPred_of_two_le hn k, hPrev]
+    exact hOld.symm
+  have hNewPred : trainCyclicPred k ∉ newCuts := by
+    intro hp
+    have hh :=
+      (mem_cyclicOwnerCutPositions_iff changed (trainCyclicPred k)).mp hp
+    rw [cyclicSucc_trainCyclicPred_of_two_le hn k] at hh
+    exact hh (hChangedPred.trans hChangedK.symm)
+  have hNe : newCuts ≠ oldCuts := by
+    intro heq
+    apply hNewPred
+    rw [heq]
+    exact hOldPred
+  have hProper : newCuts ⊂ oldCuts := lt_of_le_of_ne hSub hNe
+  have hCard : newCuts.card < oldCuts.card :=
+    Finset.card_lt_card hProper
+  calc
+    cyclicOwnerChanges (cyclicReplaceOwner owner k a) =
+        (cyclicOwnerCutPositions changed).card :=
+      (cyclicOwnerCutPositions_card changed).symm
+    _ < (cyclicOwnerCutPositions owner).card := hCard
+    _ = cyclicOwnerChanges owner := cyclicOwnerCutPositions_card owner
+
 section GeometricCoreAbsorption
 
 open StructuralRamsey.RelStructure
@@ -180,6 +250,54 @@ theorem attachedSelectedPicture_minimal_no_absorbable_core_right
   have hDrop := cyclicOwnerChanges_absorb_right
     K.length_ge_two owner k (Sum.inl i : I ⊕ CoreEdge)
     hNext hOld hPrev
+  have hMin := hMinimal alternative hAltAllowed
+  exact (Nat.not_lt_of_ge hMin) hDrop
+
+/-- Likewise, a minimum geometric owner assignment cannot place
+a core-edge singleton immediately AFTER a standard that contains it.
+This is the other orientation of the necessary no-improvement condition. -/
+theorem attachedSelectedPicture_minimal_no_absorbable_core_left
+    {n : ℕ} (K : (Out).BigCycle n)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ k : Fin n, GeomAllowed (K.label k) (owner k))
+    (hMinimal : ∀ other : Fin n → I ⊕ CoreEdge,
+      (∀ k : Fin n, GeomAllowed (K.label k) (other k)) →
+      cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
+    (k : Fin n) (b : CoreEdge) (i : I)
+    (hCore : owner k = Sum.inr b)
+    (hPrev : owner (trainCyclicPred k) = Sum.inl i)
+    (hInStandard : (Out).carrier (K.label k) ⊆
+      copyCarrier (Std i)) : False := by
+  classical
+  have hOld : owner k ≠ Sum.inl i := by
+    rw [hCore]
+    intro h
+    cases h
+  have hNext : owner k ≠ owner (cyclicSucc k) := by
+    have hIsolated :=
+      attachedSelectedPicture_geometric_core_owner_isolated
+        A hA B D C family selected e R f T U hShared μ
+        K owner hAllowed k b hCore
+    intro heq
+    apply hIsolated.2
+    calc
+      owner (cyclicSucc k) = owner k := heq.symm
+      _ = Sum.inr b := hCore
+  let alternative :=
+    cyclicReplaceOwner owner k (Sum.inl i : I ⊕ CoreEdge)
+  have hAltAllowed : ∀ j : Fin n,
+      GeomAllowed (K.label j) (alternative j) := by
+    intro j
+    by_cases hj : j = k
+    · subst j
+      simpa [alternative, cyclicReplaceOwner] using hInStandard
+    · have hSame : alternative j = owner j := by
+        simp [alternative, cyclicReplaceOwner, hj]
+      rw [hSame]
+      exact hAllowed j
+  have hDrop := cyclicOwnerChanges_absorb_left
+    K.length_ge_two owner k (Sum.inl i : I ⊕ CoreEdge)
+    hPrev hOld hNext
   have hMin := hMinimal alternative hAltAllowed
   exact (Nat.not_lt_of_ge hMin) hDrop
 
