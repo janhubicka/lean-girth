@@ -43,19 +43,19 @@ theorem cyclicOwnerCut_four_cases
             intro hEq
             subst j
             exact hCut (hLeft.trans hRight.symm)
-          exact Or.inl ⟨i, j, hij, hLeft, hRight⟩
+          exact Or.inl ⟨i, j, hij, rfl, hRight⟩
       | inr b =>
-          exact Or.inr (Or.inl ⟨i, b, hLeft, hRight⟩)
+          exact Or.inr (Or.inl ⟨i, b, rfl, hRight⟩)
   | inr b =>
       cases hRight : owner (cyclicSucc k) with
       | inl i =>
-          exact Or.inr (Or.inr (Or.inl ⟨b, i, hLeft, hRight⟩))
+          exact Or.inr (Or.inr (Or.inl ⟨b, i, rfl, hRight⟩))
       | inr c =>
           have hbc : b ≠ c := by
             intro hEq
             subst c
             exact hCut (hLeft.trans hRight.symm)
-          exact Or.inr (Or.inr (Or.inr ⟨b, c, hbc, hLeft, hRight⟩))
+          exact Or.inr (Or.inr (Or.inr ⟨b, c, hbc, rfl, hRight⟩))
 
 /-- Membership in the genuine finite cut set yields the exhaustive
 boundary-type split, with no extra owner-distinctness hypothesis. -/
