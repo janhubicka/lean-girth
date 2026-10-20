@@ -242,7 +242,8 @@ theorem attachedSelectedPicture_minimal_no_absorbable_core_right
     intro j
     by_cases hj : j = k
     · subst j
-      simpa [alternative, cyclicReplaceOwner] using hInStandard
+      change (Out).carrier (K.label k) ⊆ copyCarrier (Std i)
+      exact hInStandard
     · have hSame : alternative j = owner j := by
         simp [alternative, cyclicReplaceOwner, hj]
       rw [hSame]
@@ -290,7 +291,8 @@ theorem attachedSelectedPicture_minimal_no_absorbable_core_left
     intro j
     by_cases hj : j = k
     · subst j
-      simpa [alternative, cyclicReplaceOwner] using hInStandard
+      change (Out).carrier (K.label k) ⊆ copyCarrier (Std i)
+      exact hInStandard
     · have hSame : alternative j = owner j := by
         simp [alternative, cyclicReplaceOwner, hj]
       rw [hSame]
