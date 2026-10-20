@@ -1,0 +1,7 @@
+import Girth.TrainSelectedCycleGeometricVertex
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_standard_core_vertex
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_vertex_two_standards
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_vertex_standard_core
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_vertex_core_standard
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_vertex_core_core
