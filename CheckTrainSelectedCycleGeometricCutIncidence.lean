@@ -1,0 +1,4 @@
+import Girth.TrainSelectedCycleGeometricCutIncidence
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_vertex_cut_incidence
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_wagon_cut_incidence
