@@ -11,7 +11,7 @@ import Girth.TrainCyclicOwnerRuns
 example :
     StructuralRamsey.Girth.cyclicOwnerChanges
         (fun _ : Fin 4 => (7 : Nat)) = 0 := by
-  exact (StructuralRamsey.Girth.cyclicOwnerChanges_eq_zero_iff_constant
+  exact (StructuralRamsey.Girth.cyclicOwnerChanges_zero_iff_constant
     (by decide) (fun _ : Fin 4 => (7 : Nat))).mpr
       ⟨7, by intro; rfl⟩
 
