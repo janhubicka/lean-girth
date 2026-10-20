@@ -242,6 +242,9 @@ theorem attachedSelectedPicture_minimal_no_absorbable_core_right
     intro j
     by_cases hj : j = k
     · subst j
+      have hChoice : alternative k = Sum.inl i := by
+        simp [alternative, cyclicReplaceOwner]
+      rw [hChoice]
       change (Out).carrier (K.label k) ⊆ copyCarrier (Std i)
       exact hInStandard
     · have hSame : alternative j = owner j := by
@@ -291,6 +294,9 @@ theorem attachedSelectedPicture_minimal_no_absorbable_core_left
     intro j
     by_cases hj : j = k
     · subst j
+      have hChoice : alternative k = Sum.inl i := by
+        simp [alternative, cyclicReplaceOwner]
+      rw [hChoice]
       change (Out).carrier (K.label k) ⊆ copyCarrier (Std i)
       exact hInStandard
     · have hSame : alternative j = owner j := by
