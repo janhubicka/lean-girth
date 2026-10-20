@@ -139,7 +139,7 @@ theorem attachedSelectedPicture_geometric_vertex_standard_core
     change x ∈ (CoreActual b).1 at hh
     exact hh
   exact attachedSelectedPicture_geometric_standard_core_vertex
-    A hA C e R f i b x hxStd hxCore
+    A hA D C e R f i b x hxStd hxCore
 
 /-- Reverse orientation: singleton core edge followed by a geometric
 standard owner. It has the same actual witness-core vertex. -/
@@ -169,7 +169,7 @@ theorem attachedSelectedPicture_geometric_vertex_core_standard
     change x ∈ (CoreActual b).1 at hh
     exact hh
   exact attachedSelectedPicture_geometric_standard_core_vertex
-    A hA C e R f i b x hxStd hxCore
+    A hA D C e R f i b x hxStd hxCore
 
 /-- Two geometric core-edge owners denote the corresponding literal
 physical core edges. A vertex boundary has their common witness
