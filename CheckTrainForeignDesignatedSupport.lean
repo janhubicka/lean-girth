@@ -1,0 +1,5 @@
+import Girth.TrainForeignDesignatedSupport
+
+#print axioms StructuralRamsey.Girth.designated_active_source_edges_eq
+#print axioms StructuralRamsey.Girth.foreign_designated_source_edges_eq
+#print axioms StructuralRamsey.Girth.foreign_designated_two_edges_not_contained
