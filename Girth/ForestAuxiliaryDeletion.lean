@@ -162,20 +162,21 @@ theorem ForestOfCopies.erase_subsingletonCarrier
     by_cases hi : i = center <;> simp [G, hi]
   have hOne : (G center).IsOneEdge := by
     simp [G, HypergraphPiece.IsOneEdge]
+  have hSmallG : (G center).carrier.Subsingleton := by
+    rw [hCarrier center]
+    exact hSmall
   have hPair : PairwiseAllowed G := by
     intro i j hij
     by_cases hi : i = center
-    · left
+    · subst i
+      left
       intro x hx y hy
-      apply hSmall
-      · simpa [hCarrier i, hi] using hx.1
-      · simpa [hCarrier i, hi] using hy.1
+      exact hSmallG hx.1 hy.1
     · by_cases hj : j = center
-      · left
+      · subst j
+        left
         intro x hx y hy
-        apply hSmall
-        · simpa [hCarrier j, hj] using hx.2
-        · simpa [hCarrier j, hj] using hy.2
+        exact hSmallG hx.2 hy.2
       · simpa [G, hi, hj] using hF.pairwiseAllowed hij
   let JG : JoinTree G :=
     { tree := J.tree
@@ -187,7 +188,8 @@ theorem ForestOfCopies.erase_subsingletonCarrier
             {i : ι | x ∈ (F i).carrier} := by
           ext i
           simp only [Set.mem_setOf_eq, hCarrier i]
-        simpa only [hOcc] using J.running x }
+        rw [hOcc]
+        exact J.running x }
   have hG : ForestOfCopies G := ⟨hPair, Or.inr ⟨JG⟩⟩
   have hErased := hG.erase_oneEdge JG hOne
   have hAgree : erasePiece G center = erasePiece F center := by
