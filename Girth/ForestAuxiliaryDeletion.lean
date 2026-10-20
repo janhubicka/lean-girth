@@ -132,4 +132,70 @@ theorem ForestOfCopies.restrict_of_oneEdge_outside
         exact Subtype.ext rfl }
   exact hBase.reindex e
 
+
+/-- A temporary singleton separator can be removed from a forest, even if
+its unique vertex is isolated in every genuine support piece.
+
+The proof regards the singleton as a *formal* one-edge piece on its own
+carrier, uses the already verified one-edge deletion theorem, and then
+forgets the formal edge. The formal edge is not an ambient hyperedge, and
+no uniformity assertion is made about the intermediate family. -/
+theorem ForestOfCopies.erase_subsingletonCarrier
+    {F : ι → HypergraphPiece W} [Fintype ι]
+    (hF : ForestOfCopies F)
+    (J : JoinTree F)
+    {center : ι}
+    (hSmall : (F center).carrier.Subsingleton) :
+    ForestOfCopies (erasePiece F center) := by
+  classical
+  let G : ι → HypergraphPiece W := fun i =>
+    if h : i = center then
+      { carrier := (F i).carrier
+        edges := {(F i).carrier}
+        edge_subset_carrier := by
+          intro e he
+          have heq : e = (F i).carrier := Set.mem_singleton_iff.mp he
+          simpa [heq] }
+    else F i
+  have hCarrier (i : ι) :
+      (G i).carrier = (F i).carrier := by
+    by_cases hi : i = center <;> simp [G, hi]
+  have hOne : (G center).IsOneEdge := by
+    simp [G, HypergraphPiece.IsOneEdge]
+  have hPair : PairwiseAllowed G := by
+    intro i j hij
+    by_cases hi : i = center
+    · left
+      intro x hx y hy
+      apply hSmall
+      · simpa [hCarrier i, hi] using hx.1
+      · simpa [hCarrier i, hi] using hy.1
+    · by_cases hj : j = center
+      · left
+        intro x hx y hy
+        apply hSmall
+        · simpa [hCarrier j, hj] using hx.2
+        · simpa [hCarrier j, hj] using hy.2
+      · simpa [G, hi, hj] using hF.pairwiseAllowed hij
+  let JG : JoinTree G :=
+    { tree := J.tree
+      isTree := J.isTree
+      running := by
+        intro x
+        have hOcc :
+            {i : ι | x ∈ (G i).carrier} =
+            {i : ι | x ∈ (F i).carrier} := by
+          ext i
+          simp only [Set.mem_setOf_eq, hCarrier i]
+        simpa only [hOcc] using J.running x }
+  have hG : ForestOfCopies G := ⟨hPair, Or.inr ⟨JG⟩⟩
+  have hErased := hG.erase_oneEdge JG hOne
+  have hAgree : erasePiece G center = erasePiece F center := by
+    funext z
+    have hz : z.1 ≠ center := by
+      simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using z.2
+    simp [erasePiece, G, hz]
+  rw [hAgree] at hErased
+  exact hErased
+
 end StructuralRamsey.Girth
