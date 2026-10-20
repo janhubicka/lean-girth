@@ -105,6 +105,8 @@ theorem attachedSelectedPicture_geometric_vertex_cut_incidence
         A hA B D C family selected e R f T U hShared μ
         K owner hAllowed k x b c hV hb hc⟩))
 
+include hRel
+
 /-- At EVERY genuine wagon cut, actual physical edges give one of the
 four witness-core wagon contacts. The old support witnesses are local
 to the appropriate copies; hShared and hRel are explicit assumptions. -/
