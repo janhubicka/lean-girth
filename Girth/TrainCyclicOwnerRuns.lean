@@ -149,7 +149,9 @@ theorem attachedSelectedPicture_minimal_zero_iff_one_standard
         (Out).carrier (K.label k) ⊆ copyCarrier (Std i) := by
   constructor
   · intro hZero
-    have hn : 0 < n := by omega
+    have hn : 0 < n := by
+      have hh := K.length_ge_two
+      omega
     obtain ⟨a, hConst⟩ :=
       (cyclicOwnerChanges_zero_iff_constant hn owner).mp hZero
     have hNotCore : ∀ b : CoreEdge, a ≠ Sum.inr b := by
