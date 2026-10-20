@@ -2,7 +2,9 @@ import Girth.TrainCyclicOwnerAbsorption
 
 #print axioms StructuralRamsey.Girth.cyclicSucc_ne_self_of_two_le
 #print axioms StructuralRamsey.Girth.cyclicOwnerChanges_absorb_right
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_absorb_left
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_minimal_no_absorbable_core_right
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_minimal_no_absorbable_core_left
 
 -- Two-occurrence wrap regression: absorbing the right neighbour
 -- collapses both original cyclic cuts.
