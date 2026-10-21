@@ -12,8 +12,8 @@ local index per DISTINCT requested support piece, avoiding insertion
 of duplicate one-edge requests entirely.
 
 After lifting, discard precisely those local request pieces which
-were not originally selected. Such a member must be a one-edge
-separator, so checked one-edge deletion applies. Original selected
+were not originally selected. Such a member is either a one-edge separator or a singleton
+separator, so certified finite mixed-auxiliary deletion applies. Original selected
 pieces are reindexed from their exact owner-dependent locations.
 
 This is the structural direct forest-increment repeated-owner kernel.
@@ -26,7 +26,7 @@ universe v
 variable {W Q N : Type v}
 
 /-- Local forests on distinct request images, containing every
-selected piece and the one-edge separators for all outer-tree
+selected piece and the short separators for all outer-tree
 neighbours, assemble into exactly the original selected forest.
 No duplicated separator labels or arbitrary subfamily restrictions. -/
 theorem selectedForest_of_distinctOwnerRequestImages
@@ -53,8 +53,9 @@ theorem selectedForest_of_distinctOwnerRequestImages
       ∀ n, (selected n).carrier ⊆ (P (owner n)).carrier)
     (hSeparatorContain :
       ∀ q r, (separator q r).carrier ⊆ (P q).carrier)
-    (hSeparatorOneEdge :
-      ∀ q r, (separator q r).IsOneEdge)
+    (hSeparatorShort :
+      ∀ q r, (separator q r).IsOneEdge ∨
+        (separator q r).carrier.Subsingleton)
     (hSeparatorCover :
       ∀ ⦃q r : Q⦄ (hadj : JOuter.tree.Adj q r),
         (P q).carrier ∩ (P r).carrier ⊆
@@ -135,9 +136,16 @@ theorem selectedForest_of_distinctOwnerRequestImages
     simpa [F, connector, hadj] using
       (show (separator q ⟨r, hadj⟩).IsOneEdge ∧
           (separator q ⟨r, hadj⟩).carrier =
-            (P q).carrier ∩ (P r).carrier from
-        ⟨hSeparatorOneEdge q ⟨r, hadj⟩,
-          hSeparatorExact hadj hBig⟩)
+            (P q).carrier ∩ (P r).carrier from by
+        have hExact := hSeparatorExact hadj hBig
+        have hOne : (separator q ⟨r, hadj⟩).IsOneEdge := by
+          rcases hSeparatorShort q ⟨r, hadj⟩ with hOne | hSmall
+          · exact hOne
+          · exfalso
+            apply hBig
+            rw [← hExact]
+            exact hSmall
+        exact ⟨hOne, hExact⟩)
   have hJoined :
       ForestOfCopies (fun z : Sigma K => F z.1 z.2) :=
     forestOfCopies_lift_local_of_linear
@@ -156,7 +164,8 @@ theorem selectedForest_of_distinctOwnerRequestImages
     exact Finset.mem_image.mpr ⟨n, Finset.mem_univ _, rfl⟩
   have hAux :
       ∀ z : Sigma K, z ∉ keep →
-        (F z.1 z.2).IsOneEdge := by
+        (F z.1 z.2).IsOneEdge ∨
+        (F z.1 z.2).carrier.Subsingleton := by
     intro z hz
     rcases z with ⟨q, k⟩
     have hk : (k.1 : HypergraphPiece W) ∈
@@ -182,12 +191,12 @@ theorem selectedForest_of_distinctOwnerRequestImages
           simpa [R] using ht.symm
         change (k.1 : HypergraphPiece W).IsOneEdge
         rw [hkPiece]
-        exact hSeparatorOneEdge q r
+        exact hSeparatorShort q r
   have hKept :
       ForestOfCopies
         (fun z : {z : Sigma K // z ∈ keep} =>
           F z.1.1 z.1.2) :=
-    hJoined.restrict_of_oneEdge_outside keep hAux
+    hJoined.restrict_of_shortAuxiliary_outside keep hAux
   let label : N → {z : Sigma K // z ∈ keep} :=
     fun n => ⟨selectedLabel n, hKeep n⟩
   have hLabelBij : Function.Bijective label := by
