@@ -200,4 +200,98 @@ theorem ForestOfCopies.erase_subsingletonCarrier
   rw [hAgree] at hErased
   exact hErased
 
+
+/-- Delete a finite family of auxiliary pieces which are each either
+one-edge pieces or have subsingleton carriers.  This is the exact
+temporary-member cleanup operation in the strengthened covered-family
+lemma: singleton requests need no incident support edge.
+
+No arbitrary subfamily heredity is asserted; all removed members satisfy
+one of these two deletion-safe hypotheses. -/
+theorem ForestOfCopies.restrict_compl_of_shortAuxiliary
+    {F : ι → HypergraphPiece W} [Fintype ι]
+    (hF : ForestOfCopies F)
+    (removed : Finset ι)
+    (hShort : ∀ i : ι, i ∈ removed →
+      (F i).IsOneEdge ∨ (F i).carrier.Subsingleton) :
+    ForestOfCopies
+      (fun i : {i : ι // i ∉ removed} => F i.1) := by
+  classical
+  induction removed using Finset.induction_on with
+  | empty =>
+      let e : {i : ι // i ∉ (∅ : Finset ι)} ≃ ι :=
+        { toFun := Subtype.val
+          invFun := fun i => ⟨i, by simp⟩
+          left_inv := by
+            intro i
+            exact Subtype.ext rfl
+          right_inv := by intro i; rfl }
+      simpa [e] using hF.reindex e
+  | @insert center removed hnot ih =>
+      have hShortRest :
+          ∀ i : ι, i ∈ removed →
+            (F i).IsOneEdge ∨ (F i).carrier.Subsingleton := by
+        intro i hi
+        exact hShort i (Finset.mem_insert_of_mem hi)
+      have hPrev :
+          ForestOfCopies
+            (fun i : {i : ι // i ∉ removed} => F i.1) :=
+        ih hShortRest
+      let oldI := {i : ι // i ∉ removed}
+      let c : oldI := ⟨center, hnot⟩
+      letI : Nonempty oldI := ⟨c⟩
+      let J : JoinTree
+          (fun i : oldI => F i.1) :=
+        Classical.choice hPrev.joinTree_of_nonempty
+      have hc : (F c.1).IsOneEdge ∨
+          (F c.1).carrier.Subsingleton :=
+        hShort center (Finset.mem_insert_self _ _)
+      have hErased :
+          ForestOfCopies
+            (erasePiece (fun i : oldI => F i.1) c) := by
+        rcases hc with hOne | hSmall
+        · exact hPrev.erase_oneEdge J hOne
+        · exact hPrev.erase_subsingletonCarrier J hSmall
+      let surviving := {i : ι // i ∉ insert center removed}
+      let erased := {i : oldI // i ∈ (({c} : Set oldI)ᶜ)}
+      let e : surviving ≃ erased :=
+        { toFun := fun i =>
+            ⟨⟨i.1, by
+                intro hi
+                exact i.2 (Finset.mem_insert_of_mem hi)⟩,
+              by
+                change
+                  (⟨i.1, by
+                    intro hi
+                    exact i.2 (Finset.mem_insert_of_mem hi)⟩ : oldI) ≠ c
+                intro h
+                have hv : i.1 = center := congrArg Subtype.val h
+                exact i.2 (by simp [hv])⟩
+          invFun := fun i =>
+            ⟨i.1.1, by
+              have hne : i.1 ≠ c := by
+                simpa only [Set.mem_compl_iff, Set.mem_singleton_iff]
+                  using i.2
+              have hval : i.1.1 ≠ center := by
+                intro hv
+                apply hne
+                apply Subtype.ext
+                exact hv
+              intro hmem
+              rcases Finset.mem_insert.mp hmem with heq | hrest
+              · exact hval heq
+              · exact i.1.2 hrest⟩
+          left_inv := by
+            intro i
+            exact Subtype.ext rfl
+          right_inv := by
+            intro i
+            apply Subtype.ext
+            apply Subtype.ext
+            rfl }
+      change ForestOfCopies (fun i : surviving => F i.1)
+      exact hErased.reindex e
+
+
+
 end StructuralRamsey.Girth
