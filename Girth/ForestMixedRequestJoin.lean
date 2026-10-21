@@ -116,7 +116,8 @@ theorem selectedForest_of_mixedRequestJoin
   exact selectedForest_of_distinctOwnerRequestImages
     hOuter JOuter hLinear owner hSurj selected hSelectedInj
     separator hDistinctRequestForest
-    hSelectedContain hSeparatorContain hSeparatorOneEdge
+    hSelectedContain hSeparatorContain
+    (fun q r => Or.inl (hSeparatorOneEdge q r))
     hSeparatorCover hSeparatorExact
 
 end StructuralRamsey.Girth
