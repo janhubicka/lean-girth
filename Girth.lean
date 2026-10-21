@@ -43,6 +43,7 @@ import Girth.ForestCompletionOwnerAssembly
 import Girth.ForestCompletionKeepPieces
 import Girth.ForestJoinGlue
 import Girth.ForestAttach
+import Girth.ForestSingletonAttachment
 import Girth.ForestCarrierCorner
 import Girth.ForestFreshCarrier
 import Girth.ForestJoinLift
