@@ -294,4 +294,44 @@ theorem ForestOfCopies.restrict_compl_of_shortAuxiliary
 
 
 
+
+/-- A finite family of selected pieces remains a forest if every unselected
+auxiliary is either a genuine one-edge member or has subsingleton carrier.
+This is the labelled-set form needed by the strengthened join-tree lift. -/
+theorem ForestOfCopies.restrict_of_shortAuxiliary_outside
+    {F : ι → HypergraphPiece W} [Fintype ι]
+    (hF : ForestOfCopies F)
+    (keep : Finset ι)
+    (hShort : ∀ i : ι, i ∉ keep →
+      (F i).IsOneEdge ∨ (F i).carrier.Subsingleton) :
+    ForestOfCopies
+      (fun i : {i : ι // i ∈ keep} => F i.1) := by
+  classical
+  let removed : Finset ι := Finset.univ \ keep
+  have hRemoved :
+      ∀ i : ι, i ∈ removed →
+        (F i).IsOneEdge ∨ (F i).carrier.Subsingleton := by
+    intro i hi
+    apply hShort i
+    simpa [removed] using hi
+  have hBase :=
+    hF.restrict_compl_of_shortAuxiliary removed hRemoved
+  let e :
+      {i : ι // i ∈ keep} ≃ {i : ι // i ∉ removed} :=
+    { toFun := fun i =>
+        ⟨i.1, by
+          simpa [removed] using i.2⟩
+      invFun := fun i =>
+        ⟨i.1, by
+          simpa [removed] using i.2⟩
+      left_inv := by
+        intro i
+        exact Subtype.ext rfl
+      right_inv := by
+        intro i
+        exact Subtype.ext rfl }
+  exact hBase.reindex e
+
+
+
 end StructuralRamsey.Girth
