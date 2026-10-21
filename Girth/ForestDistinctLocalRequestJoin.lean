@@ -189,7 +189,8 @@ theorem selectedForest_of_distinctOwnerRequestImages
     | inr r =>
         have hkPiece : (k.1 : HypergraphPiece W) = separator q r := by
           simpa [R] using ht.symm
-        change (k.1 : HypergraphPiece W).IsOneEdge
+        change (k.1 : HypergraphPiece W).IsOneEdge ∨
+          (k.1 : HypergraphPiece W).carrier.Subsingleton
         rw [hkPiece]
         exact hSeparatorShort q r
   have hKept :
