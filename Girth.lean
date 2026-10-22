@@ -376,3 +376,4 @@ import Girth.TrainActualCutConnectorLift
 import Girth.TrainCoreContactReflection
 import Girth.TrainCoreCopyVertexCoverage
 import Girth.TrainActualCoreRestrictionMap
+import Girth.TrainGeometricWagonCutTargetIncidence
