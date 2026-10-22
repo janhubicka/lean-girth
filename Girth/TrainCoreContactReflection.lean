@@ -62,7 +62,7 @@ local notation "CoreActual" => (fun (b : CoreEdge) =>
     (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
 local notation "Wit" => sharedWitnessOrderOneData U μ
   (sharedOldACarrierCoreEmbedding A C.toRelStructure S R f)
-  (fun b : CoreEdge => b.1)
+  (Subtype.val : CoreEdge → Set Y)
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
