@@ -368,3 +368,4 @@ import Girth.TrainBoundaryPairSharedOldACopy
 import Girth.TrainPhysicalAEdgeCoreBoundary
 import Girth.TrainCyclicRestriction
 import Girth.TrainCutIndexedWord
+import Girth.TrainCoreWagonEmbedding
