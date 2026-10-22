@@ -107,7 +107,7 @@ private theorem predecessor_value_of_positive {n : ℕ} (k : Fin n)
   have hsum : k.val + n - 1 = (k.val - 1) + n := by omega
   have hlt : k.val - 1 < n := by omega
   rw [hsum]
-  simp [Nat.add_mod, Nat.mod_eq_of_lt hlt]
+  simp [Nat.mod_eq_of_lt hlt]
 
 private theorem predecessor_value_of_zero {n : ℕ} (k : Fin n)
     (hk : k.val = 0) : (trainCyclicPred k).val = n - 1 := by
@@ -253,7 +253,7 @@ theorem twiceWeight_restrict_le {m n : ℕ} (hn : 2 ≤ n)
         then weight (cyclicSucc (f j)) else 0 := by
     by_cases h : f (cyclicSucc j) = cyclicSucc (f j)
     · simp [h, weight]
-    · rw [if_pos h]
+    · rw [ite_eq_left h]
       have hOutput := twiceOccurrenceWeight_le_two
         (kind (f j)) (kind (f (cyclicSucc j)))
       have hFirst := twiceOccurrenceWeight_one_le
@@ -366,6 +366,8 @@ namespace RestrictionMap
 
 variable {n m : ℕ} {C : D.BigCycle n} {B : D'.BigCycle m}
   (R : C.RestrictionMap B)
+
+include R
 
 /-- Retaining distinct positions cannot increase the cycle length. -/
 theorem length_le : m ≤ n := by
@@ -487,7 +489,7 @@ theorem A3 (hA2 : C.A2) (hA3 : C.A3) : B.A3 := by
       R.position k (B.InWagonAt p)
     intro j hj
     exact hk (R.position j) (R.contact_source p j hj)
-  · push_neg at hSourceAbsent
+  · push Not at hSourceAbsent
     obtain ⟨k, hk⟩ := hSourceAbsent
     apply CyclicRestriction.restrict_deleted_neighbour_window B.length_ge_two
       R.position k (R.source_wagon_deleted p hAbsent k hk) (B.InWagonAt p)
