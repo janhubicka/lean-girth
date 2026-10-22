@@ -371,3 +371,5 @@ import Girth.TrainCyclicRestriction
 import Girth.TrainCutIndexedWord
 import Girth.TrainCoreWagonEmbedding
 import Girth.TrainCoreWagonBridge
+import Girth.TrainSelectedWagonCutCoreMap
+import Girth.TrainActualCutConnectorLift
