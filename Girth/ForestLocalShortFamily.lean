@@ -81,8 +81,8 @@ theorem exists_port_of_shortLocalRequest
     (match port i with
     | none => (selected i).carrier ∩ Set.univ = ∅
     | some (.inl e) => (selected i).carrier ∩ Set.univ = edge e
-    | some (.inr x) => (selected i).carrier ∩ Set.univ = {x})
-  simpa only [Set.inter_univ] using h
+    | some (.inr v) => (selected i).carrier ∩ Set.univ = {id v})
+  simpa [id] using h
 
 /-- The mixed local family of genuine edge requests and edge-free singleton
 requests is a forest when its DISTINCT physical support edges have local
