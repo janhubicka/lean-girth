@@ -77,7 +77,15 @@ theorem exists_port_of_shortLocalRequest
       | some (.inl e) => (selected i).carrier = edge e
       | some (.inr x) => (selected i).carrier = {x}) :=
     Classical.choose_spec (hChoice i)
-  simpa only [Set.inter_univ, id] using h
+  -- Split the chosen port. These branches are syntactically distinct
+  -- match alternatives, so no fragile definitional equality of matches
+  -- is required before simplifying the trivial universe intersection.
+  cases hp : port i with
+  | none => simpa [hp] using h
+  | some q =>
+      cases q with
+      | inl e => simpa [hp] using h
+      | inr x => simpa [hp] using h
 
 /-- The mixed local family of genuine edge requests and edge-free singleton
 requests is a forest when its DISTINCT physical support edges have local
