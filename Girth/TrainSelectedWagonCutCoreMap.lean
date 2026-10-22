@@ -75,7 +75,7 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μ
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-  (fun ν j p q h => (hRel ν j p q).mp h)
+  (fun ν j p q h => Iff.mp (hRel ν j p q) h)
   hShared μ
 
 include hRel
@@ -89,7 +89,7 @@ theorem attachedSelectedPicture_geometric_wagon_cut_in_core_range
     (owner : Fin n → I ⊕ CoreEdge)
     (hAllowed : ∀ k : Fin n, GeomAllowed (K.label k) (owner k))
     (k : Fin n)
-    (W : Quotient (Train.wagonSetoid μ))
+    (W : Quotient ((Train).wagonSetoid μ))
     (hW : K.connector k = Sum.inr W)
     (hCut : owner k ≠ owner (cyclicSucc k)) :
     ∃ c : Quotient (U.wagonSetoid μ), CoreWagon c = W := by
