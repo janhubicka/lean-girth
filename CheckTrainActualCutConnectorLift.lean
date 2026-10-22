@@ -1,0 +1,5 @@
+import Girth.TrainActualCutConnectorLift
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_cut_connector_lift
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cutConnector
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cutConnector_eq
