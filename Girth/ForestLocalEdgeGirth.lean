@@ -48,7 +48,7 @@ theorem forest_oneEdge_family_of_girthGT
   have hLinear : LinearEdgeSet K := by
     intro e f he hf hne
     exact pairwise_subsingleton_of_girthGT_two
-      (hGirth.mono hm) he hf hne
+      (girthGT_mono hGirth hm) he hf hne
   have hBoundary :
       ∀ i, SmallOrWholeEdgeBoundary K S (selected i) := by
     intro i
