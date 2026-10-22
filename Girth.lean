@@ -69,6 +69,7 @@ import Girth.ClosureLift
 import Girth.ElementaryClosureAmalgam
 import Girth.ForestGirth
 import Girth.ForestStar
+import Girth.ForestCenteredShortRequests
 import Girth.CarrierForestGirth
 import Girth.RestrictedForestGirth
 import Girth.ForestIncidenceAcyclic
