@@ -28,8 +28,8 @@ private theorem designated_incident (labels : ℕ) (i : Fin labels)
   | inl x => exact Set.mem_univ x
   | inr p =>
       fin_cases p
-      · exact ⟨0, Set.mem_univ _, by decide⟩
-      · exact ⟨1, Set.mem_univ _, by decide⟩
+      · exact ⟨0, Set.mem_univ _, rfl⟩
+      · exact ⟨1, Set.mem_univ _, rfl⟩
 
 def source : (data 5).BigCycle 5 where
   length_ge_two := by decide
@@ -41,9 +41,36 @@ def source : (data 5).BigCycle 5 where
   right_incident := fun i => designated_incident 5 (cyclicSucc i) _
 
 theorem source_acceptable : source.Acceptable := by
-  simp only [BigCycle.Acceptable, BigCycle.A1, BigCycle.A2, BigCycle.A3,
-    BigCycle.InWagonAt, WagonVertex, PairEdge, designated, source, data,
-    Set.mem_singleton_iff] <;> decide
+  refine ⟨?_, ⟨?_, ?_⟩, ?_⟩
+  · intro _
+    exact ⟨0, trivial⟩
+  · intro i p hi j hj
+    obtain ⟨x, hx, hpx⟩ := hj
+    obtain ⟨e, hep, hxe⟩ := hpx
+    have hxe' : x = e := hxe
+    subst e
+    fin_cases i <;> fin_cases p <;> simp [source] at hi
+    fin_cases j <;> fin_cases x <;>
+      simp_all [source, data, cyclicSucc, trainCyclicPred]
+  · intro i p x y _ hx hy hDifferent _ _ hPair
+    obtain ⟨e, hxe, hye⟩ := hPair
+    have hxe' : x = e := hxe
+    have hye' : y = e := hye
+    have hxy : x = y := hxe'.trans hye'.symm
+    apply hDifferent
+    apply source.connector_injective
+    exact hx.trans ((congrArg (Sum.inl : Fin 4 → Fin 4 ⊕ Fin 2) hxy).trans hy.symm)
+  · intro p hAbsent
+    fin_cases p
+    · exact False.elim (hAbsent 0 rfl)
+    · refine ⟨(2 : Fin 5), ?_⟩
+      intro j hj
+      obtain ⟨x, hx, hpx⟩ := hj
+      obtain ⟨e, hep, hxe⟩ := hpx
+      have hxe' : x = e := hxe
+      subst e
+      fin_cases j <;> fin_cases x <;>
+        simp_all [source, data, cyclicSucc]
 
 def keepVertices : Fin 4 ↪o Fin 5 where
   toFun j := j.succ
