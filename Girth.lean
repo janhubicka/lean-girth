@@ -223,6 +223,7 @@ import Girth.ForestDistinctBoundarySkeleton
 import Girth.ForestDistinctBoundaryNoSelectedCycle
 import Girth.ForestDistinctBoundaryGirth
 import Girth.ForestDistinctBoundaryComplete
+import Girth.ForestLocalShortFamily
 import Girth.ForestDistinctBoundaryAllCore
 import Girth.ForestDistinctBoundaryCanonical
 import Girth.ForestDistinctOwnersFinal
