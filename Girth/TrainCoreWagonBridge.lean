@@ -61,12 +61,12 @@ theorem generatedActualASupportTrain_standard_shared_wagon_eq
     (i : I) (a : OldACarrierEdge A B)
     (s : SharedOldACarrierEdge A B S)
     (hOld : oldTrain.rel μ (inOld s) a) :
-    Quotient.mk (Gen.wagonSetoid μ) (Std i a) =
-      Quotient.mk (Gen.wagonSetoid μ) (CoreImage (inCore i s)) := by
+    Quotient.mk ((Gen).wagonSetoid μ) (Std i a) =
+      Quotient.mk ((Gen).wagonSetoid μ) (CoreImage (inCore i s)) := by
   have hOldReverse : oldTrain.rel μ a (inOld s) :=
     (oldTrain.equivalent μ).symm hOld
   have hOutput :
-      Gen.rel μ (Std i a) (Std i (inOld s)) :=
+      (Gen).rel μ (Std i a) (Std i (inOld s)) :=
     (generatedActualASupportTrain_restrict_standard
       A hA B S D f oldTrain coreTrain hRel hShared
       μ i a (inOld s)).2 hOldReverse
@@ -80,7 +80,7 @@ theorem generatedActualASupportTrain_standard_wagon_eq_coreEmbedding
     (i : I) (a : OldACarrierEdge A B)
     (s : SharedOldACarrierEdge A B S)
     (hOld : oldTrain.rel μ (inOld s) a) :
-    Quotient.mk (Gen.wagonSetoid μ) (Std i a) =
+    Quotient.mk ((Gen).wagonSetoid μ) (Std i a) =
       generatedActualASupportTrain_coreWagonEmbedding
         A hA B S D f oldTrain coreTrain
         (fun κ j p q h => (hRel κ j p q).mp h)
@@ -96,8 +96,8 @@ shared old edge. This avoids dropping W from an existential core tag. -/
 theorem generatedActualASupportTrain_standard_parent_eq_coreEmbedding
     (i : I) (a : OldACarrierEdge A B)
     (s : SharedOldACarrierEdge A B S)
-    (W : Quotient (Gen.wagonSetoid μ))
-    (hParent : Quotient.mk (Gen.wagonSetoid μ) (Std i a) = W)
+    (W : Quotient ((Gen).wagonSetoid μ))
+    (hParent : Quotient.mk ((Gen).wagonSetoid μ) (Std i a) = W)
     (hOld : oldTrain.rel μ (inOld s) a) :
     W =
       generatedActualASupportTrain_coreWagonEmbedding
