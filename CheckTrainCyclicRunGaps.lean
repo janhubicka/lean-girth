@@ -1,0 +1,7 @@
+import Girth.TrainCyclicRunGaps
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_no_cut_between_indexed
+#print axioms StructuralRamsey.Girth.cyclicOwner_no_cut_before_first
+#print axioms StructuralRamsey.Girth.cyclicOwner_no_cut_after_last
+#print axioms StructuralRamsey.Girth.cyclicOwner_constant_on_linear_interval
+#print axioms StructuralRamsey.Girth.cyclicOwner_constant_between_indexed_cuts

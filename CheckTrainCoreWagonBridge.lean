@@ -1,0 +1,6 @@
+import Girth.TrainCoreWagonBridge
+
+-- Physical standard/core equality, retained output wagon identity.
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_standard_shared_wagon_eq
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_standard_wagon_eq_coreEmbedding
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_standard_parent_eq_coreEmbedding

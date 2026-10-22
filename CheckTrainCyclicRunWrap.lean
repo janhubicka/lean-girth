@@ -1,0 +1,9 @@
+import Girth.TrainCyclicRunWrap
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_zero_eq_first_cut
+#print axioms StructuralRamsey.Girth.cyclicOwner_last_cut_successor_eq_zero
+#print axioms StructuralRamsey.Girth.cyclicOwner_wrap_start_eq_first_cut
+#print axioms StructuralRamsey.Girth.cyclicOwner_constant_on_wrap_run
+#print axioms StructuralRamsey.Girth.cyclicOwner_changes_ne_one
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunLabel_eq_next_cut
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunLabel_adjacent_ne

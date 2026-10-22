@@ -69,6 +69,7 @@ import Girth.ClosureLift
 import Girth.ElementaryClosureAmalgam
 import Girth.ForestGirth
 import Girth.ForestStar
+import Girth.ForestCenteredShortRequests
 import Girth.CarrierForestGirth
 import Girth.RestrictedForestGirth
 import Girth.ForestIncidenceAcyclic
@@ -224,6 +225,7 @@ import Girth.ForestDistinctBoundaryNoSelectedCycle
 import Girth.ForestDistinctBoundaryGirth
 import Girth.ForestDistinctBoundaryComplete
 import Girth.ForestLocalShortFamily
+import Girth.ForestLocalEdgeGirth
 import Girth.ForestDistinctBoundaryAllCore
 import Girth.ForestDistinctBoundaryCanonical
 import Girth.ForestDistinctOwnersFinal
@@ -365,3 +367,7 @@ import Girth.TrainSupremeVertexCoverage
 import Girth.TrainFourOccurrenceWagonCycle
 import Girth.TrainBoundaryPairSharedOldACopy
 import Girth.TrainPhysicalAEdgeCoreBoundary
+import Girth.TrainCyclicRestriction
+import Girth.TrainCutIndexedWord
+import Girth.TrainCoreWagonEmbedding
+import Girth.TrainCoreWagonBridge

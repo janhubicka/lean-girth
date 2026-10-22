@@ -1,0 +1,6 @@
+import Girth.TrainCyclicCutIndices
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_image
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_mem_iff
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_is_change
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_strictMono
