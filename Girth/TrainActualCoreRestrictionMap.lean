@@ -62,7 +62,7 @@ for actual core inclusion and genuine core-to-output wagon embedding.
 Thus any legal target big cycle with correctly transported connectors
 supplies an actual RestrictionMap. No label or cycle-transfer conclusion
 is added by the statement. -/
-theorem attachedSelectedPicture_core_restrictionMap
+noncomputable def attachedSelectedPicture_core_restrictionMap
     {n k : ℕ}
     (K : (Out).BigCycle n) (Z : (Wit).BigCycle k)
     (position : Fin k ↪o Fin n)
@@ -74,8 +74,11 @@ theorem attachedSelectedPicture_core_restrictionMap
     position := position
     vertex := CoreEmb
     wagon := CoreWagon
-    vertex_injective := CoreEmb.injective
-    wagon_injective := CoreWagon.injective
+    vertex_injective :=
+      (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f).injective
+    wagon_injective :=
+      (generatedActualASupportTrain_coreWagonEmbedding
+        A hA C.toRelStructure S R f T U hPreserve hShared μ).injective
     connector_eq := hConnector
     contact := ?_
     pair_reflect := ?_
