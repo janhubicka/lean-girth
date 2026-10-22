@@ -366,3 +366,4 @@ import Girth.TrainSupremeVertexCoverage
 import Girth.TrainFourOccurrenceWagonCycle
 import Girth.TrainBoundaryPairSharedOldACopy
 import Girth.TrainPhysicalAEdgeCoreBoundary
+import Girth.TrainCyclicRestriction
