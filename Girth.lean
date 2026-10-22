@@ -375,3 +375,4 @@ import Girth.TrainSelectedWagonCutCoreMap
 import Girth.TrainActualCutConnectorLift
 import Girth.TrainCoreContactReflection
 import Girth.TrainCoreCopyVertexCoverage
+import Girth.TrainActualCoreRestrictionMap
