@@ -71,7 +71,7 @@ theorem source_acceptable : source.Acceptable := by
       have hxe' : x = e := hxe
       subst e
       fin_cases j <;> fin_cases x <;>
-        simp_all [source, data, cyclicSucc]
+        simp [source, data, cyclicSucc] at hx hep ⊢
 
 def keepVertices : Fin 4 ↪o Fin 5 where
   toFun j := j.succ
