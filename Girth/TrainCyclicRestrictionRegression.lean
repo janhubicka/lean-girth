@@ -22,16 +22,28 @@ def data (labels : ℕ) : OrderOneData (Fin 4) (Fin 4) (Fin labels) (Fin 2) wher
   copyEdges _ := Set.univ
   parent e := if e = 0 ∨ e = 3 then 0 else 1
 
+private theorem designated_incident (labels : ℕ) (i : Fin labels)
+    (q : Fin 4 ⊕ Fin 2) : (data labels).Incident (Sum.inl i) q := by
+  cases q with
+  | inl x => exact Set.mem_univ x
+  | inr p =>
+      fin_cases p
+      · exact ⟨0, Set.mem_univ _, by decide⟩
+      · exact ⟨1, Set.mem_univ _, by decide⟩
+
 def source : (data 5).BigCycle 5 where
   length_ge_two := by decide
   label := Sum.inl
   connector := ![Sum.inr 0, Sum.inl 0, Sum.inl 1, Sum.inl 2, Sum.inl 3]
   adjacent_ne := by decide
   connector_injective := by decide
-  left_incident := by decide
-  right_incident := by decide
+  left_incident := fun i => designated_incident 5 i _
+  right_incident := fun i => designated_incident 5 (cyclicSucc i) _
 
-theorem source_acceptable : source.Acceptable := by decide
+theorem source_acceptable : source.Acceptable := by
+  simp only [BigCycle.Acceptable, BigCycle.A1, BigCycle.A2, BigCycle.A3,
+    BigCycle.InWagonAt, WagonVertex, PairEdge, designated, source, data,
+    Set.mem_singleton_iff] <;> decide
 
 def keepVertices : Fin 4 ↪o Fin 5 where
   toFun j := j.succ
@@ -49,7 +61,9 @@ def keepVertices : Fin 4 ↪o Fin 5 where
 def vertices : (data 4).BigCycle 4 :=
   source.restrictConnectorWord (D' := data 4) (by decide) keepVertices
     id id Sum.inl (fun j => Sum.inl j)
-    (by decide) (by decide) (by decide) (by decide)
+    (by decide) (by decide)
+    (fun j => designated_incident 4 j _)
+    (fun j => designated_incident 4 (cyclicSucc j) _)
 
 def verticesMap : source.RestrictionMap vertices where
   position := keepVertices
@@ -80,7 +94,9 @@ example : ∀ j : Fin 4, keepVertices j ≠ (0 : Fin 5) :=
 
 /-- The two contacts of the deleted source wagon are exactly the output
 last and first positions, not two positions in increasing linear order. -/
-example : ∀ j : Fin 4, vertices.InWagonAt 0 j ↔ j = 3 ∨ j = 0 := by decide
+example : ∀ j : Fin 4, vertices.InWagonAt 0 j ↔ j = 3 ∨ j = 0 := by
+  simp only [BigCycle.InWagonAt, WagonVertex, vertices,
+    BigCycle.restrictConnectorWord, data, Set.mem_singleton_iff] <;> decide
 
 def keepWagonAndSides : Fin 3 ↪o Fin 5 where
   toFun := ![0, 1, 4]
@@ -90,7 +106,9 @@ def keepWagonAndSides : Fin 3 ↪o Fin 5 where
 def wagonAndSides : (data 3).BigCycle 3 :=
   source.restrictConnectorWord (D' := data 3) (by decide) keepWagonAndSides
     id id Sum.inl ![Sum.inr 0, Sum.inl 0, Sum.inl 3]
-    (by decide) (by decide) (by decide) (by decide)
+    (by decide) (by decide)
+    (fun j => designated_incident 3 j _)
+    (fun j => designated_incident 3 (cyclicSucc j) _)
 
 def wagonAndSidesMap : source.RestrictionMap wagonAndSides where
   position := keepWagonAndSides
@@ -119,7 +137,8 @@ example : wagonAndSides.twiceOrder ≤ source.twiceOrder :=
 
 example : trainCyclicPred (0 : Fin 3) ≠ cyclicSucc 0 := by decide
 
-example : ¬ (data 3).PairEdge (3 : Fin 4) 0 := by decide
+example : ¬ (data 3).PairEdge (3 : Fin 4) 0 := by
+  simp only [PairEdge, data, Set.mem_singleton_iff] <;> decide
 
 end CyclicRestrictionRegression
 end StructuralRamsey.Girth.OrderOneData
