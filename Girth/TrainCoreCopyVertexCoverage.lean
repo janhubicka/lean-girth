@@ -46,11 +46,17 @@ theorem activeCoreWitness_vertex_mem_sharedCopy
   obtain ⟨s, hs⟩ :=
     activeCarrier_vertex_has_sharedOldAEdge A C α x.1 x.2
   refine ⟨s, ?_⟩
+  -- Expose the actual core carrier, rather than leaving the
+  -- shared-edge embedding subtype coercion opaque to rewriting.
+  change y ∈ (sharedOldACarrierCoreMap
+    A C.toRelStructure S R f i s).1
   have hImage :=
     sharedOldACarrierCoreMap_image A C.toRelStructure S R f i s
   have hCoreImage :
-      core y ∈ (fun z : Y => core z) ''
-        (sharedOldACarrierCoreEmbedding
+      (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f) y ∈
+        (fun z : Y =>
+          (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f) z) ''
+        (sharedOldACarrierCoreMap
           A C.toRelStructure S R f i s).1 := by
     rw [← hImage]
     refine ⟨x.1, hs, ?_⟩
