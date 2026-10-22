@@ -59,16 +59,30 @@ theorem exists_port_of_shortLocalRequest
           have hyx : y = x := by simpa using hy
           simpa [hyx] using hx
       · refine ⟨none, ?_⟩
-        exact Set.eq_empty_iff_forall_not_mem.mpr
-          (fun x hx => hNonempty ⟨x, hx⟩)
+        ext y
+        constructor
+        · intro hy
+          exact (hNonempty ⟨y, hy⟩).elim
+        · intro hy
+          simp at hy
     · refine ⟨some (.inl e), ?_⟩
       simp [he, HypergraphPiece.oneEdge]
   let port (i : I) : Option (E ⊕ W) :=
     Classical.choose (hChoice i)
   refine ⟨port, ?_⟩
   intro i
-  have h := Classical.choose_spec (hChoice i)
-  simpa [BoundaryPortExact, port, Set.inter_univ] using h
+  have h :
+      (match port i with
+      | none => (selected i).carrier = ∅
+      | some (.inl e) => (selected i).carrier = edge e
+      | some (.inr x) => (selected i).carrier = {x}) :=
+    Classical.choose_spec (hChoice i)
+  change
+    (match port i with
+    | none => (selected i).carrier ∩ Set.univ = ∅
+    | some (.inl e) => (selected i).carrier ∩ Set.univ = edge e
+    | some (.inr x) => (selected i).carrier ∩ Set.univ = {x})
+  simpa only [Set.inter_univ] using h
 
 /-- The mixed local family of genuine edge requests and edge-free singleton
 requests is a forest when its DISTINCT physical support edges have local
