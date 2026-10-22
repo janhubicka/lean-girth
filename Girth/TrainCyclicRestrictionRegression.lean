@@ -63,7 +63,8 @@ theorem source_acceptable : source.Acceptable := by
   · intro p hAbsent
     fin_cases p
     · exact False.elim (hAbsent 0 rfl)
-    · refine ⟨(2 : Fin 5), ?_⟩
+    · clear hAbsent
+      refine ⟨(2 : Fin 5), ?_⟩
       intro j hj
       obtain ⟨x, hx, hpx⟩ := hj
       obtain ⟨e, hep, hxe⟩ := hpx
