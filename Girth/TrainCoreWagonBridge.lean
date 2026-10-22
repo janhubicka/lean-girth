@@ -71,6 +71,7 @@ theorem generatedActualASupportTrain_standard_shared_wagon_eq
       A hA B S D f oldTrain coreTrain hRel hShared
       μ i a (inOld s)).2 hOldReverse
   apply Quotient.sound
+  change (Gen).rel μ (Std i a) (CoreImage (inCore i s))
   simpa only [physicalStandardEdge_shared, physicalCoreEdge] using hOutput
 
 /-- The preceding concrete output class is the injection of the
