@@ -138,7 +138,7 @@ theorem attachedSelectedPicture_geometric_wagon_cut_in_core_range
     obtain ⟨oldB, hParentB⟩ := attachedSelectedPicture_geometric_wagon_source
       A hA B D C family selected e R f T U hShared μ
       j (K.label (cyclicSucc k)) W hContainedB ⟨edgeB, hEdgeB, hWB⟩
-    have hSame : Train.rel μ (StdEdge i oldA) (StdEdge j oldB) :=
+    have hSame : (Train).rel μ (StdEdge i oldA) (StdEdge j oldB) :=
       Quotient.exact (hParentA.trans hParentB.symm)
     obtain ⟨c, s, t, hsOld, htOld, hsCore, htCore, hsLocal, htLocal⟩ :=
       generatedActualASupportTrain_cross_standard_copy_local_incidence
