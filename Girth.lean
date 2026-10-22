@@ -224,6 +224,7 @@ import Girth.ForestDistinctBoundarySkeleton
 import Girth.ForestDistinctBoundaryNoSelectedCycle
 import Girth.ForestDistinctBoundaryGirth
 import Girth.ForestDistinctBoundaryComplete
+import Girth.ForestLocalShortFamily
 import Girth.ForestLocalEdgeGirth
 import Girth.ForestDistinctBoundaryAllCore
 import Girth.ForestDistinctBoundaryCanonical
@@ -372,3 +373,5 @@ import Girth.TrainCoreWagonEmbedding
 import Girth.TrainCoreWagonBridge
 import Girth.TrainSelectedWagonCutCoreMap
 import Girth.TrainActualCutConnectorLift
+import Girth.TrainCoreContactReflection
+import Girth.TrainCoreCopyVertexCoverage
