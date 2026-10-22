@@ -372,3 +372,4 @@ import Girth.TrainCoreWagonEmbedding
 import Girth.TrainCoreWagonBridge
 import Girth.TrainSelectedWagonCutCoreMap
 import Girth.TrainActualCutConnectorLift
+import Girth.TrainCoreCopyVertexCoverage
