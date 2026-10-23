@@ -27,6 +27,66 @@ namespace OrderOneData
 universe v
 variable {V E I P : Type v} (D : OrderOneData V E I P)
 
+/-- A cyclic binary connector word cannot have numerical twice-order
+three. Indeed every edge of the cyclic word contributes at least one,
+so such a word would have only two or three occurrences; enumerating
+their two possible connector kinds excludes the value three.
+This is the small parity fact needed to make the order-one versus
+order-at-least-two split EXHAUSTIVE, without assuming evenness. -/
+theorem BigCycle.twiceOrder_ne_three
+    {n : ℕ} (Z : D.BigCycle n) :
+    Z.twiceOrder ≠ 3 := by
+  intro hThree
+  have hLength : n ≤ 3 := by
+    have h := Z.length_le_twiceOrder
+    omega
+  have hCases : n = 2 ∨ n = 3 := by
+    have hMin := Z.length_ge_two
+    omega
+  rcases hCases with hn | hn
+  · subst n
+    have hSum :
+        Z.twiceOrder =
+          twiceOccurrenceWeight
+            (connectorKind (Z.connector 0))
+            (connectorKind (Z.connector 1)) +
+          twiceOccurrenceWeight
+            (connectorKind (Z.connector 1))
+            (connectorKind (Z.connector 0)) := by
+      simp [BigCycle.twiceOrder, Fin.sum_univ_two, cyclicSucc]
+    rw [hSum] at hThree
+    cases h0 : connectorKind (Z.connector (0 : Fin 2)) <;>
+      cases h1 : connectorKind (Z.connector (1 : Fin 2)) <;>
+      simp [h0, h1, twiceOccurrenceWeight] at hThree
+  · subst n
+    have hSum :
+        Z.twiceOrder =
+          twiceOccurrenceWeight
+            (connectorKind (Z.connector 0))
+            (connectorKind (Z.connector 1)) +
+          twiceOccurrenceWeight
+            (connectorKind (Z.connector 1))
+            (connectorKind (Z.connector 2)) +
+          twiceOccurrenceWeight
+            (connectorKind (Z.connector 2))
+            (connectorKind (Z.connector 0)) := by
+      simp [BigCycle.twiceOrder, Fin.sum_univ_three, cyclicSucc]
+    rw [hSum] at hThree
+    cases h0 : connectorKind (Z.connector (0 : Fin 3)) <;>
+      cases h1 : connectorKind (Z.connector (1 : Fin 3)) <;>
+      cases h2 : connectorKind (Z.connector (2 : Fin 3)) <;>
+      simp [h0, h1, h2, twiceOccurrenceWeight] at hThree
+
+/-- There is no intermediate order between one and two in the real
+two-kind cyclic connector syntax. This does not use acceptability. -/
+theorem BigCycle.twiceOrder_two_or_four_le
+    {n : ℕ} (Z : D.BigCycle n) :
+    Z.twiceOrder = 2 ∨ 4 ≤ Z.twiceOrder := by
+  have hAtLeastTwo : 2 ≤ Z.twiceOrder :=
+    Z.length_ge_two.trans (Z.length_le_twiceOrder)
+  have hNotThree := BigCycle.twiceOrder_ne_three D Z
+  omega
+
 /-- Full system-girth above any positive cutoff supplies the exact
 order-one physical bridge bound, by monotonicity of the numerical
 cycle cutoff and the existing global-to-local consequence. -/
@@ -96,6 +156,7 @@ theorem attachedSelectedPicture_geometric_cut_reduction_dichotomy
       K owner hAllowed hCuts
     (cyclicOwnerChanges owner ≤ n ∧
       Z.twiceOrder ≤ K.twiceOrder ∧ Z.A2 ∧ Z.A3) ∧
+    (Z.twiceOrder = 2 ∨ 4 ≤ Z.twiceOrder) ∧
     (4 ≤ Z.twiceOrder → Z.Acceptable) ∧
     (Z.twiceOrder = 2 →
       ∃ (x : Y) (p : Quotient (U.wagonSetoid μ)),
@@ -109,7 +170,7 @@ theorem attachedSelectedPicture_geometric_cut_reduction_dichotomy
     attachedSelectedPicture_geometric_cut_restriction_bounds
       A hA B D C family selected e R f T U hShared hRel μ
       K owner hAllowed hCuts hAccept.2.1 hAccept.2.2
-  refine ⟨hBounds, ?_, ?_⟩
+  refine ⟨hBounds, OrderOneData.BigCycle.twiceOrder_two_or_four_le Wit Z, ?_, ?_⟩
   · intro hOrder
     exact attachedSelectedPicture_geometric_cut_acceptable_of_two_le
       A hA B D C family selected e R f T U hShared hRel μ
