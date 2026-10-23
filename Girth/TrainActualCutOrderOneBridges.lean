@@ -58,7 +58,7 @@ theorem BigCycle.two_both_bridges_of_order_one
           obtain ⟨hb0, hb1⟩ :=
             D.both_bridges hBound (Z.label 0) (Z.label 1)
               x p hLabels haV hbV haP hbP
-          exact ⟨x, p, Or.inl ⟨h0, h1⟩, hb0, hb1⟩
+          exact ⟨x, p, Or.inl ⟨rfl, rfl⟩, hb0, hb1⟩
   | inr p =>
       cases h1 : Z.connector (1 : Fin 2) with
       | inl x =>
@@ -75,7 +75,7 @@ theorem BigCycle.two_both_bridges_of_order_one
           obtain ⟨hb0, hb1⟩ :=
             D.both_bridges hBound (Z.label 0) (Z.label 1)
               x p hLabels haV hbV haP hbP
-          exact ⟨x, p, Or.inr ⟨h0, h1⟩, hb0, hb1⟩
+          exact ⟨x, p, Or.inr ⟨rfl, rfl⟩, hb0, hb1⟩
       | inr q =>
           have hh :
               connectorKind (Z.connector (0 : Fin 2)) =
