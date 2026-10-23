@@ -32,7 +32,7 @@ theorem BigCycle.two_both_bridges_of_order_one
       ((Z.connector 0 = Sum.inl x ∧ Z.connector 1 = Sum.inr p) ∨
        (Z.connector 0 = Sum.inr p ∧ Z.connector 1 = Sum.inl x)) ∧
       D.Bridge (Z.label 0) x p ∧ D.Bridge (Z.label 1) x p := by
-  have hMixed := Z.connectors_mixed_of_order_one hOrder (0 : Fin 2)
+  have hMixed := BigCycle.connectors_mixed_of_order_one D Z hOrder (0 : Fin 2)
   have hLabels : Z.label 0 ≠ Z.label 1 := by
     simpa [cyclicSucc] using Z.adjacent_ne (0 : Fin 2)
   cases h0 : Z.connector (0 : Fin 2) with
@@ -94,10 +94,10 @@ theorem BigCycle.both_bridges_of_order_one
         Z.connector i = Sum.inl x ∧
         Z.connector j = Sum.inr p) ∧
       ∀ k : Fin n, D.Bridge (Z.label k) x p := by
-  have hn : n = 2 := Z.length_eq_two_of_order_one hOrder
+  have hn : n = 2 := BigCycle.length_eq_two_of_order_one D Z hOrder
   subst n
   obtain ⟨x, p, hTypes, hb0, hb1⟩ :=
-    D.BigCycle.two_both_bridges_of_order_one hBound Z hOrder
+    BigCycle.two_both_bridges_of_order_one D hBound Z hOrder
   refine ⟨x, p, ?_, ?_⟩
   · rcases hTypes with ⟨h0, h1⟩ | ⟨h0, h1⟩
     · exact ⟨0, 1, by decide, h0, h1⟩
