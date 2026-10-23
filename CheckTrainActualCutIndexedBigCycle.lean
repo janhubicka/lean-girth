@@ -1,0 +1,7 @@
+import Girth.TrainActualCutIndexedBigCycle
+
+-- Physical incidences, legal target cycle, actual restriction map and bounds.
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cut_target_incidence
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_cutBigCycle
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_cut_restrictionMap
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_cut_restriction_bounds
