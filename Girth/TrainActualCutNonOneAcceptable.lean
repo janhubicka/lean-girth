@@ -86,6 +86,7 @@ theorem attachedSelectedPicture_geometric_cut_acceptable_of_two_le
   let Z := attachedSelectedPicture_geometric_cutBigCycle
     A hA B D C family selected e R f T U hShared hRel μ
     K owner hAllowed hCuts
+  have hOrderZ : 4 ≤ Z.twiceOrder := hOrder
   have hNotOne : Z.twiceOrder ≠ 2 := by
     omega
   exact (attachedSelectedPicture_geometric_cut_restrictionMap
