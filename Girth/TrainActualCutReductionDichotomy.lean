@@ -38,7 +38,7 @@ theorem BigCycle.twiceOrder_ne_three
     Z.twiceOrder ≠ 3 := by
   intro hThree
   have hLength : n ≤ 3 := by
-    have h := Z.length_le_twiceOrder
+    have h := BigCycle.length_le_twiceOrder D Z
     omega
   have hCases : n = 2 ∨ n = 3 := by
     have hMin := Z.length_ge_two
@@ -83,7 +83,7 @@ theorem BigCycle.twiceOrder_two_or_four_le
     {n : ℕ} (Z : D.BigCycle n) :
     Z.twiceOrder = 2 ∨ 4 ≤ Z.twiceOrder := by
   have hAtLeastTwo : 2 ≤ Z.twiceOrder :=
-    Z.length_ge_two.trans (Z.length_le_twiceOrder)
+    Z.length_ge_two.trans (BigCycle.length_le_twiceOrder D Z)
   have hNotThree := BigCycle.twiceOrder_ne_three D Z
   omega
 
