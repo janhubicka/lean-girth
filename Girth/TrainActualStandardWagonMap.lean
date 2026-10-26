@@ -55,7 +55,7 @@ output wagon partition at every train coordinate. The complete
 reflection/preservation equivalence is used, not carrier equality. -/
 noncomputable def generatedActualASupportTrain_standardWagonEmbedding
     (i : I) :
-    Quotient (T.wagonSetoid μ) ↪ Quotient (Train.wagonSetoid μ) :=
+    Quotient (T.wagonSetoid μ) ↪ Quotient ((Train).wagonSetoid μ) :=
   T.wagonEmbeddingOfRelationIff Train μ (StdEdge i)
     (fun a b => generatedActualASupportTrain_restrict_standard
       A hA B S D f T U hRel hShared μ i a b)
@@ -67,7 +67,7 @@ theorem generatedActualASupportTrain_standardWagonEmbedding_mk
     generatedActualASupportTrain_standardWagonEmbedding
       A hA B S D f T U hRel hShared μ i
       (Quotient.mk (T.wagonSetoid μ) a) =
-    Quotient.mk (Train.wagonSetoid μ) (StdEdge i a) := rfl
+    Quotient.mk ((Train).wagonSetoid μ) (StdEdge i a) := rfl
 
 end StandardWagonMap
 
@@ -120,7 +120,7 @@ assumed; it is constructed from the actual physical incidence. -/
 theorem attachedSelectedPicture_geometric_used_wagon_in_standard_range
     (i : I)
     (a : (I × Selected) ⊕ ActualEdge)
-    (W : Quotient (Train.wagonSetoid μ))
+    (W : Quotient ((Train).wagonSetoid μ))
     (hContained : (Out).carrier a ⊆ copyCarrier (Std i))
     (hMeets : (Out).Meets a W) :
     ∃ p : Quotient (T.wagonSetoid μ),
