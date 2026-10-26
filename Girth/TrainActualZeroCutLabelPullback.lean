@@ -129,8 +129,7 @@ theorem attachedSelectedPicture_standard_label_pullback [Finite UA]
       have hSub : edge.1 ⊆ copyCarrier (Std i) := hContained
       obtain ⟨old, hEq⟩ :=
         attachedSelectedPicture_geometric_edge_pullback
-          A hA B D C family selected e R f T U hShared μ
-          i edge hSub
+          A hA D C e R f i edge hSub
       exact ⟨Sum.inr old, congrArg Sum.inr hEq⟩
 
 /-- A zero-cut selected-picture BigCycle with nontrivial strong
