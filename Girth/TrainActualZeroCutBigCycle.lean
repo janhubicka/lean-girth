@@ -127,7 +127,7 @@ theorem attachedSelectedPicture_standard_connector_preimage
         exact h
       obtain ⟨y, hy⟩ := hContained k hx
       refine ⟨Sum.inl y, ?_⟩
-      simpa [hConnector] using (congrArg Sum.inl hy.symm)
+      simpa [hConnector, hy]
   | inr W =>
       have hMeets : (Out).Meets (K.label k) W := by
         have h := K.left_incident k
@@ -138,7 +138,7 @@ theorem attachedSelectedPicture_standard_connector_preimage
           A hA B D C family selected e R f T U hShared hRel μ
           i (K.label k) W (hContained k) hMeets
       refine ⟨Sum.inr p, ?_⟩
-      simpa [hConnector] using (congrArg Sum.inr hp.symm)
+      simpa [hConnector, hp]
 
 /-- From genuine source-label and connector preimages, construct the
 full legal old BigCycle inside the chosen standard, with exact labelled
@@ -212,6 +212,7 @@ theorem attachedSelectedPicture_oneStandard_oldBigCycle [Finite UA]
       have h := K.right_incident k
       rw [← hLabel (cyclicSucc k), hConn k] at h
       exact h
+  }
   refine ⟨Z, ?_, ?_⟩
   · intro k
     exact hLabel k
