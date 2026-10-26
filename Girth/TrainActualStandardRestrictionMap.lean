@@ -113,7 +113,11 @@ noncomputable def attachedSelectedPicture_standard_restrictionMap
         Sum.map (Std i) (StdWagon i) (Z.connector k)) :
     K.RestrictionMap Z := by
   refine {
-    position := OrderEmbedding.refl (Fin n)
+    position := {
+      toFun := fun j => j
+      inj' := by intro a b h; exact h
+      map_rel_iff' := by intro a b; rfl
+    }
     vertex := Std i
     wagon := StdWagon i
     vertex_injective := (Std i).injective
