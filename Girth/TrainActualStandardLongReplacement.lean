@@ -98,13 +98,17 @@ theorem attachedSelectedPicture_standard_longValid_lift
       LabelMap i (Z.label j) = K.label j)
     (hConnector : ∀ j : Fin n,
       Sum.map (Std i) (StdWagon i) (Z.connector j) = K.connector j)
-    (hPairBack : ∀ x y : X,
+    (hPairBack : ∀ x y : X, x ≠ y →
       (Out).PairEdge (Std i x) (Std i y) → (Old).PairEdge x y)
     (k j : Fin n) (a b : OldEdge) (p : Quotient (T.wagonSetoid μ))
     (hLong : OrderOneData.BigCycle.LongValid (Old) Z k j a p b) :
     OrderOneData.BigCycle.LongValid
       (Out) K k j (StdEdge i a) (StdWagon i p) (StdEdge i b) := by
   obtain ⟨x, y, hLeft, hRight, ha, hb, hab, hap, hbp, hx, hy, hNoPair⟩ := hLong
+  have hxy : x ≠ y := by
+    intro hEq
+    subst y
+    exact hNoPair ⟨a, hx, hx⟩
   refine ⟨Std i x, Std i y, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · calc
       K.connector (trainCyclicPred j) =
@@ -150,7 +154,7 @@ theorem attachedSelectedPicture_standard_longValid_lift
       A hA C.toRelStructure S R f i b]
     exact ⟨y, hy, rfl⟩
   · intro hOutputPair
-    exact hNoPair (hPairBack x y hOutputPair)
+    exact hNoPair (hPairBack x y hxy hOutputPair)
 
 end StandardLongReplacements
 end StructuralRamsey.Girth
