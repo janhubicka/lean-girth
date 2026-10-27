@@ -129,8 +129,18 @@ theorem attachedSelectedPicture_standard_longValid_lift
       A hA B D C family selected e R f T U hShared hRel μ
       i (Z.label k) b hb
   · intro hEq
-    exact hab (attachedSelectedPicture_standard_edge_injective
-      A hA B D C family selected e R f T U hShared hRel μ i hEq)
+    apply hab
+    apply Subtype.ext
+    have hCar : (StdEdge i a).1 = (StdEdge i b).1 :=
+      congrArg Subtype.val hEq
+    rw [actualAPictureEdgeEquiv_standard_carrier
+          A hA C.toRelStructure S R f i a,
+        actualAPictureEdgeEquiv_standard_carrier
+          A hA C.toRelStructure S R f i b] at hCar
+    change ((fun z : X => Std i z) '' a.1) =
+      ((fun z : X => Std i z) '' b.1) at hCar
+    exact (attachment_standardCarrier_image_eq_iff
+      C.toRelStructure S R f i a.1 b.1).mp hCar
   · change Quotient.mk ((Train).wagonSetoid μ) (StdEdge i a) =
       StdWagon i p
     calc
