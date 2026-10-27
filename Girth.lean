@@ -253,6 +253,7 @@ import Girth.ForestDirectIncrementConditional
 import Girth.ForestMixedDirectIncrement
 import Girth.ForestActualACopyMixedOwner
 import Girth.ForestMixedLocalForestBridge
+import Girth.ForestMixedAStrong
 import Girth.ForestMixedOwnerChoice
 import Girth.ForestMultiEdgeSupport
 import Girth.ForestCompleteBSupportIntrinsic
