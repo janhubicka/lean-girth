@@ -88,10 +88,10 @@ theorem attachedSelectedPicture_standard_pairEdge_back_of_aStrong
   obtain ⟨edge, hx, hy⟩ := hPair
   obtain ⟨b, hb⟩ := edge.2
   have hxB : Std i x ∈ copyCarrier b := by
-    rw [hb]
+    rw [← hb]
     exact hx
   have hyB : Std i y ∈ copyCarrier b := by
-    rw [hb]
+    rw [← hb]
     exact hy
   have hBig : ¬(copyCarrier b ∩ copyCarrier (Std i)).Subsingleton := by
     intro hSmall
@@ -99,7 +99,7 @@ theorem attachedSelectedPicture_standard_pairEdge_back_of_aStrong
       hSmall ⟨hxB, ⟨x, rfl⟩⟩ ⟨hyB, ⟨y, rfl⟩⟩
     exact hxy ((Std i).injective hImages)
   have hSub : edge.1 ⊆ copyCarrier (Std i) := by
-    rw [← hb]
+    rw [hb]
     exact hStdStrong b hBig
   have hImage : edge.1 ⊆
       ((fun z : X => Std i z) '' (Set.univ : Set X)) := by
