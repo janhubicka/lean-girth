@@ -387,3 +387,4 @@ import Girth.TrainActualStandardWagonMap
 import Girth.TrainActualZeroCutBigCycle
 import Girth.TrainActualStandardRestrictionMap
 import Girth.TrainActualZeroCutAcceptable
+import Girth.TrainActualStandardShortReplacement
