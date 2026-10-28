@@ -92,6 +92,10 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
       (copyCarrier (Std i)) :=
     attachment_copy_aStrong
       C.toRelStructure S R f hA hOldStrong hCoreStrong i
+  have hMappedLabel (a : Selected ⊕ OldEdge) :
+      Sum.map (fun q : Selected => (i, q)) (StdEdge i) a =
+        LabelMap i a := by
+    cases a <;> rfl
   refine {
     vertex := (Std i).toFunctionEmbedding
     edge := ⟨StdEdge i,
@@ -110,14 +114,21 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
     cases q with
     | inl x =>
         change x ∈ (Old).carrier a at h
-        change Std i x ∈ (Out).carrier (LabelMap i a)
-        rw [attachedSelectedPicture_carrier
-          A hA B D C family selected e R f T U hShared μ i a]
-        exact ⟨x, h, rfl⟩
+        have hPhysical : Std i x ∈ (Out).carrier (LabelMap i a) := by
+          rw [attachedSelectedPicture_carrier
+            A hA B D C family selected e R f T U hShared μ i a]
+          exact ⟨x, h, rfl⟩
+        change Std i x ∈ (Out).carrier
+          (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
+        rw [hMappedLabel]
+        exact hPhysical
     | inr p =>
         change (Old).Meets a p at h
         obtain ⟨old, he, hp⟩ := h
-        change (Out).Meets (LabelMap i a) (StdWagon i p)
+        change (Out).Meets
+          (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
+          (StdWagon i p)
+        rw [hMappedLabel]
         refine ⟨StdEdge i old, ?_, ?_⟩
         · exact attachedSelectedPicture_standard_edge_membership_lift
             A hA B D C family selected e R f T U hShared hRel μ
@@ -130,6 +141,9 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
                 A hA C.toRelStructure S R f T U hRel hShared μ i old).symm
             _ = StdWagon i p := congrArg (StdWagon i) hp
   · intro a old he
+    change StdEdge i old ∈ (Out).edges
+      (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
+    rw [hMappedLabel]
     exact attachedSelectedPicture_standard_edge_membership_lift
       A hA B D C family selected e R f T U hShared hRel μ
       i a old he
