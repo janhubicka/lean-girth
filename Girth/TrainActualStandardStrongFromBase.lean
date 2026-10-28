@@ -81,12 +81,13 @@ theorem activeAttached_standard_pairEdge_back_of_base_aLinear
       (C.toRelStructure.induce (activeCarrier A C e.toFunctionEmbedding)) R)
     (hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)))
     (i : I) (x y : X) (hxy : x ≠ y) :
-    let S := activeCarrier A C e.toFunctionEmbedding
-    let Std := RelStructure.Attachment.copyEmbedding
-      C.toRelStructure S R f i
     ∀ edge : OldACarrierEdge A
-        (RelStructure.Attachment.attach C.toRelStructure S R f),
-      Std x ∈ edge.1 → Std y ∈ edge.1 →
+        (RelStructure.Attachment.attach C.toRelStructure
+          (activeCarrier A C e.toFunctionEmbedding) R f),
+      (RelStructure.Attachment.copyEmbedding C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f i) x ∈ edge.1 →
+      (RelStructure.Attachment.copyEmbedding C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f i) y ∈ edge.1 →
       ∃ old : OldACarrierEdge A C.toRelStructure,
         x ∈ old.1 ∧ y ∈ old.1 := by
   intro edge hx hy
