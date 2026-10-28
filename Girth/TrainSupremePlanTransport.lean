@@ -88,7 +88,8 @@ theorem planValid_map {n : ℕ} (C : D.BigCycle n)
     have hOld : C.label j = C.label k :=
       M.mapLabel_injective hSame
     have hKeep := (hValid j).1 hOld
-    simp [hKeep, M.mapPiece]
+    rw [hKeep]
+    rfl
   · intro hOther
     have hOld : C.label j ≠ C.label k := by
       intro hEq
@@ -100,11 +101,14 @@ theorem planValid_map {n : ℕ} (C : D.BigCycle n)
     | short e =>
         have hs : BigCycle.ShortValid D C k j e := by
           simpa only [hp] using hPiece
-        simpa [M.mapPiece, hp] using M.shortValid_map C k j e hs
+        change BigCycle.ShortValid H (M.mapBigCycle C) k j (M.edge e)
+        exact M.shortValid_map C k j e hs
     | long e p f =>
         have hl : BigCycle.LongValid D C k j e p f := by
           simpa only [hp] using hPiece
-        simpa [M.mapPiece, hp] using M.longValid_map C k j e p f hl
+        change BigCycle.LongValid H (M.mapBigCycle C) k j
+          (M.edge e) (M.wagon p) (M.edge f)
+        exact M.longValid_map C k j e p f hl
 
 /-- FULL global simultaneous supreme replacement plans transfer
 through a literal physical map, not merely the existence of
@@ -117,8 +121,9 @@ theorem hasSimultaneousSupreme_map {n : ℕ} (C : D.BigCycle n)
   have hk' : H.designated ((M.mapBigCycle C).label k) := by
     cases hLab : C.label k with
     | inl i =>
-        simp [LiteralPhysicalMap.mapBigCycle,
-          LiteralPhysicalMap.mapLabel, OrderOneData.designated]
+        change H.designated (M.mapLabel (C.label k))
+        rw [hLab]
+        trivial
     | inr e =>
         simp [hLab, OrderOneData.designated] at hk
   exact ⟨k, hk',
