@@ -120,33 +120,41 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
           exact ⟨x, h, rfl⟩
         change Std i x ∈ (Out).carrier
           (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
-        rw [hMappedLabel a]
-        exact hPhysical
+        exact Eq.mp
+          (congrArg (fun lab => Std i x ∈ (Out).carrier lab)
+            (hMappedLabel a).symm) hPhysical
     | inr p =>
         change (Old).Meets a p at h
         obtain ⟨old, he, hp⟩ := h
         change (Out).Meets
           (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
           (StdWagon i p)
-        rw [hMappedLabel a]
-        refine ⟨StdEdge i old, ?_, ?_⟩
-        · exact attachedSelectedPicture_standard_edge_membership_lift
-            A hA B D C family selected e R f T U hShared hRel μ
-            i a old he
-        · change Quotient.mk ((Train).wagonSetoid μ) (StdEdge i old) =
-            StdWagon i p
-          calc
-            _ = StdWagon i (Quotient.mk (T.wagonSetoid μ) old) :=
-              (generatedActualASupportTrain_standardWagonEmbedding_mk
-                A hA C.toRelStructure S R f T U hRel hShared μ i old).symm
-            _ = StdWagon i p := congrArg (StdWagon i) hp
+        have hPhysical : (Out).Meets (LabelMap i a) (StdWagon i p) := by
+          refine ⟨StdEdge i old, ?_, ?_⟩
+          · exact attachedSelectedPicture_standard_edge_membership_lift
+              A hA B D C family selected e R f T U hShared hRel μ
+              i a old he
+          · change Quotient.mk ((Train).wagonSetoid μ) (StdEdge i old) =
+              StdWagon i p
+            calc
+              _ = StdWagon i (Quotient.mk (T.wagonSetoid μ) old) :=
+                (generatedActualASupportTrain_standardWagonEmbedding_mk
+                  A hA C.toRelStructure S R f T U hRel hShared μ i old).symm
+              _ = StdWagon i p := congrArg (StdWagon i) hp
+        exact Eq.mp
+          (congrArg (fun lab => (Out).Meets lab (StdWagon i p))
+            (hMappedLabel a).symm) hPhysical
   · intro a old he
     change StdEdge i old ∈ (Out).edges
       (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
-    rw [hMappedLabel a]
-    exact attachedSelectedPicture_standard_edge_membership_lift
-      A hA B D C family selected e R f T U hShared hRel μ
-      i a old he
+    have hPhysical : StdEdge i old ∈
+        (Out).edges (LabelMap i a) :=
+      attachedSelectedPicture_standard_edge_membership_lift
+        A hA B D C family selected e R f T U hShared hRel μ
+        i a old he
+    exact Eq.mp
+      (congrArg (fun lab => StdEdge i old ∈ (Out).edges lab)
+        (hMappedLabel a).symm) hPhysical
   · intro old
     exact generatedActualASupportTrain_standardWagonEmbedding_mk
       A hA C.toRelStructure S R f T U hRel hShared μ i old |>.symm
