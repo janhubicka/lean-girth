@@ -152,7 +152,7 @@ theorem resultWord_map
       (fun j => M.mapPiece (pieces j)) =
         (BigCycle.resultWord D C pieces).map M.mapEntry := by
   simp [BigCycle.resultWord, List.map_flatten,
-    List.map_ofFn, M.pieceWord_map]
+    List.map_ofFn, M.pieceWord_map, Function.comp_def]
 
 /-- Global legality really transfers. The original PlanProduces
 witness is a concrete BigCycle, mapped using verified incidence,
@@ -171,7 +171,7 @@ theorem planProduces_map
       (List.ofFn (fun j : Fin m => (B.label j, B.connector j))).map
         M.mapEntry := by
         simp [mapBigCycle, mapEntry, mapLabel, mapConnector,
-          List.map_ofFn]
+          List.map_ofFn, Function.comp_def]
     _ = (BigCycle.resultWord D C pieces).map M.mapEntry :=
       congrArg (List.map M.mapEntry) hWord
     _ = BigCycle.resultWord H (M.mapBigCycle C)
