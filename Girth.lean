@@ -391,3 +391,4 @@ import Girth.TrainActualZeroCutAcceptable
 import Girth.TrainActualStandardShortReplacement
 import Girth.TrainActualStandardLongReplacement
 import Girth.TrainActualStandardNoNewPair
+import Girth.TrainActualStandardStrongFromBase
