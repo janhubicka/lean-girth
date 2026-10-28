@@ -96,7 +96,7 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
     vertex := (Std i).toFunctionEmbedding
     edge := ⟨StdEdge i,
       attachedSelectedPicture_standard_edge_injective
-        A hA C e R f T U hRel i⟩
+        A hA D C e R f T U hRel i⟩
     designated := ⟨(fun q : Selected => (i, q)), ?_⟩
     wagon := StdWagon i
     incident := ?_
