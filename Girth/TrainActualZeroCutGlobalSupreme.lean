@@ -118,14 +118,23 @@ theorem attachedSelectedPicture_standard_mappedBigCycle_eq
   let M := attachedSelectedPicture_standard_physicalMap
     A hA B D C family selected e R f T U hShared hRel μ
     hOldStrong hCoreStrong i
+  -- The physical label map and the paper's tagged-label map are
+  -- propositionally equal only after splitting the sum constructor.
+  have hMapLabel (a : Selected ⊕ OldEdge) :
+      M.mapLabel a = LabelMap i a := by
+    cases a <;> rfl
+  have hMapConnector (z : X ⊕ (T.wagonSetoid μ).Quotient) :
+      M.mapConnector z = Sum.map (Std i) (StdWagon i) z := by
+    cases z <;> rfl
   apply OrderOneData.BigCycle.eq_of_label_connector (Out)
     (M.mapBigCycle Z) K
   · intro j
-    change LabelMap i (Z.label j) = K.label j
+    change M.mapLabel (Z.label j) = K.label j
+    rw [hMapLabel]
     exact hLabels j
   · intro j
-    change Sum.map (Std i) (StdWagon i) (Z.connector j) =
-      K.connector j
+    change M.mapConnector (Z.connector j) = K.connector j
+    rw [hMapConnector]
     exact hConnectors j
 
 /-- The actual ZERO-CUT output cycle inherits a fully GLOBAL
