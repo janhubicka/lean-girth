@@ -120,7 +120,7 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
           exact ⟨x, h, rfl⟩
         change Std i x ∈ (Out).carrier
           (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
-        rw [hMappedLabel]
+        rw [hMappedLabel a]
         exact hPhysical
     | inr p =>
         change (Old).Meets a p at h
@@ -128,7 +128,7 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
         change (Out).Meets
           (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
           (StdWagon i p)
-        rw [hMappedLabel]
+        rw [hMappedLabel a]
         refine ⟨StdEdge i old, ?_, ?_⟩
         · exact attachedSelectedPicture_standard_edge_membership_lift
             A hA B D C family selected e R f T U hShared hRel μ
@@ -143,7 +143,7 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
   · intro a old he
     change StdEdge i old ∈ (Out).edges
       (Sum.map (fun q : Selected => (i, q)) (StdEdge i) a)
-    rw [hMappedLabel]
+    rw [hMappedLabel a]
     exact attachedSelectedPicture_standard_edge_membership_lift
       A hA B D C family selected e R f T U hShared hRel μ
       i a old he
