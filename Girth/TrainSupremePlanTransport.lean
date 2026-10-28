@@ -88,8 +88,7 @@ theorem planValid_map {n : ℕ} (C : D.BigCycle n)
     have hOld : C.label j = C.label k :=
       M.mapLabel_injective hSame
     have hKeep := (hValid j).1 hOld
-    rw [hKeep]
-    rfl
+    simpa [hKeep, LiteralPhysicalMap.mapPiece]
   · intro hOther
     have hOld : C.label j ≠ C.label k := by
       intro hEq
@@ -101,14 +100,13 @@ theorem planValid_map {n : ℕ} (C : D.BigCycle n)
     | short e =>
         have hs : BigCycle.ShortValid D C k j e := by
           simpa only [hp] using hPiece
-        change BigCycle.ShortValid H (M.mapBigCycle C) k j (M.edge e)
-        exact M.shortValid_map C k j e hs
+        simpa [hp, LiteralPhysicalMap.mapPiece] using
+          M.shortValid_map C k j e hs
     | long e p f =>
         have hl : BigCycle.LongValid D C k j e p f := by
           simpa only [hp] using hPiece
-        change BigCycle.LongValid H (M.mapBigCycle C) k j
-          (M.edge e) (M.wagon p) (M.edge f)
-        exact M.longValid_map C k j e p f hl
+        simpa [hp, LiteralPhysicalMap.mapPiece] using
+          M.longValid_map C k j e p f hl
 
 /-- FULL global simultaneous supreme replacement plans transfer
 through a literal physical map, not merely the existence of
