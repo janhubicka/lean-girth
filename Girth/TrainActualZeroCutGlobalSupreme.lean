@@ -123,7 +123,7 @@ theorem attachedSelectedPicture_standard_mappedBigCycle_eq
   have hMapLabel (a : Selected ⊕ OldEdge) :
       M.mapLabel a = LabelMap i a := by
     cases a <;> rfl
-  have hMapConnector (z : X ⊕ (T.wagonSetoid μ).Quotient) :
+  have hMapConnector (z : X ⊕ Quotient (T.wagonSetoid μ)) :
       M.mapConnector z = Sum.map (Std i) (StdWagon i) z := by
     cases z <;> rfl
   apply OrderOneData.BigCycle.eq_of_label_connector (Out)
