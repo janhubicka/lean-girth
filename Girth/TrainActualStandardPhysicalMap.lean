@@ -93,10 +93,10 @@ noncomputable def attachedSelectedPicture_standard_physicalMap
     attachment_copy_aStrong
       C.toRelStructure S R f hA hOldStrong hCoreStrong i
   refine {
-    vertex := Std i
+    vertex := (Std i).toFunctionEmbedding
     edge := ⟨StdEdge i,
       attachedSelectedPicture_standard_edge_injective
-        A hA B D C family selected e R f T U hShared hRel μ i⟩
+        A hA C e R f T U hRel i⟩
     designated := ⟨(fun q : Selected => (i, q)), ?_⟩
     wagon := StdWagon i
     incident := ?_
