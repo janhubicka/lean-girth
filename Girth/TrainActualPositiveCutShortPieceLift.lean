@@ -1,4 +1,5 @@
 import Girth.TrainActualSupremeCutBoundarySupport
+import Girth.TrainActualSharedCoreEdgeStandard
 
 /-!
 # Track A: transport one REAL reduced short piece to the original boundaries
@@ -48,6 +49,8 @@ local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Shared" => SharedOldACarrierEdge A C.toRelStructure S
 local notation "Emb" => sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
+local notation "Std" => RelStructure.Attachment.copyEmbedding
+  C.toRelStructure S R f
 local notation "CoreEmb" => RelStructure.Attachment.coreEmbedding
   C.toRelStructure S R f
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
@@ -134,6 +137,31 @@ theorem attachedSelectedPicture_cut_short_piece_has_shared_source
     exact hShort.1
   change b ∈ Set.range (Emb i) at hb
   exact hb
+
+/-- An actual witness ShortValid piece whose chosen label is the
+standard i provides a physically contained output edge; this
+does not yet assert the piece is at a singleton source occurrence. -/
+theorem attachedSelectedPicture_cut_short_piece_carrier_in_standard
+    {n : ℕ} (K : (Out).BigCycle n)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
+    (hCuts : 2 ≤ cyclicOwnerChanges owner)
+    (target cut : Fin (cyclicOwnerChanges owner)) (i : I)
+    (hTarget : (attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed hCuts).label target = Sum.inl i)
+    (b : CoreEdge)
+    (hShort : (attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed hCuts).ShortValid (Wit) target cut b) :
+    (CoreActual b).1 ⊆ copyCarrier (Std i) := by
+  obtain ⟨s, hs⟩ :=
+    attachedSelectedPicture_cut_short_piece_has_shared_source
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed hCuts target cut i hTarget b hShort
+  rw [← hs]
+  exact actualSharedCoreEdge_carrier_subset_standard
+    A hA C.toRelStructure S R f i s
 
 end PositiveCutShortPieceLift
 end StructuralRamsey.Girth
