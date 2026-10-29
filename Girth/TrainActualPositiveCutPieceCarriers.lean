@@ -120,9 +120,17 @@ theorem attachedSelectedPicture_replacement_labels_in_standard
         change edge.1 ⊆ copyCarrier (Std i) ∧
           other.1 ⊆ copyCarrier (Std i)
         exact hLong j edge w other hp
-  exact K.replacement_labels_of_piece_property
+  apply K.replacement_labels_of_piece_property
     Out H pieces (fun a => (Out).carrier a ⊆ copyCarrier (Std i))
-    hPieces hWord
+  · intro j
+    cases hp : pieces j with
+    | keep =>
+        simpa only [hp] using hPieces j
+    | short edge =>
+        simpa only [hp] using hPieces j
+    | long edge w other =>
+        simpa only [hp] using hPieces j
+  · exact hWord
 
 end PositiveCutPhysicalStandardContainment
 end StructuralRamsey.Girth
