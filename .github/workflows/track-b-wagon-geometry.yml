@@ -11,6 +11,8 @@ on:
       - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
       - 'Girth/TrainTwoWagonVertexProbe.lean'
       - 'CheckTrainTwoWagonVertexProbe.lean'
+      - 'Girth/TrainTwoLabelVertexProbe.lean'
+      - 'CheckTrainTwoLabelVertexProbe.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -24,6 +26,8 @@ on:
       - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
       - 'Girth/TrainTwoWagonVertexProbe.lean'
       - 'CheckTrainTwoWagonVertexProbe.lean'
+      - 'Girth/TrainTwoLabelVertexProbe.lean'
+      - 'CheckTrainTwoLabelVertexProbe.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -80,7 +84,9 @@ jobs:
             Girth.TrainSelectedPictureOffCorePairGeometry \
             Girth.TrainSelectedPictureCoreVertexLocalization \
             Girth.TrainTwoWagonVertexProbe \
-            Girth.TrainSelectedPictureCoreOffCorePairGeometry
+            Girth.TrainSelectedPictureCoreOffCorePairGeometry \
+            Girth.TrainTwoLabelVertexProbe \
+            Girth.TrainSelectedPictureOneOffCorePairGeometry
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -93,7 +99,9 @@ jobs:
             CheckTrainSelectedPictureOffCorePairGeometry \
             CheckTrainSelectedPictureCoreVertexLocalization \
             CheckTrainTwoWagonVertexProbe \
-            CheckTrainSelectedPictureCoreOffCorePairGeometry; do
+            CheckTrainSelectedPictureCoreOffCorePairGeometry \
+            CheckTrainTwoLabelVertexProbe \
+            CheckTrainSelectedPictureOneOffCorePairGeometry; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -121,6 +129,8 @@ jobs:
             CheckTrainSelectedPictureCoreVertexLocalization.log
             CheckTrainTwoWagonVertexProbe.log
             CheckTrainSelectedPictureCoreOffCorePairGeometry.log
+            CheckTrainTwoLabelVertexProbe.log
+            CheckTrainSelectedPictureOneOffCorePairGeometry.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
