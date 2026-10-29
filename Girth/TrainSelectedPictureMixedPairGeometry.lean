@@ -51,7 +51,8 @@ theorem sharedWitness_copy_wagon_pair_shared_edges
   obtain ⟨b, hbw, hyb⟩ := hyW
   have hab : a ≠ b := by
     intro h
-    exact hNoPair ⟨a, hxa, h.symm ▸ hyb⟩
+    exact hNoPair ⟨a, hxa,
+      Eq.mpr (congrArg (fun r : E => y ∈ carrier r) h) hyb⟩
   have hLong : D.LongPiece (.inl i) (.inl x) (.inl y) :=
     D.copy_long_piece_of_two_edge_probe hBound i a b w x y
       hab hxy hxCopy hyCopy haw hbw hxa hyb hNoPair
@@ -63,14 +64,10 @@ theorem sharedWitness_copy_wagon_pair_shared_edges
   obtain ⟨s, hs⟩ := hc
   obtain ⟨t, ht⟩ := hd
   refine ⟨s, t, ?_, ?_, ?_, ?_⟩
-  · rw [hs]
-    exact hcw
-  · rw [ht]
-    exact hdw
-  · rw [hs]
-    exact hxc
-  · rw [ht]
-    exact hyd
+  · exact (congrArg (Quotient.mk (U.wagonSetoid μ)) hs).trans hcw
+  · exact (congrArg (Quotient.mk (U.wagonSetoid μ)) ht).trans hdw
+  · exact Eq.mpr (congrArg (fun r : E => x ∈ carrier r) hs) hxc
+  · exact Eq.mpr (congrArg (fun r : E => y ∈ carrier r) ht) hyd
 
 section Attachment
 
@@ -140,6 +137,18 @@ theorem attachedSelectedPicture_standard_core_blocks_parent_eq
   classical
   let preserve := fun (ν : Fin (m + 1)) (k : I)
       (s t : SharedOldACarrierEdge A C.toRelStructure S) => (hRel ν k s t).mp
+  let κ : Quotient (U.wagonSetoid μ) ↪ Quotient ((Train).wagonSetoid μ) :=
+    generatedActualASupportTrain_coreWagonEmbedding
+      A hA C.toRelStructure S R f T U preserve hShared μ
+  have coreParent (r : CoreEdge) :
+      κ ((Witness).parent r) = (Out).parent (CoreActual r) := rfl
+  have coreParent_eq (r : CoreEdge) (a : ActualEdge) (hr : CoreActual r = a) :
+      κ ((Witness).parent r) = (Out).parent a :=
+    (coreParent r).trans (congrArg (fun q : ActualEdge => (Out).parent q) hr)
+  have coreCarrier_eq (r : CoreEdge) (a : ActualEdge) (hr : CoreActual r = a) :
+      CoreCar r = a.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA C.toRelStructure S R f r).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) hr)
   by_cases hPair : (Witness).PairEdge x y
   · obtain ⟨p, hxp, hyp⟩ := hPair
     have hpSub : (CoreActual p).1 ⊆ copyCarrier CoreEmb := by
@@ -161,20 +170,13 @@ theorem attachedSelectedPicture_standard_core_blocks_parent_eq
       A hA C.toRelStructure S R f c hcSub
     obtain ⟨d₀, hd₀⟩ := actualASupport_core_edge_pullback
       A hA C.toRelStructure S R f d hdSub
-    have hDC : (Witness).parent d₀ = (Witness).parent c₀ := by
-      apply Quotient.sound
-      apply (generatedActualASupportTrain_restrict_core
-        A hA C.toRelStructure S R f T U preserve hShared μ d₀ c₀).mp
-      apply Quotient.exact
-      change (Out).parent (CoreActual d₀) = (Out).parent (CoreActual c₀)
-      rw [hc₀, hd₀]
-      exact hd.trans hc.symm
-    have hxc₀ : x ∈ CoreCar c₀ := by
-      rw [← actualAPictureEdgeEquiv_core_carrier A hA C.toRelStructure S R f c₀, hc₀]
-      exact hxc
-    have hyd₀ : y ∈ CoreCar d₀ := by
-      rw [← actualAPictureEdgeEquiv_core_carrier A hA C.toRelStructure S R f d₀, hd₀]
-      exact hyd
+    have hDC : (Witness).parent d₀ = (Witness).parent c₀ :=
+      κ.injective ((coreParent_eq d₀ d hd₀).trans
+        (hd.trans (hc.symm.trans (coreParent_eq c₀ c hc₀).symm)))
+    have hxc₀ : x ∈ CoreCar c₀ :=
+      Eq.mpr (congrArg (fun Z : Set Vertex => x ∈ Z) (coreCarrier_eq c₀ c hc₀)) hxc
+    have hyd₀ : y ∈ CoreCar d₀ :=
+      Eq.mpr (congrArg (fun Z : Set Vertex => y ∈ Z) (coreCarrier_eq d₀ d hd₀)) hyd
     have hxCopy : x ∈ (Witness).copyCarrier i :=
       activeAttached_mem_sharedWitness_of_standard_core
         A C e.toFunctionEmbedding R f U μ i x (haSub hxa) (hcSub hxc)
@@ -188,27 +190,24 @@ theorem attachedSelectedPicture_standard_core_blocks_parent_eq
       ⟨c₀, rfl, hxc₀⟩ ⟨d₀, hDC, hyd₀⟩ hPair
     have sharedImage (r : SharedOldACarrierEdge A C.toRelStructure S) :
         StdEdge i r.1 = CoreActual (Emb i r) := by
-      change actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-          (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S)
-            Emb i ((sharedOldACarrierInclusion A C.toRelStructure S) r)) = _
-      rw [physicalStandardEdge_shared]
+      exact congrArg
+        (fun p : ActualAPicturePushoutEdge A C.toRelStructure S R I =>
+          actualAPictureEdgeEquiv A hA C.toRelStructure S R f p)
+        (physicalStandardEdge_shared
+          (sharedOldACarrierInclusion A C.toRelStructure S) Emb i r)
     have parentW (r : SharedOldACarrierEdge A C.toRelStructure S)
         (hr : (Witness).parent (Emb i r) = (Witness).parent c₀) :
         (Out).parent (StdEdge i r.1) = W₂ := by
-      rw [sharedImage r]
-      have hSource : U.rel μ (Emb i r) c₀ := Quotient.exact hr
       have hOut : (Out).parent (CoreActual (Emb i r)) =
           (Out).parent (CoreActual c₀) :=
-        Quotient.sound ((generatedActualASupportTrain_restrict_core
-          A hA C.toRelStructure S R f T U preserve hShared μ (Emb i r) c₀).mpr hSource)
-      rw [hc₀] at hOut
-      exact hOut.trans hc
-    have hxs' : x ∈ (StdEdge i s.1).1 := by
-      rw [sharedImage s]
-      exact hxs
-    have hyt' : y ∈ (StdEdge i t.1).1 := by
-      rw [sharedImage t]
-      exact hyt
+        (coreParent (Emb i r)).symm.trans
+          ((congrArg (fun w : Quotient (U.wagonSetoid μ) => κ w) hr).trans (coreParent c₀))
+      exact (congrArg (fun q : ActualEdge => (Out).parent q) (sharedImage r)).trans
+        (hOut.trans ((congrArg (fun q : ActualEdge => (Out).parent q) hc₀).trans hc))
+    have hxs' : x ∈ (StdEdge i s.1).1 :=
+      Eq.mpr (congrArg (fun q : ActualEdge => x ∈ q.1) (sharedImage s)) hxs
+    have hyt' : y ∈ (StdEdge i t.1).1 :=
+      Eq.mpr (congrArg (fun q : ActualEdge => y ∈ q.1) (sharedImage t)) hyt
     obtain ⟨a₀, rfl⟩ := attachedSelectedPicture_geometric_edge_pullback
       A hA D C e R f i a haSub
     obtain ⟨b₀, rfl⟩ := attachedSelectedPicture_geometric_edge_pullback

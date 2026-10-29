@@ -105,14 +105,13 @@ theorem generatedActualASupportTrain_coreWagon_pair_absorbs_edge
     oldACarrier_subset_of_two_mem_aStrong A Attached (copyCarrier CoreEmb)
       hCore p x y hxy hx hy (vertexInCore x hxw) (vertexInCore y hyw)
   obtain ⟨a, ha⟩ := actualASupport_core_edge_pullback A hA B S R f p hSub
-  have hxa : x ∈ (Witness).edgeCarrier a := by
-    change x ∈ CoreCar a
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f a, ha]
-    exact hx
-  have hya : y ∈ (Witness).edgeCarrier a := by
-    change y ∈ CoreCar a
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f a, ha]
-    exact hy
+  have hCarrier : CoreCar a = p.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f a).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) ha)
+  have hxa : x ∈ (Witness).edgeCarrier a :=
+    Eq.mp (congrArg (fun Z : Set Vertex => x ∈ Z) hCarrier.symm) hx
+  have hya : y ∈ (Witness).edgeCarrier a :=
+    Eq.mp (congrArg (fun Z : Set Vertex => y ∈ Z) hCarrier.symm) hy
   have hParent : (Witness).parent a = w :=
     OrderOneData.parent_eq_of_two_vertices_in_wagon
       (Witness) hLinear a w x y hxa hya hxw hyw hxy
@@ -135,20 +134,24 @@ theorem generatedActualASupportTrain_parent_eq_of_core_pair
     Parent p = W := by
   obtain ⟨a₀, ha⟩ := actualASupport_core_edge_pullback A hA B S R f a haSub
   obtain ⟨b₀, hb⟩ := actualASupport_core_edge_pullback A hA B S R f b hbSub
-  have hOut : (Train).rel μ (CoreActual b₀) (CoreActual a₀) := by
-    apply Quotient.exact
-    change Parent (CoreActual b₀) = Parent (CoreActual a₀)
-    rw [ha, hb]
-    exact hbW.trans haW.symm
+  have hOutEq : Parent (CoreActual b₀) = Parent (CoreActual a₀) :=
+    (congrArg Parent hb).trans
+      (hbW.trans (haW.symm.trans (congrArg Parent ha).symm))
+  have hOut : (Train).rel μ (CoreActual b₀) (CoreActual a₀) :=
+    Quotient.exact (s := (Train).wagonSetoid μ) hOutEq
   have hSource : U.rel μ b₀ a₀ :=
     (generatedActualASupportTrain_restrict_core
       A hA B S R f T U hPreserve hShared μ b₀ a₀).mp hOut
-  have hxa₀ : x ∈ CoreCar a₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f a₀, ha]
-    exact hxa
-  have hyb₀ : y ∈ CoreCar b₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b₀, hb]
-    exact hyb
+  have hCa : CoreCar a₀ = a.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f a₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) ha)
+  have hCb : CoreCar b₀ = b.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f b₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) hb)
+  have hxa₀ : x ∈ CoreCar a₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => x ∈ Z) hCa.symm) hxa
+  have hyb₀ : y ∈ CoreCar b₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => y ∈ Z) hCb.symm) hyb
   have hxW : (Witness).WagonVertex ((Witness).parent a₀) x :=
     ⟨a₀, rfl, hxa₀⟩
   have hyW : (Witness).WagonVertex ((Witness).parent a₀) y :=
@@ -181,42 +184,49 @@ theorem generatedActualASupportTrain_core_blocks_parent_eq
   obtain ⟨c₀, hc⟩ := actualASupport_core_edge_pullback A hA B S R f c hcSub
   obtain ⟨d₀, hd⟩ := actualASupport_core_edge_pullback A hA B S R f d hdSub
   have hBA : (Witness).parent b₀ = (Witness).parent a₀ := by
-    apply Quotient.sound
-    apply (generatedActualASupportTrain_restrict_core
+    have hOutEq : Parent (CoreActual b₀) = Parent (CoreActual a₀) :=
+      (congrArg Parent hb).trans
+        (hbW.trans (haW.symm.trans (congrArg Parent ha).symm))
+    exact Quotient.sound ((generatedActualASupportTrain_restrict_core
       A hA B S R f T U hPreserve hShared μ b₀ a₀).mp
-    apply Quotient.exact
-    change Parent (CoreActual b₀) = Parent (CoreActual a₀)
-    rw [ha, hb]
-    exact hbW.trans haW.symm
+        (Quotient.exact (s := (Train).wagonSetoid μ) hOutEq))
   have hDC : (Witness).parent d₀ = (Witness).parent c₀ := by
-    apply Quotient.sound
-    apply (generatedActualASupportTrain_restrict_core
+    have hOutEq : Parent (CoreActual d₀) = Parent (CoreActual c₀) :=
+      (congrArg Parent hd).trans
+        (hdW.trans (hcW.symm.trans (congrArg Parent hc).symm))
+    exact Quotient.sound ((generatedActualASupportTrain_restrict_core
       A hA B S R f T U hPreserve hShared μ d₀ c₀).mp
-    apply Quotient.exact
-    change Parent (CoreActual d₀) = Parent (CoreActual c₀)
-    rw [hc, hd]
-    exact hdW.trans hcW.symm
-  have hxa₀ : x ∈ CoreCar a₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f a₀, ha]
-    exact hxa
-  have hyb₀ : y ∈ CoreCar b₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b₀, hb]
-    exact hyb
-  have hxc₀ : x ∈ CoreCar c₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f c₀, hc]
-    exact hxc
-  have hyd₀ : y ∈ CoreCar d₀ := by
-    rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f d₀, hd]
-    exact hyd
+        (Quotient.exact (s := (Train).wagonSetoid μ) hOutEq))
+  have hCa : CoreCar a₀ = a.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f a₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) ha)
+  have hCb : CoreCar b₀ = b.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f b₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) hb)
+  have hCc : CoreCar c₀ = c.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f c₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) hc)
+  have hCd : CoreCar d₀ = d.1 :=
+    (actualAPictureEdgeEquiv_core_carrier A hA B S R f d₀).symm.trans
+      (congrArg (fun q : ActualEdge => q.1) hd)
+  have hxa₀ : x ∈ CoreCar a₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => x ∈ Z) hCa.symm) hxa
+  have hyb₀ : y ∈ CoreCar b₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => y ∈ Z) hCb.symm) hyb
+  have hxc₀ : x ∈ CoreCar c₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => x ∈ Z) hCc.symm) hxc
+  have hyd₀ : y ∈ CoreCar d₀ :=
+    Eq.mp (congrArg (fun Z : Set Vertex => y ∈ Z) hCd.symm) hyd
   have hAC : (Witness).parent a₀ = (Witness).parent c₀ :=
     OrderOneData.wagon_eq_of_common_vertex_pair
       (Witness) hLinear ((Witness).parent a₀) ((Witness).parent c₀) x y
       ⟨a₀, rfl, hxa₀⟩ ⟨b₀, hBA, hyb₀⟩ ⟨c₀, rfl, hxc₀⟩ ⟨d₀, hDC, hyd₀⟩ hxy
   have hOut : Parent (CoreActual a₀) = Parent (CoreActual c₀) :=
     Quotient.sound ((generatedActualASupportTrain_restrict_core
-      A hA B S R f T U hPreserve hShared μ a₀ c₀).mpr (Quotient.exact hAC))
-  rw [ha, hc] at hOut
-  exact haW.symm.trans (hOut.trans hcW)
+      A hA B S R f T U hPreserve hShared μ a₀ c₀).mpr
+        (Quotient.exact (s := U.wagonSetoid μ) hAC))
+  exact haW.symm.trans ((congrArg Parent ha).symm.trans
+    (hOut.trans ((congrArg Parent hc).trans hcW)))
 
 end CorePair
 
