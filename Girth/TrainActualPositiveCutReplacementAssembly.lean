@@ -73,7 +73,7 @@ theorem attachedSelectedPicture_standard_contained_replacement_supreme
     (hOrder : K.twiceOrder ≤ 2 * q)
     (hOldSupreme : (Old).SupremeCycleBound q)
     (i : I)
-    (pieces : Fin n → TrainSupremePiece ActualEdge Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ))
+    (pieces : Fin n → TrainSupremePiece ActualEdge (Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ)))
     (hInc : K.LocalPieceIncidence (Out) pieces)
     (hGeom : K.LocalLongA2Geometry (Out) pieces)
     (hFresh : ∀ (j : Fin n) (a : ActualEdge) (p : Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ))
