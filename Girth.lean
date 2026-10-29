@@ -383,6 +383,7 @@ import Girth.TrainActualCutIndexedBigCycle
 import Girth.TrainActualCutOrderOneBridges
 import Girth.TrainActualCutNonOneAcceptable
 import Girth.TrainActualCutReductionDichotomy
+import Girth.TrainActualPositiveCutSupremeOrBridges
 import Girth.TrainActualZeroCutLabelPullback
 import Girth.TrainActualStandardWagonMap
 import Girth.TrainActualZeroCutBigCycle
@@ -391,5 +392,6 @@ import Girth.TrainActualZeroCutAcceptable
 import Girth.TrainActualStandardShortReplacement
 import Girth.TrainActualStandardLongReplacement
 import Girth.TrainActualStandardNoNewPair
+import Girth.TrainActualStandardStrongFromBase
 import Girth.TrainSupremeWordTransport
 import Girth.TrainSupremePlanTransport
