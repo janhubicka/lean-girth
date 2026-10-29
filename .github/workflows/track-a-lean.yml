@@ -5,7 +5,9 @@ on:
   pull_request:
     paths:
       - 'Girth/TrainSupremeBoundaryEdgeCoverage.lean'
+      - 'Girth/TrainActualSupremeCutBoundarySupport.lean'
       - 'CheckTrackABoundaryEdges.lean'
+      - 'CheckTrackAActualSupport.lean'
   workflow_dispatch:
 permissions:
   contents: read
@@ -33,6 +35,8 @@ jobs:
       - name: Compile Track A and check theorem axioms
         run: |
           set -euo pipefail
-          lake build Girth.TrainSupremeBoundaryEdgeCoverage
+          lake build Girth.TrainActualSupremeCutBoundarySupport
           lake env lean CheckTrackABoundaryEdges.lean | tee track-a-check.log
           python3 scripts/check_axioms.py track-a-check.log CheckTrackABoundaryEdges.lean
+          lake env lean CheckTrackAActualSupport.lean | tee track-a-actual-check.log
+          python3 scripts/check_axioms.py track-a-actual-check.log CheckTrackAActualSupport.lean
