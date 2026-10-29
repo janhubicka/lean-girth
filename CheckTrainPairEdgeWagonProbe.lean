@@ -1,0 +1,11 @@
+import Girth.TrainPairEdgeWagonProbe
+
+#check @StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe
+#check @StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe_twiceOrder
+#check @StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe_acceptable
+#check @StructuralRamsey.Girth.OrderOneData.twoLabel_wagon_bridge_of_pair_edge
+
+#print axioms StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe
+#print axioms StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.pairEdgeWagonProbe_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.twoLabel_wagon_bridge_of_pair_edge

@@ -13,6 +13,10 @@ on:
       - 'CheckTrainTwoWagonVertexProbe.lean'
       - 'Girth/TrainTwoLabelVertexProbe.lean'
       - 'CheckTrainTwoLabelVertexProbe.lean'
+      - 'Girth/TrainPairEdgeWagonProbe.lean'
+      - 'CheckTrainPairEdgeWagonProbe.lean'
+      - 'Girth/TrainSelectedPictureWagonStrongness.lean'
+      - 'CheckTrainSelectedPictureWagonStrongness.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -28,6 +32,10 @@ on:
       - 'CheckTrainTwoWagonVertexProbe.lean'
       - 'Girth/TrainTwoLabelVertexProbe.lean'
       - 'CheckTrainTwoLabelVertexProbe.lean'
+      - 'Girth/TrainPairEdgeWagonProbe.lean'
+      - 'CheckTrainPairEdgeWagonProbe.lean'
+      - 'Girth/TrainSelectedPictureWagonStrongness.lean'
+      - 'CheckTrainSelectedPictureWagonStrongness.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -86,7 +94,9 @@ jobs:
             Girth.TrainTwoWagonVertexProbe \
             Girth.TrainSelectedPictureCoreOffCorePairGeometry \
             Girth.TrainTwoLabelVertexProbe \
-            Girth.TrainSelectedPictureOneOffCorePairGeometry
+            Girth.TrainSelectedPictureOneOffCorePairGeometry \
+            Girth.TrainPairEdgeWagonProbe \
+            Girth.TrainSelectedPictureWagonStrongness
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -101,7 +111,9 @@ jobs:
             CheckTrainTwoWagonVertexProbe \
             CheckTrainSelectedPictureCoreOffCorePairGeometry \
             CheckTrainTwoLabelVertexProbe \
-            CheckTrainSelectedPictureOneOffCorePairGeometry; do
+            CheckTrainSelectedPictureOneOffCorePairGeometry \
+            CheckTrainPairEdgeWagonProbe \
+            CheckTrainSelectedPictureWagonStrongness; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -131,6 +143,8 @@ jobs:
             CheckTrainSelectedPictureCoreOffCorePairGeometry.log
             CheckTrainTwoLabelVertexProbe.log
             CheckTrainSelectedPictureOneOffCorePairGeometry.log
+            CheckTrainPairEdgeWagonProbe.log
+            CheckTrainSelectedPictureWagonStrongness.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5

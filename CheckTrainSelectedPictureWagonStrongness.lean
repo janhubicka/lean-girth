@@ -1,0 +1,9 @@
+import Girth.TrainSelectedPictureWagonStrongness
+
+#check @StructuralRamsey.Girth.attachedSelectedPicture_parent_eq_of_wagon_pair
+#check @StructuralRamsey.Girth.attachedSelectedPicture_outside_edge_wagon_inter_subsingleton
+#check @StructuralRamsey.Girth.attachedSelectedPicture_wagon_aStrong
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_parent_eq_of_wagon_pair
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_outside_edge_wagon_inter_subsingleton
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_wagon_aStrong
