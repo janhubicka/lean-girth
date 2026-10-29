@@ -1,0 +1,18 @@
+import Girth.ForestToSupremeCycle
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.incident_left
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.incident_right
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.label_eq_of_edge_owner
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.supreme_of_constant_owner
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.constant_owner_designated
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.leaf_side_mixed
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.leaf_switch_members
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.leaf_separator
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.leaf_singleton_side
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.separator_incident_at_switch
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.supreme_of_complement_singleton
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestOwnership.erase_singleton_leaf
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_owned_bottom_joinTree
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_bottomForest
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottomForest_of_localForest
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_bottomLocalForest

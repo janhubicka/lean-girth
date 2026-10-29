@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveWitnessInitialParameters
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_rel_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_wagonCarrier
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_adjacentParameters

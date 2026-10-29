@@ -1,0 +1,6 @@
+import Girth.ForestToSupremeLeaf
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.edge_incident_positions_consecutive
+#print axioms StructuralRamsey.Girth.OrderOneData.incident_of_carrier_edges_subset
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.leaf_shared_edge_mem_parent
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.leaf_switch_incident
