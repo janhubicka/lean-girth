@@ -1,0 +1,38 @@
+name: Track A local Lean check
+on:
+  push:
+    branches: [circulation-par-a-positive-cut-oct29]
+  pull_request:
+    paths:
+      - 'Girth/TrainSupremeBoundaryEdgeCoverage.lean'
+      - 'CheckTrackABoundaryEdges.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v5
+        with:
+          path: ~/.elan/toolchains
+          key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
+      - uses: actions/cache@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+      - name: Install elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Mathlib cache
+        run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+      - name: Compile Track A and check theorem axioms
+        run: |
+          set -euo pipefail
+          lake build Girth.TrainSupremeBoundaryEdgeCoverage
+          lake env lean CheckTrackABoundaryEdges.lean | tee track-a-check.log
+          python3 scripts/check_axioms.py track-a-check.log CheckTrackABoundaryEdges.lean
