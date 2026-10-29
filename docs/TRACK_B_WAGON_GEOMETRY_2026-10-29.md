@@ -6,6 +6,8 @@ merged as PR #668. The one-off-core continuation starts from integrated main
 `65a1bab3e2314f22c4921269ca81f019dbf4de26`, preserving the other lanes.
 The direct strongness continuation builds on PR #675 at
 `5a1b62b8a8344d983a34d19a8378281d4614e3b7`.
+The full-linearity continuation builds on PR #677 at
+`f0765e13be4416d671606048d2d8d82c806c41ed`.
 Only the circulation argument is addressed; the appendix is excluded.
 The user's continuation explicitly also requests fixing, simplifying and
 annotating the TeX draft. Those focused changes belong to a companion PR in
@@ -23,7 +25,7 @@ Track A's cycle-transfer conclusion is assumed.
 | `TrainSelectedPictureWagonPairGeometry` | `attachedSelectedPicture_same_standard_blocks_parent_eq` | Old wagon linearity and exact standard restriction identify the output parents of two edge blocks in one standard through distinct common vertices. |
 | same | `attachedSelectedPicture_parent_eq_of_standard_pair` | Whole-standard A-strongness absorbs an ambient pair edge, after which old wagon linearity determines its generated parent. |
 | same | `attachedSelectedPicture_standard_blocks_parent_eq` | Old/core full order-two bounds, shared compatibility and whole gluing-image strongness identify parents of blocks in arbitrary two standards. The actual-picture instantiation also retains finite A, partiteness over the base, base A-linearity/rigidity and strong designated base copies. The standard indices may coincide and physical edges may repeat. |
-| same | `attachedSelectedPicture_standard_wagon_carriers_inter_subsingleton` | Complete **source** wagon carriers with different generated output labels intersect in at most one vertex. This is not yet the corresponding statement about complete generated wagon carriers. |
+| same | `attachedSelectedPicture_standard_wagon_carriers_inter_subsingleton` | Complete **source** wagon carriers with different generated output labels intersect in at most one vertex. The complete generated-wagon statement is proved by the continuation below. |
 | `TrainSelectedPictureCorePairGeometry` | `actualASupport_core_edge_pullback` | Every actual support edge contained in the core is the canonical physical image of a genuine core edge. |
 | same | `generatedActualASupportTrain_coreWagon_pair_absorbs_edge` | A-strongness of the active subsystem, core wagon linearity and shared-relation preservation give pair-edge absorption by the generated image of a core wagon. |
 | same | `generatedActualASupportTrain_parent_eq_of_core_pair` | The same absorption conclusion starts from arbitrary actual edge witnesses contained in the core, preserving their original output parent. |
@@ -161,9 +163,10 @@ identities preserve the original output parents. Old wagon linearity then
 compares the two blocks entirely inside one standard.
 
 This proof never localizes a lone arbitrary wagon incidence at a core
-vertex. The second wagon and common off-core endpoint are essential to the
-argument. No core wagon linearity, strongness, finite support or output
-`LinearPretrain` premise is introduced.
+vertex. It uses the off-core endpoint to obtain a common standard owner.
+The continuation below supplies that owner explicitly and removes the
+vertex-location condition. No core wagon linearity, strongness, finite
+support or output `LinearPretrain` premise is introduced in this comparison.
 
 ## Adversarial scope checks
 
@@ -255,47 +258,124 @@ reviewed at their stored signatures and audited for transitive axioms. Only
 `propext`, `Classical.choice` and `Quot.sound` occur. Exact-head repository
 CI remains the merge gate, as for every other contribution.
 
-## Remaining Track B obligation
+## Full generated-wagon and pretrain linearity
 
-Arbitrary generated wagon pairs are compared whenever one common vertex
-lies outside the core. Full pair-edge absorption is now proved under the
-explicit source and whole-piece geometric hypotheses above. Consequently,
-distinct output wagons sharing two vertices can do so only when both
-vertices lie in the core **and no ambient support edge joins the pair**.
-This is the remaining global output-linearity case.
+The remaining core/core case is now implemented with a finite source-case
+argument. It needs no minimum segmentation and no global cyclic reduct.
 
-Vertex membership in the core still does not put an incident edge in the
-core. A private old wagon can touch the active subsystem in one vertex
-without a shared edge. Thus unconditional core localization of every
-generated-wagon vertex remains an invalid intermediate target. The
-remaining three- and four-segment configurations must retain original
-quotient labels, actual vertex incidences and legal replacement words.
-The core/core case has no off-core vertex furnishing a common standard
-owner automatically.
+| Module | Interface | Exact role |
+|---|---|---|
+| `TrainSelectedPictureCommonStandardEndpoint` | `attachedSelectedPicture_common_standard_endpoint_parent_eq` and `attachedSelectedPicture_wagon_eq_of_common_standard_vertex` | Compare arbitrary generated wagons sharing a distinct pair when one standard has an edge of each at one endpoint. Neither endpoint must be outside the core. Inputs remain old linearity, witness local order-two bound and exact shared compatibility. |
+| `TrainThreeLabelWagonProbe` | `piece_vertices_common_wagon`, `common_wagon_of_two_copy_vertex_pair`, and the three-label probe construction, order, acceptability and common-wagon theorem | Any piece between two vertex boundaries exhibits a common wagon. The literal cycle Q x F p G y has order two; A2 uses a genuine no-pair-edge guard, and A3 is checked directly. |
+| `TrainFourLabelWagonFrame` | frame, cycle, order, A2, A3, acceptability and occurrence-specific bridge alternatives | The word a p b y c q d x allows repeated diagonal labels. A3 explicitly requires every wagon containing both vertices to be one of p,q; absence of an ambient pair edge alone is not substituted for this requirement. |
+| `TrainSelectedPictureWagonLinearity` | unrestricted wagon pair equality, quotient-carrier pair equality, carrier-intersection subsingleton and exact WagonVertex component | Complete generated wagon carriers are pairwise linear, without an endpoint-location, source-block, ambient-pair-edge or core-ancestor premise. |
+| `TrainSelectedPictureEdgeLinearity` | `attachedSelectedPicture_edge_carriers_inter_subsingleton` | The actual physical support edges are linear from source old/core linearity and active/whole-standard strongness. No bound, shared-relation compatibility or output linearity is used. |
+| `TrainSelectedPictureLinearPretrain` | `attachedSelectedPicture_linearPretrain` | Assemble both independently proved components of the existing full output `LinearPretrain` predicate. |
+| same | `attachedSelectedPicture_linear_and_strong_of_gluing_geometry` | Whole core gluing-image strongness supplies whole-standard strongness, then packages full generated linearity and strongness of every complete wagon. |
 
-The companion TeX change replaces the old minimum-segment strongness
-argument by the direct checked proof. A strongness marker certifies exactly
-the conditional geometric statement above; it does not certify the
-recursive construction supplying its hypotheses. Global output linearity,
-positive-cut cycle transfer, the remaining construction hypotheses and the
-full circulation theorem remain open.
+### Common-standard endpoint
+
+The former one-off-core proof uses its off-core premise only to obtain a
+standard containing the two original edges at that endpoint. Supplying those
+edges and their standard directly generalizes the theorem to arbitrary
+endpoints. If the other endpoint is outside the core, its owner is supplied
+by free attachment; compare inside one standard or apply crossing-wagon
+uniqueness. If it is in the core, the already checked hub argument applies.
+
+Thus two distinct output wagons sharing x,y cannot have their incidences at
+the same endpoint represented in one standard. This applies to new shared
+bridge edges as well as the originally selected physical edges.
+
+### Core/core finite cases
+
+Suppose distinct output wagons share distinct x,y. The one-off-core theorem
+puts both vertices in the core. Checked pair-edge absorption excludes every
+ambient support edge through x,y, since its parent would equal both wagons.
+
+Split explicitly on whether a core wagon contains both vertices.
+
+- **Anchored case.** If q contains x,y, compare its output extension with a
+  distinct original candidate. Genuine q-edges anchor the two endpoints.
+  Two core witnesses use source-core wagon linearity. A one-standard block
+  uses the checked long-pair probe. Different source labels determine a core
+  parent p preserving the original output label. The alternating frame has
+  A3 because source-core linearity makes q the only possible common core
+  wagon. A local mixed bridge puts the competing parent into the same
+  standard at the same endpoint, contradicting the common-standard theorem.
+- **Unanchored case.** Record that no core wagon contains both vertices.
+  Classify each wagon's endpoint witnesses as a one-standard block, a
+  core-local pair, or two distinct source labels with a genuine common core
+  ancestor. The core-local alternative contradicts the recorded condition.
+  Two one-standard blocks use the two-copy vertex cycle; one block and one
+  split pair use the three-label probe. Every vertex-to-vertex piece in these
+  cases exhibits a forbidden common core wagon.
+- **Two split pairs.** Their literal four-occurrence frame has separate A2
+  and A3 proofs. Every supreme designated occurrence receives, across its
+  vertex boundary, a shared edge of the other original wagon through that
+  same endpoint. The common-standard theorem gives the contradiction.
+
+Private wagons stay in the one-standard branch; they are never assigned
+fictitious core ancestors. Source records retain the actual physical edge,
+its endpoint and its original generated parent by **occurrence**, not by
+copy label. This matters when a diagonal label repeats. Only adjacent label
+inequalities are imposed. Shared-edge identities transport the preserved
+parent equations; equal vertex-carrier sets never identify wagon labels.
+
+### Full physical edge component and final interface
+
+For distinct actual support edges sharing x,y, localize one edge to a core
+or standard piece. That whole piece is A-strong (the core by active
+strongness), so the other edge lies there too. Pull both back through the
+actual embedding and apply source edge linearity. This direct argument
+uses the existing whole-standard strongness premise and requires no new
+whole-core-image premise.
+
+The final direct `LinearPretrain` theorem therefore retains exactly the
+strongness theorem's explicit inputs: irreducible A and actual active
+attachment data, nonempty shared support, exact all-level shared relations,
+old/core `LinearPretrain`, witness `LocalPieceSystemBound 2`, active-subsystem
+AStrong and whole attached-standard AStrong. It has no old global system
+bound, output system-girth, localization, no-pair-edge or finiteness premise.
+The alternative gluing-geometry wrapper takes strongness of each complete
+core gluing image and derives the whole-standard input by
+`attachment_copy_aStrong`; it then returns both linearity and wagon strongness.
+
+All six new modules compile. Their 22 exports (19 theorems, two cycle
+constructions and one frame structure) passed stored-signature review and
+transitive axiom audits. Only the standard logical axioms occur; the elementary
+piece helper and frame structure are axiom-free. Independent review checked
+actual incidences, original-parent retention, source trichotomy, diagonal
+repetitions, acceptability, and the absence of circular output assumptions.
+
+## Remaining construction and transfer obligations
+
+The conditional actual generated geometry required by Track B is now proved:
+full output wagon strongness, complete wagon-carrier linearity and full
+output pretrain linearity. Recursive discharge of the explicit source
+geometry, positive-cut global cycle transfer and the full circulation theorem
+remain separate obligations. Local pieces used in these finite probes are
+not asserted to assemble a simultaneous legal cyclic reduct in general.
+
+The companion TeX revision replaces both minimum-segmentation geometry proofs
+with the checked direct arguments, states their precise hypotheses, adds the
+common-standard comparison and separates the full-pretrain corollary.
+Compact immutable source annotations certify these conditional results;
+they do not certify the recursive construction supplying the inputs or the
+remaining system-girth transfer.
 
 ## Integration
 
 Each new module has a dedicated `Check*.lean` file printing both its elaborated
-export signatures and theorem axioms. A separate, focused
-`track-b-wagon-geometry.yml` workflow builds all Track B modules from fresh
-project objects, audits all their exports and runs both new diagnostics plus
-the four existing finite regressions. It checks the actual PR head and does
-not alter the shared `lean.yml` workflow or root imports.
+export signatures and theorem axioms. A separate focused workflow builds all
+Track B modules from fresh project objects, audits their exports and runs the
+six existing finite geometry/boundary diagnostics. It checks the actual PR
+head and does not alter the shared `lean.yml` workflow or root imports.
 
-Audit PR #665 is now integrated: the shared workflow discovers and builds
-every `Girth/*.lean` module and runs every `Check*.lean` audit exactly once.
-The focused workflow additionally enumerates all twelve Track B modules
-and their twelve Check files: 42 exports in total (39 theorems and three
-cycle constructions). The two continuations beyond PR #668 add sixteen
-exports: fourteen theorems and two constructions. Both workflows must pass
-on the proposed PR head before merge.
-
-No manuscript marker should be promoted for global output linearity or
-the full recursive theorem on the strength of these geometric statements.
+Audit PR #665 is integrated: the shared workflow discovers and builds every
+`Girth/*.lean` module and runs every `Check*.lean` audit exactly once. The
+focused workflow now enumerates all eighteen Track B modules and their
+Check files: 64 exports (58 theorems, five cycle constructions and one frame
+structure). The three continuations beyond PR #668 add 38 exports: 33
+theorems, four constructions and one frame structure. Both complete workflows
+must succeed on the proposed PR head before merge. Finite diagnostics are
+not substitutes for the Lean kernel checks.

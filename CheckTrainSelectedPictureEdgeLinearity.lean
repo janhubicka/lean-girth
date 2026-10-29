@@ -1,0 +1,5 @@
+import Girth.TrainSelectedPictureEdgeLinearity
+
+#check @StructuralRamsey.Girth.attachedSelectedPicture_edge_carriers_inter_subsingleton
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_edge_carriers_inter_subsingleton

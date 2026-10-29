@@ -1,0 +1,15 @@
+import Girth.TrainThreeLabelWagonProbe
+
+#check @StructuralRamsey.Girth.OrderOneData.piece_vertices_common_wagon
+#check @StructuralRamsey.Girth.OrderOneData.common_wagon_of_two_copy_vertex_pair
+#check @StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe
+#check @StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe_twiceOrder
+#check @StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe_acceptable
+#check @StructuralRamsey.Girth.OrderOneData.common_wagon_of_three_label_wagon_probe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.piece_vertices_common_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.common_wagon_of_two_copy_vertex_pair
+#print axioms StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe
+#print axioms StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.threeLabelWagonProbe_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.common_wagon_of_three_label_wagon_probe

@@ -17,6 +17,18 @@ on:
       - 'CheckTrainPairEdgeWagonProbe.lean'
       - 'Girth/TrainSelectedPictureWagonStrongness.lean'
       - 'CheckTrainSelectedPictureWagonStrongness.lean'
+      - 'Girth/TrainSelectedPictureCommonStandardEndpoint.lean'
+      - 'CheckTrainSelectedPictureCommonStandardEndpoint.lean'
+      - 'Girth/TrainThreeLabelWagonProbe.lean'
+      - 'CheckTrainThreeLabelWagonProbe.lean'
+      - 'Girth/TrainFourLabelWagonFrame.lean'
+      - 'CheckTrainFourLabelWagonFrame.lean'
+      - 'Girth/TrainSelectedPictureWagonLinearity.lean'
+      - 'CheckTrainSelectedPictureWagonLinearity.lean'
+      - 'Girth/TrainSelectedPictureEdgeLinearity.lean'
+      - 'CheckTrainSelectedPictureEdgeLinearity.lean'
+      - 'Girth/TrainSelectedPictureLinearPretrain.lean'
+      - 'CheckTrainSelectedPictureLinearPretrain.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -36,6 +48,18 @@ on:
       - 'CheckTrainPairEdgeWagonProbe.lean'
       - 'Girth/TrainSelectedPictureWagonStrongness.lean'
       - 'CheckTrainSelectedPictureWagonStrongness.lean'
+      - 'Girth/TrainSelectedPictureCommonStandardEndpoint.lean'
+      - 'CheckTrainSelectedPictureCommonStandardEndpoint.lean'
+      - 'Girth/TrainThreeLabelWagonProbe.lean'
+      - 'CheckTrainThreeLabelWagonProbe.lean'
+      - 'Girth/TrainFourLabelWagonFrame.lean'
+      - 'CheckTrainFourLabelWagonFrame.lean'
+      - 'Girth/TrainSelectedPictureWagonLinearity.lean'
+      - 'CheckTrainSelectedPictureWagonLinearity.lean'
+      - 'Girth/TrainSelectedPictureEdgeLinearity.lean'
+      - 'CheckTrainSelectedPictureEdgeLinearity.lean'
+      - 'Girth/TrainSelectedPictureLinearPretrain.lean'
+      - 'CheckTrainSelectedPictureLinearPretrain.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -96,7 +120,13 @@ jobs:
             Girth.TrainTwoLabelVertexProbe \
             Girth.TrainSelectedPictureOneOffCorePairGeometry \
             Girth.TrainPairEdgeWagonProbe \
-            Girth.TrainSelectedPictureWagonStrongness
+            Girth.TrainSelectedPictureWagonStrongness \
+            Girth.TrainSelectedPictureCommonStandardEndpoint \
+            Girth.TrainThreeLabelWagonProbe \
+            Girth.TrainFourLabelWagonFrame \
+            Girth.TrainSelectedPictureWagonLinearity \
+            Girth.TrainSelectedPictureEdgeLinearity \
+            Girth.TrainSelectedPictureLinearPretrain
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -113,7 +143,13 @@ jobs:
             CheckTrainTwoLabelVertexProbe \
             CheckTrainSelectedPictureOneOffCorePairGeometry \
             CheckTrainPairEdgeWagonProbe \
-            CheckTrainSelectedPictureWagonStrongness; do
+            CheckTrainSelectedPictureWagonStrongness \
+            CheckTrainSelectedPictureCommonStandardEndpoint \
+            CheckTrainThreeLabelWagonProbe \
+            CheckTrainFourLabelWagonFrame \
+            CheckTrainSelectedPictureWagonLinearity \
+            CheckTrainSelectedPictureEdgeLinearity \
+            CheckTrainSelectedPictureLinearPretrain; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -145,6 +181,12 @@ jobs:
             CheckTrainSelectedPictureOneOffCorePairGeometry.log
             CheckTrainPairEdgeWagonProbe.log
             CheckTrainSelectedPictureWagonStrongness.log
+            CheckTrainSelectedPictureCommonStandardEndpoint.log
+            CheckTrainThreeLabelWagonProbe.log
+            CheckTrainFourLabelWagonFrame.log
+            CheckTrainSelectedPictureWagonLinearity.log
+            CheckTrainSelectedPictureEdgeLinearity.log
+            CheckTrainSelectedPictureLinearPretrain.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
