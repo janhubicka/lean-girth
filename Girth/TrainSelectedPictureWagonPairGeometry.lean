@@ -4,6 +4,10 @@ import Girth.TrainActualStandardStrongFromBase
 import Girth.TrainActualStandardWagonMap
 import Girth.TrainWagonPairUniqueness
 
+-- Elaborate these dependent attachment interfaces synchronously on the pinned
+-- Lean release candidate, retaining ordinary kernel checking and diagnostics.
+set_option Elab.async false
+
 /-!
 # Noncircular wagon geometry for two standard-local edge blocks
 
@@ -57,11 +61,11 @@ local notation "Std" => RelStructure.Attachment.copyEmbedding C.toRelStructure S
 local notation "Emb" => sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
 local notation "CoreCar" => attachedCoreAEdgeCarrier A C.toRelStructure S R f
 local notation "StdEdge" => (fun (i : I) (a : OldEdge) =>
-  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-    (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb i a))
+  (show ActualEdge from actualAPictureEdgeEquiv A hA C.toRelStructure S R f
+    (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb i a)))
 local notation "CoreActual" => (fun (a : OldACarrierEdge A R) =>
-  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I a))
+  (show ActualEdge from actualAPictureEdgeEquiv A hA C.toRelStructure S R f
+    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I a)))
 local notation "Train" => generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared
 local notation "Old" => selectedPictureOrderOneData A B D C family selected T μ
 local notation "Witness" => sharedWitnessOrderOneData U μ Emb CoreCar

@@ -38,7 +38,8 @@ jobs:
           path: ~/.elan/toolchains
           key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
       - name: Restore dependency cache
-        uses: actions/cache@v5
+        id: dependencies
+        uses: actions/cache/restore@v5
         with:
           path: .lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-track-b-${{ github.sha }}
@@ -84,3 +85,9 @@ jobs:
             CheckTrainSelectedPictureWagonPairGeometry.log
             CheckTrainSelectedPictureCorePairGeometry.log
             CheckTrainSelectedPictureMixedPairGeometry.log
+      - name: Save compiled dependencies for proof iteration
+        if: always() && steps.dependencies.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: .lake
+          key: ${{ steps.dependencies.outputs.cache-primary-key }}
