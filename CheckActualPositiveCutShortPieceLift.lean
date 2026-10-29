@@ -1,0 +1,4 @@
+import Girth.TrainActualPositiveCutShortPieceLift
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cut_short_piece_incident_lift
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cut_short_piece_has_shared_source
