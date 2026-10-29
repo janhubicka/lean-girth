@@ -1,0 +1,6 @@
+import Girth.TrainSelectedPictureWagonPairGeometry
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_same_standard_blocks_parent_eq
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_parent_eq_of_standard_pair
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_standard_blocks_parent_eq
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_standard_wagon_carriers_inter_subsingleton

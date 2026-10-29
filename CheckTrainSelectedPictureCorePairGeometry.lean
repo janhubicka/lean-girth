@@ -1,0 +1,6 @@
+import Girth.TrainSelectedPictureCorePairGeometry
+
+#print axioms StructuralRamsey.Girth.actualASupport_core_edge_pullback
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_coreWagon_pair_absorbs_edge
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_parent_eq_of_core_pair
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_core_blocks_parent_eq
