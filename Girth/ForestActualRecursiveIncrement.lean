@@ -169,8 +169,7 @@ theorem actualPartiteDesignatedAB_mixedForest_of_relationalLocal
       core hCoreGirth
   have hRegularAmbient : ∀ i,
       ((fullASupportPiece A C.toRelStructure).map
-        ((StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).
-          toEmbedding.toFunctionEmbedding)).edges ⊆
+        (StructuralRamsey.Partite.Attachment.copyEmbedding C S E f i).toEmbedding.toFunctionEmbedding).edges ⊆
         supportCopies A attached.toRelStructure := by
     intro i h hh
     obtain ⟨hOld, hhOld, rfl⟩ := hh

@@ -265,8 +265,8 @@ theorem actualRecursiveMixedLocalForest
   apply localForestThrough_mixedOwners_of_finiteMixed
     small (fun ce : {ce : Set Z // ce ∈ mappedSupportCopies A C D core} => ce.1)
     hSmallInj Subtype.val_injective
-    (fun i => (mappedStrongASupportEmbedding A (f i) (hStrong i) core).
-      supportPiece_notIsOneEdge_of_twoSourceEdges e₀ e₁ he₀ he₁ hne)
+    (fun i => StrongSupportEmbedding.supportPiece_notIsOneEdge_of_twoSourceEdges
+      (mappedStrongASupportEmbedding A (f i) (hStrong i) core) e₀ e₁ he₀ he₁ hne)
     tested m
   · intro i
     exact ⟨bSupportPiece A (f i), Or.inl ⟨i, rfl⟩, hSmall i⟩

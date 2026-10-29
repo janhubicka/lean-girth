@@ -1,0 +1,9 @@
+import Girth.ForestOrderSegmentBudget
+
+#print axioms StructuralRamsey.Girth.length_le_twiceSegmentWeight
+#print axioms StructuralRamsey.Girth.two_le_twiceSegmentWeight_of_not_mixed_singleton
+#print axioms StructuralRamsey.Girth.twice_segmentCount_le_expandedBudget
+#print axioms StructuralRamsey.Girth.reducedSegmentWord_length_eq
+#print axioms StructuralRamsey.Girth.twice_segmentCount_le_cyclicExpandedWeight
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_length_le_cutoff
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_hasSupreme_of_bottomLocalForest

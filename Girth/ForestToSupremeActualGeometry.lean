@@ -113,7 +113,9 @@ theorem selectedPicture_bottom_piece_designated
       rw [← ha]
       exact hSub
     · rintro ⟨a, ha, hSub⟩
-      exact ⟨⟨s, ⟨a, ha.symm⟩⟩, by simpa only [ha] using hSub, rfl⟩
+      refine ⟨⟨s, ⟨a, ha.symm⟩⟩, ?_, rfl⟩
+      change s ⊆ copyCarrier q.1.embedding
+      simpa only [ha] using hSub
 
 /-- An ambient edge label is the actual one-edge piece on its carrier. -/
 theorem selectedPicture_bottom_piece_edge

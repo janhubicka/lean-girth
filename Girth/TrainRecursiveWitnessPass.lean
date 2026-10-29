@@ -26,6 +26,15 @@ This module proves the finite iteration and Ramsey extraction once those
 steps are provided.  Refinability of unprocessed fibres, where needed to
 produce a step, still belongs to its concrete construction; no such
 refinability theorem is asserted here.  No ambient support edge is pruned.
+
+To instantiate a nontrivial local `PictureStep`, the geometric construction
+must combine the actual physical forest increment with Track A's physical
+segmentation and supremeness pullback, Track B's generated-wagon strongness,
+linearity and two-standard obstruction, and Track C's all-level parameters
+and filling/subcopy cycle transfer.  Initial selected forest/tail stages,
+preservation of remaining-fibre refinability, the cutoff-two tail step and
+larger-cutoff refinement forgetting remain explicit construction work.  The
+identity step for a fibre with at most one physical edge is proved below.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
@@ -123,8 +132,8 @@ structure ForestTailStage
   bottomForest : FiniteMixedForestThrough
     (testedAB A B D system family selected) (t.headD 0)
   tailGirth : ∀ j : Fin t.length, 0 < j.val →
-    (selectedPictureOrderOneData A B D system family selected train j.castSucc).
-      FullSystemGirthGT (t.get j)
+    (selectedPictureOrderOneData A B D system family selected
+      train j.castSucc).FullSystemGirthGT (t.get j)
 
 attribute [instance] ForestTailStage.finiteVertex
 
@@ -138,8 +147,8 @@ structure OrderStage
     (allowed : Fin (t.length + 1) → Set P)
     extends ForestTailStage A B D family t targetTrain allowed where
   allCutGirth : ∀ j : Fin t.length,
-    (selectedPictureOrderOneData A B D system family selected train j.castSucc).
-      FullSystemGirthGT (t.get j)
+    (selectedPictureOrderOneData A B D system family selected
+      train j.castSucc).FullSystemGirthGT (t.get j)
 
 section Pass
 

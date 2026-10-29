@@ -7,11 +7,20 @@ Scope: circulation only.
 
 ## Validation state
 
-This is an implementation checkpoint. Kernel compilation and axiom audits
-are in progress; the branch must remain draft until they succeed on its
-latest head. The new lane-local workflow compiles the new modules and audits
-their exports without changing the shared umbrella, `lean.yml`, or manuscript.
-No final train Ramsey theorem is claimed by this checkpoint.
+This is an implementation checkpoint. The complete new proof bodies have
+passed exact-source Lean diagnostics and their axiom audits, using the
+pinned toolchain and genuine dependencies. These diagnostics do not replace
+the original-import build. The first remote build compiled the generic
+forest-cycle modules, then exposed two field-notation line-break errors in
+the relational support and selected-pass interfaces; these are repaired.
+The original-import build and latest-head CI remain required before review.
+
+The new lane-local workflow builds every repository module and audits all
+new exports without changing the shared umbrella, `lean.yml`, or manuscript.
+The independent audit #665 revealed a pre-existing unclosed reflexive goal
+in `RootedForest.parent_dist_add_one`; the only old proof-file edit here is
+the one-line reflexivity closure, with its own axiom check. No final train
+Ramsey theorem is claimed by this checkpoint.
 
 ## New mathematical work
 
@@ -48,6 +57,33 @@ No final train Ramsey theorem is claimed by this checkpoint.
    Its remaining-profile readiness predicate permits the actual unprocessed
    refinability invariant; it does not assert that every arbitrary stage
    is refinable.
+8. `ForestOrderSegmentBudget` proves the missing numerical estimate:
+   if the literal cyclic segmentation has no mixed singleton segment, then
+   twice its segment count is at most the source's twice-order. A source of
+   order at most `q` therefore has a reduced cycle of length at most `q`.
+   The source and reduct may have different incidence data. The combined
+   theorem supplies supremeness of the acceptable reduced bottom cycle;
+   physical transfer to the source remains separate.
+9. `ForestSelectedMixedCoverage` preserves irreducible coverage by selected
+   B-copies or ambient A-edges through the actual attachment. Its active
+   generation corollary needs base strongness only for selected old copies.
+10. `TrainRecursiveWitnessInitial` identifies all actual initial support
+    edges with component/target-edge pairs, constructs the component train
+    with universal top, and proves exact restriction to each selected
+    target copy. It also proves initial selected support injectivity,
+    selected strongness and mixed coverage, support coverage/nonemptiness
+    from explicit target hypotheses, and disjointness of distinct A-copies
+    in each initial projection fibre.
+11. `TrainRecursiveWitnessInitialParameters` identifies each proper-cut
+    initial wagon carrier with its tagged target carrier and derives all
+    adjacent initial parameters from the target parameters under each
+    prescribed base projection. The universal top is handled explicitly.
+12. `TrainRecursiveWitnessProfiles` realizes each inhabited injection profile
+    as an actual relational embedding into the base, supplies the empty-fibre
+    identity step, and converts constructors indexed by actual embeddings
+    into the finite pass's profile-indexed step. It also supplies a finite
+    nodup enumeration of profiles and extracts a nonempty prescribed family
+    from its restricted Ramsey arrow.
 
 ## Noncircular dependency boundary
 
@@ -72,10 +108,59 @@ iteration and backwards selection, but its local geometry-preserving
 `PictureStep` operator must still be constructed. Neither theorem substitutes
 rank decrease for witness existence.
 
-The remaining applications include the minimal-segmentation length estimate
-in the forest-to-order picture step, its cycle-transfer hypotheses, the actual
-initial/refinement/cutoff-two construction operators, and their A/B/C
-integration. No uncovered ambient edges are pruned at higher coordinates.
+The numerical minimum-segmentation length estimate is now proved from exact
+word identities and absence of mixed singletons. Constructing the actual
+geometric segmentation and proving those hypotheses remain separate. No
+uncovered ambient edges are pruned at higher coordinates.
+
+## Exact remaining construction obligations
+
+| Construction boundary | Proved here | Still required |
+| --- | --- | --- |
+| Forest cycle | Acceptable bottom cycle carried by its occurring labelled forest has a globally legal simultaneous supreme copy, including repeats and length two | For an order-one reduct without A1, use the separate both-bridges theorem; do not treat it as acceptable |
+| Same-cutoff forest-to-order step | Segment count is bounded by source order after excluding mixed singleton segments; actual reduced forest yields supremeness | Physical minimum segmentation, elimination of mixed singletons, source/reduct word identities, old-standard supreme bound, and legal source pullback from Track A |
+| Actual forest increment | True-active support, strong support maps, exact full pieces/overlaps, selected B transport, every ambient A-edge, and predecessor forest at cutoff two | Old mixed forest; selected-base strongness; local-image strongness; core ordinary girth `>m`; independent output ordinary girth `>2`; larger-cutoff local mixed forest and physical injectivity |
+| Initial picture | Full physical edge equivalence, train, all adjacent parameters, selected restriction and strongness, mixed coverage, support conditions and matching fibres | Mixed forest through the target budget, tail system-girth, and the actual refinement readiness invariant |
+| Finite selected pass | Finite profile enumeration and realization, empty-fibre identity, forward iteration with `Ready`, backward colour selection, literal selected-copy transport, all-level train preservation/reflection and selected strong Ramsey extraction | A finite geometric base and actual local `PictureStep` constructors preserving the remaining readiness invariant |
+| Recursive kernel | Data-valued recursion in all three rank cases; fixed forest-to-order conversion only after a smaller witness exists | Universal actual witness families and instances of all four geometric construction operators |
+
+The construction obligations above cannot be replaced by weaker invariants:
+
+- The Ramsey base needs `ALinear A D`, selected-base A-strongness, finite
+  support, controlled intersections and the auxiliary order. The colouring
+  arrow alone does not provide this package. The existing closure Ramsey
+  theorem in `ALinearRamsey` is the relevant source.
+- A fixed-target `ForestTailStage` cannot itself be the universal recursive
+  witness family: the active target, refinement depth, train height and
+  contracted coloured edge type change in recursive calls.
+- Refinement requires actual finite nested partitions and singleton allowed
+  parts, with girth at every inserted cut. `RefinementRunCount` supplies
+  arithmetic once run data are given; it does not construct that data or
+  the refinement. The initial matching theorem is one concrete input.
+- Output ordinary girth `>2` must be derived independently before applying
+  the forest increment. Deriving it from that increment's conclusion and
+  using it as an input would be circular. Likewise, local forest through
+  `q-1` alone does not establish core girth `>q`; the refinement-collapse
+  construction must provide the extra gain.
+- The cutoff-two case with nonempty tail requires uniform first wagons,
+  contraction to a coloured edge type, a shorter-train order witness,
+  colour-word Ramsey selection, and actual filling/scattering. The existing
+  filling carrier invariant does not construct those operations or their
+  cycle-transfer proof.
+- Track B must supply genuine generated-wagon strongness/linearity and the
+  mixed two-standard obstruction. Track C must supply all-level parameters
+  and filling/subcopy system-girth transfer. Ordinary girth, equal wagon
+  carriers, and unions of individually strong pieces are insufficient.
+- The finite actual output needs finite local indexing, local homogeneous
+  selection, irreducible-to-A extension, selected physical injectivity,
+  target restriction, transition reflection, support, parameters and every
+  tail bound. The increment theorem alone asserts no Ramsey existence.
+- The profile bridge does not assume readiness is monotone: dropping an
+  empty profile still requires the explicit remaining-readiness clause.
+  Active-carrier nonemptiness is equivalent to an inhabited fibre only for
+  a nonempty source; the bridge retains that hypothesis.
+- Finalization still needs one-edge target handling, fine-to-coarse
+  predicates and order completion. No appendix assertion is used.
 
 ## Review points
 
@@ -89,6 +174,11 @@ integration. No uncovered ambient edges are pruned at higher coordinates.
   global legality.
 - Only actual join-tree leaves are removed. No unjustified general forest
   heredity or arbitrary designated-member deletion is used.
+- The labelled forest-cycle proof does not require a preselected designated
+  root or a two-edge hypothesis on designated members. Existence of a
+  designated supreme occurrence follows within the induction. The separate
+  physical-set bridge still needs label injectivity and its multi-edge
+  separation; this stronger generic statement does not erase that issue.
 - The finite pass transports selected labels and all train relations, rather
   than inferring those properties from an ordinary relational embedding.
 

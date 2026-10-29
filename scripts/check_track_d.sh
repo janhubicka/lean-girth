@@ -2,25 +2,33 @@
 set -euo pipefail
 
 # Lane-local gate. Shared umbrella imports and lean.yml belong to integration.
-lake build \
-  Girth.ForestCyclicSwitching \
-  Girth.ForestBottomSupremePullback \
-  Girth.ForestToSupremeCycle \
-  Girth.ForestActualRecursiveIncrement \
-  Girth.ForestToSupremeActualGeometry \
-  Girth.TrainRecursiveWitnessPass
+# Building every module also checks files outside the shared import facade.
+python3 - <<'PY'
+from pathlib import Path
+import subprocess
+
+modules = sorted(str(p.with_suffix('')).replace('/', '.')
+                 for p in Path('Girth').rglob('*.lean'))
+subprocess.run(['lake', 'build', 'Girth', *modules], check=True)
+PY
 
 checks=(
+  CheckTrackDRootedForest
   CheckForestCyclicSwitching
   CheckForestBottomSupremePullback
+  CheckForestOrderSegmentBudget
   CheckForestToSupremeBottom
   CheckForestToSupremeLeaf
   CheckForestToSupremeCycle
   CheckForestActualRecursiveSupport
   CheckForestActualRecursiveIncrement
+  CheckForestSelectedMixedCoverage
   CheckForestToSupremeActualGeometry
   CheckTrainRecursiveWitness
   CheckTrainRecursiveWitnessPass
+  CheckTrainRecursiveWitnessInitial
+  CheckTrainRecursiveWitnessInitialParameters
+  CheckTrainRecursiveWitnessProfiles
 )
 
 for check in "${checks[@]}"; do

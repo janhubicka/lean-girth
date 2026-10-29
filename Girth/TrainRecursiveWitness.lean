@@ -22,6 +22,19 @@ implication between unspecified existence propositions.  Its domain includes
 exactly the nonempty nondecreasing cutoff vectors with entries at least two.
 All recursive requests stay in that domain and below the fixed starting
 ceiling.  Existing multiplicity-lex theorems supply every rank decrease.
+
+The cross-track inputs are deliberately outside this recursion kernel:
+Track A supplies physical minimum-segmentation replacement, old supremeness,
+and arbitrary-replacement pullback, including the two-segment/order-one case;
+Track B supplies actual generated-wagon strongness and linearity and the
+mixed two-standard contained-block obstruction; Track C supplies the actual
+all-level adjacent parameters and filling/subcopy system-girth transfer.
+The remaining Track D construction inputs are initial selected stages with
+their unprocessed-fibre refinability, the genuine `[2]` base, the cutoff-two
+tail contraction/filling step, the larger-cutoff refinement-forgetting and
+girth-increment step, and the segmentation length estimate and forest-to-order
+pass.  `Operators` records the resulting construction interfaces; it does
+not discharge any of these geometric inputs merely by naming them.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
