@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveWitnessInitialSupreme
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.hasSupremeAt_of_other_labels_own_edges
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialCycle_hasSupremeAt_of_contained

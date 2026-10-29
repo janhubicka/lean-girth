@@ -7,3 +7,6 @@ import Girth.ForestOrderSegmentBudget
 #print axioms StructuralRamsey.Girth.twice_segmentCount_le_cyclicExpandedWeight
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_length_le_cutoff
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_hasSupreme_of_bottomLocalForest
+#print axioms StructuralRamsey.Girth.ForestOrderSegmentBudget.cyclicWeight_rotate
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_length_le_cutoff_of_rotation
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.segmentedReduct_hasSupreme_of_rotated_bottomLocalForest

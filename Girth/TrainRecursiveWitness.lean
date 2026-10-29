@@ -29,12 +29,14 @@ and arbitrary-replacement pullback, including the two-segment/order-one case;
 Track B supplies actual generated-wagon strongness and linearity and the
 mixed two-standard contained-block obstruction; Track C supplies the actual
 all-level adjacent parameters and filling/subcopy system-girth transfer.
-The remaining Track D construction inputs are initial selected stages with
-their unprocessed-fibre refinability, the genuine `[2]` base, the cutoff-two
+The remaining Track D construction inputs include initial tail transfer and
+unprocessed-fibre refinability, the genuine `[2]` Ramsey base, the cutoff-two
 tail contraction/filling step, the larger-cutoff refinement-forgetting and
 girth-increment step, and the segmentation length estimate and forest-to-order
 pass.  `Operators` records the resulting construction interfaces; it does
-not discharge any of these geometric inputs merely by naming them.
+not discharge any of these geometric inputs merely by naming them. The
+actual initial-stage and finite-pass components are supplied separately by
+`TrainRecursiveWitnessInitialStage` and `TrainRecursiveWitnessConstruction`.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness

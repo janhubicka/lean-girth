@@ -5,6 +5,32 @@ Branch: `circulation-par-d-forest-recursion-oct29`.
 Contract: issues #663 and #664, with the audit in #665.
 Scope: circulation only.
 
+## Context recovered from path A
+
+The operative sources are the [coordinator](https://github.com/janhubicka/lean-girth/issues/664),
+the [D contract](https://github.com/janhubicka/lean-girth/issues/663), and the
+[circulation audit](https://github.com/janhubicka/lean-girth/pull/665), read
+together with circulation Sections 14--17. The corrected positive-cut route
+is recorded in [A's contract](https://github.com/janhubicka/lean-girth/issues/660)
+and [standard-local transfer interface](https://github.com/janhubicka/lean-girth/pull/667).
+
+- Reuse the checked actual forest increment, structural completion,
+  join-tree lifting, and multiplicity-lex rank libraries.
+- A forest means a clean-intersection family admitting a join tree. Do not
+  replace that definition by Berge-acyclicity of designated-copy carriers.
+- A reduced supreme local gluing copy determines a standard picture; it
+  does not automatically identify an original designated B-label. Physical
+  replacements into that standard precede old supremeness and pullback.
+- Local replacement validity does not imply global legality. The literal
+  output BigCycle or the global replacement theorem must be supplied.
+- Keep bottom mixed forests and every tail system-girth condition. Removing
+  uncovered ambient edges can change A2 even when wagon carriers agree.
+- The shorter-train conversion is fixed on an already proved vector;
+  larger-cutoff recursion requests arbitrary positive refinement depths.
+- The appendix is excluded. Integration owns root imports, shared CI and
+  the manuscript's compact linked margin marks. No manuscript claim is
+  upgraded by a conditional interface alone.
+
 ## Validation state
 
 This is an implementation checkpoint. The complete new proof bodies have
@@ -13,7 +39,9 @@ pinned toolchain and genuine dependencies. These diagnostics do not replace
 the original-import build. The first remote build compiled the generic
 forest-cycle modules, then exposed two field-notation line-break errors in
 the relational support and selected-pass interfaces; these are repaired.
-The original-import build and latest-head CI remain required before review.
+The review gate is the original-import build and latest-head CI. Current
+run results are recorded in [PR #669](https://github.com/janhubicka/lean-girth/pull/669);
+this ledger records the mathematical boundaries independently of run status.
 
 The new lane-local workflow builds every repository module and audits all
 new exports without changing the shared umbrella, `lean.yml`, or manuscript.
@@ -64,6 +92,8 @@ Ramsey theorem is claimed by this checkpoint.
    The source and reduct may have different incidence data. The combined
    theorem supplies supremeness of the acceptable reduced bottom cycle;
    physical transfer to the source remains separate.
+   Rotated variants permit the geometric segmentation to begin at any
+   cyclic boundary without changing the source order.
 9. `ForestSelectedMixedCoverage` preserves irreducible coverage by selected
    B-copies or ambient A-edges through the actual attachment. Its active
    generation corollary needs base strongness only for selected old copies.
@@ -84,6 +114,28 @@ Ramsey theorem is claimed by this checkpoint.
     into the finite pass's profile-indexed step. It also supplies a finite
     nodup enumeration of profiles and extracts a nonempty prescribed family
     from its restricted Ramsey arrow.
+13. `ForestRecursiveInitialMixed` proves the complete actual initial mixed
+    forest through every `q ≥ 2` from target support girth `>q`. If the
+    target centre is selected it uses the star; otherwise it proves the
+    edge-only selected family directly from girth, then combines disjoint
+    component owners. The bound includes every actual ambient A-edge.
+14. `TrainRecursiveWitnessInitialSupreme` proves that an occurring designated
+    label is supreme when every different cycle label is one of its own
+    edges. The global replacement output is literally the original cycle.
+    The actual initial-component corollary requires the literal occurrence
+    and component containment; it does not choose an absent designation.
+15. `TrainRecursiveWitnessInitialStage` constructs the actual finite initial
+    stage from target support, girth and parameters. Its sole remaining
+    output bound is the explicitly typed initial tail system-girth input.
+    For a singleton vector `[q]` that input is discharged because the tail
+    is empty. In particular `[2]` has a genuine initial-stage constructor;
+    the final `[2]` Ramsey witness still requires its construction operator.
+16. `TrainRecursiveWitnessConstruction.constructFromInitial_of_actualSteps`
+    composes the actual initial stage, complete finite profile enumeration,
+    actual-embedding local steps and backwards selection into a finite
+    output stage with `Ready []` and `DesignatedArrow`. Its selected
+    monochromatic copy is strong and preserves and reflects every target
+    train relation. No arbitrary initial stage is assumed by this endpoint.
 
 ## Noncircular dependency boundary
 
@@ -118,16 +170,16 @@ uncovered ambient edges are pruned at higher coordinates.
 | Construction boundary | Proved here | Still required |
 | --- | --- | --- |
 | Forest cycle | Acceptable bottom cycle carried by its occurring labelled forest has a globally legal simultaneous supreme copy, including repeats and length two | For an order-one reduct without A1, use the separate both-bridges theorem; do not treat it as acceptable |
-| Same-cutoff forest-to-order step | Segment count is bounded by source order after excluding mixed singleton segments; actual reduced forest yields supremeness | Physical minimum segmentation, elimination of mixed singletons, source/reduct word identities, old-standard supreme bound, and legal source pullback from Track A |
+| Same-cutoff forest-to-order step | Segment count is bounded by source order after excluding mixed singleton segments, at any cyclic cut; actual reduced forest yields supremeness | Physical minimum segmentation, elimination of mixed singletons, source/reduct word identities, old-standard supreme bound, and legal source pullback from Track A |
 | Actual forest increment | True-active support, strong support maps, exact full pieces/overlaps, selected B transport, every ambient A-edge, and predecessor forest at cutoff two | Old mixed forest; selected-base strongness; local-image strongness; core ordinary girth `>m`; independent output ordinary girth `>2`; larger-cutoff local mixed forest and physical injectivity |
-| Initial picture | Full physical edge equivalence, train, all adjacent parameters, selected restriction and strongness, mixed coverage, support conditions and matching fibres | Mixed forest through the target budget, tail system-girth, and the actual refinement readiness invariant |
-| Finite selected pass | Finite profile enumeration and realization, empty-fibre identity, forward iteration with `Ready`, backward colour selection, literal selected-copy transport, all-level train preservation/reflection and selected strong Ramsey extraction | A finite geometric base and actual local `PictureStep` constructors preserving the remaining readiness invariant |
-| Recursive kernel | Data-valued recursion in all three rank cases; fixed forest-to-order conversion only after a smaller witness exists | Universal actual witness families and instances of all four geometric construction operators |
+| Initial picture | Actual finite-stage assembly, complete mixed forest through the target budget, physical edge equivalence, train, all adjacent parameters, selected restriction and strongness, mixed coverage, support conditions and matching fibres | Tail system-girth for nonempty tails and the actual refinement readiness invariant; the singleton-vector constructor has no tail obligation |
+| Finite selected pass | Direct assembly from the constructed initial stage; finite profile enumeration and realization, empty-fibre identity, forward iteration with `Ready`, backward colour selection, literal selected-copy transport, all-level train preservation/reflection and selected strong Ramsey extraction | A finite geometric base, initial tail/readiness inputs and actual local `PictureStep` constructors preserving the remaining readiness invariant |
+| Recursive kernel | Data-valued recursion in all three rank cases; fixed conversion on an established vector, with shorter-tail conversion following its smaller-rank call | Universal actual witness families and instances of all four geometric construction operators |
 
 The construction obligations above cannot be replaced by weaker invariants:
 
-- The Ramsey base needs `ALinear A D`, selected-base A-strongness, finite
-  support, controlled intersections and the auxiliary order. The colouring
+- The Ramsey base needs `ALinear A D`, selected-base A-strongness, a finite
+  base carrier, controlled intersections and the auxiliary order. The colouring
   arrow alone does not provide this package. The existing closure Ramsey
   theorem in `ALinearRamsey` is the relevant source.
 - A fixed-target `ForestTailStage` cannot itself be the universal recursive
@@ -147,6 +199,11 @@ The construction obligations above cannot be replaced by weaker invariants:
   colour-word Ramsey selection, and actual filling/scattering. The existing
   filling carrier invariant does not construct those operations or their
   cycle-transfer proof.
+- In picture zero, a cycle containing its component's designated B-label
+  has the proved literal identity replacement plan. Localizing arbitrary
+  cycles and excluding edge-only cycles by the target's horizontal-cut
+  girth remain necessary. A1 forces a designated occurrence only at order
+  one; it cannot justify choosing a designated label on every cycle.
 - Track B must supply genuine generated-wagon strongness/linearity and the
   mixed two-standard obstruction. Track C must supply all-level parameters
   and filling/subcopy system-girth transfer. Ordinary girth, equal wagon

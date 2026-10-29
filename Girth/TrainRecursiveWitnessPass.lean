@@ -31,8 +31,9 @@ To instantiate a nontrivial local `PictureStep`, the geometric construction
 must combine the actual physical forest increment with Track A's physical
 segmentation and supremeness pullback, Track B's generated-wagon strongness,
 linearity and two-standard obstruction, and Track C's all-level parameters
-and filling/subcopy cycle transfer.  Initial selected forest/tail stages,
-preservation of remaining-fibre refinability, the cutoff-two tail step and
+and filling/subcopy cycle transfer.  `TrainRecursiveWitnessInitialStage`
+assembles the actual initial stage with an explicit tail-cycle input.
+Preservation of remaining-fibre refinability, the cutoff-two tail step and
 larger-cutoff refinement forgetting remain explicit construction work.  The
 identity step for a fibre with at most one physical edge is proved below.
 -/

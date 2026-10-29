@@ -111,6 +111,16 @@ theorem twice_segmentCount_le_cyclicExpandedWeight
     rw [← twiceExpandedSegmentBudget_eq_word]
     exact twice_segmentCount_le_expandedBudget blocks _ hNoMixed
 
+namespace ForestOrderSegmentBudget
+
+/-- A geometric segmentation may start at any cyclic boundary. -/
+theorem cyclicWeight_rotate (word : List CycleConnectorKind) (cut : ℕ) :
+    cyclicKindTwiceWeight (word.rotate cut) = cyclicKindTwiceWeight word := by
+  rw [List.rotate_eq_drop_append_take_mod,
+    cyclicKindTwiceWeight_append_comm, List.take_append_drop]
+
+end ForestOrderSegmentBudget
+
 namespace OrderOneData
 
 universe v w
@@ -157,6 +167,47 @@ theorem BigCycle.segmentedReduct_hasSupreme_of_bottomLocalForest
     (hOrder : C.twiceOrder ≤ 2 * q) : B.HasSimultaneousSupreme :=
   B.hasSimultaneousSupreme_of_bottomLocalForest D' H hAccept q hLocal
     (C.segmentedReduct_length_le_cutoff D B blocks hSource hReduct hNoMixed hOrder)
+
+/-- The same length budget when the first segmentation boundary is not
+source index zero.  Rotation preserves the literal cyclic twice-order. -/
+theorem BigCycle.segmentedReduct_length_le_cutoff_of_rotation
+    {V' E' I' P' : Type w} {D' : OrderOneData V' E' I' P'}
+    {n m q : ℕ} (C : D.BigCycle n) (B : D'.BigCycle m)
+    (blocks : List CycleReductionBlock) (cut : ℕ)
+    (hSource : (List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i))).rotate cut = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks)
+    (hNoMixed : NoMixedSingletonSegments
+      (kindLastOr .vertex (reducedSegmentWord blocks)) blocks)
+    (hOrder : C.twiceOrder ≤ 2 * q) : m ≤ q := by
+  have hLength : m = blocks.length := by
+    simpa using congrArg List.length hReduct
+  have hBudget := twice_segmentCount_le_cyclicExpandedWeight blocks hNoMixed
+  have hSourceOrder : C.twiceOrder =
+      cyclicKindTwiceWeight (expandedSegmentWord blocks) := by
+    rw [C.twiceOrder_eq_cyclicKindList D, ← hSource,
+      ForestOrderSegmentBudget.cyclicWeight_rotate]
+  omega
+
+/-- Forest-to-supreme reduction is independent of the selected cyclic cut.
+As in the unrotated theorem, source pullback is a separate physical step. -/
+theorem BigCycle.segmentedReduct_hasSupreme_of_rotated_bottomLocalForest
+    {V' E' I' P' : Type w} {D' : OrderOneData V' E' I' P'}
+    {n m q : ℕ} (C : D.BigCycle n) (B : D'.BigCycle m)
+    (H : D'.BottomForestGeometry) (hAccept : B.Acceptable)
+    (hLocal : LocalForestThrough (D'.bottomForestPiece H) q)
+    (blocks : List CycleReductionBlock) (cut : ℕ)
+    (hSource : (List.ofFn (fun i : Fin n =>
+      connectorKind (C.connector i))).rotate cut = expandedSegmentWord blocks)
+    (hReduct : List.ofFn (fun j : Fin m =>
+      connectorKind (B.connector j)) = reducedSegmentWord blocks)
+    (hNoMixed : NoMixedSingletonSegments
+      (kindLastOr .vertex (reducedSegmentWord blocks)) blocks)
+    (hOrder : C.twiceOrder ≤ 2 * q) : B.HasSimultaneousSupreme :=
+  B.hasSimultaneousSupreme_of_bottomLocalForest D' H hAccept q hLocal
+    (C.segmentedReduct_length_le_cutoff_of_rotation D B blocks cut
+      hSource hReduct hNoMixed hOrder)
 
 end OrderOneData
 end StructuralRamsey.Girth

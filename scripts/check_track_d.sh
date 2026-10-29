@@ -23,12 +23,16 @@ checks=(
   CheckForestActualRecursiveSupport
   CheckForestActualRecursiveIncrement
   CheckForestSelectedMixedCoverage
+  CheckForestRecursiveInitialMixed
   CheckForestToSupremeActualGeometry
   CheckTrainRecursiveWitness
   CheckTrainRecursiveWitnessPass
   CheckTrainRecursiveWitnessInitial
   CheckTrainRecursiveWitnessInitialParameters
+  CheckTrainRecursiveWitnessInitialSupreme
+  CheckTrainRecursiveWitnessInitialStage
   CheckTrainRecursiveWitnessProfiles
+  CheckTrainRecursiveWitnessConstruction
 )
 
 for check in "${checks[@]}"; do
