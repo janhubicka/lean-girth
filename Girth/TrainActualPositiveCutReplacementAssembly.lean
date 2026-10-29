@@ -51,8 +51,6 @@ local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 local notation "ActualEdge" => OldACarrierEdge A
   (RelStructure.Attachment.attach C.toRelStructure S R f)
-local notation "OutWagon" => Quotient
-  ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ)
 
 include hRel
 
@@ -75,10 +73,10 @@ theorem attachedSelectedPicture_standard_contained_replacement_supreme
     (hOrder : K.twiceOrder ≤ 2 * q)
     (hOldSupreme : (Old).SupremeCycleBound q)
     (i : I)
-    (pieces : Fin n → TrainSupremePiece ActualEdge OutWagon)
+    (pieces : Fin n → TrainSupremePiece ActualEdge Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ))
     (hInc : K.LocalPieceIncidence (Out) pieces)
     (hGeom : K.LocalLongA2Geometry (Out) pieces)
-    (hFresh : ∀ (j : Fin n) (a : ActualEdge) (p : OutWagon)
+    (hFresh : ∀ (j : Fin n) (a : ActualEdge) (p : Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ))
         (b : ActualEdge), pieces j = .long a p b →
       ∀ t : Fin n, K.connector t ≠ Sum.inr p)
     (hContained : ∀ x ∈ K.resultWord (Out) pieces,
