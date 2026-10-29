@@ -1,0 +1,4 @@
+import Girth.TrainActualPositiveCutPieceCarriers
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometric_owner_edge_in_standard
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_replacement_labels_in_standard

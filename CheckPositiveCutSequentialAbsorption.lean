@@ -1,0 +1,5 @@
+import Girth.TrainPositiveCutSequentialAbsorption
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replaceOne_physical_resultWord
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_pullback_one_physical_short
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.PhysicalShortReachable.supreme_pullback_of_three_le
