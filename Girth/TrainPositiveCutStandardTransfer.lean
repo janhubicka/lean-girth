@@ -60,4 +60,37 @@ theorem BigCycle.supreme_of_arbitrary_replacement_in_standard_of_three_le
     hPullback kB ⟨hkDesignated, hBPlan⟩
   exact C.hasSimultaneousSupreme_of_hasSupremeAt D kC hCSupreme
 
+/-- The boundary interface, valid also for length-two/order-one source
+cycles, once a literal output BigCycle and designated retention are provided.
+Unlike the length-at-least-three theorem, legality is not automatic here.
+The designated retention premise is exactly what A1 needs at order one. -/
+theorem BigCycle.supreme_of_legal_replacement_in_standard
+    {n m q : ℕ} (C : D.BigCycle n) (B : D.BigCycle m)
+    (hAccept : C.Acceptable)
+    (hLinear : D.LinearPretrain)
+    (hOrder : C.twiceOrder ≤ 2 * q)
+    (pieces : Fin n → TrainSupremePiece E P)
+    (hGeom : C.LocalLongA2Geometry D pieces)
+    (hWord : List.ofFn (fun j : Fin m =>
+      (B.label j, B.connector j)) = C.resultWord D pieces)
+    (hRetain : C.twiceOrder = 2 →
+      ∃ j : Fin m, D.designated (B.label j))
+    (InStandard : D.BigCycle m → Prop)
+    (hInside : InStandard B)
+    (hOldBound : ∀ K : D.BigCycle m,
+      InStandard K → K.Acceptable →
+      K.twiceOrder ≤ 2 * q → K.HasSimultaneousSupreme) :
+    C.HasSimultaneousSupreme := by
+  obtain ⟨hBAccept, hSameOrder, hPullback⟩ :=
+    C.arbitrary_legal_replacement_all_conclusions
+      D B hAccept hLinear pieces hGeom hWord hRetain
+  have hBOrder : B.twiceOrder ≤ 2 * q := by
+    rw [hSameOrder]
+    exact hOrder
+  obtain ⟨kB, hkDesignated, hBPlan⟩ :=
+    hOldBound B hInside hBAccept hBOrder
+  obtain ⟨kC, _, hCSupreme⟩ :=
+    hPullback kB ⟨hkDesignated, hBPlan⟩
+  exact C.hasSimultaneousSupreme_of_hasSupremeAt D kC hCSupreme
+
 end StructuralRamsey.Girth.OrderOneData
