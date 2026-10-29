@@ -4,6 +4,8 @@ This work follows the audited Track B contract in issue #661. The first
 contribution used common base `3af405cc3a51ca7d3201e221a8a2a56d2e443751` and
 merged as PR #668. The one-off-core continuation starts from integrated main
 `65a1bab3e2314f22c4921269ca81f019dbf4de26`, preserving the other lanes.
+The direct strongness continuation builds on PR #675 at
+`5a1b62b8a8344d983a34d19a8378281d4614e3b7`.
 Only the circulation argument is addressed; the appendix is excluded.
 The user's continuation explicitly also requests fixing, simplifying and
 annotating the TeX draft. Those focused changes belong to a companion PR in
@@ -195,84 +197,88 @@ witness bound, which that diagnostic does not impose. These examples are
 not counterexamples satisfying the full relational attachment and
 system-girth hypotheses.
 
+## Full generated-wagon strongness
+
+The formerly proposed direct strongness route is now implemented. It avoids
+the general minimum-segment argument and proves parent-preserving absorption
+for every actual ambient support edge and every generated output wagon.
+
+| Module | Interface | Inputs and scope |
+|---|---|---|
+| `TrainPairEdgeWagonProbe` | `OrderOneData.pairEdgeWagonProbe`, its order and acceptability theorems | Labels `[edge g,F,G]`, connectors `[x,p,y]`, all adjacent labels distinct and x distinct from y. The actual pair edge g remains present. Acceptability requires that p does not contain both endpoints. |
+| same | `OrderOneData.twoLabel_wagon_bridge_of_pair_edge` | Under `LocalPieceSystemBound 2`, either F is designated and supplies a p-edge through y, or G is designated and supplies a p-edge through x. No source linearity or global replacement legality is assumed. |
+| `TrainSelectedPictureWagonStrongness` | `attachedSelectedPicture_parent_eq_of_wagon_pair` | Any actual support edge through two distinct vertices of an arbitrary output wagon has that wagon's original quotient parent, with no localization premise on its endpoint witnesses. |
+| same | `attachedSelectedPicture_outside_edge_wagon_inter_subsingleton` | An actual edge whose output parent differs from W meets the complete generated carrier of W in at most one vertex. |
+| same | `attachedSelectedPicture_wagon_aStrong` | Every complete generated `wagonClassCarrier` satisfies the existing relational `AStrong` predicate in the full actual attachment. |
+
+The actual strongness exports retain the standing true active-attachment
+data, irreducibility, `hShared` and exact all-level `hRel`. Their additional
+inputs are old and core-witness `LinearPretrain`, the core witness
+`LocalPieceSystemBound 2`, A-strongness of the whole active subsystem, and
+A-strongness of every whole attached standard. They assume no generated
+output linearity, output system-girth, finite support, missing-incidence
+condition or target-wagon strongness. The geometric whole-standard input
+can be supplied by the existing attachment theorem from active strongness
+and strongness of each complete core gluing image. Strong constituent
+designated subcopies do not by themselves prove strongness of that union.
+
+The one-off-core theorem first handles any pair with an off-core endpoint.
+For two core endpoints, `attachment_core_aStrong` and
+`actualASupport_core_edge_pullback` turn the ambient pair edge g into a
+genuine core edge. Classify arbitrary W-edges through x,y by the actual
+support cover. If both come from one standard or both are core edges, the
+existing source-local pair absorption theorems finish. Otherwise exact
+generated incidence gives a core class p with `κ p = W` and genuine witness
+labels F,G containing x,y and meeting p. Active coverage supplies the
+prescribed standard-copy memberships.
+
+Assume g has another output parent. Its core parent q then differs from p.
+**Source-core** wagon linearity excludes both endpoints belonging to p,
+because g puts them in q. The cycle `[edge g,F,G]` with connectors `[x,p,y]`
+has twice-order four. Its A2 ambient-nonedge clause has impossible premises
+because one endpoint is missing from p; the proof never claims that the
+actual pair edge g is absent. A3 follows because the two vertex positions
+are consecutive cyclically. Its designated supreme occurrence is F or G,
+and the mixed replacement gives an actual p-edge through the opposite
+endpoint in that same source.
+
+The shared-edge identity preserves `κ p = W` on transport into the original
+standard. Both endpoints of W are now represented there, so whole-standard
+A-strongness absorbs g and old wagon linearity identifies its parent with W.
+Equal standard sources were already handled in the source-local branch;
+an equality between g's edge label and a core endpoint label directly
+contradicts the supposed different output parents. Designated one-edge
+copies remain distinct from actual edge labels despite equal carriers.
+
+Both new modules have been compiled and all seven declarations have been
+reviewed at their stored signatures and audited for transitive axioms. Only
+`propext`, `Classical.choice` and `Quot.sound` occur. Exact-head repository
+CI remains the merge gate, as for every other contribution.
+
 ## Remaining Track B obligation
 
-The source-local results cover all three combinations: standard/standard,
-core/core and standard/core. Arbitrary generated wagon pairs are now also
-covered whenever at least one common vertex lies outside the core. Thus
-both the remaining pair-uniqueness problem and any remaining failure of
-ambient pair-edge absorption are confined to pairs whose two vertices lie
-in the core. Their incident edges are still arbitrary actual edges: vertex
-membership in the core does not make an incident edge a core edge.
+Arbitrary generated wagon pairs are compared whenever one common vertex
+lies outside the core. Full pair-edge absorption is now proved under the
+explicit source and whole-piece geometric hypotheses above. Consequently,
+distinct output wagons sharing two vertices can do so only when both
+vertices lie in the core **and no ambient support edge joins the pair**.
+This is the remaining global output-linearity case.
 
-A genuine single-source obstruction remains: a private old wagon can touch
-the active subsystem in one vertex without containing a shared edge. Thus
-unconditional core localization of every generated-wagon vertex is not a
-valid intermediate target. A useful incidence dichotomy is to retain either
-a genuine same-parent core edge at the vertex or its unique standard owner.
+Vertex membership in the core still does not put an incident edge in the
+core. A private old wagon can touch the active subsystem in one vertex
+without a shared edge. Thus unconditional core localization of every
+generated-wagon vertex remains an invalid intermediate target. The
+remaining three- and four-segment configurations must retain original
+quotient labels, actual vertex incidences and legal replacement words.
+The core/core case has no off-core vertex furnishing a common standard
+owner automatically.
 
-The core/core case remains separate because it lacks the common standard
-owner furnished by an off-core endpoint. The companion manuscript change
-states the new pair lemma separately and uses it at the start of the two
-global arguments, so their outstanding segment analysis only concerns
-vertices in the core. The global markers remain open.
-
-The remaining three- and four-segment configurations still require an
-argument. Replacement edges must preserve
-the original generated wagon labels and actual physical incidences while
-reducing the segment count. For the output-strongness auxiliary cycle, only the
-unconditional legal reduct and order bounds are available until acceptability
-has independently been proved. Global output-wagon strongness, global output
-linearity, and the final circulation theorem remain separate obligations.
-
-### Reviewed next route for output strongness (not formalized)
-
-A possible shorter proof would use a different three-occurrence probe and
-avoid the general minimum-segment machinery. Its proposed generic input is
-an actual edge g through distinct x,y, two other distinct labels F,G with
-x in F, y in G, and both meeting a specified core wagon p. Require that p
-does **not** contain both endpoints. The cycle has labels `[edge g,F,G]`
-and connectors `[x,p,y]`, so its twice-order is four. A2's ambient nonedge
-clause is vacuous because one endpoint is missing from p; it would be false
-to claim there is no pair edge, since g is supplied. A3 follows from the
-two vertex positions being consecutive cyclically. A local supreme label
-must be F or G and supplies, respectively, a bridge through the opposite
-endpoint in p. All three label inequalities must be proved before this
-probe is formed.
-
-For the actual application, retain old and core `LinearPretrain`, the core
-order-two local-piece bound, exact shared compatibility, strongness of the
-whole active subsystem and A-strongness of every whole attached standard.
-The existing attachment geometry derives the latter from active strongness
-and strongness of each complete gluing image. Strong individual designated
-subcopies do not suffice for strongness of that union.
-
-The newly checked theorem first reduces pair-edge absorption to x,y in the
-core. Core A-strongness then puts g itself in the core, where
-`actualASupport_core_edge_pullback` supplies a genuine core representative.
-Classify arbitrary W-edges through x,y by the actual support cover. If both
-are in one standard or both are core edges, the existing source-local pair
-absorption theorems apply. Otherwise actual cross-standard or standard/core
-incidence gives a core class p with `κ p = W` and the two genuine witness
-labels F,G. Active coverage supplies the prescribed standard's vertex
-membership.
-
-Assuming that g has a different output parent, its core parent q differs
-from p. Core wagon linearity then excludes both x and y belonging to p,
-because q contains them via g. This establishes the new probe's critical
-acceptability premise using **source-core** linearity. Its bridge retains
-`κ p = W` and places both endpoints of W inside a single old standard;
-whole-standard A-strongness and old wagon linearity finish. Equal source
-labels are handled in the source-local cases, and equality between g's
-edge label and a core endpoint label immediately contradicts the assumed
-different output parent. A designated one-edge copy remains distinct from
-its edge label even if their carriers coincide.
-
-This route has been reviewed mathematically, but neither the new pair-edge
-probe nor its actual strongness application is a Lean export in this
-continuation. It does not settle the remaining core/core pair-uniqueness
-problem when there is no ambient pair edge. No global manuscript marker
-should be promoted on its strength.
+The companion TeX change replaces the old minimum-segment strongness
+argument by the direct checked proof. A strongness marker certifies exactly
+the conditional geometric statement above; it does not certify the
+recursive construction supplying its hypotheses. Global output linearity,
+positive-cut cycle transfer, the remaining construction hypotheses and the
+full circulation theorem remain open.
 
 ## Integration
 
@@ -285,10 +291,11 @@ not alter the shared `lean.yml` workflow or root imports.
 
 Audit PR #665 is now integrated: the shared workflow discovers and builds
 every `Girth/*.lean` module and runs every `Check*.lean` audit exactly once.
-The focused workflow additionally enumerates all ten Track B modules and
-their ten Check files, including the nine new exports in this continuation
-(eight theorems and one cycle construction). Both checks must pass on the
-proposed PR head before merge.
+The focused workflow additionally enumerates all twelve Track B modules
+and their twelve Check files: 42 exports in total (39 theorems and three
+cycle constructions). The two continuations beyond PR #668 add sixteen
+exports: fourteen theorems and two constructions. Both workflows must pass
+on the proposed PR head before merge.
 
-No manuscript marker should be promoted for global output strongness or
-linearity on the strength of these localized statements.
+No manuscript marker should be promoted for global output linearity or
+the full recursive theorem on the strength of these geometric statements.
