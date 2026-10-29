@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutChosenStandard
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cut_supreme_selects_standard
