@@ -1,0 +1,9 @@
+import Girth.TrainActualParameterPremises
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_vertexImage
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_vertexImage
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentPartParameters_vertexEmbedding
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOneData_bound_vertexImage
+#print axioms StructuralRamsey.Girth.attachedOldAEdgeCarrier_adjacentParameters_of_intrinsic
+#print axioms StructuralRamsey.Girth.attachedCoreAEdgeCarrier_adjacentParameters_of_intrinsic
+#print axioms StructuralRamsey.Girth.attachedSharedWitnessOrderOne_bound_of_intrinsic

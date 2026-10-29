@@ -1,0 +1,6 @@
+import Girth.TrainDesignatedSubcopyGirth
+
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.resultWord_parent_contained_of_enlarged_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.localLongA2Geometry_of_enlarged_plan
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.supreme_target_of_enlarged_supreme
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.fullSystemGirthGT_of_components

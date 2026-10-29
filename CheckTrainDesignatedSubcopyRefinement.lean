@@ -1,0 +1,4 @@
+import Girth.TrainDesignatedSubcopyRefinement
+
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.resultWord_enlargeCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.planProducesBigCycle_of_enlargeCycle

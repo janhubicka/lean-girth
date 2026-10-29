@@ -1,0 +1,4 @@
+import Girth.TrainDesignatedSubcopyStrong
+
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.ComponentDecomposition.edge_in_target_component_of_old_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.ComponentDecomposition.target_strong_of_parent_strong
