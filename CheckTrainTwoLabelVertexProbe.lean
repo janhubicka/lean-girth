@@ -1,0 +1,11 @@
+import Girth.TrainTwoLabelVertexProbe
+
+#check @StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe
+#check @StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe_twiceOrder
+#check @StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe_acceptable
+#check @StructuralRamsey.Girth.OrderOneData.copy_bridges_of_two_label_vertex_probe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe
+#print axioms StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.twoLabelVertexProbe_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_bridges_of_two_label_vertex_probe

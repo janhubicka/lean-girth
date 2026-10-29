@@ -1,10 +1,14 @@
 # Track B: generated output-wagon geometry
 
-This work starts the audited Track B contract in issue #661, using the common
-base `3af405cc3a51ca7d3201e221a8a2a56d2e443751`. The scope and exclusions come
-from coordinator #664 and audit PR #665. Only the circulation argument is
-addressed. The manuscript, root imports, shared workflow and other lanes are
-not edited here.
+This work follows the audited Track B contract in issue #661. The first
+contribution used common base `3af405cc3a51ca7d3201e221a8a2a56d2e443751` and
+merged as PR #668. The one-off-core continuation starts from integrated main
+`65a1bab3e2314f22c4921269ca81f019dbf4de26`, preserving the other lanes.
+Only the circulation argument is addressed; the appendix is excluded.
+The user's continuation explicitly also requests fixing, simplifying and
+annotating the TeX draft. Those focused changes belong to a companion PR in
+`janhubicka/girth`; this Lean PR does not edit root imports or the shared
+workflow.
 
 ## New interfaces
 
@@ -117,6 +121,48 @@ both core ancestors, while the supplied core edges place the other endpoint
 in both ancestors. The probe brings both parent-labelled incidences into the
 chosen standard, where old wagon linearity finishes the comparison.
 
+## Arbitrary pairs with one off-core endpoint
+
+The next continuation removes the genuine-core-edge premise entirely. Only
+one of the two distinct common vertices must lie outside the core; the other
+vertex and all four actual support-edge witnesses are unrestricted.
+
+| Module | Interface | Inputs and scope |
+|---|---|---|
+| `TrainTwoLabelVertexProbe` | `OrderOneData.twoLabelVertexProbe`, its order and acceptability theorems | A genuine three-occurrence cycle with labels `[hub copy i, a, b]` and connectors `[wagon p, vertex x, wagon q]`. All three labels are distinct and `p ≠ q`; the non-hub labels may be copies or edges. The cycle has twice-order four and satisfies A1--A3 without assuming that x lies in either wagon or in the hub. |
+| same | `OrderOneData.copy_bridges_of_two_label_vertex_probe` | Under `LocalPieceSystemBound 2`, the hub supplies a bridge through x in each prescribed wagon. A non-hub supreme occurrence would replace the hub between distinct wagon boundaries, contradicting `piece_two_wagon_forces_eq`. |
+| `TrainSelectedPictureOneOffCorePairGeometry` | `attachedSelectedPicture_one_offCore_blocks_parent_eq` | Arbitrary actual endpoint blocks have the same generated parent when one endpoint is off-core. Inputs are old `LinearPretrain`, core `LocalPieceSystemBound 2`, exact shared compatibility and the standing active-attachment data. |
+| same | `attachedSelectedPicture_one_offCore_wagon_eq_of_common_vertex_pair` | The complete `WagonVertex` formulation, with no selected source representatives. |
+| same | `attachedSelectedPicture_one_offCore_wagon_class_eq_of_common_vertex_pair` | The complete generated quotient-carrier formulation. |
+| same | `attachedSelectedPicture_wagon_carriers_inter_subsingleton_of_offCore` | Distinct output wagons sharing an off-core vertex have a subsingleton **whole** intersection, including inside the core. This is stronger than merely removing the core from the intersection. |
+| same | `attachedSelectedPicture_parent_eq_of_one_offCore_pair` | An arbitrary actual support edge through a distinct pair of vertices of a wagon has that wagon's parent when one endpoint is off-core. No output strongness or output linearity is assumed. |
+
+For the actual proof, the off-core endpoint y supplies a common standard
+owner i. If x is also off-core, the earlier theorem applies. Otherwise,
+classify each x-edge using exhaustive actual physical edge coverage. An
+edge already in standard i provides its required representative directly.
+Every other source gives a literal core-witness label F and a core wagon p
+with all of the following retained: `F ≠ copy i`, x belongs to F, F and i
+meet p, and the canonical core embedding satisfies `κ p = W` for the
+original output parent W. For a standard source, membership in the
+prescribed witness copy comes from active-support coverage; it is not
+inferred from meeting a wagon.
+
+If one x-edge is already in the hub, its vertex incidence and the order-one
+bridge move the other parent into that hub. If both sources are outside the
+hub and their output parents differ, their core parents differ. Equal
+source labels are impossible: equal copy labels violate the two-wagon
+obstruction, while equal physical edge labels immediately identify the core
+parents. The generalized probe therefore applies to three distinct labels
+and gives both required shared edges in the hub. Their physical shared-edge
+identities preserve the original output parents. Old wagon linearity then
+compares the two blocks entirely inside one standard.
+
+This proof never localizes a lone arbitrary wagon incidence at a core
+vertex. The second wagon and common off-core endpoint are essential to the
+argument. No core wagon linearity, strongness, finite support or output
+`LinearPretrain` premise is introduced.
+
 ## Adversarial scope checks
 
 - Every linearity input belongs to the old train or the core witness.
@@ -143,20 +189,21 @@ complete output wagon families and 2,112 with mixed core/off-core overlap.
 It checks complete carriers and contains separate countermodels for removing
 source wagon linearity, off-core owner uniqueness or crossing-wagon control.
 Its mixed-pair example satisfies those three downstream interfaces, showing
-their precise limitation. These are not counterexamples satisfying the full
-relational attachment and system-girth hypotheses.
+their precise limitation. The new one-off-core theorem uses the additional
+order-one and generalized order-two bridge consequences of the actual
+witness bound, which that diagnostic does not impose. These examples are
+not counterexamples satisfying the full relational attachment and
+system-girth hypotheses.
 
 ## Remaining Track B obligation
 
 The source-local results cover all three combinations: standard/standard,
-core/core and standard/core. The continuation additionally covers arbitrary
-generated wagon pairs when both common vertices lie outside the core.
-The mixed core/off-core case is also proved when both wagon incidences at the
-core endpoint have actual core representatives. The two-standard localization
-theorem supplies such a representative when one wagon reaches that vertex
-through distinct standards. Arbitrary core/off-core pairs and arbitrary
-core/core pairs still need further arguments. Merely finding a shared edge
-through a core vertex does not preserve the required original wagon parent.
+core/core and standard/core. Arbitrary generated wagon pairs are now also
+covered whenever at least one common vertex lies outside the core. Thus
+both the remaining pair-uniqueness problem and any remaining failure of
+ambient pair-edge absorption are confined to pairs whose two vertices lie
+in the core. Their incident edges are still arbitrary actual edges: vertex
+membership in the core does not make an incident edge a core edge.
 
 A genuine single-source obstruction remains: a private old wagon can touch
 the active subsystem in one vertex without containing a shared edge. Thus
@@ -164,35 +211,11 @@ unconditional core localization of every generated-wagon vertex is not a
 valid intermediate target. A useful incidence dichotomy is to retain either
 a genuine same-parent core edge at the vertex or its unique standard owner.
 
-The next concrete target is the **fully arbitrary core/off-core pair**. A
-reviewed route generalizes the checked probe from two actual edge labels to
-two arbitrary source labels a,b: use `[hub copy i, a, b]` with connectors
-`[p,x,q]`, keeping all three labels distinct and `p ≠ q`. Assume the hub meets
-p and q, a meets p, b meets q, and x lies in both a and b. A supreme occurrence
-at a or b would have to replace the hub between two distinct wagon connectors,
-contradicting `piece_two_wagon_forces_eq`. Hence the hub supplies both mixed
-bridges. The A1--A3 and order arguments are unchanged, and no initial
-`WagonVertex p x` or `WagonVertex q x` premise is needed.
-
-For the actual application, the off-core endpoint supplies the hub standard
-i. Classify both witnesses at the core endpoint using the actual physical
-edge cover. A standard source becomes its prescribed witness-copy label;
-active coverage supplies genuine vertex membership. A core source becomes
-its genuine physical edge label. Resolve label collisions before constructing
-the generalized three-cycle:
-
-| Core-endpoint source labels | Proposed reduction |
-|---|---|
-| Both equal the hub standard | Existing same-standard block uniqueness. |
-| Exactly one equals the hub | The order-one bridge puts the other wagon's shared edge through the vertex in the hub; then use same-standard uniqueness. |
-| Both equal another standard | Existing crossing-wagon uniqueness. |
-| Both equal one core edge | Their original output parents are already equal. |
-| Two distinct non-hub labels | The generalized three-cycle supplies both hub bridges. |
-
-This extension has been checked mathematically but is **not yet a Lean export**
-in this contribution. Every core ancestor must retain its equation with the
-original output parent. The core/core case remains separate because it lacks
-the common standard owner furnished by an off-core endpoint.
+The core/core case remains separate because it lacks the common standard
+owner furnished by an off-core endpoint. The companion manuscript change
+states the new pair lemma separately and uses it at the start of the two
+global arguments, so their outstanding segment analysis only concerns
+vertices in the core. The global markers remain open.
 
 The remaining three- and four-segment configurations still require an
 argument. Replacement edges must preserve
@@ -201,6 +224,55 @@ reducing the segment count. For the output-strongness auxiliary cycle, only the
 unconditional legal reduct and order bounds are available until acceptability
 has independently been proved. Global output-wagon strongness, global output
 linearity, and the final circulation theorem remain separate obligations.
+
+### Reviewed next route for output strongness (not formalized)
+
+A possible shorter proof would use a different three-occurrence probe and
+avoid the general minimum-segment machinery. Its proposed generic input is
+an actual edge g through distinct x,y, two other distinct labels F,G with
+x in F, y in G, and both meeting a specified core wagon p. Require that p
+does **not** contain both endpoints. The cycle has labels `[edge g,F,G]`
+and connectors `[x,p,y]`, so its twice-order is four. A2's ambient nonedge
+clause is vacuous because one endpoint is missing from p; it would be false
+to claim there is no pair edge, since g is supplied. A3 follows from the
+two vertex positions being consecutive cyclically. A local supreme label
+must be F or G and supplies, respectively, a bridge through the opposite
+endpoint in p. All three label inequalities must be proved before this
+probe is formed.
+
+For the actual application, retain old and core `LinearPretrain`, the core
+order-two local-piece bound, exact shared compatibility, strongness of the
+whole active subsystem and A-strongness of every whole attached standard.
+The existing attachment geometry derives the latter from active strongness
+and strongness of each complete gluing image. Strong individual designated
+subcopies do not suffice for strongness of that union.
+
+The newly checked theorem first reduces pair-edge absorption to x,y in the
+core. Core A-strongness then puts g itself in the core, where
+`actualASupport_core_edge_pullback` supplies a genuine core representative.
+Classify arbitrary W-edges through x,y by the actual support cover. If both
+are in one standard or both are core edges, the existing source-local pair
+absorption theorems apply. Otherwise actual cross-standard or standard/core
+incidence gives a core class p with `κ p = W` and the two genuine witness
+labels F,G. Active coverage supplies the prescribed standard's vertex
+membership.
+
+Assuming that g has a different output parent, its core parent q differs
+from p. Core wagon linearity then excludes both x and y belonging to p,
+because q contains them via g. This establishes the new probe's critical
+acceptability premise using **source-core** linearity. Its bridge retains
+`κ p = W` and places both endpoints of W inside a single old standard;
+whole-standard A-strongness and old wagon linearity finish. Equal source
+labels are handled in the source-local cases, and equality between g's
+edge label and a core endpoint label immediately contradicts the assumed
+different output parent. A designated one-edge copy remains distinct from
+its edge label even if their carriers coincide.
+
+This route has been reviewed mathematically, but neither the new pair-edge
+probe nor its actual strongness application is a Lean export in this
+continuation. It does not settle the remaining core/core pair-uniqueness
+problem when there is no ambient pair edge. No global manuscript marker
+should be promoted on its strength.
 
 ## Integration
 
@@ -211,12 +283,12 @@ project objects, audits all their exports and runs both new diagnostics plus
 the four existing finite regressions. It checks the actual PR head and does
 not alter the shared `lean.yml` workflow or root imports.
 
-The integration lane should also include these modules and Check files in
-its complete build and axiom audit. The baseline shared workflow has fixed
-lists and does not automatically discover these additions; its green status
-alone is not evidence that the new exports were checked. Audit PR #665 proposes
-discovery of every module and every Check file, but this Track B work does not
-depend on that PR being merged.
+Audit PR #665 is now integrated: the shared workflow discovers and builds
+every `Girth/*.lean` module and runs every `Check*.lean` audit exactly once.
+The focused workflow additionally enumerates all ten Track B modules and
+their ten Check files, including the nine new exports in this continuation
+(eight theorems and one cycle construction). Both checks must pass on the
+proposed PR head before merge.
 
 No manuscript marker should be promoted for global output strongness or
 linearity on the strength of these localized statements.
