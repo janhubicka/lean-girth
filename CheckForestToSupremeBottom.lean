@@ -1,0 +1,10 @@
+import Girth.ForestToSupremeBottom
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.edge_eq_of_subset
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.common_edge_of_two_vertices
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.inter_eq_of_common_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.common_edge_of_meets
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.both_bridges_of_allowed
+#print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.common_short_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.designated_or_of_common_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_two_bottom_forest

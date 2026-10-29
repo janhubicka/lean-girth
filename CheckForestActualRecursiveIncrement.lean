@@ -1,0 +1,3 @@
+import Girth.ForestActualRecursiveIncrement
+
+#print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_mixedForest_of_relationalLocal

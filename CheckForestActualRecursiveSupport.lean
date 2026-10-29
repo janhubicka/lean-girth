@@ -1,0 +1,12 @@
+import Girth.ForestActualRecursiveSupport
+
+#print axioms StructuralRamsey.Girth.strongASupportEmbedding
+#print axioms StructuralRamsey.Girth.strongASupportEmbedding_piece
+#print axioms StructuralRamsey.Girth.mappedStrongASupportEmbedding
+#print axioms StructuralRamsey.Girth.mappedStrongASupportEmbedding_piece
+#print axioms StructuralRamsey.Girth.actualRecursiveActiveSupport_cover
+#print axioms StructuralRamsey.Girth.actualRecursiveActiveSupport_nonempty
+#print axioms StructuralRamsey.Girth.RelationalMixedSupportTest
+#print axioms StructuralRamsey.Girth.actualRecursiveLocalForest_one
+#print axioms StructuralRamsey.Girth.actualRecursiveSupport_map_injective
+#print axioms StructuralRamsey.Girth.actualRecursiveMixedLocalForest

@@ -1,0 +1,60 @@
+name: Circulation track D
+
+on:
+  push:
+    branches:
+      - circulation-par-d-forest-recursion-oct29
+  pull_request:
+    paths:
+      - 'Girth/ForestCyclicSwitching.lean'
+      - 'Girth/ForestBottomSupremePullback.lean'
+      - 'Girth/ForestToSupreme*.lean'
+      - 'Girth/ForestActualRecursive*.lean'
+      - 'Girth/TrainRecursiveWitness*.lean'
+      - 'CheckForestCyclicSwitching.lean'
+      - 'CheckForestBottomSupremePullback.lean'
+      - 'CheckForestToSupreme*.lean'
+      - 'CheckForestActualRecursive*.lean'
+      - 'CheckTrainRecursiveWitness*.lean'
+      - 'scripts/check_track_d.sh'
+      - '.github/workflows/circulation-track-d.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: track-d-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  track-d:
+    runs-on: ubuntu-latest
+    env:
+      LEAN_NUM_THREADS: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache Lean toolchain
+        uses: actions/cache@v5
+        with:
+          path: ~/.elan/toolchains
+          key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
+      - name: Cache Lake dependencies
+        uses: actions/cache@v5
+        with:
+          path: .lake
+          key: track-d-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            track-d-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+      - name: Install elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download Mathlib cache
+        run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup Mathlib.Combinatorics.SimpleGraph.Acyclic
+      - name: Compile and audit track D
+        run: |
+          # Only pinned dependency caches are reused, never project objects.
+          rm -rf .lake/build
+          bash scripts/check_track_d.sh

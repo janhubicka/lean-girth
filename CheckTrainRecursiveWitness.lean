@@ -1,0 +1,12 @@
+import Girth.TrainRecursiveWitness
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.admissible_two
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.not_admissible_nil
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Admissible.tail
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Bounded.tail
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Admissible.replace
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Bounded.replace
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Operators.assembleBounded
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.bounded_ceiling
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Operators.assemble
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Operators.assembleOrder
