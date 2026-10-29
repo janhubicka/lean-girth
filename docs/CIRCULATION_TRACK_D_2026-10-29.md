@@ -1,5 +1,11 @@
 # Track D: forest conversion and recursive witness assembly
 
+This is the historical checkpoint merged in PR #669. The
+[continuation ledger](CIRCULATION_TRACK_D_CONTINUATION_2026-10-29.md)
+records the subsequent initial-tail, refinement, output-girth, base-Ramsey,
+and one-edge-target constructions and supersedes the corresponding open
+entries below.
+
 Common base: `3af405cc3a51ca7d3201e221a8a2a56d2e443751`.
 Branch: `circulation-par-d-forest-recursion-oct29`.
 Contract: issues #663 and #664, with the audit in #665.

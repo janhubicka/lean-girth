@@ -38,6 +38,15 @@ checks=(
   CheckTrainRecursiveRefinement
   CheckTrainRecursiveRefinementInitial
   CheckTrainRecursiveRefinementReady
+  CheckTrainEdgeOnlyConstantParent
+  CheckTrainRecursiveInitialTailLocalization
+  CheckTrainRecursiveInitialTailGirth
+  CheckTrainRecursiveInitialTailBudget
+  CheckTrainRecursiveInitialTailIncidence
+  CheckTrainRecursiveInitialTailSystem
+  CheckTrainRecursiveInitialTargetStage
+  CheckTrainRecursiveReadyConstruction
+  CheckTrainRecursiveOneEdgeTarget
 )
 
 for check in "${checks[@]}"; do

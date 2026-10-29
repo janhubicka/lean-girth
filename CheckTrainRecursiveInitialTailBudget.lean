@@ -1,0 +1,7 @@
+import Girth.TrainRecursiveInitialTailBudget
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_vertexPosition_card_le_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.vertexPosition_card_le_of_twiceOrder_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.used_owner_has_outgoing_change
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.used_parent_card_le_vertexPosition_card
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.used_parent_card_le_of_twiceOrder_le

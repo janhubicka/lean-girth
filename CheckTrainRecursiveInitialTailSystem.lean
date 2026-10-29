@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveInitialTailSystem
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.false_of_edge_only_of_labelledCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_fullSystemGirth_of_targetCut

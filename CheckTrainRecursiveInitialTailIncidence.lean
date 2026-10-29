@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveInitialTailIncidence
+
+#print axioms StructuralRamsey.Girth.LabelledGirthGT.range_girth
+#print axioms StructuralRamsey.Girth.labelledGirthGT_image
+#print axioms StructuralRamsey.Girth.labelledGirthGT_incidence_acyclic_of_card
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.parent_constant_of_labelledCutGirth_of_used_card
