@@ -6,6 +6,8 @@ import sys
 text = pathlib.Path(sys.argv[1]).read_text()
 audit_source = pathlib.Path(sys.argv[2] if len(sys.argv) > 2 else "CheckAxioms.lean")
 expected = set(re.findall(r"^#print axioms (\S+)", audit_source.read_text(), re.M))
+if not expected:
+    raise SystemExit(f"No axiom declarations requested by {audit_source}")
 found = {}
 for name, axioms in re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", text):
     found[name] = {a.strip() for a in axioms.split(",") if a.strip()}

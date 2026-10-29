@@ -1,0 +1,41 @@
+name: Circulation source audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/circulation-audit.yml'
+      - 'scripts/audit_circulation.py'
+      - 'scripts/test_audit_circulation.py'
+      - 'docs/CIRCULATION_AUDIT_2026-10-29.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Record exact sources and run source audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee audit-revision.txt
+          git archive --format=tar.gz --output=audit-source.tar.gz HEAD
+          if test -f scripts/audit_circulation.py; then
+            python3 scripts/audit_circulation.py --output audit-inventory.json
+          fi
+          if test -f scripts/test_audit_circulation.py; then
+            python3 scripts/test_audit_circulation.py
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: circulation-audit-source
+          retention-days: 7
+          path: |
+            audit-revision.txt
+            audit-source.tar.gz
+            audit-inventory.json
