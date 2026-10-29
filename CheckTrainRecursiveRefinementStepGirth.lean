@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveRefinementStepGirth
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.child_not_injective_of_singleton_intersections
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.child_constant_of_singleton_intersections
+#print axioms StructuralRamsey.Girth.BergeCycle.child_constant_of_singleton_intersections

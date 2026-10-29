@@ -1,0 +1,16 @@
+import Girth.TrainRecursiveRefinementForget
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstForgetIndex_zero
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstForgetIndex_of_pos
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstForgetIndex_monotone
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_rel_iff_of_pos
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_wagonEquiv
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_wagonEquiv_mk
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_wagonCarrier
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_wagonClassCarrier
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_wagonParent
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.forget_rel_iff
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.forget_train_eq

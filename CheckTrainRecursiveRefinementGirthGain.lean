@@ -1,0 +1,10 @@
+import Girth.TrainRecursiveRefinementGirthGain
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.false_of_short_labelledCycle_in_firstWagon
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledGirthGT_firstWagon
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_firstWagon
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledGirthGT_of_first_universal
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_of_first_universal
+#print axioms StructuralRamsey.Girth.actualASupport_part_injOn
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_firstWagon
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_of_first_universal

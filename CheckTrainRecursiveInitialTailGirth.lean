@@ -1,0 +1,8 @@
+import Girth.TrainRecursiveInitialTailGirth
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_mono
+#print axioms StructuralRamsey.Girth.labelledGirthGT_two_pairwise_subsingleton
+#print axioms StructuralRamsey.Girth.labelledGirthGT_tagged
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_labelledCutGirth
+#print axioms StructuralRamsey.Girth.selectedPicture_wagonVertex_iff
+#print axioms StructuralRamsey.Girth.selectedPicture_linearPretrain_of_labelledCutGirth

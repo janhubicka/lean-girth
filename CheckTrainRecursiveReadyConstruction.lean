@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveReadyConstruction
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.constructFromTargetCuts_of_refiningSteps

@@ -1,0 +1,3 @@
+import Girth.TrainEdgeOnlyConstantParent
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.false_of_edge_only_constant_parent

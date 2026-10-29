@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveInitialTargetStage
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTail_of_targetCuts
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestTailStage_of_targetCuts
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestTailStage_of_targetCuts_firstRefinementReady

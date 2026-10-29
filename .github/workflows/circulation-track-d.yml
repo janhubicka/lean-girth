@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - circulation-par-d-forest-recursion-oct29
+      - circulation-d-initial-refinement-oct29
   pull_request:
     paths:
       - 'Girth/ForestCyclicSwitching.lean'
@@ -14,7 +15,9 @@ on:
       - 'Girth/RootedForest.lean'
       - 'Girth/ForestToSupreme*.lean'
       - 'Girth/ForestActualRecursive*.lean'
-      - 'Girth/TrainRecursiveWitness*.lean'
+      - 'Girth/ForestRecursive*.lean'
+      - 'Girth/TrainRecursive*.lean'
+      - 'Girth/TrainEdgeOnly*.lean'
       - 'CheckForestCyclicSwitching.lean'
       - 'CheckForestBottomSupremePullback.lean'
       - 'CheckForestOrderSegmentBudget.lean'
@@ -23,7 +26,9 @@ on:
       - 'CheckTrackDRootedForest.lean'
       - 'CheckForestToSupreme*.lean'
       - 'CheckForestActualRecursive*.lean'
-      - 'CheckTrainRecursiveWitness*.lean'
+      - 'CheckForestRecursive*.lean'
+      - 'CheckTrainRecursive*.lean'
+      - 'CheckTrainEdgeOnly*.lean'
       - 'scripts/check_track_d.sh'
       - '.github/workflows/circulation-track-d.yml'
   workflow_dispatch:

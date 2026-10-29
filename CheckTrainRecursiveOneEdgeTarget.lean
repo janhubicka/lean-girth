@@ -1,0 +1,8 @@
+import Girth.TrainRecursiveOneEdgeTarget
+
+#print axioms StructuralRamsey.Girth.oldACarrierEdge_subsingleton_of_support_subsingleton
+#print axioms StructuralRamsey.Girth.oneEdgeTarget_labelledCutGirth
+#print axioms StructuralRamsey.Girth.oneEdgeTarget_adjacentParameters
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.oneEdgeTargetOrderStage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.oneEdgeTargetOrderStage_designatedArrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.exists_orderStage_designatedArrow_of_oneEdgeTarget
