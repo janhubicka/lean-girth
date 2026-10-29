@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveWitnessInitialStage
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestTailStage_of_tail
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestStage_singleton

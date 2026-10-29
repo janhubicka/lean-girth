@@ -1,0 +1,6 @@
+import Girth.TrainFillingMixedNormalization
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.mixedWagonContact_edge
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.mixedWagonContact_iff_of_sameConnectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.exists_mixed_normalized
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.exists_mixed_normalized_counterexample

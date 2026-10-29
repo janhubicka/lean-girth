@@ -1,0 +1,5 @@
+import Girth.TrainFillingContractedBlockLift
+
+#print axioms StructuralRamsey.Girth.TrainFilling.contracting_edge_excludes_oldLong
+#print axioms StructuralRamsey.Girth.TrainFilling.contracting_edge_mem_of_oldPiece
+#print axioms StructuralRamsey.Girth.TrainFilling.contractedBlock_short_lifts

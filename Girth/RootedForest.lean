@@ -75,10 +75,7 @@ theorem parent_dist_add_one {F : ι → HypergraphPiece W}
     J.tree.dist root (J.parent root i) + 1 =
         (J.rootPath root (J.parent root i)).length + 1 := by
           rw [hparent]
-    _ = p.dropLast.length + 1 :=
-      congrArg
-        (fun q : J.tree.Walk root (J.parent root i) => q.length + 1)
-        huniq.symm
+    _ = p.dropLast.length + 1 := by rw [← huniq] <;> rfl
     _ = p.length := p.length_dropLast_add_one hnp
     _ = J.tree.dist root i := by
       exact hi

@@ -1,0 +1,8 @@
+import Girth.ForestCyclicSwitching
+
+#print axioms StructuralRamsey.Girth.cyclicRunIndex_exists_of_ne_before
+#print axioms StructuralRamsey.Girth.cyclicOwner_eq_off_singleton
+#print axioms StructuralRamsey.Girth.cyclicOwner_constant_off_consecutive_cuts
+#print axioms StructuralRamsey.Girth.cyclicBool_singleton_side_of_consecutive_cuts
+#print axioms StructuralRamsey.Girth.cyclicBool_exists_two_distinct_switches
+#print axioms StructuralRamsey.Girth.cyclicBool_has_singleton_side_of_consecutive_cuts

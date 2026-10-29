@@ -1,0 +1,5 @@
+import Girth.ForestRecursiveInitialMixed
+
+#print axioms StructuralRamsey.Girth.forest_selected_embeddedTarget_of_girthGT
+#print axioms StructuralRamsey.Girth.initialPicture_mixedForest_of_supportGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected_mixedForest
