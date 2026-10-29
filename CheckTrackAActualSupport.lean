@@ -1,0 +1,4 @@
+import Girth.TrainActualSupremeCutBoundarySupport
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_edge_incident_lift
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_positive_cut_shared_boundary_support_or_bridges
