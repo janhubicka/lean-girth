@@ -1,0 +1,7 @@
+import Girth.TrainSelectedPictureLinearPretrain
+
+#check @StructuralRamsey.Girth.attachedSelectedPicture_linearPretrain
+#check @StructuralRamsey.Girth.attachedSelectedPicture_linear_and_strong_of_gluing_geometry
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_linearPretrain
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_linear_and_strong_of_gluing_geometry

@@ -1,0 +1,7 @@
+import Girth.TrainSelectedPictureCommonStandardEndpoint
+
+#check @StructuralRamsey.Girth.attachedSelectedPicture_common_standard_endpoint_parent_eq
+#check @StructuralRamsey.Girth.attachedSelectedPicture_wagon_eq_of_common_standard_vertex
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_common_standard_endpoint_parent_eq
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_wagon_eq_of_common_standard_vertex

@@ -1,0 +1,17 @@
+import Girth.TrainFourLabelWagonFrame
+
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.toBigCycle
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.twiceOrder_eq_four
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.A2_of_no_pair
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.A3_of_common_wagons
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.acceptable
+#check @StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.bridges_of_local_bound
+
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.toBigCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.twiceOrder_eq_four
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.A2_of_no_pair
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.A3_of_common_wagons
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.FourLabelWagonFrame.bridges_of_local_bound
