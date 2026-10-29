@@ -1,0 +1,15 @@
+import Girth.TrainRecursiveRefinement
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstRefinementCollapse
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstRefinementShift
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.insertFirstCuts
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.insertFirstCuts_originalLevel
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.insertFirstCuts_lowerLevel
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_disjoint_of_matching
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_of_matching
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_matching
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCutGirth_of_matching
+#print axioms StructuralRamsey.Girth.firstRefinementChild
+#print axioms StructuralRamsey.Girth.firstRefinementParent
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement
+#print axioms StructuralRamsey.Girth.firstWagonRefinement_of_matching

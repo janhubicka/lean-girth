@@ -22,6 +22,8 @@ checks=(
   CheckForestToSupremeCycle
   CheckForestActualRecursiveSupport
   CheckForestActualRecursiveIncrement
+  CheckForestRecursiveOutputGirth
+  CheckTrainRecursiveBaseRamsey
   CheckForestSelectedMixedCoverage
   CheckForestRecursiveInitialMixed
   CheckForestToSupremeActualGeometry
@@ -33,6 +35,9 @@ checks=(
   CheckTrainRecursiveWitnessInitialStage
   CheckTrainRecursiveWitnessProfiles
   CheckTrainRecursiveWitnessConstruction
+  CheckTrainRecursiveRefinement
+  CheckTrainRecursiveRefinementInitial
+  CheckTrainRecursiveRefinementReady
 )
 
 for check in "${checks[@]}"; do

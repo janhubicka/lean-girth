@@ -1,0 +1,7 @@
+import Girth.ForestRecursiveOutputGirth
+
+#print axioms StructuralRamsey.Girth.girthGT_of_finiteMixedForestThrough
+#print axioms StructuralRamsey.Girth.FiniteMixedForestThrough.allowedIntersection_of_ne
+#print axioms StructuralRamsey.Girth.aStrong_of_finiteMixedForestThrough
+#print axioms StructuralRamsey.Girth.actualActiveAttachment_girthGT_two_of_mixedOld
+#print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_forest_and_girth_of_localGeometry

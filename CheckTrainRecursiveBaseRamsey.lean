@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveBaseRamsey
+
+#print axioms StructuralRamsey.Girth.mixedForestThrough_two_of_strong_controlledFamily
+#print axioms StructuralRamsey.Girth.closedTarget_mixedForest_two
+#print axioms StructuralRamsey.Girth.baseTwoRamseyFamily_of_monotone_embeddings
+#print axioms StructuralRamsey.Girth.baseTwoRamseyFamily_ordered_source

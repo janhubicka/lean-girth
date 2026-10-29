@@ -1,0 +1,10 @@
+import Girth.TrainRecursiveRefinementInitial
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialActiveACopy_has_projectedCarrier
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialActiveEdge_has_projectedCarrier
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialActiveEdges_pairwiseDisjoint
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialActiveFirstWagonRefinement
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ActiveFirstRefinable
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.RemainingFirstRefinable
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initial_remainingFirstRefinable
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.RemainingFirstRefinable.tail
