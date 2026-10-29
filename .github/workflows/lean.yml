@@ -35,9 +35,10 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download Mathlib cache
         run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
-      - name: Inventory source and test the inventory checker
+      - name: Inventory source and test audit checkers
         run: |
           python3 scripts/test_audit_circulation.py
+          python3 scripts/test_check_axioms.py
           python3 scripts/audit_circulation.py --output audit-inventory.json
       - name: Build every project module from this checkout
         shell: bash
