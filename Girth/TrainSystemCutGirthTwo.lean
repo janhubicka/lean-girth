@@ -31,7 +31,9 @@ theorem labelledGirthGT_two_of_pairwiseSubsingleton
     LabelledGirthGT carrier 2 := by
   rintro ⟨C, hSmall⟩
   obtain ⟨n, hn, label, vertex, hLabel, hVertex, hLeft, hRight⟩ := C
-  have hLength : n = 2 := by omega
+  have hLength : n = 2 := by
+    change n ≤ 2 at hSmall
+    omega
   subst n
   have hpq : label 0 ≠ label 1 := by
     intro h
