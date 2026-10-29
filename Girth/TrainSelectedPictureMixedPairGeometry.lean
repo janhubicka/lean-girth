@@ -2,6 +2,8 @@ import Girth.TrainSelectedPictureWagonPairGeometry
 import Girth.TrainSelectedPictureCorePairGeometry
 import Girth.TrainTwoCopyLongProbe
 
+set_option Elab.async false
+
 /-!
 # A standard block and a core block through the same pair
 
@@ -111,8 +113,13 @@ local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 
 variable (hRel : ∀ (ν : Fin (m + 1)) (k : I)
-  (p q : SharedOldACarrierEdge A C.toRelStructure S),
-  T.rel ν p.1 q.1 ↔ U.rel ν (Emb k p) (Emb k q))
+  (p q : SharedOldACarrierEdge A C.toRelStructure
+    (activeCarrier A C e.toFunctionEmbedding)),
+  T.rel ν p.1 q.1 ↔
+    U.rel ν (sharedOldACarrierCoreEmbedding A C.toRelStructure
+      (activeCarrier A C e.toFunctionEmbedding) R f k p)
+      (sharedOldACarrierCoreEmbedding A C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f k q))
 
 include hRel
 

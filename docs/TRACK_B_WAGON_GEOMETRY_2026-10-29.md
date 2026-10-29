@@ -16,7 +16,7 @@ Track A's cycle-transfer conclusion is assumed.
 |---|---|---|
 | `TrainSelectedPictureWagonPairGeometry` | `attachedSelectedPicture_same_standard_blocks_parent_eq` | Old wagon linearity and exact standard restriction identify the output parents of two edge blocks in one standard through distinct common vertices. |
 | same | `attachedSelectedPicture_parent_eq_of_standard_pair` | Whole-standard A-strongness absorbs an ambient pair edge, after which old wagon linearity determines its generated parent. |
-| same | `attachedSelectedPicture_standard_blocks_parent_eq` | Old/core full order-two bounds, shared compatibility and whole gluing-image strongness identify parents of blocks in arbitrary two standards. The standard indices may coincide and physical edges may repeat. |
+| same | `attachedSelectedPicture_standard_blocks_parent_eq` | Old/core full order-two bounds, shared compatibility and whole gluing-image strongness identify parents of blocks in arbitrary two standards. The actual-picture instantiation also retains finite A, partiteness over the base, base A-linearity/rigidity and strong designated base copies. The standard indices may coincide and physical edges may repeat. |
 | same | `attachedSelectedPicture_standard_wagon_carriers_inter_subsingleton` | Complete **source** wagon carriers with different generated output labels intersect in at most one vertex. This is not yet the corresponding statement about complete generated wagon carriers. |
 | `TrainSelectedPictureCorePairGeometry` | `actualASupport_core_edge_pullback` | Every actual support edge contained in the core is the canonical physical image of a genuine core edge. |
 | same | `generatedActualASupportTrain_coreWagon_pair_absorbs_edge` | A-strongness of the active subsystem, core wagon linearity and shared-relation preservation give pair-edge absorption by the generated image of a core wagon. |
@@ -76,8 +76,19 @@ standard/core. An arbitrary generated wagon can have its two endpoint witnesses
 in different pieces. The new results do not assert that such a block has already
 been localized.
 
-The next step is the genuine minimum-segmentation argument for the remaining
-three- and four-segment configurations. Its replacement edges must preserve
+The next proposed interface is cross-standard wagon uniqueness: for distinct
+standards i,j, at most one generated output wagon contains a physical edge
+from each of i and j. The existing cross-standard shared-edge incidence
+theorem identifies each candidate with the image of a core wagon;
+`no_two_designated_meet_two_wagons` then excludes two candidates. This reduction
+uses the core order-two local-piece bound and exact shared compatibility,
+without old linearity or strongness. Together with same-standard comparison
+and actual off-core edge ownership, it should give global wagon-pair uniqueness
+when both common vertices are outside the core. This is a mathematically
+reviewed next step, not a new Lean export in this change.
+
+Cases with a common core vertex and the remaining three- and four-segment
+configurations still require an argument. Replacement edges must preserve
 the original generated wagon labels and actual physical incidences while
 reducing the segment count. For the output-strongness auxiliary cycle, only the
 unconditional legal reduct and order bounds are available until acceptability
@@ -86,7 +97,8 @@ linearity, and the final circulation theorem remain separate obligations.
 
 ## Integration
 
-Each new module has a dedicated `Check*.lean` file. A separate, focused
+Each new module has a dedicated `Check*.lean` file printing both its elaborated
+export signatures and theorem axioms. A separate, focused
 `track-b-wagon-geometry.yml` workflow builds these three modules from fresh
 project objects, audits all their exports and runs the new diagnostic plus
 the four existing finite regressions. It checks the actual PR head and does

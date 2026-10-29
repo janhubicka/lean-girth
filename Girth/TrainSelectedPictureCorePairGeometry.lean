@@ -3,6 +3,8 @@ import Girth.TrainCoreWagonEmbedding
 import Girth.TrainWagonPairUniqueness
 import Girth.AttachmentStrongness
 
+set_option Elab.async false
+
 /-!
 # Core-block absorption in the actual generated picture
 
@@ -66,11 +68,13 @@ theorem actualASupport_core_edge_pullback
 
 variable {m : ℕ}
 variable (T : EdgeTrainLevels (OldACarrierEdge A B) m)
-variable (U : EdgeTrainLevels CoreEdge m)
+variable (U : EdgeTrainLevels (OldACarrierEdge A R) m)
 variable (hShared : ∀ _i : I, Nonempty (SharedOldACarrierEdge A B S))
 variable (hPreserve : ∀ (ν : Fin (m + 1)) (i : I)
   (a b : SharedOldACarrierEdge A B S),
-  T.rel ν a.1 b.1 → U.rel ν (Emb i a) (Emb i b))
+  T.rel ν a.1 b.1 →
+    U.rel ν (sharedOldACarrierCoreEmbedding A B S R f i a)
+      (sharedOldACarrierCoreEmbedding A B S R f i b))
 variable (μ : Fin (m + 1))
 
 local notation "Train" => generatedActualASupportTrain A hA B S R f T U hShared

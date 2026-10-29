@@ -61,11 +61,11 @@ local notation "Std" => RelStructure.Attachment.copyEmbedding C.toRelStructure S
 local notation "Emb" => sharedOldACarrierCoreEmbedding A C.toRelStructure S R f
 local notation "CoreCar" => attachedCoreAEdgeCarrier A C.toRelStructure S R f
 local notation "StdEdge" => (fun (i : I) (a : OldEdge) =>
-  (show ActualEdge from actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-    (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb i a)))
+  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
+    (physicalStandardEdge (sharedOldACarrierInclusion A C.toRelStructure S) Emb i a))
 local notation "CoreActual" => (fun (a : OldACarrierEdge A R) =>
-  (show ActualEdge from actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I a)))
+  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
+    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I a))
 local notation "Train" => generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared
 local notation "Old" => selectedPictureOrderOneData A B D C family selected T μ
 local notation "Witness" => sharedWitnessOrderOneData U μ Emb CoreCar
@@ -73,8 +73,14 @@ local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 
 variable (hRel : ∀ (ν : Fin (m + 1)) (k : I)
-  (p q : SharedOldACarrierEdge A C.toRelStructure S),
-  T.rel ν p.1 q.1 ↔ U.rel ν (Emb k p) (Emb k q))
+  (p q : SharedOldACarrierEdge A C.toRelStructure
+    (activeCarrier A C e.toFunctionEmbedding)),
+  T.rel ν p.1 q.1 ↔
+    U.rel ν
+      (sharedOldACarrierCoreEmbedding A C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f k p)
+      (sharedOldACarrierCoreEmbedding A C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f k q))
 
 include hRel
 
