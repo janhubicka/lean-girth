@@ -1,0 +1,3 @@
+import Girth.TrainActualCoreSingletonCutIndices
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_singleton_two_cut_indices
