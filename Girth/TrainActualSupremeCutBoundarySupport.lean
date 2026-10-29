@@ -54,7 +54,7 @@ local notation "CoreEmb" =>
   RelStructure.Attachment.coreEmbedding C.toRelStructure S R f
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-    (fun ν j p q h => (hRel ν j p q).mp h) hShared μ
+    (fun ν j p q h => Iff.mp (hRel ν j p q) h) hShared μ
 local notation "CoreActual" => (fun (b : CoreEdge) =>
   actualAPictureEdgeEquiv A hA C.toRelStructure S R f
     (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
@@ -95,7 +95,7 @@ theorem attachedSelectedPicture_core_edge_incident_lift
           CoreWagon (Quotient.mk (U.wagonSetoid μ) b) :=
             (generatedActualASupportTrain_coreWagonEmbedding_mk
               A hA C.toRelStructure S R f T U
-              (fun ν j p q h => (hRel ν j p q).mp h)
+              (fun ν j p q h => Iff.mp (hRel ν j p q) h)
               hShared μ b).symm
         _ = CoreWagon p := congrArg CoreWagon hp
 
