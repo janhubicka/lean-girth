@@ -1,0 +1,6 @@
+import Girth.TrainDesignatedSubcopyLocalSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.not_wagon_vertex_three_distinct
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.edge_parents_ne_at_vertex
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.component_target_contains_vertex_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_component_target

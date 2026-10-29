@@ -1,0 +1,10 @@
+import Girth.TrainFillingPieceLiftRegression
+
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.filling
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.old_linearPretrain
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.filled_linearPretrain
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.old_short
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.no_filled_pair
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.no_filled_short
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.filled_long
+#print axioms StructuralRamsey.Girth.TrainFillingPieceLiftRegression.short_requires_long

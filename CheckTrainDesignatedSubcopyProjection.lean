@@ -1,0 +1,10 @@
+import Girth.TrainDesignatedSubcopyProjection
+
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.siblings_not_incident
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeLabel_eq_of_incident
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeCycle_connector_word
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeCycle_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeCycle_acceptable_iff
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.target_linearPretrain_iff
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.enlargeCycle_supreme_parent_of_fullSystemGirth
