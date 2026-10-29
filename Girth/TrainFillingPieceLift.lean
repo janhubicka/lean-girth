@@ -85,20 +85,28 @@ theorem longPiece_lift (i : I) (q r : V ⊕ P)
     (F.filledData copyCarrier copyEdges parent).LongPiece (.inl i) q r := by
   obtain ⟨x, y, w, f, g, hq, hr, hf, hg, hfg,
     hfw, hgw, hxf, hyg, hNoPair⟩ := h
+  change f ∈ copyEdges i at hf
+  change g ∈ copyEdges i at hg
+  change parent f = w at hfw
+  change parent g = w at hgw
   obtain ⟨e, he, hxe⟩ := F.covering f x hxf
   obtain ⟨d, hd, hyd⟩ := F.covering g y hyg
   refine ⟨x, y, w, e, d, hq, hr, ?_, ?_, ?_, ?_, ?_, hxe, hyd, ?_⟩
   · change F.cover e ∈ copyEdges i
-    simpa only [he] using hf
+    rw [he]
+    exact hf
   · change F.cover d ∈ copyEdges i
-    simpa only [hd] using hg
+    rw [hd]
+    exact hg
   · intro hed
     apply hfg
     exact he.symm.trans ((congrArg F.cover hed).trans hd)
   · change parent (F.cover e) = w
-    simpa only [he] using hfw
+    rw [he]
+    exact hfw
   · change parent (F.cover d) = w
-    simpa only [hd] using hgw
+    rw [hd]
+    exact hgw
   · intro hPair
     exact hNoPair (F.filled_pairEdge_old copyCarrier copyEdges parent x y hPair)
 
@@ -120,19 +128,24 @@ theorem vertex_shortPiece_lift
     left
     refine ⟨e, ?_, hxe, hye⟩
     change F.cover e ∈ copyEdges i
-    simpa only [he] using hf
+    rw [he]
+    exact hf
   · obtain ⟨e, he, hxe⟩ := F.covering f x hxf
     obtain ⟨d, hd, hyd⟩ := F.covering f y hyf
     right
     refine ⟨x, y, parent f, e, d, rfl, rfl, ?_, ?_, ?_, ?_, ?_, hxe, hyd, hPair⟩
     · change F.cover e ∈ copyEdges i
-      simpa only [he] using hf
+      rw [he]
+      exact hf
     · change F.cover d ∈ copyEdges i
-      simpa only [hd] using hf
+      rw [hd]
+      exact hf
     · intro hed
       apply hPair
       refine ⟨e, hxe, ?_⟩
-      simpa only [hed] using hyd
+      change y ∈ e.1
+      rw [hed]
+      exact hyd
     · change parent (F.cover e) = parent f
       rw [he]
     · change parent (F.cover d) = parent f
@@ -161,17 +174,21 @@ theorem shortPiece_lift
           obtain ⟨g, hgf, hgw⟩ := hr
           have hEq : g = f := hgf
           subst g
+          change parent f = w at hgw
           obtain ⟨e, he, hxe⟩ := F.covering f x hq
           left
           refine ⟨e, ?_, hxe, e, rfl, ?_⟩
           · change F.cover e ∈ copyEdges i
-            simpa only [he] using hf
+            rw [he]
+            exact hf
           · change parent (F.cover e) = w
-            simpa only [he] using hgw
+            rw [he]
+            exact hgw
   | inr w =>
       obtain ⟨g, hgf, hgw⟩ := hq
       have hEq : g = f := hgf
       subst g
+      change parent f = w at hgw
       cases r with
       | inl y =>
           change y ∈ f.1 at hr
@@ -179,14 +196,17 @@ theorem shortPiece_lift
           left
           refine ⟨e, ?_, ?_, hye⟩
           · change F.cover e ∈ copyEdges i
-            simpa only [he] using hf
+            rw [he]
+            exact hf
           · refine ⟨e, rfl, ?_⟩
             change parent (F.cover e) = w
-            simpa only [he] using hgw
+            rw [he]
+            exact hgw
       | inr z =>
           obtain ⟨g, hgf, hgz⟩ := hr
           have hEq : g = f := hgf
           subst g
+          change parent f = z at hgz
           exact False.elim (hne (congrArg Sum.inr (hgw.symm.trans hgz)))
 
 end StructuralRamsey.Girth.TrainFilling

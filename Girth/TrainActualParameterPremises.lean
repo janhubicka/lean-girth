@@ -81,7 +81,9 @@ theorem adjacentPartParameters_vertexEmbedding
   intro ν z hz
   rcases hz with ⟨x, hx, rfl⟩
   change newPart (φ x) ∈ allowedParts ν
-  simpa only [hPart x] using hx
+  change oldPart x ∈ allowedParts ν at hx
+  rw [hPart x]
+  exact hx
 
 end EdgeTrainLevels
 

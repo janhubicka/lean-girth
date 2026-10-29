@@ -58,9 +58,13 @@ theorem filled_linearPretrain : filled.LinearPretrain := by
   · intro e f hne
     change (e.1 ∩ f.1).Subsingleton
     have he : e.1 = leftEdge ∨ e.1 = rightEdge := by
-      simpa only [filling, Set.mem_insert_iff, Set.mem_singleton_iff] using e.2
+      have h := e.2
+      change e.1 = leftEdge ∨ e.1 = rightEdge at h
+      exact h
     have hf : f.1 = leftEdge ∨ f.1 = rightEdge := by
-      simpa only [filling, Set.mem_insert_iff, Set.mem_singleton_iff] using f.2
+      have h := f.2
+      change f.1 = leftEdge ∨ f.1 = rightEdge at h
+      exact h
     rcases he with he | he <;> rcases hf with hf | hf
     · exact False.elim (hne (Subtype.ext (he.trans hf.symm)))
     · rw [he, hf]
@@ -73,7 +77,12 @@ theorem filled_linearPretrain : filled.LinearPretrain := by
 
 /-- The sole old edge is a short piece through 0 and 2. -/
 theorem old_short : old.ShortPiece (.inl ()) (.inl 0) (.inl 2) := by
-  refine ⟨⟨Set.univ, by simp [filling]⟩, ?_, ?_, ?_⟩ <;>
+  refine ⟨⟨Set.univ, by simp [filling]⟩, ?_, ?_, ?_⟩
+  · change True
+    trivial
+  · change (0 : Fin 3) ∈ (Set.univ : Set (Fin 3))
+    trivial
+  · change (2 : Fin 3) ∈ (Set.univ : Set (Fin 3))
     trivial
 
 /-- No ambient filled edge contains both end vertices. -/
@@ -82,7 +91,9 @@ theorem no_filled_pair : ¬ filled.PairEdge 0 2 := by
   change (0 : Fin 3) ∈ e.1 at hZero
   change (2 : Fin 3) ∈ e.1 at hTwo
   have he : e.1 = leftEdge ∨ e.1 = rightEdge := by
-    simpa only [filling, Set.mem_insert_iff, Set.mem_singleton_iff] using e.2
+    have h := e.2
+    change e.1 = leftEdge ∨ e.1 = rightEdge at h
+    exact h
   rcases he with he | he
   · rw [he] at hTwo
     norm_num [leftEdge] at hTwo
@@ -99,8 +110,10 @@ theorem filled_long : filled.LongPiece (.inl ()) (.inl 0) (.inl 2) := by
   let e : filling.NewEdge := ⟨leftEdge, by simp [filling]⟩
   let f : filling.NewEdge := ⟨rightEdge, by simp [filling]⟩
   refine ⟨0, 2, (), e, f, rfl, rfl, ?_, ?_, ?_, rfl, rfl, ?_, ?_, no_filled_pair⟩
-  · trivial
-  · trivial
+  · change True
+    trivial
+  · change True
+    trivial
   · intro hef
     have hSets : leftEdge = rightEdge := congrArg Subtype.val hef
     have hZero : (0 : Fin 3) ∈ rightEdge := by

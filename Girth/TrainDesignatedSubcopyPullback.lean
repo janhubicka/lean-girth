@@ -44,7 +44,10 @@ theorem BigCycle.supreme_of_localized_component_replacement
   have hRetain : C.twiceOrder = 2 →
       ∃ j : Fin m, D.designated (B.label j) := by
     intro _
-    exact ⟨k, by simp only [hk, designated]⟩
+    refine ⟨k, ?_⟩
+    rw [hk]
+    change True
+    trivial
   obtain ⟨hBAccept, _hOrder, hPullback⟩ :=
     C.arbitrary_legal_replacement_all_conclusions
       D B hAccept hLinear pieces hGeom hWord hRetain

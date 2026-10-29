@@ -84,9 +84,12 @@ theorem BigCycle.edge_parents_ne_at_vertex
   | inl y =>
       cases hAfter : C.connector (cyclicSucc i) with
       | inl z =>
-          have hyE : y ∈ D.edgeCarrier e := by simpa only [hBefore] using hPrev
-          have hxE : x ∈ D.edgeCarrier e := by simpa only [hx] using hHereE
-          have hzF : z ∈ D.edgeCarrier f := by simpa only [hAfter] using hNext
+          have hyE : y ∈ D.edgeCarrier e := by
+            simpa only [hBefore, Incident, carrier] using hPrev
+          have hxE : x ∈ D.edgeCarrier e := by
+            simpa only [hx, Incident, carrier] using hHereE
+          have hzF : z ∈ D.edgeCarrier f := by
+            simpa only [hAfter, Incident, carrier] using hNext
           exact C.not_wagon_vertex_three_distinct D hAccept (D.parent e)
             (trainCyclicPred i) i (cyclicSucc i) hPrevI hPrevNext hiNext
             ⟨y, hBefore, e, rfl, hyE⟩
@@ -150,22 +153,22 @@ theorem BigCycle.component_target_contains_vertex_connectors
   rw [hx] at hLeft hRight
   by_cases hn : 3 ≤ n
   · rcases hLabels i with hTarget | ⟨e, he, hE⟩
-    · simpa only [hTarget] using hLeft
+    · simpa only [hTarget, Incident, carrier] using hLeft
     · rcases hLabels (cyclicSucc i) with hTarget | ⟨f, hf, hF⟩
-      · simpa only [hTarget] using hRight
+      · simpa only [hTarget, Incident, carrier] using hRight
       · exact G.inter_wagon_intersections e hE f hF
           (C.edge_parents_ne_at_vertex D hAccept hn i e f x he hf hx) x
-          (by simpa only [he] using hLeft)
-          (by simpa only [hf] using hRight)
+          (by simpa only [he, Incident, carrier] using hLeft)
+          (by simpa only [hf, Incident, carrier] using hRight)
   · have hnTwo : n = 2 := by have h := C.length_ge_two; omega
     subst n
     have hIndex : k = i ∨ k = cyclicSucc i := by
       fin_cases i <;> fin_cases k <;> simp [cyclicSucc]
     rcases hIndex with hIndex | hIndex
     · rw [hIndex] at hk
-      simpa only [hk] using hLeft
+      simpa only [hk, Incident, carrier] using hLeft
     · rw [hIndex] at hk
-      simpa only [hk] using hRight
+      simpa only [hk, Incident, carrier] using hRight
 
 /-- The target of a localized component cycle is genuinely supreme:
 all short replacements are constructed, including their global legality.
@@ -201,11 +204,13 @@ theorem BigCycle.hasSupremeAt_of_component_target
     fun h => hPrevNe (C.connector_injective h)
   cases hBefore : C.connector (trainCyclicPred j) with
   | inl x =>
-      have hxE : x ∈ D.edgeCarrier e := by simpa only [hBefore] using hPrev
+      have hxE : x ∈ D.edgeCarrier e := by
+        simpa only [hBefore, Incident, carrier] using hPrev
       have hxT := hVertices (trainCyclicPred j) x hBefore
       cases hAfter : C.connector j with
       | inl y =>
-          have hyE : y ∈ D.edgeCarrier e := by simpa only [hAfter] using hHere
+          have hyE : y ∈ D.edgeCarrier e := by
+            simpa only [hAfter, Incident, carrier] using hHere
           have hyT := hVertices j y hAfter
           have hxy : x ≠ y := by
             intro h
@@ -222,7 +227,7 @@ theorem BigCycle.hasSupremeAt_of_component_target
           obtain ⟨f, hf, hParent, hxf⟩ := G.pointwise_cover e hE x hxE hxT
           refine ⟨f, ?_, ?_, ?_⟩
           · simpa only [hk, edges] using hf
-          · simpa only [hBefore] using hxf
+          · simpa only [hBefore, Incident, carrier] using hxf
           · rw [hAfter]
             exact ⟨f, rfl, hParent.trans hep⟩
   | inr p =>
@@ -234,14 +239,15 @@ theorem BigCycle.hasSupremeAt_of_component_target
         simpa only [hae] using hap
       cases hAfter : C.connector j with
       | inl y =>
-          have hyE : y ∈ D.edgeCarrier e := by simpa only [hAfter] using hHere
+          have hyE : y ∈ D.edgeCarrier e := by
+            simpa only [hAfter, Incident, carrier] using hHere
           have hyT := hVertices j y hAfter
           obtain ⟨f, hf, hParent, hyf⟩ := G.pointwise_cover e hE y hyE hyT
           refine ⟨f, ?_, ?_, ?_⟩
           · simpa only [hk, edges] using hf
           · rw [hBefore]
             exact ⟨f, rfl, hParent.trans hep⟩
-          · simpa only [hAfter] using hyf
+          · simpa only [hAfter, Incident, carrier] using hyf
       | inr q =>
           have heq : D.parent e = q := by
             have h := hHere
