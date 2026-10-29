@@ -5,13 +5,27 @@ on:
     paths:
       - 'Girth/TrainSelectedPicture*PairGeometry.lean'
       - 'CheckTrainSelectedPicture*PairGeometry.lean'
+      - 'Girth/TrainSelectedPictureCrossStandardWagons.lean'
+      - 'CheckTrainSelectedPictureCrossStandardWagons.lean'
+      - 'Girth/TrainSelectedPictureCoreVertexLocalization.lean'
+      - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
+      - 'Girth/TrainTwoWagonVertexProbe.lean'
+      - 'CheckTrainTwoWagonVertexProbe.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
+      - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
   pull_request:
     paths:
       - 'Girth/TrainSelectedPicture*PairGeometry.lean'
       - 'CheckTrainSelectedPicture*PairGeometry.lean'
+      - 'Girth/TrainSelectedPictureCrossStandardWagons.lean'
+      - 'CheckTrainSelectedPictureCrossStandardWagons.lean'
+      - 'Girth/TrainSelectedPictureCoreVertexLocalization.lean'
+      - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
+      - 'Girth/TrainTwoWagonVertexProbe.lean'
+      - 'CheckTrainTwoWagonVertexProbe.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
+      - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
   workflow_dispatch:
 
@@ -58,12 +72,28 @@ jobs:
           git rev-parse HEAD | tee track-b-revision.txt
           # Dependency objects may be cached; project proof objects must be fresh.
           rm -rf .lake/build
-          lake build Girth.TrainSelectedPictureWagonPairGeometry Girth.TrainSelectedPictureCorePairGeometry Girth.TrainSelectedPictureMixedPairGeometry
+          lake build \
+            Girth.TrainSelectedPictureWagonPairGeometry \
+            Girth.TrainSelectedPictureCorePairGeometry \
+            Girth.TrainSelectedPictureMixedPairGeometry \
+            Girth.TrainSelectedPictureCrossStandardWagons \
+            Girth.TrainSelectedPictureOffCorePairGeometry \
+            Girth.TrainSelectedPictureCoreVertexLocalization \
+            Girth.TrainTwoWagonVertexProbe \
+            Girth.TrainSelectedPictureCoreOffCorePairGeometry
       - name: Audit every Track B export
         shell: bash
         run: |
           set -euo pipefail
-          for check in CheckTrainSelectedPictureWagonPairGeometry CheckTrainSelectedPictureCorePairGeometry CheckTrainSelectedPictureMixedPairGeometry; do
+          for check in \
+            CheckTrainSelectedPictureWagonPairGeometry \
+            CheckTrainSelectedPictureCorePairGeometry \
+            CheckTrainSelectedPictureMixedPairGeometry \
+            CheckTrainSelectedPictureCrossStandardWagons \
+            CheckTrainSelectedPictureOffCorePairGeometry \
+            CheckTrainSelectedPictureCoreVertexLocalization \
+            CheckTrainTwoWagonVertexProbe \
+            CheckTrainSelectedPictureCoreOffCorePairGeometry; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -71,6 +101,7 @@ jobs:
       - name: Run finite geometry and boundary regressions
         run: |
           python3 scripts/check_track_b_wagon_geometry.py
+          python3 scripts/check_track_b_off_core_geometry.py
           python3 scripts/check_boundary_transport.py
           python3 scripts/check_boundary_girth.py
           python3 scripts/check_order_one_bridge.py
@@ -85,6 +116,11 @@ jobs:
             CheckTrainSelectedPictureWagonPairGeometry.log
             CheckTrainSelectedPictureCorePairGeometry.log
             CheckTrainSelectedPictureMixedPairGeometry.log
+            CheckTrainSelectedPictureCrossStandardWagons.log
+            CheckTrainSelectedPictureOffCorePairGeometry.log
+            CheckTrainSelectedPictureCoreVertexLocalization.log
+            CheckTrainTwoWagonVertexProbe.log
+            CheckTrainSelectedPictureCoreOffCorePairGeometry.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5

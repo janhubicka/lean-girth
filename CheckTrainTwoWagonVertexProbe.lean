@@ -1,0 +1,15 @@
+import Girth.TrainTwoWagonVertexProbe
+
+#check @StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe
+#check @StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe_twiceOrder
+#check @StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe_acceptable
+#check @StructuralRamsey.Girth.OrderOneData.copy_bridges_of_two_wagon_vertex_probe
+#check @StructuralRamsey.Girth.OrderOneData.copy_bridges_of_common_wagon_vertex
+#check @StructuralRamsey.Girth.OrderOneData.copy_contains_common_wagon_vertex
+
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.twoWagonVertexProbe_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_bridges_of_two_wagon_vertex_probe
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_bridges_of_common_wagon_vertex
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_contains_common_wagon_vertex

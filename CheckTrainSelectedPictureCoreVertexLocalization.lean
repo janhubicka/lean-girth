@@ -1,0 +1,7 @@
+import Girth.TrainSelectedPictureCoreVertexLocalization
+
+#check @StructuralRamsey.Girth.generatedActualASupportTrain_two_standard_vertex_shared_witnesses
+#check @StructuralRamsey.Girth.generatedActualASupportTrain_two_standard_vertex_core_edge
+
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_two_standard_vertex_shared_witnesses
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_two_standard_vertex_core_edge
