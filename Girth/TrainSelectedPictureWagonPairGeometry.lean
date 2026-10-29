@@ -91,34 +91,36 @@ theorem attachedSelectedPicture_same_standard_blocks_parent_eq
     (hxa : x ∈ (StdEdge i a).1) (hyb : y ∈ (StdEdge i b).1)
     (hxc : x ∈ (StdEdge i c).1) (hyd : y ∈ (StdEdge i d).1) :
     W₁ = W₂ := by
-  rw [actualAPictureEdgeEquiv_standard_carrier] at hxa hyb hxc hyd
-  obtain ⟨x₀, hxA, hxx⟩ := hxa
-  obtain ⟨y₀, hyB, hyy⟩ := hyb
+  let σ : Quotient (T.wagonSetoid μ) ↪ Quotient ((Train).wagonSetoid μ) := StdWagon i
+  have hMap (r : OldEdge) : σ ((Old).parent r) = (Out).parent (StdEdge i r) := rfl
+  have hMem (r : OldEdge) (z : Vertex) (hz : z ∈ (StdEdge i r).1) :
+      z ∈ (fun t : X => Std i t) '' r.1 := by
+    exact Eq.mp (congrArg (fun Z : Set Vertex => z ∈ Z)
+      (actualAPictureEdgeEquiv_standard_carrier A hA C.toRelStructure S R f i r)) hz
+  obtain ⟨x₀, hxA, hxx⟩ := hMem a x hxa
+  obtain ⟨y₀, hyB, hyy⟩ := hMem b y hyb
   have hxC : x₀ ∈ c.1 := by
-    obtain ⟨z, hz, hzx⟩ := hxc
-    exact (Std i).injective (hzx.trans hxx.symm) ▸ hz
+    obtain ⟨z, hz, hzx⟩ := hMem c x hxc
+    have hzx₀ : z = x₀ := (Std i).injective (hzx.trans hxx.symm)
+    exact Eq.mp (congrArg (fun t : X => t ∈ c.1) hzx₀) hz
   have hyD : y₀ ∈ d.1 := by
-    obtain ⟨z, hz, hzy⟩ := hyd
-    exact (Std i).injective (hzy.trans hyy.symm) ▸ hz
+    obtain ⟨z, hz, hzy⟩ := hMem d y hyd
+    have hzy₀ : z = y₀ := (Std i).injective (hzy.trans hyy.symm)
+    exact Eq.mp (congrArg (fun t : X => t ∈ d.1) hzy₀) hz
   have hxy₀ : x₀ ≠ y₀ := by
     intro h
     exact hxy (hxx.symm.trans ((congrArg (fun z : X => Std i z) h).trans hyy))
-  have hBA : (Old).parent b = (Old).parent a := Quotient.sound
-    ((generatedActualASupportTrain_restrict_standard
-      A hA C.toRelStructure S R f T U hRel hShared μ i b a).mp
-      (Quotient.exact (hb.trans ha.symm)))
-  have hDC : (Old).parent d = (Old).parent c := Quotient.sound
-    ((generatedActualASupportTrain_restrict_standard
-      A hA C.toRelStructure S R f T U hRel hShared μ i d c).mp
-      (Quotient.exact (hd.trans hc.symm)))
+  have hBA : (Old).parent b = (Old).parent a :=
+    σ.injective ((hMap b).trans (hb.trans (ha.symm.trans (hMap a).symm)))
+  have hDC : (Old).parent d = (Old).parent c :=
+    σ.injective ((hMap d).trans (hd.trans (hc.symm.trans (hMap c).symm)))
   have hAC : (Old).parent a = (Old).parent c :=
     OrderOneData.wagon_eq_of_common_vertex_pair Old hOld
       ((Old).parent a) ((Old).parent c) x₀ y₀
       ⟨a, rfl, hxA⟩ ⟨b, hBA, hyB⟩ ⟨c, rfl, hxC⟩ ⟨d, hDC, hyD⟩ hxy₀
   have hOut : (Out).parent (StdEdge i a) = (Out).parent (StdEdge i c) :=
-    Quotient.sound ((generatedActualASupportTrain_restrict_standard
-      A hA C.toRelStructure S R f T U hRel hShared μ i a c).mpr
-      (Quotient.exact hAC))
+    (hMap a).symm.trans
+      ((congrArg (fun p : Quotient (T.wagonSetoid μ) => σ p) hAC).trans (hMap c))
   exact ha.symm.trans (hOut.trans hc)
 
 /-- An ambient pair edge through a standard-local physical wagon block has

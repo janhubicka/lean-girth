@@ -75,7 +75,8 @@ variable (μ : Fin (m + 1))
 
 local notation "Train" => generatedActualASupportTrain A hA B S R f T U hShared
 local notation "Witness" => sharedWitnessOrderOneData U μ Emb CoreCar
-local notation "Parent" => Quotient.mk ((Train).wagonSetoid μ)
+local notation "Parent" => Quotient.mk (EdgeTrainLevels.wagonSetoid
+  (generatedActualASupportTrain A hA B S R f T U hShared) μ)
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA B S R f T U hPreserve hShared μ
 
