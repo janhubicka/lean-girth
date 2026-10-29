@@ -35,132 +35,35 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download Mathlib cache
         run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
-      - name: Build two-standard obstruction modules
+      - name: Inventory source and test the inventory checker
         run: |
+          python3 scripts/test_audit_circulation.py
+          python3 scripts/audit_circulation.py --output audit-inventory.json
+      - name: Build every project module from this checkout
+        shell: bash
+        run: |
+          set -euo pipefail
           # Keep dependency caches, but never reuse unchecked project objects.
           rm -rf .lake/build
-          lake build Girth.TrainCyclicRestriction Girth.TrainCyclicRestrictionRegression Girth.TrainCutIndexedWord Girth.TrainCoreWagonEmbedding Girth.TrainCoreWagonBridge Girth.TrainSelectedWagonCutCoreMap Girth.TrainActualCutConnectorLift Girth.TrainCoreContactReflection Girth.TrainCoreCopyVertexCoverage Girth.TrainActualCoreRestrictionMap Girth.TrainGeometricVertexCutTargetIncidence Girth.TrainGeometricWagonCutTargetIncidence Girth.TrainActualCutIndexedBigCycle Girth.TrainActualCutOrderOneBridges Girth.TrainActualCutNonOneAcceptable Girth.TrainActualCutReductionDichotomy Girth.TrainActualPositiveCutSupremeOrBridges Girth.TrainActualZeroCutLabelPullback Girth.TrainActualStandardWagonMap Girth.TrainActualZeroCutBigCycle Girth.TrainActualStandardRestrictionMap Girth.TrainActualZeroCutAcceptable Girth.TrainActualStandardShortReplacement Girth.TrainActualStandardLongReplacement Girth.TrainActualStandardNoNewPair Girth.TrainActualStandardStrongFromBase Girth.ForestMixedAStrong Girth.TrainSupremeWordTransport Girth.TrainSupremePlanTransport Girth.TrainActualStandardPhysicalMap Girth.TrainActualZeroCutGlobalSupreme
-          lake build Girth.TrainOldWagonNoInsertion Girth.TrainOptionalOldSuccessor Girth.TrainOptionalOldCyclic Girth.TrainOutputA3SplitReduction Girth.TrainLiteralOldPosA3 Girth.TrainOptionalOldHeadCyclic Girth.TrainLiteralOldPosHead Girth.TrainLiteralOutputA2 Girth.TrainStrictPlanAcceptability Girth.TrainOrderOnePlanAcceptability Girth.TrainShortOnlyLiteralAcceptability Girth.TrainThreeWordCycle Girth.TrainTwoOccurrencePlanGlobal Girth.TrainOptionalKindOrder Girth.TrainOptionalKindChain Girth.TrainCyclicListOrder Girth.TrainFinCyclicOrder Girth.TrainPhysicalKindWord Girth.TrainLiteralMixedOrder Girth.TrainStrictPlanComplete Girth.TrainArbitraryLongA3 Girth.TrainArbitraryLongA2Geometry Girth.TrainArbitraryDesignatedOrigin Girth.TrainArbitraryLongOrder Girth.TrainArbitraryGeometricA2 Girth.TrainSameConnectorSupremeTransfer Girth.TrainArbitraryLiteralA2 Girth.TrainOptionalFreshnessConverse Girth.TrainFreshLocalSupreme Girth.TrainLiteralPieceLabels Girth.TrainOldPosPieceTransfer Girth.TrainFirstLongNeighbours Girth.TrainTwoStageLongComposition Girth.TrainWagonBoundaryShort Girth.TrainNoInsertionStageCompose Girth.TrainArbitrarySupremeComposition Girth.TrainArbitraryLegalReplacementComplete Girth.TrainArbitraryConnectorNodup Girth.TrainArbitraryPieceIncidence Girth.TrainArbitraryEdgeBoundaryCollision Girth.TrainArbitraryBoundaryLabels Girth.TrainArbitraryWordAssembly Girth.TrainArbitraryReplacementComplete Girth.TrainSegmentedCycleOrder Girth.TrainSelectedCycleMinimalOwners Girth.TrainSelectedCycleGeometricOwners Girth.TrainCyclicOwnerRuns Girth.TrainCyclicOwnerAbsorption Girth.TrainSelectedCycleGeometricVertex Girth.TrainSelectedCycleGeometricWagon Girth.TrainCyclicOwnerFourCases Girth.TrainSelectedCycleGeometricCutIncidence Girth.TrainForeignDesignatedSupport Girth.TrainCyclicCutIndices Girth.TrainCyclicRunGaps Girth.TrainCyclicRunWrap
-      - name: Audit cyclic restriction exports
+          python3 - <<'PY' > audit-build-targets.txt
+          from pathlib import Path
+          print('Girth')
+          for source in sorted(Path('Girth').rglob('*.lean')):
+              print('.'.join(source.with_suffix('').parts))
+          PY
+          mapfile -t modules < audit-build-targets.txt
+          lake build "${modules[@]}"
+      - name: Check every theorem audit exactly once
+        shell: bash
         run: |
           set -euo pipefail
-          lake env lean CheckTrainCyclicRestriction.lean | tee CheckTrainCyclicRestriction.log
-          python3 scripts/check_axioms.py CheckTrainCyclicRestriction.log CheckTrainCyclicRestriction.lean
-          lake env lean CheckTrainCutIndexedWord.lean | tee CheckTrainCutIndexedWord.log
-          python3 scripts/check_axioms.py CheckTrainCutIndexedWord.log CheckTrainCutIndexedWord.lean
-          lake env lean CheckTrainCoreWagonEmbedding.lean | tee CheckTrainCoreWagonEmbedding.log
-          python3 scripts/check_axioms.py CheckTrainCoreWagonEmbedding.log CheckTrainCoreWagonEmbedding.lean
-          lake env lean CheckTrainCoreWagonBridge.lean | tee CheckTrainCoreWagonBridge.log
-          python3 scripts/check_axioms.py CheckTrainCoreWagonBridge.log CheckTrainCoreWagonBridge.lean
-          lake env lean CheckTrainSelectedWagonCutCoreMap.lean | tee CheckTrainSelectedWagonCutCoreMap.log
-          python3 scripts/check_axioms.py CheckTrainSelectedWagonCutCoreMap.log CheckTrainSelectedWagonCutCoreMap.lean
-          lake env lean CheckTrainActualCutConnectorLift.lean | tee CheckTrainActualCutConnectorLift.log
-          python3 scripts/check_axioms.py CheckTrainActualCutConnectorLift.log CheckTrainActualCutConnectorLift.lean
-          lake env lean CheckTrainCoreContactReflection.lean | tee CheckTrainCoreContactReflection.log
-          python3 scripts/check_axioms.py CheckTrainCoreContactReflection.log CheckTrainCoreContactReflection.lean
-          lake env lean CheckTrainCoreCopyVertexCoverage.lean | tee CheckTrainCoreCopyVertexCoverage.log
-          python3 scripts/check_axioms.py CheckTrainCoreCopyVertexCoverage.log CheckTrainCoreCopyVertexCoverage.lean
-          lake env lean CheckTrainActualCoreRestrictionMap.lean | tee CheckTrainActualCoreRestrictionMap.log
-          python3 scripts/check_axioms.py CheckTrainActualCoreRestrictionMap.log CheckTrainActualCoreRestrictionMap.lean
-          lake env lean CheckTrainGeometricVertexCutTargetIncidence.lean | tee CheckTrainGeometricVertexCutTargetIncidence.log
-          python3 scripts/check_axioms.py CheckTrainGeometricVertexCutTargetIncidence.log CheckTrainGeometricVertexCutTargetIncidence.lean
-          lake env lean CheckTrainGeometricWagonCutTargetIncidence.lean | tee CheckTrainGeometricWagonCutTargetIncidence.log
-          python3 scripts/check_axioms.py CheckTrainGeometricWagonCutTargetIncidence.log CheckTrainGeometricWagonCutTargetIncidence.lean
-          lake env lean CheckTrainActualCutIndexedBigCycle.lean | tee CheckTrainActualCutIndexedBigCycle.log
-          python3 scripts/check_axioms.py CheckTrainActualCutIndexedBigCycle.log CheckTrainActualCutIndexedBigCycle.lean
-          lake env lean CheckTrainActualCutOrderOneBridges.lean | tee CheckTrainActualCutOrderOneBridges.log
-          python3 scripts/check_axioms.py CheckTrainActualCutOrderOneBridges.log CheckTrainActualCutOrderOneBridges.lean
-          lake env lean CheckTrainActualCutNonOneAcceptable.lean | tee CheckTrainActualCutNonOneAcceptable.log
-          python3 scripts/check_axioms.py CheckTrainActualCutNonOneAcceptable.log CheckTrainActualCutNonOneAcceptable.lean
-          lake env lean CheckTrainActualCutReductionDichotomy.lean | tee CheckTrainActualCutReductionDichotomy.log
-          python3 scripts/check_axioms.py CheckTrainActualCutReductionDichotomy.log CheckTrainActualCutReductionDichotomy.lean
-          lake env lean CheckTrainActualPositiveCutSupremeOrBridges.lean | tee CheckTrainActualPositiveCutSupremeOrBridges.log
-          python3 scripts/check_axioms.py CheckTrainActualPositiveCutSupremeOrBridges.log CheckTrainActualPositiveCutSupremeOrBridges.lean
-          lake env lean CheckTrainActualZeroCutLabelPullback.lean | tee CheckTrainActualZeroCutLabelPullback.log
-          python3 scripts/check_axioms.py CheckTrainActualZeroCutLabelPullback.log CheckTrainActualZeroCutLabelPullback.lean
-          lake env lean CheckTrainActualStandardWagonMap.lean | tee CheckTrainActualStandardWagonMap.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardWagonMap.log CheckTrainActualStandardWagonMap.lean
-          lake env lean CheckTrainActualZeroCutBigCycle.lean | tee CheckTrainActualZeroCutBigCycle.log
-          python3 scripts/check_axioms.py CheckTrainActualZeroCutBigCycle.log CheckTrainActualZeroCutBigCycle.lean
-          lake env lean CheckTrainActualStandardRestrictionMap.lean | tee CheckTrainActualStandardRestrictionMap.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardRestrictionMap.log CheckTrainActualStandardRestrictionMap.lean
-          lake env lean CheckTrainActualZeroCutAcceptable.lean | tee CheckTrainActualZeroCutAcceptable.log
-          python3 scripts/check_axioms.py CheckTrainActualZeroCutAcceptable.log CheckTrainActualZeroCutAcceptable.lean
-          lake env lean CheckTrainActualStandardShortReplacement.lean | tee CheckTrainActualStandardShortReplacement.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardShortReplacement.log CheckTrainActualStandardShortReplacement.lean
-          lake env lean CheckTrainActualStandardLongReplacement.lean | tee CheckTrainActualStandardLongReplacement.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardLongReplacement.log CheckTrainActualStandardLongReplacement.lean
-          lake env lean CheckTrainActualStandardNoNewPair.lean | tee CheckTrainActualStandardNoNewPair.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardNoNewPair.log CheckTrainActualStandardNoNewPair.lean
-          lake env lean CheckTrainActualStandardStrongFromBase.lean | tee CheckTrainActualStandardStrongFromBase.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardStrongFromBase.log CheckTrainActualStandardStrongFromBase.lean
-          lake env lean CheckTrainSupremeWordTransport.lean | tee CheckTrainSupremeWordTransport.log
-          python3 scripts/check_axioms.py CheckTrainSupremeWordTransport.log CheckTrainSupremeWordTransport.lean
-          lake env lean CheckTrainSupremePlanTransport.lean | tee CheckTrainSupremePlanTransport.log
-          python3 scripts/check_axioms.py CheckTrainSupremePlanTransport.log CheckTrainSupremePlanTransport.lean
-          lake env lean CheckTrainActualStandardPhysicalMap.lean | tee CheckTrainActualStandardPhysicalMap.log
-          python3 scripts/check_axioms.py CheckTrainActualStandardPhysicalMap.log CheckTrainActualStandardPhysicalMap.lean
-          lake env lean CheckTrainActualZeroCutGlobalSupreme.lean | tee CheckTrainActualZeroCutGlobalSupreme.log
-          python3 scripts/check_axioms.py CheckTrainActualZeroCutGlobalSupreme.log CheckTrainActualZeroCutGlobalSupreme.lean
-          lake env lean CheckForestMixedAStrong.lean | tee CheckForestMixedAStrong.log
-          python3 scripts/check_axioms.py CheckForestMixedAStrong.log CheckForestMixedAStrong.lean
-      - name: Audit two-standard obstruction exports
-        run: |
-          set -euo pipefail
-          for check in CheckTrainOldWagonNoInsertion CheckTrainOptionalOldSuccessor CheckTrainOptionalOldCyclic CheckTrainOutputA3SplitReduction CheckTrainLiteralOldPosA3 CheckTrainOptionalOldHeadCyclic CheckTrainLiteralOldPosHead CheckTrainLiteralOutputA2 CheckTrainStrictPlanAcceptability CheckTrainOrderOnePlanAcceptability CheckTrainShortOnlyLiteralAcceptability CheckTrainThreeWordCycle CheckTrainTwoOccurrencePlanGlobal CheckTrainOptionalKindOrder CheckTrainOptionalKindChain CheckTrainCyclicListOrder CheckTrainFinCyclicOrder CheckTrainPhysicalKindWord CheckTrainLiteralMixedOrder CheckTrainStrictPlanComplete CheckTrainArbitraryLongA3 CheckTrainArbitraryLongA2Geometry CheckTrainArbitraryDesignatedOrigin CheckTrainArbitraryLongOrder CheckTrainArbitraryGeometricA2 CheckTrainSameConnectorSupremeTransfer CheckTrainArbitraryLiteralA2 CheckTrainOptionalFreshnessConverse CheckTrainFreshLocalSupreme CheckTrainLiteralPieceLabels CheckTrainOldPosPieceTransfer CheckTrainFirstLongNeighbours CheckTrainTwoStageLongComposition CheckTrainWagonBoundaryShort CheckTrainNoInsertionStageCompose CheckTrainArbitrarySupremeComposition CheckTrainArbitraryLegalReplacementComplete CheckTrainArbitraryConnectorNodup CheckTrainArbitraryPieceIncidence CheckTrainArbitraryEdgeBoundaryCollision CheckTrainArbitraryBoundaryLabels CheckTrainArbitraryWordAssembly CheckTrainArbitraryReplacementComplete CheckTrainSegmentedCycleOrder CheckTrainSelectedCycleMinimalOwners CheckTrainSelectedCycleGeometricOwners CheckTrainCyclicOwnerRuns CheckTrainCyclicOwnerAbsorption CheckTrainSelectedCycleGeometricVertex CheckTrainSelectedCycleGeometricWagon CheckTrainCyclicOwnerFourCases CheckTrainSelectedCycleGeometricCutIncidence CheckTrainForeignDesignatedSupport CheckTrainCyclicCutIndices CheckTrainCyclicRunGaps CheckTrainCyclicRunWrap; do
-            lake env lean "${check}.lean" | tee "${check}.log"
-            python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
-          done
-      - name: Build all project modules
-        run: |
-          # Objects above were built from this checkout; no unchecked project cache remains.
-          lake build Girth.TrainActualTwoStandardDesignatedBlock
-          lake build Girth.TrainSelectedPictureContainedBlocks Girth.TrainShortReplacementGlobal Girth.TrainSingleShortReplacement Girth.TrainShortReplacementNeighbour Girth.TrainShortOnlyPlanGlobal Girth.TrainFreshLongWagon Girth.TrainLongBoundaryCollision Girth.TrainFreshWagonA2 Girth.TrainRetainedEdgeBoundary Girth.TrainCheckedCycleWord Girth.TrainInsertedConnectorNodup Girth.TrainExpandedWordChain Girth.TrainPlanBlockChain Girth.TrainPlanGlobalAssembly Girth.TrainPlanCyclicWrap Girth.TrainOutputA1Length Girth.TrainComposeLongBridges Girth.TrainSupremeLabelProvenance Girth.TrainTwoOccurrenceMixedLong Girth.TrainAllLengthPlanGlobal Girth.TrainThreeWagonCycleAcceptability Girth.TrainTwoLongOutputAccept Girth.TrainTwoPlanOutputAccept Girth.TrainA3ContactTransfer Girth.TrainA2ContactTransfer Girth.TrainOutputOldPos Girth.TrainOutputWagonOrigin Girth.TrainOptionalFreshSuccessor Girth.TrainOptionalFreshCyclic Girth.TrainOldWagonNoInsertion Girth.TrainOptionalOldSuccessor Girth.TrainOptionalOldCyclic Girth.TrainOutputA3SplitReduction Girth.TrainLiteralOldPosA3 Girth.TrainOptionalOldHeadCyclic Girth.TrainLiteralOldPosHead Girth.TrainLiteralOutputA2 Girth.TrainStrictPlanAcceptability Girth.TrainOrderOnePlanAcceptability Girth.TrainShortOnlyLiteralAcceptability Girth.TrainThreeWordCycle Girth.TrainTwoOccurrencePlanGlobal Girth.TrainOptionalKindOrder Girth.TrainOptionalKindChain Girth.TrainCyclicListOrder Girth.TrainFinCyclicOrder Girth.TrainPhysicalKindWord Girth.TrainLiteralMixedOrder Girth.TrainStrictPlanComplete Girth.TrainArbitraryLongA3 Girth.TrainArbitraryLongA2Geometry Girth.TrainArbitraryDesignatedOrigin Girth.TrainArbitraryLongOrder Girth.TrainArbitraryGeometricA2 Girth.TrainSameConnectorSupremeTransfer Girth.TrainArbitraryLiteralA2 Girth.TrainOptionalFreshnessConverse Girth.TrainFreshLocalSupreme Girth.TrainLiteralPieceLabels Girth.TrainOldPosPieceTransfer Girth.TrainFirstLongNeighbours Girth.TrainTwoStageLongComposition Girth.TrainWagonBoundaryShort Girth.TrainNoInsertionStageCompose Girth.TrainArbitrarySupremeComposition Girth.TrainArbitraryLegalReplacementComplete Girth.TrainArbitraryConnectorNodup Girth.TrainArbitraryPieceIncidence Girth.TrainArbitraryEdgeBoundaryCollision Girth.TrainArbitraryBoundaryLabels Girth.TrainArbitraryWordAssembly Girth.TrainArbitraryReplacementComplete Girth.TrainSegmentedCycleOrder Girth.TrainSelectedCycleMinimalOwners Girth.TrainSelectedCycleGeometricOwners Girth.TrainCyclicOwnerRuns Girth.TrainCyclicOwnerAbsorption Girth.TrainSelectedCycleGeometricVertex Girth.TrainSelectedCycleGeometricWagon Girth.TrainCyclicOwnerFourCases Girth.TrainSelectedCycleGeometricCutIncidence Girth.TrainForeignDesignatedSupport Girth.TrainCyclicCutIndices Girth.TrainCyclicRunGaps Girth.TrainCyclicRunWrap
-          lake build Girth.TrainStandardPictureFourWagonBoundary
-          # Preserve the explicit circulation targets, including non-root imports.
-          lake build Girth.TrainBigCycleOrderOneExtraction Girth.TrainBigCycleTwoWagonObstruction Girth.TrainLengthTwoBridgeLemma Girth.TrainBigCycleOrderBudget Girth.TrainSimultaneousSupreme Girth.TrainBoundaryPairCoreSupport Girth.TrainBoundaryPairSharedOldACopy Girth.TrainPhysicalAEdgeCoreBoundary Girth.TrainSupremeVertexCoverage Girth.TrainFourOccurrenceWagonCycle Girth.TrainFullSystemGirthParameter Girth.TrainAllAdjacentParameterPreservation Girth.TrainAllAdjacentParametersBridge Girth.TrainWagonStrongInduced Girth.TrainWagonPairUniqueness Girth.TrainWagonThreeLink Girth.TrainActualWagonThreeLink Girth.TrainActualTwoStandardEdgeBlock Girth.TrainActualTwoStandardEdgeBlockObstruction Girth.TrainTwoCopyCommonWagon Girth.TrainReplacementOrder Girth.TrainTwoCopyVertexProbe Girth.TrainShortReplacementAcceptability Girth.TrainFillingCarrierInvariant Girth.TrainTwoCopyLongProbe Girth.TrainTwoCopyLocalSymmetry Girth.TrainTwoCopyGlobalFirst Girth.TrainTwoCopyGlobalSecond Girth.TrainTwoCopyIndexedSymmetry Girth.TrainOrderOneGlobalBridge
-          lake build
-          lake build Girth.TrainPhysicalWagonQuotientModel Girth.TrainActualInteriorParentQuotientBridge Girth.TrainTaggedQuotientCarrier
-          lake build Girth.TrainCrossStandardCoreWagon
-          lake build Girth.TrainCrossStandardCoreIncidence
-          lake build Girth.TrainActualStandardCoreIncidence
-          lake build Girth.TrainSharedSupportInteriorCompatibility Girth.TrainBigCyclePhysicalIncidence Girth.TrainSelectedCycleBoundaryIncidence Girth.TrainSelectedCycleVertexCoreBoundary Girth.TrainSelectedCycleStandardCoreWagon Girth.TrainSelectedCycleTwoStandardVertex Girth.TrainSelectedCycleCoreCoreVertex Girth.TrainSelectedCycleTwoStandardWagon Girth.TrainSelectedPictureOutputLabelCover Girth.TrainSelectedPictureCanonicalEdgeSource Girth.TrainMinimalCyclicOwners
-          lake build Girth.TrainPhysicalParameterBridgeComposite
-          lake build Girth.TrainActualWagonCarrierGeometry Girth.TrainActualPhysicalParameterComposite
-          lake build Girth.TrainActualPhysicalEdgeCarrierEval Girth.TrainActualSupportParameterTransport
-          lake build Girth.TrainUniversalTopOrderOne
-      - name: Check theorem axioms
-        run: |
-          set -euo pipefail
-          # Preserve every previous audit; keep additions in one explicit list.
-          checks=(
-            CheckAxioms CheckForestLocalShortFamily CheckSuccessorBoundary CheckWagonQuotients CheckTaggedQuotients
-            CheckTrainCrossStandardCoreWagon
-            CheckTrainCrossStandardCoreIncidence
-            CheckTrainActualStandardCoreIncidence
-            CheckTrainSharedSupportInteriorCompatibility CheckTrainBigCyclePhysicalIncidence
-            CheckTrainSelectedCycleBoundaryIncidence CheckTrainSelectedCycleVertexCoreBoundary CheckTrainSelectedCycleStandardCoreWagon CheckTrainSelectedCycleTwoStandardVertex CheckTrainSelectedCycleCoreCoreVertex CheckTrainSelectedCycleTwoStandardWagon CheckTrainSelectedPictureOutputLabelCover CheckTrainSelectedPictureCanonicalEdgeSource CheckTrainMinimalCyclicOwners
-            CheckPhysicalParameterComposite CheckActualPhysicalParameter CheckActualSupportTransport
-            CheckUniversalTopOrderOne CheckTrainBigCycleOrderOne CheckTrainBigCycleTwoWagon
-            CheckTrainLengthTwoBridgeLemma CheckTrainBigCycleOrderBudget CheckTrainSimultaneousSupreme
-            CheckTrainBoundaryPairCoreSupport CheckTrainBoundaryPairSharedOldACopy
-            CheckTrainPhysicalAEdgeCoreBoundary CheckTrainSupremeVertexCoverage
-            CheckTrainFourOccurrenceWagonCycle CheckTrainFourWagonFrameBuilder
-            CheckTrainStandardPictureSystemGirth CheckTrainStandardPictureFourWagonBoundary
-            CheckTrainActualTwoStandardDesignatedBlock CheckTrainSelectedPictureTwoStandard
-            CheckTrainSelectedPictureOutputIncidence CheckTrainSelectedPictureContainedBlocks CheckTrainShortReplacementGlobal CheckTrainSingleShortReplacement CheckTrainShortReplacementNeighbour CheckTrainShortOnlyPlanGlobal CheckTrainFreshLongWagon CheckTrainLongBoundaryCollision CheckTrainFreshWagonA2 CheckTrainRetainedEdgeBoundary CheckTrainCheckedCycleWord CheckTrainInsertedConnectorNodup CheckTrainExpandedWordChain CheckTrainPlanBlockChain CheckTrainPlanGlobalAssembly CheckTrainPlanCyclicWrap CheckTrainOutputA1Length CheckTrainComposeLongBridges CheckTrainSupremeLabelProvenance CheckTrainTwoOccurrenceMixedLong CheckTrainAllLengthPlanGlobal CheckTrainThreeWagonCycleAcceptability CheckTrainTwoLongOutputAccept CheckTrainTwoPlanOutputAccept CheckTrainA3ContactTransfer CheckTrainA2ContactTransfer CheckTrainOutputOldPos CheckTrainOutputWagonOrigin CheckTrainOptionalFreshSuccessor CheckTrainOptionalFreshCyclic CheckTrainOldWagonNoInsertion CheckTrainOptionalOldSuccessor CheckTrainOptionalOldCyclic CheckTrainOutputA3SplitReduction CheckTrainLiteralOldPosA3 CheckTrainOptionalOldHeadCyclic CheckTrainLiteralOldPosHead CheckTrainLiteralOutputA2 CheckTrainStrictPlanAcceptability CheckTrainOrderOnePlanAcceptability CheckTrainShortOnlyLiteralAcceptability CheckTrainThreeWordCycle CheckTrainTwoOccurrencePlanGlobal CheckTrainOptionalKindOrder CheckTrainOptionalKindChain CheckTrainCyclicListOrder CheckTrainFinCyclicOrder CheckTrainPhysicalKindWord CheckTrainLiteralMixedOrder CheckTrainStrictPlanComplete CheckTrainArbitraryLongA3 CheckTrainArbitraryLongA2Geometry CheckTrainArbitraryDesignatedOrigin CheckTrainArbitraryLongOrder CheckTrainArbitraryGeometricA2 CheckTrainSameConnectorSupremeTransfer CheckTrainArbitraryLiteralA2 CheckTrainOptionalFreshnessConverse CheckTrainFreshLocalSupreme CheckTrainLiteralPieceLabels CheckTrainOldPosPieceTransfer CheckTrainFirstLongNeighbours CheckTrainTwoStageLongComposition CheckTrainWagonBoundaryShort CheckTrainNoInsertionStageCompose CheckTrainArbitrarySupremeComposition CheckTrainArbitraryLegalReplacementComplete CheckTrainArbitraryConnectorNodup CheckTrainArbitraryPieceIncidence CheckTrainArbitraryEdgeBoundaryCollision CheckTrainArbitraryBoundaryLabels CheckTrainArbitraryWordAssembly CheckTrainArbitraryReplacementComplete CheckTrainSegmentedCycleOrder CheckTrainSelectedCycleMinimalOwners CheckTrainSelectedCycleGeometricOwners CheckTrainCyclicOwnerRuns CheckTrainCyclicOwnerAbsorption CheckTrainSelectedCycleGeometricVertex CheckTrainSelectedCycleGeometricWagon CheckTrainCyclicOwnerFourCases CheckTrainSelectedCycleGeometricCutIncidence CheckTrainForeignDesignatedSupport CheckTrainCyclicCutIndices CheckTrainCyclicRunGaps CheckTrainCyclicRunWrap
-            CheckTrainFullSystemParameter CheckTrainAllAdjacentParameters
-            CheckTrainAllAdjacentParametersBridge CheckTrainWagonStrongInduced
-            CheckTrainWagonPairUniqueness CheckTrainWagonThreeLink CheckTrainActualWagonThreeLink
-            CheckTrainActualTwoStandardEdgeBlock CheckTrainActualTwoStandardEdgeBlockObstruction
-            CheckTrainTwoCopyCommonWagon CheckTrainReplacementOrder CheckTrainTwoCopyVertexProbe
-            CheckTrainShortReplacement CheckTrainFillingCarrierInvariant CheckTrainTwoCopyLongProbe
-            CheckTrainTwoCopyLocalSymmetry CheckTrainTwoCopyGlobalFirst CheckTrainTwoCopyGlobalSecond
-            CheckTrainTwoCopyIndexedSymmetry CheckTrainOrderOneGlobalBridge
-          )
-          for check in "${checks[@]}"; do
-            lake env lean "${check}.lean" | tee "${check}.log"
-            python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
+          shopt -s nullglob
+          checks=(Check*.lean)
+          test "${#checks[@]}" -gt 0
+          for source in "${checks[@]}"; do
+            log="${source%.lean}.log"
+            lake env lean "$source" | tee "$log"
+            python3 scripts/check_axioms.py "$log" "$source"
           done
       - name: Run finite boundary regressions
         run: |
