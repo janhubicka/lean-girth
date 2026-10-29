@@ -1,3 +1,4 @@
 import Girth.TrainActualPositiveCutReplacementAssembly
 
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_standard_contained_replacement_supreme
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_legal_standard_replacement_supreme

@@ -108,5 +108,50 @@ theorem attachedSelectedPicture_standard_contained_replacement_supreme
     hPullback kZ ⟨hkZ, zPieces, hzValid, hzLegal⟩
   exact K.hasSimultaneousSupreme_of_hasSupremeAt (Out) kK hKSup
 
+/-- Length-two and order-one interface. A literal legal cycle must
+already have been built, and a designated occurrence must survive
+when the source twice-order is two. Neither is automatic here. -/
+theorem attachedSelectedPicture_legal_standard_replacement_supreme
+    [Finite UA]
+    (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
+      AStrong A D (copyCarrier b))
+    (hTwo : ∀ q : Selected, ∃ r s : OldEdge,
+      r ≠ s ∧ r.1 ⊆ copyCarrier q.1.embedding ∧
+        s.1 ⊆ copyCarrier q.1.embedding)
+    (hOldStrong : AStrong A C.toRelStructure S)
+    (hCoreStrong : ∀ j : I, AStrong A R (copyCarrier (f j)))
+    {n r q : ℕ} (K : (Out).BigCycle n) (Z : (Out).BigCycle r)
+    (hAccept : K.Acceptable)
+    (hLinear : (Out).LinearPretrain)
+    (hOrder : K.twiceOrder ≤ 2 * q)
+    (hOldSupreme : (Old).SupremeCycleBound q)
+    (i : I)
+    (pieces : Fin n → TrainSupremePiece ActualEdge (Quotient ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μ)))
+    (hGeom : K.LocalLongA2Geometry (Out) pieces)
+    (hWord : List.ofFn (fun j : Fin r =>
+      (Z.label j, Z.connector j)) = K.resultWord (Out) pieces)
+    (hRetain : K.twiceOrder = 2 →
+      ∃ j : Fin r, (Out).designated (Z.label j))
+    (hContained : ∀ j : Fin r,
+      (Out).carrier (Z.label j) ⊆ copyCarrier (Std i)) :
+    K.HasSimultaneousSupreme := by
+  obtain ⟨hZAccept, hZOrder, hPullback⟩ :=
+    K.arbitrary_legal_replacement_all_conclusions
+      (Out) Z hAccept hLinear pieces hGeom hWord hRetain
+  obtain ⟨owner, hAllowed, hZero⟩ :=
+    attachedSelectedPicture_geometric_zero_of_one_standard
+      A hA B D C family selected e R f T U hShared μ Z i hContained
+  have hZBound : Z.twiceOrder ≤ 2 * q := by
+    rw [hZOrder]
+    exact hOrder
+  obtain ⟨kZ, hkZ, zPieces, hzValid, hzLegal⟩ :=
+    attachedSelectedPicture_zero_cut_supreme_of_old_bound
+      A hA B D C family selected e R f T U hShared hRel μ
+      hStrong hTwo hOldStrong hCoreStrong Z hZAccept
+      hOldSupreme hZBound owner hAllowed hZero
+  obtain ⟨kK, _hLabel, hKSup⟩ :=
+    hPullback kZ ⟨hkZ, zPieces, hzValid, hzLegal⟩
+  exact K.hasSimultaneousSupreme_of_hasSupremeAt (Out) kK hKSup
+
 end ActualPositiveCutReplacementAssembly
 end StructuralRamsey.Girth
