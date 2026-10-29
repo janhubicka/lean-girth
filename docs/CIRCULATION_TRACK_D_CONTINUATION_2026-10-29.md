@@ -6,6 +6,9 @@ merge commit `b9e86cdb75356b68e87af7504b213c90d83850ce`.
 Current validation results are recorded in [PR #671](https://github.com/janhubicka/lean-girth/pull/671).
 The circulation-only contracts in #663/#664 and the audit #665 still apply.
 
+The continuation adds 17 proof modules and 97 audited declarations. The
+complete D gate now audits 233 distinct declarations in 37 Check files.
+
 ## Construction obligations discharged
 
 ### Initial tail system girth
@@ -79,6 +82,43 @@ remaining-profile invariant. Its initial theorem and its `.tail` law
 discharge both initial readiness and the empty-profile drop premise.
 Preservation through a nontrivial attachment remains separate.
 
+### One-unit refinement girth gain and actual forgetting
+
+`LabelledBergeCycle.child_constant_of_singleton_intersections` proves the
+one-level gain. If a cycle of length at most `g+1` used a different child
+at every position, the two distinct boundary vertices of an occurrence
+edge would lie in the same permitted part. Injectivity of the part map on
+that physical edge contradicts this. Hence fewer than the cycle's number
+of child labels occur, so at most `g` labels occur. The labelled child-cut
+bound `>g` and the existing incidence compression force the child word
+to be constant.
+
+`FirstWagonRefinement.girthGT_firstWagon` iterates that localization from
+the shifted original first level down to actual bottom equality. The
+result is ordinary girth `>g+1` on the complete edge class of each original
+first wagon, for `g >= 2`. It concerns the edge class, not every possible
+A-copy in the relational structure induced on the wagon's vertex carrier.
+The global corollary explicitly requires the original first relation to
+be universal. `actualASupport_part_injOn` derives the necessary physical
+edge transversality from the partite system and irreducibility of A, for
+every ambient A-edge; no extra projection, rigidity or finiteness input is
+needed.
+
+The cut-forgetting construction retains bottom at zero and sends a positive
+coarse level `mu` to fine level `mu + extraCuts`. The original shift map
+cannot be used at zero for an arbitrary refinement. The resulting actual
+train retains every edge and the exact relations at all kept levels.
+Explicit fine singleton-parameter and labelled-child-girth data reconstruct
+a `FirstWagonRefinement` of that coarse train, and forgetting an existing
+refinement recovers every original relation, including bottom.
+
+These are geometric theorems with natural lower-cut inputs. They do not
+derive labelled cut girth from a recursive output's `FullSystemGirthGT`.
+That system-to-labelled-cut converse is still required to instantiate the
+fine child-girth data from the recursive output. For nonempty tails, a
+retained original first-cut girth bound is also needed to localize cycles
+that span more than one original first wagon.
+
 ### Output ordinary girth and local strongness
 
 `girthGT_of_finiteMixedForestThrough` proves that a mixed invariant testing
@@ -99,9 +139,11 @@ Only the cutoff-two local constructor supplies strongness separately.
 After the increment, the new theorem returns both the complete mixed
 forest through `m` and ordinary output support girth `>m`.
 
-The core hypothesis remains `GirthGT ... m`. It is not derived from a
-local mixed forest through `m-1`; the required one-unit gain is still part
-of the refinement-forgetting construction.
+The increment's core hypothesis remains `GirthGT ... m`. It is not derived
+from a local mixed forest through `m-1` alone. The new refinement gain
+supplies it from actual refinement and transversality data in the global
+first-wagon case, by setting `g = m-1` for `m > 2`. Producing that refined
+recursive core, and the nonempty-tail localization input, remain separate.
 
 ### Concrete base Ramsey geometry
 
@@ -170,7 +212,7 @@ from the multi-edge cutoff-two construction.
 | Initial picture | Finite stage, all initial tail bounds, complete active support, actual refinements and initial readiness are proved from natural target hypotheses. |
 | One-edge target | A complete finite order stage and selected arrow are constructed. |
 | General cutoff-two base | Selected EHN Ramsey/mixed-two geometry is constructed; the full supported, parameter-compatible partite/train package and output order completion still require assembly. |
-| Larger-cutoff local operator | Construct the finite refined recursive witness, forget/collapse refinements, prove core ordinary girth `>m`, and preserve the remaining fibres' concrete refinements. |
+| Larger-cutoff local operator | Actual cut forgetting and the one-unit local/universal-first girth gain are proved. Construct the recursive output refinement, derive its labelled child-cut bounds from system girth, globalize across first wagons for nonempty tails, and preserve the remaining fibres' concrete refinements. |
 | Nonempty-tail cutoff two | Construct uniform first wagons, contraction to the coloured edge type, colour-word selection, filling/scattering, and all tail/parameter preservation. |
 | Fixed forest-to-order conversion | The forest-cycle theorem and source-order segment budget are proved; geometric minimum segmentation, mixed-singleton elimination, old-standard supremeness, and legal physical pullback still require A/B/C integration. |
 | Universal recursion | The well-founded assembly is checked; instantiate its actual witness families and every geometric operator. No unconditional universal train Ramsey theorem is claimed. |

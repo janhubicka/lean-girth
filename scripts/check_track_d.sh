@@ -47,6 +47,9 @@ checks=(
   CheckTrainRecursiveInitialTargetStage
   CheckTrainRecursiveReadyConstruction
   CheckTrainRecursiveOneEdgeTarget
+  CheckTrainRecursiveRefinementStepGirth
+  CheckTrainRecursiveRefinementGirthGain
+  CheckTrainRecursiveRefinementForget
 )
 
 for check in "${checks[@]}"; do
