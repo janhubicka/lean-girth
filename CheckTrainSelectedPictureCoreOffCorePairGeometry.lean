@@ -1,0 +1,5 @@
+import Girth.TrainSelectedPictureCoreOffCorePairGeometry
+
+#check @StructuralRamsey.Girth.attachedSelectedPicture_core_offCore_blocks_parent_eq
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_offCore_blocks_parent_eq

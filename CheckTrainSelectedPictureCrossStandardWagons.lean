@@ -1,0 +1,5 @@
+import Girth.TrainSelectedPictureCrossStandardWagons
+
+#check @StructuralRamsey.Girth.generatedActualASupportTrain_cross_standard_wagon_unique
+
+#print axioms StructuralRamsey.Girth.generatedActualASupportTrain_cross_standard_wagon_unique

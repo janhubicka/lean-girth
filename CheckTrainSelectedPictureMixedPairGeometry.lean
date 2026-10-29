@@ -1,0 +1,7 @@
+import Girth.TrainSelectedPictureMixedPairGeometry
+
+#check @StructuralRamsey.Girth.sharedWitness_copy_wagon_pair_shared_edges
+#check @StructuralRamsey.Girth.attachedSelectedPicture_standard_core_blocks_parent_eq
+
+#print axioms StructuralRamsey.Girth.sharedWitness_copy_wagon_pair_shared_edges
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_standard_core_blocks_parent_eq

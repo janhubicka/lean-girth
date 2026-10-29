@@ -1,0 +1,129 @@
+name: Track B wagon geometry
+
+on:
+  push:
+    paths:
+      - 'Girth/TrainSelectedPicture*PairGeometry.lean'
+      - 'CheckTrainSelectedPicture*PairGeometry.lean'
+      - 'Girth/TrainSelectedPictureCrossStandardWagons.lean'
+      - 'CheckTrainSelectedPictureCrossStandardWagons.lean'
+      - 'Girth/TrainSelectedPictureCoreVertexLocalization.lean'
+      - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
+      - 'Girth/TrainTwoWagonVertexProbe.lean'
+      - 'CheckTrainTwoWagonVertexProbe.lean'
+      - 'scripts/check_track_b_wagon_geometry.py'
+      - 'scripts/check_track_b_off_core_geometry.py'
+      - '.github/workflows/track-b-wagon-geometry.yml'
+  pull_request:
+    paths:
+      - 'Girth/TrainSelectedPicture*PairGeometry.lean'
+      - 'CheckTrainSelectedPicture*PairGeometry.lean'
+      - 'Girth/TrainSelectedPictureCrossStandardWagons.lean'
+      - 'CheckTrainSelectedPictureCrossStandardWagons.lean'
+      - 'Girth/TrainSelectedPictureCoreVertexLocalization.lean'
+      - 'CheckTrainSelectedPictureCoreVertexLocalization.lean'
+      - 'Girth/TrainTwoWagonVertexProbe.lean'
+      - 'CheckTrainTwoWagonVertexProbe.lean'
+      - 'scripts/check_track_b_wagon_geometry.py'
+      - 'scripts/check_track_b_off_core_geometry.py'
+      - '.github/workflows/track-b-wagon-geometry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: track-b-wagon-geometry-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      LEAN_NUM_THREADS: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Cache Lean toolchain
+        uses: actions/cache@v5
+        with:
+          path: ~/.elan/toolchains
+          key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
+      - name: Restore dependency cache
+        id: dependencies
+        uses: actions/cache/restore@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-track-b-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+      - name: Install elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download required Mathlib cache
+        run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+      - name: Build Track B from the checked-out sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD | tee track-b-revision.txt
+          # Dependency objects may be cached; project proof objects must be fresh.
+          rm -rf .lake/build
+          lake build \
+            Girth.TrainSelectedPictureWagonPairGeometry \
+            Girth.TrainSelectedPictureCorePairGeometry \
+            Girth.TrainSelectedPictureMixedPairGeometry \
+            Girth.TrainSelectedPictureCrossStandardWagons \
+            Girth.TrainSelectedPictureOffCorePairGeometry \
+            Girth.TrainSelectedPictureCoreVertexLocalization \
+            Girth.TrainTwoWagonVertexProbe \
+            Girth.TrainSelectedPictureCoreOffCorePairGeometry
+      - name: Audit every Track B export
+        shell: bash
+        run: |
+          set -euo pipefail
+          for check in \
+            CheckTrainSelectedPictureWagonPairGeometry \
+            CheckTrainSelectedPictureCorePairGeometry \
+            CheckTrainSelectedPictureMixedPairGeometry \
+            CheckTrainSelectedPictureCrossStandardWagons \
+            CheckTrainSelectedPictureOffCorePairGeometry \
+            CheckTrainSelectedPictureCoreVertexLocalization \
+            CheckTrainTwoWagonVertexProbe \
+            CheckTrainSelectedPictureCoreOffCorePairGeometry; do
+            test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
+            lake env lean "${check}.lean" | tee "${check}.log"
+            python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
+          done
+      - name: Run finite geometry and boundary regressions
+        run: |
+          python3 scripts/check_track_b_wagon_geometry.py
+          python3 scripts/check_track_b_off_core_geometry.py
+          python3 scripts/check_boundary_transport.py
+          python3 scripts/check_boundary_girth.py
+          python3 scripts/check_order_one_bridge.py
+          python3 scripts/check_output_connector_layout.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: track-b-validation
+          retention-days: 7
+          path: |
+            track-b-revision.txt
+            CheckTrainSelectedPictureWagonPairGeometry.log
+            CheckTrainSelectedPictureCorePairGeometry.log
+            CheckTrainSelectedPictureMixedPairGeometry.log
+            CheckTrainSelectedPictureCrossStandardWagons.log
+            CheckTrainSelectedPictureOffCorePairGeometry.log
+            CheckTrainSelectedPictureCoreVertexLocalization.log
+            CheckTrainTwoWagonVertexProbe.log
+            CheckTrainSelectedPictureCoreOffCorePairGeometry.log
+      - name: Save compiled dependencies for proof iteration
+        if: always() && steps.dependencies.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: .lake
+          key: ${{ steps.dependencies.outputs.cache-primary-key }}
