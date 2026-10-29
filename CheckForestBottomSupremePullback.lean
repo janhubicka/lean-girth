@@ -1,0 +1,5 @@
+import Girth.ForestBottomSupremePullback
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_false_of_parent_injective
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_hasSupremeAt_pullback_sameConnectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_hasSimultaneousSupreme_pullback_sameConnectors

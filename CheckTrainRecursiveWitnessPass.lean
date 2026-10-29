@@ -1,0 +1,15 @@
+import Girth.TrainRecursiveWitnessPass
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.mapDesignated_id
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.mapDesignated_comp
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.TransitionEmbedding.id
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.TransitionEmbedding.comp
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.PictureStep.pictureProperty
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.DesignatedArrow.arrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.DesignatedArrow.strongTrain
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.pictureStep_self_of_subsingleton_physical_fibre
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialPicture_lifts
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.finitePass
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.allProjections
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.designatedArrow_of_canonicalOn
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyPass

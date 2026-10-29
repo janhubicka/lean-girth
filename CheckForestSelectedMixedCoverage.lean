@@ -1,0 +1,5 @@
+import Girth.ForestSelectedMixedCoverage
+
+#print axioms StructuralRamsey.Girth.SelectedBorACoversIrreducibles.forget
+#print axioms StructuralRamsey.Girth.selectedBorACoversIrreducibles_partiteAttachment
+#print axioms StructuralRamsey.Girth.activeSubsystem_aGenerated_of_selectedMixedCoverage
