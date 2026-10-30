@@ -57,10 +57,9 @@ theorem LabelledBergeCycle.outside_wagon_no_second_from_zero
     have hEq : C.vertex z = C.vertex o :=
       hLinear p (C.label o) (hOutside o)
         ⟨hp0, hV0o⟩ ⟨hV1p, hV1o⟩
-    exact (fun h : z ≠ o => h (C.vertex_injective hEq)) (by
-      intro h
-      have := congrArg Fin.val h
-      simp [z, o] at this)
+    have heq : z = o := C.vertex_injective hEq
+    have hv := congrArg Fin.val heq
+    simp [z, o] at hv
   · by_cases hkLast : k + 1 = C.length
     · let last : Fin C.length := ⟨C.length - 1, by omega⟩
       have hlast : k = C.length - 1 := by omega
