@@ -1,0 +1,5 @@
+import Girth.TrainSupremeBoundaryEdgeCoverage
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_copy_incident_edge_at_every_connector
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOneData_copyIncidenceEdgeGenerated
+#print axioms StructuralRamsey.Girth.sharedWitness_supreme_shared_edge_at_every_connector

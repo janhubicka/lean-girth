@@ -1,0 +1,3 @@
+import Girth.TrainActualSharedCoreEdgeStandard
+
+#print axioms StructuralRamsey.Girth.actualSharedCoreEdge_carrier_subset_standard
