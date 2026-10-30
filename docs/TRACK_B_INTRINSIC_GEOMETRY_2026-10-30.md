@@ -1,9 +1,10 @@
 # Track B: intrinsic and recursive-stage geometry
 
 Original geometry base: `7813765c03d2709ab3941d6ab02383e25688e438`.
-Integrated publication base: `a8d68df5efdd2f5d9550f87ca8d3cd650db223ca`,
-including the subsequently merged Track A positive-cut interfaces and Track D
-two-cut consequence. Their sources are retained unchanged.
+Integrated publication base: `d5257e9326f70804adf6f12e8f09702aacf24b6c`,
+including the subsequently merged Track A positive-cut/source-linearity
+interfaces and Track D two-cut and short-triangle results. Their sources
+are retained unchanged.
 Scope: the circulation manuscript; the appendix is unchanged.
 
 PRs #675, #677 and #679 established complete generated-wagon strongness and
