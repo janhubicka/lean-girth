@@ -30,8 +30,8 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
     (p : I)
     (hp0 : C.vertex ⟨0, by omega⟩ ∈ carrier p)
     (hpk : C.vertex ⟨k, by omega⟩ ∈ carrier p)
-    (hFresh : ∀ t : ℕ, 1 ≤ t → t ≤ k →
-      p ≠ C.label ⟨t, by omega⟩) :
+    (hFresh : ∀ t : Fin C.length, 1 ≤ t.val → t.val ≤ k →
+      p ≠ C.label t) :
     ∃ B : LabelledBergeCycle carrier,
       B.length = k + 1 ∧ B.length < C.length := by
   classical
@@ -61,15 +61,16 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
           simpa only [hLab i hi, hLab j hj] using hij
         have heq := C.label_injective hc
         apply Fin.ext
-        have hv := congrArg Fin.val heq
+        have hv : i.val + 1 = j.val + 1 := by
+          simpa using congrArg Fin.val heq
         omega
       · have hc : C.label ⟨i.val + 1, by omega⟩ = p := by
           simpa only [hLab i hi, hLabLast j hj] using hij
-        exact (hFresh (i.val + 1) (by omega) (by omega) hc.symm).elim
+        exact (hFresh ⟨i.val + 1, by omega⟩ (by omega) (by omega) hc.symm).elim
     · by_cases hj : j.val < k
       · have hc : p = C.label ⟨j.val + 1, by omega⟩ := by
           simpa only [hLabLast i hi, hLab j hj] using hij
-        exact (hFresh (j.val + 1) (by omega) (by omega) hc).elim
+        exact (hFresh ⟨j.val + 1, by omega⟩ (by omega) (by omega) hc).elim
       · apply Fin.ext
         have hival := i.isLt
         have hjval := j.isLt
@@ -84,20 +85,23 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
           simpa only [hVert i hi, hVert j hj] using hij
         have heq := C.vertex_injective hc
         apply Fin.ext
-        have hv := congrArg Fin.val heq
+        have hv : i.val + 1 = j.val + 1 := by
+          simpa using congrArg Fin.val heq
         omega
       · have hc : C.vertex ⟨i.val + 1, by omega⟩ =
             C.vertex ⟨0, by omega⟩ := by
           simpa only [hVert i hi, hVertLast j hj] using hij
         have heq := C.vertex_injective hc
-        have hv := congrArg Fin.val heq
+        have hv : i.val + 1 = 0 := by
+          simpa using congrArg Fin.val heq
         omega
     · by_cases hj : j.val < k
       · have hc : C.vertex ⟨0, by omega⟩ =
             C.vertex ⟨j.val + 1, by omega⟩ := by
           simpa only [hVertLast i hi, hVert j hj] using hij
         have heq := C.vertex_injective hc
-        have hv := congrArg Fin.val heq
+        have hv : 0 = j.val + 1 := by
+          simpa using congrArg Fin.val heq
         omega
       · apply Fin.ext
         have hival := i.isLt
@@ -158,7 +162,10 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
         have hzero : ((⟨0, by omega⟩ : Fin (k + 1)).val < k) := by
           change 0 < k
           omega
-        simpa [hVertLast i hi, hsucc, hLab _ hzero] using hc
+        have hzlabel : lab (⟨0, by omega⟩ : Fin (k + 1)) =
+            C.label (⟨1, by omega⟩ : Fin C.length) :=
+          hLab (⟨0, by omega⟩ : Fin (k + 1)) hzero
+        simpa [hVertLast i hi, hsucc, hzlabel] using hc
   exact ⟨B, rfl, hkn⟩
 
 end StructuralRamsey.Girth
