@@ -1,4 +1,4 @@
-import Girth.LabelledWagonCutRestriction
+import Girth.TrainSystemCutGirthTwo
 import Mathlib.Data.Nat.Find
 import Mathlib.Tactic
 
@@ -63,5 +63,24 @@ theorem LabelledBergeCycle.no_shorter_of_global_minimal
     ¬ ∃ B : LabelledBergeCycle carrier, B.length < C.length := by
   rintro ⟨B, hShort⟩
   exact (Nat.not_lt_of_ge (hMinimal B)) hShort
+
+/-- In a pairwise-linear family, the globally shortest labelled
+cycle has length at least three: a labelled length-two cycle would
+give two different wagon labels sharing two distinct vertices. -/
+theorem LabelledGirthGT.exists_minimal_three_of_failure
+    (carrier : I → Set V) (q : ℕ)
+    (hLinear : ∀ a b : I, a ≠ b →
+      (carrier a ∩ carrier b).Subsingleton)
+    (hFail : ¬ LabelledGirthGT carrier q) :
+    ∃ C : LabelledBergeCycle carrier,
+      3 ≤ C.length ∧ C.length ≤ q ∧
+      ∀ B : LabelledBergeCycle carrier, C.length ≤ B.length := by
+  obtain ⟨C, hBudget, hMin⟩ :=
+    LabelledGirthGT.exists_global_minimal_cycle_of_failure carrier q hFail
+  have hTwo : LabelledGirthGT carrier 2 :=
+    labelledGirthGT_two_of_pairwiseSubsingleton carrier hLinear
+  have hNotTwo : ¬ C.length ≤ 2 :=
+    fun hLength => hTwo ⟨C, hLength⟩
+  exact ⟨C, by omega, hBudget, hMin⟩
 
 end StructuralRamsey.Girth
