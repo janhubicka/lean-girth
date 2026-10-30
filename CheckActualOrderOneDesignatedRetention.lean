@@ -1,0 +1,5 @@
+import Girth.TrainActualOrderOneDesignatedRetention
+
+#print axioms StructuralRamsey.Girth.trainCyclicPred_eq_succ_of_two
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replace_physical_two_of_other_designated
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_physical_two_other_designated
