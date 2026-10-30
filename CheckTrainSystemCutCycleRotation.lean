@@ -1,0 +1,7 @@
+import Girth.TrainSystemCutCycleRotation
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.rotate
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.rotate_length
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.rotate_vertex_zero
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.rotate_label_zero
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.rotate_minimal
