@@ -1,0 +1,5 @@
+import Girth.TrainUntouchedChildGirth
+
+#print axioms StructuralRamsey.Girth.relationalSupportPieces_meet_subsingleton_parts
+#print axioms StructuralRamsey.Girth.untouchedSubcarriers_labelledGirth_of_localForest
+#print axioms StructuralRamsey.Girth.untouchedSubcarriers_labelledGirth_of_finiteMixed

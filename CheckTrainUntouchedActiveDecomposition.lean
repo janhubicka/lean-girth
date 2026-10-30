@@ -1,0 +1,14 @@
+import Girth.TrainUntouchedActiveDecomposition
+
+#print axioms StructuralRamsey.Girth.standardActiveEdge
+#print axioms StructuralRamsey.Girth.standardActiveEdge_carrier
+#print axioms StructuralRamsey.Girth.standardActiveEdge_eq_physical
+#print axioms StructuralRamsey.Girth.standardActiveEdge_train_iff
+#print axioms StructuralRamsey.Girth.activePhysicalEdge_has_projectedCarrier
+#print axioms StructuralRamsey.Girth.untouchedProjectedCopy_not_core
+#print axioms StructuralRamsey.Girth.untouchedActiveEdge_private_vertex
+#print axioms StructuralRamsey.Girth.standardActiveEdge_pair_injective
+#print axioms StructuralRamsey.Girth.standardActiveEdge_pair_surjective
+#print axioms StructuralRamsey.Girth.untouchedActiveEdgeEquiv
+#print axioms StructuralRamsey.Girth.standardActiveCarriers_inter_part
+#print axioms StructuralRamsey.Girth.standardActiveCarriers_inter_single_part
