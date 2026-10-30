@@ -1,0 +1,4 @@
+import Girth.TrainEdgeLabelSupremeShort
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_piece_short_of_edge_label
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_short_of_edge_label
