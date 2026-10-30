@@ -1,0 +1,4 @@
+import Girth.TrainActualCoreSingletonConsecutiveCuts
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_of_adjacent_cuts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_singleton_consecutive_cut_indices
