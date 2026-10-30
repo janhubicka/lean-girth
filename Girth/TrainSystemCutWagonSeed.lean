@@ -61,7 +61,7 @@ def labelledWagonCycle.toWagonSeedBigCycle
   adjacent_ne := by
     intro i he
     have hh : C.label i = C.label (cyclicSucc i) := Sum.inl.inj he
-    exact (D.fin_ne_cyclicSucc C.hlength i) (C.label_injective hh)
+    exact (fin_ne_cyclicSucc C.hlength i) (C.label_injective hh)
   connector_injective := by
     intro i j h
     exact C.vertex_injective (Sum.inl.inj h)
