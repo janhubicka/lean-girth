@@ -1,0 +1,3 @@
+import Girth.TrainActualSupremeSuccessorEdgeDescent
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_successor_core_edge_descent
