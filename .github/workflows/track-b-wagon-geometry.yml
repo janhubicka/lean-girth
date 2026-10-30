@@ -29,6 +29,18 @@ on:
       - 'CheckTrainSelectedPictureEdgeLinearity.lean'
       - 'Girth/TrainSelectedPictureLinearPretrain.lean'
       - 'CheckTrainSelectedPictureLinearPretrain.lean'
+      - 'Girth/TrainVertexImageSystemGirth.lean'
+      - 'CheckTrainVertexImageSystemGirth.lean'
+      - 'Girth/TrainEndpointGeometry.lean'
+      - 'CheckTrainEndpointGeometry.lean'
+      - 'Girth/TrainActiveGluingWitness.lean'
+      - 'CheckTrainActiveGluingWitness.lean'
+      - 'Girth/TrainFullGirthCopyStrongness.lean'
+      - 'CheckTrainFullGirthCopyStrongness.lean'
+      - 'Girth/TrainSelectedPictureIntrinsicGeometry.lean'
+      - 'CheckTrainSelectedPictureIntrinsicGeometry.lean'
+      - 'Girth/TrainSelectedPictureStageGeometry.lean'
+      - 'CheckTrainSelectedPictureStageGeometry.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -60,6 +72,18 @@ on:
       - 'CheckTrainSelectedPictureEdgeLinearity.lean'
       - 'Girth/TrainSelectedPictureLinearPretrain.lean'
       - 'CheckTrainSelectedPictureLinearPretrain.lean'
+      - 'Girth/TrainVertexImageSystemGirth.lean'
+      - 'CheckTrainVertexImageSystemGirth.lean'
+      - 'Girth/TrainEndpointGeometry.lean'
+      - 'CheckTrainEndpointGeometry.lean'
+      - 'Girth/TrainActiveGluingWitness.lean'
+      - 'CheckTrainActiveGluingWitness.lean'
+      - 'Girth/TrainFullGirthCopyStrongness.lean'
+      - 'CheckTrainFullGirthCopyStrongness.lean'
+      - 'Girth/TrainSelectedPictureIntrinsicGeometry.lean'
+      - 'CheckTrainSelectedPictureIntrinsicGeometry.lean'
+      - 'Girth/TrainSelectedPictureStageGeometry.lean'
+      - 'CheckTrainSelectedPictureStageGeometry.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -126,7 +150,13 @@ jobs:
             Girth.TrainFourLabelWagonFrame \
             Girth.TrainSelectedPictureWagonLinearity \
             Girth.TrainSelectedPictureEdgeLinearity \
-            Girth.TrainSelectedPictureLinearPretrain
+            Girth.TrainSelectedPictureLinearPretrain \
+            Girth.TrainVertexImageSystemGirth \
+            Girth.TrainEndpointGeometry \
+            Girth.TrainActiveGluingWitness \
+            Girth.TrainFullGirthCopyStrongness \
+            Girth.TrainSelectedPictureIntrinsicGeometry \
+            Girth.TrainSelectedPictureStageGeometry
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -149,7 +179,13 @@ jobs:
             CheckTrainFourLabelWagonFrame \
             CheckTrainSelectedPictureWagonLinearity \
             CheckTrainSelectedPictureEdgeLinearity \
-            CheckTrainSelectedPictureLinearPretrain; do
+            CheckTrainSelectedPictureLinearPretrain \
+            CheckTrainVertexImageSystemGirth \
+            CheckTrainEndpointGeometry \
+            CheckTrainActiveGluingWitness \
+            CheckTrainFullGirthCopyStrongness \
+            CheckTrainSelectedPictureIntrinsicGeometry \
+            CheckTrainSelectedPictureStageGeometry; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -187,6 +223,12 @@ jobs:
             CheckTrainSelectedPictureWagonLinearity.log
             CheckTrainSelectedPictureEdgeLinearity.log
             CheckTrainSelectedPictureLinearPretrain.log
+            CheckTrainVertexImageSystemGirth.log
+            CheckTrainEndpointGeometry.log
+            CheckTrainActiveGluingWitness.log
+            CheckTrainFullGirthCopyStrongness.log
+            CheckTrainSelectedPictureIntrinsicGeometry.log
+            CheckTrainSelectedPictureStageGeometry.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
