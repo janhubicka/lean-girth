@@ -1,4 +1,5 @@
 import Girth.TrainSystemCutGirthTwo
+import Girth.TrainBigCycleOrderBudget
 import Girth.TrainCheckedCycleWord
 import Mathlib.Tactic
 
@@ -52,7 +53,7 @@ private theorem fin_ne_cyclicSucc
 
 /-- A labelled cut cycle is a legal big cycle in the AUXILIARY
 wagon-as-designated-copy pretrain. -/
-def labelledWagonCycle.toWagonSeedBigCycle
+def _root_.StructuralRamsey.Girth.LabelledBergeCycle.toWagonSeedBigCycle
     (C : LabelledBergeCycle (fun p : P => {x : V | D.WagonVertex p x})) :
     (D.wagonSeed).BigCycle C.length where
   length_ge_two := C.hlength
@@ -104,7 +105,7 @@ theorem BigCycle.acceptable_of_vertex_only_chordless
 
 /-- The temporary designated-wagon source is acceptable when the
 shortest-cut incidence data have the literal no-chord window. -/
-theorem labelledWagonCycle.wagonSeed_acceptable_of_chordless
+theorem _root_.StructuralRamsey.Girth.LabelledBergeCycle.wagonSeed_acceptable_of_chordless
     (C : LabelledBergeCycle (fun p : P => {x : V | D.WagonVertex p x}))
     (hn : 3 ≤ C.length)
     (hChordless : ∀ p : P, ∃ i : Fin C.length,
@@ -150,7 +151,7 @@ theorem BigCycle.twiceOrder_of_vertex_only
 
 /-- The artificial wagon-cycle seed has order equal to the length of
 the original labelled cut cycle, before any physical expansion. -/
-theorem labelledWagonCycle.wagonSeed_twiceOrder
+theorem _root_.StructuralRamsey.Girth.LabelledBergeCycle.wagonSeed_twiceOrder
     (C : LabelledBergeCycle (fun p : P => {x : V | D.WagonVertex p x})) :
     (C.toWagonSeedBigCycle D).twiceOrder = 2 * C.length := by
   apply (C.toWagonSeedBigCycle D).twiceOrder_of_vertex_only (D.wagonSeed)
