@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutOutsideWagonWindow
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.outside_wagon_no_second_from_zero
