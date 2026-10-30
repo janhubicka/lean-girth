@@ -50,16 +50,55 @@ def designatedLongSingletonCycle :
     fin_cases k <;> fin_cases l <;> simp_all
   left_incident := by
     intro k
-    fin_cases k <;> decide
+    fin_cases k <;> simp [OrderOneData.Incident, OrderOneData.carrier,
+      designatedLongSingletonData]
   right_incident := by
     intro k
-    fin_cases k <;> decide
+    fin_cases k <;> simp [OrderOneData.Incident, OrderOneData.carrier,
+      designatedLongSingletonData]
 
 /-- The abstract source cycle is acceptable; in particular A3
 allows a nonconnector wagon touching two ADJACENT vertex positions. -/
 theorem designatedLongSingletonCycle_acceptable :
     designatedLongSingletonCycle.Acceptable := by
-  decide
+  classical
+  refine ⟨?_, ?_, ?_⟩
+  · intro _
+    refine ⟨(0 : Fin 3), ?_⟩
+    simp [OrderOneData.designated, designatedLongSingletonCycle]
+  · constructor
+    · intro j p hW _ _
+      fin_cases j <;> simp [designatedLongSingletonCycle] at hW
+    · intro j p x y hW _ _ _ _ _ _
+      fin_cases j <;> simp [designatedLongSingletonCycle] at hW
+  · intro p _hFresh
+    fin_cases p
+    · refine ⟨(0 : Fin 3), ?_⟩
+      intro j hj
+      fin_cases j
+      · exact Or.inl rfl
+      · exact Or.inr (by decide)
+      · rcases hj with ⟨x, hx, edge, he, hxEdge⟩
+        have hx2 : x = (2 : Fin 3) := by
+          simpa [designatedLongSingletonCycle] using
+            Sum.inl_injective hx.symm
+        subst x
+        fin_cases edge <;>
+          simp [designatedLongSingletonData, OrderOneData.parent,
+            OrderOneData.edgeCarrier] at he hxEdge
+    · refine ⟨(1 : Fin 3), ?_⟩
+      intro j hj
+      fin_cases j
+      · rcases hj with ⟨x, hx, edge, he, hxEdge⟩
+        have hx0 : x = (0 : Fin 3) := by
+          simpa [designatedLongSingletonCycle] using
+            Sum.inl_injective hx.symm
+        subst x
+        fin_cases edge <;>
+          simp [designatedLongSingletonData, OrderOneData.parent,
+            OrderOneData.edgeCarrier] at he hxEdge
+      · exact Or.inl rfl
+      · exact Or.inr (by decide)
 
 /-- Occurrence 1 has a genuine LONG replacement from designated
 occurrence 0, using two different edges with the same parent wagon. -/
@@ -67,7 +106,22 @@ theorem designatedLongSingletonCycle_long_piece :
     designatedLongSingletonCycle.LongValid
       designatedLongSingletonData (0 : Fin 3) (1 : Fin 3)
       (0 : Fin 3) (0 : Fin 2) (1 : Fin 3) := by
-  decide
+  refine ⟨(0 : Fin 3), (1 : Fin 3), ?_, ?_, ?_, ?_,
+      ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · decide
+  · decide
+  · simp [OrderOneData.edges, designatedLongSingletonData]
+  · simp [OrderOneData.edges, designatedLongSingletonData]
+  · decide
+  · decide
+  · decide
+  · simp [designatedLongSingletonData]
+  · simp [designatedLongSingletonData]
+  · rintro ⟨edge, h0, h1⟩
+    change (0 : Fin 3) = edge at h0
+    change (1 : Fin 3) = edge at h1
+    have hFalse : (0 : Fin 3) = 1 := h0.trans h1.symm
+    exact (by decide : (0 : Fin 3) ≠ 1) hFalse
 
 /-- The common wagon 0 of that genuine long piece is NOT among
 the source cycle's connectors, all of which are vertices. -/
