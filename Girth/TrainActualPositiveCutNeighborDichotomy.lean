@@ -120,7 +120,7 @@ theorem attachedSelectedPicture_positive_cut_edge_neighbor_or_two_designated
             hTarget b ha hSupreme
       | inl after =>
           right
-          exact ⟨before, after, hb, ha⟩
+          exact ⟨before, after, rfl, rfl⟩
 
 end ActualPositiveCutNeighborDichotomy
 end StructuralRamsey.Girth
