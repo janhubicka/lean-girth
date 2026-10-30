@@ -1,0 +1,5 @@
+import Girth.TrainFullGirthCopyStrongness
+
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_edge_of_pair_of_local_bound
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_edge_of_pair_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.activeGluingWitness_images_aStrong_of_fullSystemGirth

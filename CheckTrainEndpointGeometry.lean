@@ -1,0 +1,12 @@
+import Girth.TrainEndpointGeometry
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_parent_injective
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.top_parent_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_bottom
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_top
+#print axioms StructuralRamsey.Girth.OrderOneData.linearPretrain_of_injective_parent
+#print axioms StructuralRamsey.Girth.OrderOneData.linearPretrain_of_constant_parent
+#print axioms StructuralRamsey.Girth.oldACarrier_edges_inter_subsingleton_of_aLinear
+#print axioms StructuralRamsey.Girth.aLinear_of_oldACarrier_edges_inter_subsingleton
+#print axioms StructuralRamsey.Girth.actualASupport_bottom_wagon_aStrong
+#print axioms StructuralRamsey.Girth.actualASupport_top_wagon_aStrong

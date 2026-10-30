@@ -1,0 +1,8 @@
+import Girth.TrainVertexImageSystemGirth
+
+#print axioms StructuralRamsey.Girth.OrderOneData.vertexImage
+#print axioms StructuralRamsey.Girth.OrderOneData.vertexImage_physicalMap
+#print axioms StructuralRamsey.Girth.OrderOneData.vertexImage_linearPretrain
+#print axioms StructuralRamsey.Girth.OrderOneData.vertexImage_fullSystemGirth
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOneData_linearPretrain_vertexImage
+#print axioms StructuralRamsey.Girth.sharedWitnessOrderOneData_fullSystemGirth_vertexImage

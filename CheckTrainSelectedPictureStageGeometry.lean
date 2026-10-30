@@ -1,0 +1,9 @@
+import Girth.TrainSelectedPictureStageGeometry
+
+#check @StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_allLevels_linear_and_strong
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_allLevels_linear_and_strong
+
+#check @StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_allLevels_linear_and_strong_of_two_le_height
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_allLevels_linear_and_strong_of_two_le_height

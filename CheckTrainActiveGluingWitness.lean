@@ -1,0 +1,11 @@
+import Girth.TrainActiveGluingWitness
+
+#check @StructuralRamsey.Girth.sharedOldACarrierCoreEmbedding_mem_range_iff
+#check @StructuralRamsey.Girth.activeCoreWitness_copyCarrier_eq
+#check @StructuralRamsey.Girth.activeGluingWitnessOrderOneData
+#check @StructuralRamsey.Girth.activeGluingWitnessOrderOneData_eq_shared
+
+#print axioms StructuralRamsey.Girth.sharedOldACarrierCoreEmbedding_mem_range_iff
+#print axioms StructuralRamsey.Girth.activeCoreWitness_copyCarrier_eq
+#print axioms StructuralRamsey.Girth.activeGluingWitnessOrderOneData
+#print axioms StructuralRamsey.Girth.activeGluingWitnessOrderOneData_eq_shared
