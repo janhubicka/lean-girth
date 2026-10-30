@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutSourceLinear
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_of_standard_replacement_of_source_geometry
