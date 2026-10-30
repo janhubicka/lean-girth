@@ -64,7 +64,7 @@ theorem BigCycle.replace_physical_two_of_other_designated
   refine ⟨H, ?_, ?_, ?_⟩
   · exact C.replaceOne_acceptable_of_other_designated
       D k (cyclicSucc k) (Sum.inr e)
-      hIndexNe (by rw [hOther]; rfl)
+      hIndexNe (by simp [OrderOneData.designated, hOther])
       hPrevLabel hNextLabel hAt hPred hAccept
   · exact C.replaceOne_twiceOrder D k (Sum.inr e)
       hPrevLabel hNextLabel hAt hPred
