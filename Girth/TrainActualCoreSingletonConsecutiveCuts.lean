@@ -1,4 +1,5 @@
 import Girth.TrainActualCoreSingletonCutIndices
+import Girth.TrainCyclicOwnerAbsorption
 import Mathlib.Tactic
 
 /-!
@@ -103,7 +104,7 @@ theorem cyclicOwnerCutIndex_pred_of_adjacent_cuts
         change (k.val + n - 1) % n = k.val - 1
         have hArith : k.val + n - 1 = n + (k.val - 1) := by omega
         rw [hArith]
-        simp [Nat.add_mod, Nat.mod_eq_of_lt (show k.val - 1 < n by omega)]
+        simp [Nat.mod_eq_of_lt (show k.val - 1 < n by omega)]
       have hOutAdjacent : (f a).val + 1 = (f b).val := by
         rw [hA, hB]
         omega
