@@ -51,23 +51,29 @@ def LabelledBergeCycle.rotate
 theorem LabelledBergeCycle.rotate_vertex_zero
     {carrier : I → Set V} (C : LabelledBergeCycle carrier)
     (s : Fin C.length) :
-    (C.rotate s).vertex (⟨0, by have := C.hlength; omega⟩) =
+    (C.rotate s).vertex
+        (⟨0, by have h := C.hlength; omega⟩ : Fin C.length) =
       C.vertex s := by
   change C.vertex ((finCycle s) ⟨0, by omega⟩) = C.vertex s
   congr 1
+  rw [finCycle_apply]
   apply Fin.ext
-  simp [finCycle_apply]
+  rw [Fin.val_add]
+  simpa using (Nat.mod_eq_of_lt s.isLt)
 
 /-- The same rotation sends the chosen original wagon label to zero. -/
 theorem LabelledBergeCycle.rotate_label_zero
     {carrier : I → Set V} (C : LabelledBergeCycle carrier)
     (s : Fin C.length) :
-    (C.rotate s).label (⟨0, by have := C.hlength; omega⟩) =
+    (C.rotate s).label
+        (⟨0, by have h := C.hlength; omega⟩ : Fin C.length) =
       C.label s := by
   change C.label ((finCycle s) ⟨0, by omega⟩) = C.label s
   congr 1
+  rw [finCycle_apply]
   apply Fin.ext
-  simp [finCycle_apply]
+  rw [Fin.val_add]
+  simpa using (Nat.mod_eq_of_lt s.isLt)
 
 /-- A globally minimal labelled cycle remains globally minimal
 under rotation, since its length is literally unchanged. -/
