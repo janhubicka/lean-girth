@@ -1,0 +1,7 @@
+import Girth.TrainSelectedPictureTransition
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.actualEdge_standard_comp
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeAttachment_standard_selected
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeAttachment_standard_train_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeAttachment_selected_train_selection
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeAttachment_localSelection_of_familyArrow
