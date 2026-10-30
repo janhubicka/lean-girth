@@ -80,8 +80,9 @@ theorem designatedLongSingletonCycle_acceptable :
       · exact Or.inr (by decide)
       · rcases hj with ⟨x, hx, edge, he, hxEdge⟩
         have hx2 : x = (2 : Fin 3) := by
-          simpa [designatedLongSingletonCycle] using
-            Sum.inl_injective hx.symm
+          have hh : (2 : Fin 3) = x := by
+            simpa [designatedLongSingletonCycle] using hx
+          exact hh.symm
         subst x
         fin_cases edge <;>
           simp [designatedLongSingletonData, OrderOneData.parent,
@@ -91,8 +92,9 @@ theorem designatedLongSingletonCycle_acceptable :
       fin_cases j
       · rcases hj with ⟨x, hx, edge, he, hxEdge⟩
         have hx0 : x = (0 : Fin 3) := by
-          simpa [designatedLongSingletonCycle] using
-            Sum.inl_injective hx.symm
+          have hh : (0 : Fin 3) = x := by
+            simpa [designatedLongSingletonCycle] using hx
+          exact hh.symm
         subst x
         fin_cases edge <;>
           simp [designatedLongSingletonData, OrderOneData.parent,
