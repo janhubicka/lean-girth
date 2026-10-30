@@ -113,7 +113,7 @@ theorem projectedLabel_right_incident {n : ℕ} (C : (H).BigCycle n)
     (O).Incident (F.projectedLabel copyCarrier copyEdges parent C hOld j)
       (C.connector (F.retainedIndex copyCarrier copyEdges parent C j)) := by
   classical
-  unfold projectedLabel
+  dsimp only [projectedLabel]
   split_ifs with hi
   · have h := (F.contractingEdge_spec copyCarrier copyEdges parent C hOld _ hi).2.1
     simpa only [cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two] using h
@@ -128,13 +128,13 @@ theorem projectedLabel_left_incident {n : ℕ} (C : (H).BigCycle n)
   have hpred := F.retainedIndex_predecessor copyCarrier copyEdges parent C j
   rcases hpred with ⟨hkeep, hpos⟩ | ⟨hdelete, hpos⟩
   · rw [hpos]
-    simp only [projectedLabel, dif_neg hkeep]
+    simp only [projectedLabel, dite_eq_right hkeep]
     apply F.projectLabel_incident copyCarrier copyEdges parent
     have h := C.right_incident (trainCyclicPred (F.retainedIndex copyCarrier copyEdges parent C j))
     rw [cyclicSucc_trainCyclicPred_of_two_le C.length_ge_two] at h
     exact h
   · rw [hpos]
-    simp only [projectedLabel, dif_pos hdelete]
+    simp only [projectedLabel, dite_eq_left hdelete]
     exact (F.contractingEdge_spec copyCarrier copyEdges parent C hOld _ hdelete).1
 
 theorem projectedLabel_eq_designated_iff {n : ℕ} (C : (H).BigCycle n)
@@ -143,7 +143,7 @@ theorem projectedLabel_eq_designated_iff {n : ℕ} (C : (H).BigCycle n)
     F.projectedLabel copyCarrier copyEdges parent C hOld j = Sum.inl a ↔
       C.label (F.retainedIndex copyCarrier copyEdges parent C j) = Sum.inl a := by
   classical
-  unfold projectedLabel
+  dsimp only [projectedLabel]
   split_ifs with hi
   · obtain ⟨e, f, _he, hf, _hef⟩ :=
       F.contractible_has_edge_occurrences copyCarrier copyEdges parent C hNormal _ hi
@@ -159,7 +159,7 @@ theorem projected_designated_predecessor_retained {n : ℕ} (C : (H).BigCycle n)
       (trainCyclicPred (F.retainedIndex copyCarrier copyEdges parent C j)) := by
   classical
   intro hi
-  simp only [projectedLabel, dif_pos hi, reduceCtorEq] at ha
+  simp only [projectedLabel, dite_eq_left hi, reduceCtorEq] at ha
 
 theorem projected_adjacent_designated_ne {n : ℕ} (C : (H).BigCycle n)
     (hOld : (O).LinearPretrain) (hNormal : C.MixedNormalized H)
@@ -227,6 +227,7 @@ theorem projectedCycleOfThree_acceptable_and_order {n : ℕ} (C : (H).BigCycle n
     F.filling_canonical_restriction_bounds copyCarrier copyEdges parent C B hAccept (fun _ => rfl)
   refine ⟨⟨?_, hA2, hA3⟩, hOrder⟩
   intro hOne
+  change B.twiceOrder = 2 at hOne
   have hLength := B.length_le_twiceOrder
   omega
 end StructuralRamsey.Girth.TrainFilling
