@@ -1,0 +1,3 @@
+import Girth.TrainActualCoreSingletonAutomaticDescent
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_singleton_supreme_right_descent
