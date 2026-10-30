@@ -66,11 +66,17 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
         omega
       · have hc : C.label ⟨i.val + 1, by omega⟩ = p := by
           simpa only [hLab i hi, hLabLast j hj] using hij
-        exact (hFresh ⟨i.val + 1, by omega⟩ (by omega) (by omega) hc.symm).elim
+        let t : Fin C.length := ⟨i.val + 1, by omega⟩
+        have ht : 1 ≤ t.val := by dsimp [t]; omega
+        have htk : t.val ≤ k := by dsimp [t]; omega
+        exact (hFresh t ht htk hc.symm).elim
     · by_cases hj : j.val < k
       · have hc : p = C.label ⟨j.val + 1, by omega⟩ := by
           simpa only [hLabLast i hi, hLab j hj] using hij
-        exact (hFresh ⟨j.val + 1, by omega⟩ (by omega) (by omega) hc).elim
+        let t : Fin C.length := ⟨j.val + 1, by omega⟩
+        have ht : 1 ≤ t.val := by dsimp [t]; omega
+        have htk : t.val ≤ k := by dsimp [t]; omega
+        exact (hFresh t ht htk hc).elim
       · apply Fin.ext
         have hival := i.isLt
         have hjval := j.isLt
@@ -165,7 +171,10 @@ theorem LabelledBergeCycle.exists_prefix_shortcut
         have hzlabel : lab (⟨0, by omega⟩ : Fin (k + 1)) =
             C.label (⟨1, by omega⟩ : Fin C.length) :=
           hLab (⟨0, by omega⟩ : Fin (k + 1)) hzero
-        simpa [hVertLast i hi, hsucc, hzlabel] using hc
+        change vert i ∈ carrier (lab (cyclicSucc i))
+        rw [hVertLast i hi, hsucc, hzlabel]
+        exact hc
+    }
   exact ⟨B, rfl, hkn⟩
 
 end StructuralRamsey.Girth
