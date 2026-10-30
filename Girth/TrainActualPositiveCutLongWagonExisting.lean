@@ -163,13 +163,15 @@ theorem attachedSelectedPicture_long_cut_piece_wagon_is_old_connector
     refine ⟨CoreActual first, ?_, ?_⟩
     · change CoreWagon ((Wit).parent first) = CoreWagon w
       exact congrArg CoreWagon hParentFirst
-    · rw [actualAPictureEdgeEquiv_core_carrier]
+    · change (CoreEmb x) ∈ (CoreActual first).1
+      rw [actualAPictureEdgeEquiv_core_carrier A hA C.toRelStructure S R f first]
       exact ⟨x, hFirstX, rfl⟩
   have hWagonY : (Out).WagonVertex (CoreWagon w) (CoreEmb y) := by
     refine ⟨CoreActual second, ?_, ?_⟩
     · change CoreWagon ((Wit).parent second) = CoreWagon w
       exact congrArg CoreWagon hParentSecond
-    · rw [actualAPictureEdgeEquiv_core_carrier]
+    · change (CoreEmb y) ∈ (CoreActual second).1
+      rw [actualAPictureEdgeEquiv_core_carrier A hA C.toRelStructure S R f second]
       exact ⟨y, hSecondY, rfl⟩
   have hSourceA : K.InWagonAt (CoreWagon w) a :=
     ⟨CoreEmb x, hAtA, hWagonX⟩
