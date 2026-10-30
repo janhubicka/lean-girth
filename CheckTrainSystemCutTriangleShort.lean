@@ -1,0 +1,6 @@
+import Girth.TrainSystemCutTriangleShort
+
+#print axioms StructuralRamsey.Girth.OrderOneData.no_three_vertex_wagon_of_two_pairs
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.three_vertices_acceptable_of_no_triple
+#print axioms StructuralRamsey.Girth.OrderOneData.three_short_wagons_bigCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.no_three_short_wagons_of_fullSystemGirth
