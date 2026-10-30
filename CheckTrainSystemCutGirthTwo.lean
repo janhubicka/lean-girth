@@ -1,0 +1,6 @@
+import Girth.TrainSystemCutGirthTwo
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_two_of_pairwiseSubsingleton
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledCutGirth_two_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_exists_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.false_of_acceptable_edgeOnly_fullSystemGirth
