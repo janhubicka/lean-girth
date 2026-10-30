@@ -1,0 +1,4 @@
+import Girth.TrainSystemCutGirthThree
+
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledWagonCycle.chordless_of_length_three
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledCutGirth_three_of_fullSystemGirth

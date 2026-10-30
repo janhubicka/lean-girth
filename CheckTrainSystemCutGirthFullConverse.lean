@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutGirthFullConverse
+
+#print axioms StructuralRamsey.Girth.OrderOneData.fullSystemGirth_implies_labelledWagonCutGirth

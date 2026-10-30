@@ -1,0 +1,4 @@
+import Girth.TrainSystemCutPhysicalPieces
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.exists_physical_pieces
+#print axioms StructuralRamsey.Girth.OrderOneData.false_of_chordless_wagon_cycle

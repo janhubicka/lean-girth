@@ -1,0 +1,7 @@
+import Girth.TrainSystemCutWagonRetype
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.output_edgeOnly_of_no_keeps
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retypeWagonSeedEdgeOnly
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retypeWagonSeedEdgeOnly_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retypeWagonSeedEdgeOnly_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.retypeWagonSeedEdgeOnly_only_edges
