@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutNeighborDichotomy
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_positive_cut_edge_neighbor_or_two_designated
