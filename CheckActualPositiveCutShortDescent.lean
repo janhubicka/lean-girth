@@ -1,0 +1,4 @@
+import Girth.TrainActualPositiveCutShortDescent
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_right_short_decreases_cuts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_core_right_short_minimal_descent

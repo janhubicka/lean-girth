@@ -1,0 +1,8 @@
+import Girth.TrainPositiveCutLabelProvenance
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_arbitrary_replacement_in_standard_of_three_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_legal_replacement_in_standard
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.resultWord_labels_of_piece_property
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.replacement_labels_of_piece_property
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_piecewise_standard_provenance_of_three_le

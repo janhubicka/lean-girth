@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutStandardTransfer
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_of_standard_replacement_of_three_le
