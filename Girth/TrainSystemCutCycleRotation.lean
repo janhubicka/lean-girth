@@ -54,7 +54,8 @@ theorem LabelledBergeCycle.rotate_vertex_zero
     (C.rotate s).vertex
         (⟨0, by have h := C.hlength; omega⟩ : Fin C.length) =
       C.vertex s := by
-  change C.vertex ((finCycle s) ⟨0, by omega⟩) = C.vertex s
+  change C.vertex ((finCycle s) (⟨0, by have h := C.hlength; omega⟩ : Fin C.length)) =
+    C.vertex s
   congr 1
   rw [finCycle_apply]
   apply Fin.ext
@@ -68,7 +69,8 @@ theorem LabelledBergeCycle.rotate_label_zero
     (C.rotate s).label
         (⟨0, by have h := C.hlength; omega⟩ : Fin C.length) =
       C.label s := by
-  change C.label ((finCycle s) ⟨0, by omega⟩) = C.label s
+  change C.label ((finCycle s) (⟨0, by have h := C.hlength; omega⟩ : Fin C.length)) =
+    C.label s
   congr 1
   rw [finCycle_apply]
   apply Fin.ext
