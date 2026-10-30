@@ -28,7 +28,7 @@ variable {V E I P : Type v} (D : OrderOneData V E I P)
 /-- Genuine physical short/long pieces are available at EVERY wagon
 of an arbitrary labelled cut cycle, without a shortestness hypothesis.
 No auxiliary designated-wagon occurrence is kept. -/
-theorem labelledWagonCycle.exists_physical_pieces
+theorem _root_.StructuralRamsey.Girth.LabelledBergeCycle.exists_physical_pieces
     (C : LabelledBergeCycle (fun p : P => {x : V | D.WagonVertex p x})) :
     ∃ pieces : Fin C.length → TrainSupremePiece E P,
       (∀ i : Fin C.length, pieces i ≠ .keep) ∧
