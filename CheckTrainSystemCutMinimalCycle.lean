@@ -1,0 +1,4 @@
+import Girth.TrainSystemCutMinimalCycle
+
+#print axioms StructuralRamsey.Girth.LabelledGirthGT.exists_global_minimal_cycle_of_failure
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.no_shorter_of_global_minimal
