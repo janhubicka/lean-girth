@@ -97,7 +97,7 @@ theorem contractible_has_edge_occurrences {n : ℕ} (C : (H).BigCycle n)
       | inl b =>
           exact False.elim (hNotRight (by rw [hb]; trivial))
       | inr b =>
-          refine ⟨a, b, ha, hb, ?_⟩
+          refine ⟨a, b, rfl, rfl, ?_⟩
           intro hab
           exact C.adjacent_ne i (ha.trans ((congrArg Sum.inr hab).trans hb.symm))
 
@@ -167,9 +167,11 @@ theorem retainedPositions_card_two_le {n : ℕ} (C : (H).BigCycle n) :
       F.retainedPositions copyCarrier copyEdges parent C := by
     intro k hk
     simp only [Finset.mem_insert, Finset.mem_singleton] at hk
-    rcases hk with rfl | rfl
-    · exact (F.retainedPositions_mem_iff copyCarrier copyEdges parent C a).mpr ha
-    · exact (F.retainedPositions_mem_iff copyCarrier copyEdges parent C b).mpr hb
+    rcases hk with hk | hk
+    · rw [hk]
+      exact (F.retainedPositions_mem_iff copyCarrier copyEdges parent C a).mpr ha
+    · rw [hk]
+      exact (F.retainedPositions_mem_iff copyCarrier copyEdges parent C b).mpr hb
   have hc := Finset.card_le_card hsub
   simpa [hab] using hc
 
@@ -191,6 +193,10 @@ theorem retainedIndex_not_contractible {n : ℕ} (C : (H).BigCycle n)
       (F.retainedIndex copyCarrier copyEdges parent C j) := by
   classical
   apply (F.retainedPositions_mem_iff copyCarrier copyEdges parent C _).mp
-  rw [← F.retainedIndex_image copyCarrier copyEdges parent C]
-  exact Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩
+  have hMem : F.retainedIndex copyCarrier copyEdges parent C j ∈
+      Finset.image (F.retainedIndex copyCarrier copyEdges parent C) Finset.univ :=
+    Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩
+  exact (congrArg (fun s : Finset (Fin n) =>
+    F.retainedIndex copyCarrier copyEdges parent C j ∈ s)
+    (F.retainedIndex_image copyCarrier copyEdges parent C)).mp hMem
 end StructuralRamsey.Girth.TrainFilling
