@@ -1,0 +1,5 @@
+import Girth.TrainDesignatedLongSingletonRegression
+
+#print axioms StructuralRamsey.Girth.designatedLongSingletonCycle_acceptable
+#print axioms StructuralRamsey.Girth.designatedLongSingletonCycle_long_piece
+#print axioms StructuralRamsey.Girth.designatedLongSingletonCycle_wagon_absent
