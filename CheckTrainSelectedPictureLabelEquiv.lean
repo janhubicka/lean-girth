@@ -1,0 +1,10 @@
+import Girth.TrainSelectedPictureLabelEquiv
+
+#print axioms StructuralRamsey.Girth.transportedSelectedCopyLabel
+#print axioms StructuralRamsey.Girth.transportedSelectedCopyLabel_surjective
+#print axioms StructuralRamsey.Girth.transportedSelectedCopyLabel_carrier
+#print axioms StructuralRamsey.Girth.selectedCopy_two_edges_of_target
+#print axioms StructuralRamsey.Girth.selectedCopy_private_vertex_of_two_edges
+#print axioms StructuralRamsey.Girth.transportedSelectedCopyLabel_injective
+#print axioms StructuralRamsey.Girth.transportedSelectedCopyEquiv
+#print axioms StructuralRamsey.Girth.transportedSelectedCopies_physical_injective

@@ -41,6 +41,16 @@ on:
       - 'CheckTrainSelectedPictureIntrinsicGeometry.lean'
       - 'Girth/TrainSelectedPictureStageGeometry.lean'
       - 'CheckTrainSelectedPictureStageGeometry.lean'
+      - 'Girth/TrainDesignatedReindexGirth.lean'
+      - 'CheckTrainDesignatedReindexGirth.lean'
+      - 'Girth/TrainSelectedPictureLabelEquiv.lean'
+      - 'CheckTrainSelectedPictureLabelEquiv.lean'
+      - 'Girth/TrainActualSelectedOutputGirth.lean'
+      - 'CheckTrainActualSelectedOutputGirth.lean'
+      - 'Girth/TrainSelectedPictureStageForest.lean'
+      - 'CheckTrainSelectedPictureStageForest.lean'
+      - 'Girth/TrainRecursiveNontrivialFibre.lean'
+      - 'CheckTrainRecursiveNontrivialFibre.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -84,6 +94,16 @@ on:
       - 'CheckTrainSelectedPictureIntrinsicGeometry.lean'
       - 'Girth/TrainSelectedPictureStageGeometry.lean'
       - 'CheckTrainSelectedPictureStageGeometry.lean'
+      - 'Girth/TrainDesignatedReindexGirth.lean'
+      - 'CheckTrainDesignatedReindexGirth.lean'
+      - 'Girth/TrainSelectedPictureLabelEquiv.lean'
+      - 'CheckTrainSelectedPictureLabelEquiv.lean'
+      - 'Girth/TrainActualSelectedOutputGirth.lean'
+      - 'CheckTrainActualSelectedOutputGirth.lean'
+      - 'Girth/TrainSelectedPictureStageForest.lean'
+      - 'CheckTrainSelectedPictureStageForest.lean'
+      - 'Girth/TrainRecursiveNontrivialFibre.lean'
+      - 'CheckTrainRecursiveNontrivialFibre.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -156,7 +176,12 @@ jobs:
             Girth.TrainActiveGluingWitness \
             Girth.TrainFullGirthCopyStrongness \
             Girth.TrainSelectedPictureIntrinsicGeometry \
-            Girth.TrainSelectedPictureStageGeometry
+            Girth.TrainSelectedPictureStageGeometry \
+            Girth.TrainDesignatedReindexGirth \
+            Girth.TrainSelectedPictureLabelEquiv \
+            Girth.TrainActualSelectedOutputGirth \
+            Girth.TrainSelectedPictureStageForest \
+            Girth.TrainRecursiveNontrivialFibre
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -185,7 +210,12 @@ jobs:
             CheckTrainActiveGluingWitness \
             CheckTrainFullGirthCopyStrongness \
             CheckTrainSelectedPictureIntrinsicGeometry \
-            CheckTrainSelectedPictureStageGeometry; do
+            CheckTrainSelectedPictureStageGeometry \
+            CheckTrainDesignatedReindexGirth \
+            CheckTrainSelectedPictureLabelEquiv \
+            CheckTrainActualSelectedOutputGirth \
+            CheckTrainSelectedPictureStageForest \
+            CheckTrainRecursiveNontrivialFibre; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -229,6 +259,11 @@ jobs:
             CheckTrainFullGirthCopyStrongness.log
             CheckTrainSelectedPictureIntrinsicGeometry.log
             CheckTrainSelectedPictureStageGeometry.log
+            CheckTrainDesignatedReindexGirth.log
+            CheckTrainSelectedPictureLabelEquiv.log
+            CheckTrainActualSelectedOutputGirth.log
+            CheckTrainSelectedPictureStageForest.log
+            CheckTrainRecursiveNontrivialFibre.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5

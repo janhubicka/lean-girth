@@ -1,0 +1,4 @@
+import Girth.TrainSelectedPictureStageForest
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.testedAB_transportedSelectedCopies_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_bottom_invariants_of_intrinsic
