@@ -51,11 +51,15 @@ theorem BigCycle.edge_incident_all_connectors_of_order_one
   intro j
   rcases hConnectors with ⟨h0, h1⟩ | ⟨h0, h1⟩
   · fin_cases j
-    · simpa only [h0] using hVertex
-    · simpa only [h1] using hWagon
+    · rw [h0]
+      exact hVertex
+    · rw [h1]
+      exact hWagon
   · fin_cases j
-    · simpa only [h0] using hWagon
-    · simpa only [h1] using hVertex
+    · rw [h0]
+      exact hWagon
+    · rw [h1]
+      exact hVertex
 
 end OrderOneData
 
