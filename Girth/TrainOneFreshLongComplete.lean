@@ -41,6 +41,7 @@ theorem BigCycle.onlyLongPieces_incidence
   intro k
   by_cases hk : k = j
   · subst k
+    simp only [BigCycle.onlyLongPieces, if_pos rfl]
     change e ≠ f ∧
       D.Incident (.inr e) (C.connector (trainCyclicPred j)) ∧
       D.parent e = w ∧ D.parent f = w ∧
