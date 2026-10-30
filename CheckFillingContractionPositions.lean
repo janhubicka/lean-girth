@@ -1,0 +1,15 @@
+import Girth.TrainFillingContractionPositions
+
+#print axioms StructuralRamsey.Girth.TrainFilling.ContractibleBlock
+#print axioms StructuralRamsey.Girth.TrainFilling.vertex_not_contractible
+#print axioms StructuralRamsey.Girth.TrainFilling.contractible_neighbours_retained
+#print axioms StructuralRamsey.Girth.TrainFilling.contractionBlocks_disjoint
+#print axioms StructuralRamsey.Girth.TrainFilling.contractible_has_edge_occurrences
+#print axioms StructuralRamsey.Girth.TrainFilling.contractible_unique_old_edge
+#print axioms StructuralRamsey.Girth.TrainFilling.exists_two_retained
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedPositions
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedPositions_mem_iff
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedPositions_card_two_le
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedIndex
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedIndex_image
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedIndex_not_contractible

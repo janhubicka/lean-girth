@@ -1,0 +1,5 @@
+import Girth.TrainFillingRetainedEdgeContacts
+
+#print axioms StructuralRamsey.Girth.TrainFilling.old_edge_incidence_cases
+#print axioms StructuralRamsey.Girth.TrainFilling.old_edge_not_incident_three_retained
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_adjacent_edge_ne

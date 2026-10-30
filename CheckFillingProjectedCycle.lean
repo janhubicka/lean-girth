@@ -1,0 +1,15 @@
+import Girth.TrainFillingProjectedCycle
+
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedIndex_surjective
+#print axioms StructuralRamsey.Girth.TrainFilling.retainedIndex_predecessor
+#print axioms StructuralRamsey.Girth.TrainFilling.contractingEdge_exists
+#print axioms StructuralRamsey.Girth.TrainFilling.contractingEdge
+#print axioms StructuralRamsey.Girth.TrainFilling.contractingEdge_spec
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedLabel
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedLabel_right_incident
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedLabel_left_incident
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedLabel_eq_designated_iff
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_designated_predecessor_retained
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_adjacent_designated_ne
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedCycleOfThree
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedCycleOfThree_acceptable_and_order

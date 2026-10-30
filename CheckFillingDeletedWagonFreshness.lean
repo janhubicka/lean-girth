@@ -1,0 +1,5 @@
+import Girth.TrainFillingDeletedWagonFreshness
+
+#print axioms StructuralRamsey.Girth.TrainFilling.deleted_wagon_contacts_in_old_edge
+#print axioms StructuralRamsey.Girth.TrainFilling.old_nonedge_wagon_not_deleted
+#print axioms StructuralRamsey.Girth.TrainFilling.old_long_wagon_fresh_in_source

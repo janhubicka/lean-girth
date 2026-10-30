@@ -129,7 +129,7 @@ local notation "New" => F.filledData copyCarrier copyEdges parent
 /-- Filling preserves the carrier of EVERY old wagon, not only that
 of a single old edge. The parent labels are unchanged. -/
 theorem filled_wagonVertex_iff (p : P) (x : V) :
-    New.WagonVertex p x ↔ Old.WagonVertex p x := by
+    (New).WagonVertex p x ↔ (Old).WagonVertex p x := by
   constructor
   · rintro ⟨e, hp, hx⟩
     exact ⟨F.cover e, hp, F.contained e hx⟩
@@ -143,9 +143,9 @@ theorem filled_wagonVertex_iff (p : P) (x : V) :
 /-- Full filled pretrain linearity follows from new edge linearity and
 old wagon linearity. No cycle-bound assumption on the output is used. -/
 theorem filled_linearPretrain
-    (hOld : Old.LinearPretrain)
+    (hOld : (Old).LinearPretrain)
     (hEdges : ∀ e f : F.NewEdge, e ≠ f → (e.1 ∩ f.1).Subsingleton) :
-    New.LinearPretrain := by
+    (New).LinearPretrain := by
   refine ⟨hEdges, ?_⟩
   intro p q hpq x hx y hy
   apply hOld.2 p q hpq
@@ -164,7 +164,7 @@ theorem projectLabel_eq_designated_iff (a : I ⊕ F.NewEdge) (i : I) :
   cases a <;> simp [projectLabel]
 
 theorem projectLabel_ne_of_designated (a b : I ⊕ F.NewEdge)
-    (hne : a ≠ b) (hDes : New.designated a ∨ New.designated b) :
+    (hne : a ≠ b) (hDes : (New).designated a ∨ (New).designated b) :
     F.projectLabel a ≠ F.projectLabel b := by
   cases a <;> cases b <;>
     simp_all [projectLabel, OrderOneData.designated]
@@ -172,7 +172,7 @@ theorem projectLabel_ne_of_designated (a b : I ⊕ F.NewEdge)
 /-- Both kinds of actual incidence project; the reverse pair-edge
 implication is deliberately absent. -/
 theorem projectLabel_incident (a : I ⊕ F.NewEdge) (q : V ⊕ P)
-    (h : New.Incident a q) : Old.Incident (F.projectLabel a) q := by
+    (h : (New).Incident a q) : (Old).Incident (F.projectLabel a) q := by
   cases a with
   | inl i =>
       cases q with
@@ -191,8 +191,8 @@ theorem projectLabel_incident (a : I ⊕ F.NewEdge) (q : V ⊕ P)
 
 /-- A two-occurrence cycle containing a designated label projects to
 an actual old BigCycle with exactly the same connector word. -/
-def projectTwoCycle (C : New.BigCycle 2)
-    (hDes : ∃ k : Fin 2, New.designated (C.label k)) : Old.BigCycle 2 where
+def projectTwoCycle (C : (New).BigCycle 2)
+    (hDes : ∃ k : Fin 2, (New).designated (C.label k)) : (Old).BigCycle 2 where
   length_ge_two := C.length_ge_two
   label := fun j => F.projectLabel (C.label j)
   connector := C.connector
@@ -212,18 +212,18 @@ def projectTwoCycle (C : New.BigCycle 2)
   right_incident := fun j => F.projectLabel_incident copyCarrier copyEdges parent
     (C.label (cyclicSucc j)) (C.connector j) (C.right_incident j)
 
-theorem projectTwoCycle_twiceOrder (C : New.BigCycle 2)
-    (hDes : ∃ k : Fin 2, New.designated (C.label k)) :
+theorem projectTwoCycle_twiceOrder (C : (New).BigCycle 2)
+    (hDes : ∃ k : Fin 2, (New).designated (C.label k)) :
     (F.projectTwoCycle copyCarrier copyEdges parent C hDes).twiceOrder =
       C.twiceOrder := rfl
 
 /-- At length two A2 and A3 need no pair-edge reflection. A retained
 designated occurrence gives A1 independently of the connector kinds. -/
-theorem projectTwoCycle_acceptable (C : New.BigCycle 2)
-    (hDes : ∃ k : Fin 2, New.designated (C.label k)) :
+theorem projectTwoCycle_acceptable (C : (New).BigCycle 2)
+    (hDes : ∃ k : Fin 2, (New).designated (C.label k)) :
     (F.projectTwoCycle copyCarrier copyEdges parent C hDes).Acceptable := by
   let Z := F.projectTwoCycle copyCarrier copyEdges parent C hDes
-  refine ⟨?_, Old.twoCycle_A2 Z, Old.twoCycle_A3 Z⟩
+  refine ⟨?_, (Old).twoCycle_A2 Z, (Old).twoCycle_A3 Z⟩
   intro _
   obtain ⟨k, hk⟩ := hDes
   refine ⟨k, ?_⟩
@@ -236,13 +236,13 @@ theorem projectTwoCycle_acceptable (C : New.BigCycle 2)
 has a genuine simultaneous supreme plan. No projected cycle, replacement
 plan, inserted-wagon freshness or output cycle is assumed. -/
 theorem filled_two_supreme_of_fullSystemGirth
-    {q : ℕ} (hOld : Old.FullSystemGirthGT q)
+    {q : ℕ} (hOld : (Old).FullSystemGirthGT q)
     (hEdges : ∀ e f : F.NewEdge, e ≠ f → (e.1 ∩ f.1).Subsingleton)
-    (C : New.BigCycle 2) (hAccept : C.Acceptable)
+    (C : (New).BigCycle 2) (hAccept : C.Acceptable)
     (hOrder : C.twiceOrder ≤ 2 * q) : C.HasSimultaneousSupreme := by
-  have hNewLinear : New.LinearPretrain :=
+  have hNewLinear : (New).LinearPretrain :=
     F.filled_linearPretrain copyCarrier copyEdges parent hOld.1 hEdges
-  have hDes : ∃ k : Fin 2, New.designated (C.label k) :=
+  have hDes : ∃ k : Fin 2, (New).designated (C.label k) :=
     C.two_has_designated_of_edge_linear New hAccept hEdges
   let Z := F.projectTwoCycle copyCarrier copyEdges parent C hDes
   have hZAccept : Z.Acceptable :=
@@ -258,7 +258,7 @@ theorem filled_two_supreme_of_fullSystemGirth
           simpa [Z, projectTwoCycle, projectLabel,
             OrderOneData.designated, hLabel] using hk)
   obtain ⟨i, hki⟩ := hSource
-  have hkNew : New.designated (C.label k) := by
+  have hkNew : (New).designated (C.label k) := by
     simp [OrderOneData.designated, hki]
   have hAt : C.HasSupremeAt New k := by
     apply C.hasSupremeAt_of_fresh_local_witnesses New hAccept hNewLinear k hkNew
@@ -270,8 +270,8 @@ theorem filled_two_supreme_of_fullSystemGirth
       apply hNe
       exact ((F.projectLabel_eq_designated_iff (C.label j) i).mp hEq).trans hki.symm
     have hPiece :
-        Old.ShortPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) ∨
-        Old.LongPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) := by
+        (Old).ShortPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) ∨
+        (Old).LongPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) := by
       simpa [Z, projectTwoCycle, hki, projectLabel]
         using hLocal j hZNe
     have hBoundaryNe : C.connector (trainCyclicPred j) ≠ C.connector j := by
@@ -280,8 +280,8 @@ theorem filled_two_supreme_of_fullSystemGirth
       have hn : trainCyclicPred j ≠ j := by fin_cases j <;> decide
       exact hn hj
     have hLift :
-        New.ShortPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) ∨
-        New.LongPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) := by
+        (New).ShortPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) ∨
+        (New).LongPiece (.inl i) (C.connector (trainCyclicPred j)) (C.connector j) := by
       rcases hPiece with hs | hl
       · exact F.shortPiece_lift copyCarrier copyEdges parent hOld.1.1 i
           _ _ hBoundaryNe hs

@@ -1,0 +1,4 @@
+import Girth.TrainFillingWagonGeometry
+
+#print axioms StructuralRamsey.Girth.TrainFilling.wagonVertex_filled_iff_old
+#print axioms StructuralRamsey.Girth.TrainFilling.wagonCarrier_filled_eq_old
