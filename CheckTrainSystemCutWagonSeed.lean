@@ -1,0 +1,8 @@
+import Girth.TrainSystemCutWagonSeed
+
+#print axioms StructuralRamsey.Girth.OrderOneData.wagonSeed_linear_iff
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledWagonCycle.toWagonSeedBigCycle
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.acceptable_of_vertex_only_chordless
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledWagonCycle.wagonSeed_acceptable_of_chordless
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twiceOrder_of_vertex_only
+#print axioms StructuralRamsey.Girth.OrderOneData.labelledWagonCycle.wagonSeed_twiceOrder
