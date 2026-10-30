@@ -112,10 +112,10 @@ theorem attachedSelectedPicture_positive_cut_descent_or_designated_or_bridges
   · obtain ⟨target, hDesignated, pieces, hValid, hGlobal⟩ := hSup
     cases ht : Z.label target with
     | inr edge =>
-        have : False := by
-          have h := hDesignated
-          simp [OrderOneData.designated, ht] at h
-        exact False.elim this
+        have hBad : False := by
+          change (Wit).designated (Z.label target) at hDesignated
+          simp [OrderOneData.designated, ht] at hDesignated
+        exact False.elim hBad
     | inl i =>
         have hAt : Z.HasSupremeAt Wit target :=
           ⟨hDesignated, pieces, hValid, hGlobal⟩
