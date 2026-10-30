@@ -1,0 +1,69 @@
+name: Track C diagnostics
+
+on:
+  push:
+    branches: [circulation-c-projection-integration-oct30]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: track-c-diagnostics-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  filling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record exact source
+        run: |
+          mkdir -p track-c-diagnostics
+          git rev-parse HEAD > track-c-diagnostics/head.txt
+          git archive --format=tar HEAD | gzip > track-c-diagnostics/source.tar.gz
+      - name: Cache Lean toolchain
+        uses: actions/cache@v5
+        with:
+          path: ~/.elan/toolchains
+          key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
+      - name: Cache Lake workspace
+        uses: actions/cache@v5
+        with:
+          path: .lake
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+      - name: Install elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download Mathlib cache
+        run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+      - name: Compile filling modules with fresh project objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .lake/build
+          mapfile -t modules < <(find Girth -name 'TrainFilling*.lean' -print | sort | sed 's/\.lean$//; s|/|.|g')
+          printf '%s\n' "${modules[@]}" > track-c-diagnostics/modules.txt
+          lake build "${modules[@]}" 2>&1 | tee track-c-diagnostics/build.log
+      - name: Audit filling exports
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          checks=(CheckFilling*.lean)
+          test "${#checks[@]}" -gt 0
+          for source in "${checks[@]}"; do
+            log="track-c-diagnostics/${source%.lean}.log"
+            lake env lean "$source" 2>&1 | tee "$log"
+            python3 scripts/check_axioms.py "$log" "$source"
+          done
+      - name: Publish diagnostics even on compilation failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: track-c-diagnostics-${{ github.sha }}
+          path: track-c-diagnostics/
+          retention-days: 7

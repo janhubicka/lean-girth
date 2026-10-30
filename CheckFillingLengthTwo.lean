@@ -1,0 +1,14 @@
+import Girth.TrainFillingLengthTwo
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_has_designated_of_edge_linear
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_fresh_of_vertex_boundaries
+#print axioms StructuralRamsey.Girth.TrainFilling.filled_wagonVertex_iff
+#print axioms StructuralRamsey.Girth.TrainFilling.filled_linearPretrain
+#print axioms StructuralRamsey.Girth.TrainFilling.projectLabel
+#print axioms StructuralRamsey.Girth.TrainFilling.projectLabel_eq_designated_iff
+#print axioms StructuralRamsey.Girth.TrainFilling.projectLabel_ne_of_designated
+#print axioms StructuralRamsey.Girth.TrainFilling.projectLabel_incident
+#print axioms StructuralRamsey.Girth.TrainFilling.projectTwoCycle
+#print axioms StructuralRamsey.Girth.TrainFilling.projectTwoCycle_twiceOrder
+#print axioms StructuralRamsey.Girth.TrainFilling.projectTwoCycle_acceptable
+#print axioms StructuralRamsey.Girth.TrainFilling.filled_two_supreme_of_fullSystemGirth
