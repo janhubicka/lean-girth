@@ -1,0 +1,4 @@
+import Girth.TrainActualPositiveCutLongWagonExisting
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.wagon_connector_of_nonadjacent_contacts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_long_cut_piece_wagon_is_old_connector
