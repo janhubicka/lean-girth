@@ -41,7 +41,7 @@ theorem BigCycle.output_edgeOnly_of_no_keeps
   intro j
   cases hl : B.label j with
   | inr e =>
-      exact ⟨e, hl⟩
+      exact ⟨e, rfl⟩
   | inl p =>
       have hd : (D.wagonSeed).designated (B.label j) := by
         simp [hl, OrderOneData.designated]
@@ -73,7 +73,8 @@ noncomputable def BigCycle.retypeWagonSeedEdgeOnly
       apply B.adjacent_ne i
       calc
         B.label i = Sum.inr (edge i) := he i
-        _ = Sum.inr (edge (cyclicSucc i)) := hh
+        _ = Sum.inr (edge (cyclicSucc i)) :=
+           congrArg (Sum.inr : E → P ⊕ E) (Sum.inr.inj hh)
         _ = B.label (cyclicSucc i) := (he _).symm
     connector_injective := B.connector_injective
     left_incident := by
@@ -105,8 +106,9 @@ theorem BigCycle.retypeWagonSeedEdgeOnly_acceptable
   let C : D.BigCycle n := B.retypeWagonSeedEdgeOnly D hOnly
   have hA1 : C.A1 := by
     intro hOne
+    exfalso
     apply hOrder
-    simpa only [C, BigCycle.retypeWagonSeedEdgeOnly_twiceOrder] using hOne
+    exact (B.retypeWagonSeedEdgeOnly_twiceOrder D hOnly).symm.trans hOne
   have hA2 : C.A2 := hAcc.2.1
   have hA3 : C.A3 := hAcc.2.2
   exact ⟨hA1, hA2, hA3⟩
