@@ -1,0 +1,6 @@
+import Girth.TrainDesignatedReindexGirth
+
+#print axioms StructuralRamsey.Girth.OrderOneData.reindexDesignated
+#print axioms StructuralRamsey.Girth.OrderOneData.reindexDesignated_linearPretrain_iff
+#print axioms StructuralRamsey.Girth.OrderOneData.reindexDesignated_supremeCycleBound_iff
+#print axioms StructuralRamsey.Girth.OrderOneData.reindexDesignated_fullSystemGirth_iff

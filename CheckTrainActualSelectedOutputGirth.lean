@@ -1,0 +1,6 @@
+import Girth.TrainActualSelectedOutputGirth
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_linearPretrain_iff_actualSelected
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_eq_reindex_actualSelected
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_iff_actualSelected
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_iff_actualSelected_of_target
