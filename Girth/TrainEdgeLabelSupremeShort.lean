@@ -1,4 +1,5 @@
 import Girth.TrainSimultaneousSupreme
+import Girth.TrainSingleShortReplacement
 
 /-!
 # A physical-edge occurrence cannot have a long supreme replacement
@@ -42,7 +43,7 @@ theorem BigCycle.supreme_piece_short_of_edge_label
   | keep =>
       exact False.elim (by simpa only [hp] using hPiece)
   | short edge =>
-      exact ⟨edge, hp, by simpa only [hp] using hPiece⟩
+      exact ⟨edge, rfl, by simpa only [hp] using hPiece⟩
   | long e w f =>
       have hLong : C.LongValid D target source e w f := by
         simpa only [hp] using hPiece
