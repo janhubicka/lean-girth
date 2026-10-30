@@ -123,7 +123,7 @@ theorem labelledCutGirth_three_of_fullSystemGirth
   · have hTwoGirth := D.labelledCutGirth_two_of_fullSystemGirth 3 hFull
     exact hTwoGirth ⟨C, by omega⟩
   · have hChordless :=
-      D.labelledWagonCycle.chordless_of_length_three
+      labelledWagonCycle.chordless_of_length_three D
         hFull.1 C hThree
     exact D.false_of_chordless_wagon_cycle
       3 hFull C (by omega) (by omega) hChordless
