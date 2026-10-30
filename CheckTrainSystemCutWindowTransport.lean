@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutWindowTransport
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.contact_window_of_rotate
