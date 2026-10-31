@@ -45,7 +45,7 @@ theorem oneDoubleWord_exists_common_split
           · simp [oneDoubleWord, List.ofFn_succ]
       | succ j =>
           obtain ⟨before, after, hOld, hNew⟩ :=
-            ih (fun k : Fin n => labels k.succ) j a b
+            ih (fun k : Fin n => labels k.succ) j
           refine ⟨labels 0 :: before, after, ?_, ?_⟩
           · simp only [List.ofFn_succ, List.cons_append]
             exact congrArg (List.cons (labels 0)) hOld
