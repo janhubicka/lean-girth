@@ -1,0 +1,5 @@
+import Girth.TrainActualFullCutLongFreshness
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_eq_length_iff_every_cut
+#print axioms StructuralRamsey.Girth.cyclicOwner_all_cut_of_length_three_three_changes
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_long_wagon_fresh_of_all_source_cuts
