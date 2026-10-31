@@ -43,7 +43,7 @@ theorem designatedLabelCount_long_insert_drop
       designatedLabelCount
         (before ++ Sum.inl source :: after) := by
   classical
-  simp [designatedLabelCount, List.filter_append]
+  simp [designatedLabelCount, List.filter_append] <;> omega
 
 /-- The same target-independent count drop holds for a SHORT
 replacement of a designated original occurrence by a physical edge. -/
@@ -53,7 +53,7 @@ theorem designatedLabelCount_short_replace_drop
     designatedLabelCount (before ++ Sum.inr edge :: after) + 1 =
       designatedLabelCount (before ++ Sum.inl source :: after) := by
   classical
-  simp [designatedLabelCount, List.filter_append]
+  simp [designatedLabelCount, List.filter_append] <;> omega
 
 /-- For a well-founded lexicographic rank, NONINCREASING first
 coordinate and STRICTLY decreasing second coordinate are enough.
