@@ -57,14 +57,19 @@ theorem attachment_core_pairEdge_back_of_aStrong
       hXY hx hy hXCore hYCore
   obtain ⟨b, hb⟩ :=
     actualASupport_core_edge_pullback A hA B S R f g hSub
+  have hEdgeEq : CoreActual b = g := hb
   have hxImage : CoreEmb x ∈ attachedCoreAEdgeCarrier A B S R f b := by
     rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b]
     change CoreEmb x ∈ (CoreActual b).1
-    exact hb.symm ▸ hx
+    exact (congrArg
+      (fun z : OldACarrierEdge A Actual => CoreEmb x ∈ z.1)
+      hEdgeEq).symm.mp hx
   have hyImage : CoreEmb y ∈ attachedCoreAEdgeCarrier A B S R f b := by
     rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b]
     change CoreEmb y ∈ (CoreActual b).1
-    exact hb.symm ▸ hy
+    exact (congrArg
+      (fun z : OldACarrierEdge A Actual => CoreEmb y ∈ z.1)
+      hEdgeEq).symm.mp hy
   have hxCore : x ∈ b.1 := by
     change CoreEmb x ∈ (fun t : Core => CoreEmb t) '' b.1 at hxImage
     obtain ⟨t, ht, htx⟩ := hxImage
