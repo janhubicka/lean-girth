@@ -94,9 +94,7 @@ theorem product_childGirth
     (std (parent p).1) (hStd _) g (hOld (parent p).2)
   refine labelledGirthGT_of_injective_shrinking _ _ label hLabel ?_ g hImage
   intro a
-  change newCarrier a.val ⊆ std (parent p).1 '' oldCarrier (label a).val
   rw [hCarrier a.val, hOwner a]
-  exact Set.Subset.rfl
 
 private theorem classCarrier_has_edge
     {F Z : Type v} {n : ℕ} (V : EdgeTrainLevels F n)
@@ -292,7 +290,8 @@ noncomputable def append
           (R.train.wagonParent (oldLowIndex m R.extraCuts hm μ)
             (oldLowIndex m R.extraCuts hm ν) hμν)
           (oldPart ⁻¹' R.permitted oldj) := by
-        simpa only [oldLowIndex, firstRefinementChild, firstRefinementParent, μ, ν]
+        simpa only [oldLowIndex, firstRefinementChild, firstRefinementParent, μ, ν,
+          Fin.val_castSucc, Fin.val_succ]
           using R.parameters oldj
       have hBound := product_parentIntersectionBound
         (R.train.wagonClassCarrier edge (oldLowIndex m R.extraCuts hm μ))
@@ -307,7 +306,8 @@ noncomputable def append
         (lowerWagon_carrier hm R.train U hFirst edge std μ)
         (lowerWagon_parent hm R.train U hFirst μ ν hμν)
         oldPart newPart hPart (R.permitted oldj) hOld
-      simpa only [lowIndex, firstRefinementChild, firstRefinementParent, μ, ν, oldj]
+      simpa only [lowIndex, firstRefinementChild, firstRefinementParent, μ, ν, oldj,
+        Fin.val_castSucc, Fin.val_succ]
         using hBound
     · have hjLast : j = Fin.last (R.extraCuts + 1) := by
         apply Fin.ext
@@ -315,8 +315,13 @@ noncomputable def append
         have := j.isLt
         omega
       subst j
-      simp only [Fin.val_last, dite_eq_right (Nat.lt_irrefl _)]
-      simpa only [lowIndex, freshParentIndex, firstRefinementChild, firstRefinementParent]
+      have hPerm : (if h : (Fin.last (R.extraCuts + 1)).val < R.extraCuts + 1 then
+          R.permitted ⟨(Fin.last (R.extraCuts + 1)).val, h⟩ else firstAllowed ∩ common) =
+          firstAllowed ∩ common := by
+        exact dite_eq_right (Nat.lt_irrefl _)
+      rw [hPerm]
+      simpa only [lowIndex, freshParentIndex, firstRefinementChild, firstRefinementParent,
+        Fin.val_last]
         using fresh_parentIntersectionBound hm R.train U hFirst edge std
           newPart firstAllowed common hCross hParameter
   · intro j
@@ -331,7 +336,8 @@ noncomputable def append
               R.train.wagonParent (oldLowIndex m R.extraCuts hm μ)
                 (oldLowIndex m R.extraCuts hm ν) hμν a = p} =>
               R.train.wagonClassCarrier edge (oldLowIndex m R.extraCuts hm μ) a.val) g := by
-        simpa only [oldLowIndex, firstRefinementChild, firstRefinementParent, μ, ν]
+        simpa only [oldLowIndex, firstRefinementChild, firstRefinementParent, μ, ν,
+          Fin.val_castSucc, Fin.val_succ]
           using R.childGirth oldj
       have hGirth := product_childGirth
         (R.train.wagonClassCarrier edge (oldLowIndex m R.extraCuts hm μ))
@@ -345,7 +351,8 @@ noncomputable def append
         (lowerWagonEquiv hm R.train U hFirst ν) std hStd
         (lowerWagon_carrier hm R.train U hFirst edge std μ)
         (lowerWagon_parent hm R.train U hFirst μ ν hμν) g hOld
-      simpa only [lowIndex, firstRefinementChild, firstRefinementParent, μ, ν, oldj]
+      simpa only [lowIndex, firstRefinementChild, firstRefinementParent, μ, ν, oldj,
+        Fin.val_castSucc, Fin.val_succ]
         using hGirth
     · have hjLast : j = Fin.last (R.extraCuts + 1) := by
         apply Fin.ext
@@ -353,7 +360,8 @@ noncomputable def append
         have := j.isLt
         omega
       subst j
-      simpa only [lowIndex, freshParentIndex, firstRefinementChild, firstRefinementParent]
+      simpa only [lowIndex, freshParentIndex, firstRefinementChild, firstRefinementParent,
+        Fin.val_last]
         using fresh_childGirth hm R.train U hFirst edge std g hFresh
 
 end StructuralRamsey.Girth.FirstRefinementAppend
