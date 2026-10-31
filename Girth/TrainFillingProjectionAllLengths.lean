@@ -83,11 +83,14 @@ theorem projected_edge_source_parents {n : ℕ} (C : (H).BigCycle n)
   classical
   let i := F.retainedIndex copyCarrier copyEdges parent C j
   change (∃ e : F.NewEdge, C.label i = Sum.inr e ∧ parent (F.cover e) = parent f) ∧ _
+  change (if h : F.ContractibleBlock copyCarrier copyEdges parent C (trainCyclicPred i)
+    then Sum.inr (F.contractingEdge copyCarrier copyEdges parent C hOld (trainCyclicPred i) h)
+    else F.projectLabel (C.label i)) = Sum.inr f at hLabel
   by_cases hi : F.ContractibleBlock copyCarrier copyEdges parent C (trainCyclicPred i)
   · have hEdge : F.contractingEdge copyCarrier copyEdges parent C hOld
         (trainCyclicPred i) hi = f := by
       apply Sum.inr.inj
-      simpa only [projectedLabel, dif_pos hi] using hLabel
+      simpa only [dite_eq_left hi] using hLabel
     have hWagon : C.connector (trainCyclicPred i) = Sum.inr (parent f) := by
       have hw := (F.contractingEdge_spec copyCarrier copyEdges parent C hOld _ hi).2.2
       rw [hEdge] at hw
@@ -106,7 +109,7 @@ theorem projected_edge_source_parents {n : ℕ} (C : (H).BigCycle n)
     exact ⟨⟨b, hb, hParentB⟩, fun _ => ⟨a, ha, hParentA⟩⟩
   · refine ⟨?_, fun h => False.elim (hi h)⟩
     have hProject : F.projectLabel (C.label i) = Sum.inr f := by
-      simpa only [projectedLabel, dif_neg hi] using hLabel
+      simpa only [dite_eq_right hi] using hLabel
     cases hc : C.label i with
     | inl a => simp [hc, projectLabel] at hProject
     | inr e =>
@@ -219,7 +222,13 @@ theorem projectedCycle_acceptable_and_order {n : ℕ} (C : (H).BigCycle n)
   have hPhysical (j : Fin (F.retainedPositions copyCarrier copyEdges parent C).card) :
       ∃ f : F.OldEdge, B.label j = Sum.inr f := by
     cases hj : B.label j with
-    | inl a => exact False.elim (hNone ⟨j, by simp [OrderOneData.designated, hj]⟩)
+    | inl a =>
+        apply False.elim
+        apply hNone
+        refine ⟨j, ?_⟩
+        change (O).designated (B.label j)
+        rw [hj]
+        trivial
     | inr f => exact ⟨f, rfl⟩
   choose edge hLabel using hPhysical
   obtain ⟨p, hParent⟩ := B.orderOne_edge_only_constant_parent O edge hLabel hOne
