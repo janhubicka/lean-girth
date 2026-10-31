@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutEdgeOnlyExtraction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.exists_labelledWagonCycle_of_acceptable_edgeOnly
