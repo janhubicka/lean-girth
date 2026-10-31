@@ -1,0 +1,14 @@
+import Girth.TrainFillingInheritedTrain
+
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_rel_zero
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_rel_succ
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_first_rel
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_bottom_carrier
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_wagonCarrier
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedWagonEmbedding
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedWagonEmbedding_mk
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedWagonEmbedding_carrier
+#print axioms StructuralRamsey.Girth.TrainFilling.cover_surjective_of_nonempty
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedWagonEmbedding_surjective
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedWagonEmbedding_parent

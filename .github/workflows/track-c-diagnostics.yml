@@ -2,7 +2,7 @@ name: Track C diagnostics
 
 on:
   push:
-    branches: [circulation-c-filling-completion-oct31]
+    branches: [circulation-c-inherited-filling-train-oct31]
   workflow_dispatch:
 
 permissions:
