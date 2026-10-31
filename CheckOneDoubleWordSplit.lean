@@ -1,0 +1,3 @@
+import Girth.TrainOneDoubleWordSplit
+
+#print axioms StructuralRamsey.Girth.oneDoubleWord_exists_common_split
