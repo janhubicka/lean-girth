@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutPrefixShortcut
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.exists_prefix_shortcut
