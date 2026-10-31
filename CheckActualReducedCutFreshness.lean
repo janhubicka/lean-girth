@@ -1,0 +1,4 @@
+import Girth.TrainActualReducedCutFreshness
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_wagon_fresh_at_all_source_cuts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_long_wagon_fresh_at_source_cuts
