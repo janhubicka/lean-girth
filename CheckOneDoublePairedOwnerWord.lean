@@ -1,0 +1,5 @@
+import Girth.TrainOneDoublePairedOwnerWord
+
+#print axioms StructuralRamsey.Girth.oneDoublePairedWord_label_projection
+#print axioms StructuralRamsey.Girth.oneDoublePairedWord_owner_projection
+#print axioms StructuralRamsey.Girth.oneDoublePairedWord_admissible
