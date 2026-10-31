@@ -108,7 +108,8 @@ theorem attachedSelectedPicture_reduced_wagon_fresh_at_all_source_cuts
           hShared μ).injective
       have hq : q = w := hWagonInjective hWq
       apply hReducedFresh j
-      simpa [hz, hq]
+      change Z.connector j = Sum.inr w
+      rw [hz, hq]
 
 /-- A full HasSupremeAt plan constructs its replacement word, so
 each long wagon is fresh among reduced connectors. We transfer this
