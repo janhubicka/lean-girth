@@ -22,6 +22,41 @@ namespace StructuralRamsey.Girth
 open StructuralRamsey.RelStructure
 
 universe u v
+
+/-- A cyclic owner word has the maximum possible number of cuts
+exactly when every original position is a cut. Thus the length-three,
+three-segment exceptional case retains all original connectors. -/
+theorem cyclicOwnerChanges_eq_length_iff_every_cut
+    {Owner : Type v} {n : ℕ} (owner : Fin n → Owner) :
+    cyclicOwnerChanges owner = n ↔
+      ∀ k : Fin n, owner k ≠ owner (cyclicSucc k) := by
+  classical
+  constructor
+  · intro hCount
+    have hCard :
+        (Finset.univ : Finset (Fin n)).card ≤
+          (cyclicOwnerCutPositions owner).card := by
+      simpa [cyclicOwnerCutPositions_card] using hCount.symm.le
+    have hEq : cyclicOwnerCutPositions owner =
+        (Finset.univ : Finset (Fin n)) :=
+      Finset.eq_of_subset_of_card_le (Finset.subset_univ _) hCard
+    intro k
+    apply (mem_cyclicOwnerCutPositions_iff owner k).mp
+    rw [hEq]
+    exact Finset.mem_univ k
+  · intro hEvery
+    have hEq : cyclicOwnerCutPositions owner =
+        (Finset.univ : Finset (Fin n)) := by
+      ext k
+      simp only [mem_cyclicOwnerCutPositions_iff, Finset.mem_univ,
+        iff_true]
+      exact hEvery k
+    calc
+      cyclicOwnerChanges owner =
+          (cyclicOwnerCutPositions owner).card :=
+        (cyclicOwnerCutPositions_card owner).symm
+      _ = n := by rw [hEq]; simp
+
 section ActualFullCutLongFreshness
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
