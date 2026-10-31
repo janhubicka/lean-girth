@@ -1,3 +1,4 @@
 import Girth.TrainActualSupremeChosenLongGlobal
 
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_of_every_cut
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_chosen_long_global_of_all_cuts
