@@ -101,7 +101,12 @@ theorem attachedSelectedPicture_reduced_wagon_fresh_at_all_source_cuts
       have hWq : CoreWagon q = CoreWagon w := by
         have h := hMap.trans hOldWagon
         simpa [hz] using h
-      have hq : q = w := CoreWagon.injective hWq
+      have hWagonInjective : Function.Injective CoreWagon :=
+        (generatedActualASupportTrain_coreWagonEmbedding
+          A hA C.toRelStructure S R f T U
+          (fun ν j p q h => Iff.mp (hRel ν j p q) h)
+          hShared μ).injective
+      have hq : q = w := hWagonInjective hWq
       apply hReducedFresh j
       simpa [hz, hq]
 
