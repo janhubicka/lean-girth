@@ -1,5 +1,5 @@
 import Girth.LabelledWagonCutRestriction
-import Girth.PartiteIrreducible
+import Girth.TrainRecursiveRefinement
 
 /-!
 # Ordinary physical girth gives labelled girth for injective carriers
