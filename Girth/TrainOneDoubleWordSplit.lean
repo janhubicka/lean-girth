@@ -27,6 +27,17 @@ def oneDoubleWord {n : ℕ}
   (List.ofFn fun k : Fin n =>
     if k = j then [a,b] else [labels k]).flatten
 
+/-- Flattening Fin-indexed singleton lists returns the original
+Fin-indexed word. -/
+theorem flatten_ofFn_singletons
+    {n : ℕ} (labels : Fin n → α) :
+    (List.ofFn fun k : Fin n => [labels k]).flatten =
+      List.ofFn labels := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      simp [List.ofFn_succ, ih]
+
 /-- The source and its one-double replacement admit the SAME exact
 prefix and suffix, including replacement at index zero and the
 last index. -/
@@ -35,14 +46,15 @@ theorem oneDoubleWord_exists_common_split
     ∃ (before after : List α),
       List.ofFn labels = before ++ labels j :: after ∧
       oneDoubleWord labels j a b = before ++ a :: b :: after := by
-  induction n generalizing labels j with
+  induction n with
   | zero => exact Fin.elim0 j
   | succ n ih =>
       cases j using Fin.cases with
       | zero =>
           refine ⟨[], List.ofFn (fun k : Fin n => labels k.succ), ?_, ?_⟩
           · simp [List.ofFn_succ]
-          · simp [oneDoubleWord, List.ofFn_succ]
+          · simp [oneDoubleWord, List.ofFn_succ,
+              flatten_ofFn_singletons]
       | succ j =>
           obtain ⟨before, after, hOld, hNew⟩ :=
             ih (fun k : Fin n => labels k.succ) j
@@ -53,7 +65,12 @@ theorem oneDoubleWord_exists_common_split
                 oneDoubleWord labels (Fin.succ j) a b =
                 labels 0 :: oneDoubleWord
                   (fun k : Fin n => labels k.succ) j a b := by
-                simp [oneDoubleWord, List.ofFn_succ]
+                have hz : (0 : Fin (n + 1)) ≠ Fin.succ j := by
+                  intro heq
+                  have hv := congrArg Fin.val heq
+                  change 0 = j.val + 1 at hv
+                  omega
+                simp [oneDoubleWord, List.ofFn_succ, hz]
             rw [hBlocks, hNew]
             simp [List.cons_append]
 
