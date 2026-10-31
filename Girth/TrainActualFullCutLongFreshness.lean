@@ -57,6 +57,25 @@ theorem cyclicOwnerChanges_eq_length_iff_every_cut
         (cyclicOwnerCutPositions_card owner).symm
       _ = n := by rw [hEq]; simp
 
+/-- In the exceptional length-three case, having at least three
+different owner segments forces all three source connectors to
+survive as cut connectors. -/
+theorem cyclicOwner_all_cut_of_length_three_three_changes
+    {Owner : Type v} {n : ℕ} (owner : Fin n → Owner)
+    (hn : n = 3) (hChanges : 3 ≤ cyclicOwnerChanges owner) :
+    ∀ k : Fin n, owner k ≠ owner (cyclicSucc k) := by
+  classical
+  have hUpper : cyclicOwnerChanges owner ≤ n := by
+    calc
+      cyclicOwnerChanges owner =
+          (cyclicOwnerCutPositions owner).card :=
+        (cyclicOwnerCutPositions_card owner).symm
+      _ ≤ (Finset.univ : Finset (Fin n)).card :=
+        Finset.card_le_card (Finset.subset_univ _)
+      _ = n := by simp
+  apply (cyclicOwnerChanges_eq_length_iff_every_cut owner).mp
+  omega
+
 section ActualFullCutLongFreshness
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
