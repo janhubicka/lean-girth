@@ -1,0 +1,6 @@
+import Girth.TrainFillingRetainedRestriction
+
+#print axioms StructuralRamsey.Girth.TrainFilling.retained_wagon_no_old_pair
+#print axioms StructuralRamsey.Girth.TrainFilling.fillingRestrictionMap
+#print axioms StructuralRamsey.Girth.TrainFilling.filling_restriction_bounds
+#print axioms StructuralRamsey.Girth.TrainFilling.filling_canonical_restriction_bounds
