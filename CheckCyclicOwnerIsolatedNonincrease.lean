@@ -1,0 +1,4 @@
+import Girth.TrainCyclicOwnerIsolatedNonincrease
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_replace_isolated_le
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_replace_isolated_strict_of_neighbor
