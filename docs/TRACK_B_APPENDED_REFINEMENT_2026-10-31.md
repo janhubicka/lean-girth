@@ -1,7 +1,7 @@
 # Track B: appended refinement and actual remaining-fibre readiness
 
-Starting point: main `c60b2fa77b8ed35a3b34e4caeed027c9ab94b6f8`, including
-Track B PR #715 and the concurrently merged A/C/D additions. These additions
+Integration base: main `8218823f73106e9f54613d48fd66f53be9f2c480`, including
+Track B PR #715, Track A PR #726 and the concurrent A/C/D additions. These additions
 are preserved; the proof code here extends the unchanged Track B base.
 Scope: the circulation proof; no appendix changes.
 
