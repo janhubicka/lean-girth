@@ -1,0 +1,5 @@
+import Girth.TrainActualOrderOneCutBridge
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.edge_incident_all_connectors_of_order_one
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_orderOne_cut_physical_bridge
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_orderOne_cut_shared_standard_bridge

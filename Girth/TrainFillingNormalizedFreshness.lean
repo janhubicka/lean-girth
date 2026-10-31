@@ -78,8 +78,8 @@ theorem BigCycle.wagon_fresh_of_mixedNormalized
       have hn := length_three_of_third_successor C.length_ge_two i hThird
       subst n
       have hCover : k = j ∨ k = i ∨ k = cyclicSucc i := by
-        fin_cases i <;> fin_cases j <;> fin_cases k <;>
-          simp_all [cyclicSucc, trainCyclicPred]
+        rw [hjSS]
+        fin_cases i <;> fin_cases k <;> decide
       rcases hCover with hkj | hki | hks
       · exact hNe (congrArg C.label hkj.symm)
       · apply hNormal k hk

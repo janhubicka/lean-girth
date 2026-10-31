@@ -1,0 +1,3 @@
+import Girth.TrainSystemCutFirstWagonWindow
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.first_wagon_no_extra_of_minimal

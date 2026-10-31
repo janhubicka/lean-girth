@@ -1,0 +1,6 @@
+import Girth.TrainOneFreshLongPhysical
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.physicalLongGeometry_of_longValid
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLongPieces_physical_incidence
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLongPieces_physical_A2Geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oneFreshPhysicalLong_complete_of_three_le
