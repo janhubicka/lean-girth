@@ -1,0 +1,5 @@
+import Girth.TrainActualReducedNeighborOwner
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_label_eq_source_owner
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_predecessor_is_old_left_owner
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_successor_is_old_right_owner
