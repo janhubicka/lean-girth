@@ -39,7 +39,7 @@ theorem BigCycle.source_designated_of_physicalLongGeometry
     hNoPair⟩ := hLong
   cases hLabel : K.label j with
   | inl i =>
-      exact ⟨i, hLabel⟩
+      exact ⟨i, rfl⟩
   | inr old =>
       exfalso
       have hOldX : x ∈ D.edgeCarrier old := by
