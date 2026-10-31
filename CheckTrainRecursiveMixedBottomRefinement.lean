@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveMixedBottomRefinement
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_bottomAndPositiveSystemBounds
