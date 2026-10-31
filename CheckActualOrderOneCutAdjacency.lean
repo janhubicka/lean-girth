@@ -1,0 +1,4 @@
+import Girth.TrainActualOrderOneCutAdjacency
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.mixed_connectors_adjacent_of_common_edge
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_orderOne_cut_positions_adjacent
