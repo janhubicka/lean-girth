@@ -59,7 +59,7 @@ def inheritedTrain (T : EdgeTrainLevels F.OldEdge m) :
       exact T.nested _ _ (Nat.sub_le_sub_right hμν 1) _ _ hef
   bottom := by
     intro e f
-    simp only [if_pos rfl]
+    simp
   top := by
     intro e f
     have hpos : m + 1 ≠ 0 := by omega
