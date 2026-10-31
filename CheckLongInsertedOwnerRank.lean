@@ -1,0 +1,4 @@
+import Girth.TrainLongInsertedOwnerRank
+
+#print axioms StructuralRamsey.Girth.listNonTargetCount_insert_two_target
+#print axioms StructuralRamsey.Girth.listNonTargetCount_insert_two_target_lt
