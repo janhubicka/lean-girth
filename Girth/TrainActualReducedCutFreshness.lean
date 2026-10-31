@@ -95,12 +95,8 @@ theorem attachedSelectedPicture_reduced_wagon_fresh_at_all_source_cuts
       K owner hAllowed j
   cases hz : Z.connector j with
   | inl x =>
-      have hContr : (Sum.inl (CoreEmb x) :
-          (RelStructure.Attachment.Vertex S) ⊕
-            Quotient (U.wagonSetoid μ)) =
-          Sum.inr (CoreWagon w) := by
-        simpa [hz] using hMap.trans hOldWagon
-      cases hContr
+      have hContr := hMap.trans hOldWagon
+      simp [hz] at hContr
   | inr q =>
       have hWq : CoreWagon q = CoreWagon w := by
         have h := hMap.trans hOldWagon
