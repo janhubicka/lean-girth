@@ -1,0 +1,3 @@
+import Girth.TrainActualSupremeChosenLongGlobal
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_supreme_chosen_long_global_of_all_cuts
