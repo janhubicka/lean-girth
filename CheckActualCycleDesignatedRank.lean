@@ -1,0 +1,4 @@
+import Girth.TrainActualCycleDesignatedRank
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designatedCount_drop_of_long_literal
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designatedCount_drop_of_short_literal
