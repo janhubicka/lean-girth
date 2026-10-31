@@ -164,18 +164,18 @@ theorem EdgeTrainLevels.labelledRetainedCutGirth_of_fine
     {m d : ℕ} (T : EdgeTrainLevels E (m + d)) (hm : 0 < m)
     (edge : E → Set W) (μ : Fin (m + 1)) (q : ℕ)
     (hFine : LabelledGirthGT
-      (T.wagonClassCarrier edge (firstForgetIndex m d μ)) q) :
+      (T.wagonClassCarrier edge (EdgeTrainLevels.firstForgetIndex m d μ)) q) :
     LabelledGirthGT
       ((T.forgetFirstCuts hm).wagonClassCarrier edge μ) q := by
   have hEq :
       (T.forgetFirstCuts hm).wagonClassCarrier edge μ =
-        fun p => T.wagonClassCarrier edge (firstForgetIndex m d μ)
+        fun p => T.wagonClassCarrier edge (EdgeTrainLevels.firstForgetIndex m d μ)
           (T.forgetFirstCuts_wagonEquiv hm μ p) := by
     funext p
     exact T.forgetFirstCuts_wagonClassCarrier hm edge μ p
   rw [hEq]
   exact labelledGirthGT_of_injective_reindex
-    (T.wagonClassCarrier edge (firstForgetIndex m d μ))
+    (T.wagonClassCarrier edge (EdgeTrainLevels.firstForgetIndex m d μ))
     (T.forgetFirstCuts_wagonEquiv hm μ)
     (T.forgetFirstCuts_wagonEquiv hm μ).injective q hFine
 
@@ -198,14 +198,14 @@ theorem selectedPicture_retainedCutGirth_of_fullSystemGirth
     (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) (m + d))
     (hm : 0 < m) (μ : Fin (m + 1)) (q : ℕ)
     (hFull : (selectedPictureOrderOneData A B D C family selected T
-      (firstForgetIndex m d μ)).FullSystemGirthGT q) :
+      (EdgeTrainLevels.firstForgetIndex m d μ)).FullSystemGirthGT q) :
     LabelledGirthGT
       ((T.forgetFirstCuts hm).wagonClassCarrier
         (fun edge => edge.1) μ) q := by
   exact T.labelledRetainedCutGirth_of_fine hm
     (fun edge => edge.1) μ q
     (selectedPicture_labelledCutGirth_of_fullSystemGirth
-      A B D C family selected T (firstForgetIndex m d μ) q hFull)
+      A B D C family selected T (EdgeTrainLevels.firstForgetIndex m d μ) q hFull)
 
 end SelectedRetainedActual
 
