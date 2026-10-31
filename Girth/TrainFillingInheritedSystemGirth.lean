@@ -77,6 +77,34 @@ theorem inheritedCutData_fullSystemGirthGT (ν : Fin (m + 1)) {q : ℕ}
   exact F.filled_fullSystemGirthGT copyCarrier copyEdges
     (Quotient.mk (T.wagonSetoid ν)) hOld hEdges
 
+/-- Global filled-edge linearity is a consequence of old edge linearity
+and linearity INSIDE each actual filling fibre. No injective cover map
+or independently postulated global output linearity is required. -/
+theorem edgeLinear_of_fibreLinear
+    (hOld : ∀ e f : F.OldEdge, e ≠ f → (e.1 ∩ f.1).Subsingleton)
+    (hFibre : ∀ e f : F.NewEdge, e ≠ f → F.cover e = F.cover f →
+      (e.1 ∩ f.1).Subsingleton) :
+    ∀ e f : F.NewEdge, e ≠ f → (e.1 ∩ f.1).Subsingleton := by
+  intro e f hne
+  by_cases hc : F.cover e = F.cover f
+  · exact hFibre e f hne hc
+  · intro x hx y hy
+    exact hOld (F.cover e) (F.cover f) hc
+      ⟨F.contained e hx.1, F.contained f hx.2⟩
+      ⟨F.contained e hy.1, F.contained f hy.2⟩
+
+/-- The actual quotient-cut theorem with only LOCAL filling linearity.
+The old full bound supplies old edge linearity, so global new linearity
+is derived rather than passed as an independent output invariant. -/
+theorem inheritedCutData_fullSystemGirthGT_of_fibreLinearity
+    (ν : Fin (m + 1)) {q : ℕ}
+    (hOld : (F.oldCutData T copyCarrier copyEdges ν).FullSystemGirthGT q)
+    (hFibre : ∀ e f : F.NewEdge, e ≠ f → F.cover e = F.cover f →
+      (e.1 ∩ f.1).Subsingleton) :
+    (F.inheritedCutData T copyCarrier copyEdges ν).FullSystemGirthGT q := by
+  exact F.inheritedCutData_fullSystemGirthGT T copyCarrier copyEdges ν hOld
+    (F.edgeLinear_of_fibreLinear hOld.1.1 hFibre)
+
 /-- The cutoff-two restoration delivers its actual train parameters and
 ALL proper inherited system bounds together. Old proper indices are
 j.castSucc for j : Fin m, INCLUDING the old equality cut. They become
@@ -90,13 +118,14 @@ theorem inheritedTrain_parameters_and_tailSystemGirth
       (fun ν => allowed ν.succ))
     (hOldGirth : ∀ j : Fin m,
       (F.oldCutData T copyCarrier copyEdges j.castSucc).FullSystemGirthGT (g j))
-    (hEdges : ∀ e f : F.NewEdge, e ≠ f → (e.1 ∩ f.1).Subsingleton) :
+    (hFibre : ∀ e f : F.NewEdge, e ≠ f → F.cover e = F.cover f →
+      (e.1 ∩ f.1).Subsingleton) :
     (F.inheritedTrain T).AdjacentParameters (fun e => e.1) allowed ∧
       ∀ j : Fin m,
         (F.inheritedCutData T copyCarrier copyEdges j.castSucc).FullSystemGirthGT (g j) := by
   refine ⟨F.inheritedTrain_adjacentParameters T allowed hFirst hOldParameters, ?_⟩
   intro j
-  exact F.inheritedCutData_fullSystemGirthGT T copyCarrier copyEdges j.castSucc
-    (hOldGirth j) hEdges
+  exact F.inheritedCutData_fullSystemGirthGT_of_fibreLinearity
+    T copyCarrier copyEdges j.castSucc (hOldGirth j) hFibre
 
 end StructuralRamsey.Girth.TrainFilling
