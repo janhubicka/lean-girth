@@ -1,0 +1,3 @@
+import Girth.TrainActualLongStandardSupport
+
+#print axioms StructuralRamsey.Girth.sharedWitness_long_piece_physical_edges_in_standard
