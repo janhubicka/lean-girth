@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutFreshLongGlobal
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_fresh_long_global_transfer

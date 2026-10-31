@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutLongPhysicalLift
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_long_piece_physical_output
