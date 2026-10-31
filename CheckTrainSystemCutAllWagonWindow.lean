@@ -1,0 +1,5 @@
+import Girth.TrainSystemCutAllWagonWindow
+
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.first_wagon_contact_window_of_minimal
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.outside_wagon_contact_window_of_minimal
+#print axioms StructuralRamsey.Girth.LabelledBergeCycle.contact_window_of_global_minimal
