@@ -88,7 +88,9 @@ theorem oneDoubleWord_length_succ
     oneDoubleWord_exists_common_split labels j first second
   have hLen := congrArg List.length hOld
   have hn : before.length + 1 + after.length = n := by
-    simpa [List.length_append, List.length_cons] using hLen.symm
+    simp only [List.length_ofFn, List.length_append,
+      List.length_cons] at hLen
+    omega
   rw [hNew]
   simp only [List.length_append, List.length_cons]
   omega
