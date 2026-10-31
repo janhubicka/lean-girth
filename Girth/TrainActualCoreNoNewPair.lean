@@ -59,12 +59,12 @@ theorem attachment_core_pairEdge_back_of_aStrong
     actualASupport_core_edge_pullback A hA B S R f g hSub
   have hxImage : CoreEmb x ∈ attachedCoreAEdgeCarrier A B S R f b := by
     rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b]
-    rw [hb]
-    exact hx
+    change CoreEmb x ∈ (CoreActual b).1
+    exact hb.symm ▸ hx
   have hyImage : CoreEmb y ∈ attachedCoreAEdgeCarrier A B S R f b := by
     rw [← actualAPictureEdgeEquiv_core_carrier A hA B S R f b]
-    rw [hb]
-    exact hy
+    change CoreEmb y ∈ (CoreActual b).1
+    exact hb.symm ▸ hy
   have hxCore : x ∈ b.1 := by
     change CoreEmb x ∈ (fun t : Core => CoreEmb t) '' b.1 at hxImage
     obtain ⟨t, ht, htx⟩ := hxImage
