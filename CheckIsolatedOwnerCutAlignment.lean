@@ -1,0 +1,3 @@
+import Girth.TrainIsolatedOwnerCutAlignment
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_of_isolated
