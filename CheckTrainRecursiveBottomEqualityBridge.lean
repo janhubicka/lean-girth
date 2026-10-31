@@ -1,0 +1,7 @@
+import Girth.TrainRecursiveBottomEqualityBridge
+
+#check StructuralRamsey.Girth.EdgeTrainLevels.bottomQuotientEdge
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottomQuotientEdge_injective
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_wagonClassCarrier_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_labelledCutGirth_of_edgeGirth
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_ordinaryBottomAndPositiveSystemBounds
