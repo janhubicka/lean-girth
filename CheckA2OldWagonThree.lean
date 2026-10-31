@@ -1,0 +1,4 @@
+import Girth.TrainA2OldWagonThree
+
+#print axioms StructuralRamsey.Girth.cyclicSucc_succ_ne_pred_of_four_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.old_wagon_adjacent_contacts_force_length_three
