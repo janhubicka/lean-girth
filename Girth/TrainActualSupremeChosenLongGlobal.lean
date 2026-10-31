@@ -1,5 +1,6 @@
 import Girth.TrainActualFullCutLongFreshness
 import Girth.TrainActualPositiveCutFreshLongGlobal
+import Girth.TrainIsolatedOwnerCutAlignment
 
 /-!
 # A long piece from the ACTUAL global supreme plan yields legal output
@@ -25,6 +26,27 @@ namespace StructuralRamsey.Girth
 open StructuralRamsey.RelStructure
 
 universe u v
+/-- If all original positions are cuts, the predecessor in the
+canonical cut index has EXACTLY the predecessor original position.
+No extra geometric cut alignment premise is needed. -/
+theorem cyclicOwnerCutIndex_pred_of_every_cut
+    {Owner : Type v} {n : ℕ} (owner : Fin n → Owner)
+    (hn : 2 ≤ n)
+    (hEveryCut : ∀ k : Fin n,
+      owner k ≠ owner (cyclicSucc k))
+    (cut : Fin (cyclicOwnerChanges owner)) :
+    cyclicOwnerCutIndex owner (trainCyclicPred cut) =
+      trainCyclicPred (cyclicOwnerCutIndex owner cut) := by
+  let pos := cyclicOwnerCutIndex owner cut
+  have hPrev : owner (trainCyclicPred pos) ≠ owner pos := by
+    simpa only [cyclicSucc_trainCyclicPred_of_two_le hn pos] using
+      hEveryCut (trainCyclicPred pos)
+  obtain ⟨j, hj, hPrevIndex⟩ :=
+    cyclicOwnerCutIndex_pred_of_isolated
+      owner hn pos hPrev (hEveryCut pos)
+  have hEq : j = cut := (cyclicOwnerCutIndex owner).injective hj
+  simpa only [hEq, pos] using hPrevIndex
+
 section ActualSupremeChosenLongGlobal
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
