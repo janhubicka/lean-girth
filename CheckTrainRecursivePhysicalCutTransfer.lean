@@ -1,0 +1,6 @@
+import Girth.TrainRecursivePhysicalCutTransfer
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledChildGirth_of_labelledCut
+#print axioms StructuralRamsey.Girth.selectedPicture_labelledCutGirth_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.selectedPicture_childGirth_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_physicalSystemBounds
