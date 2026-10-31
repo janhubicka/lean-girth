@@ -1,0 +1,4 @@
+import Girth.TrainSystemCutEdgeOnlyExpansion
+
+#print axioms StructuralRamsey.Girth.OrderOneData.exists_acceptable_edgeOnly_of_chordless_wagon_cycle
+#print axioms StructuralRamsey.Girth.OrderOneData.exists_acceptable_edgeOnly_of_minimal_wagon_cycle
