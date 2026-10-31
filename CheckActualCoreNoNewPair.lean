@@ -1,0 +1,4 @@
+import Girth.TrainActualCoreNoNewPair
+
+#print axioms StructuralRamsey.Girth.attachment_core_pairEdge_back_of_aStrong
+#print axioms StructuralRamsey.Girth.attachment_core_nonpair_preserved_of_aStrong
