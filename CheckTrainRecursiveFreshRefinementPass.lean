@@ -1,0 +1,7 @@
+import Girth.TrainRecursiveFreshRefinementPass
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.constructFromInitial_of_freshNontrivialSteps
+#check StructuralRamsey.Girth.TrainRecursiveWitness.constructFromTargetCuts_of_freshNontrivialRefiningSteps
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.constructFromInitial_of_freshNontrivialSteps
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.constructFromTargetCuts_of_freshNontrivialRefiningSteps
