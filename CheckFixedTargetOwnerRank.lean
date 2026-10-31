@@ -1,0 +1,5 @@
+import Girth.TrainFixedTargetOwnerRank
+
+#print axioms StructuralRamsey.Girth.cyclicNonTargetCount_replace_drop
+#print axioms StructuralRamsey.Girth.cyclicNonTargetCount_replace_lt
+#print axioms StructuralRamsey.Girth.cyclicIsolatedOwner_fixedTarget_lex_decrease
