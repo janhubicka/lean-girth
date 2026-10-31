@@ -151,4 +151,62 @@ def FirstWagonRefinement.ofFineTrain_of_physicalSystemBounds
 
 end ConcreteRefinement
 
+
+section RetainedCut
+
+variable {E W : Type v}
+
+/-- Forgetting inserted first levels changes neither the complete
+retained labelled cut family nor its girth. The exact quotient
+equivalence keeps distinct wagon labels distinct even if their
+physical carriers coincide. Level zero is retained as zero. -/
+theorem EdgeTrainLevels.labelledRetainedCutGirth_of_fine
+    {m d : ℕ} (T : EdgeTrainLevels E (m + d)) (hm : 0 < m)
+    (edge : E → Set W) (μ : Fin (m + 1)) (q : ℕ)
+    (hFine : LabelledGirthGT
+      (T.wagonClassCarrier edge (firstForgetIndex m d μ)) q) :
+    LabelledGirthGT
+      ((T.forgetFirstCuts hm).wagonClassCarrier edge μ) q := by
+  have hEq :
+      (T.forgetFirstCuts hm).wagonClassCarrier edge μ =
+        fun p => T.wagonClassCarrier edge (firstForgetIndex m d μ)
+          (T.forgetFirstCuts_wagonEquiv hm μ p) := by
+    funext p
+    exact T.forgetFirstCuts_wagonClassCarrier hm edge μ p
+  rw [hEq]
+  exact labelledGirthGT_of_injective_reindex
+    (T.wagonClassCarrier edge (firstForgetIndex m d μ))
+    (T.forgetFirstCuts_wagonEquiv hm μ)
+    (T.forgetFirstCuts_wagonEquiv hm μ).injective q hFine
+
+end RetainedCut
+
+section SelectedRetainedActual
+
+variable {L : RelLanguage.{u}} {UA VB P X : Type v}
+variable (A : RelStructure L UA) (B : RelStructure L VB)
+variable (D : RelStructure L P) (C : StructuralRamsey.Partite.System L P X)
+variable (family : Set (RelStructure.Embedding B D))
+variable (selected : Set (DesignatedCopy B D C family))
+
+/-- A complete physical system-girth bound at the corresponding
+FINE level gives the genuine labelled girth of an original RETAINED
+train cut after forgetting extra refinement levels. Every parent
+label, ambient support edge and physical vertex carrier is preserved. -/
+theorem selectedPicture_retainedCutGirth_of_fullSystemGirth
+    {m d : ℕ}
+    (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) (m + d))
+    (hm : 0 < m) (μ : Fin (m + 1)) (q : ℕ)
+    (hFull : (selectedPictureOrderOneData A B D C family selected T
+      (firstForgetIndex m d μ)).FullSystemGirthGT q) :
+    LabelledGirthGT
+      ((T.forgetFirstCuts hm).wagonClassCarrier
+        (fun edge => edge.1) μ) q := by
+  exact T.labelledRetainedCutGirth_of_fine hm
+    (fun edge => edge.1) μ q
+    (selectedPicture_labelledCutGirth_of_fullSystemGirth
+      A B D C family selected T (firstForgetIndex m d μ) q hFull)
+
+end SelectedRetainedActual
+
 end StructuralRamsey.Girth
