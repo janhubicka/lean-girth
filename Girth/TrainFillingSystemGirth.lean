@@ -63,7 +63,8 @@ theorem filled_normalized_supreme_of_fullSystemGirth
       rcases F.retainedIndex_predecessor copyCarrier copyEdges parent C t with
         ⟨hKeep, _h⟩ | ⟨_hDelete, h⟩
       · exact False.elim (hKeep (by rw [hPred]; exact hi))
-      · simpa only [hPred] using h
+      · change pos (trainCyclicPred t) = trainCyclicPred (trainCyclicPred (pos t)) at h
+        simpa only [hPred] using h
     have hPhysical : B.label t = Sum.inr
         (F.contractingEdge copyCarrier copyEdges parent C hOld.1 i hi) := by
       change F.projectedLabel copyCarrier copyEdges parent C hOld.1 t = _
