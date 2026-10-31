@@ -117,15 +117,17 @@ theorem designatedLongSingletonCycle_long_piece :
       ?_, ?_, ?_, ?_, ?_, ?_⟩
   · decide
   · decide
-  · simp [OrderOneData.edges, designatedLongSingletonData]
-  · simp [OrderOneData.edges, designatedLongSingletonData]
+  · simpa [OrderOneData.edges, designatedLongSingletonCycle,
+      designatedLongSingletonData] using (Set.mem_univ (0 : Fin 3))
+  · simpa [OrderOneData.edges, designatedLongSingletonCycle,
+      designatedLongSingletonData] using (Set.mem_univ (1 : Fin 3))
   · decide
   · decide
   · decide
-  · change (0 : Fin 3) ∈ (Set.univ : Set (Fin 3))
-    exact Set.mem_univ _
-  · change (1 : Fin 3) ∈ (Set.univ : Set (Fin 3))
-    exact Set.mem_univ _
+  · change (0 : Fin 3) ∈ ({(0 : Fin 3)} : Set (Fin 3))
+    exact Set.mem_singleton _
+  · change (1 : Fin 3) ∈ ({(1 : Fin 3)} : Set (Fin 3))
+    exact Set.mem_singleton _
   · rintro ⟨edge, h0, h1⟩
     change (0 : Fin 3) = edge at h0
     change (1 : Fin 3) = edge at h1
