@@ -1,0 +1,6 @@
+import Girth.TrainOneFreshLongComplete
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLongPieces_incidence
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLongPieces_A2Geometry
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLongPieces_fresh
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oneFreshLong_complete_of_three_le
