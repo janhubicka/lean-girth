@@ -77,6 +77,34 @@ theorem oneDoublePairedWord_owner_projection
     · simp [hk]
   exact congrArg List.flatten (congrArg List.ofFn hBlocks)
 
+/-- The doubled source label word has length precisely n+1.
+This is the exact source/output Fin-size equality required later,
+not an informal assumption that one long block inserts one token. -/
+theorem oneDoubleWord_length_succ
+    {n : ℕ} (labels : Fin n → Label) (j : Fin n)
+    (first second : Label) :
+    (oneDoubleWord labels j first second).length = n + 1 := by
+  obtain ⟨before, after, hOld, hNew⟩ :=
+    oneDoubleWord_exists_common_split labels j first second
+  have hLen := congrArg List.length hOld
+  have hn : before.length + 1 + after.length = n := by
+    simpa [List.length_append, List.length_cons] using hLen.symm
+  rw [hNew]
+  simp only [List.length_append, List.length_cons]
+  omega
+
+/-- The paired owner certificate has the same exact output length. -/
+theorem oneDoublePairedWord_length_succ
+    {n : ℕ} (labels : Fin n → Label) (owners : Fin n → Owner)
+    (j : Fin n) (first second : Label) (target : Owner) :
+    (oneDoublePairedWord labels owners j first second target).length =
+      n + 1 := by
+  have h := congrArg List.length
+    (oneDoublePairedWord_label_projection
+      labels owners j first second target)
+  simpa only [List.length_map,
+    oneDoubleWord_length_succ] using h
+
 /-- Every token of the paired long certificate is geometrically
 admissible when the old positions are admissible and BOTH new
 physical labels are contained in the chosen receiving standard.
