@@ -55,7 +55,7 @@ def designatedLongSingletonCycle :
   right_incident := by
     intro k
     fin_cases k <;> simp [OrderOneData.Incident, OrderOneData.carrier,
-      designatedLongSingletonData]
+      designatedLongSingletonData] <;> decide
 
 /-- The abstract source cycle is acceptable; in particular A3
 allows a nonconnector wagon touching two ADJACENT vertex positions. -/
@@ -85,8 +85,8 @@ theorem designatedLongSingletonCycle_acceptable :
           exact hh.symm
         subst x
         fin_cases edge <;>
-          simp [designatedLongSingletonData, OrderOneData.parent,
-            OrderOneData.edgeCarrier] at he hxEdge
+          simp_all [designatedLongSingletonData, OrderOneData.parent,
+            OrderOneData.edgeCarrier]
     · refine ⟨(1 : Fin 3), ?_⟩
       intro j hj
       fin_cases j
@@ -97,8 +97,8 @@ theorem designatedLongSingletonCycle_acceptable :
           exact hh.symm
         subst x
         fin_cases edge <;>
-          simp [designatedLongSingletonData, OrderOneData.parent,
-            OrderOneData.edgeCarrier] at he hxEdge
+          simp_all [designatedLongSingletonData, OrderOneData.parent,
+            OrderOneData.edgeCarrier]
       · exact Or.inl rfl
       · exact Or.inr (by decide)
 
@@ -117,8 +117,10 @@ theorem designatedLongSingletonCycle_long_piece :
   · decide
   · decide
   · decide
-  · simp [designatedLongSingletonData]
-  · simp [designatedLongSingletonData]
+  · simp [designatedLongSingletonCycle, designatedLongSingletonData,
+      OrderOneData.carrier, OrderOneData.edges]
+  · simp [designatedLongSingletonCycle, designatedLongSingletonData,
+      OrderOneData.carrier, OrderOneData.edges]
   · rintro ⟨edge, h0, h1⟩
     change (0 : Fin 3) = edge at h0
     change (1 : Fin 3) = edge at h1
