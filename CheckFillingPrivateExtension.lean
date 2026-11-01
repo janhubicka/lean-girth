@@ -10,3 +10,8 @@ import Girth.TrainFillingPrivateExtension
 #print axioms StructuralRamsey.Girth.PrivateWagonInput.range_inter
 #print axioms StructuralRamsey.Girth.PrivateWagonInput.selected_carrier_old
 #print axioms StructuralRamsey.Girth.PrivateWagonInput.componentGeometry
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.ranges_inter_subsingleton
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.edgeCarrier_injective
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.every_vertex_covered
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.finite_vertices
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.finite_edges
