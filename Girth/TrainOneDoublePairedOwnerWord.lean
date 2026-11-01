@@ -126,11 +126,12 @@ theorem oneDoublePairedWord_admissible
         Allowed z.1 z.2 := by
     intro k z hz
     by_cases hk : k = j
-    · simp only [hk, ite_true, List.mem_cons,
-        List.mem_singleton] at hz
-      rcases hz with rfl | rfl
-      · exact hFirst
-      · exact hSecond
+    · simp [hk] at hz
+      rcases hz with hFirstZ | hSecondZ
+      · subst z
+        exact hFirst
+      · subst z
+        exact hSecond
     · simp only [hk, ite_false, List.mem_singleton] at hz
       subst z
       exact hOld k
