@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveFineWitnessBounds
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeFineWitness_supportGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachmentBounds_of_fineWitness
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.pictureStep_of_fineWitness

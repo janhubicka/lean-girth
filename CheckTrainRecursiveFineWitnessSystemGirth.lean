@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveFineWitnessSystemGirth
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.activeGluingWitness_labelledCutGirth_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.activeGluingWitness_forgetFirstCuts_eq
+#print axioms StructuralRamsey.Girth.activeGluingWitness_interiorFull_of_fine

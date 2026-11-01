@@ -77,6 +77,14 @@ on:
       - 'CheckTrainRecursiveRefinementParameters.lean'
       - 'Girth/TrainRecursiveEmptySource.lean'
       - 'CheckTrainRecursiveEmptySource.lean'
+      - 'Girth/TrainRecursiveFineWitnessTransport.lean'
+      - 'CheckTrainRecursiveFineWitnessTransport.lean'
+      - 'Girth/TrainRecursiveFineWitnessSystemGirth.lean'
+      - 'CheckTrainRecursiveFineWitnessSystemGirth.lean'
+      - 'Girth/TrainRecursiveFineWitnessBounds.lean'
+      - 'CheckTrainRecursiveFineWitnessBounds.lean'
+      - 'Girth/TrainRecursiveFineWitnessStep.lean'
+      - 'CheckTrainRecursiveFineWitnessStep.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -156,6 +164,14 @@ on:
       - 'CheckTrainRecursiveRefinementParameters.lean'
       - 'Girth/TrainRecursiveEmptySource.lean'
       - 'CheckTrainRecursiveEmptySource.lean'
+      - 'Girth/TrainRecursiveFineWitnessTransport.lean'
+      - 'CheckTrainRecursiveFineWitnessTransport.lean'
+      - 'Girth/TrainRecursiveFineWitnessSystemGirth.lean'
+      - 'CheckTrainRecursiveFineWitnessSystemGirth.lean'
+      - 'Girth/TrainRecursiveFineWitnessBounds.lean'
+      - 'CheckTrainRecursiveFineWitnessBounds.lean'
+      - 'Girth/TrainRecursiveFineWitnessStep.lean'
+      - 'CheckTrainRecursiveFineWitnessStep.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -246,7 +262,11 @@ jobs:
             Girth.TrainRecursiveFreshRefinementPass \
             Girth.TrainRecursiveActivePartite \
             Girth.TrainRecursiveRefinementParameters \
-            Girth.TrainRecursiveEmptySource
+            Girth.TrainRecursiveEmptySource \
+            Girth.TrainRecursiveFineWitnessTransport \
+            Girth.TrainRecursiveFineWitnessSystemGirth \
+            Girth.TrainRecursiveFineWitnessBounds \
+            Girth.TrainRecursiveFineWitnessStep
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -293,7 +313,11 @@ jobs:
             CheckTrainRecursiveFreshRefinementPass \
             CheckTrainRecursiveActivePartite \
             CheckTrainRecursiveRefinementParameters \
-            CheckTrainRecursiveEmptySource; do
+            CheckTrainRecursiveEmptySource \
+            CheckTrainRecursiveFineWitnessTransport \
+            CheckTrainRecursiveFineWitnessSystemGirth \
+            CheckTrainRecursiveFineWitnessBounds \
+            CheckTrainRecursiveFineWitnessStep; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -355,6 +379,10 @@ jobs:
             CheckTrainRecursiveActivePartite.log
             CheckTrainRecursiveRefinementParameters.log
             CheckTrainRecursiveEmptySource.log
+            CheckTrainRecursiveFineWitnessTransport.log
+            CheckTrainRecursiveFineWitnessSystemGirth.log
+            CheckTrainRecursiveFineWitnessBounds.log
+            CheckTrainRecursiveFineWitnessStep.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
