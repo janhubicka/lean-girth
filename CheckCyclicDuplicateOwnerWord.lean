@@ -1,0 +1,4 @@
+import Girth.TrainCyclicDuplicateOwnerWord
+
+#print axioms StructuralRamsey.Girth.ownerWalkCuts_duplicate
+#print axioms StructuralRamsey.Girth.listCyclicOwnerChanges_duplicate
