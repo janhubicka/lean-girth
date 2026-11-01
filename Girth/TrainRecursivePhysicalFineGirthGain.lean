@@ -39,6 +39,8 @@ variable (selected : Set (DesignatedCopy B D C family))
 /-- The induction's complete q=g+1 ordinary girth gain, for the
 ACTUAL fine physical support and exact retained first-wagon quotient,
 provided its named bottom, positive and retained certificates. -/
+include hA
+
 theorem selectedPicture_actualSupport_girthGain_of_fineSystemCuts
     {m d : ℕ}
     (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) (m + d))
