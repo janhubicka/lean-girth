@@ -1,0 +1,15 @@
+import Girth.TrainFirstRefinementAppendTrain
+
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lowIndex
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.oldLowIndex
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.freshParentIndex
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.train
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lower_rel
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.oldLevels
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.freshParent_rel
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lowerWagonEquiv
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lowerWagonEquiv_mk
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lowerWagon_carrier
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.lowerWagon_parent
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.freshChildOwner
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.freshChildOwner_injective

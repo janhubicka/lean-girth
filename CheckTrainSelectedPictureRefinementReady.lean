@@ -1,0 +1,6 @@
+import Girth.TrainSelectedPictureRefinementReady
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeFirstRefinable_of_empty_activeCarrier
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ActiveAttachmentBounds.localForest_predecessor
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_firstRefinementReady
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_refiningPictureStep_of_familyArrow

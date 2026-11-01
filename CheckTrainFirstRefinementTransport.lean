@@ -1,0 +1,5 @@
+import Girth.TrainFirstRefinementTransport
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstEdgeIntersection_of_adjacent
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonTransport_childGirth
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.transport
