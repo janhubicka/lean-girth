@@ -1,0 +1,3 @@
+import Girth.TrainActualReducedLongSourceDesignated
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_long_piece_original_designated

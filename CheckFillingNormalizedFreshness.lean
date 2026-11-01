@@ -1,0 +1,5 @@
+import Girth.TrainFillingNormalizedFreshness
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.wagon_fresh_of_mixedNormalized
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_fresh_of_mixedNormalized
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSupremeAt_of_mixedNormalized_local

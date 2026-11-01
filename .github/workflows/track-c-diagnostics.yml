@@ -2,7 +2,7 @@ name: Track C diagnostics
 
 on:
   push:
-    branches: [circulation-c-projection-integration-oct30]
+    branches: [circulation-c-inherited-filling-train-oct31]
   workflow_dispatch:
 
 permissions:

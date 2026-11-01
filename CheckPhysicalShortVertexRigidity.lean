@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalShortVertexRigidity
+
+#print axioms StructuralRamsey.Girth.OrderOneData.edge_eq_of_two_shared_vertices
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.shortValid_edge_eq_of_vertex_boundaries

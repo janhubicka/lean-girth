@@ -1,0 +1,4 @@
+import Girth.TrainUntouchedRefinement
+
+#print axioms StructuralRamsey.Girth.untouchedActiveFirstWagonRefinement
+#print axioms StructuralRamsey.Girth.untouchedActiveFirstWagonRefinement_of_finiteMixed

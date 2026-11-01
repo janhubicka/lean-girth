@@ -1,0 +1,8 @@
+import Girth.TrainFirstRefinementAppend
+
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.product_parentIntersectionBound
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.product_childGirth
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.freshChildCarrier_subset_standard
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.fresh_parentIntersectionBound
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.fresh_childGirth
+#print axioms StructuralRamsey.Girth.FirstRefinementAppend.append

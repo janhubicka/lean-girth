@@ -1,0 +1,6 @@
+import Girth.TrainDesignatedLabelLexRank
+
+#print axioms StructuralRamsey.Girth.designatedLabelCount_long_insert_drop
+#print axioms StructuralRamsey.Girth.designatedLabelCount_short_replace_drop
+#print axioms StructuralRamsey.Girth.natCutDesignatedLex_drop
+#print axioms StructuralRamsey.Girth.natCutDesignatedLex_wellFounded

@@ -1,0 +1,3 @@
+import Girth.TrainActualLongResultLabelWord
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.onlyLong_resultWord_label_projection

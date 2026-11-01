@@ -1,0 +1,4 @@
+import Girth.TrainBottomOrdinaryLabelledGirth
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_carrier_rangeGirth
+#print axioms StructuralRamsey.Girth.physicalASupport_labelledGirth_of_girth

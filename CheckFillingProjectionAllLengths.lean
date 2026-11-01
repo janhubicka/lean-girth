@@ -1,0 +1,10 @@
+import Girth.TrainFillingProjectionAllLengths
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.orderOne_edge_only_constant_parent
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_edge_source_parents
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_edge_only_constant_parent_false
+#print axioms StructuralRamsey.Girth.TrainFilling.projected_adjacent_edge_ne_all
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedCycle
+#print axioms StructuralRamsey.Girth.TrainFilling.projectedCycle_acceptable_and_order
+#print axioms StructuralRamsey.Girth.TrainFilling.designated_position_retained
+#print axioms StructuralRamsey.Girth.TrainFilling.designated_source_projects
