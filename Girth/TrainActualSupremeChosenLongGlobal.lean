@@ -148,7 +148,11 @@ theorem attachedSelectedPicture_supreme_chosen_long_global_of_all_cuts
   have hDifferent : Z.label cut ≠ Z.label target := by
     intro heq
     have hKeep := (hPlan cut).1 heq
-    cases hKeep
+    have hImpossible :
+        (TrainSupremePiece.long first w second :
+          TrainSupremePiece CoreEdge (Quotient (U.wagonSetoid μ))) =
+          TrainSupremePiece.keep := hp.symm.trans hKeep
+    cases hImpossible
   have hLong : Z.LongValid Wit target cut first w second := by
     have hCase := (hPlan cut).2 hDifferent
     simpa only [hp] using hCase
