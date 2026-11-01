@@ -35,6 +35,16 @@ def wagonImage : OrderOneData V E I Q where
   copyEdges := D.copyEdges
   parent := fun e => φ (D.parent e)
 
+/-- Wagon renaming does not change which labels are designated. -/
+private theorem wagonImage_designated (a : I ⊕ E) :
+    (D.wagonImage φ).designated a ↔ D.designated a := by
+  cases a <;> rfl
+
+/-- Physical edge ownership is literal even though the wagon sort changes. -/
+private theorem wagonImage_edges (a : I ⊕ E) :
+    (D.wagonImage φ).edges a = D.edges a := by
+  cases a <;> rfl
+
 private theorem wagonImage_vertex (p : P) (x : V) :
     (D.wagonImage φ).WagonVertex (φ p) x ↔ D.WagonVertex p x := by
   simp only [WagonVertex, wagonImage, φ.injective.eq_iff]
@@ -63,6 +73,7 @@ def wagonImage_physicalMap : LiteralPhysicalMap D (D.wagonImage φ) where
 
 private theorem imageCycle_label {n : ℕ} (C : D.BigCycle n) (j : Fin n) :
     ((D.wagonImage_physicalMap φ).mapBigCycle C).label j = C.label j := by
+  change Sum.map id id (C.label j) = C.label j
   cases C.label j <;> rfl
 
 private theorem imageCycle_vertex {n : ℕ} (C : D.BigCycle n) (j : Fin n) (x : V) :
@@ -159,7 +170,7 @@ theorem fullSystemGirth_of_wagonImage {q : ℕ}
       (by rw [D.wagonImage_cycle_twiceOrder φ C]; exact hOrder)
   have hFresh := Z.longWagons_fresh_of_literalBigCycle (D.wagonImage φ) B pieces hWord
   have hkD : D.designated (C.label k) := by
-    simpa only [Z, imageCycle_label] using hk
+    simpa only [Z, imageCycle_label, wagonImage_designated] using hk
   apply C.hasSimultaneousSupreme_of_hasSupremeAt D k
   apply C.hasSupremeAt_of_fresh_local_witnesses D hAccept hLinear k hkD
   intro j hNe
@@ -173,7 +184,7 @@ theorem fullSystemGirth_of_wagonImage {q : ℕ}
         simpa only [hp] using hj
       left
       refine ⟨e, ?_, ?_, ?_⟩
-      · simpa only [Z, imageCycle_label] using hs.1
+      · simpa only [Z, imageCycle_label, wagonImage_edges] using hs.1
       · exact (wagonImage_incident D φ (.inr e) _).mp hs.2.1
       · exact (wagonImage_incident D φ (.inr e) _).mp hs.2.2
   | long e p f =>
@@ -187,8 +198,8 @@ theorem fullSystemGirth_of_wagonImage {q : ℕ}
           (imageCycle_vertex D φ C _ x).mp hx,
           (imageCycle_vertex D φ C _ y).mp hy, ?_, ?_, hef, rfl, hParent,
           hxe, hyf, hPair⟩
-        · simpa only [Z, imageCycle_label] using he
-        · simpa only [Z, imageCycle_label] using hf
+        · simpa only [Z, imageCycle_label, wagonImage_edges] using he
+        · simpa only [Z, imageCycle_label, wagonImage_edges] using hf
       · intro t ht
         apply hFresh j e p f hp t
         change Sum.map id φ (C.connector t) = Sum.inr p
