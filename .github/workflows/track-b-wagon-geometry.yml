@@ -71,6 +71,12 @@ on:
       - 'CheckTrainSelectedPictureRefinementReady.lean'
       - 'Girth/TrainRecursiveFreshRefinementPass.lean'
       - 'CheckTrainRecursiveFreshRefinementPass.lean'
+      - 'Girth/TrainRecursiveActivePartite.lean'
+      - 'CheckTrainRecursiveActivePartite.lean'
+      - 'Girth/TrainRecursiveRefinementParameters.lean'
+      - 'CheckTrainRecursiveRefinementParameters.lean'
+      - 'Girth/TrainRecursiveEmptySource.lean'
+      - 'CheckTrainRecursiveEmptySource.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -144,6 +150,12 @@ on:
       - 'CheckTrainSelectedPictureRefinementReady.lean'
       - 'Girth/TrainRecursiveFreshRefinementPass.lean'
       - 'CheckTrainRecursiveFreshRefinementPass.lean'
+      - 'Girth/TrainRecursiveActivePartite.lean'
+      - 'CheckTrainRecursiveActivePartite.lean'
+      - 'Girth/TrainRecursiveRefinementParameters.lean'
+      - 'CheckTrainRecursiveRefinementParameters.lean'
+      - 'Girth/TrainRecursiveEmptySource.lean'
+      - 'CheckTrainRecursiveEmptySource.lean'
       - 'scripts/check_track_b_wagon_geometry.py'
       - 'scripts/check_track_b_off_core_geometry.py'
       - '.github/workflows/track-b-wagon-geometry.yml'
@@ -231,7 +243,10 @@ jobs:
             Girth.TrainFirstRefinementTransport \
             Girth.TrainUntouchedRefinement \
             Girth.TrainSelectedPictureRefinementReady \
-            Girth.TrainRecursiveFreshRefinementPass
+            Girth.TrainRecursiveFreshRefinementPass \
+            Girth.TrainRecursiveActivePartite \
+            Girth.TrainRecursiveRefinementParameters \
+            Girth.TrainRecursiveEmptySource
       - name: Audit every Track B export
         shell: bash
         run: |
@@ -275,7 +290,10 @@ jobs:
             CheckTrainFirstRefinementTransport \
             CheckTrainUntouchedRefinement \
             CheckTrainSelectedPictureRefinementReady \
-            CheckTrainRecursiveFreshRefinementPass; do
+            CheckTrainRecursiveFreshRefinementPass \
+            CheckTrainRecursiveActivePartite \
+            CheckTrainRecursiveRefinementParameters \
+            CheckTrainRecursiveEmptySource; do
             test "$(grep -c '^#print axioms ' "${check}.lean")" -gt 0
             lake env lean "${check}.lean" | tee "${check}.log"
             python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
@@ -334,6 +352,9 @@ jobs:
             CheckTrainUntouchedRefinement.log
             CheckTrainSelectedPictureRefinementReady.log
             CheckTrainRecursiveFreshRefinementPass.log
+            CheckTrainRecursiveActivePartite.log
+            CheckTrainRecursiveRefinementParameters.log
+            CheckTrainRecursiveEmptySource.log
       - name: Save compiled dependencies for proof iteration
         if: always() && steps.dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
