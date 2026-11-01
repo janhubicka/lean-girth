@@ -57,7 +57,7 @@ theorem BigCycle.oneFreshPhysicalLong_designatedCount_drop
       List.ofFn H.label =
           (List.ofFn (fun k : Fin m =>
             (H.label k, H.connector k))).map Prod.fst := by
-              simp [List.map_ofFn]
+              simp [List.map_ofFn] <;> (funext k; rfl)
       _ = (K.resultWord D
           (K.onlyLongPieces D j first wagon second)).map Prod.fst :=
             congrArg (List.map Prod.fst) hWord
