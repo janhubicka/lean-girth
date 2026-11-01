@@ -1,0 +1,4 @@
+import Girth.TrainFillingSystemGirth
+
+#print axioms StructuralRamsey.Girth.TrainFilling.filled_normalized_supreme_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.TrainFilling.filled_fullSystemGirthGT
