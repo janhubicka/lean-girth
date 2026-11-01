@@ -148,7 +148,7 @@ theorem attachedSelectedPicture_supreme_chosen_long_global_of_all_cuts
   have hDifferent : Z.label cut ≠ Z.label target := by
     intro heq
     have hKeep := (hPlan cut).1 heq
-    simp only [hp] at hKeep
+    cases hKeep
   have hLong : Z.LongValid Wit target cut first w second := by
     have hCase := (hPlan cut).2 hDifferent
     simpa only [hp] using hCase
