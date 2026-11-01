@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveStageBottomGirth
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ordinaryBottomGirth
