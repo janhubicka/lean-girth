@@ -1,0 +1,4 @@
+import Girth.TrainFillingInheritedParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.parentBound_iff_representatives
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_adjacentParameters
