@@ -1,0 +1,7 @@
+import Girth.TrainFillingWagonImageTransfer
+
+#print axioms StructuralRamsey.Girth.OrderOneData.wagonImage
+#print axioms StructuralRamsey.Girth.OrderOneData.wagonImage_physicalMap
+#print axioms StructuralRamsey.Girth.OrderOneData.wagonImage_cycle_twiceOrder
+#print axioms StructuralRamsey.Girth.OrderOneData.wagonImage_cycle_acceptable
+#print axioms StructuralRamsey.Girth.OrderOneData.fullSystemGirth_of_wagonImage

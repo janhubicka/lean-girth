@@ -1,0 +1,21 @@
+import Girth.TrainFillingTemplateConstruction
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.imageCarrier_subset
+#print axioms StructuralRamsey.Girth.UniformFillingData.unique_old_cover
+#print axioms StructuralRamsey.Girth.UniformFillingData.imageCarrier_injective
+#print axioms StructuralRamsey.Girth.UniformFillingData.generatedEdges
+#print axioms StructuralRamsey.Girth.UniformFillingData.imageCarrier_decode
+#print axioms StructuralRamsey.Girth.UniformFillingData.decode_encode
+#print axioms StructuralRamsey.Girth.UniformFillingData.encode_decode
+#print axioms StructuralRamsey.Girth.UniformFillingData.toTrainFilling
+#print axioms StructuralRamsey.Girth.UniformFillingData.edgeEquiv
+#print axioms StructuralRamsey.Girth.UniformFillingData.edgeEquiv_carrier
+#print axioms StructuralRamsey.Girth.UniformFillingData.edgeEquiv_cover
+#print axioms StructuralRamsey.Girth.UniformFillingData.toTrainFilling_cover_unique
+#print axioms StructuralRamsey.Girth.UniformFillingData.finite_newEdges
+#print axioms StructuralRamsey.Girth.UniformFillingData.first_fibre_parameter
+#print axioms StructuralRamsey.Girth.UniformFillingData.fibre_linear
+#print axioms StructuralRamsey.Girth.UniformFillingData.generated_linear
+#print axioms StructuralRamsey.Girth.UniformFillingData.restored_parameters_and_tailSystemGirth
+#print axioms StructuralRamsey.Girth.UniformFillingData.ofSupportCopies
+#print axioms StructuralRamsey.Girth.UniformFillingData.ofSupportCopies_generated_linear

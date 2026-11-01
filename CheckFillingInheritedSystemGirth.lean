@@ -1,0 +1,10 @@
+import Girth.TrainFillingInheritedSystemGirth
+
+#print axioms StructuralRamsey.Girth.TrainFilling.oldCutData
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedCutData
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedCutData_wagonImage_eq
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedCutData_wagonVertex_iff
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedCutData_fullSystemGirthGT
+#print axioms StructuralRamsey.Girth.TrainFilling.edgeLinear_of_fibreLinear
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedCutData_fullSystemGirthGT_of_fibreLinearity
+#print axioms StructuralRamsey.Girth.TrainFilling.inheritedTrain_parameters_and_tailSystemGirth
