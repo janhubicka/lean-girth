@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveStagePositiveCutCertificates
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.fullSystemGirth_at_positive
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.labelledPhysicalCutGirth_at_positive
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.labelledPhysicalChildGirth_at_positive
