@@ -1,0 +1,6 @@
+import Girth.TrainOneDoubleOwnerCutBound
+
+#print axioms StructuralRamsey.Girth.oneDoubleWord_of_reassigned_owner
+#print axioms StructuralRamsey.Girth.oneDoubleWord_cyclicCuts_eq_reassigned
+#print axioms StructuralRamsey.Girth.oneDoubleWord_cyclicCuts_le_of_isolated
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_long_output_le
