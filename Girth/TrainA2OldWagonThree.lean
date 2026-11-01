@@ -96,7 +96,7 @@ theorem BigCycle.old_wagon_adjacent_contacts_force_length_three
         rw [haPred, hbSucc] at hh
         rw [cyclicSucc_trainCyclicPred_of_two_le hTwo t] at hh
         exact hh.symm
-      exact (cyclicSucc_ne_self_of_two_le hTwo t) hEq
+      exact (cyclicSucc_ne_self_of_two_le hTwo t) hEq.symm
   · rcases hB with hbPred | hbSucc
     · have hEq : cyclicSucc (cyclicSucc t) =
           trainCyclicPred t := by
