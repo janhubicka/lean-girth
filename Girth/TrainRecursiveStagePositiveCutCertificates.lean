@@ -57,7 +57,7 @@ theorem ForestTailStage.labelledPhysicalCutGirth_at_positive
       (S.train.wagonClassCarrier (fun edge => edge.1) j.castSucc) q := by
   exact selectedPicture_labelledCutGirth_of_fullSystemGirth
     A B D S.system family S.selected S.train j.castSucc q
-    (S.fullSystemGirth_at_positive j hj q hq)
+    (ForestTailStage.fullSystemGirth_at_positive A B D family S j hj q hq)
 
 /-- Child-girth in any actual fixed parent of the stage's positive
 tail cut.  The family of children is the subtype of true quotient
@@ -75,6 +75,6 @@ theorem ForestTailStage.labelledPhysicalChildGirth_at_positive
           j.castSucc a.val) q := by
   exact S.train.labelledChildGirth_of_labelledCut
     (fun edge => edge.1) j.castSucc ν hμν p q
-    (S.labelledPhysicalCutGirth_at_positive j hj q hq)
+    (ForestTailStage.labelledPhysicalCutGirth_at_positive A B D family S j hj q hq)
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
