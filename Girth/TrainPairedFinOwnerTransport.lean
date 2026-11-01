@@ -51,7 +51,7 @@ theorem finOwnerChoice_of_paired_word
     calc
       List.ofFn (fun k : Fin m => (pairAt k).1) =
           (List.ofFn pairAt).map Prod.fst := by
-            simp [List.map_ofFn]
+            simp [List.map_ofFn] <;> (funext t; rfl)
       _ = paired.map Prod.fst :=
             congrArg (List.map Prod.fst) hPaired
       _ = List.ofFn outLabels := hLabels
