@@ -1,0 +1,12 @@
+import Girth.TrainFillingPrivateExtension
+
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.place_old
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.place_eq_old_iff
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.place_eq_private_owner
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.place_injective
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.placement
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.old_mem_range
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.shared_vertex_old
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.range_inter
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.selected_carrier_old
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.componentGeometry
