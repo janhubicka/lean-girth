@@ -1,0 +1,3 @@
+import Girth.TrainBottomMixedForestGirth
+
+#print axioms StructuralRamsey.Girth.girthGT_of_finiteOneEdgeForest
