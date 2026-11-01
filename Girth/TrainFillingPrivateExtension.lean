@@ -148,6 +148,79 @@ theorem range_inter (p q : P) (hpq : p ≠ q) :
 /-- Every local edge is retained in every expanded first wagon. -/
 noncomputable def edgeCarrier (e : U.Edge) : Set U.Vertex := U.place e.1 '' e.2.1
 
+/-- Old first-wagon linearity is preserved by the concrete private extension. -/
+theorem ranges_inter_subsingleton
+    (hOld : ∀ p q : P, p ≠ q → (U.oldCarrier p ∩ U.oldCarrier q).Subsingleton)
+    (p q : P) (hpq : p ≠ q) :
+    (Set.range (U.place p) ∩ Set.range (U.place q)).Subsingleton := by
+  rw [U.range_inter p q hpq]
+  rintro z ⟨x, hx, rfl⟩ w ⟨y, hy, rfl⟩
+  exact congrArg Sum.inl (hOld p q hpq hx hy)
+
+/-- With nontrivial local edges and old first-wagon linearity, the entire
+occurrence indexing is physically injective. No edge pruning is needed. -/
+theorem edgeCarrier_injective
+    (hOld : ∀ p q : P, p ≠ q → (U.oldCarrier p ∩ U.oldCarrier q).Subsingleton)
+    (hPair : ∀ a : U.LocalEdge, ∃ x y, x ≠ y ∧ x ∈ a.1 ∧ y ∈ a.1) :
+    Function.Injective U.edgeCarrier := by
+  rintro ⟨p, a⟩ ⟨q, b⟩ hEq
+  by_cases hpq : p = q
+  · subst q
+    have hImage : U.place p '' a.1 = U.place p '' b.1 := hEq
+    have hab : a = b := by
+      apply Subtype.ext
+      ext x
+      constructor
+      · intro hx
+        have him : U.place p x ∈ U.place p '' b.1 := by
+          rw [← hImage]
+          exact ⟨x, hx, rfl⟩
+        obtain ⟨y, hy, hyx⟩ := him
+        simpa only [U.place_injective p hyx] using hy
+      · intro hx
+        have him : U.place p x ∈ U.place p '' a.1 := by
+          rw [hImage]
+          exact ⟨x, hx, rfl⟩
+        obtain ⟨y, hy, hyx⟩ := him
+        simpa only [U.place_injective p hyx] using hy
+    exact congrArg (Prod.mk p) hab
+  · obtain ⟨x, y, hxy, hx, hy⟩ := hPair a
+    have hBoth : ∀ t ∈ a.1,
+        U.place p t ∈ Set.range (U.place p) ∩ Set.range (U.place q) := by
+      intro t ht
+      have him : U.place p t ∈ U.edgeCarrier (q, b) := by
+        rw [← hEq]
+        exact ⟨t, ht, rfl⟩
+      obtain ⟨w, _, hw⟩ := him
+      exact ⟨⟨t, rfl⟩, ⟨w, hw⟩⟩
+    exact False.elim (hxy (U.place_injective p
+      (U.ranges_inter_subsingleton hOld p q hpq (hBoth x hx) (hBoth y hy))))
+
+/-- No isolated vertices are introduced when the old first wagons and X
+are covered. This includes private vertices, not just the old target. -/
+theorem every_vertex_covered
+    (hOldCover : ∀ x : V, ∃ p, x ∈ U.oldCarrier p)
+    (hTemplateCover : ∀ x : X, ∃ a : U.LocalEdge, x ∈ a.1) :
+    ∀ z : U.Vertex, ∃ e : U.Edge, z ∈ U.edgeCarrier e := by
+  classical
+  intro z
+  cases z with
+  | inl x =>
+      obtain ⟨p, hp⟩ := hOldCover x
+      obtain ⟨a, _, ha⟩ := U.local_cover p ⟨x, hp⟩
+      exact ⟨(p, a), U.coordinate p ⟨x, hp⟩, ha, U.place_old p ⟨x, hp⟩⟩
+  | inr z =>
+      rcases z with ⟨⟨p, x⟩, hx⟩
+      obtain ⟨a, ha⟩ := hTemplateCover x
+      refine ⟨(p, a), x, ha, ?_⟩
+      simp only [place, dif_neg hx]
+
+theorem finite_vertices [Finite V] [Finite P] [Finite X] : Finite U.Vertex := by
+  infer_instance
+
+theorem finite_edges [Finite P] [Finite X] : Finite U.Edge := by
+  infer_instance
+
 /-- The original target consists exactly of the chosen old local edges. -/
 def targetEdges : Set U.Edge := {e | e.2 ∈ U.selectedEdges e.1}
 
