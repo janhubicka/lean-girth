@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveRefinementGlobalCutGirth
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCycle_rel_constant_of_cutGirth
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledGirthGT_of_retainedFirstCut
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_of_retainedFirstCut
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_of_retainedFirstCut
