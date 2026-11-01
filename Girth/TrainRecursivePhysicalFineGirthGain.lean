@@ -30,7 +30,7 @@ universe u v
 section ActualFine
 
 variable {L : RelLanguage.{u}} {UA VB P X : Type v}
-variable (A : RelStructure L UA) (hA : A.Irreducible)
+variable (A : RelStructure L UA)
 variable (B : RelStructure L VB)
 variable (D : RelStructure L P) (C : StructuralRamsey.Partite.System L P X)
 variable (family : Set (RelStructure.Embedding B D))
@@ -39,12 +39,11 @@ variable (selected : Set (DesignatedCopy B D C family))
 /-- The induction's complete q=g+1 ordinary girth gain, for the
 ACTUAL fine physical support and exact retained first-wagon quotient,
 provided its named bottom, positive and retained certificates. -/
-include hA
-
 theorem selectedPicture_actualSupport_girthGain_of_fineSystemCuts
     {m d : ℕ}
     (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) (m + d))
     (hm : 0 < m)
+    (hA : A.Irreducible)
     (firstAllowed : Set P) (g : ℕ) (hg : 2 ≤ g)
     (permitted : Fin (d + 1) → Set P)
     (hSubset : ∀ j, permitted j ⊆ firstAllowed)
