@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveRefinementParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.edgeIntersection_of_firstCommonAncestor
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_adjacentParameters

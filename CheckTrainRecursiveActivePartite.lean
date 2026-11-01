@@ -1,0 +1,8 @@
+import Girth.TrainRecursiveActivePartite
+
+#print axioms StructuralRamsey.Girth.actualActiveSubsystemPartite_isPartiteOver
+#print axioms StructuralRamsey.Girth.activePartiteToRelabelledCore
+#print axioms StructuralRamsey.Girth.activeProjectedPartite
+#print axioms StructuralRamsey.Girth.partiteEmbedding_relabelProjected
+#print axioms StructuralRamsey.Girth.activeLocalSelection_of_partiteFamilyArrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_refiningPictureStep_of_partiteFamilyArrow
