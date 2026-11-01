@@ -1,0 +1,7 @@
+import Girth.TrainCyclicOwnerFinListBridge
+
+#print axioms StructuralRamsey.Girth.ownerWalkCuts_eq_zip
+#print axioms StructuralRamsey.Girth.listCyclicOwnerChanges_eq_zipRotate
+#print axioms StructuralRamsey.Girth.zipOwnerCutRotate_ofFn
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_eq_sum_ownerCutStep
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_eq_listCyclicOwnerChanges
