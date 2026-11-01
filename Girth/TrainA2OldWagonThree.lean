@@ -58,23 +58,12 @@ theorem cyclicSucc_succ_ne_pred_of_four_le
     {n : ℕ} (hn : 4 ≤ n) (t : Fin n) :
     cyclicSucc (cyclicSucc t) ≠ trainCyclicPred t := by
   intro hEq
+  have hNext := cyclicSucc_val_if t
+  have hNextNext := cyclicSucc_val_if (cyclicSucc t)
+  have hPrev := trainCyclicPred_val_if t
   have hVal := congrArg Fin.val hEq
-  rw [cyclicSucc_val_if (cyclicSucc t),
-    cyclicSucc_val_if t, trainCyclicPred_val_if t] at hVal
-  by_cases h0 : t.val = 0
-  · have hOne : t.val + 1 < n := by omega
-    have hTwo : t.val + 2 < n := by omega
-    simp [h0, hOne, hTwo] at hVal
-    omega
-  · by_cases hOne : t.val + 1 < n
-    · by_cases hTwo : t.val + 2 < n
-      · simp [h0, hOne, hTwo] at hVal
-        omega
-      · simp [h0, hOne, hTwo] at hVal
-        omega
-    · have hWrap : 1 < n := by omega
-      simp [h0, hOne, hWrap] at hVal
-      omega
+  rw [hNextNext, hNext, hPrev] at hVal
+  split_ifs at hVal <;> omega
 
 namespace OrderOneData
 
