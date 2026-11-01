@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveCutoffIndexAlignment
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.replicatedCutoff_at_inserted
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.replicatedCutoff_at_retained
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.replicatedCutoff_retained_ge
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.firstRetainedCutoff_ge_next
