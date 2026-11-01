@@ -1,0 +1,4 @@
+import Girth.TrainPairedFinOwnerTransport
+
+#print axioms StructuralRamsey.Girth.finOwnerChoice_of_paired_word
+#print axioms StructuralRamsey.Girth.oneDoubleWord_fin_owner_admissible
