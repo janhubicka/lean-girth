@@ -167,7 +167,8 @@ theorem toTrainFilling_cover_unique (e : U.toTrainFilling.NewEdge)
     (g : U.OldEdge) (hSub : e.1 ⊆ g.1) :
     U.toTrainFilling.cover e = g := by
   apply U.unique_old_cover (U.decode e) g
-  simpa only [U.imageCarrier_decode] using hSub
+  intro x hx
+  exact hSub ((U.imageCarrier_decode e) ▸ hx)
 
 /-- Finite local and old edge sets give a finite generated edge set. -/
 theorem finite_newEdges [Finite U.OldEdge] [Finite U.TemplateEdge] :
