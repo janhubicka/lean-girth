@@ -319,5 +319,15 @@ noncomputable def taggedChoiceInput
     exact G.inter_wagon_intersections e (Set.mem_univ e) f (Set.mem_univ f)
       hParent z hzE hzF
 
+/-- Direct application wrapper: once one private extension is given, the
+choice-tagged proper-cut target inherits the old one-parent full-system
+bound with no additional scattering hypotheses. -/
+theorem taggedChoice_target_fullSystemGirthGT_of_old
+    (U : PrivateWagonInput V P X) (C : Type v) (parent : P → Q) {g : ℕ}
+    (hGirth :
+      ((U.taggedChoiceInput (C := C) parent).oldData).FullSystemGirthGT g) :
+    ((U.taggedChoiceInput (C := C) parent).data).FullSystemGirthGT g :=
+  (U.taggedChoiceInput (C := C) parent).target_fullSystemGirthGT_of_old hGirth
+
 end PrivateWagonInput
 end StructuralRamsey.Girth
