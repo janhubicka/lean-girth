@@ -1,0 +1,10 @@
+import Girth.TrainFillingTaggedChoiceAssembly
+
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.placeVertex_injective
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.ranges_inter_old
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.inter_component_edges_old
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.properParent_ne_of_choice_ne
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.topParent_eq
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.selected_edge_carrier_old
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.componentGeometry
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.taggedChoiceInput
