@@ -1,4 +1,5 @@
 import Girth.TrainFillingPrivateExtension
+import Girth.TrainDesignatedSubcopyGirth
 
 set_option Elab.async false
 
@@ -200,6 +201,88 @@ noncomputable def componentGeometry (c : C) :
     · exact ⟨rfl, hfSel⟩
     · exact congrArg (Prod.mk c) hfParent
     · exact ⟨Sum.inl x0, hxf, rfl⟩
+
+
+/-- Treat the whole choice union as one old designated parent at a proper cut. -/
+noncomputable def oldData : OrderOneData U.Vertex U.Edge PUnit U.ProperWagon where
+  edgeCarrier := U.edgeCarrier
+  copyCarrier := fun _ => Set.univ
+  copyEdges := fun _ => Set.univ
+  parent := U.properParentOf
+
+/-- Each choice is a designated target inside the single old parent. -/
+noncomputable def designatedFamily :
+    OrderOneData.DesignatedSubcopyFamily U.oldData C where
+  containingCopy := fun _ => PUnit.unit
+  copyCarrier := U.targetCarrier
+  copyEdges := U.targetEdges
+  carrier_subset := by
+    intro c z hz
+    exact Set.mem_univ z
+  edges_subset := by
+    intro c e he
+    exact Set.mem_univ e
+  siblings_vertex_disjoint := by
+    intro c d hcd _hParent
+    rw [Set.disjoint_left]
+    intro z hzC hzD
+    exact (Set.disjoint_left.mp (U.componentCarrier_disjoint c d hcd))
+      (U.targetCarrier_subset_component c hzC)
+      (U.targetCarrier_subset_component d hzD)
+  siblings_wagon_disjoint := by
+    intro c d hcd _hParent e f he hf
+    exact U.properParent_ne_of_choice_ne e f
+      (by simpa only [he.1, hf.1] using hcd)
+
+/-- The choice tags construct the full component decomposition used by
+the designated-subcopy scattering theorem. -/
+noncomputable def componentDecomposition :
+    U.designatedFamily.ComponentDecomposition where
+  componentCarrier := U.componentCarrier
+  componentEdges := U.componentEdges
+  component_carrier_subset := by
+    intro c z hz
+    exact Set.mem_univ z
+  component_edges_subset := by
+    intro c e he
+    exact Set.mem_univ e
+  target_carrier_subset := U.targetCarrier_subset_component
+  target_edges_subset := U.targetEdges_subset_component
+  edge_carrier_subset := by
+    intro c e he
+    have hc : e.1 = c := he
+    rw [← hc]
+    exact U.edgeCarrier_subset_component e
+  siblings_vertex_disjoint := by
+    intro c d hcd _hParent
+    exact U.componentCarrier_disjoint c d hcd
+  siblings_wagon_disjoint := by
+    intro c d hcd _hParent e f he hf
+    exact U.properParent_ne_of_choice_ne e f
+      (by
+        have hc : e.1 = c := he
+        have hd : f.1 = d := hf
+        intro h
+        apply hcd
+        exact hc.symm.trans (h.trans hd))
+  old_edges_covered := by
+    intro _i e _he
+    refine ⟨e.1, rfl, ?_⟩
+    rfl
+
+@[simp] theorem designatedFamily_target_eq_data :
+    U.designatedFamily.target = U.data := rfl
+
+/-- The tagged proper-cut assembly is now enough to apply the checked
+component scattering theorem. The only remaining system input is the
+old full-system-girth bound on the single parent. -/
+theorem target_fullSystemGirthGT_of_old {g : ℕ}
+    (hGirth : U.oldData.FullSystemGirthGT g) :
+    U.data.FullSystemGirthGT g := by
+  rw [← U.designatedFamily_target_eq_data]
+  exact U.designatedFamily.fullSystemGirthGT_of_components
+    U.componentDecomposition U.componentGeometry
+    (fun _ => rfl) hGirth
 
 end TaggedChoiceInput
 
