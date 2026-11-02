@@ -13,3 +13,5 @@ import Girth.TrainFillingTaggedChoiceAssembly
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.componentDecomposition
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.designatedFamily_target_eq_data
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.target_fullSystemGirthGT_of_old
+
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.taggedChoice_target_fullSystemGirthGT_of_old
