@@ -147,7 +147,7 @@ theorem attachedSelectedPicture_fresh_long_minimal_designated_rank
           (cyclicOwnerChanges owner,
             K.designatedOccurrenceCount Out) := by
   classical
-  have ⟨hPrev, hNext⟩ :=
+  obtain ⟨hPrev, hNext⟩ :=
     cyclicOwner_isolated_of_consecutive_cut_indices
       owner (by omega) hCuts cut pos hThis hPrevious
   let Z := attachedSelectedPicture_geometric_cutBigCycle
