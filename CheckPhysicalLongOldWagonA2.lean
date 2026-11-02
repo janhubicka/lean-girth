@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalLongOldWagonA2
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.physicalLong_oldWagon_length_three
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.physicalLong_oldWagon_all_source_cuts
