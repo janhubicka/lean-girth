@@ -29,6 +29,29 @@ open StructuralRamsey.RelStructure
 
 universe u v
 
+/-- Consecutive retained cut connectors at consecutive ORIGINAL
+positions certify that the intervening original occurrence is an
+isolated geometric owner segment. Neither owner names nor minimality
+are extra hypotheses. -/
+theorem cyclicOwner_isolated_of_consecutive_cut_indices
+    {Owner : Type v} {n : ℕ}
+    (owner : Fin n → Owner) (hn : 2 ≤ n)
+    (hCuts : 2 ≤ cyclicOwnerChanges owner)
+    (cut : Fin (cyclicOwnerChanges owner)) (pos : Fin n)
+    (hThis : cyclicOwnerCutIndex owner cut = pos)
+    (hPrevious : cyclicOwnerCutIndex owner
+      (trainCyclicPred cut) = trainCyclicPred pos) :
+    owner (trainCyclicPred pos) ≠ owner pos ∧
+    owner pos ≠ owner (cyclicSucc pos) := by
+  have hHere := cyclicOwnerCutIndex_is_change owner cut
+  have hBefore :=
+    cyclicOwnerCutIndex_is_change owner (trainCyclicPred cut)
+  constructor
+  · rw [hPrevious, cyclicSucc_trainCyclicPred_of_two_le hn pos]
+      at hBefore
+    exact hBefore
+  · simpa only [hThis] using hHere
+
 section ActualReducedLongGeometricRank
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
@@ -101,8 +124,6 @@ theorem attachedSelectedPicture_fresh_long_minimal_designated_rank
     (hThis : cyclicOwnerCutIndex owner cut = pos)
     (hPrevious : cyclicOwnerCutIndex owner
       (trainCyclicPred cut) = trainCyclicPred pos)
-    (hPrev : owner (trainCyclicPred pos) ≠ owner pos)
-    (hNext : owner pos ≠ owner (cyclicSucc pos))
     (hFresh : ∀ t : Fin n,
       K.connector t ≠ Sum.inr (CoreWagon w)) :
     ∃ outLength : ℕ, ∃ H : (Out).BigCycle outLength,
@@ -126,6 +147,9 @@ theorem attachedSelectedPicture_fresh_long_minimal_designated_rank
           (cyclicOwnerChanges owner,
             K.designatedOccurrenceCount Out) := by
   classical
+  have ⟨hPrev, hNext⟩ :=
+    cyclicOwner_isolated_of_consecutive_cut_indices
+      owner (by omega) hCuts cut pos hThis hPrevious
   let Z := attachedSelectedPicture_geometric_cutBigCycle
     A hA B D C family selected e R f T U hShared hRel μ
     K owner hAllowed hCuts
@@ -236,18 +260,13 @@ theorem attachedSelectedPicture_all_cuts_chosen_long_rank
       (trainCyclicPred cut) = trainCyclicPred pos :=
     cyclicOwnerCutIndex_pred_of_every_cut
       owner hn2 hEveryCut cut
-  have hPrev : owner (trainCyclicPred pos) ≠ owner pos := by
-    simpa only [cyclicSucc_trainCyclicPred_of_two_le hn2 pos]
-      using hEveryCut (trainCyclicPred pos)
-  have hNext : owner pos ≠ owner (cyclicSucc pos) :=
-    hEveryCut pos
   obtain ⟨outLength, H, _hWord, hOutAccept, hOrder,
     hPull, minOwner, hMinAllowed, hMin, hRank⟩ :=
     attachedSelectedPicture_fresh_long_minimal_designated_rank
       A hA B D C family selected e R f T U hShared hRel μ
       K hAccept hLinear hn owner hAllowed hCuts hActive
       target cut i hTarget first second w hLong
-      pos rfl hPrevious hPrev hNext
+      pos rfl hPrevious
       (hFresh cut first second w hp)
   exact ⟨outLength, H, hOutAccept, hOrder,
     hPull, minOwner, hMinAllowed, hMin, hRank⟩
