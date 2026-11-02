@@ -86,4 +86,44 @@ theorem activeGluingWitness_fullSystemGirth_iff_selectedPicture
   exact OrderOneData.reindexDesignated_fullSystemGirth_iff
     (selectedPictureOrderOneData A B D C family selected T μ) e q
 
+
+section CanonicalSelectedIndices
+
+variable {Y : Type v}
+variable (Old : StructuralRamsey.Partite.System L P X)
+variable (New : StructuralRamsey.Partite.System L P Y)
+variable (α : UA → P)
+local notation "Source" =>
+  Old.toRelStructure.induce (activeCarrier A Old α)
+variable (lowerFamily : Set (Embedding Source D))
+variable (lowerSelected : Set (DesignatedCopy Source D New lowerFamily))
+variable {n : ℕ} (U : EdgeTrainLevels (OldACarrierEdge A New.toRelStructure) n)
+variable (ν : Fin (n + 1))
+
+/-- If the gluing indices are literally the selected local target copies,
+the local gluing record and the selected-picture record are the SAME
+complete incidence data.  No chosen equivalence or image-based
+identification of distinct selected labels is needed. -/
+theorem activeGluingWitness_eq_selectedPicture_of_canonicalIndices :
+    activeGluingWitnessOrderOneData A Old α New.toRelStructure
+      (fun q : {q : DesignatedCopy Source D New lowerFamily //
+          q ∈ lowerSelected} => q.1.embedding) U ν =
+    selectedPictureOrderOneData A Source D New lowerFamily lowerSelected U ν := by
+  rfl
+
+/-- Therefore the actual lower-stage selected-copy system bound is
+already precisely the indexed gluing bound whenever the canonical
+selected labels themselves are used as the gluing index family. -/
+theorem activeGluingWitness_fullSystemGirth_iff_canonicalIndices
+    (q : ℕ) :
+    (activeGluingWitnessOrderOneData A Old α New.toRelStructure
+      (fun i : {i : DesignatedCopy Source D New lowerFamily //
+          i ∈ lowerSelected} => i.1.embedding) U ν).FullSystemGirthGT q ↔
+    (selectedPictureOrderOneData A Source D New lowerFamily lowerSelected
+      U ν).FullSystemGirthGT q := by
+  rw [activeGluingWitness_eq_selectedPicture_of_canonicalIndices
+    A D Old New α lowerFamily lowerSelected U ν]
+
+end CanonicalSelectedIndices
+
 end StructuralRamsey.Girth
