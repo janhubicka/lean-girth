@@ -92,7 +92,6 @@ section CanonicalSelectedIndices
 variable {Y : Type v}
 variable (Old : StructuralRamsey.Partite.System L P X)
 variable (New : StructuralRamsey.Partite.System L P Y)
-variable (α : UA → P)
 local notation "Source" =>
   Old.toRelStructure.induce (activeCarrier A Old α)
 variable (lowerFamily : Set (Embedding Source D))
@@ -121,8 +120,7 @@ theorem activeGluingWitness_fullSystemGirth_iff_canonicalIndices
           i ∈ lowerSelected} => i.1.embedding) U ν).FullSystemGirthGT q ↔
     (selectedPictureOrderOneData A Source D New lowerFamily lowerSelected
       U ν).FullSystemGirthGT q := by
-  rw [activeGluingWitness_eq_selectedPicture_of_canonicalIndices
-    A D Old New α lowerFamily lowerSelected U ν]
+  rfl
 
 end CanonicalSelectedIndices
 
