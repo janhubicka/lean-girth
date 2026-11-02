@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveFineWitnessStep
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.refiningPictureStep_of_fineWitness
