@@ -1,0 +1,7 @@
+import Girth.TrainActualLongOwnerRankBridge
+
+#print axioms StructuralRamsey.Girth.finOwnerChoice_of_paired_word_exact
+#print axioms StructuralRamsey.Girth.oneDoubleWord_fin_owner_exact
+#print axioms StructuralRamsey.Girth.oneDoubleWord_fin_owner_cut_bound
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oneFreshPhysicalLong_owner_rank_of_isolated
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.oneFreshPhysicalLong_minimal_rank_of_isolated
