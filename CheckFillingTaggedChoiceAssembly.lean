@@ -1,17 +1,16 @@
 import Girth.TrainFillingTaggedChoiceAssembly
 
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.placeVertex_injective
-#print axioms StructuralRamsey.Girth.TaggedChoiceInput.ranges_inter_old
-#print axioms StructuralRamsey.Girth.TaggedChoiceInput.inter_component_edges_old
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.componentCarrier_disjoint
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.properParent_ne_of_choice_ne
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.topParent_eq
-#print axioms StructuralRamsey.Girth.TaggedChoiceInput.selected_edge_carrier_old
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.targetCarrier_subset_component
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.targetEdges_subset_component
+#print axioms StructuralRamsey.Girth.TaggedChoiceInput.selected_edge_carrier_target
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.componentGeometry
-#print axioms StructuralRamsey.Girth.PrivateWagonInput.taggedChoiceInput
-
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.designatedFamily
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.componentDecomposition
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.designatedFamily_target_eq_data
 #print axioms StructuralRamsey.Girth.TaggedChoiceInput.target_fullSystemGirthGT_of_old
-
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.taggedChoiceInput
 #print axioms StructuralRamsey.Girth.PrivateWagonInput.taggedChoice_target_fullSystemGirthGT_of_old
