@@ -83,7 +83,7 @@ theorem activeGluingWitness_fullSystemGirth_iff_selectedPicture
       (selectedPictureOrderOneData A B D C family selected T μ).FullSystemGirthGT q := by
   rw [activeGluingWitness_eq_reindexed_selectedPicture
     A B D C family selected α f T μ e hCarrier]
-  exact (selectedPictureOrderOneData A B D C family selected T μ)
-    |>.reindexDesignated_fullSystemGirth_iff e q
+  exact OrderOneData.reindexDesignated_fullSystemGirth_iff
+    (selectedPictureOrderOneData A B D C family selected T μ) e q
 
 end StructuralRamsey.Girth
