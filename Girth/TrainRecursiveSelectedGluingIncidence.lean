@@ -1,6 +1,7 @@
 import Girth.TrainActiveGluingWitness
 import Girth.TrainSelectedPictureTwoStandard
 import Girth.TrainDesignatedReindexGirth
+import Girth.TrainRecursiveWitnessPass
 
 set_option autoImplicit false
 
@@ -123,5 +124,36 @@ theorem activeGluingWitness_fullSystemGirth_iff_canonicalIndices
   rfl
 
 end CanonicalSelectedIndices
+
+section CanonicalForestTailStage
+
+variable (Old : StructuralRamsey.Partite.System L P X)
+local notation "Source" =>
+  Old.toRelStructure.induce (activeCarrier A Old α)
+variable (lowerFamily : Set (Embedding Source D))
+variable {t : List ℕ}
+variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length}
+variable {allowed : Fin (t.length + 1) → Set P}
+
+/-- If a lower recursive forest-tail stage is built with the exact
+physical active induced target and its ACTUAL selected copies are used as
+the gluing indices, its existing tail-girth certificate already applies
+to the entire local gluing incidence record at the identical cutoff.
+The matching of the stage's source type with this active induced target
+is explicit in the statement; this does NOT produce the lower stage,
+its prescribed Ramsey family or any arbitrary external gluing indices. -/
+theorem TrainRecursiveWitness.ForestTailStage.gluingFullSystemGirth_of_canonicalSelected
+    (S : TrainRecursiveWitness.ForestTailStage A Source D lowerFamily
+      t targetTrain allowed)
+    (j : Fin t.length) (hj : 0 < j.val) :
+    (activeGluingWitnessOrderOneData A Old α S.system.toRelStructure
+      (fun i : {i : DesignatedCopy Source D S.system lowerFamily //
+        i ∈ S.selected} => i.1.embedding)
+      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
+  change (selectedPictureOrderOneData A Source D S.system
+    lowerFamily S.selected S.train j.castSucc).FullSystemGirthGT (t.get j)
+  exact S.tailGirth j hj
+
+end CanonicalForestTailStage
 
 end StructuralRamsey.Girth
