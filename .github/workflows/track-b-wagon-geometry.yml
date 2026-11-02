@@ -212,7 +212,11 @@ jobs:
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download required Mathlib cache
-        run: lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+        run: |
+          # Restored caches can retain this lock after an interrupted dependency checkout.
+          # No Git process is active before this first Lake invocation.
+          rm -f .lake/packages/batteries/.git/index.lock
+          lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
       - name: Build Track B from the checked-out sources
         shell: bash
         run: |
