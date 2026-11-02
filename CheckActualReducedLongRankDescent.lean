@@ -1,0 +1,5 @@
+import Girth.TrainActualReducedLongRankDescent
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_isolated_of_consecutive_cut_indices
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fresh_long_minimal_designated_rank
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_all_cuts_chosen_long_rank
