@@ -9,9 +9,9 @@ set_option autoImplicit false
 # Ordinary girth from the finite-set forest property of physical one-edge members
 
 A cyclic family of at most q distinct physical edges is a finite family
-of distinct one-edge support pieces. The honest FiniteMixedForestThrough
-hypothesis applies to the FINITE IMAGE of those pieces, not to an
-arbitrary list of possibly repeated B-support labels.
+of distinct one-edge support pieces. The finite-set forest
+hypothesis is applied directly to the FINITE IMAGE of these pieces;
+no index-family universe restriction or repeated-label assumption is used.
 
 The checked union-girth theorem for genuine join-tree forests then
 contradicts the original Berge cycle. This is the missing generic
@@ -45,15 +45,22 @@ theorem girthGT_of_finiteOneEdgeForest
     exact ⟨C.edge i, C.edge_mem i, rfl⟩
   have hCount : Fintype.card (Fin C.length) ≤ q := by
     simpa using hBound
-  let PieceIndex := {F : HypergraphPiece W // F ∈ finitePieceImage pieces}
-  have hForest : ForestOfCopies (fun p : PieceIndex => p.val) :=
-    FiniteMixedForestThrough.image
-      (fun F : HypergraphPiece W =>
-        ∃ e : Set W, e ∈ H ∧ F = oneEdgePiece e)
-      q hFinite pieces hTest hCount
+  let chosen : Finset (HypergraphPiece W) := Finset.univ.image pieces
+  let PieceIndex := {F : HypergraphPiece W // F ∈ chosen}
+  have hForest : ForestOfCopies (fun p : PieceIndex => p.val) := by
+    apply hFinite chosen
+    · intro P hP
+      obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hP
+      subst P
+      exact hTest i
+    · calc
+        chosen.card ≤ (Finset.univ : Finset (Fin C.length)).card := by
+          dsimp [chosen]
+          exact Finset.card_image_le
+        _ = Fintype.card (Fin C.length) := Finset.card_univ
+        _ ≤ q := hCount
   have hEach (p : PieceIndex) : GirthGT (p.val).edges q := by
-    have hMem : p.val ∈ Finset.univ.image pieces := by
-      simpa [finitePieceImage] using p.property
+    have hMem : p.val ∈ Finset.univ.image pieces := p.property
     obtain ⟨i, _hi, hp⟩ := Finset.mem_image.mp hMem
     have heq : p.val = oneEdgePiece (C.edge i) := hp.symm
     rw [heq]
@@ -70,8 +77,7 @@ theorem girthGT_of_finiteOneEdgeForest
     edge_mem := by
       intro i
       refine Set.mem_iUnion.mpr ⟨⟨pieces i, ?_⟩, ?_⟩
-      · change pieces i ∈ finitePieceImage pieces
-        simp [finitePieceImage]
+      · exact Finset.mem_image.mpr ⟨i, Finset.mem_univ i, rfl⟩
       · change C.edge i ∈ (pieces i).edges
         simp [pieces, oneEdgePiece]
     edge_injective := C.edge_injective
