@@ -46,7 +46,8 @@ def coordinate
     (oldCarrier : P → Set V)
     (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
     (p : P) : {x : V // x ∈ oldCarrier p} ↪ X :=
-  T.star.comp (identify p).toEmbedding
+  ⟨fun x => T.star (identify p x),
+    fun _ _ h => (identify p).injective (T.star.injective h)⟩
 
 /-- Every chosen W* coordinate has exactly the range of the fixed star map,
 independently of the first-wagon label. -/
@@ -54,7 +55,7 @@ theorem coordinate_range_eq
     (oldCarrier : P → Set V)
     (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
     (p : P) :
-    Set.range (T.coordinate oldCarrier identify p) = Set.range T.star := by
+    Set.range (coordinate T oldCarrier identify p) = Set.range T.star := by
   ext x
   constructor
   · rintro ⟨z, rfl⟩
@@ -71,21 +72,21 @@ noncomputable def toPrivateWagonInput
     (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W) :
     PrivateWagonInput V P X where
   oldCarrier := oldCarrier
-  coordinate := T.coordinate oldCarrier identify
+  coordinate := coordinate T oldCarrier identify
   templateEdges := T.templateEdges
-  selectedEdges := fun _ => T.selectedEdges
+  selectedEdges := fun _ => selectedEdges T
   selected_inside := by
     intro p a ha
     obtain ⟨e, he⟩ := ha
-    rw [he, T.coordinate_range_eq oldCarrier identify p]
+    rw [he, coordinate_range_eq T oldCarrier identify p]
     exact Set.image_subset_range
   local_strong := by
     intro p a x y hxy hx hy hxRange hyRange
     have hxStar : x ∈ Set.range T.star := by
-      rw [← T.coordinate_range_eq oldCarrier identify p]
+      rw [← coordinate_range_eq T oldCarrier identify p]
       exact hxRange
     have hyStar : y ∈ Set.range T.star := by
-      rw [← T.coordinate_range_eq oldCarrier identify p]
+      rw [← coordinate_range_eq T oldCarrier identify p]
       exact hyRange
     obtain ⟨e, he⟩ := T.strong a x y hxy hx hy hxStar hyStar
     exact ⟨e, he⟩
@@ -104,8 +105,8 @@ edge family; the wagon label affects only which old vertices are identified. -/
     (oldCarrier : P → Set V)
     (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
     (p : P) :
-    (T.toPrivateWagonInput oldCarrier identify).selectedEdges p =
-      T.selectedEdges := rfl
+    (toPrivateWagonInput T oldCarrier identify).selectedEdges p =
+      selectedEdges T := rfl
 
 /-- Hence the checked private scattering geometry is available immediately
 after uniformization, for every parent map on first-wagon labels. -/
@@ -113,9 +114,10 @@ noncomputable def componentGeometry
     (oldCarrier : P → Set V)
     (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
     {Q : Type v} (parent : P → Q) :
-    ((T.toPrivateWagonInput oldCarrier identify).data parent).
-      ComponentTargetGeometry PUnit.unit :=
-  (T.toPrivateWagonInput oldCarrier identify).componentGeometry parent
+    OrderOneData.ComponentTargetGeometry
+      ((toPrivateWagonInput T oldCarrier identify).data parent) PUnit.unit :=
+  PrivateWagonInput.componentGeometry
+    (toPrivateWagonInput T oldCarrier identify) parent
 
 end UniformPrivateTemplate
 
