@@ -79,7 +79,8 @@ noncomputable def toPrivateWagonInput
     intro p a ha
     obtain ⟨e, he⟩ := ha
     rw [he, coordinate_range_eq T oldCarrier identify p]
-    exact Set.image_subset_range
+    rintro z ⟨x, hx, rfl⟩
+    exact ⟨x, rfl⟩
   local_strong := by
     intro p a x y hxy hx hy hxRange hyRange
     have hxStar : x ∈ Set.range T.star := by
