@@ -49,7 +49,7 @@ local notation "Source" =>
 partite gluing map with that same embedding exactly when its injective
 prescribed base projection is the literal active source part map. -/
 theorem selectedCopy_isPartiteGluing_iff_basePart
-    (family : Set (Embedding Source D))
+    {family : Set (Embedding Source D)}
     (q : DesignatedCopy Source D E family) :
     (∃ g : StructuralRamsey.Partite.Embedding
       (actualActiveSubsystemPartite A C α) E,
@@ -71,7 +71,7 @@ theorem selectedCopy_isPartiteGluing_iff_basePart
 selected-copy base embedding as a partite gluing map for the FULL source:
 the selected base embedding is injective, while the part map is not. -/
 theorem selectedCopy_notPartiteGluing_of_partCollision
-    (family : Set (Embedding Source D))
+    {family : Set (Embedding Source D)}
     (q : DesignatedCopy Source D E family)
     (x y : activeCarrier A C α)
     (hxy : x ≠ y)
@@ -83,7 +83,7 @@ theorem selectedCopy_notPartiteGluing_of_partCollision
   intro h
   have hBase :=
     (selectedCopy_isPartiteGluing_iff_basePart
-      A C α E D family q).mp h
+      A C α E D q).mp h
   have hEq : q.base x = q.base y :=
     (hBase x).trans (hPart.trans (hBase y).symm)
   exact hxy (q.base.injective hEq)
@@ -135,7 +135,7 @@ theorem selectedCopy_notPartiteGluing_of_nontrivialActive
     activePart_collision_of_distinct_projected_carriers
       A C α a b hDifferent
   exact selectedCopy_notPartiteGluing_of_partCollision
-    A C α E D family q x y hxy hPart
+    A C α E D q x y hxy hPart
 
 end Criterion
 
