@@ -208,4 +208,40 @@ noncomputable def componentGeometry (c : C) :
     · exact ⟨Sum.inl x0, hxf, by simpa only [placeVertex_old] using hx0⟩
 
 end TaggedChoiceInput
+
+namespace PrivateWagonInput
+
+variable {V P X C Q : Type v}
+
+/-- The verified private first-wagon extension supplies all local premises
+needed by the tagged choice assembly at an arbitrary proper-cut parent map. -/
+noncomputable def taggedChoiceInput
+    (U : PrivateWagonInput V P X) (parent : P → Q) :
+    TaggedChoiceInput C V U.PrivateVertex U.Edge P Q where
+  localCarrier := U.edgeCarrier
+  localParent := Prod.fst
+  properParent := parent
+  selected := U.targetEdges
+  selected_inside_old := by
+    intro e he
+    exact U.selected_carrier_old e he
+  local_strong := by
+    intro e x y hxy hx hy
+    let G := U.componentGeometry parent
+    exact G.strong_target e (Set.mem_univ e) (Sum.inl x) (Sum.inl y)
+      (by simpa using hxy) hx hy ⟨x, rfl⟩ ⟨y, rfl⟩
+  local_cover := by
+    intro e x hx
+    let G := U.componentGeometry parent
+    obtain ⟨f, hf, hParent, hxf⟩ :=
+      G.pointwise_cover e (Set.mem_univ e) (Sum.inl x) hx ⟨x, rfl⟩
+    exact ⟨f, hf, hParent, hxf⟩
+  local_inter_proper := by
+    intro e f hParent z hzE hzF
+    let G := U.componentGeometry parent
+    exact G.inter_wagon_intersections e (Set.mem_univ e) f (Set.mem_univ f)
+      hParent z hzE hzF
+
+end PrivateWagonInput
+
 end StructuralRamsey.Girth
