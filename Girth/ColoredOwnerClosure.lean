@@ -143,7 +143,7 @@ theorem range_subset_of_embedding_range_of_two_mem
     (hu : e u ∈ Set.range b) (hv : e v ∈ Set.range b) :
     Set.range e ⊆ Set.range b := by
   exact range_subset_of_closed_of_two_mem A part ownerPart e
-    (Set.range b) (StructuralRamsey.Structure.structureEmbedding_range_isClosed b)
+    (Set.range b) (structureEmbedding_range_isClosed b)
     u v huv hu hv
 
 /-- A shared vertex occurring in a blocked source part forces two full
@@ -176,13 +176,14 @@ theorem same_range_of_shared_blocked
         C.func (.owner j) (fun _ : Fin 1 => f v) = {f v} := by
       rw [← hfMap, owner_value_of_other A part ownerPart j v hvPart,
         imageSet_singleton]
-    obtain ⟨w, hwu⟩ := exists_pair_ne U
+    obtain ⟨w, hwu⟩ := exists_ne u
     have hew : e w ∈ Set.range e := ⟨w, rfl⟩
     have hewSingleton : e w ∈ ({f v} : Set X) := by
       rw [← hfSingleton, ← hshared, heRange]
       exact hew
-    have heq : e w = e u := by
-      simpa [hshared] using hewSingleton
+    have hewv : e w = f v := by
+      simpa using hewSingleton
+    have heq : e w = e u := hewv.trans hshared.symm
     exact False.elim (hwu (e.injective heq))
 
 /-- Hence two physically distinct expanded edges cannot meet at any source
