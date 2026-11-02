@@ -1,0 +1,9 @@
+import Girth.TrainRecursiveSelectedGluingIncidence
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_eq_reindexed_selectedPicture
+#print axioms StructuralRamsey.Girth.activeGluingWitness_fullSystemGirth_iff_selectedPicture
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_eq_selectedPicture_of_canonicalIndices
+#print axioms StructuralRamsey.Girth.activeGluingWitness_fullSystemGirth_iff_canonicalIndices
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.gluingFullSystemGirth_of_canonicalSelected

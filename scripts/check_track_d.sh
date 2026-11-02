@@ -50,6 +50,7 @@ checks=(
   CheckTrainRecursiveRefinementStepGirth
   CheckTrainRecursiveRefinementGirthGain
   CheckTrainRecursiveRefinementForget
+  CheckTrainRecursiveSelectedGluingIncidence
 )
 
 for check in "${checks[@]}"; do
