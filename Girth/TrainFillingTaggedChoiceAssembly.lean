@@ -156,8 +156,8 @@ noncomputable def componentGeometry (c : C) :
     have hOld := U.local_inter_proper e.2 f.2 hLocalParent x hx hy
     obtain ⟨v, hv⟩ := hOld
     refine ⟨Sum.inl v, ⟨v, rfl⟩, ?_⟩
-    simpa only [hc, placeVertex_old] using hxz.symm.trans
-      (congrArg (U.placeVertex c) hv)
+    simpa only [hc, placeVertex_old] using
+      (congrArg (U.placeVertex c) hv).trans hxz
   strong_target := by
     intro e he x y hxy hxE hyE hxT hyT
     have hc : e.1 = c := he
@@ -182,7 +182,7 @@ noncomputable def componentGeometry (c : C) :
     have hxy0 : x0 ≠ y0 := by
       intro h
       subst y0
-      exact hxy (hxPlace.trans hyPlace.symm)
+      exact hxy (hxPlace.symm.trans hyPlace)
     exact ⟨hc, U.local_strong e.2 x0 y0 hxy0 hxLocal hyLocal⟩
   pointwise_cover := by
     intro e he x hxE hxT
@@ -200,7 +200,7 @@ noncomputable def componentGeometry (c : C) :
     refine ⟨(c, f), ?_, ?_, ?_⟩
     · exact ⟨rfl, hfSel⟩
     · exact congrArg (Prod.mk c) hfParent
-    · exact ⟨Sum.inl x0, hxf, rfl⟩
+    · exact ⟨Sum.inl x0, hxf, hxPlace⟩
 
 
 /-- Treat the whole choice union as one old designated parent at a proper cut. -/
@@ -266,8 +266,8 @@ noncomputable def componentDecomposition :
         apply hcd
         exact hc.symm.trans (h.trans hd))
   old_edges_covered := by
-    intro _i e _he
-    refine ⟨e.1, rfl, ?_⟩
+    intro i e _he
+    refine ⟨e.1, Subsingleton.elim _ _, ?_⟩
     rfl
 
 @[simp] theorem designatedFamily_target_eq_data :
