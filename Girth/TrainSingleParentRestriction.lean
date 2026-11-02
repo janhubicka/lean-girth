@@ -84,21 +84,30 @@ theorem exactSingleCopy_planValid_of_enlarge
         have hs :
             ((exactSingleCopyFamily D i).enlargeCycle C).ShortValid D k j e := by
           simpa only [hp] using hj
+        obtain ⟨he, hPrev, hCurr⟩ := hs
+        change e ∈ D.edges
+          ((exactSingleCopyFamily D i).enlargeLabel (C.label k)) at he
+        rw [hk] at he
+        change e ∈ D.copyEdges i at he
         change e ∈ (exactSingleCopyFamily D i).target.edges (C.label k) ∧
           (exactSingleCopyFamily D i).target.Incident (.inr e)
             (C.connector (trainCyclicPred j)) ∧
           (exactSingleCopyFamily D i).target.Incident (.inr e)
             (C.connector j)
         rw [hk]
-        change e ∈ D.copyEdges i ∧
-          D.Incident (.inr e) (C.connector (trainCyclicPred j)) ∧
-          D.Incident (.inr e) (C.connector j)
-        simpa only [DesignatedSubcopyFamily.enlargeCycle_connector] using hs
+        exact ⟨he, hPrev, hCurr⟩
     | long e w f =>
         have hl :
             ((exactSingleCopyFamily D i).enlargeCycle C).LongValid D k j e w f := by
           simpa only [hp] using hj
         obtain ⟨x, y, hPrev, hCurr, he, hf, hne, hpe, hpf, hxe, hyf, hPair⟩ := hl
+        change e ∈ D.edges
+          ((exactSingleCopyFamily D i).enlargeLabel (C.label k)) at he
+        change f ∈ D.edges
+          ((exactSingleCopyFamily D i).enlargeLabel (C.label k)) at hf
+        rw [hk] at he hf
+        change e ∈ D.copyEdges i at he
+        change f ∈ D.copyEdges i at hf
         change ∃ x y : V,
           C.connector (trainCyclicPred j) = Sum.inl x ∧
           C.connector j = Sum.inl y ∧
@@ -110,11 +119,9 @@ theorem exactSingleCopy_planValid_of_enlarge
         · simpa only [DesignatedSubcopyFamily.enlargeCycle_connector] using hPrev
         · simpa only [DesignatedSubcopyFamily.enlargeCycle_connector] using hCurr
         · rw [hk]
-          change e ∈ D.copyEdges i
-          simpa only [hk] using he
+          exact he
         · rw [hk]
-          change f ∈ D.copyEdges i
-          simpa only [hk] using hf
+          exact hf
 
 theorem exactSingleCopy_fullSystemGirthGT
     (D : OrderOneData V E I P) (i : I) {g : ℕ}
