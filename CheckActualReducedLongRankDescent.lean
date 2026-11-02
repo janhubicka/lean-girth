@@ -1,0 +1,4 @@
+import Girth.TrainActualReducedLongRankDescent
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fresh_long_minimal_designated_rank
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_all_cuts_chosen_long_rank
