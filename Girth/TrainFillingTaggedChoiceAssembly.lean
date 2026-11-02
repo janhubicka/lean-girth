@@ -155,9 +155,10 @@ noncomputable def componentGeometry (c : C) :
     subst y
     have hOld := U.local_inter_proper e.2 f.2 hLocalParent x hx hy
     obtain ⟨v, hv⟩ := hOld
+    have hxz' : U.placeVertex c x = z := by
+      simpa only [hc] using hxz
     refine ⟨Sum.inl v, ⟨v, rfl⟩, ?_⟩
-    simpa only [hc, placeVertex_old] using
-      (congrArg (U.placeVertex c) hv).trans hxz
+    exact (congrArg (U.placeVertex c) hv).trans hxz'
   strong_target := by
     intro e he x y hxy hxE hyE hxT hyT
     have hc : e.1 = c := he
