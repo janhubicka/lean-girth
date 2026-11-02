@@ -50,6 +50,7 @@ checks=(
   CheckTrainRecursiveRefinementStepGirth
   CheckTrainRecursiveRefinementGirthGain
   CheckTrainRecursiveRefinementForget
+  CheckTrainRecursiveSelectedPartiteCriterion
 )
 
 for check in "${checks[@]}"; do
