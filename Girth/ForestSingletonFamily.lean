@@ -35,7 +35,15 @@ theorem ForestOfCopies.append_subsingletonFinset
   | empty =>
       let e : I ⊕ (∅ : Set J) ≃ I := Equiv.sumEmpty _ _
       have h := hF.reindex e
-      simpa [sumPieces, e] using h
+      have heq :
+          (fun k => F (e k)) =
+            sumPieces F (fun j : (∅ : Set J) => S j.1) := by
+        funext k
+        cases k with
+        | inl i => rfl
+        | inr j => exact False.elim j.2
+      rw [← heq]
+      exact h
   | @insert a s ha ih =>
       have ih' : ForestOfCopies
           (sumPieces F (fun j : (s : Set J) => S j.1)) :=
@@ -44,9 +52,11 @@ theorem ForestOfCopies.append_subsingletonFinset
         hSmall a (Finset.mem_insert_self a s)
       have happ :=
         ih'.append_subsingletonCarrier (S a) haSmall
+      have haSet : a ∉ (↑s : Set J) := by
+        simpa using ha
       let es :
           (↑(insert a s) : Set J) ≃ (↑s : Set J) ⊕ PUnit :=
-        Equiv.Set.insert (by simpa using ha)
+        Equiv.Set.insert haSet
       let e :
           I ⊕ (↑(insert a s) : Set J) ≃
             (I ⊕ (↑s : Set J)) ⊕ PUnit :=
