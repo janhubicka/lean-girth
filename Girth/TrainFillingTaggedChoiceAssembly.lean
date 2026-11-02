@@ -39,6 +39,10 @@ structure TaggedChoiceInput (C V Y E P Q : Type v) where
     ∃ f, f ∈ selected ∧
       properParent (localParent f) = properParent (localParent e) ∧
       Sum.inl x ∈ localCarrier f
+  local_inter_proper : ∀ e f,
+    properParent (localParent e) ≠ properParent (localParent f) →
+    ∀ z, z ∈ localCarrier e → z ∈ localCarrier f →
+      z ∈ Set.range (Sum.inl : V → V ⊕ Y)
 
 namespace TaggedChoiceInput
 
@@ -148,10 +152,22 @@ noncomputable def componentGeometry (c : C) :
     intro e he f hf hParent z hzE hzF
     have hc : e.1 = c := he
     have hfc : f.1 = c := hf
-    have hSame : e.1 = f.1 := hc.trans hfc.symm
-    have hSameParent : U.properParentOf e = U.properParentOf f := by
-      rw [properParentOf, properParentOf, hSame]
-    exact False.elim (hParent hSameParent)
+    have hLocalParent :
+        U.properParent (U.localParent e.2) ≠
+          U.properParent (U.localParent f.2) := by
+      intro h
+      apply hParent
+      rw [properParentOf, properParentOf, hc, hfc]
+      exact congrArg (Prod.mk c) h
+    obtain ⟨x, hx, hxz⟩ := hzE
+    obtain ⟨y, hy, hyz⟩ := hzF
+    have hOld := U.local_inter_proper e.2 f.2 hLocalParent x hx (by
+      have hEq : U.placeVertex c x = U.placeVertex c y := by
+        simpa only [hc, hfc] using hxz.trans hyz.symm
+      have hxy : x = y := U.placeVertex_injective c hEq
+      simpa only [hxy] using hy)
+    obtain ⟨v, hv⟩ := hOld
+    exact ⟨v, by simpa only [hc, placeVertex_old] using hxz.symm.trans (congrArg (U.placeVertex c) hv)⟩
   strong_target := by
     intro e he x y hxy hxE hyE hxT hyT
     have hc : e.1 = c := he
