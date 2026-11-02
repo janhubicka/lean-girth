@@ -45,12 +45,11 @@ variable (D : RelStructure L UA)
 local notation "Source" =>
   C.toRelStructure.induce (activeCarrier A C α)
 
-variable (family : Set (Embedding Source D))
-
 /-- A selected relational copy of the entire actual active target is a
 partite gluing map with that same embedding exactly when its injective
 prescribed base projection is the literal active source part map. -/
 theorem selectedCopy_isPartiteGluing_iff_basePart
+    (family : Set (Embedding Source D))
     (q : DesignatedCopy Source D E family) :
     (∃ g : StructuralRamsey.Partite.Embedding
       (actualActiveSubsystemPartite A C α) E,
@@ -72,6 +71,7 @@ theorem selectedCopy_isPartiteGluing_iff_basePart
 selected-copy base embedding as a partite gluing map for the FULL source:
 the selected base embedding is injective, while the part map is not. -/
 theorem selectedCopy_notPartiteGluing_of_partCollision
+    (family : Set (Embedding Source D))
     (q : DesignatedCopy Source D E family)
     (x y : activeCarrier A C α)
     (hxy : x ≠ y)
@@ -99,7 +99,7 @@ theorem activePart_collision_of_distinct_projected_carriers
   classical
   have hPoint : ∃ u : UA, a.val u ≠ b.val u := by
     by_contra hNo
-    push_neg at hNo
+    push Not at hNo
     have hEmb : a.val = b.val := Embedding.ext (fun u => hNo u)
     exact hDifferent (congrArg copyCarrier hEmb)
   obtain ⟨u, hDiff⟩ := hPoint
@@ -124,6 +124,7 @@ two physically distinct projected A-copies in the active fibre prevent
 every selected full-active-target copy from being a partite gluing
 embedding with its original selected relational embedding. -/
 theorem selectedCopy_notPartiteGluing_of_nontrivialActive
+    (family : Set (Embedding Source D))
     (a b : StructuralRamsey.Partite.ProjectedEmbedding A C α)
     (hDifferent : copyCarrier a.val ≠ copyCarrier b.val)
     (q : DesignatedCopy Source D E family) :
