@@ -1,0 +1,3 @@
+import Girth.TrainRecursivePhysicalFineGirthGain
+
+#print axioms StructuralRamsey.Girth.selectedPicture_actualSupport_girthGain_of_fineSystemCuts
