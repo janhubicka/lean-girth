@@ -118,4 +118,81 @@ noncomputable def componentGeometry
   (T.toPrivateWagonInput oldCarrier identify).componentGeometry parent
 
 end UniformPrivateTemplate
+
+namespace UniformPrivateTemplate
+
+open StructuralRamsey.RelStructure
+
+universe u
+variable {L : RelLanguage.{u}} {UA W X : Type v}
+
+/-- Images of intrinsic support edges commute literally with composition. -/
+theorem image_copyCarrier_comp
+    (A : RelStructure L UA) (B : RelStructure L W) (R : RelStructure L X)
+    (b : Embedding B R) (a : Embedding A B) :
+    b.toFunctionEmbedding '' copyCarrier a = copyCarrier (b.comp a) := by
+  ext x
+  constructor
+  · rintro ⟨y, ⟨z, rfl⟩, rfl⟩
+    exact ⟨z, rfl⟩
+  · rintro ⟨z, rfl⟩
+    exact ⟨a z, ⟨z, rfl⟩, rfl⟩
+
+/-- A single A-strong, support-covered relational copy B -> R supplies the
+uniform hypergraph template used by the private first-wagon construction. -/
+noncomputable def ofStrongEmbedding
+    (A : RelStructure L UA) (B : RelStructure L W) (R : RelStructure L X)
+    (b : Embedding B R)
+    (hStrong : AStrong A R (copyCarrier b))
+    (hCovered : ∀ x : W, ∃ a : Embedding A B, x ∈ copyCarrier a) :
+    UniformPrivateTemplate W X where
+  localEdges := supportCopies A B
+  templateEdges := supportCopies A R
+  star := b.toFunctionEmbedding
+  map_edge := by
+    intro e
+    obtain ⟨a, ha⟩ := e.2
+    refine ⟨b.comp a, ?_⟩
+    rw [ha]
+    exact image_copyCarrier_comp A B R b a
+  strong := by
+    intro edge x y hxy hx hy hxRange hyRange
+    obtain ⟨a, ha⟩ := edge.2
+    have hxA : x ∈ copyCarrier a := by
+      rw [← ha]
+      exact hx
+    have hyA : y ∈ copyCarrier a := by
+      rw [← ha]
+      exact hy
+    change x ∈ copyCarrier b at hxRange
+    change y ∈ copyCarrier b at hyRange
+    have hMeet : ¬ (copyCarrier a ∩ copyCarrier b).Subsingleton := by
+      intro hSmall
+      exact hxy (hSmall ⟨hxA, hxRange⟩ ⟨hyA, hyRange⟩)
+    have hSub : copyCarrier a ⊆ copyCarrier b := hStrong a hMeet
+    have hFactor : ∀ u : UA, ∃ w : W, a u = b w := by
+      intro u
+      obtain ⟨w, hw⟩ := hSub ⟨u, rfl⟩
+      exact ⟨w, hw.symm⟩
+    let q : Embedding A B := a.factorThroughRange b hFactor
+    have hComp : b.comp q = a := by
+      apply Embedding.ext
+      intro u
+      have hq : a u = b (q u) := Classical.choose_spec (hFactor u)
+      exact hq.symm
+    let e : {e : Set W // e ∈ supportCopies A B} :=
+      ⟨copyCarrier q, ⟨q, rfl⟩⟩
+    refine ⟨e, ?_⟩
+    calc
+      edge.1 = copyCarrier a := ha
+      _ = copyCarrier (b.comp q) := congrArg copyCarrier hComp.symm
+      _ = b.toFunctionEmbedding '' copyCarrier q :=
+        (image_copyCarrier_comp A B R b q).symm
+  local_cover := by
+    intro x
+    obtain ⟨a, hx⟩ := hCovered x
+    exact ⟨⟨copyCarrier a, ⟨a, rfl⟩⟩, hx⟩
+
+end UniformPrivateTemplate
+
 end StructuralRamsey.Girth
