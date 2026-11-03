@@ -1,0 +1,4 @@
+import Girth.TrainActualChosenNonadjacentLongOldUncut
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.old_wagon_distinct_contacts_straddle
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_nonadjacent_long_old_uncut_wagon
