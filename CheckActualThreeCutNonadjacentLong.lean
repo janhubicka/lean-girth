@@ -1,0 +1,6 @@
+import Girth.TrainActualThreeCutNonadjacentLong
+
+#print axioms StructuralRamsey.Girth.cyclicSucc_succ_ne_self_of_three_le
+#print axioms StructuralRamsey.Girth.trainCyclicPred_pred_ne_self_of_three_le
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_ne_reverse_succ_of_three_cuts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_forward_nonadjacent_long_old_uncut_wagon
