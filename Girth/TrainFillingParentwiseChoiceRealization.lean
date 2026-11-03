@@ -47,7 +47,7 @@ namespace ParentwiseRealization
 
 variable {U D} (R : ParentwiseRealization U D)
 
-abbrev Target := I × C
+abbrev Target (_R : ParentwiseRealization U D) := I × C
 
 def targetCarrier (j : R.Target) : Set V :=
   R.vertex j.1 '' U.targetCarrier j.2
