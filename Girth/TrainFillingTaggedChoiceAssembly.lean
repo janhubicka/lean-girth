@@ -46,10 +46,10 @@ namespace TaggedChoiceInput
 
 variable {C V Y E P Q : Type v} (U : TaggedChoiceInput C V Y E P Q)
 
-abbrev LocalVertex := V ⊕ Y
-abbrev Vertex := C × U.LocalVertex
-abbrev Edge := C × E
-abbrev ProperWagon := C × Q
+abbrev LocalVertex (_U : TaggedChoiceInput C V Y E P Q) := V ⊕ Y
+abbrev Vertex (U : TaggedChoiceInput C V Y E P Q) := C × U.LocalVertex
+abbrev Edge (_U : TaggedChoiceInput C V Y E P Q) := C × E
+abbrev ProperWagon (_U : TaggedChoiceInput C V Y E P Q) := C × Q
 
 def placeVertex (c : C) (z : U.LocalVertex) : U.Vertex := (c, z)
 
