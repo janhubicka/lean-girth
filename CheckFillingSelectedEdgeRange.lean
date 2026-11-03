@@ -1,0 +1,7 @@
+import Girth.TrainFillingSelectedEdgeRange
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledEdgeEmbedding
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledEdgeEmbedding_cover
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledEdgeEmbedding_range
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledEdges_eq_coverPullback
