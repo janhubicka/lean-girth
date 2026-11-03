@@ -1,0 +1,8 @@
+import Girth.TrainFillingColourWord
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_apply
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_complete
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_eq_at
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_selected_monochromatic
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_selected_exists
+#print axioms StructuralRamsey.Girth.UniformFillingData.colourWord_palette_card
