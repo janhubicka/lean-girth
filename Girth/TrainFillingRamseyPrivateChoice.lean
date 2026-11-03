@@ -53,7 +53,7 @@ theorem exists_colouredRamsey_privateChoiceGeometry
       (∀ b : StructuralRamsey.Structure.Embedding
           (targetClosureExpansion A B) C,
         ∃ U : PrivateWagonInput V P X,
-          (U.data parent).ComponentTargetGeometry PUnit.unit) := by
+          Nonempty ((U.data parent).ComponentTargetGeometry PUnit.unit)) := by
   classical
   obtain ⟨X, hFinite, ord, C, hClass, hRamsey⟩ :=
     closedTargetRamseyFamily_of_monotone_embeddings
@@ -65,6 +65,6 @@ theorem exists_colouredRamsey_privateChoiceGeometry
       (targetEmbeddingRel b)
       (targetEmbedding_range_aStrong hClass.2 b) hCovered
   refine ⟨T.toPrivateWagonInput oldCarrier identify, ?_⟩
-  exact T.componentGeometry oldCarrier identify parent
+  exact ⟨T.componentGeometry oldCarrier identify parent⟩
 
 end StructuralRamsey.Girth
