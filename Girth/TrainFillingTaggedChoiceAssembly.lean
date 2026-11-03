@@ -94,7 +94,11 @@ theorem properParent_ne_of_choice_ne
     (e f : U.Edge) (hChoice : e.1 ≠ f.1) :
     U.properParentOf e ≠ U.properParentOf f := by
   intro h
-  exact hChoice (congrArg Prod.fst h)
+  have hPair :
+      (e.1, U.properParent (U.localParent e.2)) =
+        (f.1, U.properParent (U.localParent f.2)) := by
+    simpa only [properParentOf] using h
+  exact hChoice (congrArg Prod.fst hPair)
 
 /-- The universal top deliberately forgets the choice tag. -/
 theorem topParent_eq (e f : U.Edge) :
@@ -145,8 +149,9 @@ noncomputable def componentGeometry (c : C) :
           U.properParent (U.localParent f.2) := by
       intro h
       apply hParent
-      rw [properParentOf, properParentOf, hc, hfc]
-      exact congrArg (Prod.mk c) h
+      change (e.1, U.properParent (U.localParent e.2)) =
+        (f.1, U.properParent (U.localParent f.2))
+      simpa only [hc, hfc] using congrArg (Prod.mk c) h
     obtain ⟨x, hx, hxz⟩ := hzE
     obtain ⟨y, hy, hyz⟩ := hzF
     have hxy : x = y := by
@@ -200,7 +205,9 @@ noncomputable def componentGeometry (c : C) :
     obtain ⟨f, hfSel, hfParent, hxf⟩ := U.local_cover e.2 x0 hxLocal
     refine ⟨(c, f), ?_, ?_, ?_⟩
     · exact ⟨rfl, hfSel⟩
-    · exact congrArg (Prod.mk c) hfParent
+    · change (c, U.properParent (U.localParent f)) =
+        (e.1, U.properParent (U.localParent e.2))
+      simpa only [hc] using congrArg (Prod.mk c) hfParent
     · exact ⟨Sum.inl x0, hxf, hxPlace⟩
 
 
