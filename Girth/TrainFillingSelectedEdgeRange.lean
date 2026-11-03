@@ -61,7 +61,8 @@ theorem selectedFilledEdgeEmbedding_range
     refine ⟨(s, (U.decode e).2), ?_⟩
     change U.encode (β s, (U.decode e).2) = e
     have hCover : β s = (U.decode e).1 := by
-      simpa only [TrainFilling.cover] using hs
+      change β s = (U.decode e).1 at hs
+      exact hs
     rw [hCover]
     exact U.encode_decode e
 
