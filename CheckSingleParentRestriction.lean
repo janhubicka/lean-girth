@@ -1,0 +1,6 @@
+import Girth.TrainSingleParentRestriction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.exactSingleCopyFamily
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.exactSingleCopy_enlargeLabel_injective
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.exactSingleCopy_planValid_of_enlarge
+#print axioms StructuralRamsey.Girth.OrderOneData.DesignatedSubcopyFamily.exactSingleCopy_fullSystemGirthGT
