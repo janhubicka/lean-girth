@@ -120,11 +120,15 @@ noncomputable def componentGeometry (c : C) :
     have hxLocal : x0 ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwx⟩ := hxE
       have h := (tagVertex_injective U c) (hwx.trans hxPlace.symm)
-      simpa only [tagEdge, h] using hw
+      change w ∈ (U c).edgeCarrier a at hw
+      rw [h] at hw
+      exact hw
     have hyLocal : y0 ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwy⟩ := hyE
       have h := (tagVertex_injective U c) (hwy.trans hyPlace.symm)
-      simpa only [tagEdge, h] using hw
+      change w ∈ (U c).edgeCarrier a at hw
+      rw [h] at hw
+      exact hw
     have hxyLocal : x0 ≠ y0 := by
       intro h
       subst y0
@@ -140,7 +144,9 @@ noncomputable def componentGeometry (c : C) :
     have hxLocal : x ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwz⟩ := hzE
       have h := (tagVertex_injective U c) (hwz.trans hxPlace.symm)
-      simpa only [tagEdge, h] using hw
+      change w ∈ (U c).edgeCarrier a at hw
+      rw [h] at hw
+      exact hw
     let G := (U c).componentGeometry parent
     obtain ⟨f, hfSelected, hfParent, hxf⟩ :=
       G.pointwise_cover a (Set.mem_univ _) x hxLocal hxOld
