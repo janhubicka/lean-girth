@@ -29,7 +29,7 @@ namespace ColouredEdgeOwnerSplit
 variable {V I : Type v} (H : ColouredEdgeOwnerSplit V I)
 
 abbrev OldEdge := {e : Set V // e ∈ H.edges}
-abbrev Vertex := V ⊕ (V × (H.OldEdge ⊕ PUnit))
+abbrev Vertex := V ⊕ (V × (H.OldEdge ⊕ PUnit.{v}))
 
 def project : H.Vertex → V
   | .inl x => x
@@ -106,12 +106,12 @@ theorem intersection_only_allowed
     exact hzx.symm.trans hs
   · have hs : H.place e x = H.place f x := hzx.trans hzy.symm
     have hs' :
-        (Sum.inr (x, (Sum.inl e : H.OldEdge ⊕ PUnit)) : H.Vertex) =
-          Sum.inr (x, (Sum.inl f : H.OldEdge ⊕ PUnit)) := by
+        (Sum.inr (x, (Sum.inl e : H.OldEdge ⊕ PUnit.{v})) : H.Vertex) =
+          Sum.inr (x, (Sum.inl f : H.OldEdge ⊕ PUnit.{v})) := by
       simpa [ColouredEdgeOwnerSplit.place, h] using hs
     have hpair :
-        (x, (Sum.inl e : H.OldEdge ⊕ PUnit)) =
-          (x, (Sum.inl f : H.OldEdge ⊕ PUnit)) := Sum.inr.inj hs'
+        (x, (Sum.inl e : H.OldEdge ⊕ PUnit.{v})) =
+          (x, (Sum.inl f : H.OldEdge ⊕ PUnit.{v})) := Sum.inr.inj hs'
     have heq : e = f := Sum.inl.inj (Prod.mk.inj hpair).2
     exact False.elim (hef heq)
 
