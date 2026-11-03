@@ -74,6 +74,8 @@ theorem inducedPower_embedding_of_coordinateCopies_coord
     ((inducedPower_embedding_of_coordinateCopies A B N hN copies hParts) x).coord i =
       copies i x := rfl
 
+include hN
+
 /-- Every actual power vertex belongs to the physical carrier of an
 A-copy, provided the original target has full A-support coverage and
 its A-copies preserve the Q-part map. The conclusion concerns ALL
