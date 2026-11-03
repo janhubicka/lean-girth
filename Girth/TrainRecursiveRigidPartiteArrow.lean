@@ -109,6 +109,6 @@ theorem relationalArrow_of_partiteArrow_for_rigidA
     A B hA hB hRigid a₁
   let e₂ := relationalA_embedding_to_partite_of_rigid
     A B hA hB hRigid a₂
-  simpa only [e₁, e₂] using hb e₁ e₂
+  exact hb e₁ e₂
 
 end StructuralRamsey.Girth
