@@ -1,0 +1,9 @@
+import Girth.TrainFillingPrivateUniform
+
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.coordinate_range_eq
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.toPrivateWagonInput
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.toPrivateWagonInput_selectedEdges
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.componentGeometry
+
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.image_copyCarrier_comp
+#print axioms StructuralRamsey.Girth.UniformPrivateTemplate.ofStrongEmbedding
