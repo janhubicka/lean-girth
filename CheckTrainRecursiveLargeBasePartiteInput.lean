@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveLargeBasePartiteInput
+
+#print axioms StructuralRamsey.Girth.exists_largeBase_partiteRamseyFamily
