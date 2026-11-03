@@ -87,6 +87,8 @@ theorem inducedPower_coordinateAEmbedding_parts
     B.part (inducedPower_coordinateAEmbedding A B hB N e hPart i x) = x :=
   ((e x).belongs i).trans (hPart x)
 
+include hB
+
 /-- Genuine A-linearity persists under the positive-or-zero induced
 partite power as soon as its A-embeddings are actual A-part-preserving
 copies. The proof keeps complete physical carriers and treats distinct
