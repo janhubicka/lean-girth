@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveSelectedGluingIncidence
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_eq_reindexed_selectedPicture
+#print axioms StructuralRamsey.Girth.activeGluingWitness_fullSystemGirth_iff_selectedPicture
