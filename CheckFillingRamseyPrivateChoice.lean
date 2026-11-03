@@ -1,0 +1,3 @@
+import Girth.TrainFillingRamseyPrivateChoice
+
+#print axioms StructuralRamsey.Girth.exists_colouredRamsey_privateChoiceGeometry
