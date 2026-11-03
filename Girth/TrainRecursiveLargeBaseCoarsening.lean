@@ -41,7 +41,7 @@ variable {L : RelLanguage.{u}} {P Q X Y : Type v}
 /-- Coarsen the witness's PARTITION, not its relational or physical
 edge structure. The target base D must be a Q-partite system and E's
 projection to its relational reduct must preserve relations. -/
-def System.coarsenVia (D : System L Q P) (E : System L P X)
+def System.coarsenVia (E : System L P X) (D : System L Q P)
     (hE : E.IsPartiteOver D.toRelStructure) : System L Q X where
   toRelStructure := E.toRelStructure
   part x := D.part (E.part x)
@@ -116,7 +116,7 @@ def selectedPartiteGluingFamily_of_largeBase
     {q : DesignatedCopy Target.toRelStructure D.toRelStructure E family //
       q ∈ selected} →
       StructuralRamsey.Partite.Embedding Target (E.coarsenVia D hE) :=
-  fun q => q.1.toCoarsenedPartiteEmbedding Target D E hE family
+  fun q => DesignatedCopy.toCoarsenedPartiteEmbedding Target D E hE family q.1
     (hFamilyParts q.1.base q.1.base_mem)
 
 end StructuralRamsey.Girth
