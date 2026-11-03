@@ -19,14 +19,14 @@ variable {C V P X Q : Type v}
 variable (U : C → PrivateWagonInput V P X) (parent : P → Q)
 
 /-- The physical incidence system with one old parent and all choices. -/
-noncomputable def oldData : OrderOneData (Vertex U) (Edge U) PUnit (ProperWagon U) where
+noncomputable def oldData : OrderOneData (Vertex U) (Edge U) PUnit (ProperWagon (Q := Q) U) where
   edgeCarrier := edgeCarrier U
   copyCarrier := fun _ => Set.univ
   copyEdges := fun _ => Set.univ
   parent := properParentOf U parent
 
 /-- The target incidence system retains each choice as its own designation. -/
-noncomputable def data : OrderOneData (Vertex U) (Edge U) C (ProperWagon U) where
+noncomputable def data : OrderOneData (Vertex U) (Edge U) C (ProperWagon (Q := Q) U) where
   edgeCarrier := edgeCarrier U
   copyCarrier := targetCarrier U
   copyEdges := targetEdges U
@@ -49,10 +49,12 @@ noncomputable def designatedFamily :
       (targetCarrier_subset_component U d hzD)
   siblings_wagon_disjoint := by
     intro c d hcd _ e f he hf
-    obtain ⟨ec, _, hEc⟩ := he
-    obtain ⟨fd, _, hFd⟩ := hf
-    have hc : e.1 = c := by simpa [tagEdge] using congrArg Sigma.fst hEc.symm
-    have hd : f.1 = d := by simpa [tagEdge] using congrArg Sigma.fst hFd.symm
+    have hc : e.1 = c := by
+      obtain ⟨ec, hEc⟩ := he
+      simpa only [tagEdge] using congrArg Sigma.fst hEc.symm
+    have hd : f.1 = d := by
+      obtain ⟨fd, hFd⟩ := hf
+      simpa only [tagEdge] using congrArg Sigma.fst hFd.symm
     exact properParent_ne_of_choice_ne U parent e f (by
       intro h; exact hcd (hc.symm.trans (h.trans hd)))
 
@@ -118,11 +120,11 @@ noncomputable def componentGeometry (c : C) :
     have hxLocal : x0 ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwx⟩ := hxE
       have h := (tagVertex_injective U c) (hwx.trans hxPlace.symm)
-      simpa only [h] using hw
+      simpa only [tagEdge, h] using hw
     have hyLocal : y0 ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwy⟩ := hyE
       have h := (tagVertex_injective U c) (hwy.trans hyPlace.symm)
-      simpa only [h] using hw
+      simpa only [tagEdge, h] using hw
     have hxyLocal : x0 ≠ y0 := by
       intro h
       subst y0
@@ -138,7 +140,7 @@ noncomputable def componentGeometry (c : C) :
     have hxLocal : x ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwz⟩ := hzE
       have h := (tagVertex_injective U c) (hwz.trans hxPlace.symm)
-      simpa only [h] using hw
+      simpa only [tagEdge, h] using hw
     let G := (U c).componentGeometry parent
     obtain ⟨f, hfSelected, hfParent, hxf⟩ :=
       G.pointwise_cover a (Set.mem_univ _) x hxLocal hxOld
