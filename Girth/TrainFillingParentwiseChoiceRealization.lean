@@ -89,24 +89,29 @@ theorem edge_carrier_subset_component (j : R.Target) (e : E)
   obtain ⟨a, ha, rfl⟩ := he
   rw [R.edgeCarrier_eq j.1 a]
   rintro z ⟨x, hx, rfl⟩
-  exact ⟨x, U.edgeCarrier_subset_component a hx, rfl⟩
+  have hChoice : a.1 = j.2 := ha
+  exact ⟨x, by simpa only [hChoice] using
+    U.edgeCarrier_subset_component a hx, rfl⟩
 
 /-- Siblings under one old parent remain vertex-disjoint after realization. -/
 theorem sibling_componentCarrier_disjoint
     (j k : R.Target) (hjk : j ≠ k) (hParent : j.1 = k.1) :
     Disjoint (R.componentCarrier j) (R.componentCarrier k) := by
-  subst k.1
-  have hChoice : j.2 ≠ k.2 := by
+  rcases j with ⟨i, c⟩
+  rcases k with ⟨i', d⟩
+  change i = i' at hParent
+  subst i'
+  have hChoice : c ≠ d := by
     intro h
     exact hjk (Prod.ext rfl h)
   rw [Set.disjoint_left]
   intro z hzJ hzK
   obtain ⟨x, hx, hxz⟩ := hzJ
   obtain ⟨y, hy, hyz⟩ := hzK
-  have hxy : x = y := R.vertex j.1 |>.injective (hxz.trans hyz.symm)
+  have hxy : x = y := (R.vertex i).injective (hxz.trans hyz.symm)
   subst y
   exact (Set.disjoint_left.mp
-    (U.componentCarrier_disjoint j.2 k.2 hChoice)) hx hy
+    (U.componentCarrier_disjoint c d hChoice)) hx hy
 
 /-- Siblings under one old parent remain proper-wagon-disjoint. -/
 theorem sibling_componentWagon_disjoint
@@ -114,23 +119,26 @@ theorem sibling_componentWagon_disjoint
     (e f : E) (he : e ∈ R.componentEdges j)
     (hf : f ∈ R.componentEdges k) :
     D.parent e ≠ D.parent f := by
-  subst k.1
-  have hChoice : j.2 ≠ k.2 := by
+  rcases j with ⟨i, c⟩
+  rcases k with ⟨i', d⟩
+  change i = i' at hParent
+  subst i'
+  have hChoice : c ≠ d := by
     intro h
     exact hjk (Prod.ext rfl h)
   obtain ⟨a, ha, rfl⟩ := he
   obtain ⟨b, hb, rfl⟩ := hf
   have hab : a.1 ≠ b.1 := by
-    have haChoice : a.1 = j.2 := ha
-    have hbChoice : b.1 = k.2 := hb
+    have haChoice : a.1 = c := ha
+    have hbChoice : b.1 = d := hb
     intro h
     apply hChoice
     exact haChoice.symm.trans (h.trans hbChoice)
   have hLocal : U.properParentOf a ≠ U.properParentOf b :=
     U.properParent_ne_of_choice_ne a b hab
-  rw [R.parent_eq j.1 a, R.parent_eq j.1 b]
+  rw [R.parent_eq i a, R.parent_eq i b]
   intro h
-  exact hLocal ((R.wagon j.1).injective h)
+  exact hLocal ((R.wagon i).injective h)
 
 /-- Every old-parent edge belongs to exactly some local choice component;
 only existence is needed by ComponentDecomposition. -/
@@ -191,11 +199,15 @@ noncomputable def componentGeometry (j : R.Target) :
     intro e he f hf hParent z hzE hzF
     obtain ⟨a, ha, rfl⟩ := he
     obtain ⟨b, hb, rfl⟩ := hf
+    change D.parent (R.edge j.1 a) ≠
+      D.parent (R.edge j.1 b) at hParent
     have hLocalParent : U.properParentOf a ≠ U.properParentOf b := by
       intro h
       apply hParent
       rw [R.parent_eq j.1 a, R.parent_eq j.1 b]
       exact congrArg (R.wagon j.1) h
+    change z ∈ D.edgeCarrier (R.edge j.1 a) at hzE
+    change z ∈ D.edgeCarrier (R.edge j.1 b) at hzF
     rw [R.edgeCarrier_eq j.1 a] at hzE
     rw [R.edgeCarrier_eq j.1 b] at hzF
     obtain ⟨x, hx, hxz⟩ := hzE
@@ -208,6 +220,8 @@ noncomputable def componentGeometry (j : R.Target) :
   strong_target := by
     intro e he x y hxy hxE hyE hxT hyT
     obtain ⟨a, ha, rfl⟩ := he
+    change x ∈ D.edgeCarrier (R.edge j.1 a) at hxE
+    change y ∈ D.edgeCarrier (R.edge j.1 a) at hyE
     rw [R.edgeCarrier_eq j.1 a] at hxE hyE
     obtain ⟨x0, hx0, hxMap⟩ := hxE
     obtain ⟨y0, hy0, hyMap⟩ := hyE
@@ -229,6 +243,7 @@ noncomputable def componentGeometry (j : R.Target) :
   pointwise_cover := by
     intro e he x hxE hxT
     obtain ⟨a, ha, rfl⟩ := he
+    change x ∈ D.edgeCarrier (R.edge j.1 a) at hxE
     rw [R.edgeCarrier_eq j.1 a] at hxE
     obtain ⟨x0, hx0, hxMap⟩ := hxE
     obtain ⟨tx, htx, htxMap⟩ := hxT
@@ -239,9 +254,12 @@ noncomputable def componentGeometry (j : R.Target) :
       (U.componentGeometry j.2).pointwise_cover a ha x0 hx0 htx
     refine ⟨R.edge j.1 b, ?_, ?_, ?_⟩
     · exact ⟨b, hbTarget, rfl⟩
-    · rw [R.parent_eq j.1 b, R.parent_eq j.1 a]
+    · change D.parent (R.edge j.1 b) =
+        D.parent (R.edge j.1 a)
+      rw [R.parent_eq j.1 b, R.parent_eq j.1 a]
       exact congrArg (R.wagon j.1) hbParent
-    · rw [R.edgeCarrier_eq j.1 b]
+    · change x ∈ D.edgeCarrier (R.edge j.1 b)
+      rw [R.edgeCarrier_eq j.1 b]
       exact ⟨x0, hxb, hxMap⟩
 
 /-- Global parentwise scattering: no reduction to one parent and no
