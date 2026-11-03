@@ -50,10 +50,10 @@ noncomputable def designatedFamily :
   siblings_wagon_disjoint := by
     intro c d hcd _ e f he hf
     have hc : e.1 = c := by
-      obtain ⟨ec, hEc⟩ := he
+      obtain ⟨ec, _hm, hEc⟩ := he
       simpa only [tagEdge] using congrArg Sigma.fst hEc.symm
     have hd : f.1 = d := by
-      obtain ⟨fd, hFd⟩ := hf
+      obtain ⟨fd, _hm, hFd⟩ := hf
       simpa only [tagEdge] using congrArg Sigma.fst hFd.symm
     exact properParent_ne_of_choice_ne U parent e f (by
       intro h; exact hcd (hc.symm.trans (h.trans hd)))
@@ -69,15 +69,15 @@ noncomputable def componentDecomposition :
   target_edges_subset := targetEdges_subset_component U
   edge_carrier_subset := by
     intro c e he
-    obtain ⟨ec, _, rfl⟩ := he
+    obtain ⟨ec, rfl⟩ := he
     exact edgeCarrier_subset_component U (tagEdge U c ec)
   siblings_vertex_disjoint := by
     intro c d hcd _
     exact componentCarrier_disjoint U c d hcd
   siblings_wagon_disjoint := by
     intro c d hcd _ e f he hf
-    obtain ⟨ec, _, hEc⟩ := he
-    obtain ⟨fd, _, hFd⟩ := hf
+    obtain ⟨ec, hEc⟩ := he
+    obtain ⟨fd, hFd⟩ := hf
     have hc : e.1 = c := by simpa [tagEdge] using congrArg Sigma.fst hEc.symm
     have hd : f.1 = d := by simpa [tagEdge] using congrArg Sigma.fst hFd.symm
     exact properParent_ne_of_choice_ne U parent e f (by
@@ -97,8 +97,8 @@ noncomputable def componentGeometry (c : C) :
   componentEdges := componentEdges U c
   inter_wagon_intersections := by
     intro e he f hf hParent z hzE hzF
-    obtain ⟨a, _ha, rfl⟩ := he
-    obtain ⟨b, _hb, rfl⟩ := hf
+    obtain ⟨a, rfl⟩ := he
+    obtain ⟨b, rfl⟩ := hf
     have hLocalParent : parent a.1 ≠ parent b.1 := by
       intro h
       apply hParent
@@ -114,7 +114,7 @@ noncomputable def componentGeometry (c : C) :
     exact ⟨x, hOld, hxz⟩
   strong_target := by
     intro e he x y hxy hxE hyE hxT hyT
-    obtain ⟨a, _ha, rfl⟩ := he
+    obtain ⟨a, rfl⟩ := he
     obtain ⟨x0, hxOld, hxPlace⟩ := hxT
     obtain ⟨y0, hyOld, hyPlace⟩ := hyT
     have hxLocal : x0 ∈ (U c).edgeCarrier a := by
@@ -135,7 +135,7 @@ noncomputable def componentGeometry (c : C) :
     exact ⟨a, hSelected, rfl⟩
   pointwise_cover := by
     intro e he z hzE hzT
-    obtain ⟨a, _ha, rfl⟩ := he
+    obtain ⟨a, rfl⟩ := he
     obtain ⟨x, hxOld, hxPlace⟩ := hzT
     have hxLocal : x ∈ (U c).edgeCarrier a := by
       obtain ⟨w, hw, hwz⟩ := hzE
