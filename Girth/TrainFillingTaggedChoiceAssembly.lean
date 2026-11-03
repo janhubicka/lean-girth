@@ -98,7 +98,7 @@ theorem properParent_ne_of_choice_ne
       (e.1, U.properParent (U.localParent e.2)) =
         (f.1, U.properParent (U.localParent f.2)) := by
     simpa only [properParentOf] using h
-  exact hChoice (congrArg Prod.fst hPair)
+  exact hChoice (congrArg (fun z : C × Q => z.1) hPair)
 
 /-- The universal top deliberately forgets the choice tag. -/
 theorem topParent_eq (e f : U.Edge) :
