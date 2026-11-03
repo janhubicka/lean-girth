@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCoarsenedRamseyArrow
+
+#print axioms StructuralRamsey.Girth.partiteArrow_after_coarsen_of_designatedRelationalArrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.partiteArrow_after_largeBaseCoarsen
