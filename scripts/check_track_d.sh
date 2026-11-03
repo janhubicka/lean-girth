@@ -53,6 +53,7 @@ checks=(
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveActiveTargetNoSmallBase
   CheckTrainRecursiveSelectedGluingIncidence
+  CheckTrainRecursiveRigidPartiteArrow
 )
 
 for check in "${checks[@]}"; do
