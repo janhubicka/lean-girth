@@ -1,0 +1,11 @@
+import Girth.TrainFillingIndexedChoiceCore
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.tagVertex_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.tagEdge_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.componentCarrier_disjoint
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.edge_carriers_disjoint_of_choice_ne
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.properParent_ne_of_choice_ne
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.topParent_eq
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.targetCarrier_subset_component
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.targetEdges_subset_component
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.target_edge_carrier_subset
