@@ -101,13 +101,14 @@ theorem intersection_only_allowed
   subst y
   by_cases h : H.predicate x ∈ H.allowed
   · refine ⟨x, h, ?_⟩
-    have hs : H.place e x = Sum.inl x := by simp [H.place, h]
+    have hs : H.place e x = Sum.inl x := by
+      simp [ColouredEdgeOwnerSplit.place, h]
     exact hzx.symm.trans hs
   · have hs : H.place e x = H.place f x := hzx.trans hzy.symm
     have hs' :
         (Sum.inr (x, Sum.inl e) : H.Vertex) =
           Sum.inr (x, Sum.inl f) := by
-      simpa [H.place, h] using hs
+      simpa [ColouredEdgeOwnerSplit.place, h] using hs
     have hpair : (x, Sum.inl e) = (x, Sum.inl f) := Sum.inr.inj hs'
     have heq : e = f := Sum.inl.inj (Prod.mk.inj hpair).2
     exact False.elim (hef heq)
