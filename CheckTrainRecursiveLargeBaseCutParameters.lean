@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveLargeBaseCutParameters
+
+#print axioms StructuralRamsey.Girth.supportCopies_coarsenVia_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_after_baseCoarsening
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_coarsen_iff
