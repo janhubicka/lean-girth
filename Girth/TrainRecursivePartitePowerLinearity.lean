@@ -49,17 +49,17 @@ local notation "Power" => StructuralRamsey.Partite.Induced.power B N
 power is a full relational embedding in the original A-partite B.
 In particular it reflects all relations, not merely preserves them. -/
 def inducedPower_coordinateAEmbedding
-    (e : Embedding A Power.toRelStructure)
-    (hPart : ∀ x : Q, Power.part (e x) = x)
+    (e : Embedding A (Power).toRelStructure)
+    (hPart : ∀ x : Q, (Power).part (e x) = x)
     (i : Fin N) : Embedding A B.toRelStructure where
   toFun x := (e x).coord i
   injective := by
     intro x y hxy
     calc
-      x = Power.part (e x) := (hPart x).symm
+      x = (Power).part (e x) := (hPart x).symm
       _ = B.part ((e x).coord i) := ((e x).belongs i).symm
       _ = B.part ((e y).coord i) := congrArg B.part hxy
-      _ = Power.part (e y) := (e y).belongs i
+      _ = (Power).part (e y) := (e y).belongs i
       _ = y := hPart y
   map_rel_iff := by
     intro R z
@@ -73,7 +73,7 @@ def inducedPower_coordinateAEmbedding
       rw [hEq] at hA
       exact hA
     · intro hA
-      have hPower : Power.rel R (e ∘ z) :=
+      have hPower : (Power).rel R (e ∘ z) :=
         (e.map_rel_iff R z).mpr hA
       exact hPower i
 
@@ -81,8 +81,8 @@ def inducedPower_coordinateAEmbedding
 even though the power's vertex carrier may have many vertices in
 each part. -/
 theorem inducedPower_coordinateAEmbedding_parts
-    (e : Embedding A Power.toRelStructure)
-    (hPart : ∀ x : Q, Power.part (e x) = x)
+    (e : Embedding A (Power).toRelStructure)
+    (hPart : ∀ x : Q, (Power).part (e x) = x)
     (i : Fin N) (x : Q) :
     B.part (inducedPower_coordinateAEmbedding A B hB N e hPart i x) = x :=
   ((e x).belongs i).trans (hPart x)
@@ -93,9 +93,9 @@ copies. The proof keeps complete physical carriers and treats distinct
 edge labels by actual carrier equality rather than quotienting labels. -/
 theorem aLinear_inducedPower_of_Aparts
     (hLinear : ALinear A B.toRelStructure)
-    (hPowerPart : ∀ e : Embedding A Power.toRelStructure,
-      ∀ x : Q, Power.part (e x) = x) :
-    ALinear A Power.toRelStructure := by
+    (hPowerPart : ∀ e : Embedding A (Power).toRelStructure,
+      ∀ x : Q, (Power).part (e x) = x) :
+    ALinear A (Power).toRelStructure := by
   intro e f hNotSame x hx y hy
   by_contra hxy
   obtain ⟨u, hu⟩ := hx.1
@@ -104,13 +104,13 @@ theorem aLinear_inducedPower_of_Aparts
   obtain ⟨v', hv'⟩ := hy.2
   have huu' : u = u' := by
     calc
-      u = Power.part (e u) := (hPowerPart e u).symm
-      _ = Power.part (f u') := congrArg Power.part (hu.trans hu'.symm)
+      u = (Power).part (e u) := (hPowerPart e u).symm
+      _ = (Power).part (f u') := congrArg (Power).part (hu.trans hu'.symm)
       _ = u' := hPowerPart f u'
   have hvv' : v = v' := by
     calc
-      v = Power.part (e v) := (hPowerPart e v).symm
-      _ = Power.part (f v') := congrArg Power.part (hv.trans hv'.symm)
+      v = (Power).part (e v) := (hPowerPart e v).symm
+      _ = (Power).part (f v') := congrArg (Power).part (hv.trans hv'.symm)
       _ = v' := hPowerPart f v'
   subst u'
   subst v'
