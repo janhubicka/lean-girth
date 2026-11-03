@@ -68,7 +68,7 @@ theorem exists_largeBase_partiteRamseyFamily
   refine ⟨N, hN, ?_⟩
   let D := StructuralRamsey.Partite.Induced.power B N
   have hD : D.IsPartiteOver A :=
-    StructuralRamsey.Partite.Induced.power_isPartiteOver A B hB hN
+    StructuralRamsey.Partite.Induced.power_isPartiteOver hB hN
   let family : Set (Embedding B.toRelStructure D.toRelStructure) :=
     Set.range (fun b : StructuralRamsey.Partite.Embedding B D =>
       b.toEmbedding)
