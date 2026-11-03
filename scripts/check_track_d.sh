@@ -54,6 +54,7 @@ checks=(
   CheckTrainRecursiveActiveTargetNoSmallBase
   CheckTrainRecursiveSelectedGluingIncidence
   CheckTrainRecursiveLargeBaseCoarsening
+  CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveCoarsenedRamseyArrow
 )
 
