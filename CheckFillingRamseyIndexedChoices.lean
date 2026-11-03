@@ -1,0 +1,3 @@
+import Girth.TrainFillingRamseyIndexedChoices
+
+#print axioms StructuralRamsey.Girth.exists_colouredRamsey_indexedPrivateChoices
