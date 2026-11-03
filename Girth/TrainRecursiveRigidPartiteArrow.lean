@@ -1,5 +1,7 @@
 import Girth.TrainRecursiveActivePartite
 import PartiteConstruction.Partite.Induced
+import PartiteConstruction.Relational.Order
+import Mathlib.Order.Preorder.Finite
 
 set_option autoImplicit false
 
@@ -110,5 +112,40 @@ theorem relationalArrow_of_partiteArrow_for_rigidA
   let e₂ := relationalA_embedding_to_partite_of_rigid
     A B hA hB hRigid a₂
   exact hb e₁ e₂
+
+
+/-- The order relation makes every self-embedding of a finite ordered
+relational structure the identity.  This discharges the rigidity
+condition above for the actual circulation source, rather than
+postulating rigidity as an external premise. -/
+theorem orderedA_self_embedding_is_id
+    (A₀ : RelStructure L Q)
+    [LinearOrder Q] [Finite Q]
+    (e : Embedding A₀.ordered A₀.ordered) :
+    e = Embedding.id A₀.ordered := by
+  apply Embedding.ext
+  intro x
+  exact StrictMono.apply_eq (Embedding.strictMono e)
+
+/-- The actual ordered-A specialization needs ONLY the genuine
+A-partite projection of B and a partite Ramsey arrow.  Irreducibility
+and rigidity are both derived from the distinguished finite order. -/
+theorem relationalArrow_of_partiteArrow_for_orderedA
+    (A₀ : RelStructure L Q)
+    [LinearOrder Q] [Finite Q]
+    (B : StructuralRamsey.Partite.System L.withOrder Q V)
+    (D : StructuralRamsey.Partite.System L.withOrder Q X)
+    (hB : B.IsPartiteOver A₀.ordered)
+    (κ : Type w)
+    (hArrow : StructuralRamsey.Partite.Arrow
+      (StructuralRamsey.Partite.transversal A₀.ordered) B D κ) :
+    ∀ χ : Embedding A₀.ordered D.toRelStructure → κ,
+      ∃ b : StructuralRamsey.Partite.Embedding B D,
+        ∀ a₁ a₂ : Embedding A₀.ordered B.toRelStructure,
+          χ (b.toEmbedding.comp a₁) = χ (b.toEmbedding.comp a₂) := by
+  exact relationalArrow_of_partiteArrow_for_rigidA
+    A₀.ordered B D
+    (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
+    hB (fun e => orderedA_self_embedding_is_id A₀ e) κ hArrow
 
 end StructuralRamsey.Girth
