@@ -1,0 +1,4 @@
+import Girth.TrainActualChosenTwoStepLong
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_long_cut_piece_actual_source_contacts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_nonadjacent_long_exact_two_step
