@@ -35,6 +35,9 @@ def project : H.Vertex → V
   | .inl x => x
   | .inr (x, _) => x
 
+/-- The split retains the exact original unary predicate of every vertex. -/
+def newPredicate (z : H.Vertex) : I := H.predicate (H.project z)
+
 /-- A vertex on physical edge e has a unique incidence token when its
 predicate is forbidden; in allowed predicates it keeps its old name. -/
 noncomputable def place (e : H.OldEdge) (x : V) : H.Vertex := by
@@ -47,6 +50,10 @@ noncomputable def place (e : H.OldEdge) (x : V) : H.Vertex := by
   classical
   by_cases h : H.predicate x ∈ H.allowed <;>
     simp [place, project, h]
+
+@[simp] theorem newPredicate_place (e : H.OldEdge) (x : V) :
+    H.newPredicate (H.place e x) = H.predicate x := by
+  simp only [newPredicate, project_place]
 
 theorem place_injective (e : H.OldEdge) : Function.Injective (H.place e) := by
   intro x y h
@@ -117,6 +124,10 @@ noncomputable def isolatedLift (x : V) : H.Vertex := by
   classical
   by_cases h : H.predicate x ∈ H.allowed <;>
     simp [isolatedLift, project, h]
+
+@[simp] theorem newPredicate_isolatedLift (x : V) :
+    H.newPredicate (H.isolatedLift x) = H.predicate x := by
+  simp only [newPredicate, project_isolatedLift]
 
 theorem isolatedLift_injective : Function.Injective H.isolatedLift := by
   intro x y h
