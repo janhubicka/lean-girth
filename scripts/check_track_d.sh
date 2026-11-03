@@ -52,6 +52,7 @@ checks=(
   CheckTrainRecursiveRefinementForget
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveLargeBaseCoarsening
+  CheckTrainRecursiveCoarsenedRamseyArrow
 )
 
 for check in "${checks[@]}"; do
