@@ -106,10 +106,12 @@ theorem intersection_only_allowed
     exact hzx.symm.trans hs
   · have hs : H.place e x = H.place f x := hzx.trans hzy.symm
     have hs' :
-        (Sum.inr (x, Sum.inl e) : H.Vertex) =
-          Sum.inr (x, Sum.inl f) := by
+        (Sum.inr (x, (Sum.inl e : H.OldEdge ⊕ PUnit)) : H.Vertex) =
+          Sum.inr (x, (Sum.inl f : H.OldEdge ⊕ PUnit)) := by
       simpa [ColouredEdgeOwnerSplit.place, h] using hs
-    have hpair : (x, Sum.inl e) = (x, Sum.inl f) := Sum.inr.inj hs'
+    have hpair :
+        (x, (Sum.inl e : H.OldEdge ⊕ PUnit)) =
+          (x, (Sum.inl f : H.OldEdge ⊕ PUnit)) := Sum.inr.inj hs'
     have heq : e = f := Sum.inl.inj (Prod.mk.inj hpair).2
     exact False.elim (hef heq)
 
