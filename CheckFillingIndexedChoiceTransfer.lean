@@ -1,0 +1,9 @@
+import Girth.TrainFillingIndexedChoiceTransfer
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.oldData
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.data
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.designatedFamily
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.componentDecomposition
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.designatedFamily_target_eq_data
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.componentGeometry
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.target_fullSystemGirthGT_of_old
