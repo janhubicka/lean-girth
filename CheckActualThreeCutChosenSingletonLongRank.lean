@@ -1,0 +1,3 @@
+import Girth.TrainActualThreeCutChosenSingletonLongRank
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_three_cuts_chosen_singleton_long_rank
