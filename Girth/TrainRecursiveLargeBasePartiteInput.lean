@@ -83,4 +83,63 @@ theorem exists_largeBase_partiteRamseyFamily
     obtain ⟨b, hMono⟩ := hArrow χ
     exact ⟨b, ⟨b, rfl⟩, hMono⟩
 
+/-- The geometrically distinguished Hales--Jewett LINE family can be
+chosen instead of ALL partite B-embeddings into the power.  This
+retains the same partite Ramsey arrow while making the exact selected
+base-copy geometry explicit for later A-strongness auditing. -/
+theorem exists_largeBase_HJLineRamseyFamily
+    (A : RelStructure L Q)
+    (B : StructuralRamsey.Partite.System L Q VB)
+    [Finite Q] [Finite VB]
+    (hB : B.IsPartiteOver A)
+    (κ : Type w) [Fintype κ] [Nonempty κ] :
+    ∃ (N : ℕ), 0 < N ∧
+      let D := StructuralRamsey.Partite.Induced.power B N
+      D.IsPartiteOver A ∧
+      ∃ family : Set (Embedding B.toRelStructure D.toRelStructure),
+        Nonempty family ∧
+        (∀ b, b ∈ family → ∀ x : VB,
+          D.part (b x) = B.part x) ∧
+        (∀ χ : StructuralRamsey.Partite.Embedding
+          (StructuralRamsey.Partite.transversal A) D → κ,
+          ∃ W : HalesJewett.Line
+            (StructuralRamsey.Partite.Induced.Letter A B) N,
+            (StructuralRamsey.Partite.Induced.lineEmbedding hB W).toEmbedding ∈
+              family ∧
+            ∀ a₁ a₂ : StructuralRamsey.Partite.Embedding
+                (StructuralRamsey.Partite.transversal A) B,
+              χ ((StructuralRamsey.Partite.Induced.lineEmbedding hB W).comp a₁) =
+                χ ((StructuralRamsey.Partite.Induced.lineEmbedding hB W).comp a₂)) := by
+  classical
+  letI : Fintype (StructuralRamsey.Partite.Induced.Letter A B) :=
+    Fintype.ofFinite _
+  obtain ⟨N, hN, hHJ⟩ :=
+    HalesJewett.finite
+      (α := StructuralRamsey.Partite.Induced.Letter A B) (κ := κ)
+  refine ⟨N, hN, ?_⟩
+  let D := StructuralRamsey.Partite.Induced.power B N
+  have hD : D.IsPartiteOver A :=
+    StructuralRamsey.Partite.Induced.power_isPartiteOver hB hN
+  let family : Set (Embedding B.toRelStructure D.toRelStructure) :=
+    Set.range (fun W : HalesJewett.Line
+      (StructuralRamsey.Partite.Induced.Letter A B) N =>
+      (StructuralRamsey.Partite.Induced.lineEmbedding hB W).toEmbedding)
+  refine ⟨hD, family, ?_, ?_, ?_⟩
+  · let colour : κ := Classical.choice (inferInstance : Nonempty κ)
+    obtain ⟨W, _⟩ := hHJ (fun _ => colour)
+    exact ⟨(StructuralRamsey.Partite.Induced.lineEmbedding hB W).toEmbedding,
+      ⟨W, rfl⟩⟩
+  · intro b hb x
+    obtain ⟨W, rfl⟩ := hb
+    exact (StructuralRamsey.Partite.Induced.lineEmbedding hB W).map_part x
+  · intro χ
+    obtain ⟨W, hMono⟩ := hHJ
+      (fun word => χ
+        (StructuralRamsey.Partite.Induced.wordEmbedding hB hN word))
+    refine ⟨W, ⟨W, rfl⟩, ?_⟩
+    intro a₁ a₂
+    simpa only [StructuralRamsey.Partite.Induced.lineEmbedding_comp_letter
+      hB hN] using hMono a₁ a₂
+
+
 end StructuralRamsey.Girth
