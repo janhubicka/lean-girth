@@ -1,0 +1,7 @@
+import Girth.TrainRecursiveLargeBaseCoarsening
+
+#print axioms StructuralRamsey.Partite.System.coarsenVia
+#print axioms StructuralRamsey.Partite.System.coarsenVia_isPartiteOver
+#print axioms StructuralRamsey.Partite.Embedding.coarsenVia
+#print axioms StructuralRamsey.Girth.DesignatedCopy.toCoarsenedPartiteEmbedding
+#print axioms StructuralRamsey.Girth.selectedPartiteGluingFamily_of_largeBase
