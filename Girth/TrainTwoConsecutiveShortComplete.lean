@@ -1,4 +1,5 @@
 import Girth.TrainArbitraryReplacementComplete
+import Girth.TrainCyclicOwnerAbsorption
 import Mathlib.Tactic
 
 /-!
@@ -76,7 +77,7 @@ theorem BigCycle.twoConsecutiveShort_complete_of_three_le
     by_cases hJt : j = t
     · simp [pieces, BigCycle.twoConsecutiveShortPieces, hJt]
     · by_cases hJs : j = cyclicSucc t
-      · simp [pieces, BigCycle.twoConsecutiveShortPieces, hJt, hJs]
+      · simp [pieces, BigCycle.twoConsecutiveShortPieces, hNe, hJt, hJs]
       · simp [pieces, BigCycle.twoConsecutiveShortPieces, hJt, hJs]
   have hGeom : C.LocalLongA2Geometry D pieces := by
     intro j e f p hp
