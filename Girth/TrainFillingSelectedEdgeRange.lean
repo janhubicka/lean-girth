@@ -83,4 +83,50 @@ theorem selectedFilledEdges_eq_coverPullback
     selected = Set.range (U.selectedFilledEdgeEmbedding β) := by
   rw [hSelected, U.selectedFilledEdgeEmbedding_range β]
 
+
+/-- An actual contracted M-copy provides a vertex embedding and local
+X-coordinate maps; their equality with the canonical N placements is
+the precise remaining compatibility requirement. The full physical
+new-edge carrier identity is then a CONCLUSION, not a field. -/
+structure SelectedContractedPlacement (W : Type v) where
+  vertex : W ↪ V
+  oldEdge : S ↪ U.OldEdge
+  local : S → X ↪ W
+  vertex_local : ∀ s x,
+    vertex (local s x) = U.place (oldEdge s) x
+
+namespace SelectedContractedPlacement
+
+variable {W : Type v} (R : U.SelectedContractedPlacement (S := S) W)
+
+/-- Local physical edge carriers inside the contracted selected copy. -/
+def sourcePhysicalCarrier (c : S × U.TemplateEdge) : Set W :=
+  R.local c.1 '' c.2.1
+
+/-- The actual global physical filled edge carrier is exactly the
+image of its source local physical carrier under the selected M-copy
+vertex embedding. No ambient edges are discarded or reinterpreted. -/
+theorem edgeCarrier_eq_image (c : S × U.TemplateEdge) :
+    U.imageCarrier (R.oldEdge c.1, c.2) =
+      R.vertex '' R.sourcePhysicalCarrier c := by
+  ext y
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    exact ⟨R.local c.1 x, ⟨x, hx, rfl⟩,
+      R.vertex_local c.1 x⟩
+  · rintro ⟨w, ⟨x, hx, rfl⟩, rfl⟩
+    exact ⟨x, hx, (R.vertex_local c.1 x).symm⟩
+
+/-- Consequently the canonical physical edge embedding constructed
+from the selected old edge map automatically has its exact carrier
+transport. This is the second realization field after exact range. -/
+theorem physicalEdge_carrier_eq_image (c : S × U.TemplateEdge) :
+    (U.selectedFilledEdgeEmbedding R.oldEdge c).1 =
+      R.vertex '' R.sourcePhysicalCarrier c := by
+  change U.imageCarrier (R.oldEdge c.1, c.2) =
+    R.vertex '' R.sourcePhysicalCarrier c
+  exact R.edgeCarrier_eq_image c
+
+end SelectedContractedPlacement
+
 end StructuralRamsey.Girth.UniformFillingData
