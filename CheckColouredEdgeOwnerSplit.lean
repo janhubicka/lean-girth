@@ -1,9 +1,11 @@
 import Girth.TrainColouredEdgeOwnerSplit
 
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.project_place
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.newPredicate_place
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.place_injective
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.projection_splitEdge
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.splitEdge_injective
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.intersection_only_allowed
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.project_isolatedLift
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.newPredicate_isolatedLift
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.isolatedLift_injective
