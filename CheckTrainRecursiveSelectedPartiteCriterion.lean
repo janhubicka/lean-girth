@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveSelectedPartiteCriterion
+
+#print axioms StructuralRamsey.Girth.selectedCopy_isPartiteGluing_iff_basePart
+#print axioms StructuralRamsey.Girth.selectedCopy_notPartiteGluing_of_partCollision
+#print axioms StructuralRamsey.Girth.activePart_collision_of_distinct_projected_carriers
+#print axioms StructuralRamsey.Girth.selectedCopy_notPartiteGluing_of_nontrivialActive
