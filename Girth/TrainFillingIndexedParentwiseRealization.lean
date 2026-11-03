@@ -93,9 +93,12 @@ theorem edge_carrier_subset_component
   rw [R.edgeCarrier_eq j.1 a]
   rintro z ⟨x, hx, rfl⟩
   have hIn : x ∈ IndexedPrivateChoice.componentCarrier U j.2 := by
-    obtain ⟨a', ha', hEq⟩ := ha
-    subst a
-    exact ⟨a', rfl⟩
+    have hOwner : a.1 = j.2 := by
+      obtain ⟨b, hb⟩ := ha
+      simpa only [IndexedPrivateChoice.tagEdge] using
+        congrArg Sigma.fst hb.symm
+    have hLocal := IndexedPrivateChoice.edgeCarrier_subset_component U a hx
+    simpa only [hOwner] using hLocal
   exact ⟨x, hIn, rfl⟩
 
 theorem sibling_componentCarrier_disjoint
