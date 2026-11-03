@@ -3,3 +3,6 @@ import Girth.TrainRecursiveRigidPartiteArrow
 #print axioms StructuralRamsey.Girth.relationalA_embedding_preserves_parts_of_rigid
 #print axioms StructuralRamsey.Girth.relationalA_embedding_to_partite_of_rigid
 #print axioms StructuralRamsey.Girth.relationalArrow_of_partiteArrow_for_rigidA
+
+#print axioms StructuralRamsey.Girth.orderedA_self_embedding_is_id
+#print axioms StructuralRamsey.Girth.relationalArrow_of_partiteArrow_for_orderedA
