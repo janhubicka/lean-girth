@@ -82,20 +82,25 @@ theorem partiteArrow_after_coarsen_of_designatedRelationalArrow
       exact g.map_part x
     dsimp [χraw]
     rw [dif_pos hg]
-    apply congrArg χ
-    exact StructuralRamsey.Partite.Embedding.ext (fun x => rfl)
   obtain ⟨q, hMono⟩ := hRelArrow χraw
   let g := selectedPartiteGluingFamily_of_largeBase
     Target D E hE family hFamilyParts selected q
+  have hUnderlying (e : StructuralRamsey.Partite.Embedding
+      (StructuralRamsey.Partite.transversal A) Target) :
+      (g.comp e).toEmbedding = q.1.embedding.comp e.toEmbedding := by
+    rfl
   refine ⟨g, ?_⟩
   intro e1 e2
   calc
-    χ (g.comp e1) = χraw (q.1.embedding.comp e1.toEmbedding) := by
-      simpa only [] using (hRaw (g.comp e1)).symm
+    χ (g.comp e1) = χraw (g.comp e1).toEmbedding :=
+      (hRaw (g.comp e1)).symm
+    _ = χraw (q.1.embedding.comp e1.toEmbedding) :=
+      congrArg χraw (hUnderlying e1)
     _ = χraw (q.1.embedding.comp e2.toEmbedding) :=
       hMono e1.toEmbedding e2.toEmbedding
-    _ = χ (g.comp e2) := by
-      simpa only [] using hRaw (g.comp e2)
+    _ = χraw (g.comp e2).toEmbedding :=
+      congrArg χraw (hUnderlying e2).symm
+    _ = χ (g.comp e2) := hRaw (g.comp e2)
 
 end StructuralRamsey.Girth
 
