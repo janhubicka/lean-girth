@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveActiveTargetNoSmallBase
+
+#print axioms StructuralRamsey.Girth.activeCarrier_no_injection_to_A_of_two_copies
+#print axioms StructuralRamsey.Girth.activeSource_no_embedding_to_A_base_of_two_copies
+#print axioms StructuralRamsey.Girth.fullActive_selectedCopy_isEmpty_of_two_copies
