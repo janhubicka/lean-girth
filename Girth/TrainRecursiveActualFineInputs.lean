@@ -87,7 +87,7 @@ theorem ForestTailStage.coarsenedFineInputs_of_trueActive
     FiniteMixedForestThrough
       (RelationalMixedSupportTest A (fun i : Selected =>
         (Gluing i).toEmbedding)) q := by
-  have hTarget : IrreduciblesExtendTo A Target.toRelStructure :=
+  have hTarget : IrreduciblesExtendTo A (Target).toRelStructure :=
     old.trueActive_irreduciblesExtendTo hA hBaseLinear
       hBaseStrong e hRigid hActive projected hHigh
   exact lower.coarsenedSelected_fineWitnessInputs
