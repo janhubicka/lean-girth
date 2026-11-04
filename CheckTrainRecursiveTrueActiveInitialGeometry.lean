@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveTrueActiveInitialGeometry
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_supportGirthGT
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_supportNonempty
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_initialTargetGeometry
