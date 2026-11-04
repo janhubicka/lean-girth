@@ -61,6 +61,7 @@ checks=(
   CheckTrainRecursivePartitePowerLinearity
   CheckTrainRecursivePartitePowerSupport
   CheckTrainRecursiveStrongSupportedHJBase
+  CheckTrainActualSelectedOutputLexRank
 )
 
 for check in "${checks[@]}"; do
