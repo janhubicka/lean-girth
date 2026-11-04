@@ -97,7 +97,7 @@ theorem ForestTailStage.trueActive_initialTargetGeometry
       (supportCopies A
         (actualActiveSubsystemPartite A stage.system e.toFunctionEmbedding).toRelStructure) q := by
   obtain ⟨hPartite, hLinear, hCover⟩ :=
-    stage.trueActive_HJ_sourceGeometry A B D e
+    ForestTailStage.trueActive_HJ_sourceGeometry A B D stage e
   exact ⟨hPartite, hLinear,
     stage.trueActive_supportNonempty e hActive, hCover,
     stage.trueActive_supportGirthGT e q hq⟩
