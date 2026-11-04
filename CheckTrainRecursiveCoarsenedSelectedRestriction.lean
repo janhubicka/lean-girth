@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveCoarsenedSelectedRestriction
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_trainRestriction
