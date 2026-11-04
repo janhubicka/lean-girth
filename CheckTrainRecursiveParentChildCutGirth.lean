@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveParentChildCutGirth
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCutGirth_of_parent_and_children
