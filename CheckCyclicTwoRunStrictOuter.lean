@@ -1,0 +1,4 @@
+import Girth.TrainCyclicTwoRunStrictOuter
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutPositions_replace_two_run_subset
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_replace_two_run_strict_of_outer_match
