@@ -53,12 +53,6 @@ variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain all
 variable (hFamilyParts : ∀ b, b ∈ family → ∀ x : activeCarrier A Old α,
   D.part (b x) = activeSourcePart A Old α x)
 
-local notation "Selected" =>
-  {q : DesignatedCopy Source D.toRelStructure S.system family // q ∈ S.selected}
-local notation "PartiteGluing" =>
-  selectedPartiteGluingFamily_of_largeBase
-    Target D S.system S.isPartite family hFamilyParts S.selected
-
 /-- At every positive stage coordinate, the actual PARTITE gluing family
 obtained by coarsening has the exact full system-girth cutoff of the
 lower selected-picture stage. This is a complete indexed incidence
@@ -67,7 +61,11 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
     (j : Fin t.length) (hj : 0 < j.val) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : Selected => (PartiteGluing i).toEmbedding)
+      (fun i : {q : DesignatedCopy Source D.toRelStructure S.system family //
+        q ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
+          family hFamilyParts S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT (t.get j) :=
   S.tailGirth j hj
 
@@ -79,7 +77,11 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
     (q : ℕ) (hq : q ≤ t.get j) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : Selected => (PartiteGluing i).toEmbedding)
+      (fun i : {q : DesignatedCopy Source D.toRelStructure S.system family //
+        q ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
+          family hFamilyParts S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT q := by
   change (selectedPictureOrderOneData A Source D.toRelStructure
     S.system family S.selected S.train j.castSucc).FullSystemGirthGT q
