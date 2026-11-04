@@ -32,6 +32,15 @@ universe v
 variable {V X S : Type v} (U : UniformFillingData V X)
 variable {m : ℕ} (T : EdgeTrainLevels U.OldEdge m)
 
+/-- The nonempty local-template-edge hypothesis needed for quotient-wagon
+representatives follows from pointwise coverage whenever the uniform
+Ramsey template has at least one vertex. It is not an independent
+geometric premise in the intended cutoff-two application. -/
+theorem nonempty_templateEdge_of_nonempty [Nonempty X] : Nonempty U.TemplateEdge := by
+  obtain ⟨x⟩ := (inferInstance : Nonempty X)
+  obtain ⟨a, _⟩ := U.template_covers x
+  exact ⟨a⟩
+
 /-- A selected old edge embedding faithfully reflects the specified old
 wagon relation. No new-filled-wagon hypothesis is supplied. -/
 noncomputable def selectedFilledFaithfulWagonMap
