@@ -55,8 +55,8 @@ theorem ForestTailStage.selectedEmbeddings_mixedForest
   intro piece hp
   rcases hTest piece hp with ⟨i, hi⟩ | ⟨a, ha⟩
   · obtain ⟨b, hb, hfi⟩ := hSelected i
-    exact Or.inl ⟨b, hb, by simpa only [hfi] using hi⟩
-  · exact Or.inr ⟨a, ha⟩
+    exact Or.inr ⟨b, hb, by simpa only [hfi] using hi⟩
+  · exact Or.inl ⟨a, ha⟩
 
 /-- The lower stage's *mixed* irreducible coverage upgrades to ordinary
 A-extension of every irreducible as soon as its target B has A-extension.
