@@ -6,3 +6,5 @@ import Girth.TrainCyclicRunIndexReverseWindow
 #print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_zero_wrap_window
 
 #print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_two_step_fibre
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_singleton_fibre
