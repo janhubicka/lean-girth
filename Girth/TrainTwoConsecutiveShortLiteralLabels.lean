@@ -48,8 +48,10 @@ theorem BigCycle.twoConsecutiveShort_resultWord
       simp [BigCycle.twoConsecutiveShortPieces,
         BigCycle.twoConsecutiveShortLabels, BigCycle.pieceWord]
     · by_cases hJs : j = cyclicSucc t
-      · simp [BigCycle.twoConsecutiveShortPieces,
-          BigCycle.twoConsecutiveShortLabels, BigCycle.pieceWord, hJt, hJs]
+      · have hNe : cyclicSucc t ≠ t :=
+          cyclicSucc_ne_self_of_two_le C.length_ge_two t
+        simp [BigCycle.twoConsecutiveShortPieces,
+          BigCycle.twoConsecutiveShortLabels, BigCycle.pieceWord, hJt, hJs, hNe]
       · simp [BigCycle.twoConsecutiveShortPieces,
           BigCycle.twoConsecutiveShortLabels, BigCycle.pieceWord, hJt, hJs]
   change (List.ofFn (fun j : Fin n =>
