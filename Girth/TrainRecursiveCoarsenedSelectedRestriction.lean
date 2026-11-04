@@ -39,34 +39,21 @@ variable (D : StructuralRamsey.Partite.System L UA V)
 
 local notation "Source" =>
   Old.toRelStructure.induce (activeCarrier A Old α)
-local notation "Target" =>
-  actualActiveSubsystemPartite A Old α
-
-variable (family : Set (Embedding Source D.toRelStructure))
-variable {t : List ℕ}
-variable (targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length)
-variable (allowed : Fin (t.length + 1) → Set V)
-variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
-variable (hFamilyParts : ∀ b, b ∈ family → ∀ x : activeCarrier A Old α,
-  D.part (b x) = activeSourcePart A Old α x)
-
-local notation "Selected" =>
-  {q : DesignatedCopy Source D.toRelStructure S.system family // q ∈ S.selected}
-
-local notation "PartiteGluing" =>
-  selectedPartiteGluingFamily_of_largeBase
-    Target D S.system S.isPartite family hFamilyParts S.selected
-
 /-- Full preservation and reflection of all physical fine train
 cuts on each actual selected gluing embedding after part-coarsening.
 No prescribed target cut or selected copy is replaced by an arbitrary
 projected copy. The selected indices remain the literal subtype. -/
 theorem ForestTailStage.coarsenedSelected_trainRestriction
     (ν : Fin (t.length + 1))
-    (i : Selected) (a b : Embedding A Source) :
+    (i : {q : DesignatedCopy Source D.toRelStructure S.system family //
+      q ∈ S.selected}) (a b : Embedding A Source) :
     S.train.rel ν
-      (actualEdge ((PartiteGluing i).toEmbedding.comp a))
-      (actualEdge ((PartiteGluing i).toEmbedding.comp b)) ↔
+      (actualEdge ((selectedPartiteGluingFamily_of_largeBase
+        (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
+        family hFamilyParts S.selected i).toEmbedding.comp a))
+      (actualEdge ((selectedPartiteGluingFamily_of_largeBase
+        (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
+        family hFamilyParts S.selected i).toEmbedding.comp b)) ↔
     targetTrain.rel ν (actualEdge a) (actualEdge b) :=
   S.targetRestriction i.1 i.2 ν a b
 
