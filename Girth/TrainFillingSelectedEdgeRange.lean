@@ -112,7 +112,7 @@ theorem edgeCarrier_eq_image
     (R : U.SelectedContractedPlacement (S := S) W)
     (c : S × U.TemplateEdge) :
     U.imageCarrier (R.oldEdge c.1, c.2) =
-      R.vertex '' R.sourcePhysicalCarrier c := by
+      R.vertex '' sourcePhysicalCarrier U R c := by
   ext y
   constructor
   · rintro ⟨x, hx, rfl⟩
@@ -128,10 +128,10 @@ theorem physicalEdge_carrier_eq_image
     (R : U.SelectedContractedPlacement (S := S) W)
     (c : S × U.TemplateEdge) :
     (U.selectedFilledEdgeEmbedding R.oldEdge c).1 =
-      R.vertex '' R.sourcePhysicalCarrier c := by
+      R.vertex '' sourcePhysicalCarrier U R c := by
   change U.imageCarrier (R.oldEdge c.1, c.2) =
-    R.vertex '' R.sourcePhysicalCarrier c
-  exact R.edgeCarrier_eq_image c
+    R.vertex '' sourcePhysicalCarrier U R c
+  exact edgeCarrier_eq_image U R c
 
 end SelectedContractedPlacement
 
