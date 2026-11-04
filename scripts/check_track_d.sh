@@ -56,6 +56,9 @@ checks=(
   CheckTrainRecursiveLargeBaseCoarsening
   CheckTrainRecursiveLargeBaseCutParameters
   CheckTrainRecursiveCoarsenedRamseyArrow
+  CheckTrainRecursiveLargeBasePartiteInput
+  CheckTrainRecursiveRigidPartiteArrow
+  CheckTrainRecursivePartitePowerLinearity
 )
 
 for check in "${checks[@]}"; do
