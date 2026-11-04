@@ -67,11 +67,7 @@ theorem ForestTailStage.coarsenedSelected_trainRestriction
     S.train.rel ν
       (actualEdge ((PartiteGluing i).toEmbedding.comp a))
       (actualEdge ((PartiteGluing i).toEmbedding.comp b)) ↔
-    targetTrain.rel ν (actualEdge a) (actualEdge b) := by
-  change S.train.rel ν
-      (actualEdge (i.1.embedding.comp a))
-      (actualEdge (i.1.embedding.comp b)) ↔
-    targetTrain.rel ν (actualEdge a) (actualEdge b)
-  exact S.targetRestriction i.1 i.2 ν a b
+    targetTrain.rel ν (actualEdge a) (actualEdge b) :=
+  S.targetRestriction i.1 i.2 ν a b
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
