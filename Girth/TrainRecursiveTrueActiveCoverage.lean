@@ -79,7 +79,10 @@ theorem irreduciblesExtendTo_of_aGenerated_girthThree
     irreducible_induce_subset_edge_of_girthGT_three
       hGirth hRel hH hVert hT
   obtain ⟨a, rfl⟩ := he
-  exact ⟨a, hCover⟩
+  refine ⟨a, ?_⟩
+  intro z
+  obtain ⟨u, hu⟩ := hCover z
+  exact ⟨u, hu.symm⟩
 
 end StructuralRamsey.Girth
 
