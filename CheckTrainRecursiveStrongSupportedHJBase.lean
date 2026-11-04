@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveStrongSupportedHJBase
+
+#print axioms StructuralRamsey.Girth.exists_largeBase_strongSupportedHJLineRamseyFamily

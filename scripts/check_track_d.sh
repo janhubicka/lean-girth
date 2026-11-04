@@ -60,6 +60,7 @@ checks=(
   CheckTrainRecursiveRigidPartiteArrow
   CheckTrainRecursivePartitePowerLinearity
   CheckTrainRecursivePartitePowerSupport
+  CheckTrainRecursiveStrongSupportedHJBase
   CheckTrainRecursiveCoarsenedStageParameters
 )
 
