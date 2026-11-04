@@ -1,0 +1,5 @@
+import Girth.TrainFillingSelectedStrongCover
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.generatedEdge_has_distinct_pair
+#print axioms StructuralRamsey.Girth.UniformFillingData.generatedEdge_subset_iff_cover_mem
+#print axioms StructuralRamsey.Girth.UniformFillingData.generatedEdges_selected_exact

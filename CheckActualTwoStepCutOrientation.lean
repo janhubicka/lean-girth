@@ -1,0 +1,5 @@
+import Girth.TrainActualTwoStepCutOrientation
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_of_single_uncut_gap
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_no_reverse_single_uncut_gap_of_three_cuts
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_old_uncut_straddle_forward_of_three_cuts

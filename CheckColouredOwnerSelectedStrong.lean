@@ -1,0 +1,8 @@
+import Girth.TrainColouredOwnerSelectedStrong
+
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.project_injective_on_splitEdge
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.project_injective_on_lift_range
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selected_strong_of_old
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.split_selected_edge_subset_copy
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lifted_pair_intersection_projects
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lifted_pair_intersection_subsingleton

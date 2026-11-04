@@ -1,0 +1,4 @@
+import Girth.TrainCyclicTwoRunOwnerBound
+
+#print axioms StructuralRamsey.Girth.cyclicReplaceTwoOwners
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_replace_two_run_le

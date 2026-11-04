@@ -1,0 +1,6 @@
+import Girth.TrainFillingFaithfulWagonMap
+
+#print axioms StructuralRamsey.Girth.FaithfulPhysicalWagonMap.sourceRepresentative_parent
+#print axioms StructuralRamsey.Girth.FaithfulPhysicalWagonMap.wagonEmbedding
+#print axioms StructuralRamsey.Girth.FaithfulPhysicalWagonMap.wagonEmbedding_parent
+#print axioms StructuralRamsey.Girth.FaithfulPhysicalWagonMap.wagonEmbedding_range

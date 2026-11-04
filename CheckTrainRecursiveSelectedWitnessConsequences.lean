@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveSelectedWitnessConsequences
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedEmbeddings_mixedForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.irreduciblesExtendTo_of_target
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fineWitnessInputs

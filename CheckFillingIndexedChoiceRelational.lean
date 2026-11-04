@@ -1,0 +1,5 @@
+import Girth.TrainFillingIndexedChoiceRelational
+
+#print axioms StructuralRamsey.Girth.relationalPrivateChoices
+#print axioms StructuralRamsey.Girth.relationalPrivateChoices_selectedEdges
+#print axioms StructuralRamsey.Girth.relationalPrivateChoiceGeometry

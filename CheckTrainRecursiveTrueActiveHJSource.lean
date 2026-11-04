@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveHJSource
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_HJ_sourceGeometry
