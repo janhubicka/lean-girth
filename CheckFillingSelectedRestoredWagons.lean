@@ -1,0 +1,5 @@
+import Girth.TrainFillingSelectedRestoredWagons
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledFaithfulWagonMap
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledWagonEmbedding
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedFilledWagonEmbedding_parent
