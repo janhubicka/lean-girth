@@ -321,4 +321,141 @@ theorem cyclicOwnerRunIndex_two_step_fibre
       · exact Or.inr (by rw [← hLast]; exact hTail)
     exact cyclic_two_step_wrap_window hn t x hCutOrder hSourceWindow
 
+/-- If the original cut immediately preceding p is pred p,
+then the ordinary linear interval (pred p, p] contains only p. -/
+private theorem cyclic_singleton_linear_window
+    {n : ℕ} (hn : 2 ≤ n) (p x : Fin n)
+    (hLeft : trainCyclicPred p < x)
+    (hRight : x ≤ p) :
+    x = p := by
+  by_cases hZero : p.val = 0
+  · have hp : (trainCyclicPred p).val = n - 1 := by
+      change (p.val + n - 1) % n = n - 1
+      rw [hZero]
+      simpa using (Nat.mod_eq_of_lt (show n - 1 < n by omega))
+    have hx : n - 1 < x.val := by
+      rw [← hp]
+      exact hLeft
+    have hBound := x.isLt
+    omega
+  · have hp : (trainCyclicPred p).val = p.val - 1 := by
+      change (p.val + n - 1) % n = p.val - 1
+      have hNum : p.val + n - 1 = n + (p.val - 1) := by omega
+      rw [hNum, Nat.add_mod]
+      simp [Nat.mod_eq_of_lt (show p.val - 1 < n by omega)]
+    apply Fin.ext
+    have hxL : p.val - 1 < x.val := by
+      rw [← hp]
+      exact hLeft
+    have hxR : x.val ≤ p.val := hRight
+    omega
+
+/-- When the singleton interval crosses the cyclic seam it can
+only end at source position zero, and the wrap interval contains
+only that position. -/
+private theorem cyclic_singleton_wrap_window
+    {n : ℕ} (hn : 2 ≤ n) (p x : Fin n)
+    (hWrap : p < trainCyclicPred p)
+    (hWindow : x ≤ p ∨ trainCyclicPred p < x) :
+    x = p := by
+  by_cases hZero : p.val = 0
+  · have hp : (trainCyclicPred p).val = n - 1 := by
+      change (p.val + n - 1) % n = n - 1
+      rw [hZero]
+      simpa using (Nat.mod_eq_of_lt (show n - 1 < n by omega))
+    rcases hWindow with hHead | hTail
+    · apply Fin.ext
+      have hL : x.val ≤ p.val := hHead
+      omega
+    · have hx : n - 1 < x.val := by
+        rw [← hp]
+        exact hTail
+      have hBound := x.isLt
+      omega
+  · have hp : (trainCyclicPred p).val = p.val - 1 := by
+      change (p.val + n - 1) % n = p.val - 1
+      have hNum : p.val + n - 1 = n + (p.val - 1) := by omega
+      rw [hNum, Nat.add_mod]
+      simp [Nat.mod_eq_of_lt (show p.val - 1 < n by omega)]
+    have hBad : p.val < p.val - 1 := by
+      have hv : p.val < (trainCyclicPred p).val := hWrap
+      rw [hp] at hv
+      exact hv
+    omega
+
+/-- Exact converse for a SINGLETON source owner run: if consecutive
+canonical cuts are the physical predecessor and current source
+connector p, then the only original occurrence assigned to that run
+is p itself, even when it ends at position zero across the wrap.
+
+This complements the two-step fibre classification; together they
+exhaust all non-target runs under the checked Path A run-width theorem. -/
+theorem cyclicOwnerRunIndex_singleton_fibre
+    (owner : Fin n → Owner)
+    (hn : 2 ≤ n) (hTwo : 2 ≤ cyclicOwnerChanges owner)
+    (j : Fin (cyclicOwnerChanges owner))
+    (p x : Fin n)
+    (hPrev : cyclicOwnerCutIndex owner (trainCyclicPred j) =
+      trainCyclicPred p)
+    (hHere : cyclicOwnerCutIndex owner j = p)
+    (hx : cyclicOwnerRunIndex owner (by omega) x = j) :
+    x = p := by
+  let q := cyclicOwnerChanges owner
+  have hq : 0 < q := by omega
+  by_cases hjPos : 0 < j.val
+  · let i : Fin q := ⟨j.val - 1, by omega⟩
+    have hPred : trainCyclicPred j = i := by
+      apply Fin.ext
+      change (j.val + q - 1) % q = j.val - 1
+      have hv : j.val + q - 1 = q + (j.val - 1) := by omega
+      rw [hv, Nat.add_mod]
+      simp [Nat.mod_eq_of_lt (show j.val - 1 < q by omega)]
+    have hWindow :=
+      cyclicOwnerRunIndex_nonzero_window owner hq x j hx hjPos
+    have hLeft : trainCyclicPred p < x := by
+      have hh := hWindow.1
+      change cyclicOwnerCutIndex owner i < x at hh
+      rw [← hPred, hPrev] at hh
+      exact hh
+    have hRight : x ≤ p := by
+      have hh := hWindow.2
+      rw [hHere] at hh
+      exact hh
+    exact cyclic_singleton_linear_window hn p x hLeft hRight
+  · have hjZero : j.val = 0 := by omega
+    have hZero : j = (⟨0, hq⟩ : Fin q) := Fin.ext hjZero
+    have hRunZero : cyclicOwnerRunIndex owner hq x =
+        (⟨0, hq⟩ : Fin q) := hx.trans hZero
+    have hWindow :=
+      cyclicOwnerRunIndex_zero_wrap_window owner hq x hRunZero
+    have hPredVal : (trainCyclicPred j).val = q - 1 := by
+      change (j.val + q - 1) % q = q - 1
+      rw [hjZero]
+      simpa using (Nat.mod_eq_of_lt (show q - 1 < q by omega))
+    have hPrevLast : trainCyclicPred j =
+        (⟨q - 1, by omega⟩ : Fin q) := Fin.ext hPredVal
+    have hLast : cyclicOwnerLastCut owner hq = trainCyclicPred p := by
+      change cyclicOwnerCutIndex owner
+        (⟨q - 1, by omega⟩ : Fin q) = trainCyclicPred p
+      rw [← hPrevLast]
+      exact hPrev
+    have hFirst : cyclicOwnerFirstCut owner hq = p := by
+      change cyclicOwnerCutIndex owner (⟨0, hq⟩ : Fin q) = p
+      rw [← hZero]
+      exact hHere
+    have hJLess : j < trainCyclicPred j := by
+      change j.val < (trainCyclicPred j).val
+      rw [hjZero, hPredVal]
+      omega
+    have hCutOrder : p < trainCyclicPred p := by
+      have hh := (cyclicOwnerCutIndex owner).strictMono hJLess
+      rw [hHere, hPrev] at hh
+      exact hh
+    have hSourceWindow :
+        x ≤ p ∨ trainCyclicPred p < x := by
+      rcases hWindow with hHead | hTail
+      · exact Or.inl (by rw [← hFirst]; exact hHead)
+      · exact Or.inr (by rw [← hLast]; exact hTail)
+    exact cyclic_singleton_wrap_window hn p x hCutOrder hSourceWindow
+
 end StructuralRamsey.Girth
