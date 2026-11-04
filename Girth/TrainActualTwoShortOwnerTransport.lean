@@ -78,7 +78,7 @@ theorem attachedSelectedPicture_two_short_owner_allowed
     have hLabel :
         H.label t = Sum.inr (CoreActual first) := by
       rw [hLabels t]
-      simp [OrderOneData.BigCycle.twoConsecutiveShortLabels]
+      simp [OrderOneData.BigCycle.twoConsecutiveShortLabels] <;> rfl
     have hOwner :
         cyclicReplaceTwoOwners owner t (Sum.inl i) t = Sum.inl i := by
       simp [cyclicReplaceTwoOwners]
@@ -92,7 +92,7 @@ theorem attachedSelectedPicture_two_short_owner_allowed
       have hLabel :
           H.label (cyclicSucc t) = Sum.inr (CoreActual second) := by
         rw [hLabels (cyclicSucc t)]
-        simp [OrderOneData.BigCycle.twoConsecutiveShortLabels, hNe]
+        simp [OrderOneData.BigCycle.twoConsecutiveShortLabels, hNe] <;> rfl
       have hOwner :
           cyclicReplaceTwoOwners owner t (Sum.inl i)
               (cyclicSucc t) = Sum.inl i := by
