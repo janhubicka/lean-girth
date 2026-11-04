@@ -1,0 +1,7 @@
+import Girth.TrainCyclicRunIndexAllPositions
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_right_bound
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_le_of_right
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_at_cut
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_owner_eq_cut
