@@ -1,0 +1,4 @@
+import Girth.TrainActualPlanKeptRunOwner
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_plan_keep_run_label_eq_target
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_plan_keep_original_owner
