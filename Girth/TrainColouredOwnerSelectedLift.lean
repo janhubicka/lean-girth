@@ -41,9 +41,9 @@ structure ColouredOwnerSelectedCopy where
 
 namespace ColouredOwnerSelectedCopy
 
-variable {H} (S : ColouredOwnerSelectedCopy H W)
+variable {H} (S : ColouredOwnerSelectedCopy (W := W) H)
 
-abbrev SourceEdge (S : ColouredOwnerSelectedCopy H W) :=
+abbrev SourceEdge (S : ColouredOwnerSelectedCopy (W := W) H) :=
   {e : Set W // e ∈ S.sourceEdges}
 
 /-- Lift one selected source vertex through owner-tagged incidence
