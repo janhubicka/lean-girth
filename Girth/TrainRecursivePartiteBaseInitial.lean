@@ -104,4 +104,47 @@ noncomputable def initialForestTailStage_of_partiteBaseTargetCuts
       A Target D family hFamilyParts targetTrain fineAllowed hTargetParameters)
     hTargetCuts
 
+/-- The newly constructed actual initial lower stage automatically
+satisfies the concrete remaining-profile first-refinement readiness
+predicate, for every finite refinement budget and any remaining
+profile list. No initial readiness hypothesis has to be supplied. -/
+theorem initialForestTailStage_of_partiteBaseTargetCuts_ready
+    (A : RelStructure L UA) (hA : A.Irreducible)
+    [Nonempty UA] [Finite UA]
+    (Target : StructuralRamsey.Partite.System L UA VB) [Finite VB]
+    (D : StructuralRamsey.Partite.System L UA P) [Finite P]
+    (family : Set (Embedding Target.toRelStructure D.toRelStructure))
+    [Nonempty family]
+    (hFamilyParts : ∀ b, b ∈ family → ∀ x : VB,
+      D.part (b x) = Target.part x)
+    (t : List ℕ) (ht : Admissible t)
+    (targetTrain : EdgeTrainLevels
+      (OldACarrierEdge A Target.toRelStructure) t.length)
+    (fineAllowed : Fin (t.length + 1) → Set UA)
+    (hSupportNonempty : Nonempty (OldACarrierEdge A Target.toRelStructure))
+    (hSupportCovers : ∀ b : VB,
+      ∃ e : OldACarrierEdge A Target.toRelStructure, b ∈ e.1)
+    (hTargetGirth : GirthGT
+      (supportCopies A Target.toRelStructure) (t.headD 0))
+    (hTargetParameters : targetTrain.AdjacentParameters
+      (fun edge => edge.1) (fun ν => Target.part ⁻¹' fineAllowed ν))
+    (hTargetCuts : ∀ j : Fin t.length, 0 < j.val →
+      LabelledGirthGT
+        (targetTrain.wagonClassCarrier (fun edge => edge.1) j.castSucc)
+        (t.get j))
+    (q : ℕ) (profiles : List (UA ↪ P)) :
+    ForestTailStage.FirstRefinementReady
+      (List.length_pos_iff.mpr ht.nonempty) q profiles
+      (initialForestTailStage_of_partiteBaseTargetCuts
+        A hA Target D family hFamilyParts t ht targetTrain fineAllowed
+        hSupportNonempty hSupportCovers hTargetGirth
+        hTargetParameters hTargetCuts) := by
+  exact initialForestTailStage_of_targetCuts_firstRefinementReady
+    A hA Target.toRelStructure D.toRelStructure family t ht
+    targetTrain (fun ν => D.part ⁻¹' fineAllowed ν)
+    hSupportNonempty hSupportCovers hTargetGirth
+    (targetParameters_of_partiteFamily_preimage
+      A Target D family hFamilyParts targetTrain fineAllowed hTargetParameters)
+    hTargetCuts q profiles
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
