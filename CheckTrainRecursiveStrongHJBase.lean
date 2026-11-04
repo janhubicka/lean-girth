@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveStrongHJBase
+
+#print axioms StructuralRamsey.Girth.exists_largeBase_HJLine_fullGeometry_ordered
