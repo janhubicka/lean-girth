@@ -132,6 +132,7 @@ theorem cyclicOwnerRunIndex_succ_cut
           cyclicOwnerRunIndex owner (by omega : 0 < q) pos =
             (⟨0, hq⟩ : Fin q) := by
         apply Fin.ext
+        change (cyclicOwnerRunIndex owner (by omega : 0 < q) pos).val = 0
         have hVal :
             (cyclicOwnerRunIndex owner (by omega : 0 < q) pos).val ≤ 0 :=
           hLe
