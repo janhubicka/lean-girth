@@ -55,6 +55,8 @@ variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain all
 variable (hFamilyParts : ∀ b, b ∈ family → ∀ x : activeCarrier A Old α,
   D.part (b x) = activeSourcePart A Old α x)
 
+include hFamilyParts
+
 /-- At every positive stage coordinate, the actual PARTITE gluing family
 obtained by coarsening has the exact full system-girth cutoff of the
 lower selected-picture stage. This is a complete indexed incidence
