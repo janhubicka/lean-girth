@@ -65,8 +65,7 @@ noncomputable def edgeIndexEquiv :
   left_inv := by
     rintro ⟨c, ⟨p, a⟩⟩
     apply Sigma.ext rfl
-    apply Prod.ext rfl
-    exact (choiceTemplateEquiv U E hTemplate c).symm_apply_apply a
+    rfl
   right_inv := by
     rintro ⟨⟨c, p⟩, a⟩
     change ((c, p),
