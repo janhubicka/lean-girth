@@ -1,0 +1,3 @@
+import Girth.TrainSameConnectorSupremeCompletion
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_of_literal_sameConnector_replacement
