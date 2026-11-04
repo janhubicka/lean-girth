@@ -24,6 +24,62 @@ namespace StructuralRamsey.Girth.UniformFillingData
 universe v
 variable {V X S : Type v} (U : UniformFillingData V X)
 
+/-- A genuine selected vertex embedding takes every complete source
+first-wagon carrier onto a complete old N edge. When source edges are
+physically distinct as subsets of their vertex type, the induced old
+edge map is injective: two old image edges equal only if their two
+source carriers have the same image, hence were the same source edge.
+
+Thus injectivity of the contracted edge map need not be postulated as a
+separate application premise once exact whole-carrier transport holds. -/
+theorem oldEdgeMap_injective_of_exact_carriers
+    {W : Type v}
+    (sourceCarrier : S → Set W)
+    (hSourceInjective : Function.Injective sourceCarrier)
+    (vertex : W ↪ V)
+    (edgeMap : S → U.OldEdge)
+    (hCarrier : ∀ s : S,
+      (edgeMap s).1 = vertex '' sourceCarrier s) :
+    Function.Injective edgeMap := by
+  intro s t hst
+  apply hSourceInjective
+  have hImages : vertex '' sourceCarrier s =
+      vertex '' sourceCarrier t := by
+    calc
+      vertex '' sourceCarrier s = (edgeMap s).1 := (hCarrier s).symm
+      _ = (edgeMap t).1 := congrArg (fun f : U.OldEdge => f.1) hst
+      _ = vertex '' sourceCarrier t := hCarrier t
+  ext w
+  constructor
+  · intro hw
+    have h : vertex w ∈ vertex '' sourceCarrier t := by
+      rw [← hImages]
+      exact ⟨w, hw, rfl⟩
+    obtain ⟨z, hz, hzw⟩ := h
+    have hzw' : z = w := vertex.injective hzw
+    simpa only [hzw'] using hz
+  · intro hw
+    have h : vertex w ∈ vertex '' sourceCarrier s := by
+      rw [hImages]
+      exact ⟨w, hw, rfl⟩
+    obtain ⟨z, hz, hzw⟩ := h
+    have hzw' : z = w := vertex.injective hzw
+    simpa only [hzw'] using hz
+
+/-- Canonical contracted physical edge embedding from complete source
+carrier transport and the actual selected vertex embedding. -/
+def oldEdgeEmbedding_of_exact_carriers
+    {W : Type v}
+    (sourceCarrier : S → Set W)
+    (hSourceInjective : Function.Injective sourceCarrier)
+    (vertex : W ↪ V)
+    (edgeMap : S → U.OldEdge)
+    (hCarrier : ∀ s : S,
+      (edgeMap s).1 = vertex '' sourceCarrier s) :
+    S ↪ U.OldEdge :=
+  ⟨edgeMap, U.oldEdgeMap_injective_of_exact_carriers
+    sourceCarrier hSourceInjective vertex edgeMap hCarrier⟩
+
 /-- Physical new edges over the image of a selected contracted old edge
 embedding, using all local template edges with their actual labels. -/
 noncomputable def selectedFilledEdgeEmbedding
