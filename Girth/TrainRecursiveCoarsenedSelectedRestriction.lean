@@ -49,6 +49,8 @@ variable (hFamilyParts : ∀ b, b ∈ family →
   ∀ x : activeCarrier A Old α,
     D.part (b x) = activeSourcePart A Old α x)
 
+include hFamilyParts
+
 /-- Full preservation and reflection of all physical fine train
 cuts on each actual selected gluing embedding after part-coarsening.
 No prescribed target cut or selected copy is replaced by an arbitrary
@@ -64,7 +66,11 @@ theorem ForestTailStage.coarsenedSelected_trainRestriction
       (actualEdge ((selectedPartiteGluingFamily_of_largeBase
         (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
         family hFamilyParts S.selected i).toEmbedding.comp b)) ↔
-    targetTrain.rel ν (actualEdge a) (actualEdge b) :=
-  S.targetRestriction i.1 i.2 ν a b
+    targetTrain.rel ν (actualEdge a) (actualEdge b) := by
+  change S.train.rel ν
+      (actualEdge (i.1.embedding.comp a))
+      (actualEdge (i.1.embedding.comp b)) ↔
+    targetTrain.rel ν (actualEdge a) (actualEdge b)
+  exact S.targetRestriction i.1 i.2 ν a b
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
