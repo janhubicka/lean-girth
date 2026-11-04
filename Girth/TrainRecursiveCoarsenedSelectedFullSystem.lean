@@ -68,10 +68,8 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
       (fun i : Selected => (PartiteGluing i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-  change (selectedPictureOrderOneData A Source D.toRelStructure
-    S.system family S.selected S.train j.castSucc).FullSystemGirthGT (t.get j)
-  exact S.tailGirth j hj
+      S.train j.castSucc).FullSystemGirthGT (t.get j) :=
+  S.tailGirth j hj
 
 /-- The actual fine gluing system certificate is monotone in its numerical
 cutoff; in the recursive vector this lets the inserted and retained
