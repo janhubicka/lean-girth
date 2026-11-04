@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveCoarsenedStageParameters
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsened_adjacentParameters_of_allowed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsened_adjacentParameters_preimage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsened_adjacentParameters_image
