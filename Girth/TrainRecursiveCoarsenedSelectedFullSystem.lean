@@ -1,36 +1,30 @@
-import Girth.TrainRecursiveLargeBaseCoarsening
-import Girth.TrainRecursiveWitnessPass
-import Girth.TrainRecursiveActivePartite
-import Girth.TrainActiveGluingWitness
 import Girth.TrainRecursiveSelectedGluingIncidence
+import Girth.TrainRecursiveWitnessPass
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option Elab.async false
 
 /-!
-# Actual positive full-system certificates for a larger-base selected gluing family
+# Positive full-system girth through an exact selected-label equivalence
 
-A lower forest-tail stage may use a larger Q-partite Ramsey base D,
-yet its source is exactly the true active induced relational target.
-Its selected labels are genuine target copies over D, not an ad-hoc
-family of images or a quotient by coincident carriers.
+The genuine lower ForestTailStage supplies positive full-system girth
+for its complete selected-picture incidence system at every positive
+stage cut. The actual gluing interface may index its copies by a
+different type, so the ONLY extra information required to transfer
+this certificate is an honest equivalence of labels and pointwise
+equality of their complete physical carriers.
 
-If each selected base embedding respects the coarse A-parts, #773
-turns precisely those selected labels into genuine A-partite gluing
-maps after coarsening the lower witness.  These maps have the SAME
-underlying relational embeddings as the selected copies.
+The already verified activeGluingWitness_fullSystemGirth_iff_selectedPicture
+compares the WHOLE simultaneous-replacement incidence structures,
+including all ambient physical A-support edges and full quotient wagon
+labels, not just ordinary Berge cycles.
 
-Consequently the complete gluing OrderOneData record at each positive
-fine cut is literally the lower stage's selected-picture OrderOneData.
-The existing stage tailGirth certificate transfers to full-system
-girth for the canonical, truly PARTITE gluing family and can be
-lowered to a smaller cutoff.  This is the missing certificate interface
-needed by Track B's actual fine-witness attachment bounds.
-
-The existence of the lower stage, its correctly Q-partite base/family,
-the fine train's exact restriction and allowed geometry, and the
-attached output's indexed SupremeCycleBound remain independent open
-obligations. No ambient edge or designated label is removed here.
+For the canonical coarsened selected family the equivalence is literally
+identity and carrier equality follows from the partite embedding's
+unchanged relational map. Those are separate geometry facts, not
+postulated here. This theorem does not construct a lower recursive
+stage or the attached output SupremeCycleBound.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
@@ -38,74 +32,56 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 open StructuralRamsey.RelStructure
 
 universe u v
-variable {L : RelLanguage.{u}} {UA P V X : Type v}
+variable {L : RelLanguage.{u}}
+variable {UA P Q X I : Type v}
 
 variable (A : RelStructure L UA)
 variable (Old : StructuralRamsey.Partite.System L P X)
 variable (α : UA ↪ P)
-variable (D : StructuralRamsey.Partite.System L UA V)
-local notation "Source" => Old.toRelStructure.induce (activeCarrier A Old α)
-local notation "Target" => actualActiveSubsystemPartite A Old α
 
-variable (family : Set (Embedding Source D.toRelStructure))
+local notation "Source" =>
+  Old.toRelStructure.induce (activeCarrier A Old α)
+
+variable (D : RelStructure L Q)
+variable {family : Set (Embedding Source D)}
 variable {t : List ℕ}
 variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length}
-variable {allowed : Fin (t.length + 1) → Set V}
-variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
-variable (hFamilyParts : ∀ b, b ∈ family → ∀ x : activeCarrier A Old α,
-  D.part (b x) = activeSourcePart A Old α x)
+variable {allowed : Fin (t.length + 1) → Set Q}
+variable (S : ForestTailStage A Source D family t targetTrain allowed)
 
-include hFamilyParts
+variable (f : I → Embedding Source S.system.toRelStructure)
+variable (e : I ≃ {b : DesignatedCopy Source D S.system family //
+  b ∈ S.selected})
+variable (hCarrier : ∀ i : I,
+  copyCarrier (f i) = copyCarrier (e i).1.embedding)
 
-/-- At every positive stage coordinate, the actual PARTITE gluing family
-obtained by coarsening has the exact full system-girth cutoff of the
-lower selected-picture stage. This is a complete indexed incidence
-certificate, including global simultaneous legal replacement plans. -/
-theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
+/-- Every positive FULL selected-system-girth certificate passes to
+the actual gluing family with the same physical carriers and an
+honest bijection of designated indices. This includes simultaneous
+replacement plans; no quotient by equal image carriers occurs. -/
+theorem ForestTailStage.selectedGluing_fullSystem_at_positive
     (j : Fin t.length) (hj : 0 < j.val) :
     (activeGluingWitnessOrderOneData A Old α
-      (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {q : DesignatedCopy Source D.toRelStructure S.system family //
-        q ∈ S.selected} =>
-        (selectedPartiteGluingFamily_of_largeBase
-          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
-          family hFamilyParts S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-  let I := {q : DesignatedCopy Source D.toRelStructure S.system family //
-    q ∈ S.selected}
-  let f : I → Embedding Source S.system.toRelStructure := fun i =>
-    (selectedPartiteGluingFamily_of_largeBase
-      (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
-      family hFamilyParts S.selected i).toEmbedding
-  have hCarriers : ∀ i : I,
-      copyCarrier (f i) = copyCarrier i.1.embedding := by
-    intro i
-    rfl
-  have hWitness :
-      (activeGluingWitnessOrderOneData A Old α S.system.toRelStructure
-        f S.train j.castSucc).FullSystemGirthGT (t.get j) :=
-    (activeGluingWitness_fullSystemGirth_iff_selectedPicture
-      A Source D.toRelStructure Old S.system family S.selected α
-      f S.train j.castSucc (Equiv.refl I) hCarriers (t.get j)).mpr
-      (S.tailGirth j hj)
-  exact hWitness
+      S.system.toRelStructure f S.train j.castSucc).FullSystemGirthGT
+        (t.get j) := by
+  exact (activeGluingWitness_fullSystemGirth_iff_selectedPicture
+    A Source D Old S.system family S.selected α f S.train
+    j.castSucc e hCarrier (t.get j)).mpr
+    (S.tailGirth j hj)
 
-/-- The actual fine gluing system certificate is monotone in its numerical
-cutoff; in the recursive vector this lets the inserted and retained
-coordinates be instantiated with their respective requested bounds. -/
-theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
+/-- A positive stage certificate also gives every numerically
+smaller full-system cutoff, with all gluing and physical labels
+retained literally. -/
+theorem ForestTailStage.selectedGluing_fullSystem_at_positive_mono
     (j : Fin t.length) (hj : 0 < j.val)
     (q : ℕ) (hq : q ≤ t.get j) :
     (activeGluingWitnessOrderOneData A Old α
-      (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {q : DesignatedCopy Source D.toRelStructure S.system family //
-        q ∈ S.selected} =>
-        (selectedPartiteGluingFamily_of_largeBase
-          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
-          family hFamilyParts S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT q := by
-  have hFull := S.coarsenedSelected_fullSystem_at_positive
-    A Old α D family hFamilyParts j hj
+      S.system.toRelStructure f S.train j.castSucc).FullSystemGirthGT q := by
+  have hFull :
+      (activeGluingWitnessOrderOneData A Old α
+        S.system.toRelStructure f S.train j.castSucc).FullSystemGirthGT
+          (t.get j) :=
+    S.selectedGluing_fullSystem_at_positive A Old α D f e hCarrier j hj
   refine ⟨hFull.1, ?_⟩
   intro n K hAccept hOrder
   exact hFull.2 n K hAccept (by omega)
