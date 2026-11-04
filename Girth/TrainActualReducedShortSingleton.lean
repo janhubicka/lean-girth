@@ -232,7 +232,7 @@ theorem attachedSelectedPicture_any_plan_nontarget_nonsingleton_is_long
   | long first w second =>
       have hLong : Z.LongValid Wit target cut first w second := by
         simpa only [hp] using hCase
-      exact ⟨first, second, w, hp, hLong⟩
+      exact ⟨first, second, w, rfl, hLong⟩
 
 /-- From a GENUINELY chosen globally legal plan, every NON-TARGET
 piece at a NON-singleton original owner segment must be LongValid:
