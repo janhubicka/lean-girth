@@ -133,11 +133,15 @@ theorem attachedSelectedPicture_long_piece_old_wagon_two_short_incidence
   have hFirstRight : (Out).Incident (.inr (CoreActual first))
       (K.connector t) := by
     rw [hOld]
+    change (Out).Meets (.inr (CoreActual first)) (CoreWagon w)
+    refine ⟨CoreActual first, rfl, ?_⟩
     change CoreWagon ((Wit).parent first) = CoreWagon w
     exact congrArg CoreWagon hParentFirst
   have hSecondLeft : (Out).Incident (.inr (CoreActual second))
       (K.connector t) := by
     rw [hOld]
+    change (Out).Meets (.inr (CoreActual second)) (CoreWagon w)
+    refine ⟨CoreActual second, rfl, ?_⟩
     change CoreWagon ((Wit).parent second) = CoreWagon w
     exact congrArg CoreWagon hParentSecond
   have hSecondRight : (Out).Incident (.inr (CoreActual second))
