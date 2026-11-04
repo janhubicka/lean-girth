@@ -97,16 +97,20 @@ structure SelectedContractedPlacement (W : Type v) where
 
 namespace SelectedContractedPlacement
 
-variable {W : Type v} (R : U.SelectedContractedPlacement (S := S) W)
+variable {W : Type v}
 
 /-- Local physical edge carriers inside the contracted selected copy. -/
-def sourcePhysicalCarrier (c : S × U.TemplateEdge) : Set W :=
+def sourcePhysicalCarrier
+    (R : U.SelectedContractedPlacement (S := S) W)
+    (c : S × U.TemplateEdge) : Set W :=
   R.localPlacement c.1 '' c.2.1
 
 /-- The actual global physical filled edge carrier is exactly the
 image of its source local physical carrier under the selected M-copy
 vertex embedding. No ambient edges are discarded or reinterpreted. -/
-theorem edgeCarrier_eq_image (c : S × U.TemplateEdge) :
+theorem edgeCarrier_eq_image
+    (R : U.SelectedContractedPlacement (S := S) W)
+    (c : S × U.TemplateEdge) :
     U.imageCarrier (R.oldEdge c.1, c.2) =
       R.vertex '' R.sourcePhysicalCarrier c := by
   ext y
@@ -120,7 +124,9 @@ theorem edgeCarrier_eq_image (c : S × U.TemplateEdge) :
 /-- Consequently the canonical physical edge embedding constructed
 from the selected old edge map automatically has its exact carrier
 transport. This is the second realization field after exact range. -/
-theorem physicalEdge_carrier_eq_image (c : S × U.TemplateEdge) :
+theorem physicalEdge_carrier_eq_image
+    (R : U.SelectedContractedPlacement (S := S) W)
+    (c : S × U.TemplateEdge) :
     (U.selectedFilledEdgeEmbedding R.oldEdge c).1 =
       R.vertex '' R.sourcePhysicalCarrier c := by
   change U.imageCarrier (R.oldEdge c.1, c.2) =
