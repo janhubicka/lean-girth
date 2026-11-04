@@ -124,7 +124,8 @@ theorem fineAllowedFromRefinement_retained_first
         ⟨1, Nat.succ_lt_succ hm⟩ =
         firstRefinementParent m d hm j := by
     apply Fin.ext
-    simp [EdgeTrainLevels.firstForgetIndex, firstRefinementParent, j]
+    change 1 + d = d + 1
+    omega
   rw [hindex, fineAllowedFromRefinement_parent]
 
 /-- Retained cuts strictly above the first one use exactly their
@@ -147,6 +148,8 @@ theorem fineAllowedFromRefinement_retained_gt_one
   have hIdx : (⟨(EdgeTrainLevels.firstForgetIndex m d ν).val - d,
       by omega⟩ : Fin (m + 1)) = ν := by
     apply Fin.ext
+    change (EdgeTrainLevels.firstForgetIndex m d ν).val - d = ν.val
+    rw [hval]
     omega
   rw [hIdx]
 
@@ -172,7 +175,6 @@ theorem fineAllowedFromRefinement_retained_subset
     exact Set.preimage_mono (hPermitted ⟨d, Nat.lt_succ_self d⟩)
   · have hgt : 1 < ν.val := by omega
     rw [fineAllowedFromRefinement_retained_gt_one m d hm α allowed permitted ν hgt]
-    exact Set.Subset.rfl
 
 /-- The entire fine allowed-parameter geometry required by the
 larger-cutoff attachment, as a single reusable package. -/
