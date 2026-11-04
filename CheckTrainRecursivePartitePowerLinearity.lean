@@ -1,0 +1,5 @@
+import Girth.TrainRecursivePartitePowerLinearity
+
+#print axioms StructuralRamsey.Girth.inducedPower_coordinateAEmbedding
+#print axioms StructuralRamsey.Girth.inducedPower_coordinateAEmbedding_parts
+#print axioms StructuralRamsey.Girth.aLinear_inducedPower_of_Aparts

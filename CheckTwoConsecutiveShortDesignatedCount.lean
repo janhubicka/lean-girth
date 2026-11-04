@@ -1,0 +1,7 @@
+import Girth.TrainTwoConsecutiveShortDesignatedCount
+
+#print axioms StructuralRamsey.Girth.designatedLabelIndicator
+#print axioms StructuralRamsey.Girth.designatedLabelCount_eq_indicatorSum
+#print axioms StructuralRamsey.Girth.designatedLabelCount_ofFn_eq_indicatorFinset
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShort_designatedCount_le
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShort_designatedCount_lt

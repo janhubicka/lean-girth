@@ -1,0 +1,6 @@
+import Girth.TrainActualChosenTwoStepShortComplete
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShortPieces
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShort_complete_of_three_le
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_long_piece_old_wagon_two_short_incidence
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_nonadjacent_long_two_short_complete

@@ -1,0 +1,3 @@
+import Girth.TrainActualNonTargetRunWidthOneTwo
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_nontarget_run_one_or_two_steps

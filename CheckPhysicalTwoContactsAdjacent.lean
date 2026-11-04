@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalTwoContactsAdjacent
+
+#print axioms StructuralRamsey.Girth.OrderOneData.edge_wagon_incidence_parent_eq
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.physical_edge_two_contacts_adjacent

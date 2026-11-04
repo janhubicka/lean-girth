@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoShortOwnerTransport
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_short_owner_allowed
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_short_minimum_cuts_le
