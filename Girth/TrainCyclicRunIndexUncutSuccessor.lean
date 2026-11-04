@@ -65,6 +65,7 @@ theorem cyclicOwnerRunIndex_succ_of_uncut
     have hRunSucc : cyclicOwnerRunIndex owner hCuts (cyclicSucc t) =
         (⟨0, hCuts⟩ : Fin (cyclicOwnerChanges owner)) := by
       apply Fin.ext
+      change (cyclicOwnerRunIndex owner hCuts (cyclicSucc t)).val = 0
       have hv : (cyclicOwnerRunIndex owner hCuts (cyclicSucc t)).val ≤ 0 :=
         hFirstLe
       omega
