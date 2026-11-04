@@ -2,8 +2,10 @@ import Girth.TrainRecursiveLargeBaseCoarsening
 import Girth.TrainRecursiveWitnessPass
 import Girth.TrainRecursiveActivePartite
 import Girth.TrainActiveGluingWitness
+import Girth.TrainRecursiveSelectedGluingIncidence
 
 set_option autoImplicit false
+set_option Elab.async false
 
 /-!
 # Actual positive full-system certificates for a larger-base selected gluing family
@@ -66,8 +68,25 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
         (selectedPartiteGluingFamily_of_largeBase
           (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
           family hFamilyParts S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT (t.get j) :=
-  S.tailGirth j hj
+      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
+  let I := {q : DesignatedCopy Source D.toRelStructure S.system family //
+    q ∈ S.selected}
+  let f : I → Embedding Source S.system.toRelStructure := fun i =>
+    (selectedPartiteGluingFamily_of_largeBase
+      (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
+      family hFamilyParts S.selected i).toEmbedding
+  have hCarriers : ∀ i : I,
+      copyCarrier (f i) = copyCarrier i.1.embedding := by
+    intro i
+    rfl
+  have hWitness :
+      (activeGluingWitnessOrderOneData A Old α S.system.toRelStructure
+        f S.train j.castSucc).FullSystemGirthGT (t.get j) :=
+    (activeGluingWitness_fullSystemGirth_iff_selectedPicture
+      A Source D.toRelStructure Old S.system family S.selected α
+      f S.train j.castSucc (Equiv.refl I) hCarriers (t.get j)).mpr
+      (S.tailGirth j hj)
+  exact hWitness
 
 /-- The actual fine gluing system certificate is monotone in its numerical
 cutoff; in the recursive vector this lets the inserted and retained
@@ -83,11 +102,8 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
           (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
           family hFamilyParts S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT q := by
-  change (selectedPictureOrderOneData A Source D.toRelStructure
-    S.system family S.selected S.train j.castSucc).FullSystemGirthGT q
-  have hFull : (selectedPictureOrderOneData A Source D.toRelStructure
-      S.system family S.selected S.train j.castSucc).FullSystemGirthGT (t.get j) :=
-    S.tailGirth j hj
+  have hFull := S.coarsenedSelected_fullSystem_at_positive
+    A Old α D family hFamilyParts j hj
   refine ⟨hFull.1, ?_⟩
   intro n K hAccept hOrder
   exact hFull.2 n K hAccept (by omega)
