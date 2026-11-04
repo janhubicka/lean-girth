@@ -1,0 +1,7 @@
+import Girth.TrainColouredOwnerSelectedLift
+
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lift_on_source_edge
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.project_lift
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lift_injective
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lift_source_edge
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.physicalEdge_injective
