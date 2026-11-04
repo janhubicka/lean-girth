@@ -97,15 +97,15 @@ theorem inducedHJLine_aStrong_of_Aparts
   obtain ⟨a, ha⟩ := hx.2
   obtain ⟨v, hv⟩ := hy.1
   obtain ⟨b, hb⟩ := hy.2
-  have hUa : e u = line a := hu.symm.trans ha
-  have hVb : e v = line b := hv.symm.trans hb
+  have hUa : e u = line a := hu.trans ha.symm
+  have hVb : e v = line b := hv.trans hb.symm
   have huv : u ≠ v := by
     intro h
     apply hxy
     calc
-      x = e u := hu
+      x = e u := hu.symm
       _ = e v := congrArg e h
-      _ = y := hv.symm
+      _ = y := hv
   have hPartA : B.part a = u := by
     calc
       B.part a = Power.part (line a) := (line.map_part a).symm
@@ -156,8 +156,10 @@ theorem inducedHJLine_aStrong_of_Aparts
         _ = c v := by rw [hPartB]
     exact aLinear_partPreserving_twoPoint_eq A B hLinear
       (eI i) c.toEmbedding (hIparts i) c.map_part u v huv hIU hIV
-  intro p hp
+  intro z hz
+  obtain ⟨p, rfl⟩ := hz
   refine ⟨eI k p, ?_⟩
+  symm
   apply StructuralRamsey.Partite.NonInduced.Vertex.ext B
   · calc
       (e p).part = p := hPowerParts e p
