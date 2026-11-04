@@ -162,7 +162,8 @@ theorem cyclicExpandReducedPieces_long_two_step
     (cyclicOwnerRunIndex_succ_of_uncut owner hCuts t hUncut).symm.trans hAtNext
   have hNotT : t ≠ cyclicOwnerCutIndex owner j := by
     rw [hHere]
-    exact cyclicSucc_ne_self_of_two_le (by omega : 2 ≤ n) t |>.symm
+    intro heq
+    exact (cyclicSucc_ne_self_of_two_le (by omega : 2 ≤ n) t) heq.symm
   have hPredNeT : trainCyclicPred t ≠ t := by
     intro heq
     have hSucc := cyclicSucc_trainCyclicPred_of_two_le
