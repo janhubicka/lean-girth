@@ -1,7 +1,8 @@
 import Girth.HypergraphClique
 import Girth.SupportGirthEmbeddingEquiv
 import Girth.ForestSelectedMixedCoverage
-import Girth.TrainRecursiveNontrivialFibre
+import Girth.TrainRecursiveFineWitnessBounds
+import Girth.TrainRecursiveActivePartite
 
 set_option autoImplicit false
 set_option Elab.async false
