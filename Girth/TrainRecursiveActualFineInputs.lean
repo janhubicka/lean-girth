@@ -45,16 +45,12 @@ variable {allowed : Fin (t.length + 1) → Set P}
 variable (old : ForestTailStage A B D family t targetTrain allowed)
 variable (e : Embedding A D)
 
-local notation "Source" =>
-  old.system.toRelStructure.induce
-    (activeCarrier A old.system e.toFunctionEmbedding)
-
 variable (large : StructuralRamsey.Partite.System L UA Q)
-variable {lowerFamily : Set (Embedding Source large.toRelStructure)}
+variable {lowerFamily : Set (Embedding (old.system.toRelStructure.induce (activeCarrier A old.system e.toFunctionEmbedding)) large.toRelStructure)}
 variable {lowerCutoffs : List ℕ}
-variable {lowerTrain : EdgeTrainLevels (OldACarrierEdge A Source) lowerCutoffs.length}
+variable {lowerTrain : EdgeTrainLevels (OldACarrierEdge A (old.system.toRelStructure.induce (activeCarrier A old.system e.toFunctionEmbedding))) lowerCutoffs.length}
 variable {lowerAllowed : Fin (lowerCutoffs.length + 1) → Set Q}
-variable (lower : ForestTailStage A Source large.toRelStructure
+variable (lower : ForestTailStage A (old.system.toRelStructure.induce (activeCarrier A old.system e.toFunctionEmbedding)) large.toRelStructure
   lowerFamily lowerCutoffs lowerTrain lowerAllowed)
 
 /-- The true active target's irreducible A-extension, derived from
@@ -73,7 +69,7 @@ theorem ForestTailStage.coarsenedAExtension_of_trueActive
     (hHigh : 3 ≤ t.headD 0) :
     IrreduciblesExtendTo A
       (lower.system.coarsenVia large lower.isPartite).toRelStructure := by
-  have hTarget : IrreduciblesExtendTo A Source :=
+  have hTarget : IrreduciblesExtendTo A (old.system.toRelStructure.induce (activeCarrier A old.system e.toFunctionEmbedding)) :=
     old.trueActive_irreduciblesExtendTo hA hBaseLinear
       hBaseStrong e hRigid hActive projected hHigh
   change IrreduciblesExtendTo A lower.system.toRelStructure
