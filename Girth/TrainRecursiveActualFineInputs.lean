@@ -5,23 +5,28 @@ set_option autoImplicit false
 set_option Elab.async false
 
 /-!
-# Core fine-witness inputs from the actual active fibre and the lower stage
+# Irreducible A-coverage through the actual active lower recursive stage
 
-The previous modules established two different parts of the q > 2
-recursion: the old stage gives irreducible A-coverage of its true active
-subsystem at girth greater than three; a genuine lower selected stage
-gives partiteness, local A-coverage, selected physical injectivity and
-the mixed forest bound after coarsening.
+The original bundle of four local fine-witness inputs is already
+proved in TrainRecursiveSelectedWitnessConsequences: local
+partiteness, physical injectivity, mixed forest and ordinary
+irreducible A-coverage follow from a lower stage PROVIDED its
+target has A-coverage.
 
-This module composes those theorems with the literal active relational
-target. In particular the local target-coverage premise is derived from
-the old stage, rather than being passed as an extra hypothesis. The
-selected gluing family still consists of the genuine selected-copy
-subtype, with no quotient of labels or deletion of ambient A-edges.
+The genuinely new point is to discharge that last proviso for the
+TRUE active subsystem of the old picture, using the verified
+high-girth active A-generation theorem. The lower stage's
+selected mixed B-or-A coverage then yields ordinary A-coverage
+of its FULL relational reduct, unchanged by part coarsening.
 
-The construction of the lower stage, fine train restrictions, positive
-system-girth, parameters and attached-output SupremeCycleBound remain
-distinct obligations. No full recursive witness existence is asserted.
+Separating this proof from the selected gluing function avoids
+re-proving the three other conditions and avoids introducing
+implicit new selected-copy labels, false girth of a power, or a
+spurious additional geometric assumption.
+
+This is a conditional proof: the actual lower stage and selected
+line family still have to be produced; no output SupremeCycleBound
+is implied.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
@@ -43,8 +48,6 @@ variable (e : Embedding A D)
 local notation "Source" =>
   old.system.toRelStructure.induce
     (activeCarrier A old.system e.toFunctionEmbedding)
-local notation "Target" =>
-  actualActiveSubsystemPartite A old.system e.toFunctionEmbedding
 
 variable (large : StructuralRamsey.Partite.System L UA Q)
 variable {lowerFamily : Set (Embedding Source large.toRelStructure)}
@@ -53,23 +56,12 @@ variable {lowerTrain : EdgeTrainLevels (OldACarrierEdge A Source) lowerCutoffs.l
 variable {lowerAllowed : Fin (lowerCutoffs.length + 1) → Set Q}
 variable (lower : ForestTailStage A Source large.toRelStructure
   lowerFamily lowerCutoffs lowerTrain lowerAllowed)
-variable (hFamilyParts : ∀ b, b ∈ lowerFamily →
-  ∀ x : activeCarrier A old.system e.toFunctionEmbedding,
-    large.part (b x) = activeSourcePart A old.system e.toFunctionEmbedding x)
 
-local notation "Gluing" =>
-  selectedPartiteGluingFamily_of_largeBase Target large lower.system
-    lower.isPartite lowerFamily hFamilyParts lower.selected
-local notation "Selected" =>
-  {q : DesignatedCopy Source large.toRelStructure lower.system lowerFamily //
-    q ∈ lower.selected}
-
-include hFamilyParts
-
-/-- The true active target's A-extension is derived *before* applying
-the coarsened lower-stage result. Four physical fine-witness inputs
-then follow, without assuming an independent A-coverage witness. -/
-theorem ForestTailStage.coarsenedFineInputs_of_trueActive
+/-- The true active target's irreducible A-extension, derived from
+old-stage geometry at cutoff at least three, propagates through
+the actual lower selected stage. The large base may have many
+vertices per A-part and no physical copy or ambient edge is pruned. -/
+theorem ForestTailStage.coarsenedAExtension_of_trueActive
     (hA : A.Irreducible)
     (hBaseLinear : ALinear A D)
     (hBaseStrong : ∀ b : DesignatedCopy B D old.system family,
@@ -78,34 +70,13 @@ theorem ForestTailStage.coarsenedFineInputs_of_trueActive
     (hActive : (activeCarrier A old.system e.toFunctionEmbedding).Nonempty)
     (projected : StructuralRamsey.Partite.ProjectedEmbedding
       A old.system e.toFunctionEmbedding)
-    (hHigh : 3 ≤ t.headD 0)
-    (hLarge : large.IsPartiteOver A)
-    (q : ℕ) (hq : q ≤ lowerCutoffs.headD 0) :
-    (lower.system.coarsenVia large lower.isPartite).IsPartiteOver A ∧
+    (hHigh : 3 ≤ t.headD 0) :
     IrreduciblesExtendTo A
-      (lower.system.coarsenVia large lower.isPartite).toRelStructure ∧
-    Function.Injective (fun i : {b : DesignatedCopy
-        Source large.toRelStructure lower.system lowerFamily //
-        b ∈ lower.selected} =>
-      bSupportPiece A
-        ((selectedPartiteGluingFamily_of_largeBase
-          (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
-          large lower.system lower.isPartite
-          lowerFamily hFamilyParts lower.selected i).toEmbedding)) ∧
-    FiniteMixedForestThrough
-      (RelationalMixedSupportTest A (fun i :
-        {b : DesignatedCopy
-          Source large.toRelStructure lower.system lowerFamily //
-          b ∈ lower.selected} =>
-        (selectedPartiteGluingFamily_of_largeBase
-          (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
-          large lower.system lower.isPartite
-          lowerFamily hFamilyParts lower.selected i).toEmbedding)) q := by
+      (lower.system.coarsenVia large lower.isPartite).toRelStructure := by
   have hTarget : IrreduciblesExtendTo A Source :=
     old.trueActive_irreduciblesExtendTo hA hBaseLinear
       hBaseStrong e hRigid hActive projected hHigh
-  exact lower.coarsenedSelected_fineWitnessInputs
-    A (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
-    large hLarge hTarget hFamilyParts q hq
+  change IrreduciblesExtendTo A lower.system.toRelStructure
+  exact lower.irreduciblesExtendTo_of_target hTarget
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
