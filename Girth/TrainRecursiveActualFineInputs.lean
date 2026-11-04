@@ -84,15 +84,28 @@ theorem ForestTailStage.coarsenedFineInputs_of_trueActive
     (lower.system.coarsenVia large lower.isPartite).IsPartiteOver A ∧
     IrreduciblesExtendTo A
       (lower.system.coarsenVia large lower.isPartite).toRelStructure ∧
-    Function.Injective (fun i : Selected =>
-      bSupportPiece A (Gluing i).toEmbedding) ∧
+    Function.Injective (fun i : {b : DesignatedCopy
+        Source large.toRelStructure lower.system lowerFamily //
+        b ∈ lower.selected} =>
+      bSupportPiece A
+        ((selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
+          large lower.system lower.isPartite
+          lowerFamily hFamilyParts lower.selected i).toEmbedding)) ∧
     FiniteMixedForestThrough
-      (RelationalMixedSupportTest A (fun i : Selected =>
-        (Gluing i).toEmbedding)) q := by
-  have hTarget : IrreduciblesExtendTo A (Target).toRelStructure :=
+      (RelationalMixedSupportTest A (fun i :
+        {b : DesignatedCopy
+          Source large.toRelStructure lower.system lowerFamily //
+          b ∈ lower.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
+          large lower.system lower.isPartite
+          lowerFamily hFamilyParts lower.selected i).toEmbedding)) q := by
+  have hTarget : IrreduciblesExtendTo A Source :=
     old.trueActive_irreduciblesExtendTo hA hBaseLinear
       hBaseStrong e hRigid hActive projected hHigh
   exact lower.coarsenedSelected_fineWitnessInputs
-    A Target large hLarge hTarget hFamilyParts q hq
+    A (actualActiveSubsystemPartite A old.system e.toFunctionEmbedding)
+    large hLarge hTarget hFamilyParts q hq
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
