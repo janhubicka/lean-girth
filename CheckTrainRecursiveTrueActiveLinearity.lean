@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveTrueActiveLinearity
+
+#print axioms StructuralRamsey.Girth.aLinear_of_supportGirth_two
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_aLinear
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActivePartite_aLinear
