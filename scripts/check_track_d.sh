@@ -60,6 +60,7 @@ checks=(
   CheckTrainRecursiveRigidPartiteArrow
   CheckTrainRecursivePartitePowerLinearity
   CheckTrainRecursivePartitePowerSupport
+  CheckTrainRecursiveCoarsenedStageParameters
 )
 
 for check in "${checks[@]}"; do
