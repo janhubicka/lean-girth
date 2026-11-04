@@ -209,4 +209,27 @@ theorem inducedHJLine_aStrong_ordered
     (StructuralRamsey.Partite.Induced.power_isPartiteOver hB hN)
     (fun f => orderedA_self_embedding_is_id A₀ f) e p
 
+/-- The complete canonical Hales--Jewett LINE family used as the
+large Ramsey base's designated-copy family consists entirely of
+A-strong target copies. This is the precise base-strongness
+hypothesis needed for the q>2 picture attachment, with no extra
+assumption on selected labels. -/
+theorem inducedHJLine_family_aStrong_ordered
+    (A₀ : RelStructure L Q) [LinearOrder Q] [Finite Q]
+    (B : StructuralRamsey.Partite.System L.withOrder Q V)
+    (hB : B.IsPartiteOver A₀.ordered)
+    (hLinear : ALinear A₀.ordered B.toRelStructure)
+    (N : ℕ) (hN : 0 < N) :
+    ∀ b : Embedding B.toRelStructure
+        (StructuralRamsey.Partite.Induced.power B N).toRelStructure,
+      b ∈ Set.range
+        (fun W : HalesJewett.Line
+          (StructuralRamsey.Partite.Induced.Letter A₀.ordered B) N =>
+            (StructuralRamsey.Partite.Induced.lineEmbedding hB W).toEmbedding) →
+      AStrong A₀.ordered
+        (StructuralRamsey.Partite.Induced.power B N).toRelStructure
+        (copyCarrier b) := by
+  rintro b ⟨W, rfl⟩
+  exact inducedHJLine_aStrong_ordered A₀ B hB hLinear N hN W
+
 end StructuralRamsey.Girth
