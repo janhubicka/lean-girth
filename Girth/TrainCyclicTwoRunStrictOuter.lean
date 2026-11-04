@@ -87,8 +87,10 @@ theorem cyclicOwnerChanges_replace_two_run_strict_of_outer_match
   have hVanished : ∃ j : Fin n, j ∈ oldCuts ∧ j ∉ newCuts := by
     rcases hMatch with hLeft | hRight
     · refine ⟨trainCyclicPred t, ?_, ?_⟩
-      · exact (mem_cyclicOwnerCutPositions_iff owner
-          (trainCyclicPred t)).mpr hPrev
+      · apply (mem_cyclicOwnerCutPositions_iff owner
+          (trainCyclicPred t)).mpr
+        simpa only [cyclicSucc_trainCyclicPred_of_two_le
+          (by omega : 2 ≤ n) t] using hPrev
       · have hPredNe : trainCyclicPred t ≠ t := by
           intro heq
           have hs := cyclicSucc_trainCyclicPred_of_two_le
