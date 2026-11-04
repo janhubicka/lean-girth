@@ -24,14 +24,14 @@ variable {Owner : Type v} {n : ℕ}
 
 /-- Canonical cut indices whose physical cut is at or to the RIGHT
 of the given source occurrence in the linear Fin n enumeration. -/
-private noncomputable def cyclicOwnerRightCutIndices
+noncomputable def cyclicOwnerRightCutIndices
     (owner : Fin n → Owner) (t : Fin n) :
     Finset (Fin (cyclicOwnerChanges owner)) := by
   classical
   exact Finset.univ.filter
     (fun j => t ≤ cyclicOwnerCutIndex owner j)
 
-private theorem mem_cyclicOwnerRightCutIndices_iff
+theorem mem_cyclicOwnerRightCutIndices_iff
     (owner : Fin n → Owner) (t : Fin n)
     (j : Fin (cyclicOwnerChanges owner)) :
     j ∈ cyclicOwnerRightCutIndices owner t ↔
