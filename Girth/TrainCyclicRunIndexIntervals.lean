@@ -74,6 +74,7 @@ theorem cyclicOwnerRunIndex_before_first_cut
       (⟨0, hCuts⟩ : Fin (cyclicOwnerChanges owner)) :=
     cyclicOwnerRunIndex_le_of_right owner hCuts t ⟨0, hCuts⟩ hBefore
   apply Fin.ext
+  change (cyclicOwnerRunIndex owner hCuts t).val = 0
   have hv : (cyclicOwnerRunIndex owner hCuts t).val ≤ 0 := hLe
   omega
 
