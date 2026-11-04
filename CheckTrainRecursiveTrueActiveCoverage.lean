@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveTrueActiveCoverage
+
+#print axioms StructuralRamsey.Girth.supportGirthGT_induce
+#print axioms StructuralRamsey.Girth.irreduciblesExtendTo_of_aGenerated_girthThree
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_irreduciblesExtendTo
