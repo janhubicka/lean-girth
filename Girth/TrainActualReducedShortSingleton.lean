@@ -180,6 +180,60 @@ theorem attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
       ((cyclicOwnerCutIndex_pred_ne_reverse_succ_of_three_cuts
         owner hThree cut) hReverse)
 
+/-- For ANY SPECIFIED globally legal chosen plan, the piece at a
+non-target, non-singleton reduced cut must be long. Unlike an
+existential-only statement, this theorem can be applied to the EXACT
+same selected-plan witness used by later physical transfer theorems. -/
+theorem attachedSelectedPicture_any_plan_nontarget_nonsingleton_is_long
+    {n : ℕ} (K : (Out).BigCycle n)
+    (hAccept : K.Acceptable)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
+    (hThree : 3 ≤ cyclicOwnerChanges owner)
+    (target cut : Fin (cyclicOwnerChanges owner))
+    (pieces : Fin (cyclicOwnerChanges owner) →
+      TrainSupremePiece CoreEdge (Quotient (U.wagonSetoid μ)))
+    (hPlan : (attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed (by omega)).PlanValid Wit target pieces)
+    (hDifferent : (attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed (by omega)).label cut ≠
+      (attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed (by omega)).label target)
+    (hNonSingleton : cyclicOwnerCutIndex owner cut ≠
+      cyclicSucc (cyclicOwnerCutIndex owner (trainCyclicPred cut))) :
+    let hCuts : 2 ≤ cyclicOwnerChanges owner := by omega
+    let Z := attachedSelectedPicture_geometric_cutBigCycle
+      A hA B D C family selected e R f T U hShared hRel μ
+      K owner hAllowed hCuts
+    ∃ first second : CoreEdge, ∃ w : Quotient (U.wagonSetoid μ),
+      pieces cut = .long first w second ∧
+      Z.LongValid Wit target cut first w second := by
+  have hCuts : 2 ≤ cyclicOwnerChanges owner := by omega
+  let Z := attachedSelectedPicture_geometric_cutBigCycle
+    A hA B D C family selected e R f T U hShared hRel μ
+    K owner hAllowed hCuts
+  have hCase := (hPlan cut).2 hDifferent
+  cases hp : pieces cut with
+  | keep =>
+      have hf : False := by
+        simpa only [hp] using hCase
+      exact False.elim hf
+  | short b =>
+      have hShort : Z.ShortValid Wit target cut b := by
+        simpa only [hp] using hCase
+      have hForward :=
+        attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
+          A hA B D C family selected e R f T U hShared hRel μ
+          K hAccept owner hAllowed hThree target cut b hShort
+      exact False.elim (hNonSingleton hForward)
+  | long first w second =>
+      have hLong : Z.LongValid Wit target cut first w second := by
+        simpa only [hp] using hCase
+      exact ⟨first, second, w, hp, hLong⟩
+
 /-- From a GENUINELY chosen globally legal plan, every NON-TARGET
 piece at a NON-singleton original owner segment must be LongValid:
 the short alternative violates source A2/A3, and a kept piece is
@@ -223,24 +277,10 @@ theorem attachedSelectedPicture_chosen_nontarget_nonsingleton_is_long
       A hA B D C family selected e R f T U hShared hRel μ
       K owner hAllowed hCuts target hSupreme
   refine ⟨pieces, hPlan, hProduces, ?_⟩
-  have hCase := (hPlan cut).2 hDifferent
-  cases hp : pieces cut with
-  | keep =>
-      have hf : False := by
-        simpa only [hp] using hCase
-      exact False.elim hf
-  | short b =>
-      have hShort : Z.ShortValid Wit target cut b := by
-        simpa only [hp] using hCase
-      have hForward :=
-        attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
-          A hA B D C family selected e R f T U hShared hRel μ
-          K hAccept owner hAllowed hThree target cut b hShort
-      exact False.elim (hNonSingleton hForward)
-  | long first w second =>
-      have hLong : Z.LongValid Wit target cut first w second := by
-        simpa only [hp] using hCase
-      exact ⟨first, second, w, hp, hLong⟩
+  exact attachedSelectedPicture_any_plan_nontarget_nonsingleton_is_long
+    A hA B D C family selected e R f T U hShared hRel μ
+    K hAccept owner hAllowed hThree
+    target cut pieces hPlan hDifferent hNonSingleton
 
 end ReducedShortSingleton
 end StructuralRamsey.Girth
