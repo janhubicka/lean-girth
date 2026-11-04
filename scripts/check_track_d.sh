@@ -59,6 +59,7 @@ checks=(
   CheckTrainRecursiveLargeBasePartiteInput
   CheckTrainRecursiveRigidPartiteArrow
   CheckTrainRecursivePartitePowerLinearity
+  CheckTrainRecursiveTrueActiveLinearity
   CheckTrainRecursivePartitePowerSupport
 )
 
