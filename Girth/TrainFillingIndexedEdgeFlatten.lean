@@ -65,7 +65,8 @@ noncomputable def edgeIndexEquiv :
   left_inv := by
     rintro ⟨c, ⟨p, a⟩⟩
     apply Sigma.ext rfl
-    rfl
+    exact congrArg (fun b : (U c).LocalEdge => (p, b))
+      ((choiceTemplateEquiv U E hTemplate c).symm_apply_apply a)
   right_inv := by
     rintro ⟨⟨c, p⟩, a⟩
     change ((c, p),
