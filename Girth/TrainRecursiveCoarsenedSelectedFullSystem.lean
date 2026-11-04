@@ -52,6 +52,12 @@ variable (e : I ≃ {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrie
 variable (hCarrier : ∀ i : I,
   copyCarrier (f i) = copyCarrier (e i).1.embedding)
 
+-- The exact label equivalence and physical carrier identification MUST
+-- appear as theorem parameters; Lean otherwise omits unused section
+-- variables from the declaration while the proof body still refers
+-- to them. In particular the transfer cannot be unconditional.
+include e hCarrier
+
 /-- Every positive FULL selected-system-girth certificate passes to
 the actual gluing family with the same physical carriers and an
 honest bijection of designated indices. This includes simultaneous
