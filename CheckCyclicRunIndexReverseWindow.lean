@@ -1,0 +1,6 @@
+import Girth.TrainCyclicRunIndexReverseWindow
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_nonzero_right
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_nonzero_left
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_nonzero_window
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_zero_wrap_window
