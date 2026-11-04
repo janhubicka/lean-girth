@@ -48,6 +48,26 @@ theorem ForestTailStage.coarsened_adjacentParameters_of_allowed
   exact S.train.adjacentParameters_after_baseCoarsening
     A D S.system S.isPartite allowed fineAllowed S.parameters hAllowed
 
+/-- If the lower recursion is invoked with the inverse images of
+the prescribed fine A-part sets, its actual stage parameters become
+exactly the desired fine parameters after coarsening. This eliminates
+both the parameter input and the image-containment premise in the
+chosen lower-rank invocation. -/
+theorem ForestTailStage.coarsened_adjacentParameters_preimage
+    (A : RelStructure L UA) (B : RelStructure L VB)
+    (D : StructuralRamsey.Partite.System L UA P)
+    {family : Set (Embedding B D.toRelStructure)}
+    {t : List ℕ}
+    {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
+    (fineAllowed : Fin (t.length + 1) → Set UA)
+    (S : ForestTailStage A B D.toRelStructure family t targetTrain
+      (fun ν => D.part ⁻¹' fineAllowed ν)) :
+    S.train.AdjacentParameters (fun edge => edge.1)
+      (fun ν => (S.system.coarsenVia D S.isPartite).part ⁻¹' fineAllowed ν) := by
+  apply S.coarsened_adjacentParameters_of_allowed A B D fineAllowed
+  intro ν p hp
+  exact hp
+
 /-- The canonical family of coarsened allowed parts is obtained
 by taking images of the actual lower base's permitted part sets.
 All train relations remain unchanged, including the top. -/
