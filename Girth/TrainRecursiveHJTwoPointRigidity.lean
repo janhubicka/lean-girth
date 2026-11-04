@@ -62,10 +62,10 @@ theorem aLinear_partPreserving_twoPoint_eq
   have hwz : w = z := by
     calc
       w = B.part (e w) := (hE w).symm
-      _ = B.part (f z) := congrArg B.part hz
+      _ = B.part (f z) := congrArg B.part hz.symm
       _ = z := hF z
   subst z
-  exact hz
+  exact hz.symm
 
 /-- Two coordinate embeddings of the SAME actual A-copy in an
 induced power are identical if they agree at two distinct A-parts.
