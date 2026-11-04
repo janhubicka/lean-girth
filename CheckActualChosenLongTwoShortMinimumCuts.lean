@@ -1,0 +1,3 @@
+import Girth.TrainActualChosenLongTwoShortMinimumCuts
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_nonadjacent_long_two_short_minimum_cuts

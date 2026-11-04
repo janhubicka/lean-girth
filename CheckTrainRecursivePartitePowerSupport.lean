@@ -1,0 +1,5 @@
+import Girth.TrainRecursivePartitePowerSupport
+
+#print axioms StructuralRamsey.Girth.inducedPower_embedding_of_coordinateCopies
+#print axioms StructuralRamsey.Girth.inducedPower_embedding_of_coordinateCopies_coord
+#print axioms StructuralRamsey.Girth.inducedPower_supportCovers_of_partiteACopies
