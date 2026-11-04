@@ -50,7 +50,7 @@ theorem finite_ordered_selected_coordinate_commutes
       Set.range (canonicalPlacement : X → V)) :
     ∀ x : X,
       selectedVertex (sourceCoordinate x) = canonicalPlacement x := by
-  let composed : X ↪o V := selectedVertex.comp sourceCoordinate
+  let composed : X ↪o V := sourceCoordinate.comp selectedVertex
   have hRange :
       Set.range (composed : X → V) =
       Set.range (canonicalPlacement : X → V) := hCarrier
