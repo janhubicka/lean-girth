@@ -64,6 +64,8 @@ local notation "Selected" =>
   {q : DesignatedCopy Source large.toRelStructure lower.system lowerFamily //
     q ∈ lower.selected}
 
+include hFamilyParts
+
 /-- The true active target's A-extension is derived *before* applying
 the coarsened lower-stage result. Four physical fine-witness inputs
 then follow, without assuming an independent A-coverage witness. -/
