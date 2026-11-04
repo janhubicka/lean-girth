@@ -1,0 +1,3 @@
+import Girth.TrainActualPlanLongFreshThreeCuts
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_plan_long_fresh_of_three_cuts
