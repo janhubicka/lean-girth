@@ -1,28 +1,25 @@
 import Girth.TrainRecursiveCoarsenedRamseyArrow
-import Girth.TrainRecursiveActivePartite
 
 set_option autoImplicit false
 set_option Elab.async false
 
 /-!
-# Exact fine train restriction for genuinely selected partite gluing copies
+# Exact selected train restriction after large-base part coarsening
 
-The lower forest-tail witness is equipped with an actual
-targetRestriction field: the whole source train is preserved and
-reflected by each of its selected designated copies.
+There is no reason to specialize the fine-train restriction bridge to
+the literal true active subsystem. The genuine lower ForestTailStage
+already stores the entire source train restriction on every SELECTED
+target label. Coarsening only the base parts leaves its underlying
+relational embedding literally unchanged.
 
-When the lower target is the literal true active induced source and
-the lower Ramsey base is a larger A-partite system, coarsening part
-labels turns the selected designated copies into the genuine
-A-partite gluing embeddings. Their underlying relational embeddings
-and their physical support edges do not change. Hence the lower
-targetRestriction is exactly the fine-restriction clause expected by
-the Track B attachment construction.
+This generic statement works for every genuine A-partite target and
+larger A-partite base, under the actual part-preservation hypothesis
+for the selected base labels. In particular it applies to the exact
+true active source without adding any gluing-family equivalence,
+pruning physical edges, or replacing selected labels by carriers.
 
-This lemma does NOT assert the existence of the lower stage, a
-particular refinement target train, fine parameter bounds or
-positive gluing full-system girth. It preserves all labels and does
-not quotient equal vertex carriers.
+The theorem does NOT assert existence of the lower stage, an
+appropriately refined target train, or attached output cycle bounds.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
@@ -30,42 +27,38 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 open StructuralRamsey.RelStructure
 
 universe u v
-variable {L : RelLanguage.{u}}
-variable {UA P V X : Type v}
+variable {L : RelLanguage.{u}} {UA VB P : Type v}
+
 variable (A : RelStructure L UA)
-variable (Old : StructuralRamsey.Partite.System L P X)
-variable (α : UA ↪ P)
-variable (D : StructuralRamsey.Partite.System L UA V)
-
-local notation "Source" =>
-  Old.toRelStructure.induce (activeCarrier A Old α)
-
-variable (family : Set (Embedding Source D.toRelStructure))
+variable (Target : StructuralRamsey.Partite.System L UA VB)
+variable (D : StructuralRamsey.Partite.System L UA P)
+variable {family : Set (Embedding Target.toRelStructure D.toRelStructure)}
 variable {t : List ℕ}
-variable (targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length)
-variable (allowed : Fin (t.length + 1) → Set V)
-variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
-variable (hFamilyParts : ∀ b, b ∈ family →
-  ∀ x : activeCarrier A Old α,
-    D.part (b x) = activeSourcePart A Old α x)
+variable {targetTrain : EdgeTrainLevels
+  (OldACarrierEdge A Target.toRelStructure) t.length}
+variable {allowed : Fin (t.length + 1) → Set P}
+variable (S : ForestTailStage A Target.toRelStructure D.toRelStructure
+  family t targetTrain allowed)
+variable (hFamilyParts : ∀ b, b ∈ family → ∀ x : VB,
+  D.part (b x) = Target.part x)
 
-include hFamilyParts
-
-/-- Full preservation and reflection of all physical fine train
-cuts on each actual selected gluing embedding after part-coarsening.
-No prescribed target cut or selected copy is replaced by an arbitrary
-projected copy. The selected indices remain the literal subtype. -/
+/-- Every selected partite gluing copy reflects AND preserves the
+actual lower target train at every fine coordinate. No quotient of
+labels or ambient edge deletion is used. -/
 theorem ForestTailStage.coarsenedSelected_trainRestriction
     (ν : Fin (t.length + 1))
-    (i : {q : DesignatedCopy Source D.toRelStructure S.system family //
-      q ∈ S.selected}) (a b : Embedding A Source) :
+    (i : {b : DesignatedCopy Target.toRelStructure D.toRelStructure
+      S.system family // b ∈ S.selected})
+    (a b : Embedding A Target.toRelStructure) :
     S.train.rel ν
-      (actualEdge ((selectedPartiteGluingFamily_of_largeBase
-        (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
-        family hFamilyParts S.selected i).toEmbedding.comp a))
-      (actualEdge ((selectedPartiteGluingFamily_of_largeBase
-        (actualActiveSubsystemPartite A Old α) D S.system S.isPartite
-        family hFamilyParts S.selected i).toEmbedding.comp b)) ↔
+      (actualEdge
+        ((selectedPartiteGluingFamily_of_largeBase
+          Target D S.system S.isPartite
+          family hFamilyParts S.selected i).toEmbedding.comp a))
+      (actualEdge
+        ((selectedPartiteGluingFamily_of_largeBase
+          Target D S.system S.isPartite
+          family hFamilyParts S.selected i).toEmbedding.comp b)) ↔
     targetTrain.rel ν (actualEdge a) (actualEdge b) := by
   change S.train.rel ν
       (actualEdge (i.1.embedding.comp a))
