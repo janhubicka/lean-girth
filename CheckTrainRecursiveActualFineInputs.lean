@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualFineInputs
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedFineInputs_of_trueActive
