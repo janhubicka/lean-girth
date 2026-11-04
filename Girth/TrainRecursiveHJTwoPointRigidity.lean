@@ -45,6 +45,7 @@ theorem aLinear_partPreserving_twoPoint_eq
     (u v : Q) (huv : u ≠ v)
     (hu : e u = f u) (hv : e v = f v) :
     e = f := by
+  classical
   have hCarrier : SameCopy e f := by
     by_contra hNot
     have hSmall := hLinear e f hNot
