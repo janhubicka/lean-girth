@@ -1,0 +1,7 @@
+import Girth.TrainFillingIndexedEdgeFlatten
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.choiceTemplateEquiv
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.edgeIndexEquiv
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.edgeIndexEquiv_old
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.edgeIndexEquiv_template_carrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedCommonEdges_iff
