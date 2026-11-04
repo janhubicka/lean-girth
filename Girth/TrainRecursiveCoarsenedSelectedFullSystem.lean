@@ -83,13 +83,11 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
       (S.system.coarsenVia D S.isPartite).toRelStructure
       (fun i : Selected => (PartiteGluing i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT q := by
-  have hFull : (activeGluingWitnessOrderOneData A Old α
-      (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : Selected => (PartiteGluing i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-    change (selectedPictureOrderOneData A Source D.toRelStructure
-      S.system family S.selected S.train j.castSucc).FullSystemGirthGT (t.get j)
-    exact S.tailGirth j hj
+  change (selectedPictureOrderOneData A Source D.toRelStructure
+    S.system family S.selected S.train j.castSucc).FullSystemGirthGT q
+  have hFull : (selectedPictureOrderOneData A Source D.toRelStructure
+      S.system family S.selected S.train j.castSucc).FullSystemGirthGT (t.get j) :=
+    S.tailGirth j hj
   refine ⟨hFull.1, ?_⟩
   intro n K hAccept hOrder
   exact hFull.2 n K hAccept (by omega)
