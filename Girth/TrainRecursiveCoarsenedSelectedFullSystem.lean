@@ -39,18 +39,15 @@ variable (A : RelStructure L UA)
 variable (Old : StructuralRamsey.Partite.System L P X)
 variable (α : UA ↪ P)
 
-local notation "Source" =>
-  Old.toRelStructure.induce (activeCarrier A Old α)
-
 variable (D : RelStructure L Q)
-variable {family : Set (Embedding Source D)}
+variable {family : Set (Embedding (Old.toRelStructure.induce (activeCarrier A Old α)) D)}
 variable {t : List ℕ}
-variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length}
+variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A (Old.toRelStructure.induce (activeCarrier A Old α))) t.length}
 variable {allowed : Fin (t.length + 1) → Set Q}
-variable (S : ForestTailStage A Source D family t targetTrain allowed)
+variable (S : ForestTailStage A (Old.toRelStructure.induce (activeCarrier A Old α)) D family t targetTrain allowed)
 
-variable (f : I → Embedding Source S.system.toRelStructure)
-variable (e : I ≃ {b : DesignatedCopy Source D S.system family //
+variable (f : I → Embedding (Old.toRelStructure.induce (activeCarrier A Old α)) S.system.toRelStructure)
+variable (e : I ≃ {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D S.system family //
   b ∈ S.selected})
 variable (hCarrier : ∀ i : I,
   copyCarrier (f i) = copyCarrier (e i).1.embedding)
@@ -65,7 +62,7 @@ theorem ForestTailStage.selectedGluing_fullSystem_at_positive
       S.system.toRelStructure f S.train j.castSucc).FullSystemGirthGT
         (t.get j) := by
   exact (activeGluingWitness_fullSystemGirth_iff_selectedPicture
-    A Source D Old S.system family S.selected α f S.train
+    A (Old.toRelStructure.induce (activeCarrier A Old α)) D Old S.system family S.selected α f S.train
     j.castSucc e hCarrier (t.get j)).mpr
     (S.tailGirth j hj)
 
