@@ -36,7 +36,7 @@ noncomputable def selectedFilledEdgeEmbedding
       U.edgeEquiv.injective h
     exact Prod.ext
       (β.injective (congrArg Prod.fst hp))
-      (congrArg Prod.snd hp)
+      (congrArg (fun p : U.OldEdge × U.TemplateEdge => p.2) hp)
 
 /-- The selected physical edge keeps its actual old edge as unique cover. -/
 @[simp] theorem selectedFilledEdgeEmbedding_cover
@@ -91,9 +91,9 @@ new-edge carrier identity is then a CONCLUSION, not a field. -/
 structure SelectedContractedPlacement (W : Type v) where
   vertex : W ↪ V
   oldEdge : S ↪ U.OldEdge
-  local : S → X ↪ W
+  localPlacement : S → (X ↪ W)
   vertex_local : ∀ s x,
-    vertex (local s x) = U.place (oldEdge s) x
+    vertex (localPlacement s x) = U.place (oldEdge s) x
 
 namespace SelectedContractedPlacement
 
@@ -101,7 +101,7 @@ variable {W : Type v} (R : U.SelectedContractedPlacement (S := S) W)
 
 /-- Local physical edge carriers inside the contracted selected copy. -/
 def sourcePhysicalCarrier (c : S × U.TemplateEdge) : Set W :=
-  R.local c.1 '' c.2.1
+  R.localPlacement c.1 '' c.2.1
 
 /-- The actual global physical filled edge carrier is exactly the
 image of its source local physical carrier under the selected M-copy
@@ -112,7 +112,7 @@ theorem edgeCarrier_eq_image (c : S × U.TemplateEdge) :
   ext y
   constructor
   · rintro ⟨x, hx, rfl⟩
-    exact ⟨R.local c.1 x, ⟨x, hx, rfl⟩,
+    exact ⟨R.localPlacement c.1 x, ⟨x, hx, rfl⟩,
       R.vertex_local c.1 x⟩
   · rintro ⟨w, ⟨x, hx, rfl⟩, rfl⟩
     exact ⟨x, hx, (R.vertex_local c.1 x).symm⟩
