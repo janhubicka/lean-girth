@@ -1,4 +1,4 @@
-import Girth.TrainFillingTemplateConstruction
+import Girth.TrainFillingSelectedStrongCover
 
 set_option Elab.async false
 
@@ -65,6 +65,31 @@ theorem selectedFilledEdgeEmbedding_range
       exact hs
     rw [hCover]
     exact U.encode_decode e
+
+/-- If a contracted selected old copy is strong, the canonical selected
+filled-edge embedding covers exactly the ambient filled edges whose
+physical carriers are contained in the selected vertex carrier.
+
+This removes the exact `copyEdges_eq` field from the application:
+old strongness and edge containment suffice. The ambient filled-edge
+type is unchanged; in particular no outside edge is pruned. -/
+theorem selectedFilledEdgeEmbedding_range_eq_contained
+    (β : S ↪ U.OldEdge)
+    (carrier : Set V)
+    (hSelectedContained : ∀ s : S, (β s).1 ⊆ carrier)
+    (hOldStrong : ∀ f : U.OldEdge,
+      ¬ (f.1 ∩ carrier).Subsingleton → f ∈ Set.range β) :
+    Set.range (U.selectedFilledEdgeEmbedding β) =
+      {e : U.toTrainFilling.NewEdge | e.1 ⊆ carrier} := by
+  calc
+    Set.range (U.selectedFilledEdgeEmbedding β) =
+        {e | U.toTrainFilling.cover e ∈ Set.range β} :=
+      U.selectedFilledEdgeEmbedding_range β
+    _ = {e | e.1 ⊆ carrier} :=
+      (U.generatedEdges_selected_exact carrier (Set.range β)
+        (by
+          rintro f ⟨s, rfl⟩
+          exact hSelectedContained s) hOldStrong).symm
 
 /-- Every source/local pair maps to its literal physical carrier:
 selected-copy edge images require no independent decoding data. -/
