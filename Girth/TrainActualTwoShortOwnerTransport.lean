@@ -70,7 +70,7 @@ theorem attachedSelectedPicture_two_short_owner_allowed
     (hFirst : (CoreActual first).1 ⊆ copyCarrier (Std i))
     (hSecond : (CoreActual second).1 ⊆ copyCarrier (Std i)) :
     ∀ j : Fin n, GeomAllowed (H.label j)
-      (cyclicReplaceTwoOwners owner t (Sum.inl i)) j := by
+      ((cyclicReplaceTwoOwners owner t (Sum.inl i)) j) := by
   classical
   intro j
   by_cases hJt : j = t
