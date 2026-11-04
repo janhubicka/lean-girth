@@ -1,0 +1,6 @@
+import Girth.TrainActualReducedShortSingleton
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_short_original_cut_contacts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_short_cuts_adjacent
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_chosen_nontarget_nonsingleton_is_long
