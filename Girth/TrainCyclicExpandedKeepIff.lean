@@ -49,8 +49,7 @@ theorem cyclicExpandReducedPieces_keep_iff
         have hNot :
             cyclicExpandReducedPieces owner hCuts reduced edge wagon pos ≠
               (.keep : TrainSupremePiece F Q) := by
-          simp [cyclicExpandReducedPieces, j, hp]
-          split_ifs <;> simp
+          simp [cyclicExpandReducedPieces, j, hp] <;> split_ifs <;> simp
         exact False.elim (hNot h)
   · intro h
     exact cyclicExpandReducedPieces_keep owner hCuts reduced edge wagon
