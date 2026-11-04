@@ -1,4 +1,5 @@
 import Girth.TrainRecursiveHJTwoPointRigidity
+import Girth.TrainRecursiveRigidPartiteArrow
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -183,5 +184,29 @@ theorem inducedHJLine_aStrong_of_Aparts
           _ = c (B.part (eI k p)) := by rw [hIparts k p]
           _ = (line (eI k p)).coord i :=
             (inducedHJLine_coordinate_const A B hB N W i c hi (eI k p)).symm
+
+/-- The finite ordered source automatically discharges the ambient
+part-preservation premise of the line strongness theorem. It follows
+from irreducibility and the checked induced-power partite reflection,
+not from a false high-girth claim about the power. -/
+theorem inducedHJLine_aStrong_ordered
+    (A₀ : RelStructure L Q) [LinearOrder Q] [Finite Q]
+    (B : StructuralRamsey.Partite.System L.withOrder Q V)
+    (hB : B.IsPartiteOver A₀.ordered)
+    (hLinear : ALinear A₀.ordered B.toRelStructure)
+    (N : ℕ) (hN : 0 < N)
+    (W : HalesJewett.Line
+      (StructuralRamsey.Partite.Induced.Letter A₀.ordered B) N) :
+    AStrong A₀.ordered
+      (StructuralRamsey.Partite.Induced.power B N).toRelStructure
+      (copyCarrier (StructuralRamsey.Partite.Induced.lineEmbedding hB W).toEmbedding) := by
+  refine inducedHJLine_aStrong_of_Aparts
+    A₀.ordered B hB hLinear N ?_ W
+  intro e p
+  exact relationalA_embedding_preserves_parts_of_rigid
+    A₀.ordered (StructuralRamsey.Partite.Induced.power B N)
+    (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
+    (StructuralRamsey.Partite.Induced.power_isPartiteOver hB hN)
+    (fun f => orderedA_self_embedding_is_id A₀ f) e p
 
 end StructuralRamsey.Girth
