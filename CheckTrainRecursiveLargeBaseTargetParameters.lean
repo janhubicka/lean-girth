@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveLargeBaseTargetParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_of_largeBasePartEmbedding
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_of_largeBaseFamily
