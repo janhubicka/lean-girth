@@ -31,6 +31,26 @@ namespace StructuralRamsey.Girth.OrderOneData
 universe v
 variable {V E I P : Type v} (D : OrderOneData V E I P)
 
+/-- An already supreme later cycle pulls the ACTUAL chosen designated
+label back to an unchanged original source label. Freshness of long
+pieces is automatically derived from its global output BigCycle. -/
+theorem BigCycle.hasSupremeAt_of_literal_sameConnector_replacement
+    {n : ℕ} (C B : D.BigCycle n)
+    (hAccept : C.Acceptable)
+    (hLinear : D.LinearPretrain)
+    (hConn : ∀ i : Fin n, B.connector i = C.connector i)
+    (first : Fin n → TrainSupremePiece E P)
+    (hWord : List.ofFn (fun i : Fin n =>
+      (B.label i, B.connector i)) = C.resultWord D first)
+    (kB : Fin n) (hAt : B.HasSupremeAt D kB) :
+    ∃ kC : Fin n,
+      B.label kB = C.label kC ∧ C.HasSupremeAt D kC := by
+  obtain ⟨later, hPlanLater, _hProduces, hFresh⟩ :=
+    B.freshness_of_hasSupremeAt D kB hAt
+  exact C.supreme_plan_transfer_literal_sameConnectors
+    D B hAccept hLinear hConn first hWord kB hAt.1
+    later hPlanLater hFresh
+
 /-- Full globally valid simultaneous supremeness pulls back from
 an actual literal same-connector replacement. Both the later chosen
 designated occurrence and freshness of all later long wagons are
@@ -49,12 +69,9 @@ theorem BigCycle.supreme_of_literal_sameConnector_replacement
   obtain ⟨kB, hkB, pieces, hPlan, hProduces⟩ := hSupreme
   have hAt : B.HasSupremeAt D kB :=
     ⟨hkB, pieces, hPlan, hProduces⟩
-  obtain ⟨later, hPlanLater, _hProduces, hFresh⟩ :=
-    B.freshness_of_hasSupremeAt D kB hAt
   obtain ⟨kC, _hSameLabel, hSupC⟩ :=
-    C.supreme_plan_transfer_literal_sameConnectors
-      D B hAccept hLinear hConn first hWord kB hkB
-      later hPlanLater hFresh
+    C.hasSupremeAt_of_literal_sameConnector_replacement
+      D B hAccept hLinear hConn first hWord kB hAt
   exact C.hasSimultaneousSupreme_of_hasSupremeAt D kC hSupC
 
 end StructuralRamsey.Girth.OrderOneData
