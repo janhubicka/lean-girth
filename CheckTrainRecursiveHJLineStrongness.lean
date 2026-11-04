@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveHJLineStrongness
+
+#print axioms StructuralRamsey.Girth.inducedHJLine_coordinate_parameter
+#print axioms StructuralRamsey.Girth.inducedHJLine_coordinate_const
+#print axioms StructuralRamsey.Girth.inducedHJLine_aStrong_of_Aparts
