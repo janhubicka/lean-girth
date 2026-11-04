@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveHJTwoPointRigidity
+
+#print axioms StructuralRamsey.Girth.aLinear_partPreserving_twoPoint_eq
+#print axioms StructuralRamsey.Girth.inducedPower_twoCoordinate_agreement
