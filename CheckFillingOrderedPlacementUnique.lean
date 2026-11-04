@@ -1,0 +1,5 @@
+import Girth.TrainFillingOrderedPlacementUnique
+
+#print axioms StructuralRamsey.Girth.finite_orderEmbedding_eq_of_range_eq
+#print axioms StructuralRamsey.Girth.finite_ordered_selected_coordinate_commutes
+#print axioms StructuralRamsey.Girth.finite_ordered_selected_coordinates_commute
