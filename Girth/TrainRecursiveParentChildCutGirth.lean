@@ -132,4 +132,79 @@ theorem EdgeTrainLevels.labelledCutGirth_of_parent_and_children
   }
   exact hChildren parent ⟨lifted, hLength⟩
 
+
+/-- All inserted refinement cuts inherit GLOBAL labelled girth from
+the first retained parent cut and the original refinement's genuine
+per-parent child-girth certificates.
+
+This is the induction down the finite train:
+  retained first cut = d+1 -> d -> ... -> 1 -> 0.
+The parent cut is not assumed universal or connected. The result
+does NOT follow from local child girth alone; the complete retained
+parent-cut hypothesis is indispensable. -/
+theorem FirstWagonRefinement.labelledCutGirth_inserted_of_retained
+    {m : ℕ} {T : EdgeTrainLevels E m} {hm : 0 < m}
+    {edge : E → Set W} {P : Type v}
+    {part : W → P} {firstAllowed : Set P} {g : ℕ}
+    (R : FirstWagonRefinement T hm edge part firstAllowed g)
+    (hg : 2 ≤ g)
+    (hRetained : LabelledGirthGT
+      (R.train.wagonClassCarrier edge
+        (⟨R.extraCuts + 1, by omega⟩ :
+          Fin (m + R.extraCuts + 1))) g)
+    (ρ : Fin (m + R.extraCuts + 1))
+    (hρ : ρ.val ≤ R.extraCuts + 1) :
+    LabelledGirthGT (R.train.wagonClassCarrier edge ρ) g := by
+  let d := R.extraCuts
+  have hDown : ∀ n : ℕ, n ≤ d + 1 →
+      LabelledGirthGT
+        (R.train.wagonClassCarrier edge
+          (⟨d + 1 - n, by omega⟩ : Fin (m + d + 1))) g := by
+    intro n
+    induction n with
+    | zero =>
+        intro _
+        simpa only [Nat.sub_zero] using hRetained
+    | succ n ih =>
+        intro hn
+        have hn' : n ≤ d + 1 := by omega
+        have hPrev : LabelledGirthGT
+            (R.train.wagonClassCarrier edge
+              (⟨d + 1 - n, by omega⟩ : Fin (m + d + 1))) g :=
+          ih hn'
+        let j : Fin (d + 1) := ⟨d - n, by omega⟩
+        let μ : Fin (m + d + 1) :=
+          firstRefinementChild m d hm j
+        let ν : Fin (m + d + 1) :=
+          firstRefinementParent m d hm j
+        have hμ : μ =
+            (⟨d + 1 - (n + 1), by omega⟩ :
+              Fin (m + d + 1)) := by
+          apply Fin.ext
+          change d - n = d + 1 - (n + 1)
+          omega
+        have hν : ν =
+            (⟨d + 1 - n, by omega⟩ :
+              Fin (m + d + 1)) := by
+          apply Fin.ext
+          change d - n + 1 = d + 1 - n
+          omega
+        have hParent :
+            LabelledGirthGT (R.train.wagonClassCarrier edge ν) g := by
+          simpa only [hν] using hPrev
+        have hChild :
+            LabelledGirthGT (R.train.wagonClassCarrier edge μ) g :=
+          R.train.labelledCutGirth_of_parent_and_children
+            edge μ ν (by change j.val ≤ j.val + 1; omega)
+            g hg hParent (R.childGirth j)
+        simpa only [hμ] using hChild
+  have h := hDown (d + 1 - ρ.val) (by omega)
+  have hIdx :
+      (⟨d + 1 - (d + 1 - ρ.val), by omega⟩ :
+        Fin (m + d + 1)) = ρ := by
+    apply Fin.ext
+    change d + 1 - (d + 1 - ρ.val) = ρ.val
+    omega
+  simpa only [hIdx] using h
+
 end StructuralRamsey.Girth
