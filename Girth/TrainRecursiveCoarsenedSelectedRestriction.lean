@@ -39,6 +39,16 @@ variable (D : StructuralRamsey.Partite.System L UA V)
 
 local notation "Source" =>
   Old.toRelStructure.induce (activeCarrier A Old α)
+
+variable (family : Set (Embedding Source D.toRelStructure))
+variable {t : List ℕ}
+variable (targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length)
+variable (allowed : Fin (t.length + 1) → Set V)
+variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
+variable (hFamilyParts : ∀ b, b ∈ family →
+  ∀ x : activeCarrier A Old α,
+    D.part (b x) = activeSourcePart A Old α x)
+
 /-- Full preservation and reflection of all physical fine train
 cuts on each actual selected gluing embedding after part-coarsening.
 No prescribed target cut or selected copy is replaced by an arbitrary
