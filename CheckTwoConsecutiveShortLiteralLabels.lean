@@ -1,0 +1,5 @@
+import Girth.TrainTwoConsecutiveShortLiteralLabels
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShortLabels
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShort_resultWord
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twoConsecutiveShort_complete_exact_labels
