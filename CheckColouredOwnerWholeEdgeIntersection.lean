@@ -1,0 +1,4 @@
+import Girth.TrainColouredOwnerWholeEdgeIntersection
+
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lift_eq_place_of_old_edge
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.lifted_intersection_eq_splitEdge
