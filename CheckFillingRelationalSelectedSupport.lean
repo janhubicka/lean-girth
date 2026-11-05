@@ -1,0 +1,6 @@
+import Girth.TrainFillingRelationalSelectedSupport
+
+#print axioms StructuralRamsey.Girth.supportCopy_image_mem
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedSupportOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedSupportOldEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedSupportFilledEdgeEmbedding
