@@ -52,7 +52,12 @@ theorem FirstWagonRefinement.labelledGirthGT_at_retained
   change LabelledGirthGT
     (R.train.wagonClassCarrier edge
       (EdgeTrainLevels.firstForgetIndex m R.extraCuts μ)) q at hOld
-  simpa only [EdgeTrainLevels.firstForgetIndex_of_pos m R.extraCuts μ hμ] using hOld
+  have hIndex :
+      EdgeTrainLevels.firstForgetIndex m R.extraCuts μ =
+        EdgeTrainLevels.firstRefinementShift m R.extraCuts μ :=
+    EdgeTrainLevels.firstForgetIndex_of_pos m R.extraCuts μ hμ
+  rw [hIndex] at hOld
+  exact hOld
 
 /-- Any lower requested cutoff at a retained positive coordinate is
 also available, preserving all physical edge and wagon labels. -/
