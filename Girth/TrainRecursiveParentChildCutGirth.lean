@@ -191,13 +191,15 @@ theorem FirstWagonRefinement.labelledCutGirth_inserted_of_retained
           omega
         have hParent :
             LabelledGirthGT (R.train.wagonClassCarrier edge ν) g := by
-          simpa only [hν] using hPrev
+          rw [hν]
+          exact hPrev
         have hChild :
             LabelledGirthGT (R.train.wagonClassCarrier edge μ) g :=
           R.train.labelledCutGirth_of_parent_and_children
             edge μ ν (by change j.val ≤ j.val + 1; omega)
             g hg hParent (R.childGirth j)
-        simpa only [hμ] using hChild
+        rw [← hμ]
+        exact hChild
   have h := hDown (d + 1 - ρ.val) (by omega)
   have hIdx :
       (⟨d + 1 - (d + 1 - ρ.val), by omega⟩ :
@@ -205,6 +207,7 @@ theorem FirstWagonRefinement.labelledCutGirth_inserted_of_retained
     apply Fin.ext
     change d + 1 - (d + 1 - ρ.val) = ρ.val
     omega
-  simpa only [hIdx] using h
+  rw [← hIdx]
+  exact h
 
 end StructuralRamsey.Girth
