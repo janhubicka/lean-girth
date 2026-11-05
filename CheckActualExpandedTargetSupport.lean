@@ -1,0 +1,4 @@
+import Girth.TrainActualExpandedTargetSupport
+
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_edge_property
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_edges_in_target_standard
