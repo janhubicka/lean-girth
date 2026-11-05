@@ -1,0 +1,7 @@
+import Girth.TrainColouredOwnerExactColourTransfer
+
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.physicalSplitEdgeEquiv
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedColourTransfer
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.physicalSplitEdge_source_carrier
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.splitEdge_subset_lift_iff_selected
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selectedSplitPhysicalEdges_exact

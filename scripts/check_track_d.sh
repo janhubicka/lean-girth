@@ -61,6 +61,7 @@ checks=(
   CheckTrainRecursivePartitePowerLinearity
   CheckTrainRecursivePartitePowerSupport
   CheckTrainRecursiveStrongSupportedHJBase
+  CheckTrainRecursiveCoarsenedStageParameters
   CheckTrainSupremeLexRankInduction
 )
 

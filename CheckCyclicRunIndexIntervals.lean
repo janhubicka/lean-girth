@@ -1,0 +1,5 @@
+import Girth.TrainCyclicRunIndexIntervals
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_between_consecutive_cuts
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_before_first_cut
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_after_last_cut

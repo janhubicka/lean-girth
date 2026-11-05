@@ -1,0 +1,3 @@
+import Girth.TrainCyclicRunIndexUncutSuccessor
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_succ_of_uncut

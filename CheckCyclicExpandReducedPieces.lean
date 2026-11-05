@@ -1,0 +1,9 @@
+import Girth.TrainCyclicExpandReducedPieces
+
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_keep
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_short
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_long_singleton
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_long_interior
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_long_nonsingleton_final
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_long_two_step
