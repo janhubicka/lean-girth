@@ -50,16 +50,18 @@ theorem supremeCycleBound_of_lexDescent
       ∀ {n : ℕ} (C : D.BigCycle n),
         rank n C = r → C.Acceptable →
         C.twiceOrder ≤ 2 * q → C.HasSimultaneousSupreme := by
-    apply natCutDesignatedLex_wellFounded.induction
-    intro r ih n C hRank hAccept hOrder
-    rcases step C hAccept hOrder with hSup | ⟨m, H, hAcceptH, hOrderH, hSmaller, hPull⟩
-    · exact hSup
-    · apply hPull
-      have hBelow :
-          Prod.Lex (· < ·) (· < ·) (rank m H) r := by
-        rw [← hRank]
-        exact hSmaller
-      exact ih (rank m H) hBelow H rfl hAcceptH hOrderH
+    intro r
+    induction r using natCutDesignatedLex_wellFounded.induction with
+    | h r ih =>
+      intro n C hRank hAccept hOrder
+      rcases step C hAccept hOrder with hSup | ⟨m, H, hAcceptH, hOrderH, hSmaller, hPull⟩
+      · exact hSup
+      · apply hPull
+        have hBelow :
+            Prod.Lex (· < ·) (· < ·) (rank m H) r := by
+          rw [← hRank]
+          exact hSmaller
+        exact ih (rank m H) hBelow H rfl hAcceptH hOrderH
   intro n C hAccept hOrder
   exact hAll (rank n C) C rfl hAccept hOrder
 
