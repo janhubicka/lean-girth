@@ -1,0 +1,5 @@
+import Girth.TrainRecursivePartiteBaseInitial
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.targetParameters_of_partiteFamily_preimage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestTailStage_of_partiteBaseTargetCuts
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialForestTailStage_of_partiteBaseTargetCuts_ready
