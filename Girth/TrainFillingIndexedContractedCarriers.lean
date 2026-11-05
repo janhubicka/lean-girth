@@ -34,6 +34,53 @@ not merely the selected W* edge subset inside that wagon. -/
 def contractedCarrier (e : C × P) : Set (Vertex U) :=
   (tagVertex U e.1) '' Set.range ((U e.1).place e.2)
 
+/-- The contracted first-wagon edge carrier stays in its own
+choice component, with all other choices completely disjoint. -/
+theorem contractedCarrier_subset_component (e : C × P) :
+    contractedCarrier U e ⊆ componentCarrier U e.1 := by
+  rintro z ⟨w, _hw, rfl⟩
+  exact ⟨w, rfl⟩
+
+/-- The whole contracted heterogeneous G0 is a LINEAR physical
+hypergraph whenever each choice's old first wagons form a linear family.
+No two-vertex hypothesis is needed for linearity itself; it is needed
+only to rule out duplicate contracted edge carriers. -/
+theorem contractedCarrier_linear
+    (hOld : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton) :
+    ∀ e f : C × P, e ≠ f →
+      (contractedCarrier U e ∩ contractedCarrier U f).Subsingleton := by
+  rintro ⟨c, p⟩ ⟨d, q⟩ hef
+  by_cases hcd : c = d
+  · subst d
+    have hpq : p ≠ q := by
+      intro h
+      exact hef (congrArg (Prod.mk c) h)
+    have hSmall : (Set.range ((U c).place p) ∩
+        Set.range ((U c).place q)).Subsingleton :=
+      (U c).ranges_inter_subsingleton (hOld c) p q hpq
+    intro z hz w hw
+    obtain ⟨x, hx, hxz⟩ := hz.1
+    obtain ⟨y, hy, hyz⟩ := hz.2
+    have hxy : x = y := (tagVertex_injective U c) (hxz.trans hyz.symm)
+    subst y
+    obtain ⟨u, hu, huw⟩ := hw.1
+    obtain ⟨v, hv, hvw⟩ := hw.2
+    have huv : u = v := (tagVertex_injective U c) (huw.trans hvw.symm)
+    subst v
+    have hxu : x = u := hSmall ⟨hx, hy⟩ ⟨hu, hv⟩
+    calc
+      z = tagVertex U c x := hxz.symm
+      _ = tagVertex U c u := congrArg (tagVertex U c) hxu
+      _ = w := huw
+  · intro z hz w hw
+    have hc : z ∈ componentCarrier U c :=
+      U.contractedCarrier_subset_component (c, p) hz.1
+    have hd : z ∈ componentCarrier U d :=
+      U.contractedCarrier_subset_component (d, q) hz.2
+    exact False.elim ((Set.disjoint_left.mp
+      (componentCarrier_disjoint U c d hcd)) hc hd)
+
 /-- The actual contracted edge carriers are physically distinct.
 
 Nontriviality of X is essential: a single-vertex X would allow distinct
