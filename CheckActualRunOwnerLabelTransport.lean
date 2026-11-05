@@ -1,0 +1,5 @@
+import Girth.TrainActualRunOwnerLabelTransport
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_run_index_label_eq_original_owner
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_carrier_of_run_standard
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_carrier_of_kept_target_run
