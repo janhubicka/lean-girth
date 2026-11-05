@@ -1,0 +1,3 @@
+import Girth.TrainActualExpandedPlanKeepOwner
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_keep_owned_by_target
