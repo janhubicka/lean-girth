@@ -1,0 +1,6 @@
+import Girth.TrainFillingIndexedContractedCarriers
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedOldEdgeEmbedding_carrier
