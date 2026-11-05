@@ -1,0 +1,6 @@
+import Girth.TrainFillingIndexedProperWagonReconstruction
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.properParentOf_surjective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.faithfulProperWagonMap
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.reconstructedProperWagonEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.reconstructedProperWagonEmbedding_parent

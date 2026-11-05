@@ -1,0 +1,4 @@
+import Girth.TrainFillingIndexedFaithfulParentwise
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.FaithfulParentwisePhysicalRealization.toParentwiseRealization
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.FaithfulParentwisePhysicalRealization.target_fullSystemGirthGT
