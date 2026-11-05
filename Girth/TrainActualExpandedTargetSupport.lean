@@ -53,9 +53,9 @@ theorem cyclicExpandReducedPieces_edge_property
   let j := cyclicOwnerRunIndex owner hCuts pos
   cases hp : reduced j with
   | keep =>
-      simp [cyclicExpandReducedPieces, j, hp]
+      simp only [cyclicExpandReducedPieces, hp]
   | short e =>
-      simpa [cyclicExpandReducedPieces, j, hp] using
+      simpa only [cyclicExpandReducedPieces, hp] using
         (hShort j e hp)
   | long first w second =>
       have h := hLong j first w second hp
@@ -63,11 +63,11 @@ theorem cyclicExpandReducedPieces_edge_property
       · by_cases hPrevious :
           cyclicOwnerCutIndex owner (trainCyclicPred j) =
             trainCyclicPred pos
-        · simpa [cyclicExpandReducedPieces, j, hp, hAt, hPrevious]
+        · simpa only [cyclicExpandReducedPieces, hp, if_pos hAt, if_pos hPrevious]
             using h
-        · simpa [cyclicExpandReducedPieces, j, hp, hAt, hPrevious]
+        · simpa only [cyclicExpandReducedPieces, hp, if_pos hAt, if_pos hPrevious]
             using h.2
-      · simpa [cyclicExpandReducedPieces, j, hp, hAt] using h.1
+      · simpa only [cyclicExpandReducedPieces, hp, if_neg hAt] using h.1
 
 open StructuralRamsey.RelStructure
 
@@ -175,7 +175,7 @@ theorem attachedSelectedPicture_expanded_plan_edges_in_target_standard
       simpa only [hp] using hc
     exact attachedSelectedPicture_cut_short_piece_carrier_in_standard
       A hA B D C family selected e R f T U hShared hRel μ
-      K owner hAllowed hCuts target i hTarget b hValid
+      K owner hAllowed hCuts target j i hTarget b hValid
   have hLong (j : Fin (cyclicOwnerChanges owner))
       (first : CoreEdge) (w : Quotient (U.wagonSetoid μ))
       (second : CoreEdge)
@@ -202,8 +202,8 @@ theorem attachedSelectedPicture_expanded_plan_edges_in_target_standard
       | .short edge => edge.1 ⊆ copyCarrier (Std i)
       | .long edge _ other =>
           edge.1 ⊆ copyCarrier (Std i) ∧
-          other.1 ⊆ copyCarrier (Std i) :=
-    cyclicExpandReducedPieces_edge_property
+          other.1 ⊆ copyCarrier (Std i) := by
+    apply cyclicExpandReducedPieces_edge_property
       owner (by omega) pieces CoreActual CoreWagon
       (fun e => e.1 ⊆ copyCarrier (Std i))
       hShort hLong pos
