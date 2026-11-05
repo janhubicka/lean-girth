@@ -66,6 +66,7 @@ end StructuralRamsey.Girth
 namespace StructuralRamsey.Girth
 
 open StructuralRamsey.RelStructure
+open TrainRecursiveWitness
 
 universe u v
 variable {L : RelLanguage.{u}} {UA P X : Type v}
