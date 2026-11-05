@@ -38,7 +38,7 @@ theorem cyclicExpandReducedPieces_keep_iff
     let j := cyclicOwnerRunIndex owner hCuts pos
     cases hp : reduced j with
     | keep =>
-        exact hp
+        rfl
     | short e =>
         have hNot :
             cyclicExpandReducedPieces owner hCuts reduced edge wagon pos ≠
