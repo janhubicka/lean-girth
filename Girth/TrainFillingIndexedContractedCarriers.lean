@@ -104,8 +104,10 @@ def contractedOldEdgeEmbedding
     (hImage : ∀ e : C × P,
       vertex '' contractedCarrier U e ∈ F.oldEdges) :
     (C × P) ↪ F.OldEdge :=
-  F.oldEdgeEmbedding_from_vertex (contractedCarrier U)
-    (contractedCarrier_injective U hOld) vertex hImage
+  F.oldEdgeEmbedding_of_exact_carriers (contractedCarrier U)
+    (contractedCarrier_injective U hOld) vertex
+    (fun e => (⟨vertex '' contractedCarrier U e, hImage e⟩ : F.OldEdge))
+    (fun _ => rfl)
 
 /-- Every constructed contracted old edge is literally the image of
 its full first-wagon carrier under the selected vertex embedding. -/
