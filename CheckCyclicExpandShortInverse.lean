@@ -1,0 +1,3 @@
+import Girth.TrainCyclicExpandShortInverse
+
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_short_inverse
