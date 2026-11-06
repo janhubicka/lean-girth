@@ -1,0 +1,5 @@
+import Girth.TrainActualFixedPlanNonSingletonTwoStep
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_long_nonadjacent_two_step_of_cut_fresh
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_long_nonadjacent_two_step
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_nontarget_nonadjacent_two_step
