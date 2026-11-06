@@ -1,0 +1,8 @@
+import Girth.TrainFillingColouredOrderedEdgePresentation
+
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeLanguage
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeSource
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeTarget
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeEmbedding
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeEmbedding_carrier_mem
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeSupport_exact
