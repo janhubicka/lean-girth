@@ -72,6 +72,7 @@ checks=(
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
   CheckTrainNoSingleCyclicOwnerCut
+  CheckTrainActualSupremeResidualClosure
 )
 
 for check in "${checks[@]}"; do
