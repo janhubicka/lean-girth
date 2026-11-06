@@ -70,6 +70,9 @@ checks=(
   CheckTrainActualPositiveCutRankTrichotomy
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
+  CheckTrainRecursiveTrueActiveAdjacentParameters
+  CheckTrainRecursiveRefinementForwardParameters
+  CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveInsertedTargetParameters
 )
 
