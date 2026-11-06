@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveTrueActiveFirstCutGirth
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.top_labelledCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.Admissible.headD_le_get
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedFirstCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedFirstCutGirth
