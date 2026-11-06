@@ -121,7 +121,8 @@ theorem FirstWagonRefinement.adjacentParameters_of_old
         (fineAllowed (firstRefinementParent m R.extraCuts hm j)) := by
       intro a b hab hp x hx
       exact hInserted j (R.parameters j hab hp hx)
-    simpa only [hμ, hν] using hFineChild
+    rw [← hμ, ← hν] at hFineChild
+    exact hFineChild
   · have hμBig : R.extraCuts + 1 ≤ μ.val := by omega
     let μc : Fin (m + 1) := ⟨μ.val - R.extraCuts, by omega⟩
     let νc : Fin (m + 1) := ⟨ν.val - R.extraCuts, by omega⟩
@@ -163,6 +164,7 @@ theorem FirstWagonRefinement.adjacentParameters_of_old
         (oldAllowed νc) (fineAllowed ν)
         (by simpa [hνEq] using hRetained νc hνTwo)
         (hForget μc νc hcc hNextC)
-    simpa only [hμEq, hνEq] using hBound
+    rw [hμEq, hνEq] at hBound
+    exact hBound
 
 end StructuralRamsey.Girth
