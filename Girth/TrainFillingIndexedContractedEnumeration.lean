@@ -64,6 +64,28 @@ theorem contractedFamily_uniform [Fintype X] :
   rintro edge ⟨e, rfl⟩
   exact ⟨U.contractedEnumeration e, U.contractedEnumeration_range e⟩
 
+/-- No new isolated vertices appear in the contracted choice union:
+private vertices lie in their own expanded wagon, while each old
+vertex lies in some old first wagon by the input's actual coverage. -/
+theorem contractedFamily_covers
+    (hOldCover : ∀ c : C, ∀ v : V,
+      ∃ p : P, v ∈ (U c).oldCarrier p) :
+    ∀ z : Vertex U, ∃ e : C × P, z ∈ contractedCarrier U e := by
+  rintro ⟨c, z⟩
+  cases z with
+  | inl v =>
+      obtain ⟨p, hv⟩ := hOldCover c v
+      refine ⟨(c, p), ?_⟩
+      exact ⟨Sum.inl v, ((U c).old_mem_range p v).mpr hv, rfl⟩
+  | inr z =>
+      rcases z with ⟨⟨p, x⟩, hx⟩
+      refine ⟨(c, p), ?_⟩
+      have hp : (U c).place p x =
+          Sum.inr (⟨(p, x), hx⟩ : (U c).PrivateVertex) := by
+        simp only [PrivateWagonInput.place, dif_neg hx]
+      exact ⟨(U c).place p x, ⟨x, rfl⟩,
+        congrArg (tagVertex U c) hp⟩
+
 /-- An explicitly chosen common enumeration of X, useful when
 the chosen numbering must also preserve within-predicate orders. -/
 def contractedEnumerationOfEquiv {k : ℕ}
