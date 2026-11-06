@@ -31,6 +31,7 @@ variable (U : C → PrivateWagonInput V P X)
 /-- The actual train on contracted first wagons: disjoint components
 at proper cuts, and one global universal top. -/
 def contractedChoiceTrain {m : ℕ}
+    (_U : C → PrivateWagonInput V P X)
     (T : EdgeTrainLevels P m) (hm : 0 < m) :
     EdgeTrainLevels (C × P) m :=
   TrainRecursiveWitness.componentTrain (I := C) T hm
