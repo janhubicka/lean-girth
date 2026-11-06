@@ -102,7 +102,7 @@ theorem BigCycle.fixed_two_vertex_plan_short_of_pairEdge
     (hPlan : Z.PlanValid D target pieces)
     (hPair : D.PairEdge x y) :
     ∃ e : E, pieces (cyclicSucc target) = .short e := by
-  rcases Z.fixed_two_vertex_plan_short_or_long D
+  rcases BigCycle.fixed_two_vertex_plan_short_or_long D Z
     target x y hx hy pieces hPlan with hShort | hLong
   · exact hShort.1
   · exact False.elim (hLong.2 hPair)
@@ -120,7 +120,7 @@ theorem BigCycle.fixed_two_vertex_plan_long_of_no_pairEdge
     (hNoPair : ¬ D.PairEdge x y) :
     ∃ (e : E) (w : P) (f : E),
       pieces (cyclicSucc target) = .long e w f := by
-  rcases Z.fixed_two_vertex_plan_short_or_long D
+  rcases BigCycle.fixed_two_vertex_plan_short_or_long D Z
     target x y hx hy pieces hPlan with hShort | hLong
   · exact False.elim (hNoPair hShort.2)
   · exact hLong.1
