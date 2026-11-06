@@ -99,7 +99,7 @@ noncomputable def ownerSplit_lifted_uniformEmbedding (k : ℕ)
         calc
           Set.range (S.embedding ∘ x) =
               H.project '' Set.range (S.lift ∘ x) :=
-            (S.ownerSplit_project_lifted_tuple_range x).symm
+            (ownerSplit_project_lifted_tuple_range S x).symm
           _ = H.project '' H.splitEdge f := by rw [hf]
           _ = f.1 := H.projection_splitEdge f
       have hOldMem : Set.range ((b : W → V) ∘ x) ∈ H.edges := by
@@ -109,6 +109,6 @@ noncomputable def ownerSplit_lifted_uniformEmbedding (k : ℕ)
         ⟨b.injective.comp hx, hOldMem⟩
     · intro hSrc
       exact ⟨S.lift_injective.comp hSrc.1,
-        S.ownerSplit_lifted_source_tuple_edge x hSrc.2⟩
+        ownerSplit_lifted_source_tuple_edge S x hSrc.2⟩
 
 end StructuralRamsey.Girth
