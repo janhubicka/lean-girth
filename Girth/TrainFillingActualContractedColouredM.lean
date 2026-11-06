@@ -1,5 +1,6 @@
 import Girth.TrainFillingIndexedContractedEnumeration
 import Girth.TrainFillingColouredOrderedEdgePresentation
+import Girth.TrainFillingRelationalSelectedSupport
 
 set_option Elab.async false
 
@@ -129,5 +130,87 @@ theorem actualContractedColouredM_supportCovers
       oldColour templateColour hColour hOrdered]
     exact ⟨cp, rfl⟩
   exact ⟨⟨contractedCarrier U cp, hCarrier⟩, hz⟩
+
+/-- The genuinely selected relational M-copy in N now supplies the
+physical old-edge embedding of every contracted G0 first wagon.
+
+This is NOT a separately assumed edge map: source-edge membership
+comes from the proved full support equality, image membership from
+composition of relational A-embeddings, and injectivity from the
+physical distinctness of actual G0 contracted carriers. -/
+def actualContractedSelectedOldEdgeEmbedding
+    {Y : Type v} {k : ℕ}
+    [Nontrivial X] [LinearOrder (Vertex U)]
+    (enumerateX : Fin k ≃ X)
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 =
+          templateColour ((U c).coordinate p z))
+    (hOrdered : ∀ e : C × P, ∀ i j : Fin k,
+      templateColour (enumerateX i) = templateColour (enumerateX j) →
+      (i < j ↔
+        contractedEnumerationOfEquiv U enumerateX e i <
+          contractedEnumerationOfEquiv U enumerateX e j))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (N : RelStructure (colouredOrderedEdgeLanguage I k) Y)
+    (b : Embedding (actualContractedColouredM U oldColour templateColour) N)
+    (H : UniformFillingData Y X)
+    (hOldSupport : H.oldEdges =
+      supportCopies
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i))) N) :
+    (C × P) ↪ H.OldEdge :=
+  H.oldEdgeEmbedding_from_vertex (contractedCarrier U)
+    (contractedCarrier_injective U hLinear)
+    b.toFunctionEmbedding
+    (by
+      intro cp
+      rw [hOldSupport]
+      have hSrc : contractedCarrier U cp ∈
+          supportCopies
+            (colouredOrderedEdgeSource k
+              (fun i => templateColour (enumerateX i)))
+            (actualContractedColouredM U oldColour templateColour) := by
+        rw [actualContractedColouredM_support_eq U enumerateX
+          oldColour templateColour hColour hOrdered]
+        exact ⟨cp, rfl⟩
+      exact supportCopy_image_mem
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i)))
+        (actualContractedColouredM U oldColour templateColour)
+        N b ⟨contractedCarrier U cp, hSrc⟩)
+
+/-- The old N edge selected above has exactly the full vertex image
+of its corresponding G0 first-wagon carrier. -/
+@[simp] theorem actualContractedSelectedOldEdgeEmbedding_carrier
+    {Y : Type v} {k : ℕ}
+    [Nontrivial X] [LinearOrder (Vertex U)]
+    (enumerateX : Fin k ≃ X)
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 =
+          templateColour ((U c).coordinate p z))
+    (hOrdered : ∀ e : C × P, ∀ i j : Fin k,
+      templateColour (enumerateX i) = templateColour (enumerateX j) →
+      (i < j ↔
+        contractedEnumerationOfEquiv U enumerateX e i <
+          contractedEnumerationOfEquiv U enumerateX e j))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (N : RelStructure (colouredOrderedEdgeLanguage I k) Y)
+    (b : Embedding (actualContractedColouredM U oldColour templateColour) N)
+    (H : UniformFillingData Y X)
+    (hOldSupport : H.oldEdges =
+      supportCopies
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i))) N)
+    (cp : C × P) :
+    (actualContractedSelectedOldEdgeEmbedding U enumerateX
+      oldColour templateColour hColour hOrdered hLinear
+      N b H hOldSupport cp).1 =
+      b.toFunctionEmbedding '' contractedCarrier U cp := rfl
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
