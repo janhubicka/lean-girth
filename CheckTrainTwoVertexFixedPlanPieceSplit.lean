@@ -1,0 +1,5 @@
+import Girth.TrainTwoVertexFixedPlanPieceSplit
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fixed_two_vertex_plan_short_or_long
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fixed_two_vertex_plan_short_of_pairEdge
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.fixed_two_vertex_plan_long_of_no_pairEdge
