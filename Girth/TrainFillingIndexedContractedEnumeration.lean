@@ -64,6 +64,37 @@ theorem contractedFamily_uniform [Fintype X] :
   rintro edge ⟨e, rfl⟩
   exact ⟨U.contractedEnumeration e, U.contractedEnumeration_range e⟩
 
+/-- An explicitly chosen common enumeration of X, useful when
+the chosen numbering must also preserve within-predicate orders. -/
+def contractedEnumerationOfEquiv {k : ℕ}
+    (enumerateX : Fin k ≃ X) (e : C × P) :
+    Fin k ↪ Vertex U where
+  toFun := fun i =>
+    tagVertex U e.1 ((U e.1).place e.2 (enumerateX i))
+  inj' := by
+    intro i j hij
+    have hLocal : (U e.1).place e.2 (enumerateX i) =
+        (U e.1).place e.2 (enumerateX j) :=
+      (tagVertex_injective U e.1) hij
+    exact enumerateX.injective ((U e.1).place_injective e.2 hLocal)
+
+/-- Its image is the actual whole first-wagon carrier, independent of
+the enumeration, so changing to an ordered enumeration loses no edges. -/
+theorem contractedEnumerationOfEquiv_range {k : ℕ}
+    (enumerateX : Fin k ≃ X) (e : C × P) :
+    Set.range (U.contractedEnumerationOfEquiv enumerateX e : Fin k → Vertex U) =
+      contractedCarrier U e := by
+  ext z
+  constructor
+  · rintro ⟨i, rfl⟩
+    exact ⟨(U e.1).place e.2 (enumerateX i), ⟨enumerateX i, rfl⟩, rfl⟩
+  · rintro ⟨w, ⟨x, hx⟩, hzw⟩
+    refine ⟨enumerateX.symm x, ?_⟩
+    change tagVertex U e.1 ((U e.1).place e.2
+      (enumerateX (enumerateX.symm x))) = z
+    simpa only [Equiv.apply_symm_apply] using
+      (congrArg (tagVertex U e.1) hx).trans hzw
+
 /-- Predicates on old target vertices are retained, while private
 positions inherit the predicate of their local X-coordinate. -/
 def contractedVertexColour {I : Type*}
