@@ -111,8 +111,11 @@ theorem selectedSupportFilledEdges_exact_of_strong
       selectedSupportOldEdge_mem_range_of_strong
         A M N b hStrong f' hMeet
     refine ⟨s, ?_⟩
+    have hsCarrier : b.toFunctionEmbedding '' s.1 = f.1 :=
+      congrArg
+        (fun e : {F : Set V // F ∈ supportCopies A N} => e.1) hs
     apply Subtype.ext
-    exact congrArg Subtype.val hs
+    exact hsCarrier
 
 end UniformFillingData
 end StructuralRamsey.Girth
