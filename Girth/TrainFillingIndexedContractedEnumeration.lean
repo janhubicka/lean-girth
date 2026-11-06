@@ -64,4 +64,56 @@ theorem contractedFamily_uniform [Fintype X] :
   rintro edge ⟨e, rfl⟩
   exact ⟨U.contractedEnumeration e, U.contractedEnumeration_range e⟩
 
+/-- Predicates on old target vertices are retained, while private
+positions inherit the predicate of their local X-coordinate. -/
+def contractedVertexColour {I : Type*}
+    (oldColour : V → I) (templateColour : X → I) :
+    Vertex U → I
+  | ⟨_, .inl v⟩ => oldColour v
+  | ⟨_, .inr z⟩ => templateColour z.1.2
+
+/-- If each old first-wagon coordinate respects the original unary
+predicate, every actual private placement also preserves that predicate.
+There is no separately postulated colour map on contracted edges. -/
+theorem contractedVertexColour_place {I : Type*}
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 = templateColour ((U c).coordinate p z))
+    (c : C) (p : P) (x : X) :
+    contractedVertexColour U oldColour templateColour
+        (tagVertex U c ((U c).place p x)) = templateColour x := by
+  classical
+  by_cases h : x ∈ Set.range ((U c).coordinate p)
+  · obtain ⟨z, hz⟩ := h
+    have hp : (U c).place p x = Sum.inl z.1 := by
+      rw [← hz]
+      exact (U c).place_old p z
+    change contractedVertexColour U oldColour templateColour
+      (tagVertex U c ((U c).place p x)) = templateColour x
+    rw [hp]
+    change oldColour z.1 = templateColour x
+    exact (hColour c p z).trans (congrArg templateColour hz)
+  · have hp : (U c).place p x =
+        Sum.inr (⟨(p, x), h⟩ : (U c).PrivateVertex) := by
+      simp only [PrivateWagonInput.place, dif_neg h]
+    change contractedVertexColour U oldColour templateColour
+      (tagVertex U c ((U c).place p x)) = templateColour x
+    rw [hp]
+    rfl
+
+/-- Thus the concrete enumeration of every contracted G0 edge has the
+same fixed template colour profile, not a choice-dependent one. -/
+theorem contractedEnumeration_colour [Fintype X] {I : Type*}
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 = templateColour ((U c).coordinate p z))
+    (e : C × P) (i : Fin (Fintype.card X)) :
+    contractedVertexColour U oldColour templateColour
+        (U.contractedEnumeration e i) =
+      templateColour ((Fintype.equivFin X).symm i) :=
+  contractedVertexColour_place U oldColour templateColour hColour
+    e.1 e.2 ((Fintype.equivFin X).symm i)
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
