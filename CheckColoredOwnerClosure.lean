@@ -1,0 +1,8 @@
+import Girth.ColoredOwnerClosure
+
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.pair_value_of_ne
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.owner_value_of_part
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.range_subset_of_closed_of_two_mem
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.range_subset_of_embedding_range_of_two_mem
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.same_range_of_shared_blocked
+#print axioms StructuralRamsey.Girth.OwnerEdgeExpansion.no_shared_blocked_of_distinct_ranges
