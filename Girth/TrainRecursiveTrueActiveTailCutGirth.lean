@@ -116,9 +116,9 @@ theorem trueActive_inducedCutGirth_of_shared
           (Subtype.val : S → X) '' edge.1) μ p := by
     induction p using Quotient.inductionOn with
     | h edge =>
-      change NewTrain.wagonCarrier
+      change x ∈ NewTrain.wagonCarrier
           (fun edge : OldACarrierEdge A Source => edge.1) μ edge →
-        NewTrain.wagonCarrier
+        x ∈ NewTrain.wagonCarrier
           (fun edge : OldACarrierEdge A Source =>
             (Subtype.val : S → X) '' edge.1) μ edge
       rintro ⟨f, hRel, hx⟩
