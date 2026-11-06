@@ -7,7 +7,7 @@ set_option Elab.async false
 
 For a k-uniform hypergraph, use a single symmetric irreflexive k-ary
 relation: a tuple is related precisely when it is injective and its
-range is one of the declared physical edges. The k-vertex single-edge
+range is one of the declared physical edges. The lifted k-vertex single-edge
 source has its relation on precisely the injective self-tuples.
 
 Every induced embedding of that source has image one declared edge,
@@ -36,7 +36,7 @@ def uniformEdgeLanguage (k : ℕ) : RelLanguage where
 /-- A single complete k-edge, including every permutation of its
 distinct k endpoints and excluding repeated-entry tuples. -/
 def uniformEdgeSource (k : ℕ) :
-    RelStructure (uniformEdgeLanguage k) (Fin k) where
+    RelStructure (uniformEdgeLanguage k) (ULift.{v} (Fin k)) where
   rel _ x := Function.Injective x
 
 /-- The relational reduct of the declared physical k-edge family.
@@ -51,42 +51,58 @@ def uniformEdgeEmbedding (k : ℕ) (E : Set (Set V))
     (i : Fin k ↪ V)
     (hEdge : Set.range (i : Fin k → V) ∈ E) :
     RelStructure.Embedding (uniformEdgeSource k) (uniformEdgeTarget k E) where
-  toFun := i
-  injective := i.injective
+  toFun := fun t => i t.down
+  injective := by
+    intro x y h
+    apply ULift.down_injective
+    exact i.injective h
   map_rel_iff := by
     intro R x
-    change (Function.Injective ((i : Fin k → V) ∘ x) ∧
-      Set.range ((i : Fin k → V) ∘ x) ∈ E) ↔
+    change (Function.Injective ((fun t : ULift.{v} (Fin k) => i t.down) ∘ x) ∧
+      Set.range ((fun t : ULift.{v} (Fin k) => i t.down) ∘ x) ∈ E) ↔
         Function.Injective x
     constructor
     · intro h
       intro a b hab
-      exact h.1 (congrArg (i : Fin k → V) hab)
+      exact h.1 (congrArg (fun t : ULift.{v} (Fin k) => i t.down) hab)
     · intro hx
-      have hSurj : Function.Surjective x :=
-        Finite.injective_iff_surjective.mp hx
+      have hDown : Function.Injective (fun t : Fin k => (x t).down) := by
+        intro a b heq
+        exact hx (ULift.down_injective heq)
+      have hSurj : Function.Surjective (fun t : Fin k => (x t).down) :=
+        Finite.injective_iff_surjective.mp hDown
       have hRange :
-          Set.range ((i : Fin k → V) ∘ x) =
+          Set.range ((fun t : ULift.{v} (Fin k) => i t.down) ∘ x) =
             Set.range (i : Fin k → V) := by
         ext y
         constructor
         · rintro ⟨t, rfl⟩
-          exact ⟨x t, rfl⟩
+          exact ⟨(x t).down, rfl⟩
         · rintro ⟨t, rfl⟩
           obtain ⟨s, hs⟩ := hSurj t
           exact ⟨s, by simp only [Function.comp_apply, hs]⟩
-      exact ⟨i.injective.comp hx, by simpa only [hRange] using hEdge⟩
+      exact ⟨i.injective.comp hDown, by simpa only [hRange] using hEdge⟩
 
 /-- Every genuine induced one-edge support copy in the target is one of
 the declared whole physical hyperedges. No spurious supports. -/
 theorem uniformEdgeEmbedding_carrier_mem (k : ℕ) (E : Set (Set V))
     (f : RelStructure.Embedding (uniformEdgeSource k) (uniformEdgeTarget k E)) :
     copyCarrier f ∈ E := by
-  have h := (f.map_rel_iff () (fun x : Fin k => x)).mpr
-    (Function.injective_id : Function.Injective (fun x : Fin k => x))
-  change Function.Injective (f ∘ (fun x : Fin k => x)) ∧
-    Set.range (f ∘ (fun x : Fin k => x)) ∈ E at h
-  simpa only [copyCarrier, Function.comp_id] using h.2
+  let up : Fin k → ULift.{v} (Fin k) := ULift.up
+  have hup : Function.Injective up := by
+    intro a b h
+    exact congrArg ULift.down h
+  have h := (f.map_rel_iff () up).mpr hup
+  change Function.Injective (f ∘ up) ∧ Set.range (f ∘ up) ∈ E at h
+  have heq : Set.range (f ∘ up) = copyCarrier f := by
+    ext y
+    constructor
+    · rintro ⟨t, rfl⟩
+      exact ⟨up t, rfl⟩
+    · rintro ⟨t, rfl⟩
+      exact ⟨t.down, by cases t; rfl⟩
+  rw [heq] at h
+  exact h.2
 
 /-- Exact physical support after choosing an injective enumeration for
 each declared edge. This is satisfied by every genuine k-uniform
