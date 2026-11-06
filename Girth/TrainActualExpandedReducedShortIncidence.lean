@@ -142,11 +142,13 @@ theorem attachedSelectedPicture_expanded_reduced_short_incidence
       K owner hAllowed hCuts target j b hShort
   have hActualLeft : (Out).Incident (.inr (CoreActual b))
       (K.connector (trainCyclicPred pos)) := by
+    rw [hAt]
     rw [hPrevious] at hIncLeft
-    exact hAt ▸ hIncLeft
+    exact hIncLeft
   have hActualRight : (Out).Incident (.inr (CoreActual b))
       (K.connector pos) := by
-    exact hAt ▸ hIncRight
+    rw [hAt]
+    exact hIncRight
   exact ⟨hAt.symm, hExpanded, hActualLeft, hActualRight⟩
 
 end SourceExpandedReducedShortIncidence
