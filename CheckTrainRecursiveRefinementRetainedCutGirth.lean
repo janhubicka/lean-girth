@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveRefinementRetainedCutGirth
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledGirthGT_at_retained
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledGirthGT_at_retained_mono
