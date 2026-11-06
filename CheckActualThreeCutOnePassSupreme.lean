@@ -1,0 +1,3 @@
+import Girth.TrainActualThreeCutOnePassSupreme
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_three_cut_one_pass_supreme_of_old_bound
