@@ -1,0 +1,4 @@
+import Girth.TrainActualThreeCutFromFullSystem
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_three_cut_reduced_supreme_of_fullSystem
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness
