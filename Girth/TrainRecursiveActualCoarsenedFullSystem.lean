@@ -1,4 +1,5 @@
 import Girth.TrainRecursiveCoarsenedSelectedFullSystem
+import Girth.ActualActivePartitePresentation
 import Girth.TrainRecursiveLargeBaseCoarsening
 import Mathlib.Tactic
 
