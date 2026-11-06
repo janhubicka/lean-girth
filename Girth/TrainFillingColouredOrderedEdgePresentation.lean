@@ -130,14 +130,16 @@ def colouredOrderedEdgeEmbedding
               obtain ⟨q, hq⟩ := hSurj t
               exact ⟨q, by
                 change ι ((x q).down) = ι t
-                rw [hq]⟩
+                exact congrArg (ι : Fin k → V) hq⟩
           exact ⟨ι.injective.comp hDown,
             by simpa only [hRange] using hEdge⟩
       | inr colour =>
+        change (Fin 1 → ULift.{v} (Fin k)) at x
         change targetColour (ι (x 0).down) = colour ↔
           sourceColour (x 0).down = colour
         rw [hColour]
     | inr _ =>
+      change (Fin 2 → ULift.{v} (Fin k)) at x
       change (targetColour (ι (x 0).down) =
           targetColour (ι (x 1).down) ∧
           ι (x 0).down < ι (x 1).down) ↔
