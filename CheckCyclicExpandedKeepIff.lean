@@ -1,0 +1,3 @@
+import Girth.TrainCyclicExpandedKeepIff
+
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_keep_iff
