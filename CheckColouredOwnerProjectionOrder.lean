@@ -1,0 +1,5 @@
+import Girth.TrainColouredOwnerProjectionOrder
+
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLift_preserves_predicate
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.exists_projectionFirstLinearOrder
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLift_strictMono_of_projectionFirst
