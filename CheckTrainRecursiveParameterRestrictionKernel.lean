@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveParameterRestrictionKernel
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonClassEmbedding_parent
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_restrict
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_vertexPullback
