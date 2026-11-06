@@ -51,23 +51,33 @@ theorem cyclicExpandReducedPieces_edge_property
     | .long e _ f => Pgood e ∧ Pgood f := by
   classical
   let j := cyclicOwnerRunIndex owner hCuts pos
+  have hUnfold :
+      cyclicExpandReducedPieces owner hCuts reduced edge wagon pos =
+        match reduced j with
+        | .keep => .keep
+        | .short e => .short (edge e)
+        | .long first w second =>
+            if pos = cyclicOwnerCutIndex owner j then
+              if cyclicOwnerCutIndex owner (trainCyclicPred j) =
+                  trainCyclicPred pos then
+                .long (edge first) (wagon w) (edge second)
+              else .short (edge second)
+            else .short (edge first) := rfl
+  rw [hUnfold]
   cases hp : reduced j with
   | keep =>
-      simp only [cyclicExpandReducedPieces, hp]
+      simp only [hp]
   | short e =>
-      simpa only [cyclicExpandReducedPieces, hp] using
-        (hShort j e hp)
+      simpa only [hp] using (hShort j e hp)
   | long first w second =>
       have h := hLong j first w second hp
       by_cases hAt : pos = cyclicOwnerCutIndex owner j
       · by_cases hPrevious :
           cyclicOwnerCutIndex owner (trainCyclicPred j) =
             trainCyclicPred pos
-        · simpa only [cyclicExpandReducedPieces, hp, if_pos hAt, if_pos hPrevious]
-            using h
-        · simpa only [cyclicExpandReducedPieces, hp, if_pos hAt, if_pos hPrevious]
-            using h.2
-      · simpa only [cyclicExpandReducedPieces, hp, if_neg hAt] using h.1
+        · simpa only [hp, if_pos hAt, if_pos hPrevious] using h
+        · simpa only [hp, if_pos hAt, if_neg hPrevious] using h.2
+      · simpa only [hp, if_neg hAt] using h.1
 
 open StructuralRamsey.RelStructure
 
@@ -195,16 +205,17 @@ theorem attachedSelectedPicture_expanded_plan_edges_in_target_standard
     exact sharedWitness_long_piece_physical_edges_in_standard
       A hA D C e R f U μ Z target j
       first second w hValid i hTarget
+  have hPos : 0 < cyclicOwnerChanges owner := by omega
   have hEvery (pos : Fin n) :
-      match cyclicExpandReducedPieces owner (by omega) pieces
+      match cyclicExpandReducedPieces owner hPos pieces
         CoreActual CoreWagon pos with
       | .keep => True
       | .short edge => edge.1 ⊆ copyCarrier (Std i)
       | .long edge _ other =>
           edge.1 ⊆ copyCarrier (Std i) ∧
-          other.1 ⊆ copyCarrier (Std i) := by
-    apply cyclicExpandReducedPieces_edge_property
-      owner (by omega) pieces CoreActual CoreWagon
+          other.1 ⊆ copyCarrier (Std i) :=
+    cyclicExpandReducedPieces_edge_property
+      owner hPos pieces CoreActual CoreWagon
       (fun e => e.1 ⊆ copyCarrier (Std i))
       hShort hLong pos
   constructor
