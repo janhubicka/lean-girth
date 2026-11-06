@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveRefinementForwardParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.retainedParentBound_of_forgotten
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.adjacentParameters_of_old
