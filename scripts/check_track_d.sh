@@ -71,6 +71,7 @@ checks=(
   CheckActualPositiveCutTwoCutRankGate
   CheckTrainTwoVertexFixedPlanPieceSplit
   CheckTrainTwoCommonEdgeSupremeSwitch
+  CheckTrainTwoVertexWitnessPairSwitch
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
