@@ -99,74 +99,145 @@ theorem FirstWagonRefinement.adjacentParameters_of_old
       oldAllowed ν ⊆
         fineAllowed (EdgeTrainLevels.firstForgetIndex m R.extraCuts ν)) :
     R.train.AdjacentParameters edge fineAllowed := by
-  intro μ ν hμν hNext
-  by_cases hInsertedLevel : ν.val ≤ R.extraCuts + 1
-  · let j : Fin (R.extraCuts + 1) := ⟨μ.val, by omega⟩
-    have hμ :
-        μ = firstRefinementChild m R.extraCuts hm j := by
-      apply Fin.ext
-      rfl
-    have hν :
-        ν = firstRefinementParent m R.extraCuts hm j := by
-      apply Fin.ext
-      change ν.val = μ.val + 1
-      exact hNext
-    have hFineChild : TrainParentIntersectionBound
-        (R.train.wagonClassCarrier edge
-          (firstRefinementChild m R.extraCuts hm j))
-        (R.train.wagonParent
-          (firstRefinementChild m R.extraCuts hm j)
-          (firstRefinementParent m R.extraCuts hm j)
-          (by change j.val ≤ j.val + 1; omega))
-        (fineAllowed (firstRefinementParent m R.extraCuts hm j)) := by
-      intro a b hab hp x hx
-      exact hInserted j (R.parameters j hab hp hx)
-    subst μ
-    subst ν
-    exact hFineChild
-  · have hμBig : R.extraCuts + 1 ≤ μ.val := by omega
-    let μc : Fin (m + 1) := ⟨μ.val - R.extraCuts, by omega⟩
-    let νc : Fin (m + 1) := ⟨ν.val - R.extraCuts, by omega⟩
-    have hμPos : 0 < μc.val := by
-      change 0 < μ.val - R.extraCuts
-      omega
-    have hνPos : 0 < νc.val := by
-      change 0 < ν.val - R.extraCuts
-      omega
-    have hνTwo : 1 < νc.val := by
-      change 1 < ν.val - R.extraCuts
-      omega
-    have hcc : μc ≤ νc := by
-      change μ.val - R.extraCuts ≤ ν.val - R.extraCuts
-      omega
-    have hNextC : νc.val = μc.val + 1 := by
-      change ν.val - R.extraCuts = μ.val - R.extraCuts + 1
-      omega
-    have hμEq :
-        EdgeTrainLevels.firstForgetIndex m R.extraCuts μc = μ := by
-      apply Fin.ext
-      change (if μc.val = 0 then 0 else μc.val + R.extraCuts) = μ.val
-      simp only [Nat.ne_of_gt hμPos, ↓reduceIte]
-      change μ.val - R.extraCuts + R.extraCuts = μ.val
-      omega
-    have hνEq :
-        EdgeTrainLevels.firstForgetIndex m R.extraCuts νc = ν := by
-      apply Fin.ext
-      change (if νc.val = 0 then 0 else νc.val + R.extraCuts) = ν.val
-      simp only [Nat.ne_of_gt hνPos, ↓reduceIte]
-      change ν.val - R.extraCuts + R.extraCuts = ν.val
-      omega
-    have hForget :
-        (R.train.forgetFirstCuts hm).AdjacentParameters edge oldAllowed := by
-      rw [R.forget_train_eq]
-      exact hOld
-    have hBound :=
-      R.train.retainedParentBound_of_forgotten hm edge μc νc hcc
-        (oldAllowed νc) (fineAllowed ν)
-        (by simpa [hνEq] using hRetained νc hνTwo)
-        (hForget μc νc hcc hNextC)
-    subst μ
-    subst ν
-    exact hBound
+  classical
+  intro μ ν hμν hNext a b hne hParent x hx
+  induction a using Quotient.inductionOn with
+  | h a =>
+    induction b using Quotient.inductionOn with
+    | h b =>
+      have hFineNe : ¬ R.train.rel μ a b := by
+        intro hab
+        exact hne (Quotient.sound hab)
+      have hFineParent : R.train.rel ν a b := by
+        change
+          (Quotient.mk (R.train.wagonSetoid ν) a) =
+            Quotient.mk (R.train.wagonSetoid ν) b at hParent
+        exact Quotient.exact hParent
+      have hxA : x ∈ R.train.wagonCarrier edge μ a := hx.1
+      have hxB : x ∈ R.train.wagonCarrier edge μ b := hx.2
+      by_cases hInsertedLevel : ν.val ≤ R.extraCuts + 1
+      · let j : Fin (R.extraCuts + 1) := ⟨μ.val, by omega⟩
+        have hμ :
+            firstRefinementChild m R.extraCuts hm j = μ := by
+          apply Fin.ext
+          rfl
+        have hν :
+            firstRefinementParent m R.extraCuts hm j = ν := by
+          apply Fin.ext
+          change μ.val + 1 = ν.val
+          omega
+        have hChildNe :
+            (Quotient.mk (R.train.wagonSetoid
+              (firstRefinementChild m R.extraCuts hm j)) a :
+              Quotient (R.train.wagonSetoid
+                (firstRefinementChild m R.extraCuts hm j))) ≠
+              Quotient.mk _ b := by
+          intro heq
+          apply hFineNe
+          have hRel : R.train.rel
+              (firstRefinementChild m R.extraCuts hm j) a b :=
+            Quotient.exact heq
+          simpa only [hμ] using hRel
+        have hParentRel : R.train.rel
+            (firstRefinementParent m R.extraCuts hm j) a b := by
+          simpa only [hν] using hFineParent
+        have hxChildA : x ∈ R.train.wagonCarrier edge
+            (firstRefinementChild m R.extraCuts hm j) a := by
+          simpa only [hμ] using hxA
+        have hxChildB : x ∈ R.train.wagonCarrier edge
+            (firstRefinementChild m R.extraCuts hm j) b := by
+          simpa only [hμ] using hxB
+        have hxPermitted : x ∈ part ⁻¹' R.permitted j :=
+          R.parameters j hChildNe (Quotient.sound hParentRel)
+            ⟨hxChildA, hxChildB⟩
+        have hxFine : x ∈ fineAllowed
+            (firstRefinementParent m R.extraCuts hm j) :=
+          hInserted j hxPermitted
+        simpa only [hν] using hxFine
+      · have hμBig : R.extraCuts + 1 ≤ μ.val := by omega
+        let μc : Fin (m + 1) := ⟨μ.val - R.extraCuts, by omega⟩
+        let νc : Fin (m + 1) := ⟨ν.val - R.extraCuts, by omega⟩
+        have hμPos : 0 < μc.val := by
+          change 0 < μ.val - R.extraCuts
+          omega
+        have hνPos : 0 < νc.val := by
+          change 0 < ν.val - R.extraCuts
+          omega
+        have hνTwo : 1 < νc.val := by
+          change 1 < ν.val - R.extraCuts
+          omega
+        have hcc : μc ≤ νc := by
+          change μ.val - R.extraCuts ≤ ν.val - R.extraCuts
+          omega
+        have hNextC : νc.val = μc.val + 1 := by
+          change ν.val - R.extraCuts =
+            μ.val - R.extraCuts + 1
+          omega
+        have hμEq :
+            EdgeTrainLevels.firstForgetIndex m R.extraCuts μc = μ := by
+          apply Fin.ext
+          change (if μc.val = 0 then 0 else
+            μc.val + R.extraCuts) = μ.val
+          simp only [Nat.ne_of_gt hμPos, ↓reduceIte]
+          change μ.val - R.extraCuts + R.extraCuts = μ.val
+          omega
+        have hνEq :
+            EdgeTrainLevels.firstForgetIndex m R.extraCuts νc = ν := by
+          apply Fin.ext
+          change (if νc.val = 0 then 0 else
+            νc.val + R.extraCuts) = ν.val
+          simp only [Nat.ne_of_gt hνPos, ↓reduceIte]
+          change ν.val - R.extraCuts + R.extraCuts = ν.val
+          omega
+        have hShiftμ :
+            EdgeTrainLevels.firstRefinementShift
+              m R.extraCuts μc = μ :=
+          (EdgeTrainLevels.firstForgetIndex_of_pos
+            m R.extraCuts μc hμPos).symm.trans hμEq
+        have hShiftν :
+            EdgeTrainLevels.firstRefinementShift
+              m R.extraCuts νc = ν :=
+          (EdgeTrainLevels.firstForgetIndex_of_pos
+            m R.extraCuts νc hνPos).symm.trans hνEq
+        have hOldNe :
+            (Quotient.mk (T.wagonSetoid μc) a :
+              Quotient (T.wagonSetoid μc)) ≠ Quotient.mk _ b := by
+          intro heq
+          have hRel : T.rel μc a b := Quotient.exact heq
+          have hFine : R.train.rel
+              (EdgeTrainLevels.firstRefinementShift
+                m R.extraCuts μc) a b :=
+            (R.oldLevels μc hμPos a b).mpr hRel
+          exact hFineNe (by simpa only [hShiftμ] using hFine)
+        have hOldParentRel : T.rel νc a b := by
+          apply (R.oldLevels νc hνPos a b).mp
+          simpa only [hShiftν] using hFineParent
+        have hOldParent :
+            T.wagonParent μc νc hcc
+              (Quotient.mk (T.wagonSetoid μc) a) =
+            T.wagonParent μc νc hcc
+              (Quotient.mk (T.wagonSetoid μc) b) :=
+          Quotient.sound hOldParentRel
+        have hxOldA : x ∈ T.wagonCarrier edge μc a := by
+          obtain ⟨c, hac, hxc⟩ := hxA
+          have hFine : R.train.rel
+              (EdgeTrainLevels.firstRefinementShift
+                m R.extraCuts μc) a c := by
+            simpa only [hShiftμ] using hac
+          exact ⟨c, (R.oldLevels μc hμPos a c).mp hFine, hxc⟩
+        have hxOldB : x ∈ T.wagonCarrier edge μc b := by
+          obtain ⟨c, hbc, hxc⟩ := hxB
+          have hFine : R.train.rel
+              (EdgeTrainLevels.firstRefinementShift
+                m R.extraCuts μc) b c := by
+            simpa only [hShiftμ] using hbc
+          exact ⟨c, (R.oldLevels μc hμPos b c).mp hFine, hxc⟩
+        have hOldVertex : x ∈ oldAllowed νc :=
+          hOld μc νc hcc hNextC hOldNe hOldParent
+            ⟨hxOldA, hxOldB⟩
+        have hxFine : x ∈ fineAllowed
+            (EdgeTrainLevels.firstForgetIndex m R.extraCuts νc) :=
+          hRetained νc hνTwo hOldVertex
+        simpa only [hνEq] using hxFine
 
 end StructuralRamsey.Girth
