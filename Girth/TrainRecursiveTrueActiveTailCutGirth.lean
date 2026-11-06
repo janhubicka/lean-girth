@@ -118,7 +118,7 @@ theorem trueActive_inducedCutGirth_of_shared
     | h edge =>
       change x ∈ NewTrain.wagonCarrier
           (fun edge : OldACarrierEdge A Source => edge.1) μ edge →
-        x ∈ NewTrain.wagonCarrier
+        vertexMap x ∈ NewTrain.wagonCarrier
           (fun edge : OldACarrierEdge A Source =>
             (Subtype.val : S → X) '' edge.1) μ edge
       rintro ⟨f, hRel, hx⟩
