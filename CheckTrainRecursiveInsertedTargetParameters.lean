@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveInsertedTargetParameters
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalFineAllowed_parent_preimage_eq
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalInserted_adjacentParameter

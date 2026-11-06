@@ -69,6 +69,7 @@ checks=(
   CheckTrainActualSelectedOutputLexRank
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
+  CheckTrainRecursiveInsertedTargetParameters
 )
 
 for check in "${checks[@]}"; do
