@@ -1,0 +1,3 @@
+import Girth.TrainActualExpandedSingletonLongIncidence
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_singleton_long_incidence
