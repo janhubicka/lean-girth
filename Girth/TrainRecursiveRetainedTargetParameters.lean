@@ -78,7 +78,6 @@ theorem FirstWagonRefinement.retained_adjacentParameter_of_old
           ((R.oldLevels μ hμpos a b).mpr (Quotient.exact heq))
       have hFineParent : R.train.rel
           (EdgeTrainLevels.firstRefinementShift m R.extraCuts ν) a b := by
-        apply Quotient.exact
         change
           (Quotient.mk
             (R.train.wagonSetoid
@@ -87,7 +86,7 @@ theorem FirstWagonRefinement.retained_adjacentParameter_of_old
             (R.train.wagonSetoid
               (EdgeTrainLevels.firstRefinementShift m R.extraCuts ν)) b
           at hParent
-        exact hParent
+        exact Quotient.exact hParent
       have hOldParent :
           T.wagonParent μ ν hμν
             (Quotient.mk (T.wagonSetoid μ) a) =
@@ -106,9 +105,7 @@ theorem FirstWagonRefinement.retained_adjacentParameter_of_old
       have hxOldB : x ∈ T.wagonCarrier edge μ b :=
         ⟨d, (R.oldLevels μ hμpos b d).mp hbd, hxd⟩
       exact hOld μ ν hμν hSucc
-        (Quotient.mk (T.wagonSetoid μ) a)
-        (Quotient.mk (T.wagonSetoid μ) b)
-        hOldNe hOldParent x ⟨hxOldA, hxOldB⟩
+        hOldNe hOldParent ⟨hxOldA, hxOldB⟩
 
 /-- The same retained bound in the TRUE ACTIVE A-partite coordinates.
 At old parent ν>=2, its fine shifted coordinate uses exactly the
