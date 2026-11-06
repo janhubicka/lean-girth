@@ -1,0 +1,9 @@
+import Girth.TrainFillingUniformEdgePresentation
+
+#print axioms StructuralRamsey.Girth.uniformEdgeLanguage
+#print axioms StructuralRamsey.Girth.uniformEdgeSource
+#print axioms StructuralRamsey.Girth.uniformEdgeTarget
+#print axioms StructuralRamsey.Girth.uniformEdgeEmbedding
+#print axioms StructuralRamsey.Girth.uniformEdgeEmbedding_carrier_mem
+#print axioms StructuralRamsey.Girth.uniformEdgeSupport_exact
+#print axioms StructuralRamsey.Girth.uniformEdgeSupport_of_enumerations
