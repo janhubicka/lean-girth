@@ -56,7 +56,12 @@ theorem EdgeTrainLevels.adjacentParameters_restrict_of_vertexEmbedding
     | h a =>
       induction b using Quotient.inductionOn with
       | h b =>
-        exact Quotient.sound (Quotient.exact hParent)
+        have hAtParent :
+            Quotient.mk ((T.restrict keep).wagonSetoid ν) a =
+              Quotient.mk ((T.restrict keep).wagonSetoid ν) b := hParent
+        have hRel : T.rel ν (keep a) (keep b) :=
+          Quotient.exact hAtParent
+        exact Quotient.sound hRel
   have hCarrier (c : Quotient ((T.restrict keep).wagonSetoid μ))
       (z : V) :
       z ∈ (T.restrict keep).wagonClassCarrier new μ c →
