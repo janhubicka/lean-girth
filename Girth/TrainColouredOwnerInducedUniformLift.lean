@@ -1,5 +1,7 @@
 import Girth.TrainColouredOwnerSelectedStrong
 import Girth.TrainFillingUniformEdgePresentation
+import Girth.TrainFillingColouredOrderedEdgePresentation
+import Girth.TrainColouredOwnerProjectionOrder
 
 set_option Elab.async false
 
@@ -110,5 +112,104 @@ noncomputable def ownerSplit_lifted_uniformEmbedding (k : ℕ)
     · intro hSrc
       exact ⟨S.lift_injective.comp hSrc.1,
         ownerSplit_lifted_source_tuple_edge S x hSrc.2⟩
+
+/-- The ORIGINAL induced coloured embedding already forces its own
+unary colour preservation: take the source unary relation whose symbol
+is exactly the colour of the chosen source vertex. No extra output
+unary-predicate assumption is required. -/
+theorem ownerSplit_oldEmbedding_colour
+    [LinearOrder V] [LinearOrder W]
+    (k : ℕ) (sourceColour : W → I)
+    (b : Embedding
+      (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
+      (colouredOrderedEdgeTarget k H.edges H.predicate))
+    (hb : ∀ w : W, b w = S.embedding w)
+    (w : W) :
+    H.predicate (S.embedding w) = sourceColour w := by
+  have h :
+      (colouredOrderedEdgeTarget k H.edges H.predicate).rel
+          (.inl (.inr (sourceColour w)))
+          ((b : W → V) ∘ (fun _ : Fin 1 => w)) := by
+    apply (b.map_rel_iff (.inl (.inr (sourceColour w)))
+      (fun _ : Fin 1 => w)).mpr
+    change sourceColour w = sourceColour w
+    rfl
+  change H.predicate (b w) = sourceColour w at h
+  rw [hb w] at h
+  exact h
+
+/-- Putting together the checked projection-first output order and
+the actual induced uniform-edge lift constructs an induced embedding
+of the COMPLETE coloured ordered edge language on a selected source.
+
+The output's actual edge set is the full split physical edge family,
+all unary predicates are derived from the original old embedding,
+and every within-predicate order tuple is reflected. The only
+separate order input is strict monotonicity of the genuine old
+vertex map in its global chosen order: the projection-first output
+order is available from the verified owner-splitting construction. -/
+noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
+    {k : ℕ}
+    [LinearOrder V] [LinearOrder W] [LinearOrder H.Vertex]
+    (sourceColour : W → I)
+    (b : Embedding
+      (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
+      (colouredOrderedEdgeTarget k H.edges H.predicate))
+    (hb : ∀ w : W, b w = S.embedding w)
+    (hOldMono : StrictMono S.embedding)
+    (hProjectionOrder : ∀ a b : H.Vertex,
+      H.project a < H.project b → a < b) :
+    Embedding
+      (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
+      (colouredOrderedEdgeTarget k
+        (Set.range H.splitEdge) H.newPredicate) := by
+  let bUniform : Embedding
+      (uniformEdgeTarget k S.sourceEdges)
+      (uniformEdgeTarget k H.edges) := {
+    toFun := b
+    injective := b.injective
+    map_rel_iff := by
+      intro R x
+      cases R
+      exact b.map_rel_iff (.inl (.inl ())) x
+  }
+  have hbUniform : ∀ w : W, bUniform w = S.embedding w := hb
+  let bLiftUniform := ownerSplit_lifted_uniformEmbedding S k bUniform hbUniform
+  have hLiftMono : StrictMono S.lift := by
+    intro x y hxy
+    exact H.selectedLift_strictMono_of_projectionFirst S
+      (inferInstance : LinearOrder H.Vertex) hProjectionOrder
+      hOldMono x y hxy
+  refine {
+    toFun := S.lift
+    injective := S.lift_injective
+    map_rel_iff := ?_
+  }
+  intro R x
+  cases R with
+  | inl R =>
+      cases R with
+      | inl _ =>
+          exact bLiftUniform.map_rel_iff () x
+      | inr colour =>
+          change H.newPredicate (S.lift (x 0)) = colour ↔
+            sourceColour (x 0) = colour
+          rw [H.selectedLift_preserves_predicate S (x 0),
+            ownerSplit_oldEmbedding_colour S k sourceColour b hb (x 0)]
+  | inr _ =>
+      change (H.newPredicate (S.lift (x 0)) =
+        H.newPredicate (S.lift (x 1)) ∧
+        S.lift (x 0) < S.lift (x 1)) ↔
+        (sourceColour (x 0) = sourceColour (x 1) ∧ x 0 < x 1)
+      have hxColour : H.newPredicate (S.lift (x 0)) =
+          sourceColour (x 0) :=
+        (H.selectedLift_preserves_predicate S (x 0)).trans
+          (ownerSplit_oldEmbedding_colour S k sourceColour b hb (x 0))
+      have hyColour : H.newPredicate (S.lift (x 1)) =
+          sourceColour (x 1) :=
+        (H.selectedLift_preserves_predicate S (x 1)).trans
+          (ownerSplit_oldEmbedding_colour S k sourceColour b hb (x 1))
+      rw [hxColour, hyColour]
+      exact and_congr Iff.rfl hLiftMono.lt_iff_lt
 
 end StructuralRamsey.Girth
