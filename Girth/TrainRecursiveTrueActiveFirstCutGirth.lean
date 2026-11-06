@@ -111,7 +111,8 @@ theorem ForestTailStage.trueActive_sharedFirstCutGirth
         (⟨1, by omega⟩ : Fin (t.length + 1)) =
           ⟨t.length, Nat.lt_succ_self t.length⟩ := by
       apply Fin.ext
-      omega
+      change (1 : ℕ) = t.length
+      exact hone.symm
     rw [hTop]
     exact Tshared.top_labelledCutGirth
       (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
