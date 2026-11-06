@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveTrueActiveLowerCutoffVector
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.lowerReplacementCutoff_length
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedAllLowerCutGirth
