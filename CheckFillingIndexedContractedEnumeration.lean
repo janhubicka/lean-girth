@@ -1,0 +1,5 @@
+import Girth.TrainFillingIndexedContractedEnumeration
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedFamily_uniform
