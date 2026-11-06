@@ -38,6 +38,8 @@ variable {t : List ℕ}
 variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
 variable {allowed : Fin (t.length + 1) → Set P}
 
+namespace ForestTailStage
+
 /-- Every selected copy produces an injective map of the WHOLE physical
 A-edge carrier families. Its edge map is constructed from the vertex
 embedding, not provided as a separate witness field. -/
@@ -122,4 +124,5 @@ theorem selectedPhysicalEdgeEmbedding_train_faithful
         (S.selectedPhysicalEdgeEmbedding b f) :=
   (S.selectedPhysicalEdgeEmbedding_train_iff b hb μ e f).symm
 
+end ForestTailStage
 end StructuralRamsey.Girth.TrainRecursiveWitness
