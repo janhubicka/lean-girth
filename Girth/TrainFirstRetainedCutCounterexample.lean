@@ -79,10 +79,16 @@ def groupedFourEdgePath_triangle :
     omega
   left_mem := by
     intro i
-    fin_cases i <;> decide
+    fin_cases i
+    · exact ⟨(0 : Fin 4), by decide, by decide⟩
+    · exact ⟨(1 : Fin 4), by decide, by decide⟩
+    · exact ⟨(2 : Fin 4), by decide, by decide⟩
   right_mem := by
     intro i
-    fin_cases i <;> decide
+    fin_cases i
+    · exact ⟨(1 : Fin 4), by decide, by decide⟩
+    · exact ⟨(2 : Fin 4), by decide, by decide⟩
+    · exact ⟨(3 : Fin 4), by decide, by decide⟩
 
 /-- The grouped wagon cut fails labelled girth greater than three,
 even though its physical components form a path and the only
