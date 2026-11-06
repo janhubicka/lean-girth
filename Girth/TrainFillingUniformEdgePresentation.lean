@@ -83,7 +83,7 @@ def uniformEdgeEmbedding (k : ℕ) (E : Set (Set V))
           obtain ⟨s, hs⟩ := hSurj t
           exact ⟨s, by
             change i ((x s).down) = i t
-            rw [hs]⟩
+            exact congrArg (i : Fin k → V) hs⟩
       exact ⟨i.injective.comp hDown, by simpa only [hRange] using hEdge⟩
 
 /-- A lifted source enumeration has exactly the original physical
