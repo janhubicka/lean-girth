@@ -80,6 +80,35 @@ def oldEdgeEmbedding_of_exact_carriers
   ⟨edgeMap, U.oldEdgeMap_injective_of_exact_carriers
     sourceCarrier hSourceInjective vertex edgeMap hCarrier⟩
 
+/-- Construct the selected contracted old-edge embedding from the actual
+selected VERTEX embedding. Each full source edge carrier is required only
+to have its whole vertex image in the physical old N-edge family.
+There is no separately supplied source-edge map, edge injectivity
+certificate or target edge-carrier equality: those are derived here. -/
+def oldEdgeEmbedding_from_vertex
+    {W : Type v}
+    (sourceCarrier : S → Set W)
+    (hSourceInjective : Function.Injective sourceCarrier)
+    (vertex : W ↪ V)
+    (hImage : ∀ s : S, vertex '' sourceCarrier s ∈ U.oldEdges) :
+    S ↪ U.OldEdge :=
+  U.oldEdgeEmbedding_of_exact_carriers sourceCarrier hSourceInjective vertex
+    (fun s => (⟨vertex '' sourceCarrier s, hImage s⟩ : U.OldEdge))
+    (fun _ => rfl)
+
+/-- In the constructed edge embedding, the old physical carrier is
+exactly the full image of its source first-wagon edge carrier. -/
+@[simp] theorem oldEdgeEmbedding_from_vertex_carrier
+    {W : Type v}
+    (sourceCarrier : S → Set W)
+    (hSourceInjective : Function.Injective sourceCarrier)
+    (vertex : W ↪ V)
+    (hImage : ∀ s : S, vertex '' sourceCarrier s ∈ U.oldEdges)
+    (s : S) :
+    (U.oldEdgeEmbedding_from_vertex
+      sourceCarrier hSourceInjective vertex hImage s).1 =
+      vertex '' sourceCarrier s := rfl
+
 /-- Physical new edges over the image of a selected contracted old edge
 embedding, using all local template edges with their actual labels. -/
 noncomputable def selectedFilledEdgeEmbedding
