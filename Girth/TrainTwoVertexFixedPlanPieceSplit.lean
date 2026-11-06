@@ -46,8 +46,7 @@ theorem BigCycle.fixed_two_vertex_plan_short_or_long
   let j : Fin 2 := cyclicSucc target
   have hPred : trainCyclicPred j = target := by
     dsimp [j]
-    exact trainCyclicPred_cyclicSucc_of_two_le
-      (by decide : 2 ≤ 2) target
+    fin_cases target <;> decide
   have hDiff : Z.label j ≠ Z.label target := by
     dsimp [j]
     exact (Z.adjacent_ne target).symm
