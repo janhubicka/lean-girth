@@ -65,8 +65,10 @@ theorem cyclicExpandReducedPieces_long_inverse
   cases hp : reduced j with
   | keep =>
       simp only [hp] at hOut
+      cases hOut
   | short e =>
       simp only [hp] at hOut
+      cases hOut
   | long first w second =>
       by_cases hAt : pos = cyclicOwnerCutIndex owner j
       · by_cases hPrevious :
@@ -82,7 +84,9 @@ theorem cyclicExpandReducedPieces_long_inverse
           exact ⟨j, first, w, second, rfl, hp, hAt, hPrevious,
             hFields.1, hFields.2.1, hFields.2.2⟩
         · simp only [hp, if_pos hAt, if_neg hPrevious] at hOut
+          cases hOut
       · simp only [hp, if_neg hAt] at hOut
+        cases hOut
 
 open StructuralRamsey.RelStructure
 
