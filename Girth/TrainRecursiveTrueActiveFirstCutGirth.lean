@@ -82,10 +82,55 @@ variable {family : Set (Embedding B D)} {t : List ℕ}
 variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
 variable {allowed : Fin (t.length + 1) → Set P}
 
-/-- The complete old first positive wagon cut of the TRUE active induced
-source has labelled girth at least the old head cutoff.  In the
-one-level case this is the universal top; otherwise it follows from
-the literal index-one tail invariant (not from bottomForest). -/
+/-- The actual old level-one SHARED-A-edge cut has labelled girth at
+the old head cutoff.  If there is a tail this is literally tailGirth(1);
+if not, the first cut is the top quotient. -/
+theorem ForestTailStage.trueActive_sharedFirstCutGirth
+    (stage : ForestTailStage A B D family t targetTrain allowed)
+    (e : Embedding A D) (ht : Admissible t) :
+    LabelledGirthGT
+      ((stage.train.restrict
+          (sharedOldACarrierInclusion A stage.system.toRelStructure
+            (activeCarrier A stage.system e.toFunctionEmbedding))).wagonClassCarrier
+          (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure
+            (activeCarrier A stage.system e.toFunctionEmbedding) => edge.1.1)
+          (⟨1, by
+            have hpos : 0 < t.length := List.length_pos_iff.mpr ht.nonempty
+            omega⟩ : Fin (t.length + 1))) (t.headD 0) := by
+  let S := activeCarrier A stage.system e.toFunctionEmbedding
+  let Tshared := stage.train.restrict
+    (sharedOldACarrierInclusion A stage.system.toRelStructure S)
+  have hpos : 0 < t.length := List.length_pos_iff.mpr ht.nonempty
+  change LabelledGirthGT
+    (Tshared.wagonClassCarrier
+      (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
+        edge.1.1)
+      (⟨1, by omega⟩ : Fin (t.length + 1))) (t.headD 0)
+  by_cases hone : t.length = 1
+  · have hTop :
+        (⟨1, by omega⟩ : Fin (t.length + 1)) =
+          ⟨t.length, Nat.lt_succ_self t.length⟩ := by
+      apply Fin.ext
+      omega
+    rw [hTop]
+    exact Tshared.top_labelledCutGirth
+      (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
+        edge.1.1) (t.headD 0)
+  · have htwo : 1 < t.length := by omega
+    let j : Fin t.length := ⟨1, htwo⟩
+    have hOld :
+        LabelledGirthGT
+          (Tshared.wagonClassCarrier
+            (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
+              edge.1.1)
+            (⟨1, by omega⟩ : Fin (t.length + 1))) (t.get j) := by
+      simpa [Tshared, S, j] using
+        (stage.trueActive_sharedTailCutGirth e j (by change 0 < 1; omega))
+    exact labelledGirthGT_mono hOld (ht.headD_le_get j)
+
+/-- The same bound in the exact TRUE induced active target, with all of
+its genuine physical A-edge labels.  No additional cut hypothesis is
+needed beyond the OLD stage and admissibility. -/
 theorem ForestTailStage.trueActive_inducedFirstCutGirth
     (stage : ForestTailStage A B D family t targetTrain allowed)
     (e : Embedding A D) (ht : Admissible t) :
@@ -101,36 +146,14 @@ theorem ForestTailStage.trueActive_inducedFirstCutGirth
           (⟨1, by
             have hpos : 0 < t.length := List.length_pos_iff.mpr ht.nonempty
             omega⟩ : Fin (t.length + 1))) (t.headD 0) := by
-  let S := activeCarrier A stage.system e.toFunctionEmbedding
-  let Tactive :=
+  exact trueActive_inducedCutGirth_of_shared A stage.system
+    e.toFunctionEmbedding
     (stage.train.restrict
-      (sharedOldACarrierInclusion A stage.system.toRelStructure S)).restrict
-      (inducedACarrierToShared A stage.system.toRelStructure S)
-  have hpos : 0 < t.length := List.length_pos_iff.mpr ht.nonempty
-  change LabelledGirthGT
-    (Tactive.wagonClassCarrier
-      (fun edge : OldACarrierEdge A (stage.system.toRelStructure.induce S) => edge.1)
-      (⟨1, by omega⟩ : Fin (t.length + 1))) (t.headD 0)
-  by_cases hone : t.length = 1
-  · have hTop :
-        (⟨1, by omega⟩ : Fin (t.length + 1)) =
-          ⟨t.length, Nat.lt_succ_self t.length⟩ := by
-      apply Fin.ext
-      omega
-    rw [hTop]
-    exact Tactive.top_labelledCutGirth
-      (fun edge : OldACarrierEdge A (stage.system.toRelStructure.induce S) =>
-        edge.1) (t.headD 0)
-  · have htwo : 1 < t.length := by omega
-    let j : Fin t.length := ⟨1, htwo⟩
-    have hOld :
-        LabelledGirthGT
-          (Tactive.wagonClassCarrier
-            (fun edge : OldACarrierEdge A
-              (stage.system.toRelStructure.induce S) => edge.1)
-            (⟨1, by omega⟩ : Fin (t.length + 1))) (t.get j) := by
-      simpa [Tactive, S, j] using
-        (stage.trueActive_inducedTailCutGirth e j (by change 0 < 1; omega))
-    exact labelledGirthGT_mono hOld (ht.headD_le_get j)
+      (sharedOldACarrierInclusion A stage.system.toRelStructure
+        (activeCarrier A stage.system e.toFunctionEmbedding)))
+    (⟨1, by
+      have hpos : 0 < t.length := List.length_pos_iff.mpr ht.nonempty
+      omega⟩ : Fin (t.length + 1))
+    (t.headD 0) (stage.trueActive_sharedFirstCutGirth e ht)
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
