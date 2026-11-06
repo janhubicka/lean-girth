@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutRankTrichotomy
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_positive_cut_rank_descent_or_designated_or_bridges
