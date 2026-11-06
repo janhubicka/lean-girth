@@ -74,6 +74,9 @@ checks=(
   CheckTrainRecursiveInsertedTargetParameters
   CheckTrainRecursiveParameterRestrictionKernel
   CheckTrainRecursiveTrueActiveOriginalParameters
+  CheckTrainRecursiveTrueActiveTailCutGirth
+  CheckTrainRecursiveTrueActiveFirstCutGirth
+  CheckTrainRecursiveTrueActiveRefinementCutGirth
 )
 
 for check in "${checks[@]}"; do
