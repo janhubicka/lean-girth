@@ -58,6 +58,7 @@ def uniformEdgeEmbedding (k : ℕ) (E : Set (Set V))
     exact i.injective h
   map_rel_iff := by
     intro R x
+    cases R
     change (Function.Injective ((fun t : ULift.{v} (Fin k) => i t.down) ∘ x) ∧
       Set.range ((fun t : ULift.{v} (Fin k) => i t.down) ∘ x) ∈ E) ↔
         Function.Injective x
@@ -80,8 +81,24 @@ def uniformEdgeEmbedding (k : ℕ) (E : Set (Set V))
           exact ⟨(x t).down, rfl⟩
         · rintro ⟨t, rfl⟩
           obtain ⟨s, hs⟩ := hSurj t
-          exact ⟨s, by simp only [Function.comp_apply, hs]⟩
+          exact ⟨s, by
+            change i ((x s).down) = i t
+            rw [hs]⟩
       exact ⟨i.injective.comp hDown, by simpa only [hRange] using hEdge⟩
+
+/-- A lifted source enumeration has exactly the original physical
+edge carrier. -/
+@[simp] theorem uniformEdgeEmbedding_carrier (k : ℕ) (E : Set (Set V))
+    (i : Fin k ↪ V)
+    (hEdge : Set.range (i : Fin k → V) ∈ E) :
+    copyCarrier (uniformEdgeEmbedding k E i hEdge) =
+      Set.range (i : Fin k → V) := by
+  ext y
+  constructor
+  · rintro ⟨t, rfl⟩
+    exact ⟨t.down, rfl⟩
+  · rintro ⟨t, rfl⟩
+    exact ⟨ULift.up t, rfl⟩
 
 /-- Every genuine induced one-edge support copy in the target is one of
 the declared whole physical hyperedges. No spurious supports. -/
@@ -122,7 +139,8 @@ theorem uniformEdgeSupport_exact (k : ℕ) (E : Set (Set V))
       exact he
     let f := uniformEdgeEmbedding k E i hiE
     refine ⟨f, ?_⟩
-    change e = Set.range (i : Fin k → V)
+    change e = copyCarrier (uniformEdgeEmbedding k E i hiE)
+    rw [uniformEdgeEmbedding_carrier]
     exact hi.symm
 
 /-- A uniformly enumerated family of physical edges has exactly that
