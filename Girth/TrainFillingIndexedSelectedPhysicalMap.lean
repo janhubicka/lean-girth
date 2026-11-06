@@ -58,8 +58,8 @@ selected contracted first wagon, including the choice tag. -/
     (H.selectedFilledEdgeEmbedding β
       (edgeIndexEquiv U H.templateEdges hTemplate a)) =
         β (a.1, a.2.1)
-  simpa only [H.selectedFilledEdgeEmbedding_cover,
-    edgeIndexEquiv_old]
+  rw [H.selectedFilledEdgeEmbedding_cover]
+  rfl
 
 /-- The FULL image of the indexed heterogeneous edge map is exactly
 the ambient H-edge family over the selected old first wagons. Neither
@@ -109,6 +109,6 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier
     · exact ⟨(U a.1).place a.2.1 x, ⟨x, hx, rfl⟩, rfl⟩
     · exact (hPlace a.1 a.2.1 x).symm
   · rintro ⟨w, ⟨z, ⟨x, hx, rfl⟩, rfl⟩, rfl⟩
-    exact ⟨x, hx, (hPlace a.1 a.2.1 x).symm⟩
+    exact ⟨x, hx, hPlace a.1 a.2.1 x⟩
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
