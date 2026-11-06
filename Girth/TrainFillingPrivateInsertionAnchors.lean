@@ -1,5 +1,5 @@
 import Girth.TrainFillingPrivateExtension
-import Mathlib.Data.Finset.Lattice
+import Mathlib.Tactic
 import Mathlib.Order.WithBot
 
 set_option Elab.async false
