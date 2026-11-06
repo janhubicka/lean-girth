@@ -1,0 +1,6 @@
+import Girth.TrainFillingSelectedStageTrainReflection
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedPhysicalEdgeEmbedding
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedPhysicalEdgeEmbedding_actualEdge
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedPhysicalEdgeEmbedding_train_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedPhysicalEdgeEmbedding_train_faithful
