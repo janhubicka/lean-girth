@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveFineParameters
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedRefinementAdjacentParameters
