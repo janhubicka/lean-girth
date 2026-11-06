@@ -1,0 +1,6 @@
+import Girth.TrainActualSelectedOutputLexRank
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_minGeometricCuts_le
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_minGeometricCuts_eq_of_minimal
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometricLexRank_eq_of_minimal
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_geometricLexRank_drop
