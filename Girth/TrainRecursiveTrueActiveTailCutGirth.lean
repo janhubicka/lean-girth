@@ -117,12 +117,12 @@ theorem trueActive_inducedCutGirth_of_shared
     induction p using Quotient.inductionOn with
     | h edge =>
       change x ∈ NewTrain.wagonCarrier
-          (fun edge : OldACarrierEdge A Source => edge.1) μ edge →
-        x ∈ NewTrain.wagonCarrier
+          (fun edge : OldACarrierEdge A Source => edge.1) μ edge at hx
+      change (x : X) ∈ NewTrain.wagonCarrier
           (fun edge : OldACarrierEdge A Source =>
             (Subtype.val : S → X) '' edge.1) μ edge
-      rintro ⟨f, hRel, hx⟩
-      exact ⟨f, hRel, ⟨x, hx, rfl⟩⟩
+      obtain ⟨f, hRel, hfx⟩ := hx
+      exact ⟨f, hRel, ⟨x, hfx, rfl⟩⟩
   exact labelledGirthGT_of_injective_vertex_map vertexMap
     (NewTrain.wagonClassCarrier
       (fun edge : OldACarrierEdge A Source =>
