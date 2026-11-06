@@ -112,14 +112,14 @@ theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
             CoreWagon pos = .keep :=
         cyclicExpandReducedPieces_keep owner hPos pieces
           CoreActual CoreWagon j pos rfl hp
-      simpa only [hExpanded]
+      simpa [hExpanded]
   | short b =>
       obtain ⟨_hAt, hExpanded, hLeft, hRight⟩ :=
         attachedSelectedPicture_expanded_reduced_short_incidence
           A hA B D C family selected e R f T U hShared hRel μ
           K hAccept hn owner hAllowed hThree
           target pieces hPlan j b hp pos rfl
-      simpa only [hExpanded] using And.intro hLeft hRight
+      simpa [hExpanded] using And.intro hLeft hRight
   | long first w second =>
       by_cases hForward :
           cyclicOwnerCutIndex owner j =
@@ -148,8 +148,8 @@ theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
             first second w hp hForward pos rfl
         rcases hCase with ⟨_hAt, hExpanded, hLeft, hRight⟩ |
           ⟨_hAt, hExpanded, hLeft, hRight⟩
-        · simpa only [hExpanded] using And.intro hLeft hRight
-        · simpa only [hExpanded] using And.intro hLeft hRight
+        · simpa [hExpanded] using And.intro hLeft hRight
+        · simpa [hExpanded] using And.intro hLeft hRight
 
 end ActualExpandedPlanAllIncidence
 end StructuralRamsey.Girth
