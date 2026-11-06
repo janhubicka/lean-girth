@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveTrueActiveAdjacentParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_restrict_of_vertexEmbedding
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedAdjacentParameters
