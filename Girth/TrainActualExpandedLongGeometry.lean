@@ -49,11 +49,24 @@ theorem cyclicExpandReducedPieces_long_inverse
       edge first = a ∧ wagon w = p ∧ edge second = b := by
   classical
   let j := cyclicOwnerRunIndex owner hCuts pos
+  have hUnfold :
+      cyclicExpandReducedPieces owner hCuts reduced edge wagon pos =
+        match reduced j with
+        | .keep => .keep
+        | .short e => .short (edge e)
+        | .long first w second =>
+            if pos = cyclicOwnerCutIndex owner j then
+              if cyclicOwnerCutIndex owner (trainCyclicPred j) =
+                  trainCyclicPred pos then
+                .long (edge first) (wagon w) (edge second)
+              else .short (edge second)
+            else .short (edge first) := rfl
+  rw [hUnfold] at hOut
   cases hp : reduced j with
   | keep =>
-      simp [cyclicExpandReducedPieces, j, hp] at hOut
+      simp only [hp] at hOut
   | short e =>
-      simp [cyclicExpandReducedPieces, j, hp] at hOut
+      simp only [hp] at hOut
   | long first w second =>
       by_cases hAt : pos = cyclicOwnerCutIndex owner j
       · by_cases hPrevious :
@@ -62,16 +75,14 @@ theorem cyclicExpandReducedPieces_long_inverse
         · have hMapped :
             (TrainSupremePiece.long (edge first) (wagon w) (edge second) :
               TrainSupremePiece F Q) = .long a p b := by
-            simpa [cyclicExpandReducedPieces, j, hp, hAt, hPrevious]
-              using hOut
+            simpa only [hp, if_pos hAt, if_pos hPrevious] using hOut
           have hFields :
               edge first = a ∧ wagon w = p ∧ edge second = b := by
-            simpa using hMapped
+            simpa only [TrainSupremePiece.long.injEq] using hMapped
           exact ⟨j, first, w, second, rfl, hp, hAt, hPrevious,
             hFields.1, hFields.2.1, hFields.2.2⟩
-        · simp [cyclicExpandReducedPieces, j, hp, hAt, hPrevious]
-            at hOut
-      · simp [cyclicExpandReducedPieces, j, hp, hAt] at hOut
+        · simp only [hp, if_pos hAt, if_neg hPrevious] at hOut
+      · simp only [hp, if_neg hAt] at hOut
 
 open StructuralRamsey.RelStructure
 
@@ -166,7 +177,7 @@ theorem attachedSelectedPicture_expanded_plan_localLongA2Geometry
       first second w hLong pos hThis.symm hPrevious
   obtain ⟨x, y, hLeft, hRight, _hNe, hParFirst, hParSecond,
     hx, hy, hNoPair⟩ := hPhysical
-  rw [← he, ← hw, ← hf]
+  rw [← hw]
   exact ⟨x, y, hLeft, hRight,
     ⟨CoreActual first, hParFirst, hx⟩,
     ⟨CoreActual second, hParSecond, hy⟩, hNoPair⟩
@@ -212,7 +223,7 @@ theorem attachedSelectedPicture_expanded_plan_long_fresh
     attachedSelectedPicture_plan_long_fresh_of_three_cuts
       A hA B D C family selected e R f T U hShared hRel μ
       K hAccept hn owner hAllowed hThree hActive
-      target pieces hPlan hProduces pos
+      target j pieces hPlan hProduces pos
       hThis.symm hPrevious first second w hReducedLong
   intro t
   simpa only [← hw] using hFresh t
