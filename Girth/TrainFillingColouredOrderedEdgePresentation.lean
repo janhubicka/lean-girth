@@ -43,19 +43,24 @@ def colouredOrderedEdgeLanguage (I : Type u) (k : ℕ) : RelLanguage.{u} where
       | inr _ => exact 1
     | inr _ => exact 2
 
-/-- The ordered k-point one-edge type. Its source order is the
-natural order on Fin k restricted to each unary predicate. -/
+/-- The ordered k-point one-edge type, lifted into the universe of its
+ambient vertex type. The lift has exactly k elements. -/
 def colouredOrderedEdgeSource (k : ℕ) (sourceColour : Fin k → I) :
-    RelStructure (colouredOrderedEdgeLanguage I k) (Fin k) where
+    RelStructure (colouredOrderedEdgeLanguage I k)
+      (ULift.{v} (Fin k)) where
   rel R := by
     cases R with
     | inl s =>
       cases s with
-      | inl _ => exact fun x => Function.Injective x
-      | inr i => exact fun x => sourceColour (x 0) = i
+      | inl _ =>
+        exact fun (x : Fin k → ULift.{v} (Fin k)) => Function.Injective x
+      | inr i =>
+        exact fun (x : Fin 1 → ULift.{v} (Fin k)) =>
+          sourceColour (x 0).down = i
     | inr _ =>
-      exact fun x =>
-        sourceColour (x 0) = sourceColour (x 1) ∧ x 0 < x 1
+      exact fun (x : Fin 2 → ULift.{v} (Fin k)) =>
+        sourceColour (x 0).down = sourceColour (x 1).down ∧
+          (x 0).down < (x 1).down
 
 /-- Retain exactly the declared k-edges, the genuine colour
 predicates, and the ambient within-colour order. -/
@@ -67,16 +72,17 @@ def colouredOrderedEdgeTarget
     cases R with
     | inl s =>
       cases s with
-      | inl _ => exact fun x => Function.Injective x ∧ Set.range x ∈ E
-      | inr i => exact fun x => targetColour (x 0) = i
+      | inl _ =>
+        exact fun (x : Fin k → V) =>
+          Function.Injective x ∧ Set.range x ∈ E
+      | inr i =>
+        exact fun (x : Fin 1 → V) => targetColour (x 0) = i
     | inr _ =>
-      exact fun x =>
+      exact fun (x : Fin 2 → V) =>
         targetColour (x 0) = targetColour (x 1) ∧ x 0 < x 1
 
-/-- An actual enumerated edge is a complete INDUCED copy of the
-coloured ordered one-edge structure. All predicate and order
-reflection requirements are explicit properties of the genuine
-edge enumeration, not consequences assumed about the output copy. -/
+/-- An actual enumerated edge is an induced copy of the coloured
+ordered one-edge structure. -/
 def colouredOrderedEdgeEmbedding
     [LinearOrder V]
     (k : ℕ) (E : Set (Set V))
@@ -89,57 +95,71 @@ def colouredOrderedEdgeEmbedding
     RelStructure.Embedding
       (colouredOrderedEdgeSource k sourceColour)
       (colouredOrderedEdgeTarget k E targetColour) where
-  toFun := ι
-  injective := ι.injective
+  toFun := fun t => ι t.down
+  injective := by
+    intro x y h
+    apply ULift.down_injective
+    exact ι.injective h
   map_rel_iff := by
     intro R x
     cases R with
     | inl s =>
       cases s with
       | inl _ =>
-        change (Function.Injective ((ι : Fin k → V) ∘ x) ∧
-          Set.range ((ι : Fin k → V) ∘ x) ∈ E) ↔
-            Function.Injective x
+        change (Function.Injective
+            ((fun t : ULift.{v} (Fin k) => ι t.down) ∘ x) ∧
+            Set.range ((fun t : ULift.{v} (Fin k) => ι t.down) ∘ x) ∈ E) ↔
+          Function.Injective x
         constructor
         · intro h
           intro a b hab
-          exact h.1 (congrArg (ι : Fin k → V) hab)
+          exact h.1 (congrArg
+            (fun t : ULift.{v} (Fin k) => ι t.down) hab)
         · intro hx
-          have hSurj : Function.Surjective x :=
-            Finite.injective_iff_surjective.mp hx
+          have hDown : Function.Injective
+              (fun t : Fin k => (x t).down) := by
+            intro a b h
+            exact hx (ULift.down_injective h)
+          have hSurj : Function.Surjective
+              (fun t : Fin k => (x t).down) :=
+            Finite.injective_iff_surjective.mp hDown
           have hRange :
-              Set.range ((ι : Fin k → V) ∘ x) =
+              Set.range ((fun t : ULift.{v} (Fin k) => ι t.down) ∘ x) =
                 Set.range (ι : Fin k → V) := by
             ext y
             constructor
             · rintro ⟨t, rfl⟩
-              exact ⟨x t, rfl⟩
+              exact ⟨(x t).down, rfl⟩
             · rintro ⟨t, rfl⟩
-              obtain ⟨s, hs⟩ := hSurj t
-              exact ⟨s, by simp only [Function.comp_apply, hs]⟩
-          exact ⟨ι.injective.comp hx, by simpa only [hRange] using hEdge⟩
+              obtain ⟨q, hq⟩ := hSurj t
+              exact ⟨q, by simp only [Function.comp_apply, hq]⟩
+          exact ⟨ι.injective.comp hDown,
+            by simpa only [hRange] using hEdge⟩
       | inr colour =>
-        change targetColour (ι (x 0)) = colour ↔
-          sourceColour (x 0) = colour
-        rw [hColour (x 0)]
+        change targetColour (ι (x 0).down) = colour ↔
+          sourceColour (x 0).down = colour
+        rw [hColour]
     | inr _ =>
-      change (targetColour (ι (x 0)) = targetColour (ι (x 1)) ∧
-        ι (x 0) < ι (x 1)) ↔
-        (sourceColour (x 0) = sourceColour (x 1) ∧ x 0 < x 1)
+      change (targetColour (ι (x 0).down) =
+          targetColour (ι (x 1).down) ∧
+          ι (x 0).down < ι (x 1).down) ↔
+        (sourceColour (x 0).down = sourceColour (x 1).down ∧
+          (x 0).down < (x 1).down)
       have hc :
-          (targetColour (ι (x 0)) = targetColour (ι (x 1))) ↔
-            sourceColour (x 0) = sourceColour (x 1) := by
+          (targetColour (ι (x 0).down) =
+            targetColour (ι (x 1).down)) ↔
+          sourceColour (x 0).down = sourceColour (x 1).down := by
         simp only [hColour]
       constructor
       · rintro ⟨hColourEq, hLt⟩
         have hs := hc.mp hColourEq
-        exact ⟨hs, (hWithinOrder (x 0) (x 1) hs).mpr hLt⟩
+        exact ⟨hs,
+          (hWithinOrder (x 0).down (x 1).down hs).mpr hLt⟩
       · rintro ⟨hs, hLt⟩
-        exact ⟨hc.mpr hs, (hWithinOrder (x 0) (x 1) hs).mp hLt⟩
+        exact ⟨hc.mpr hs,
+          (hWithinOrder (x 0).down (x 1).down hs).mp hLt⟩
 
-/-- Every genuine one-edge embedding in the relational target uses
-one of the DECLARED full physical edges. Testing the identity
-k-tuple suffices; no edge closure or ambient pruning premise. -/
+/-- Every genuine one-edge embedding uses a declared full physical edge. -/
 theorem colouredOrderedEdgeEmbedding_carrier_mem
     [LinearOrder V]
     (k : ℕ) (E : Set (Set V))
@@ -148,12 +168,21 @@ theorem colouredOrderedEdgeEmbedding_carrier_mem
       (colouredOrderedEdgeSource k sourceColour)
       (colouredOrderedEdgeTarget k E targetColour)) :
     copyCarrier f ∈ E := by
-  have h := (f.map_rel_iff (.inl (.inl ()))
-    (fun x : Fin k => x)).mpr
-    (Function.injective_id : Function.Injective (fun x : Fin k => x))
-  change Function.Injective (f ∘ (fun x : Fin k => x)) ∧
-    Set.range (f ∘ (fun x : Fin k => x)) ∈ E at h
-  simpa only [copyCarrier, Function.comp_id] using h.2
+  let up : Fin k → ULift.{v} (Fin k) := ULift.up
+  have hup : Function.Injective up := by
+    intro a b h
+    exact congrArg ULift.down h
+  have h := (f.map_rel_iff (.inl (.inl ())) up).mpr hup
+  change Function.Injective (f ∘ up) ∧ Set.range (f ∘ up) ∈ E at h
+  have heq : Set.range (f ∘ up) = copyCarrier f := by
+    ext y
+    constructor
+    · rintro ⟨t, rfl⟩
+      exact ⟨up t, rfl⟩
+    · rintro ⟨t, rfl⟩
+      exact ⟨t.down, by cases t; rfl⟩
+  rw [heq] at h
+  exact h.2
 
 /-- The FULL support of the coloured ordered one-edge type equals
 the declared edge family, whenever each edge admits its actual
