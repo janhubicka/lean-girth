@@ -71,8 +71,15 @@ theorem contractedProperParent_eq_iff_rel {m : ℕ}
     ν.val = m ∨ (e.1 = f.1 ∧ T.rel ν e.2 f.2)
   constructor
   · intro h
-    exact Or.inr ⟨congrArg Prod.fst h,
-      Quotient.exact (congrArg Prod.snd h)⟩
+    have hChoice : e.1 = f.1 :=
+      congrArg
+        (fun p : C × Quotient (T.wagonSetoid ν) => p.1) h
+    have hWagon :
+        (Quotient.mk (T.wagonSetoid ν) e.2) =
+          Quotient.mk (T.wagonSetoid ν) f.2 :=
+      congrArg
+        (fun p : C × Quotient (T.wagonSetoid ν) => p.2) h
+    exact Or.inr ⟨hChoice, Quotient.exact hWagon⟩
   · rintro (hTop | ⟨hChoice, hRel⟩)
     · exact False.elim ((Nat.ne_of_lt hProper) hTop)
     · exact Prod.ext hChoice (Quotient.sound hRel)
