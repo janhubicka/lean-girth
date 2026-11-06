@@ -94,7 +94,7 @@ theorem BigCycle.two_both_designated_supreme_of_common_short
     (hBoth : ∀ j : Fin 2, D.Incident (.inr e) (Z.connector j)) :
     ∀ target : Fin 2, Z.HasSupremeAt D target := by
   intro target
-  exact Z.two_hasSupremeAt_of_common_short D
+  exact BigCycle.two_hasSupremeAt_of_common_short D Z
     hAccept hLinear target (hDesignated target)
     e (hOwned target) hBoth
 
