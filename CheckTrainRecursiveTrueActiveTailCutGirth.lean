@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveTrueActiveTailCutGirth
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_vertex_map
+#print axioms StructuralRamsey.Girth.trueActive_inducedCutGirth_of_shared
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedTailCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedTailCutGirth
