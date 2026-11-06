@@ -6,3 +6,5 @@ import Girth.TrainFillingColouredOrderedEdgePresentation
 #print axioms StructuralRamsey.Girth.colouredOrderedEdgeEmbedding
 #print axioms StructuralRamsey.Girth.colouredOrderedEdgeEmbedding_carrier_mem
 #print axioms StructuralRamsey.Girth.colouredOrderedEdgeSupport_exact
+
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeEmbedding_carrier
