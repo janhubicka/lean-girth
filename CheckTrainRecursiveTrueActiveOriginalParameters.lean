@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveOriginalParameters
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_originalTrainParameters
