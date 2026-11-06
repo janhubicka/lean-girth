@@ -1,0 +1,7 @@
+import Girth.TrainFillingPrivateInsertionAnchors
+
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.successorOldVertices
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionAnchor
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionAnchor_mono
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionAnchor_le_old
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.old_lt_insertionAnchor
