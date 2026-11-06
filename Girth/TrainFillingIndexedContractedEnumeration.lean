@@ -40,7 +40,7 @@ noncomputable def contractedEnumeration [Fintype X]
 /-- The enumerated edge is precisely the actual contracted carrier. -/
 theorem contractedEnumeration_range [Fintype X]
     (e : C × P) :
-    Set.range (U.contractedEnumeration e : Fin (Fintype.card X) → Vertex U) =
+    Set.range (contractedEnumeration U e : Fin (Fintype.card X) → Vertex U) =
       contractedCarrier U e := by
   ext z
   constructor
@@ -62,7 +62,7 @@ theorem contractedFamily_uniform [Fintype X] :
       ∃ i : Fin (Fintype.card X) ↪ Vertex U,
         Set.range (i : Fin (Fintype.card X) → Vertex U) = edge := by
   rintro edge ⟨e, rfl⟩
-  exact ⟨U.contractedEnumeration e, U.contractedEnumeration_range e⟩
+  exact ⟨contractedEnumeration U e, contractedEnumeration_range U e⟩
 
 /-- No new isolated vertices appear in the contracted choice union:
 private vertices lie in their own expanded wagon, while each old
@@ -88,7 +88,7 @@ theorem contractedFamily_covers
 
 /-- An explicitly chosen common enumeration of X, useful when
 the chosen numbering must also preserve within-predicate orders. -/
-def contractedEnumerationOfEquiv {k : ℕ}
+noncomputable def contractedEnumerationOfEquiv {k : ℕ}
     (enumerateX : Fin k ≃ X) (e : C × P) :
     Fin k ↪ Vertex U where
   toFun := fun i =>
@@ -104,7 +104,7 @@ def contractedEnumerationOfEquiv {k : ℕ}
 the enumeration, so changing to an ordered enumeration loses no edges. -/
 theorem contractedEnumerationOfEquiv_range {k : ℕ}
     (enumerateX : Fin k ≃ X) (e : C × P) :
-    Set.range (U.contractedEnumerationOfEquiv enumerateX e : Fin k → Vertex U) =
+    Set.range (contractedEnumerationOfEquiv U enumerateX e : Fin k → Vertex U) =
       contractedCarrier U e := by
   ext z
   constructor
@@ -164,7 +164,7 @@ theorem contractedEnumeration_colour [Fintype X] {I : Type*}
         oldColour z.1 = templateColour ((U c).coordinate p z))
     (e : C × P) (i : Fin (Fintype.card X)) :
     contractedVertexColour U oldColour templateColour
-        (U.contractedEnumeration e i) =
+        (contractedEnumeration U e i) =
       templateColour ((Fintype.equivFin X).symm i) :=
   contractedVertexColour_place U oldColour templateColour hColour
     e.1 e.2 ((Fintype.equivFin X).symm i)
