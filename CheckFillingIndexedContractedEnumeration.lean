@@ -8,3 +8,4 @@ import Girth.TrainFillingIndexedContractedEnumeration
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration_colour
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumerationOfEquiv
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumerationOfEquiv_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedFamily_covers
