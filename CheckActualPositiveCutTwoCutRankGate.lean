@@ -1,0 +1,3 @@
+import Girth.TrainActualPositiveCutTwoCutRankGate
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_positive_cut_rank_or_exact_two_cut_obstruction
