@@ -78,7 +78,7 @@ theorem cyclicExpandReducedPieces_long_inverse
             simpa only [hp, if_pos hAt, if_pos hPrevious] using hOut
           have hFields :
               edge first = a ∧ wagon w = p ∧ edge second = b := by
-            simpa only [TrainSupremePiece.long.injEq] using hMapped
+            simpa using hMapped
           exact ⟨j, first, w, second, rfl, hp, hAt, hPrevious,
             hFields.1, hFields.2.1, hFields.2.2⟩
         · simp only [hp, if_pos hAt, if_neg hPrevious] at hOut
