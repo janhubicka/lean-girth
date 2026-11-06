@@ -71,6 +71,7 @@ checks=(
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
+  CheckTrainNoSingleCyclicOwnerCut
 )
 
 for check in "${checks[@]}"; do
