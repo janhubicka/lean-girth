@@ -1,40 +1,41 @@
-import Girth.TrainActualExpandedReducedShortIncidence
-import Girth.TrainActualExpandedTwoStepShortIncidence
-import Girth.TrainActualExpandedSingletonLongIncidence
+import Girth.TrainExpandedRunPhysicalIncidence
+import Girth.TrainActualFixedPlanNonSingletonTwoStep
+import Girth.TrainActualPositiveCutShortPieceLift
+import Girth.TrainActualPositiveCutLongPhysicalLift
+import Girth.TrainActualChosenTwoStepShortComplete
 import Mathlib.Tactic
 
 /-!
-# Path A: complete original LocalPieceIncidence of one fixed reduced supreme plan
+# Path A: physical incidence of the actual one-pass source-expanded plan
 
-Let an actual selected-picture source cycle have length >=3 and at
-least three canonical geometric owner cuts. Take ONE actual reduced
-PlanValid and PlanProducesBigCycle witness and expand its SAME plan
-to every original source occurrence.
+For ONE specific globally legal reduced PlanValid/PlanProducesBigCycle
+witness with at least three original owner cuts, EVERY source occurrence
+in the literal run-indexed expanded plan has the genuine physical
+incidence required by the arbitrary legal-replacement theorem.
 
-Case split on the reduced piece of the canonical run of an original
-occurrence:
-* keep: the source expansion keeps it (no local conditions);
-* reduced short: source A2/A3 forces singleton original run; the
-  verified physical edge lift supplies both source incidences;
-* reduced long at singleton: the actual AStrong LongValid physical
-  lift supplies distinct edges, both boundary incidences and wagon
-  parent equalities;
-* reduced long at non-singleton: fixed-plan A2/A3 gives an old wagon
-  and an exact two-step original run, with two physical shorts each
-  incident with both original connectors.
+We use three source cases:
+* a reduced short forces a singleton original run; its actual physical
+  short is incident with both original connectors;
+* a reduced long on a singleton run has the actual PhysicalLongGeometry
+  provided by the checked A-strong physical core lift;
+* a reduced long on a non-singleton run has exactly two source steps
+  around an existing uncut wagon (same fixed plan); both physical
+  short incidences are checked in the old-wagon lift.
 
-This theorem closes the local-incidence obligation for the one-pass
-positive-cut standard transfer under explicit original strongness,
-acceptability and at least three owner cuts. Its separate long A2
-geometry, freshness and standard containment are addressed in
-independent drafts. No appendix, no manuscript green marker.
+The generic run-fibre incidence theorem then covers ALL original
+source positions, including wrap. No source designated B-copy is
+identified with a reduced geometric standard. This is the hInc input
+of the already checked global standard-transfer theorem.
+
+Long A2 geometry, global fresh wagons and target standard support are
+separate modules. No appendix or manuscript changes.
 -/
 
 namespace StructuralRamsey.Girth
 open StructuralRamsey.RelStructure
 universe u v
+section ActualExpandedPlanLocalIncidence
 
-section ActualExpandedPlanAllIncidence
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
 variable (A : RelStructure L UA) (hA : A.Irreducible)
 variable (B : RelStructure L VB) (D : RelStructure L P)
@@ -77,15 +78,19 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 
 include hRel
 
-/-- Every original occurrence has a fully physically incident
-source-expanded piece when the reduced plan is globally valid and
-the original has >=3 geometric cuts. No existential witness is
-rechosen; all local cases use the exact same PlanValid pieces. -/
+/-- An actual fixed globally legal reduced supreme plan determines
+a fully LOCAL-INCIDENT source-indexed expanded replacement. This
+conclusion is independent of the source's literal designated B-labels,
+and uses no extra hypothetical source-replacement legality assumption.
+
+The accepted source cycle has n ≥ 3; the reduced owner word has at
+least three genuine cuts. Strongness is the same explicit input needed
+by the checked ambient physical nonedge lift for singleton longs. -/
 theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
     {n : ℕ} (K : (Out).BigCycle n)
     (hAccept : K.Acceptable) (hn : 3 ≤ n)
     (owner : Fin n → I ⊕ CoreEdge)
-    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
     (hThree : 3 ≤ cyclicOwnerChanges owner)
     (hActive : AStrong A C.toRelStructure S)
     (target : Fin (cyclicOwnerChanges owner))
@@ -100,56 +105,129 @@ theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
     K.LocalPieceIncidence Out
       (cyclicExpandReducedPieces owner (by omega) pieces
         CoreActual CoreWagon) := by
-  have hPos : 0 < cyclicOwnerChanges owner := by omega
-  change K.LocalPieceIncidence Out
-    (cyclicExpandReducedPieces owner hPos pieces CoreActual CoreWagon)
-  intro pos
-  let j := cyclicOwnerRunIndex owner hPos pos
-  cases hp : pieces j with
-  | keep =>
-      have hExpanded :
-          cyclicExpandReducedPieces owner hPos pieces CoreActual
-            CoreWagon pos = .keep :=
-        cyclicExpandReducedPieces_keep owner hPos pieces
-          CoreActual CoreWagon j pos rfl hp
-      simpa [hExpanded]
-  | short b =>
-      obtain ⟨_hAt, hExpanded, hLeft, hRight⟩ :=
-        attachedSelectedPicture_expanded_reduced_short_incidence
-          A hA B D C family selected e R f T U hShared hRel μ
-          K hAccept hn owner hAllowed hThree
-          target pieces hPlan j b hp pos rfl
-      simpa [hExpanded] using And.intro hLeft hRight
-  | long first w second =>
-      by_cases hForward :
-          cyclicOwnerCutIndex owner j =
-            cyclicSucc (cyclicOwnerCutIndex owner (trainCyclicPred j))
-      · obtain ⟨_hAt, hExpanded, hDistinct, hLeft,
-          hParentFirst, hParentSecond, hRight⟩ :=
-          attachedSelectedPicture_expanded_singleton_long_incidence
-            A hA B D C family selected e R f T U hShared hRel μ
-            K hn owner hAllowed hThree hActive
-            target pieces hPlan j first second w hp hForward pos rfl
-        have hLocal :
-            CoreActual first ≠ CoreActual second ∧
-            (Out).Incident (.inr (CoreActual first))
+  classical
+  have hCuts : 2 ≤ cyclicOwnerChanges owner := by omega
+  let Z := attachedSelectedPicture_geometric_cutBigCycle
+    A hA B D C family selected e R f T U hShared hRel μ
+    K owner hAllowed hCuts
+  have hShortGeometry :
+      ∀ (j : Fin (cyclicOwnerChanges owner)) (b : CoreEdge),
+        pieces j = .short b →
+          ∃ pos : Fin n,
+            cyclicOwnerCutIndex owner j = pos ∧
+            cyclicOwnerCutIndex owner (trainCyclicPred j) =
+              trainCyclicPred pos ∧
+            (Out).Incident (.inr (CoreActual b))
               (K.connector (trainCyclicPred pos)) ∧
-            (Out).parent (CoreActual first) = CoreWagon w ∧
-            (Out).parent (CoreActual second) = CoreWagon w ∧
+            (Out).Incident (.inr (CoreActual b))
+              (K.connector pos) := by
+    intro j b hp
+    have hDiff : Z.label j ≠ Z.label target := by
+      intro heq
+      have hk := (hPlan j).1 heq
+      have hf :
+          (TrainSupremePiece.short b :
+            TrainSupremePiece CoreEdge (Quotient (U.wagonSetoid μ))) =
+              TrainSupremePiece.keep := hp.symm.trans hk
+      cases hf
+    have hShort : Z.ShortValid Wit target j b := by
+      have hCase := (hPlan j).2 hDiff
+      simpa only [hp] using hCase
+    have hForward :
+        cyclicOwnerCutIndex owner j =
+          cyclicSucc (cyclicOwnerCutIndex owner (trainCyclicPred j)) :=
+      attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
+        A hA B D C family selected e R f T U hShared hRel μ
+        K hAccept owner hAllowed hThree target j b hShort
+    let pos : Fin n := cyclicOwnerCutIndex owner j
+    have hPrevious :
+        cyclicOwnerCutIndex owner (trainCyclicPred j) =
+          trainCyclicPred pos := by
+      dsimp [pos]
+      rw [hForward]
+      exact (trainCyclicPred_cyclicSucc_of_two_le
+        (by omega : 2 ≤ n)
+        (cyclicOwnerCutIndex owner (trainCyclicPred j))).symm
+    obtain ⟨hLeft, hRight⟩ :=
+      attachedSelectedPicture_cut_short_piece_incident_lift
+        A hA B D C family selected e R f T U hShared hRel μ
+        K owner hAllowed hCuts target j b hShort pos rfl hPrevious
+    exact ⟨pos, rfl, hPrevious, hLeft, hRight⟩
+  have hLongGeometry :
+      ∀ (j : Fin (cyclicOwnerChanges owner))
+        (first : CoreEdge) (w : Quotient (U.wagonSetoid μ))
+        (second : CoreEdge),
+        pieces j = .long first w second →
+        (∃ pos : Fin n,
+          cyclicOwnerCutIndex owner j = pos ∧
+          cyclicOwnerCutIndex owner (trainCyclicPred j) =
+            trainCyclicPred pos ∧
+          K.PhysicalLongGeometry Out pos
+            (CoreActual first) (CoreWagon w) (CoreActual second)) ∨
+        (∃ t : Fin n,
+          cyclicOwnerCutIndex owner j = cyclicSucc t ∧
+          cyclicOwnerCutIndex owner (trainCyclicPred j) =
+            trainCyclicPred t ∧
+          owner t = owner (cyclicSucc t) ∧
+          ((Out).Incident (.inr (CoreActual first))
+              (K.connector (trainCyclicPred t)) ∧
+            (Out).Incident (.inr (CoreActual first))
+              (K.connector t)) ∧
+          ((Out).Incident (.inr (CoreActual second))
+              (K.connector t) ∧
             (Out).Incident (.inr (CoreActual second))
-              (K.connector pos) :=
-          ⟨hDistinct, hLeft, hParentFirst, hParentSecond, hRight⟩
-        simpa [hExpanded] using hLocal
-      · obtain ⟨t, _hOld, hCase⟩ :=
-          attachedSelectedPicture_expanded_nonadjacent_long_two_short_incidence
-            A hA B D C family selected e R f T U hShared hRel μ
-            K hAccept hn owner hAllowed hThree
-            target j pieces hPlan hProduces
-            first second w hp hForward pos rfl
-        rcases hCase with ⟨_hAt, hExpanded, hLeft, hRight⟩ |
-          ⟨_hAt, hExpanded, hLeft, hRight⟩
-        · simpa [hExpanded] using And.intro hLeft hRight
-        · simpa [hExpanded] using And.intro hLeft hRight
+              (K.connector (cyclicSucc t)))) := by
+    intro j first w second hp
+    have hDiff : Z.label j ≠ Z.label target := by
+      intro heq
+      have hk := (hPlan j).1 heq
+      have hf :
+          (TrainSupremePiece.long first w second :
+            TrainSupremePiece CoreEdge (Quotient (U.wagonSetoid μ))) =
+              TrainSupremePiece.keep := hp.symm.trans hk
+      cases hf
+    have hLong : Z.LongValid Wit target j first w second := by
+      have hCase := (hPlan j).2 hDiff
+      simpa only [hp] using hCase
+    by_cases hForward :
+        cyclicOwnerCutIndex owner j =
+          cyclicSucc (cyclicOwnerCutIndex owner (trainCyclicPred j))
+    · left
+      let pos : Fin n := cyclicOwnerCutIndex owner j
+      have hPrevious :
+          cyclicOwnerCutIndex owner (trainCyclicPred j) =
+            trainCyclicPred pos := by
+        dsimp [pos]
+        rw [hForward]
+        exact (trainCyclicPred_cyclicSucc_of_two_le
+          (by omega : 2 ≤ n)
+          (cyclicOwnerCutIndex owner (trainCyclicPred j))).symm
+      have hPhysical : K.PhysicalLongGeometry Out pos
+          (CoreActual first) (CoreWagon w) (CoreActual second) :=
+        attachedSelectedPicture_reduced_long_piece_physical_output
+          A hA B D C family selected e R f T U hShared hRel μ
+          K owner hAllowed hCuts hActive target j first second w
+          hLong pos rfl hPrevious
+      exact ⟨pos, rfl, hPrevious, hPhysical⟩
+    · right
+      obtain ⟨t, hOld, hUncut, hPrev, hHere⟩ :=
+        attachedSelectedPicture_fixed_plan_long_nonadjacent_two_step
+          A hA B D C family selected e R f T U hShared hRel μ
+          K hAccept owner hAllowed hThree target j pieces
+          hPlan hProduces first second w hp hForward
+      have hUncutOwner : owner t = owner (cyclicSucc t) := by
+        by_contra hNe
+        exact hUncut
+          ((mem_cyclicOwnerCutPositions_iff owner t).mpr hNe)
+      obtain ⟨hFirst, hSecond⟩ :=
+        attachedSelectedPicture_long_piece_old_wagon_two_short_incidence
+          A hA B D C family selected e R f T U hShared hRel μ
+          K owner hAllowed hCuts target j first second w hLong
+          t hOld hPrev hHere
+      exact ⟨t, hHere, hPrev, hUncutOwner, hFirst, hSecond⟩
+  exact K.expanded_run_plan_localIncidence
+    Out hn owner hThree pieces CoreActual CoreWagon
+    hShortGeometry hLongGeometry
 
-end ActualExpandedPlanAllIncidence
+end ActualExpandedPlanLocalIncidence
 end StructuralRamsey.Girth
