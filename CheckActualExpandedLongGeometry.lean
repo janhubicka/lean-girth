@@ -1,0 +1,5 @@
+import Girth.TrainActualExpandedLongGeometry
+
+#print axioms StructuralRamsey.Girth.cyclicExpandReducedPieces_long_inverse
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_localLongA2Geometry
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_long_fresh
