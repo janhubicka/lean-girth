@@ -3,3 +3,5 @@ import Girth.TrainColouredOwnerInducedUniformLift
 #print axioms StructuralRamsey.Girth.ownerSplit_project_lifted_tuple_range
 #print axioms StructuralRamsey.Girth.ownerSplit_lifted_source_tuple_edge
 #print axioms StructuralRamsey.Girth.ownerSplit_lifted_uniformEmbedding
+#print axioms StructuralRamsey.Girth.ownerSplit_oldEmbedding_colour
+#print axioms StructuralRamsey.Girth.ownerSplit_lifted_colouredOrderedEmbedding
