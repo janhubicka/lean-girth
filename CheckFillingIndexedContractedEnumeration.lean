@@ -1,0 +1,11 @@
+import Girth.TrainFillingIndexedContractedEnumeration
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedFamily_uniform
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedVertexColour
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedVertexColour_place
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumeration_colour
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumerationOfEquiv
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedEnumerationOfEquiv_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedFamily_covers
