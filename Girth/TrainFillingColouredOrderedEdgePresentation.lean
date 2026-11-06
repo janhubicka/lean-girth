@@ -34,14 +34,10 @@ variable {I : Type u} {V : Type v}
 order relation restricted to equal-colour vertices. -/
 def colouredOrderedEdgeLanguage (I : Type u) (k : ℕ) : RelLanguage.{u} where
   Symbol := (Unit ⊕ I) ⊕ Unit
-  arity := by
-    intro R
-    cases R with
-    | inl s =>
-      cases s with
-      | inl _ => exact k
-      | inr _ => exact 1
-    | inr _ => exact 2
+  arity := fun
+    | .inl (.inl _) => k
+    | .inl (.inr _) => 1
+    | .inr _ => 2
 
 /-- The ordered k-point one-edge type, lifted into the universe of its
 ambient vertex type. The lift has exactly k elements. -/
@@ -132,7 +128,9 @@ def colouredOrderedEdgeEmbedding
               exact ⟨(x t).down, rfl⟩
             · rintro ⟨t, rfl⟩
               obtain ⟨q, hq⟩ := hSurj t
-              exact ⟨q, by simp only [Function.comp_apply, hq]⟩
+              exact ⟨q, by
+                change ι ((x q).down) = ι t
+                rw [hq]⟩
           exact ⟨ι.injective.comp hDown,
             by simpa only [hRange] using hEdge⟩
       | inr colour =>
@@ -158,6 +156,27 @@ def colouredOrderedEdgeEmbedding
       · rintro ⟨hs, hLt⟩
         exact ⟨hc.mpr hs,
           (hWithinOrder (x 0).down (x 1).down hs).mp hLt⟩
+
+/-- The induced lifted source copy covers exactly the image of its
+chosen full physical edge enumeration. -/
+@[simp] theorem colouredOrderedEdgeEmbedding_carrier
+    [LinearOrder V]
+    (k : ℕ) (E : Set (Set V))
+    (sourceColour : Fin k → I) (targetColour : V → I)
+    (ι : Fin k ↪ V)
+    (hEdge : Set.range (ι : Fin k → V) ∈ E)
+    (hColour : ∀ x : Fin k, targetColour (ι x) = sourceColour x)
+    (hWithinOrder : ∀ x y : Fin k, sourceColour x = sourceColour y →
+      (x < y ↔ ι x < ι y)) :
+    copyCarrier (colouredOrderedEdgeEmbedding k E sourceColour targetColour
+        ι hEdge hColour hWithinOrder) =
+      Set.range (ι : Fin k → V) := by
+  ext y
+  constructor
+  · rintro ⟨t, rfl⟩
+    exact ⟨t.down, rfl⟩
+  · rintro ⟨t, rfl⟩
+    exact ⟨ULift.up t, rfl⟩
 
 /-- Every genuine one-edge embedding uses a declared full physical edge. -/
 theorem colouredOrderedEdgeEmbedding_carrier_mem
@@ -212,7 +231,10 @@ theorem colouredOrderedEdgeSupport_exact
     let f := colouredOrderedEdgeEmbedding k E
       sourceColour targetColour ι hiE hColour hWithinOrder
     refine ⟨f, ?_⟩
-    change e = Set.range (ι : Fin k → V)
+    change e = copyCarrier
+      (colouredOrderedEdgeEmbedding k E sourceColour targetColour
+        ι hiE hColour hWithinOrder)
+    rw [colouredOrderedEdgeEmbedding_carrier]
     exact hRange.symm
 
 end StructuralRamsey.Girth
