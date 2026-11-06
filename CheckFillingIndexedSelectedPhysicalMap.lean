@@ -1,0 +1,6 @@
+import Girth.TrainFillingIndexedSelectedPhysicalMap
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_cover
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_carrier
