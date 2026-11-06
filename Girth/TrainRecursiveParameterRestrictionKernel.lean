@@ -88,8 +88,7 @@ theorem EdgeTrainLevels.adjacentParameters_restrict
         oldEdges keep newEdges hShrink μ a ha,
       T.wagonClassCarrier_restrict_subset
         oldEdges keep newEdges hShrink μ b hb⟩
-  exact hOld μ ν hμν hSucc (embedChild a) (embedChild b)
-    hOldNe hOldParent x hOldX
+  exact hOld μ ν hμν hSucc hOldNe hOldParent hOldX
 
 /-- If every new physical vertex in a particular edge maps into
 its old carrier, any old sibling-intersection parameter pulls back
@@ -116,7 +115,7 @@ theorem EdgeTrainLevels.adjacentParameters_vertexPullback
         obtain ⟨f, hef, hfx⟩ := hx
         exact ⟨f, hef, hMaps f x hfx⟩
   intro μ ν hμν hSucc a b hne hParent x hx
-  exact hOld μ ν hμν hSucc a b hne hParent (vertexMap x)
+  exact hOld μ ν hμν hSucc hne hParent
     ⟨hCarrier μ a x hx.1, hCarrier μ b x hx.2⟩
 
 end StructuralRamsey.Girth
