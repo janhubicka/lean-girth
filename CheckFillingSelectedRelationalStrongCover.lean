@@ -1,0 +1,4 @@
+import Girth.TrainFillingSelectedRelationalStrongCover
+
+#print axioms StructuralRamsey.Girth.selectedSupportOldEdge_mem_range_of_strong
+#print axioms StructuralRamsey.Girth.UniformFillingData.selectedSupportFilledEdges_exact_of_strong
