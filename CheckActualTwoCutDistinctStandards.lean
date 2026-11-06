@@ -1,0 +1,5 @@
+import Girth.TrainActualTwoCutDistinctStandards
+
+#print axioms StructuralRamsey.Girth.trainCyclicPred_eq_cyclicSucc_of_card_two
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_designated_neighbors_eq_distinct
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_actual_two_standard_residual
