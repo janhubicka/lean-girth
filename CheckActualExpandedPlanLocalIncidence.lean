@@ -1,0 +1,3 @@
+import Girth.TrainActualExpandedPlanLocalIncidence
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_localPieceIncidence
