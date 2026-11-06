@@ -1,0 +1,4 @@
+import Girth.TrainTwoCommonEdgeSupremeSwitch
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_common_short
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_both_designated_supreme_of_common_short
