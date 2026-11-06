@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveRetainedTargetParameters
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.retained_adjacentParameter_of_old
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalRetained_adjacentParameter
