@@ -5,13 +5,12 @@ import Girth.TrainBigCycleOrderBudget
 import Mathlib.Tactic
 
 /-!
-# Path A: the four-or-more-owner-cut case
+# Path A: the complete three-or-more-owner-cut case
 
 The actual geometric reduction has length equal to the number of owner
-cuts. With at least FOUR cuts, its twice-order is at least four. The
-reduction dichotomy therefore puts it in the acceptable higher-order
-case. Exactly three cuts may still have twice-order three; the
-witness-girth argument alone does not exclude that case.
+cuts. With at least three cuts, its twice-order is at least three, so
+the exhaustive order-one / order-at-least-two dichotomy puts it in the
+acceptable higher-order case (in fact twice-order is at least four).
 Consequently the genuine witness FullSystemGirthGT supplies a globally
 supreme reduced plan, without separately hypothesizing such a plan.
 
@@ -20,7 +19,7 @@ globally legal simultaneous replacement of the original selected
 picture cycle, under the explicit old supreme bound and strongness
 hypotheses. No assumption on designated neighbor labels is required.
 
-The TWO-CUT and EXACTLY-THREE-CUT cases, and the existence of
+The TWO-CUT/order-one geometric-reduction case and the existence of
 the actual recursive lower witness are not concluded by this module.
 No axiom, sorry, support pruning, or synthetic designated-source label.
 -/
@@ -29,7 +28,7 @@ namespace StructuralRamsey.Girth
 open StructuralRamsey.RelStructure
 
 universe u v
-section FourCutFromFullSystem
+section ThreeCutFromFullSystem
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
 variable (A : RelStructure L UA) (hA : A.Irreducible)
@@ -72,16 +71,16 @@ local notation "Wit" => sharedWitnessOrderOneData U μ
 
 include hRel
 
-/-- A positive-cut geometric reduction with at least four actual owner
-cuts cannot be the lower twice-order-at-most-three exception. Its reduced cycle is
+/-- A positive-cut geometric reduction with at least three actual owner
+cuts cannot be the order-one bridge exception. Its reduced cycle is
 acceptable, and the genuine witness system-girth bound provides a
 complete simultaneous supreme plan at the reduced level. -/
-theorem attachedSelectedPicture_four_cut_reduced_supreme_of_fullSystem
+theorem attachedSelectedPicture_three_cut_reduced_supreme_of_fullSystem
     {n q : ℕ} (K : (Out).BigCycle n)
     (hAccept : K.Acceptable)
     (owner : Fin n → I ⊕ CoreEdge)
     (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
-    (hFour : 4 ≤ cyclicOwnerChanges owner)
+    (hThree : 3 ≤ cyclicOwnerChanges owner)
     (hq : 1 ≤ q)
     (hWitness : (Wit).FullSystemGirthGT q)
     (hOrder : K.twiceOrder ≤ 2 * q) :
@@ -100,19 +99,23 @@ theorem attachedSelectedPicture_four_cut_reduced_supreme_of_fullSystem
     OrderOneData.BigCycle.length_le_twiceOrder Wit Z
   have hAbove : 4 ≤ Z.twiceOrder := by
     rcases hCases with hOne | hAbove
-    · omega
+    · have hSmall : cyclicOwnerChanges owner ≤ 2 := by
+        calc
+          cyclicOwnerChanges owner ≤ Z.twiceOrder := hLength
+          _ = 2 := hOne
+      omega
     · exact hAbove
   have hReducedAccept : Z.Acceptable := hAcceptAbove hAbove
   have hReducedOrder : Z.twiceOrder ≤ 2 * q :=
     (hBounds.2.1).trans hOrder
   exact hWitness.2 _ Z hReducedAccept hReducedOrder
 
-/-- Full four-or-more-owner-cut Path A transfer: the genuine witness
+/-- Full three-or-more-owner-cut Path A transfer: the genuine witness
 system-girth bound and old standard supreme bound yield simultaneous
 supremeness on the actual original selected output cycle. No chosen
 reduced target is a hypothesis, and no lexicographic decrease is needed
-in this case. Exactly two and exactly three cuts remain separate open cases. -/
-theorem attachedSelectedPicture_four_cut_full_supreme_of_old_and_witness
+in this case. The two-cut reduction is a separate open case. -/
+theorem attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness
     [Finite UA]
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
       AStrong A D (copyCarrier b))
@@ -128,7 +131,7 @@ theorem attachedSelectedPicture_four_cut_full_supreme_of_old_and_witness
     (hOrder : K.twiceOrder ≤ 2 * q)
     (owner : Fin n → I ⊕ CoreEdge)
     (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
-    (hFour : 4 ≤ cyclicOwnerChanges owner)
+    (hThree : 3 ≤ cyclicOwnerChanges owner)
     (hq : 1 ≤ q)
     (hWitness : (Wit).FullSystemGirthGT q)
     (hOldSupreme : (Old).SupremeCycleBound q) :
@@ -138,9 +141,9 @@ theorem attachedSelectedPicture_four_cut_full_supreme_of_old_and_witness
       (attachedSelectedPicture_geometric_cutBigCycle
         A hA B D C family selected e R f T U hShared hRel μ
         K owner hAllowed hCuts).HasSimultaneousSupreme :=
-    attachedSelectedPicture_four_cut_reduced_supreme_of_fullSystem
+    attachedSelectedPicture_three_cut_reduced_supreme_of_fullSystem
       A hA B D C family selected e R f T U hShared hRel μ
-      K hAccept owner hAllowed hFour hq hWitness hOrder
+      K hAccept owner hAllowed hThree hq hWitness hOrder
   obtain ⟨i, target, hOwner, hAt⟩ :=
     attachedSelectedPicture_cut_supreme_selects_standard
       A hA B D C family selected e R f T U hShared hRel μ
@@ -151,12 +154,11 @@ theorem attachedSelectedPicture_four_cut_full_supreme_of_old_and_witness
         K owner hAllowed hCuts).label target = Sum.inl i := by
     change owner (cyclicOwnerCutIndex owner target) = Sum.inl i
     exact hOwner
-  have hThree : 3 ≤ cyclicOwnerChanges owner := by omega
   exact attachedSelectedPicture_three_cut_one_pass_supreme_of_old_bound
     A hA B D C family selected e R f T U hShared hRel μ
     hStrong hTwo hOldStrong hCoreStrong
     K hAccept hLinear hn hOrder
     owner hAllowed hThree target i hTarget hAt hOldSupreme
 
-end FourCutFromFullSystem
+end ThreeCutFromFullSystem
 end StructuralRamsey.Girth
