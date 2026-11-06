@@ -1,0 +1,4 @@
+import Girth.TrainSupremeLexRankInduction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.supremeCycleBound_of_lexDescent
+#print axioms StructuralRamsey.Girth.OrderOneData.fullSystemGirthGT_of_lexDescent
