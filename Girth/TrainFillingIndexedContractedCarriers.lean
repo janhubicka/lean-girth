@@ -75,9 +75,9 @@ theorem contractedCarrier_linear
       _ = w := huw
   · intro z hz w hw
     have hc : z ∈ componentCarrier U c :=
-      U.contractedCarrier_subset_component (c, p) hz.1
+      contractedCarrier_subset_component U (c, p) hz.1
     have hd : z ∈ componentCarrier U d :=
-      U.contractedCarrier_subset_component (d, q) hz.2
+      contractedCarrier_subset_component U (d, q) hz.2
     exact False.elim ((Set.disjoint_left.mp
       (componentCarrier_disjoint U c d hcd)) hc hd)
 
