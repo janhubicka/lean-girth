@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveParentChildCutGirth
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.labelledCutGirth_of_parent_and_children
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.labelledCutGirth_inserted_of_retained
