@@ -1,0 +1,7 @@
+import Girth.TrainFillingIndexedContractedTrain
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedChoiceTrain
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedProperParent
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedProperParent_surjective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedProperParent_eq_iff_rel
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.indexedEdge_properParent_eq_contracted
