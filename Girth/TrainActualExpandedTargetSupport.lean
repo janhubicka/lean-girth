@@ -213,11 +213,20 @@ theorem attachedSelectedPicture_expanded_plan_edges_in_target_standard
       | .short edge => edge.1 ⊆ copyCarrier (Std i)
       | .long edge _ other =>
           edge.1 ⊆ copyCarrier (Std i) ∧
-          other.1 ⊆ copyCarrier (Std i) :=
-    cyclicExpandReducedPieces_edge_property
-      owner hPos pieces CoreActual CoreWagon
-      (fun e => e.1 ⊆ copyCarrier (Std i))
-      hShort hLong pos
+          other.1 ⊆ copyCarrier (Std i) := by
+    have hGeneral :=
+      cyclicExpandReducedPieces_edge_property
+        owner hPos pieces CoreActual CoreWagon
+        (fun e => e.1 ⊆ copyCarrier (Std i))
+        hShort hLong pos
+    cases hp : cyclicExpandReducedPieces owner hPos pieces
+        CoreActual CoreWagon pos with
+    | keep =>
+        trivial
+    | short edge =>
+        simpa only [hp] using hGeneral
+    | long edge wagon other =>
+        simpa only [hp] using hGeneral
   constructor
   · intro pos edge hp
     have h := hEvery pos
