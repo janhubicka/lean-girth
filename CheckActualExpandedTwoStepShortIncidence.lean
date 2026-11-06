@@ -1,0 +1,3 @@
+import Girth.TrainActualExpandedTwoStepShortIncidence
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_expanded_nonadjacent_long_two_short_incidence
