@@ -7,3 +7,5 @@ import Girth.TrainFillingUniformEdgePresentation
 #print axioms StructuralRamsey.Girth.uniformEdgeEmbedding_carrier_mem
 #print axioms StructuralRamsey.Girth.uniformEdgeSupport_exact
 #print axioms StructuralRamsey.Girth.uniformEdgeSupport_of_enumerations
+
+#print axioms StructuralRamsey.Girth.uniformEdgeEmbedding_carrier
