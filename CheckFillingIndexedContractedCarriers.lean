@@ -1,0 +1,8 @@
+import Girth.TrainFillingIndexedContractedCarriers
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_subset_component
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_linear
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedOldEdgeEmbedding_carrier
