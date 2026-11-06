@@ -1,0 +1,8 @@
+import Girth.TrainTwoWagonSupremeObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.not_shortPiece_between_distinct_wagons
+#print axioms StructuralRamsey.Girth.OrderOneData.not_longPiece_between_wagons
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_localSupreme_of_two_wagon_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_simultaneousSupreme_of_two_wagon_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twiceOrder_eq_four_of_two_wagon_connectors
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_acceptable_two_wagon_of_fullSystemGirth
