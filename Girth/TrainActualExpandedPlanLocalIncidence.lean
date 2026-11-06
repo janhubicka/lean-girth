@@ -101,6 +101,8 @@ theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
       (cyclicExpandReducedPieces owner (by omega) pieces
         CoreActual CoreWagon) := by
   have hPos : 0 < cyclicOwnerChanges owner := by omega
+  change K.LocalPieceIncidence Out
+    (cyclicExpandReducedPieces owner hPos pieces CoreActual CoreWagon)
   intro pos
   let j := cyclicOwnerRunIndex owner hPos pos
   cases hp : pieces j with
@@ -137,7 +139,7 @@ theorem attachedSelectedPicture_expanded_plan_localPieceIncidence
             (Out).Incident (.inr (CoreActual second))
               (K.connector pos) :=
           ⟨hDistinct, hLeft, hParentFirst, hParentSecond, hRight⟩
-        simpa only [hExpanded] using hLocal
+        simpa [hExpanded] using hLocal
       · obtain ⟨t, _hOld, hCase⟩ :=
           attachedSelectedPicture_expanded_nonadjacent_long_two_short_incidence
             A hA B D C family selected e R f T U hShared hRel μ
