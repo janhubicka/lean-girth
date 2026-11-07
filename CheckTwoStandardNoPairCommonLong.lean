@@ -1,0 +1,5 @@
+import Girth.TrainTwoStandardNoPairCommonLong
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_standard_no_pair_long_at_both_targets
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_standard_no_pair_long_each_cut_of_two
