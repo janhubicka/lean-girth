@@ -65,7 +65,7 @@ theorem labelledGirthGT_of_unique_private
       ∃ x : V, cyc.vertex i = Sum.inl x := by
     cases hv : cyc.vertex i with
     | inl x =>
-        exact ⟨x, hv.symm⟩
+        exact ⟨x, rfl⟩
     | inr z =>
         have hl : Sum.inr z ∈ expanded (cyc.label i) := by
           rw [← hv]
@@ -160,8 +160,11 @@ theorem expandedWagonClass_private_unique
             U.place_eq_private_owner d y z hyd
           have hbd : b = d := hb.trans hd.symm
           subst d
+          have hsb : T.rel μ s b := by
+            rw [← hb] at hsd
+            exact hsd
           exact Quotient.sound ((T.equivalent μ).trans hpb
-            ((T.equivalent μ).symm hsd))
+            ((T.equivalent μ).symm hsb))
 
 /-- The expanded physical μ-wagon family inherits its FULL original
 labelled μ-cut girth, with no independent girth assumption on X. -/
