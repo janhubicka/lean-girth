@@ -220,4 +220,85 @@ theorem contractedChoiceTrain_parentBound
   exact hTagged hDistinct hParTagged ⟨hq, hr⟩
 
 
+/-- An original top-level wagon parent is constant on all lower
+wagon classes, because the original train's top relation is universal.
+This is a fact about the *actual* quotient parent map, not an added
+top-parent hypothesis. -/
+theorem oldWagonParent_eq_at_top
+    {m : ℕ} (T : EdgeTrainLevels P m)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν) (hTop : ν.val = m)
+    (q r : Quotient (T.wagonSetoid μ)) :
+    T.wagonParent μ ν hμν q =
+      T.wagonParent μ ν hμν r := by
+  induction q using Quotient.inductionOn with
+  | h p =>
+      induction r using Quotient.inductionOn with
+      | h s =>
+          apply Quotient.sound
+          change T.rel ν p s
+          have hνtop : ν = ⟨m, Nat.lt_succ_self m⟩ := Fin.ext hTop
+          rw [hνtop]
+          exact T.top p s
+
+/-- Top-parent intersection parameters survive heterogeneous
+contraction.  Unlike the proper-to-proper case, the global top
+identifies different choice components, so its parent map cannot
+factor through a choice-preserving tagged parent map.
+
+Different choices nevertheless have disjoint physical vertices.
+Within each one choice, the old top is already universal, so the
+original top-parent bound applies to ALL distinct lower wagons.
+Private X-vertices still have a unique lower wagon class.
+The actual contracted parent map is retained, with no output
+parameter bound as an input. -/
+theorem contractedChoiceTrain_topParentBound
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+    (hμ : μ.val < m) (hTop : ν.val = m)
+    (allowed : Set V)
+    (hOld : ∀ c : C, TrainParentIntersectionBound
+      (T.wagonClassCarrier (U c).oldCarrier μ)
+      (T.wagonParent μ ν hμν) allowed) :
+    TrainParentIntersectionBound
+      ((contractedChoiceTrain U T hm).wagonClassCarrier
+        (contractedCarrier U) μ)
+      ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
+      {z : Vertex U |
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
+  let local : ∀ c : C,
+      Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
+    fun c => T.wagonClassCarrier
+      (fun p => Set.range ((U c).place p)) μ
+  let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
+    fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
+  have hLocal : ∀ c : C, TrainParentIntersectionBound
+      (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
+    intro c
+    exact PrivateWagonInput.expandedWagonClass_parentBound
+      (U c) T μ ν hμν allowed (hOld c)
+  have hLocalPair : ∀ c : C,
+      ∀ ⦃a b : Quotient (T.wagonSetoid μ)⦄, a ≠ b →
+      local c a ∩ local c b ⊆ allowedLocal c := by
+    intro c a b hab
+    exact hLocal c hab
+      (oldWagonParent_eq_at_top T μ ν hμν hTop a b)
+  let fμ := contractedWagonClassEquiv U T hm μ hμ
+  intro q r hqr _ z hz
+  have hDistinct : fμ q ≠ fμ r := by
+    intro h
+    exact hqr (fμ.injective h)
+  have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ q]
+    exact hz.1
+  have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ r]
+    exact hz.2
+  exact dependentTagged_pairwise_intersection local
+    allowedLocal hLocalPair (fμ q) (fμ r)
+    hDistinct ⟨hq, hr⟩
+
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
