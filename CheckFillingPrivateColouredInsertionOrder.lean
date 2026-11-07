@@ -1,0 +1,10 @@
+import Girth.TrainFillingPrivateColouredInsertionOrder
+
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.privateColour
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.privateColour_place
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionKey
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionKey_injective
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionOrder
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionOrder_block_lt
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionOrder_old_lt
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.colouredInsertionOrder_place_lt
