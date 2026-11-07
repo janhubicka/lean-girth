@@ -78,23 +78,18 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-  let I := {b : DesignatedCopy Source D.toRelStructure S.system family //
-    b ∈ S.selected}
-  let f : I → Embedding Source S.system.toRelStructure :=
-    fun i =>
+  -- Directly specialize the checked selected-gluing equivalence. The
+  -- coarsened system has definitionally the same relational reduct, and
+  -- the selected partite embedding has the same underlying map.
+  exact S.selectedGluing_fullSystem_at_positive
+    A Old α D.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} =>
       (selectedPartiteGluingFamily_of_largeBase
         Target D S.system S.isPartite family hFamilyParts
-        S.selected i).toEmbedding
-  have hCarriers : ∀ i : I,
-      copyCarrier (f i) = copyCarrier i.1.embedding := by
-    intro i
-    rfl
-  change (activeGluingWitnessOrderOneData A Old α
-    S.system.toRelStructure f S.train j.castSucc).FullSystemGirthGT
-      (t.get j)
-  exact S.selectedGluing_fullSystem_at_positive
-    A Old α D.toRelStructure f (Equiv.refl I)
-    (by intro i; exact hCarriers i) j hj
+        S.selected i).toEmbedding)
+    (Equiv.refl _)
+    (by intro i; rfl) j hj
 
 /-- The same canonical actual positive selected gluing certificate
 at any smaller cutoff, with no loss of labels, support or plans. -/
