@@ -1,5 +1,6 @@
 import Girth.TrainFillingIndexedHigherCutPrivateGirth
 import Girth.TrainFillingIndexedContractedTrain
+import Girth.TrainFillingIndexedPrivateParentParameters
 
 set_option Elab.async false
 
@@ -128,5 +129,95 @@ theorem contractedChoiceTrain_labelledCutGirth
     exact contractedWagonClass_carrier_eq_tagged U T hm μ hProper q
   rw [hEq]
   exact hReindex
+
+/-- The real contracted-train parent square commutes EXACTLY with
+choice-tagged original quotient parents at two proper cuts.
+This is stronger than preserving the equivalence relations at each
+individual cut, because adjacent-parameter bounds depend on parents. -/
+theorem contractedWagonClass_parent_eq
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+    (hμ : μ.val < m) (hν : ν.val < m)
+    (q : Quotient ((contractedChoiceTrain U T hm).wagonSetoid μ)) :
+    contractedWagonClassEquiv U T hm ν hν
+      ((contractedChoiceTrain U T hm).wagonParent μ ν hμν q) =
+    ((contractedWagonClassEquiv U T hm μ hμ q).1,
+      T.wagonParent μ ν hμν
+        (contractedWagonClassEquiv U T hm μ hμ q).2) := by
+  induction q using Quotient.inductionOn with
+  | h e =>
+      rcases e with ⟨c, p⟩
+      rfl
+
+/-- The ACTUAL contracted train inherits every original sibling
+intersection bound between proper cuts. Distinct child μ-wagons
+with the same ν-parent can only meet on original old vertices;
+private vertices are invisible in sibling intersections.
+
+The permitted output vertices here are precisely the old tagged
+vertices whose original V-coordinate is allowed. Any larger union
+of allowed predicate parts automatically inherits this bound.
+No new parameter bound or output system-girth is assumed. -/
+theorem contractedChoiceTrain_parentBound
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+    (hμ : μ.val < m) (hν : ν.val < m)
+    (allowed : Set V)
+    (hOld : ∀ c : C, TrainParentIntersectionBound
+      (T.wagonClassCarrier (U c).oldCarrier μ)
+      (T.wagonParent μ ν hμν) allowed) :
+    TrainParentIntersectionBound
+      ((contractedChoiceTrain U T hm).wagonClassCarrier
+        (contractedCarrier U) μ)
+      ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
+      {z : Vertex U |
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
+  let local : ∀ c : C,
+      Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
+    fun c => T.wagonClassCarrier
+      (fun p => Set.range ((U c).place p)) μ
+  let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
+    fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
+  have hLocal : ∀ c : C, TrainParentIntersectionBound
+      (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
+    intro c
+    exact PrivateWagonInput.expandedWagonClass_parentBound
+      (U c) T μ ν hμν allowed (hOld c)
+  have hTagged : TrainParentIntersectionBound
+      (dependentTaggedCarriers local)
+      (fun cq : C × Quotient (T.wagonSetoid μ) =>
+        (cq.1, T.wagonParent μ ν hμν cq.2))
+      {z : Vertex U | z.2 ∈ allowedLocal z.1} :=
+    trainParentBound_dependentTagged local
+      (T.wagonParent μ ν hμν) allowedLocal hLocal
+  let fμ := contractedWagonClassEquiv U T hm μ hμ
+  let fν := contractedWagonClassEquiv U T hm ν hν
+  intro q r hqr hParent z hz
+  have hDistinct : fμ q ≠ fμ r := by
+    intro heq
+    exact hqr (fμ.injective heq)
+  have hParTagged :
+      ((fμ q).1, T.wagonParent μ ν hμν (fμ q).2) =
+      ((fμ r).1, T.wagonParent μ ν hμν (fμ r).2) := by
+    calc
+      _ = fν
+          ((contractedChoiceTrain U T hm).wagonParent μ ν hμν q) :=
+        (contractedWagonClass_parent_eq U T hm
+          μ ν hμν hμ hν q).symm
+      _ = fν
+          ((contractedChoiceTrain U T hm).wagonParent μ ν hμν r) :=
+        congrArg fν hParent
+      _ = _ :=
+        contractedWagonClass_parent_eq U T hm μ ν hμν hμ hν r
+  have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ q]
+    exact hz.1
+  have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ r]
+    exact hz.2
+  exact hTagged hDistinct hParTagged ⟨hq, hr⟩
+
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
