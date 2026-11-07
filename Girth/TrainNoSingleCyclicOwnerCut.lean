@@ -47,9 +47,7 @@ theorem cyclicOwnerChanges_ne_one
       ((mem_cyclicOwnerCutPositions_iff owner t).mpr hBad)
     have hrj : r = j := by
       apply Fin.ext
-      have hrlt := r.isLt
-      change r.val < cyclicOwnerChanges owner at hrlt
-      rw [hone] at hrlt
+      have hrlt : r.val < cyclicOwnerChanges owner := r.isLt
       change r.val = 0
       omega
     rw [hrj] at hr
