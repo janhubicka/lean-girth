@@ -1,0 +1,5 @@
+import Girth.TrainTwoVertexPairEdgeShortValidBoth
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_vertex_pairEdge_shortValid_both_targets
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_vertex_pairEdge_shortValid_for_each_cut
