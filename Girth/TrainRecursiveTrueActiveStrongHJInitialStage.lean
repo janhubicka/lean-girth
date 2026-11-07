@@ -43,7 +43,7 @@ genuine partite line embeddings, with A-strong members and the
 unrestricted partite Ramsey arrow at the chosen finite colour type.
 There is no independent base, family, linearity or support premise. -/
 theorem ForestTailStage.exists_initialLowerStage_over_strongHJBase
-    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
+    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA] [Nonempty UA]
     (B : RelStructure L.withOrder VB)
     (D : RelStructure L.withOrder P)
     {family : Set (Embedding B D)}
