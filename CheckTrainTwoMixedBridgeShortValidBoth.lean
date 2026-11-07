@@ -1,0 +1,4 @@
+import Girth.TrainTwoMixedBridgeShortValidBoth
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_mixed_bridges_shortValid_at_each_cut
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_mixed_bridges_shortValid_at_each_cut_of_two
