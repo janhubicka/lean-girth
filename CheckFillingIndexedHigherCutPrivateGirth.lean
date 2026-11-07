@@ -1,0 +1,7 @@
+import Girth.TrainFillingIndexedHigherCutPrivateGirth
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_unique_private
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedWagonClass_old_iff
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedWagonClass_private_unique
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedWagonClass_labelledGirthGT
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.indexedExpandedProperCut_labelledGirthGT
