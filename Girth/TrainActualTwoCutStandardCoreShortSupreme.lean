@@ -85,41 +85,6 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 include hRel
 
 
-/-- In a two-element witness BigCycle, if one occurrence has a
-PHYSICAL edge label, any designated supreme index necessarily
-is the other occurrence. -/
-private theorem two_cut_unique_designated_target
-    {c : ℕ} (hTwo : c = 2)
-    (Z : (Wit).BigCycle c)
-    (cut k : Fin c) (b : CoreEdge)
-    (hCore : Z.label cut = Sum.inr b)
-    (hDesignated : (Wit).designated (Z.label k)) :
-    k = trainCyclicPred cut := by
-  have hkc : k ≠ cut := by
-    intro hEq
-    subst k
-    have hFalse : False := by
-      simpa [OrderOneData.designated, hCore] using hDesignated
-    exact hFalse.elim
-  have hPredNe : trainCyclicPred cut ≠ cut := by
-    intro hEq
-    have hSucc := cyclicSucc_trainCyclicPred_of_two_le
-      (by omega : 2 ≤ c) cut
-    rw [hEq] at hSucc
-    exact (cyclicSucc_ne_self_of_two_le
-      (by omega : 2 ≤ c) cut) hSucc
-  apply Fin.ext
-  have hkBound := k.isLt
-  have hCutBound := cut.isLt
-  have hPredBound := (trainCyclicPred cut).isLt
-  have hkVal : k.val ≠ cut.val := by
-    intro h
-    exact hkc (Fin.ext h)
-  have hPredVal : (trainCyclicPred cut).val ≠ cut.val := by
-    intro h
-    exact hPredNe (Fin.ext h)
-  omega
-
 /-- With EXACTLY TWO geometric owner cuts, if one reduced label is
 a genuine designated standard and the other is a physical core
 A-edge, full witness system girth and the actual old supreme bound
@@ -173,10 +138,29 @@ theorem attachedSelectedPicture_two_cut_standard_core_full_supreme
   have hSupreme : Z.HasSimultaneousSupreme :=
     hWitness.2 _ Z hAcceptZ hOrderZ
   obtain ⟨k, hk, pieces, hPlan, hProduces⟩ := hSupreme
-  have hkEq : k = trainCyclicPred cut :=
-    two_cut_unique_designated_target
-      A hA B D C family selected e R f T U hShared hRel μ
-      hTwo Z cut k b hSource hk
+  have hkEq : k = trainCyclicPred cut := by
+    have hkc : k ≠ cut := by
+      intro heq
+      subst k
+      have hFalse : False := by
+        simpa [OrderOneData.designated, hSource] using hk
+      exact hFalse.elim
+    have hPredNe : trainCyclicPred cut ≠ cut := by
+      intro heq
+      have hSucc := cyclicSucc_trainCyclicPred_of_two_le hCuts cut
+      rw [heq] at hSucc
+      exact (cyclicSucc_ne_self_of_two_le hCuts cut) hSucc
+    apply Fin.ext
+    have hkBound := k.isLt
+    have hCutBound := cut.isLt
+    have hPredBound := (trainCyclicPred cut).isLt
+    have hkVal : k.val ≠ cut.val := by
+      intro h
+      exact hkc (Fin.ext h)
+    have hPredVal : (trainCyclicPred cut).val ≠ cut.val := by
+      intro h
+      exact hPredNe (Fin.ext h)
+    omega
   subst k
   have hAt : Z.HasSupremeAt Wit (trainCyclicPred cut) :=
     ⟨hk, pieces, hPlan, hProduces⟩
