@@ -53,6 +53,37 @@ theorem trainParentBound_of_unique_private
       exact False.elim
         (hqr (hPrivate q r x hz.1 hz.2))
 
+/-- Parent/sibling overlap bounds also pass through a genuinely
+DEPENDENT choice-tagged union. A common parent below the universal
+top forces equal choice tags; different choice tags cannot have any
+common vertex. All quotient occurrence labels remain distinct. -/
+theorem trainParentBound_dependentTagged
+    {C Q R : Type v} {W : C → Type v}
+    (H : ∀ c : C, Q → Set (W c))
+    (parent : Q → R)
+    (allowed : ∀ c : C, Set (W c))
+    (hLocal : ∀ c : C,
+      TrainParentIntersectionBound (H c) parent (allowed c)) :
+    TrainParentIntersectionBound
+      (dependentTaggedCarriers H)
+      (fun cq : C × Q => (cq.1, parent cq.2))
+      {z : Sigma W | z.2 ∈ allowed z.1} := by
+  rintro ⟨c, q⟩ ⟨d, r⟩ hDistinct hParent z hz
+  have hcd : c = d := congrArg Prod.fst hParent
+  subst d
+  have hqr : q ≠ r := by
+    intro h
+    exact hDistinct (congrArg (Prod.mk c) h)
+  obtain ⟨x, hx, hxEq⟩ := hz.1
+  obtain ⟨y, hy, hyEq⟩ := hz.2
+  have hxy : x = y :=
+    dependentTagVertex_injective c (hxEq.trans hyEq.symm)
+  have hAllowed : x ∈ allowed c :=
+    hLocal c hqr (congrArg Prod.snd hParent)
+      ⟨hx, by simpa only [hxy] using hy⟩
+  rw [← hxEq]
+  exact hAllowed
+
 namespace PrivateWagonInput
 
 variable {P X : Type v}
