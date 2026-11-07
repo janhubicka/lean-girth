@@ -1,0 +1,8 @@
+import Girth.TrainCyclicTwoCutTwoStepComplement
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_two_cut_two_step_complement_owner
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_two_cut_old_wagon_oriented_run
+
+#print axioms StructuralRamsey.Girth.finTwo_eq_self_or_pred
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.old_wagon_at_two_vertex_cuts_is_uncut
