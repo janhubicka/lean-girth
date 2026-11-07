@@ -1,3 +1,4 @@
+import Girth.TrainRecursiveTrueActiveFirstCutGirth
 import Girth.TrainFillingIndexedHigherCutPrivateGirth
 import Girth.TrainFillingIndexedContractedTrain
 import Girth.TrainFillingIndexedPrivateParentParameters
@@ -129,6 +130,31 @@ theorem contractedChoiceTrain_labelledCutGirth
     exact contractedWagonClass_carrier_eq_tagged U T hm μ hProper q
   rw [hEq]
   exact hReindex
+
+/-- Uniform horizontal labelled-cut girth of the ACTUAL contracted
+heterogeneous choice train, including its universal top.  Every
+proper cut transfers from the complete old wagon family, and the
+top has a unique quotient wagon label.  No extra output or expanded
+private girth bound is assumed. -/
+theorem contractedChoiceTrain_labelledCutGirth_allLevels
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (μ : Fin (m + 1)) (g : ℕ)
+    (hOld : ∀ c : C,
+      LabelledGirthGT
+        (T.wagonClassCarrier (U c).oldCarrier μ) g) :
+    LabelledGirthGT
+      ((contractedChoiceTrain U T hm).wagonClassCarrier
+        (contractedCarrier U) μ) g := by
+  by_cases hProper : μ.val < m
+  · exact contractedChoiceTrain_labelledCutGirth
+      U T hm μ hProper g hOld
+  · have hTop : μ = (⟨m, Nat.lt_succ_self m⟩ : Fin (m + 1)) := by
+      apply Fin.ext
+      have hb := μ.isLt
+      omega
+    subst μ
+    exact (contractedChoiceTrain U T hm).top_labelledCutGirth
+      (contractedCarrier U) g
 
 /-- The real contracted-train parent square commutes EXACTLY with
 choice-tagged original quotient parents at two proper cuts.
