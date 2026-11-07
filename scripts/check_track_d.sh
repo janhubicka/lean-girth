@@ -90,6 +90,7 @@ checks=(
   CheckTrainRecursiveTrueActiveLowerCutoffVector
   CheckTrainRecursiveExactHeightTransport
   CheckTrainRecursiveTrueActiveInitialLowerStage
+  CheckTrainRecursiveTrueActiveStrongHJInitialStage
 )
 
 for check in "${checks[@]}"; do

@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveStrongHJInitialStage
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.exists_initialLowerStage_over_strongHJBase
