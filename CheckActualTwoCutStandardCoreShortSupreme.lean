@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCutStandardCoreShortSupreme
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_standard_core_full_supreme
