@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveTrueActiveRetainedTailCuts
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedRetainedTailCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedRetainedTailCutGirth
