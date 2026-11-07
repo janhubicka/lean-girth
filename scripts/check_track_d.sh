@@ -75,6 +75,8 @@ checks=(
   CheckActualTwoCutSingletonShortStandardTransfer
   CheckActualTwoCutSymmetricShortSupreme
   CheckActualTwoCutVariableShortSupreme
+  CheckTrainTwoVertexPairEdgeShortValidBoth
+  CheckActualTwoCutPairEdgeFullSupreme
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
