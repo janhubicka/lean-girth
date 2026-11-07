@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveExactHeightTransport
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.castHeight_labelledCutGirth
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.castHeight_adjacentParameters
