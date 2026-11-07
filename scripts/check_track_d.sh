@@ -77,6 +77,8 @@ checks=(
   CheckActualTwoCutVariableShortSupreme
   CheckTrainTwoVertexPairEdgeShortValidBoth
   CheckActualTwoCutPairEdgeFullSupreme
+  CheckTrainTwoMixedBridgeShortValidBoth
+  CheckActualTwoCutMixedBridgesFullSupreme
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
