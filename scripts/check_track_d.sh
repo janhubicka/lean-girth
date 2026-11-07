@@ -92,6 +92,7 @@ checks=(
   CheckTrainRecursiveTrueActiveInitialLowerStage
   CheckTrainRecursiveTrueActiveStrongHJInitialStage
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTrainRecursiveHJSelectedFinitePass
 )
 
 for check in "${checks[@]}"; do
