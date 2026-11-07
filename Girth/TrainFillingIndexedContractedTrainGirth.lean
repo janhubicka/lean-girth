@@ -301,4 +301,49 @@ theorem contractedChoiceTrain_topParentBound
 
 
 
+/-- The complete physical contracted train inherits the old
+parent-intersection bound at every pair of wagon levels, including
+the universal top.  Proper child cuts use the choice-tagged
+quotient carrier equivalence; at the top child cut there is only
+one quotient wagon, so the bound is vacuous. -/
+theorem contractedChoiceTrain_parentBound_allLevels
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (μ ν : Fin (m + 1)) (hμν : μ ≤ ν)
+    (allowed : Set V)
+    (hOld : ∀ c : C, TrainParentIntersectionBound
+      (T.wagonClassCarrier (U c).oldCarrier μ)
+      (T.wagonParent μ ν hμν) allowed) :
+    TrainParentIntersectionBound
+      ((contractedChoiceTrain U T hm).wagonClassCarrier
+        (contractedCarrier U) μ)
+      ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
+      {z : Vertex U |
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
+  by_cases hμ : μ.val < m
+  · by_cases hν : ν.val < m
+    · exact contractedChoiceTrain_parentBound
+        U T hm μ ν hμν hμ hν allowed hOld
+    · have hTop : ν.val = m := by
+        have hbound := ν.isLt
+        omega
+      exact contractedChoiceTrain_topParentBound
+        U T hm μ ν hμν hμ hTop allowed hOld
+  · intro q r hqr _ z hz
+    have hTop : μ.val = m := by
+      have hbound := μ.isLt
+      omega
+    have hμeq : μ = ⟨m, Nat.lt_succ_self m⟩ := Fin.ext hTop
+    have hEq : q = r := by
+      induction q using Quotient.inductionOn with
+      | h p =>
+          induction r using Quotient.inductionOn with
+          | h s =>
+              apply Quotient.sound
+              change (contractedChoiceTrain U T hm).rel μ p s
+              rw [hμeq]
+              exact (contractedChoiceTrain U T hm).top p s
+    exact False.elim (hqr hEq)
+
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
