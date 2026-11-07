@@ -1,0 +1,5 @@
+import Girth.TrainFillingIndexedContractedTrainGirth
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedWagonClassEquiv
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedWagonClass_carrier_eq_tagged
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedChoiceTrain_labelledCutGirth
