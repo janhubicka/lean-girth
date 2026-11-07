@@ -150,7 +150,7 @@ vertex map in its global chosen order: the projection-first output
 order is available from the verified owner-splitting construction. -/
 noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
     {k : ℕ}
-    [LinearOrder V] [LinearOrder W] [LinearOrder H.Vertex]
+    [LinearOrder V] [LinearOrder W] [o : LinearOrder H.Vertex]
     (sourceColour : W → I)
     (b : Embedding
       (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
@@ -158,7 +158,7 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
     (hb : ∀ w : W, b w = S.embedding w)
     (hOldMono : StrictMono S.embedding)
     (hProjectionOrder : ∀ a b : H.Vertex,
-      H.project a < H.project b → a < b) :
+      H.project a < H.project b → @LT.lt H.Vertex o.toLT a b) :
     Embedding
       (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
       (colouredOrderedEdgeTarget k
@@ -177,9 +177,8 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
   let bLiftUniform := ownerSplit_lifted_uniformEmbedding S k bUniform hbUniform
   have hLiftMono : StrictMono S.lift := by
     intro x y hxy
-    exact H.selectedLift_strictMono_of_projectionFirst S
-      (inferInstance : LinearOrder H.Vertex) hProjectionOrder
-      hOldMono x y hxy
+    apply hProjectionOrder
+    simpa only [S.project_lift] using hOldMono hxy
   refine {
     toFun := S.lift
     injective := S.lift_injective
@@ -192,11 +191,13 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
       | inl _ =>
           exact bLiftUniform.map_rel_iff () x
       | inr colour =>
+          change (Fin 1 → W) at x
           change H.newPredicate (S.lift (x 0)) = colour ↔
             sourceColour (x 0) = colour
           rw [H.selectedLift_preserves_predicate S (x 0),
             ownerSplit_oldEmbedding_colour S k sourceColour b hb (x 0)]
   | inr _ =>
+      change (Fin 2 → W) at x
       change (H.newPredicate (S.lift (x 0)) =
         H.newPredicate (S.lift (x 1)) ∧
         S.lift (x 0) < S.lift (x 1)) ↔
