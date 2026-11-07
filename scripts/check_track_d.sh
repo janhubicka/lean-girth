@@ -91,6 +91,9 @@ checks=(
   CheckTrainRecursiveExactHeightTransport
   CheckTrainRecursiveTrueActiveInitialLowerStage
   CheckTrainRecursiveTrueActiveStrongHJInitialStage
+  CheckTrainRecursiveRefinementForwardParameters
+  CheckTrainRecursiveTrueActiveAdjacentParameters
+  CheckTrainRecursiveTrueActiveFineParameters
 )
 
 for check in "${checks[@]}"; do
