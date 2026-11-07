@@ -70,6 +70,7 @@ checks=(
   CheckTrainActualPositiveCutRankTrichotomy
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
+  CheckTrainTwoVertexPairEdgeShortValidBoth
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
