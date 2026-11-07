@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCutSingletonShortStandardTransfer
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_singleton_short_supreme_of_old_bound
