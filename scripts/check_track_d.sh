@@ -80,6 +80,7 @@ checks=(
   CheckActualTwoCutFreshLongStandardTransfer
   CheckTwoStandardNoPairCommonLong
   CheckActualLongChosenStandardCarriers
+  CheckActualTwoCutSymmetricLongFullSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
   CheckActualTwoCutSingletonShortStandardTransfer
