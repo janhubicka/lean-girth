@@ -51,7 +51,12 @@ theorem labelledGirthGT_of_unique_private
     change i.val = (i.val + 1) % cyc.length at hv
     have hn := cyc.hlength
     have hi := i.isLt
-    omega
+    by_cases hlt : i.val + 1 < cyc.length
+    · rw [Nat.mod_eq_of_lt hlt] at hv
+      omega
+    · have hlast : i.val + 1 = cyc.length := by omega
+      rw [hlast, Nat.mod_self] at hv
+      omega
   have hDistinct (i : Fin cyc.length) :
       cyc.label i ≠ cyc.label (cyclicSucc i) := by
     intro h
