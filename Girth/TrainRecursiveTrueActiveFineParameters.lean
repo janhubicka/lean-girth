@@ -78,25 +78,32 @@ theorem ForestTailStage.trueActive_inducedRefinementAdjacentParameters
   have hOldFineInserted (j : Fin (R.extraCuts + 1)) :
       oldFine (firstRefinementParent t.length R.extraCuts hm j) =
         R.permitted j := by
-    simpa [oldFine, Function.Embedding.refl, Set.preimage] using
-      (fineAllowedFromRefinement_parent t.length R.extraCuts hm
-        (Function.Embedding.refl P) allowed R.permitted j)
+    change fineAllowedFromRefinement t.length R.extraCuts hm
+      (Function.Embedding.refl P) allowed R.permitted
+        (firstRefinementParent t.length R.extraCuts hm j) = R.permitted j
+    rw [fineAllowedFromRefinement_parent]
+    rfl
   have hOldFineRetained (ν : Fin (t.length + 1))
       (hν : 1 < ν.val) :
       oldFine (EdgeTrainLevels.firstForgetIndex t.length R.extraCuts ν) =
         allowed ν := by
-    simpa [oldFine, Function.Embedding.refl, Set.preimage] using
-      (fineAllowedFromRefinement_retained_gt_one
-        t.length R.extraCuts hm (Function.Embedding.refl P)
-        allowed R.permitted ν hν)
+    change fineAllowedFromRefinement t.length R.extraCuts hm
+      (Function.Embedding.refl P) allowed R.permitted
+        (EdgeTrainLevels.firstForgetIndex t.length R.extraCuts ν) = allowed ν
+    rw [fineAllowedFromRefinement_retained_gt_one
+      t.length R.extraCuts hm (Function.Embedding.refl P)
+      allowed R.permitted ν hν]
+    rfl
   have hPreimage (ρ : Fin (t.length + R.extraCuts + 1)) :
       α ⁻¹' oldFine ρ =
         fineAllowedFromRefinement t.length R.extraCuts hm
           α allowed R.permitted ρ := by
     ext x
     by_cases h : 0 < ρ.val ∧ ρ.val ≤ R.extraCuts + 1
-    · simp [oldFine, fineAllowedFromRefinement, h, Function.Embedding.refl]
-    · simp [oldFine, fineAllowedFromRefinement, h, Function.Embedding.refl]
+    · simp only [oldFine, fineAllowedFromRefinement, dif_pos h]
+      rfl
+    · simp only [oldFine, fineAllowedFromRefinement, dif_neg h]
+      rfl
   have hShared : Tshared.AdjacentParameters
       (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
         edge.1.1)
