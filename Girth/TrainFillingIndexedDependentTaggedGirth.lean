@@ -109,7 +109,7 @@ theorem labelledGirthGT_dependentTagged
         have hd : d = c0 := by
           simpa only [hv] using hVertexTag i
         subst d
-        exact ⟨x, hv.symm⟩
+        exact ⟨x, by simpa only [dependentTagVertex] using hv.symm⟩
   let point (i : Fin cyc.length) : V c0 :=
     Classical.choose (hVertexExists i)
   have point_eq (i : Fin cyc.length) :
@@ -177,7 +177,12 @@ theorem PrivateWagonInput.expandedFirstWagons_labelledGirthGT
     change i.val = (i.val + 1) % cyc.length at hv
     have hn := cyc.hlength
     have hi := i.isLt
-    omega
+    by_cases hlt : i.val + 1 < cyc.length
+    · rw [Nat.mod_eq_of_lt hlt] at hv
+      omega
+    · have hlast : i.val + 1 = cyc.length := by omega
+      rw [hlast, Nat.mod_self] at hv
+      omega
   have hAdjacent (i : Fin cyc.length) :
       cyc.label i ≠ cyc.label (cyclicSucc i) := by
     intro h
