@@ -69,6 +69,7 @@ checks=(
   CheckTrainActualSelectedOutputLexRank
   CheckTrainActualPositiveCutRankTrichotomy
   CheckActualPositiveCutTwoCutRankGate
+  CheckActualTwoCutDistinctStandards
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
