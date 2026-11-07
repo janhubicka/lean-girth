@@ -161,8 +161,9 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
       H.project a < H.project b → @LT.lt H.Vertex o.toLT a b) :
     Embedding
       (colouredOrderedEdgeTarget k S.sourceEdges sourceColour)
-      (colouredOrderedEdgeTarget k
-        (Set.range H.splitEdge) H.newPredicate) := by
+      (@colouredOrderedEdgeTarget I H.Vertex k
+        (Set.range H.splitEdge) H.newPredicate o) := by
+  letI : LinearOrder H.Vertex := o
   let bUniform : Embedding
       (uniformEdgeTarget k S.sourceEdges)
       (uniformEdgeTarget k H.edges) := {
