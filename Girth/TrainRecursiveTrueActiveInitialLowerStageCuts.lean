@@ -80,7 +80,7 @@ theorem ForestTailStage.exists_initialLowerStage_of_activeRefinement
               (fineAllowedFromRefinement
                 (q :: tail).length R.extraCuts
                 (by simp : 0 < (q :: tail).length)
-                e.toFunctionEmbedding allowed R.permitted ρ)))
+                e.toFunctionEmbedding allowed R.permitted ρ))) :
     ∃ hLen : (q :: tail).length + R.extraCuts =
         (List.replicate (R.extraCuts + 1) (q - 1) ++ tail).length,
       Nonempty
