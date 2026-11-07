@@ -1,4 +1,5 @@
 import Girth.TrainRecursiveTrueActiveFirstCutGirth
+import Girth.TrainAllAdjacentParameterPreservation
 import Girth.TrainFillingIndexedHigherCutPrivateGirth
 import Girth.TrainFillingIndexedContractedTrain
 import Girth.TrainFillingIndexedPrivateParentParameters
@@ -370,6 +371,27 @@ theorem contractedChoiceTrain_parentBound_allLevels
               exact (contractedChoiceTrain U T hm).top p s
     exact False.elim (hqr hEq)
 
+
+
+/-- All adjacent parameters of the ACTUAL contracted heterogeneous
+train, including the final universal-top step, are inherited from
+the original one-choice trains.  The allowed set at parent level ν
+contains precisely tagged old vertices in the original allowed set
+at ν; no private point is added to the permitted intersections. -/
+theorem contractedChoiceTrain_adjacentParameters
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (allowed : Fin (m + 1) → Set V)
+    (hOld : ∀ c : C,
+      T.AdjacentParameters (U c).oldCarrier allowed) :
+    (contractedChoiceTrain U T hm).AdjacentParameters
+      (contractedCarrier U)
+      (fun ν => {z : Vertex U |
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed ν)}) := by
+  intro μ ν hμν hSucc
+  apply contractedChoiceTrain_parentBound_allLevels
+    U T hm μ ν hμν (allowed ν)
+  intro c
+  exact hOld c μ ν hμν hSucc
 
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
