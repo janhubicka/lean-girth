@@ -202,7 +202,6 @@ theorem attachedSelectedPicture_two_cut_singleton_short_supreme_of_old_bound
         simpa [pieces] using hp
       have hb : CoreActual b = a := by
         injection hPiece with heq
-        exact heq
       subst a
       exact hSupport
     · simp [pieces, hk] at hp
