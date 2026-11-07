@@ -205,7 +205,7 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
       change (Fin 2 → W) at x
       change (H.newPredicate (S.lift (x 0)) =
         H.newPredicate (S.lift (x 1)) ∧
-        S.lift (x 0) < S.lift (x 1)) ↔
+        @LT.lt H.Vertex o.toLT (S.lift (x 0)) (S.lift (x 1))) ↔
         (sourceColour (x 0) = sourceColour (x 1) ∧ x 0 < x 1)
       have hxColour : H.newPredicate (S.lift (x 0)) =
           sourceColour (x 0) :=
