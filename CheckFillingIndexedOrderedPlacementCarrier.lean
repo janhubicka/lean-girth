@@ -1,0 +1,4 @@
+import Girth.TrainFillingIndexedOrderedPlacementCarrier
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedPlacement_eq_of_ordered_carriers
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_carrier_of_ordered
