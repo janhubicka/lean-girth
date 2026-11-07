@@ -71,6 +71,9 @@ checks=(
   CheckActualPositiveCutTwoCutRankGate
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
+  CheckTrainRecursiveTrueActiveAdjacentParameters
+  CheckTrainRecursiveRefinementForwardParameters
+  CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveInsertedTargetParameters
   CheckTrainRecursiveParameterRestrictionKernel
   CheckTrainRecursiveTrueActiveOriginalParameters
