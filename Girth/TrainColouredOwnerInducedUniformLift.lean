@@ -164,6 +164,10 @@ noncomputable def ownerSplit_lifted_colouredOrderedEmbedding
       (@colouredOrderedEdgeTarget I H.Vertex k
         (Set.range H.splitEdge) H.newPredicate o) := by
   letI : LinearOrder H.Vertex := o
+  -- The split sum type has a pre-existing derived preorder.  Select the
+  -- same explicit projection-first order at the preorder level too;
+  -- otherwise elaboration uses the unrelated default sum order.
+  letI : Preorder H.Vertex := o.toPreorder
   let bUniform : Embedding
       (uniformEdgeTarget k S.sourceEdges)
       (uniformEdgeTarget k H.edges) := {
