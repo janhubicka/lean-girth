@@ -140,7 +140,7 @@ theorem ForestTailStage.exists_initialLowerStage_over_strongHJBase
                   (q :: tail).length R.extraCuts
                   (by simp : 0 < (q :: tail).length)
                   e.toFunctionEmbedding allowed R.permitted
-                  (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm ρ))) := by
+                  (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm ρ)))) := by
   classical
   let Source := actualActiveSubsystemPartite A₀.ordered stage.system
     e.toFunctionEmbedding
