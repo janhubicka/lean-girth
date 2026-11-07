@@ -68,6 +68,8 @@ checks=(
   CheckTrainRecursiveTrueActiveTargetSupportData
   CheckTrainActualSelectedOutputLexRank
   CheckTrainActualPositiveCutRankTrichotomy
+  CheckTrainNoSingleCyclicOwnerCut
+  CheckTrainActualSupremeResidualClosure
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
   CheckTrainSupremeLexRankInduction
