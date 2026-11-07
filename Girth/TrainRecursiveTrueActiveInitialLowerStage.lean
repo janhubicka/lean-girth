@@ -107,7 +107,8 @@ theorem ForestTailStage.exists_initialLowerStage_of_activeTargetCuts
               ⟨j.val, by
                 simp only [List.length_append, List.length_replicate,
                   List.length_cons]
-                have := j.isLt
+                have hj := j.isLt
+                simp only [List.length_cons] at hj
                 omega⟩)) :
     ∃ hLen : (q :: tail).length + R.extraCuts =
         (List.replicate (R.extraCuts + 1) (q - 1) ++ tail).length,
@@ -179,7 +180,8 @@ theorem ForestTailStage.exists_initialLowerStage_of_activeTargetCuts
     let jOld : Fin ((q :: tail).length + R.extraCuts) :=
       Fin.cast hLen.symm j
     have hjOld : 0 < jOld.val := by
-      simpa only [jOld] using hj
+      change 0 < j.val
+      exact hj
     have hOldIndex :
         (⟨jOld.val, by rw [← hLen]; exact jOld.isLt⟩ :
           Fin lower.length) = j := by
