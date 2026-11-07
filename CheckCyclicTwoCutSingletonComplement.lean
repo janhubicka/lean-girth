@@ -1,0 +1,3 @@
+import Girth.TrainCyclicTwoCutSingletonComplement
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_two_cut_singleton_complement_owner
