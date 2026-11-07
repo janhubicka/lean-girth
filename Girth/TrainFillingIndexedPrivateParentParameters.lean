@@ -84,6 +84,38 @@ theorem trainParentBound_dependentTagged
   rw [← hxEq]
   exact hAllowed
 
+
+/-- At the universal parent, different choices can have the SAME
+parent.  Nevertheless their tagged vertex carriers are disjoint.
+For labels in one choice, a pairwise local overlap bound suffices
+without any parent-tag condition.  This is the missing top-parent
+case of dependent tagged unions. -/
+theorem dependentTagged_pairwise_intersection
+    {C Q : Type v} {W : C → Type v}
+    (H : ∀ c : C, Q → Set (W c))
+    (allowed : ∀ c : C, Set (W c))
+    (hLocal : ∀ c : C, ∀ ⦃q r : Q⦄, q ≠ r →
+      H c q ∩ H c r ⊆ allowed c)
+    (a b : C × Q) (hab : a ≠ b) :
+    dependentTaggedCarriers H a ∩ dependentTaggedCarriers H b ⊆
+      {z : Sigma W | z.2 ∈ allowed z.1} := by
+  rcases a with ⟨c, q⟩
+  rcases b with ⟨d, r⟩
+  intro z hz
+  obtain ⟨x, hx, hxEq⟩ := hz.1
+  obtain ⟨y, hy, hyEq⟩ := hz.2
+  have hcd : c = d := congrArg Sigma.fst (hxEq.trans hyEq.symm)
+  subst d
+  have hqr : q ≠ r := by
+    intro h
+    exact hab (congrArg (Prod.mk c) h)
+  have hxy : x = y :=
+    dependentTagVertex_injective c (hxEq.trans hyEq.symm)
+  have hAllowed : x ∈ allowed c :=
+    hLocal c hqr ⟨hx, by simpa only [hxy] using hy⟩
+  rw [← hxEq]
+  exact hAllowed
+
 namespace PrivateWagonInput
 
 variable {P X : Type v}
