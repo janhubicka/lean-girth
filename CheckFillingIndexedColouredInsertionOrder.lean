@@ -1,0 +1,9 @@
+import Girth.TrainFillingIndexedColouredInsertionOrder
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.colouredChoiceInsertionKey
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.colouredChoiceInsertionKey_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.colouredChoiceInsertionOrder
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.colouredChoicePlace_lt
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.colouredChoiceEnumerate_lt_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualIndexedContractedM
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualIndexedContractedM_support_eq
