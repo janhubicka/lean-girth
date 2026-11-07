@@ -1,0 +1,6 @@
+import Girth.TrainActualTwoCutShortSingletonOrientation
+
+#print axioms StructuralRamsey.Girth.trainCyclicPred_pred_eq_self_of_card_two
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_two_orientations_exclusive
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_short_some_singleton_run
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_short_unique_orientation
