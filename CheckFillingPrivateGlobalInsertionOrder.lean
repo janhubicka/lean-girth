@@ -1,0 +1,7 @@
+import Girth.TrainFillingPrivateGlobalInsertionOrder
+
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionKey
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionKey_injective
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionOrder
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionOrder_old_lt
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.insertionOrder_place_lt
