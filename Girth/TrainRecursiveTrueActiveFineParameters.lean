@@ -78,14 +78,14 @@ theorem ForestTailStage.trueActive_inducedRefinementAdjacentParameters
   have hOldFineInserted (j : Fin (R.extraCuts + 1)) :
       oldFine (firstRefinementParent t.length R.extraCuts hm j) =
         R.permitted j := by
-    simpa [oldFine] using
+    simpa [oldFine, Function.Embedding.refl, Set.preimage] using
       (fineAllowedFromRefinement_parent t.length R.extraCuts hm
         (Function.Embedding.refl P) allowed R.permitted j)
   have hOldFineRetained (ν : Fin (t.length + 1))
       (hν : 1 < ν.val) :
       oldFine (EdgeTrainLevels.firstForgetIndex t.length R.extraCuts ν) =
         allowed ν := by
-    simpa [oldFine] using
+    simpa [oldFine, Function.Embedding.refl, Set.preimage] using
       (fineAllowedFromRefinement_retained_gt_one
         t.length R.extraCuts hm (Function.Embedding.refl P)
         allowed R.permitted ν hν)
@@ -93,9 +93,10 @@ theorem ForestTailStage.trueActive_inducedRefinementAdjacentParameters
       α ⁻¹' oldFine ρ =
         fineAllowedFromRefinement t.length R.extraCuts hm
           α allowed R.permitted ρ := by
+    ext x
     by_cases h : 0 < ρ.val ∧ ρ.val ≤ R.extraCuts + 1
-    · simp [oldFine, fineAllowedFromRefinement, h]
-    · simp [oldFine, fineAllowedFromRefinement, h]
+    · simp [oldFine, fineAllowedFromRefinement, h, Function.Embedding.refl]
+    · simp [oldFine, fineAllowedFromRefinement, h, Function.Embedding.refl]
   have hShared : Tshared.AdjacentParameters
       (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure S =>
         edge.1.1)
@@ -120,10 +121,8 @@ theorem ForestTailStage.trueActive_inducedRefinementAdjacentParameters
       (fun ρ => stage.system.part ⁻¹' oldFine ρ) hShared
     · intro j
       rw [hOldFineInserted j]
-      exact Set.Subset.rfl
     · intro ν hν
       rw [hOldFineRetained ν hν]
-      exact Set.Subset.rfl
   change (R.train.restrict
       (inducedACarrierToShared A stage.system.toRelStructure S)).AdjacentParameters
       (fun edge : OldACarrierEdge A (stage.system.toRelStructure.induce S) =>
