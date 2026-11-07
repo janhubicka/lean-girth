@@ -78,23 +78,15 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-  let I := {b : DesignatedCopy Source D.toRelStructure S.system family //
-    b ∈ S.selected}
-  -- First apply the no-sorry selected-picture transfer to the literal
-  -- subtype identity.  This keeps the dependent label type fully explicit.
-  have hId :
-      (activeGluingWitnessOrderOneData A Old α S.system.toRelStructure
-        (fun i : I => i.1.embedding) S.train j.castSucc).FullSystemGirthGT
-          (t.get j) := by
-    exact S.selectedGluing_fullSystem_at_positive A Old α D.toRelStructure
-      (fun i : I => i.1.embedding) (Equiv.refl I)
-      (fun i => rfl) j hj
-  -- Coarsening changes only the part map.  The literal selected
-  -- partite gluing family has the same underlying relational embeddings.
-  change (activeGluingWitnessOrderOneData A Old α S.system.toRelStructure
-    (fun i : I => i.1.embedding) S.train j.castSucc).FullSystemGirthGT
-      (t.get j)
-  exact hId
+  -- The coarsened partite system has the same relational reduct,
+  -- and selectedPartiteGluingFamily_of_largeBase retains each copy's
+  -- literal underlying relational embedding. Consequently the target
+  -- is definitionally the generic selected-gluing certificate.
+  exact S.selectedGluing_fullSystem_at_positive
+    A Old α D.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} => i.1.embedding)
+    (Equiv.refl _) (fun i => rfl) j hj
 
 /-- The same canonical actual positive selected gluing certificate
 at any smaller cutoff, with no loss of labels, support or plans. -/
