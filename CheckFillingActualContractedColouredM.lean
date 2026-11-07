@@ -1,0 +1,7 @@
+import Girth.TrainFillingActualContractedColouredM
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedColouredM
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedColouredM_support_eq
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedColouredM_supportCovers
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedSelectedOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedSelectedOldEdgeEmbedding_carrier
