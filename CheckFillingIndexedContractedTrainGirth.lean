@@ -7,3 +7,4 @@ import Girth.TrainFillingIndexedContractedTrainGirth
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedChoiceTrain_parentBound
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.oldWagonParent_eq_at_top
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedChoiceTrain_topParentBound
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedChoiceTrain_parentBound_allLevels
