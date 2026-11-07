@@ -1,0 +1,5 @@
+import Girth.TrainFillingColouredBlockMonotone
+
+#print axioms StructuralRamsey.Girth.colouredOrderedEmbedding_preserves_colour
+#print axioms StructuralRamsey.Girth.colouredOrderedEmbedding_strictMono_within
+#print axioms StructuralRamsey.Girth.colouredOrderedEmbedding_strictMono
