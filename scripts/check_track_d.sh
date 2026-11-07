@@ -73,6 +73,7 @@ checks=(
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
   CheckActualTwoCutSingletonShortStandardTransfer
+  CheckActualTwoCutSymmetricShortSupreme
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
