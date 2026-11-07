@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveInitialLowerStageCuts
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.exists_initialLowerStage_of_activeRefinement
