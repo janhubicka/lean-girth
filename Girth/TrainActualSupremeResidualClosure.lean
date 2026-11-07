@@ -6,31 +6,26 @@ set_option autoImplicit false
 set_option Elab.async false
 
 /-!
-# Full attached output girth reduces to only the two-cut geometry
+# Full attached output girth reduces to exactly two geometric owner cuts
 
-A genuine cyclic geometric owner word has zero changes or at least two.
-At zero cuts, the checked old-picture GLOBAL simultaneous supreme
-transfer gives the answer. Crucially, the already merged and kernel-audited
-three-cut Path A theorem gives complete globally legal supremeness for
-EVERY positive owner word with at least THREE changes. No rank induction
-or replacement of original source B-labels by geometric owner indices
-is needed in this case.
+Every genuine finite cyclic owner word has zero changes or at least
+two. The canonical indexed cut map injects its cut positions into all
+source positions, so its change count can NEVER exceed cycle length.
 
-Therefore full attached-output SupremeCycleBound and FullSystemGirthGT
-reduce to only TWO physical residual tasks:
-* acceptable original BigCycles of exactly two occurrences;
-* acceptable original BigCycles of at least three occurrences whose
-  actual geometric owner assignment has EXACTLY two changes.
+At zero cuts the checked old-picture GLOBAL supreme-plan transfer
+applies. For at least three changes the merged three-cut Path A theorem
+gives a complete globally legal simultaneous supreme plan (using the
+real witness FullSystemGirthGT, old standard SupremeCycleBound and
+physical A-strongness). Thus the ONLY residual geometric assumption
+needed to prove FULL output FullSystemGirthGT is the EXACTLY-two-cut
+case, for original cycles of ANY length, including length two.
 
-This is strictly simpler than the older conditional trichotomy/lexicographic
-closure formulation. The theorem remains CONDITIONAL on both residual
-physical cases, and on the real old/witness global system certificates
-and the genuine strongness/two-A-edge inputs. These remain visible in
-its statement. It neither proves the two-cut geometry nor constructs
-the lower recursive witness or asserts high girth of an HJ power.
-
-Every ambient physical A-edge and every distinct labelled wagon remains;
-the appendix is unused.
+This replaces the older lexicographic-residual formulation and avoids
+even a separate length-two exceptional hypothesis. The theorem is
+CONDITIONAL on the actual two-cut geometry, not an unconditional proof
+of the forest-partite theorem. It preserves all physical A-edges and
+distinct quotient wagon labels, assumes no high girth of the HJ power,
+and uses no appendix.
 
 -/
 
@@ -82,10 +77,10 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 
 include hRel
 
-/-- With REAL old and witness full-system certificates, only the
-original length-two and EXACTLY-two-owner-cut physical cases remain.
-In particular the ≥3-owner-cut case is already fully verified, so no
-rank-descent oracle or global induction hypothesis appears here. -/
+/-- Under real old and witness full-system certificates, complete
+output system girth follows from the exactly-two-geometric-owner-cut
+case alone. No separate source length-two premise or rank-descent
+oracle is assumed: zero and ≥3 cuts are already fully verified. -/
 theorem attachedSelectedPicture_fullSystemGirth_of_two_cut_cases
     [Finite UA]
     (q : ℕ) (hq : 1 ≤ q)
@@ -99,11 +94,8 @@ theorem attachedSelectedPicture_fullSystemGirth_of_two_cut_cases
     (hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)))
     (hOldSupreme : (Old).SupremeCycleBound q)
     (hWitness : (Wit).FullSystemGirthGT q)
-    (hTwoCycle : ∀ (K : (Out).BigCycle 2),
-      K.Acceptable → K.twiceOrder ≤ 2 * q →
-      K.HasSimultaneousSupreme)
     (hTwoCut : ∀ {n : ℕ} (K : (Out).BigCycle n)
-      (hAccept : K.Acceptable) (hn : 3 ≤ n)
+      (hAccept : K.Acceptable)
       (owner : Fin n → I ⊕ CoreEdge)
       (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
       (hExactlyTwo : cyclicOwnerChanges owner = 2)
@@ -121,20 +113,23 @@ theorem attachedSelectedPicture_fullSystemGirth_of_two_cut_cases
         A hA B D C family selected e R f T U hShared hRel μ
         hStrong hTwo hOldStrong hCoreStrong
         K hAccept hOldSupreme hOrder owner hAllowed hZero
-    · by_cases hn : 3 ≤ n
-      · by_cases hExactlyTwo : cyclicOwnerChanges owner = 2
-        · exact hTwoCut K hAccept hn owner hAllowed hExactlyTwo hOrder
-        · have hThree : 3 ≤ cyclicOwnerChanges owner := by omega
-          exact attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness
-            A hA B D C family selected e R f T U hShared hRel μ
-            hStrong hTwo hOldStrong hCoreStrong
-            K hAccept hLinear hn hOrder owner hAllowed hThree
-            hq hWitness hOldSupreme
-      · have hLen : n = 2 := by
-          have hMin := K.length_ge_two
-          omega
-        subst n
-        exact hTwoCycle K hAccept hOrder
+    · by_cases hExactlyTwo : cyclicOwnerChanges owner = 2
+      · exact hTwoCut K hAccept owner hAllowed hExactlyTwo hOrder
+      · have hThree : 3 ≤ cyclicOwnerChanges owner := by omega
+        have hCountBound : cyclicOwnerChanges owner ≤ n := by
+          have hCard :
+              Fintype.card (Fin (cyclicOwnerChanges owner)) ≤
+                Fintype.card (Fin n) :=
+            Fintype.card_le_of_injective
+              (cyclicOwnerCutIndex owner)
+              (cyclicOwnerCutIndex owner).injective
+          simpa using hCard
+        have hn : 3 ≤ n := by omega
+        exact attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness
+          A hA B D C family selected e R f T U hShared hRel μ
+          hStrong hTwo hOldStrong hCoreStrong
+          K hAccept hLinear hn hOrder owner hAllowed hThree
+          hq hWitness hOldSupreme
   exact ⟨hLinear, hSupreme⟩
 
 end AttachedCycleExceptionalClosure
