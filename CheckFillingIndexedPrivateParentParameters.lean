@@ -1,0 +1,5 @@
+import Girth.TrainFillingIndexedPrivateParentParameters
+
+#print axioms StructuralRamsey.Girth.trainParentBound_of_unique_private
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedWagonClass_parentBound
+#print axioms StructuralRamsey.Girth.trainParentBound_dependentTagged

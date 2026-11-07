@@ -1,0 +1,10 @@
+import Girth.TrainFillingIndexedDependentTaggedGirth
+
+#print axioms StructuralRamsey.Girth.dependentTagVertex
+#print axioms StructuralRamsey.Girth.dependentTagVertex_injective
+#print axioms StructuralRamsey.Girth.dependentTaggedCarriers
+#print axioms StructuralRamsey.Girth.dependentTaggedCarriers_mem_fiber
+#print axioms StructuralRamsey.Girth.labelledGirthGT_dependentTagged
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_labelledGirthGT
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedFirstWagons_labelledGirthGT
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedCarrier_labelledGirthGT_of_old
