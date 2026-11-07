@@ -1,3 +1,3 @@
 import Girth.TrainActualSupremeResidualClosure
 
-#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_residual_cases
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_two_cut_cases
