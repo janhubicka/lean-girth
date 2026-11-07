@@ -78,6 +78,7 @@ checks=(
   CheckTrainRecursiveTrueActiveFirstCutGirth
   CheckTrainRecursiveTrueActiveRefinementCutGirth
   CheckTrainRecursiveExactHeightTransport
+  CheckTrainRecursiveTrueActiveInitialLowerStage
 )
 
 for check in "${checks[@]}"; do
