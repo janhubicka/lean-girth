@@ -1,0 +1,4 @@
+import Girth.TrainCyclicRunIndexReverseWindow
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_two_step_fibre_of_two_le
+#print axioms StructuralRamsey.Girth.cyclicOwnerRunIndex_two_step_fibre
