@@ -155,6 +155,64 @@ theorem labelledGirthGT_dependentTagged
   }
   exact hLocal c0 ⟨projected, hLen⟩
 
+
+/-- Private local positions lie on exactly their own first wagon.
+A short labelled cycle among expanded full X-wagons must therefore
+use only OLD connecting vertices: each connector belongs to two
+DISTINCT consecutive first-wagon labels. The original labelled
+girth bound descends to the expanded family with no new girth
+assumption on the private extension. -/
+theorem PrivateWagonInput.expandedFirstWagons_labelledGirthGT
+    {V P X : Type v}
+    (U : PrivateWagonInput V P X)
+    (g : ℕ)
+    (hOld : LabelledGirthGT U.oldCarrier g) :
+    LabelledGirthGT
+      (fun p : P => Set.range (U.place p)) g := by
+  classical
+  rintro ⟨cyc, hBound⟩
+  have hSuccNe (i : Fin cyc.length) : i ≠ cyclicSucc i := by
+    intro h
+    have hv := congrArg Fin.val h
+    change i.val = (i.val + 1) % cyc.length at hv
+    have hn := cyc.hlength
+    have hi := i.isLt
+    omega
+  have hAdjacent (i : Fin cyc.length) :
+      cyc.label i ≠ cyc.label (cyclicSucc i) := by
+    intro h
+    exact hSuccNe i (cyc.label_injective h)
+  have hOldPoint (i : Fin cyc.length) :
+      ∃ x : V, cyc.vertex i = Sum.inl x ∧
+        x ∈ U.oldCarrier (cyc.label i) ∧
+        x ∈ U.oldCarrier (cyc.label (cyclicSucc i)) :=
+    U.shared_vertex_old (cyc.label i)
+      (cyc.label (cyclicSucc i)) (hAdjacent i)
+      (cyc.vertex i) (cyc.left_mem i) (cyc.right_mem i)
+  let vertex (i : Fin cyc.length) : V := Classical.choose (hOldPoint i)
+  have hVertex (i : Fin cyc.length) :
+      cyc.vertex i = Sum.inl (vertex i) ∧
+        vertex i ∈ U.oldCarrier (cyc.label i) ∧
+        vertex i ∈ U.oldCarrier (cyc.label (cyclicSucc i)) :=
+    Classical.choose_spec (hOldPoint i)
+  let projected : LabelledBergeCycle U.oldCarrier := {
+    length := cyc.length
+    hlength := cyc.hlength
+    label := cyc.label
+    vertex := vertex
+    label_injective := cyc.label_injective
+    vertex_injective := by
+      intro i j hij
+      apply cyc.vertex_injective
+      calc
+        cyc.vertex i = Sum.inl (vertex i) := (hVertex i).1
+        _ = Sum.inl (vertex j) := congrArg Sum.inl hij
+        _ = cyc.vertex j := (hVertex j).1.symm
+    left_mem := fun i => (hVertex i).2.1
+    right_mem := fun i => (hVertex i).2.2
+  }
+  exact hOld ⟨projected, hBound⟩
+
 end StructuralRamsey.Girth
 
 namespace StructuralRamsey.Girth.IndexedPrivateChoice
