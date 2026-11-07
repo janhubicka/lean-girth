@@ -1,40 +1,37 @@
 import Girth.TrainNoSingleCyclicOwnerCut
-import Girth.TrainActualPositiveCutRankTrichotomy
+import Girth.TrainActualThreeCutFromFullSystem
 import Girth.TrainActualZeroCutGlobalSupreme
-import Girth.TrainSupremeLexRankInduction
 
 set_option autoImplicit false
 set_option Elab.async false
 
 /-!
-# Complete global system girth reduces to the remaining physical exceptions
+# Full attached output girth reduces to only the two-cut geometry
 
-This is the final NON-GEOMETRIC closure step for the attached selected
-picture's full simultaneous-supreme cycle condition.
+A genuine cyclic geometric owner word has zero changes or at least two.
+At zero cuts, the checked old-picture GLOBAL simultaneous supreme
+transfer gives the answer. Crucially, the already merged and kernel-audited
+three-cut Path A theorem gives complete globally legal supremeness for
+EVERY positive owner word with at least THREE changes. No rank induction
+or replacement of original source B-labels by geometric owner indices
+is needed in this case.
 
-For each acceptable output BigCycle, choose the actual minimum among
-all admissible GEOMETRIC standard/core-edge owners. The genuine
-finite-cyclic lemma shows that its number of cuts is either zero or
-at least two. The zero-cut case lifts a legal global old-picture
-supreme plan; for at least three source positions the checked physical
-positive-cut trichotomy produces either a STRICT intrinsic lexicographic
-rank descent (with complete global supreme pullback), or exactly one
-of TWO explicitly retained geometric exceptions:
-  (i) a designated supreme reduced standard with designated neighbours
-      on both sides;
-  (ii) a reduced order-one vertex/wagon word with physical bridges.
+Therefore full attached-output SupremeCycleBound and FullSystemGirthGT
+reduce to only TWO physical residual tasks:
+* acceptable original BigCycles of exactly two occurrences;
+* acceptable original BigCycles of at least three occurrences whose
+  actual geometric owner assignment has EXACTLY two changes.
 
-The separate length-two output case also remains an explicit physical
-hypothesis. Once exactly these exceptional cases have been solved,
-the existing well-founded rank theorem proves FULL SupremeCycleBound
-and (with genuine pretrain linearity) FULL FullSystemGirthGT.
+This is strictly simpler than the older conditional trichotomy/lexicographic
+closure formulation. The theorem remains CONDITIONAL on both residual
+physical cases, and on the real old/witness global system certificates
+and the genuine strongness/two-A-edge inputs. These remain visible in
+its statement. It neither proves the two-cut geometry nor constructs
+the lower recursive witness or asserts high girth of an HJ power.
 
-No global supreme plan is postulated for ordinary positive-cut cycles,
-no phantom lower-stage witness is constructed, and no local-piece
-bound is substituted for globally legal simultaneous replacement.
-In particular this theorem is CONDITIONAL and should not be used as
-an unconditional validation marker in the circulation manuscript.
-No appendix.
+Every ambient physical A-edge and every distinct labelled wagon remains;
+the appendix is unused.
+
 -/
 
 namespace StructuralRamsey.Girth
@@ -82,20 +79,14 @@ local notation "Wit" => sharedWitnessOrderOneData U μ
   (Subtype.val : CoreEdge → Set Y)
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μ
-local notation "CycleRank" => attachedSelectedPicture_geometricLexRank
-  A hA B D C family selected e R f T U hShared μ
 
 include hRel
 
-/-- A complete attached-output system-girth certificate follows once
-the genuine length-two source case and the EXACT two residual
-positive-cut geometric alternatives are discharged.
-
-All other cases are already established by zero-cut global transfer,
-physical short-absorption with strict intrinsic rank decrease,
-and well-founded induction. No assumptions about an abstract
-rank-descent oracle, arbitrary chosen owner, or local-only pieces. -/
-theorem attachedSelectedPicture_fullSystemGirth_of_residual_cases
+/-- With REAL old and witness full-system certificates, only the
+original length-two and EXACTLY-two-owner-cut physical cases remain.
+In particular the ≥3-owner-cut case is already fully verified, so no
+rank-descent oracle or global induction hypothesis appears here. -/
+theorem attachedSelectedPicture_fullSystemGirth_of_two_cut_cases
     [Finite UA]
     (q : ℕ) (hq : 1 ≤ q)
     (hLinear : (Out).LinearPretrain)
@@ -111,71 +102,40 @@ theorem attachedSelectedPicture_fullSystemGirth_of_residual_cases
     (hTwoCycle : ∀ (K : (Out).BigCycle 2),
       K.Acceptable → K.twiceOrder ≤ 2 * q →
       K.HasSimultaneousSupreme)
-    (hExceptions : ∀ {n : ℕ} (K : (Out).BigCycle n)
+    (hTwoCut : ∀ {n : ℕ} (K : (Out).BigCycle n)
       (hAccept : K.Acceptable) (hn : 3 ≤ n)
       (owner : Fin n → I ⊕ CoreEdge)
       (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
-      (hMinimal : ∀ other : Fin n → I ⊕ CoreEdge,
-        (∀ j, GeomAllowed (K.label j) (other j)) →
-        cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
-      (hCuts : 2 ≤ cyclicOwnerChanges owner)
+      (hExactlyTwo : cyclicOwnerChanges owner = 2)
       (hOrder : K.twiceOrder ≤ 2 * q),
-      let Z := attachedSelectedPicture_geometric_cutBigCycle
-        A hA B D C family selected e R f T U hShared hRel μ
-        K owner hAllowed hCuts
-      ((∃ target : Fin (cyclicOwnerChanges owner),
-          ∃ i before after : I,
-          Z.HasSupremeAt Wit target ∧
-          Z.label target = Sum.inl i ∧
-          Z.label (trainCyclicPred target) = Sum.inl before ∧
-          Z.label (cyclicSucc target) = Sum.inl after) ∨
-        (∃ x : Y, ∃ p : Quotient (U.wagonSetoid μ),
-          (∃ a b : Fin (cyclicOwnerChanges owner),
-            a ≠ b ∧ Z.connector a = Sum.inl x ∧
-              Z.connector b = Sum.inr p) ∧
-          ∀ k, (Wit).Bridge (Z.label k) x p)) →
       K.HasSimultaneousSupreme) :
     (Out).FullSystemGirthGT q := by
-  have hStep : ∀ {n : ℕ} (K : (Out).BigCycle n),
-      K.Acceptable → K.twiceOrder ≤ 2 * q →
-      K.HasSimultaneousSupreme ∨
-        ∃ (r : ℕ) (H : (Out).BigCycle r),
-          H.Acceptable ∧ H.twiceOrder ≤ 2 * q ∧
-          Prod.Lex (· < ·) (· < ·) (CycleRank H) (CycleRank K) ∧
-          (H.HasSimultaneousSupreme → K.HasSimultaneousSupreme) := by
+  have hSupreme : (Out).SupremeCycleBound q := by
     intro n K hAccept hOrder
-    obtain ⟨owner, hAllowed, hMinimal⟩ :=
+    obtain ⟨owner, hAllowed, _hMinimal⟩ :=
       attachedSelectedPicture_cycle_exists_minimal_geometric_owners
         A hA B D C family selected e R f T U hShared μ K
-    rcases cyclicOwnerChanges_zero_or_two_le K.length_ge_two owner
-      with hZero | hCuts
-    · exact Or.inl
-        (attachedSelectedPicture_zero_cut_supreme_of_old_bound
-          A hA B D C family selected e R f T U hShared hRel μ
-          hStrong hTwo hOldStrong hCoreStrong
-          K hAccept hOldSupreme hOrder owner hAllowed hZero)
+    rcases cyclicOwnerChanges_zero_or_two_le K.length_ge_two owner with
+      hZero | hPositive
+    · exact attachedSelectedPicture_zero_cut_supreme_of_old_bound
+        A hA B D C family selected e R f T U hShared hRel μ
+        hStrong hTwo hOldStrong hCoreStrong
+        K hAccept hOldSupreme hOrder owner hAllowed hZero
     · by_cases hn : 3 ≤ n
-      · rcases
-          attachedSelectedPicture_positive_cut_rank_descent_or_designated_or_bridges
+      · by_cases hExactlyTwo : cyclicOwnerChanges owner = 2
+        · exact hTwoCut K hAccept hn owner hAllowed hExactlyTwo hOrder
+        · have hThree : 3 ≤ cyclicOwnerChanges owner := by omega
+          exact attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness
             A hA B D C family selected e R f T U hShared hRel μ
-            K hAccept hn hLinear owner hAllowed hMinimal
-            hCuts hq hWitness hOrder
-          with hDrop | hException
-        · obtain ⟨H, hHAccept, hSameOrder, hRank, hPull⟩ := hDrop
-          refine Or.inr ⟨n, H, hHAccept, ?_, hRank, hPull⟩
-          rw [hSameOrder]
-          exact hOrder
-        · exact Or.inl
-            (hExceptions K hAccept hn owner hAllowed hMinimal
-              hCuts hOrder hException)
-      · have heq : n = 2 := by
-          have hmin := K.length_ge_two
+            hStrong hTwo hOldStrong hCoreStrong
+            K hAccept hLinear hn hOrder owner hAllowed hThree
+            hq hWitness hOldSupreme
+      · have hLen : n = 2 := by
+          have hMin := K.length_ge_two
           omega
         subst n
-        exact Or.inl (hTwoCycle K hAccept hOrder)
-  exact ⟨hLinear,
-    (Out).supremeCycleBound_of_lexDescent q
-      (fun _ K => CycleRank K) hStep⟩
+        exact hTwoCycle K hAccept hOrder
+  exact ⟨hLinear, hSupreme⟩
 
 end AttachedCycleExceptionalClosure
 
