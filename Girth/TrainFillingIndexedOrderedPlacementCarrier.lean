@@ -94,7 +94,7 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier_of_ordered
     U H hTemplate β vertex
   intro c p x
   exact selectedIndexedPlacement_eq_of_ordered_carriers
-    U H hTemplate β sourcePlacement selectedVertex canonicalPlacement
+    U H β sourcePlacement selectedVertex canonicalPlacement
     hSource hCanonical hCarrier (c, p) x
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
