@@ -236,4 +236,20 @@ theorem contractedCarrier_labelledGirthGT
     (fun c p => Set.range ((U c).place p))
     g hLocal
 
+/-- This is the actual old-to-contracted quantitative girth transfer
+needed by the cutoff-two induction: each private extension inherits
+its old FIRST-WAGON labelled girth bound, and the full heterogeneous
+choice union preserves it again by genuinely disjoint tags.
+
+No new local expanded girth assumption is required; we use only the
+original old first-wagon label family and its input girth bound. -/
+theorem contractedCarrier_labelledGirthGT_of_old
+    (g : ℕ)
+    (hOld : ∀ c : C,
+      LabelledGirthGT (U c).oldCarrier g) :
+    LabelledGirthGT (contractedCarrier U) g :=
+  contractedCarrier_labelledGirthGT U g
+    (fun c => PrivateWagonInput.expandedFirstWagons_labelledGirthGT
+      (U c) g (hOld c))
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
