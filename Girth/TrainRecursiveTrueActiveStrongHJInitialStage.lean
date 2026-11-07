@@ -148,8 +148,8 @@ theorem ForestTailStage.exists_initialLowerStage_over_strongHJBase
     actualActiveSubsystemPartite_isPartiteOver A₀.ordered D
       stage.system stage.isPartite e
   letI : Finite stage.Vertex := stage.finiteVertex
-  have hGeometry := stage.trueActive_HJ_sourceGeometry
-    A₀.ordered B D e
+  have hGeometry := ForestTailStage.trueActive_HJ_sourceGeometry
+    A₀.ordered B D stage e
   have hIrreducible : A₀.ordered.Irreducible :=
     (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
   obtain ⟨N, hN, hPartite, hLinear, hCover, lowerFamily,
