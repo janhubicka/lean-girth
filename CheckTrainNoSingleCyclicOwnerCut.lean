@@ -1,0 +1,4 @@
+import Girth.TrainNoSingleCyclicOwnerCut
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_ne_one
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_zero_or_two_le
