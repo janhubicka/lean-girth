@@ -59,14 +59,11 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier_of_strictMono
   let canonicalPlacement : (C × P) → X ↪o Y :=
     fun cp => OrderEmbedding.ofStrictMono
       (H.place (β cp)) (hCanonicalMono cp)
-  apply selectedIndexedFilledEdgeEmbedding_carrier_of_ordered
+  exact selectedIndexedFilledEdgeEmbedding_carrier_of_ordered
     U H hTemplate β sourcePlacement selectedVertex canonicalPlacement
-  · intro cp x
-    rfl
-  · intro cp x
-    rfl
-  · intro cp
-    exact hCarrier cp
-  · exact a
+    (by intro cp x; rfl)
+    (by intro cp x; rfl)
+    (by intro cp; exact hCarrier cp)
+    a
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
