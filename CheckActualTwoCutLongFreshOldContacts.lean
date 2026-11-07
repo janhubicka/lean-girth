@@ -1,0 +1,5 @@
+import Girth.TrainActualTwoCutLongFreshOldContacts
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_long_fresh_or_old_straddle
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_long_fresh_or_old_oriented
