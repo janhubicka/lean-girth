@@ -72,6 +72,7 @@ checks=(
   CheckTrainActualSupremeResidualClosure
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
+  CheckTrainTwoVertexPairEdgeShortValidBoth
   CheckTrainSupremeLexRankInduction
   CheckTrainRecursiveRefinementRetainedCutGirth
   CheckTrainRecursiveInsertedTargetParameters
