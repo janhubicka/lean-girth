@@ -101,8 +101,8 @@ theorem BigCycle.no_simultaneousSupreme_of_two_wagon_connectors
     (h1 : Z.connector 1 = Sum.inr q) :
     ¬ Z.HasSimultaneousSupreme := by
   intro hSupreme
-  exact D.BigCycle.no_localSupreme_of_two_wagon_connectors
-    Z p q h0 h1
+  exact BigCycle.no_localSupreme_of_two_wagon_connectors
+    D Z p q h0 h1
     (D.BigCycle.localSupreme_of_simultaneous Z hSupreme)
 
 /-- Both wagon connectors contribute weight two at each of the
@@ -129,12 +129,12 @@ theorem BigCycle.no_acceptable_two_wagon_of_fullSystemGirth
     (h1 : Z.connector 1 = Sum.inr q) :
     False := by
   have hOrder : Z.twiceOrder = 4 :=
-    D.BigCycle.twiceOrder_eq_four_of_two_wagon_connectors
-      Z p q h0 h1
+    BigCycle.twiceOrder_eq_four_of_two_wagon_connectors
+      D Z p q h0 h1
   have hBounded : Z.twiceOrder ≤ 2 * qcut := by
     rw [hOrder]
     omega
-  exact D.BigCycle.no_simultaneousSupreme_of_two_wagon_connectors
-    Z p q h0 h1 (hFull.2 2 Z hAccept hBounded)
+  exact BigCycle.no_simultaneousSupreme_of_two_wagon_connectors
+    D Z p q h0 h1 (hFull.2 2 Z hAccept hBounded)
 
 end StructuralRamsey.Girth.OrderOneData
