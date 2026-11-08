@@ -119,4 +119,31 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_recursiveCuts
     (if ν.val < d then q - 1 else q) hBudget
   simpa only [hLevel] using hFull
 
+/-- Restate the same genuine full-system certificate in the precise
+`ν ≤ extraCuts` form consumed by the refining-picture-step API.
+This is only an index conversion, not an additional girth assumption. -/
+theorem ForestTailStage.coarsenedSelected_fullSystem_for_attachmentBudget
+    (r : ℕ) (hd : d = r + 1)
+    (hMonotone : (q :: tail).Pairwise (· ≤ ·))
+    (ν : Fin ((List.replicate d (q - 1) ++ tail).length + 1))
+    (hPos : 0 < ν.val)
+    (hInterior : ν.val < (List.replicate d (q - 1) ++ tail).length) :
+    (activeGluingWitnessOrderOneData A Old α
+      (S.system.coarsenVia D S.isPartite).toRelStructure
+      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+          b ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          Target D S.system S.isPartite family hFamilyParts
+          S.selected i).toEmbedding)
+      S.train ν).FullSystemGirthGT
+        (if ν.val ≤ r then q - 1 else q) := by
+  have hFull := S.coarsenedSelected_fullSystem_for_recursiveCuts
+    A Old α D hFamilyParts hMonotone ν hPos hInterior
+  have hBudget :
+      (if ν.val < d then q - 1 else q) =
+        (if ν.val ≤ r then q - 1 else q) := by
+    simp only [hd, Nat.lt_succ_iff]
+  rw [← hBudget]
+  exact hFull
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
