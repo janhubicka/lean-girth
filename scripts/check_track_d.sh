@@ -93,6 +93,7 @@ checks=(
   CheckTrainRecursiveTrueActiveRefinementCutGirth
   CheckTrainRecursiveTrueActiveRetainedTailCuts
   CheckTrainRecursiveExactRetainedFullSystemGirth
+  CheckTrainRecursiveExactOriginalRetainedCutoff
   CheckTrainRecursiveTrueActiveLowerCutoffVector
   CheckTrainRecursiveExactHeightTransport
   CheckTrainRecursiveTrueActiveInitialLowerStage
