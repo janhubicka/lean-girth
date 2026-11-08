@@ -101,6 +101,7 @@ checks=(
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
+  CheckTrainRecursiveNontrivialActiveCoverage
   CheckTrainRecursiveSelectedLowerActualInputs
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
