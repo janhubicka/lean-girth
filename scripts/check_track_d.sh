@@ -107,6 +107,7 @@ checks=(
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
   CheckTrainFirstRetainedCutCounterexample
   CheckCyclicTwoCutRunFibre
+  CheckActualTwoCycleMixedReducedOrderOne
 )
 
 for check in "${checks[@]}"; do
