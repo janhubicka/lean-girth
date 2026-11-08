@@ -109,6 +109,27 @@ checks=(
   CheckCyclicTwoCutRunFibre
   CheckTrainTwoWagonFullSystemObstruction
   CheckTrainActualTwoCutDoubleWagonExclusion
+  CheckCyclicCutIndexAtSourceTwo
+  CheckTwoCycleOriginalDesignatedOfLinear
+  CheckTwoCycleOriginalShortSupreme
+  CheckTwoCycleOriginalLongSupreme
+  CheckTwoCycleOriginalLocalToGlobal
+  CheckActualGirthFromLengthTwoSource
+  CheckActualLongChosenStandardCarriers
+  CheckActualTwoCutFreshLongStandardTransfer
+  CheckActualTwoCutLongFreshOldContacts
+  CheckActualTwoCutSymmetricLongFullSupreme
+  CheckActualTwoCutThreeLeFullSupreme
+  CheckActualTwoCutTwoStandardCases
+  CheckActualTwoCutTwoStepShortStandardTransfer
+  CheckCyclicTwoCutTwoStepComplement
+  CheckTwoCycleMixedActualBridges
+  CheckTwoStandardNoPairCommonLong
+  CheckWagonTwoContactFreshOldDichotomy
+  CheckTrainRecursiveTrueActiveTwoCopies
+  CheckTrainRecursiveTrueActiveSelectedInputBundle
+  CheckTrainRecursiveHJFreshSelectedFinitePass
+  CheckFillingIndexedSelectedColourWord
 )
 
 for check in "${checks[@]}"; do
@@ -122,3 +143,4 @@ python3 scripts/check_order_one_bridge.py
 python3 scripts/check_output_connector_layout.py
 python3 scripts/check_two_cut_singleton_orientation.py
 python3 scripts/check_two_cut_core_isolation.py
+python3 scripts/check_two_cut_old_wagon_orientation.py
