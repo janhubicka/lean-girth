@@ -66,6 +66,14 @@ local notation "Gluing" => fun i : Selected =>
 
 include hFamilyParts
 
+/-- Exact arithmetic of the refined fine-train height; independent
+of the selected lower witness. -/
+private theorem selectedFineHeightEq {q r : ℕ} {tail : List ℕ} :
+    (q :: tail).length + r =
+      (List.replicate (r + 1) (q - 1) ++ tail).length := by
+  simp only [List.length_cons, List.length_append, List.length_replicate]
+  omega
+
 /-- In the true recursive selected fine witness, the indexed
 full-system gluing bounds at q-1/q are DERIVED from the lower selected
 stage rather than stipulated. Thus the existing finite-first-wagon
@@ -76,10 +84,8 @@ theorem ForestTailStage.coarsenedSelected_coreGirth_of_lowerFineStage
     (hMonotone : (q :: tail).Pairwise (· ≤ ·))
     (fineAllowed : Fin ((q :: tail).length + r + 1) → Set UA)
     (hParameters :
-      (S.train.castHeight (by
-        simp only [List.length_cons, List.length_append, List.length_replicate]
-        omega : (q :: tail).length + r =
-          (List.replicate (r + 1) (q - 1) ++ tail).length).symm).AdjacentParameters
+      (S.train.castHeight
+        (selectedFineHeightEq (q := q) (r := r) (tail := tail)).symm).AdjacentParameters
         (fun edge => edge.1) (fun ν => E.part ⁻¹' fineAllowed ν))
     (hSingleton : ∀ j : Fin (r + 1),
       (fineAllowed (firstRefinementParent (q :: tail).length r
@@ -89,9 +95,8 @@ theorem ForestTailStage.coarsenedSelected_coreGirth_of_lowerFineStage
       (q - 1)) :
     GirthGT (supportCopies A E.toRelStructure) q := by
   have hLen : (q :: tail).length + r =
-      (List.replicate (r + 1) (q - 1) ++ tail).length := by
-    simp only [List.length_cons, List.length_append, List.length_replicate]
-    omega
+      (List.replicate (r + 1) (q - 1) ++ tail).length :=
+    selectedFineHeightEq (q := q) (r := r) (tail := tail)
   let T := S.train.castHeight hLen.symm
   have hParams :
       T.AdjacentParameters (fun edge => edge.1)
