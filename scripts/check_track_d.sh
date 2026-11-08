@@ -83,6 +83,9 @@ checks=(
   CheckActualTwoCutSymmetricLongFullSupreme
   CheckTwoCycleMixedActualBridges
   CheckActualTwoCutTwoStandardCases
+  CheckActualTwoCutCoreOwnerUnique
+  CheckActualTwoCutStandardCoreShortSupreme
+  CheckActualTwoCutThreeLeFullSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
   CheckActualTwoCutSingletonShortStandardTransfer
