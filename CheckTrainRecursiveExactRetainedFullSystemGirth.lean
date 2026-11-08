@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveExactRetainedFullSystemGirth
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_retainedFullSystem_of_fine
+#print axioms StructuralRamsey.Girth.activeGluingWitness_retainedFullSystem_all_tail
