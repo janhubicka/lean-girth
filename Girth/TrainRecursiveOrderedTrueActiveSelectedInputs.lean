@@ -1,6 +1,5 @@
 import Girth.TrainRecursiveTrueActiveSelectedInputBundle
 import Girth.ProjectedSupportCopy
-import Girth.TrainRecursiveTrueActiveTwoCopies
 
 set_option autoImplicit false
 set_option Elab.async false
