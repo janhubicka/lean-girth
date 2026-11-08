@@ -54,28 +54,42 @@ theorem BigCycle.two_wagon_connectors_all_designated
         _ = K.connector (1 : Fin 2) := hq.symm
     exact (by decide : (0 : Fin 2) ≠ 1) (K.connector_injective hSame)
   intro j
-  cases hLabel : K.label j with
-  | inl i =>
-      rw [hLabel]
-      trivial
-  | inr b =>
-      exfalso
-      fin_cases j
-      · have hLeft : D.Incident (Sum.inr b) (Sum.inr p) := by
-          simpa only [hLabel, hp] using K.left_incident (0 : Fin 2)
+  fin_cases j
+  · cases hLabel : K.label (0 : Fin 2) with
+    | inl i =>
+        trivial
+    | inr b =>
+        exfalso
+        have hLeft : D.Incident (Sum.inr b) (Sum.inr p) := by
+          have h := K.left_incident (0 : Fin 2)
+          rw [hLabel, hp] at h
+          exact h
         have hRight : D.Incident (Sum.inr b) (Sum.inr q) := by
-          simpa [hLabel, hq, cyclicSucc] using
-            K.right_incident (1 : Fin 2)
-        have hParentP := D.incident_edge_wagon_parent b p hLeft
-        have hParentQ := D.incident_edge_wagon_parent b q hRight
-        exact hpq (hParentP.symm.trans hParentQ)
-      · have hLeft : D.Incident (Sum.inr b) (Sum.inr q) := by
-          simpa only [hLabel, hq] using K.left_incident (1 : Fin 2)
+          have h := K.right_incident (1 : Fin 2)
+          rw [show cyclicSucc (1 : Fin 2) = (0 : Fin 2) from by decide] at h
+          rw [hLabel, hq] at h
+          exact h
+        have heq : p = q :=
+          (D.incident_edge_wagon_parent b p hLeft).symm.trans
+            (D.incident_edge_wagon_parent b q hRight)
+        exact hpq heq
+  · cases hLabel : K.label (1 : Fin 2) with
+    | inl i =>
+        trivial
+    | inr b =>
+        exfalso
+        have hLeft : D.Incident (Sum.inr b) (Sum.inr q) := by
+          have h := K.left_incident (1 : Fin 2)
+          rw [hLabel, hq] at h
+          exact h
         have hRight : D.Incident (Sum.inr b) (Sum.inr p) := by
-          simpa [hLabel, hp, cyclicSucc] using
-            K.right_incident (0 : Fin 2)
-        have hParentP := D.incident_edge_wagon_parent b p hRight
-        have hParentQ := D.incident_edge_wagon_parent b q hLeft
-        exact hpq (hParentP.symm.trans hParentQ)
+          have h := K.right_incident (0 : Fin 2)
+          rw [show cyclicSucc (0 : Fin 2) = (1 : Fin 2) from by decide] at h
+          rw [hLabel, hp] at h
+          exact h
+        have heq : p = q :=
+          (D.incident_edge_wagon_parent b p hRight).symm.trans
+            (D.incident_edge_wagon_parent b q hLeft)
+        exact hpq heq
 
 end StructuralRamsey.Girth.OrderOneData
