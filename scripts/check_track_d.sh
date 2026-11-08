@@ -105,6 +105,10 @@ checks=(
   CheckTrainRecursiveCoarsenedExactIncidenceAudit
   CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
+  CheckTrainRecursiveExactRetainedFullSystemGirth
+  CheckTrainRecursiveExactOriginalRetainedCutoff
+  CheckTrainRecursiveActualFullSystemHeightTransport
+  CheckTrainRecursiveActualSelectedOriginalTailFullSystem
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
