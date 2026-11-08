@@ -124,7 +124,9 @@ only once, in TrainRecursiveOrderedNontrivialSelectedInputs.  That
 independent clean-main module derives the same source-level inputs
 directly from the actual two projected physical copies.  Do not
 reintroduce a second declaration under the same global theorem name.
--//-- In the genuine nontrivial physical-fibre case, one actual pair of
+-/
+
+/-- In the genuine nontrivial physical-fibre case, one actual pair of
 distinct projected A-copy carriers simultaneously supplies the two
 different A-copies in the *true* induced active lower target and all
 seven coarsened selected local-input certificates. Neither a
@@ -171,11 +173,7 @@ theorem ForestTailStage.orderedTrueActiveSelected_pairAndBundle_of_nontrivial
     (q : ℕ) (hq : q ≤ lowerCuts.headD 0)
     (κ : Type w) [Nonempty κ]
     (hArrow : DesignatedArrow lower κ) :
-    (∃ a b : Embedding A₀.ordered
-      (actualActiveSubsystemPartite A₀.ordered old.system
-        e.toFunctionEmbedding).toRelStructure,
-      ¬ SameCopy a b) ∧
-    (let Target := actualActiveSubsystemPartite A₀.ordered old.system
+    let Target := actualActiveSubsystemPartite A₀.ordered old.system
       e.toFunctionEmbedding
     let E := lower.system.coarsenVia large lower.isPartite
     let I := {b : DesignatedCopy
@@ -185,6 +183,8 @@ theorem ForestTailStage.orderedTrueActiveSelected_pairAndBundle_of_nontrivial
       fun i => selectedPartiteGluingFamily_of_largeBase
         Target large lower.system lower.isPartite lowerFamily
         hFamilyParts lower.selected i
+    (∃ a b : Embedding A₀.ordered Target.toRelStructure,
+      ¬ SameCopy a b) ∧
     E.IsPartiteOver A₀.ordered ∧
       IrreduciblesExtendTo A₀.ordered E.toRelStructure ∧
       Function.Injective (fun i : I =>
@@ -201,7 +201,7 @@ theorem ForestTailStage.orderedTrueActiveSelected_pairAndBundle_of_nontrivial
       lower.train.AdjacentParameters (fun edge => edge.1)
         (fun ν => E.part ⁻¹' fineAllowed ν) ∧
       StructuralRamsey.Partite.Arrow
-        (StructuralRamsey.Partite.transversal A₀.ordered) Target E κ) := by
+        (StructuralRamsey.Partite.transversal A₀.ordered) Target E κ := by
   classical
   obtain ⟨projected, partner, hDistinct⟩ := hPhysical
   constructor
