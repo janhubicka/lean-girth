@@ -52,41 +52,41 @@ theorem selectedStageActualCopyEdges_eq_range
       e.1 ⊆ copyCarrier b.embedding} =
     Set.range (selectedActualMPhysicalEdgeEmbedding U A M T hm
       hSupport hLinear D family allowed S b) := by
-  ext e
-  constructor
-  · intro hInside
-    have hMeet : ¬ (e.1 ∩ copyCarrier b.embedding).Subsingleton := by
-      intro hSub
-      obtain ⟨a, ha⟩ := e.2
-      obtain ⟨x, y, hxy⟩ := exists_pair_ne UA
-      have hx : a x ∈ e.1 := by
-        rw [← ha]
-        exact ⟨x, rfl⟩
-      have hy : a y ∈ e.1 := by
-        rw [← ha]
-        exact ⟨y, rfl⟩
-      exact hxy (a.injective
-        (hSub ⟨hx, hInside hx⟩ ⟨hy, hInside hy⟩))
-    obtain ⟨s, hs⟩ :=
-      selectedSupportOldEdge_mem_range_of_strong A M
-        S.system.toRelStructure b.embedding (S.strong b hb) e hMeet
-    obtain ⟨cp, hcp⟩ :=
-      (contractedPhysicalEdgeEquiv U A M hSupport hLinear).surjective s
-    refine ⟨cp, ?_⟩
-    apply Subtype.ext
-    change b.embedding.toFunctionEmbedding ''
-      (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1 = e.1
-    calc
-      _ = b.embedding.toFunctionEmbedding '' s.1 :=
-        congrArg (fun E : Set (Vertex U) =>
-          b.embedding.toFunctionEmbedding '' E)
-          (congrArg Subtype.val hcp)
-      _ = e.1 := congrArg Subtype.val hs
-  · rintro ⟨cp, rfl⟩
-    intro z hz
-    change z ∈ b.embedding.toFunctionEmbedding ''
-      (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1 at hz
-    obtain ⟨w, _, rfl⟩ := hz
-    exact ⟨w, rfl⟩
+          ext e
+          constructor
+          · intro hInside
+            have hMeet : ¬ (e.1 ∩ copyCarrier b.embedding).Subsingleton := by
+              intro hSub
+              obtain ⟨a, ha⟩ := e.2
+              obtain ⟨x, y, hxy⟩ := exists_pair_ne UA
+              have hx : a x ∈ e.1 := by
+                rw [← ha]
+                exact ⟨x, rfl⟩
+              have hy : a y ∈ e.1 := by
+                rw [← ha]
+                exact ⟨y, rfl⟩
+              exact hxy (a.injective
+                (hSub ⟨hx, hInside hx⟩ ⟨hy, hInside hy⟩))
+            obtain ⟨s, hs⟩ :=
+              selectedSupportOldEdge_mem_range_of_strong A M
+                S.system.toRelStructure b.embedding (S.strong b hb) e hMeet
+            obtain ⟨cp, hcp⟩ :=
+              (contractedPhysicalEdgeEquiv U A M hSupport hLinear).surjective s
+            refine ⟨cp, ?_⟩
+            apply Subtype.ext
+            change b.embedding.toFunctionEmbedding ''
+              (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1 = e.1
+            calc
+              _ = b.embedding.toFunctionEmbedding '' s.1 :=
+                congrArg (fun E : Set (Vertex U) =>
+                  b.embedding.toFunctionEmbedding '' E)
+                  (congrArg Subtype.val hcp)
+              _ = e.1 := congrArg Subtype.val hs
+          · rintro ⟨cp, rfl⟩
+            intro z hz
+            change z ∈ b.embedding.toFunctionEmbedding ''
+              (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1 at hz
+            obtain ⟨w, _, rfl⟩ := hz
+            exact ⟨w, rfl⟩
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
