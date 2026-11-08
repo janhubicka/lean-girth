@@ -1,4 +1,5 @@
 import Girth.TrainFillingRamseyIndexedChoices
+import Girth.TrainFillingIndexedEdgeFlatten
 
 set_option Elab.async false
 
@@ -110,5 +111,120 @@ theorem closedTargetRamseyFamily_selectedEdges_monochromatic
     (hStrong b) hCovered ρ
     (χ ((targetEmbeddingRel b).comp a₀))
     (fun a => hb a a₀) e he
+
+
+/-- The actual EHN *heterogeneous* indexed private-choice family.
+It is constructed from EVERY strong selected closed B-copy in X;
+one choice c may have a different selected W* template edge
+subfamily from another. No selected local family is invented. -/
+noncomputable def ehnIndexedPrivateChoiceFamily
+    {V P : Type v}
+    (A : RelStructure L UA) (B : RelStructure L W)
+    (K : StructuralRamsey.Structure (closureLanguage L) X)
+    (hStrong : ∀ b : StructuralRamsey.Structure.Embedding
+        (targetClosureExpansion A B) K,
+      AStrong A (closureRelReduct K)
+        (copyCarrier (targetEmbeddingRel b)))
+    (hCovered : ∀ x : W, ∃ a : Embedding A B, x ∈ copyCarrier a)
+    (oldCarrier : P → Set V)
+    (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W) :
+    (StructuralRamsey.Structure.Embedding
+      (targetClosureExpansion A B) K) → PrivateWagonInput V P X :=
+  relationalPrivateChoices A B (closureRelReduct K)
+    (fun b => targetEmbeddingRel b) hStrong hCovered
+    oldCarrier identify
+
+/-- Every EHN-indexed private choice uses exactly the SAME complete
+ambient X support edge family. Only its selected W* subfamily varies. -/
+@[simp] theorem ehnIndexedPrivateChoiceFamily_templateEdges
+    {V P : Type v}
+    (A : RelStructure L UA) (B : RelStructure L W)
+    (K : StructuralRamsey.Structure (closureLanguage L) X)
+    (hStrong : ∀ b : StructuralRamsey.Structure.Embedding
+        (targetClosureExpansion A B) K,
+      AStrong A (closureRelReduct K)
+        (copyCarrier (targetEmbeddingRel b)))
+    (hCovered : ∀ x : W, ∃ a : Embedding A B, x ∈ copyCarrier a)
+    (oldCarrier : P → Set V)
+    (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
+    (b : StructuralRamsey.Structure.Embedding
+      (targetClosureExpansion A B) K) :
+    (ehnIndexedPrivateChoiceFamily A B K hStrong hCovered
+      oldCarrier identify b).templateEdges =
+      supportCopies A (closureRelReduct K) := rfl
+
+/-- The actual EHN closed-target Ramsey family, after the REAL
+heterogeneous indexed private construction, satisfies the exact
+local monochromaticity interface needed by the final colour-word
+argument: one selected choice c and one colour work at ALL its
+first-wagon labels p, without any per-wagon colour choice.
+
+The local edge e is a physical common support carrier in X.
+The result follows from the EHN composite A-copy arrow and the
+literal selectedEdges definition of the private template; it is
+not an independently assumed hLocalArrow field. -/
+theorem closedTargetRamseyFamily_indexedSelectedEdges_monochromatic
+    {V P : Type v}
+    (A : RelStructure L UA) (B : RelStructure L W)
+    [Nonempty W]
+    (K : StructuralRamsey.Structure (closureLanguage L) X)
+    (hRamsey : ClosedTargetRamseyFamily A B K κ)
+    (hStrong : ∀ b : StructuralRamsey.Structure.Embedding
+        (targetClosureExpansion A B) K,
+      AStrong A (closureRelReduct K)
+        (copyCarrier (targetEmbeddingRel b)))
+    (hCovered : ∀ x : W, ∃ a : Embedding A B, x ∈ copyCarrier a)
+    (oldCarrier : P → Set V)
+    (identify : ∀ p : P, {x : V // x ∈ oldCarrier p} ≃ W)
+    (ρ : {E : Set X // E ∈ supportCopies A (closureRelReduct K)} → κ) :
+    ∃ (b : StructuralRamsey.Structure.Embedding
+          (targetClosureExpansion A B) K)
+        (colour : κ),
+      ∀ p : P,
+      ∀ e : {E : Set X // E ∈ supportCopies A (closureRelReduct K)},
+        e ∈ IndexedPrivateChoice.selectedCommonEdges
+          (ehnIndexedPrivateChoiceFamily A B K hStrong
+            hCovered oldCarrier identify)
+          (supportCopies A (closureRelReduct K))
+          (fun c => ehnIndexedPrivateChoiceFamily_templateEdges
+            A B K hStrong hCovered oldCarrier identify c)
+          b p →
+        ρ e = colour := by
+  let U := ehnIndexedPrivateChoiceFamily A B K hStrong
+    hCovered oldCarrier identify
+  let hTemplate : ∀ c, (U c).templateEdges =
+      supportCopies A (closureRelReduct K) := by
+    intro c
+    exact ehnIndexedPrivateChoiceFamily_templateEdges
+      A B K hStrong hCovered oldCarrier identify c
+  obtain ⟨b, colour, hLocal⟩ :=
+    closedTargetRamseyFamily_selectedEdges_monochromatic
+      A B K hRamsey hStrong hCovered ρ
+  refine ⟨b, colour, ?_⟩
+  intro p e he
+  change e ∈ IndexedPrivateChoice.selectedCommonEdges U
+    (supportCopies A (closureRelReduct K)) hTemplate b p at he
+  obtain ⟨e₀, he₀, heq⟩ := he
+  have hSelected :
+      e₀ ∈ (UniformPrivateTemplate.ofStrongEmbedding
+        A B (closureRelReduct K) (targetEmbeddingRel b)
+        (hStrong b) hCovered).selectedEdges := by
+    change e₀ ∈
+      (relationalPrivateChoices A B (closureRelReduct K)
+        (fun c => targetEmbeddingRel c) hStrong hCovered
+        oldCarrier identify b).selectedEdges p at he₀
+    rw [relationalPrivateChoices_selectedEdges
+      A B (closureRelReduct K) (fun c => targetEmbeddingRel c)
+      hStrong hCovered oldCarrier identify b p] at he₀
+    exact he₀
+  have hValue : e₀.1 = e.1 := by
+    exact congrArg Subtype.val heq
+  have hSubtype :
+      (e₀ : {E : Set X // E ∈ supportCopies A (closureRelReduct K)}) = e :=
+    Subtype.ext hValue
+  have hColour := hLocal e₀ hSelected
+  rw [hSubtype] at hColour
+  exact hColour
+
 
 end StructuralRamsey.Girth
