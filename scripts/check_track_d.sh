@@ -106,6 +106,11 @@ checks=(
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
   CheckTrainFirstRetainedCutCounterexample
   CheckCyclicTwoCutRunFibre
+  CheckCyclicCutIndexAtSourceTwo
+  CheckTwoCycleOriginalDesignatedOfLinear
+  CheckTwoCycleOriginalShortSupreme
+  CheckTwoCycleOriginalLongSupreme
+  CheckTwoCycleOriginalLocalToGlobal
 )
 
 for check in "${checks[@]}"; do

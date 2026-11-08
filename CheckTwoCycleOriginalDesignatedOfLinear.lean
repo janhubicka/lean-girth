@@ -1,0 +1,3 @@
+import Girth.TrainTwoCycleOriginalDesignatedOfLinear
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_has_designated_of_linear
