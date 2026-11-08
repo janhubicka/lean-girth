@@ -141,6 +141,8 @@ checks=(
   CheckOriginalSelectedMixedSourceClosure
   CheckActualTwoCycleCoreConnectors
   CheckActualTwoCycleSourceExcludingDoubleWagon
+  CheckTwoWagonCycleLocalObstruction
+  CheckActualTwoCycleWitnessDoubleWagonExclusion
 )
 
 for check in "${checks[@]}"; do
