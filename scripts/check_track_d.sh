@@ -72,6 +72,7 @@ checks=(
   CheckTrainActualSupremeResidualClosure
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
+  CheckCyclicTwoCutRunFibre
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
