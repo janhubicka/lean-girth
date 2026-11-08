@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleMixedReducedOrderOne
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_reduced_order_one
