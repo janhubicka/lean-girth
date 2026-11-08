@@ -102,6 +102,7 @@ checks=(
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveNontrivialActiveCoverage
+  CheckTrainRecursiveOrderedNontrivialSelectedInputs
   CheckTrainRecursiveSelectedLowerActualInputs
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
