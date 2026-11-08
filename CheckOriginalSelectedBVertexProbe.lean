@@ -1,0 +1,3 @@
+import Girth.TrainOriginalSelectedBVertexProbe
+
+#print axioms StructuralRamsey.Girth.original_selected_B_local_piece_of_witness_piece

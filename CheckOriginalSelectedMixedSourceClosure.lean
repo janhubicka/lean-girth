@@ -1,0 +1,6 @@
+import Girth.TrainOriginalSelectedMixedSourceClosure
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_two_cut_source_two_every_position
+#print axioms StructuralRamsey.Girth.fin_two_other_is_endpoint_or_successor
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_shadow_incident
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_full_supreme_of_distinct_shadow

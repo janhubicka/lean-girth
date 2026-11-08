@@ -1,0 +1,4 @@
+import Girth.TrainWitnessCopyShadowProbe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_local_piece_of_shadow_two_vertices
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_mixed_bridge_of_shadow_label

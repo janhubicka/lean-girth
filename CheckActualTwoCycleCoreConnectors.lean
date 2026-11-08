@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCycleCoreConnectors
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_core_connectors
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_core_connector_cases
