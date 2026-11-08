@@ -38,25 +38,27 @@ theorem originalPositiveCutoff_eq_lowerRetained
         omega⟩ =
       (q :: tail).get j := by
   let k : Fin tail.length := ⟨j.val - 1, by
-    have hjLt := j.isLt
-    simp only [List.length_cons] at hjLt
+    have hlt := j.isLt
+    simp only [List.length_cons] at hlt
     omega⟩
-  have hIndex : j.val = k.val + 1 := by
-    dsimp [k]
+  have hjEq : j = (Fin.succ k : Fin (q :: tail).length) := by
+    apply Fin.ext
+    change j.val = (j.val - 1) + 1
     omega
-  have hOffset : j.val + r = (r + 1) + k.val := by omega
-  have hRetained := replicatedCutoff_at_retained (q - 1) (r + 1) tail k
-  change (List.replicate (r + 1) (q - 1) ++ tail)[(r + 1) + k.val] =
-    tail[k.val] at hRetained
-  change (List.replicate (r + 1) (q - 1) ++ tail)[j.val + r] =
-    (q :: tail)[j.val]
-  calc
-    (List.replicate (r + 1) (q - 1) ++ tail)[j.val + r] =
-        (List.replicate (r + 1) (q - 1) ++ tail)[(r + 1) + k.val] := by
-      rw [hOffset]
-    _ = tail[k.val] := hRetained
-    _ = (q :: tail)[j.val] := by
-      rw [hIndex]
-      simp
+  have hIndex :
+      (⟨j.val + r, by
+        have hlt := j.isLt
+        simp only [List.length_cons] at hlt
+        simp only [List.length_append, List.length_replicate]
+        omega⟩ : Fin (List.replicate (r + 1) (q - 1) ++ tail).length) =
+      ⟨(r + 1) + k.val, by
+        simp only [List.length_append, List.length_replicate]
+        exact Nat.add_lt_add_left k.isLt (r + 1)⟩ := by
+    apply Fin.ext
+    change j.val + r = (r + 1) + (j.val - 1)
+    omega
+  rw [hIndex, replicatedCutoff_at_retained (q - 1) (r + 1) tail k]
+  rw [hjEq]
+  rfl
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
