@@ -72,6 +72,13 @@ checks=(
   CheckTrainActualSupremeResidualClosure
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
+  CheckPhysicalMapLocalPieces
+  CheckOldCopyLocalProbePieces
+  CheckOriginalCopyProbePhysicalMap
+  CheckWitnessCopyShadowProbe
+  CheckRealSharedShortOldPairProbe
+  CheckRealSharedLongOldWagonProbe
+  CheckOriginalSelectedBVertexProbe
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
