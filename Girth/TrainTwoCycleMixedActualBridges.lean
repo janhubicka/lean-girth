@@ -80,4 +80,24 @@ theorem BigCycle.two_mixed_bridges_of_fullSystemGirth
   · exact hBridge0
   · exact hBridge1
 
+
+/-- The same TWO-label mixed bridge result on a canonically indexed
+cut word with an arbitrary numeric cut count c equal to two.
+The original Fin(c) indices and actual physical connectors remain
+unaltered; no change of geometric owner labels is assumed. -/
+theorem BigCycle.two_mixed_bridges_of_fullSystemGirth_of_two
+    {c : ℕ} (hc : c = 2)
+    (Z : D.BigCycle c) {q : ℕ} (hq : 1 ≤ q)
+    (hFull : D.FullSystemGirthGT q)
+    (x : V) (p : P)
+    (hMixed :
+      (Z.connector ⟨0, by omega⟩ = Sum.inl x ∧
+       Z.connector ⟨1, by omega⟩ = Sum.inr p) ∨
+      (Z.connector ⟨0, by omega⟩ = Sum.inr p ∧
+       Z.connector ⟨1, by omega⟩ = Sum.inl x)) :
+    ∀ k : Fin c, D.Bridge (Z.label k) x p := by
+  subst c
+  exact BigCycle.two_mixed_bridges_of_fullSystemGirth
+    D Z hq hFull x p hMixed
+
 end StructuralRamsey.Girth.OrderOneData
