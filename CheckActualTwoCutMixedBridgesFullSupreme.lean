@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCutMixedBridgesFullSupreme
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_mixed_bridges_full_supreme
