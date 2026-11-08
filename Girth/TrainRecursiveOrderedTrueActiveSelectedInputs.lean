@@ -118,92 +118,11 @@ theorem ForestTailStage.orderedTrueActiveSelected_localInputBundle
     hA hBaseLinear hBaseStrong hRigid hActive projected hHigh
     hLarge hFamilyParts q hq κ hArrow
 
-/-- In the genuine nontrivial physical-fibre case, one actual pair of
-distinct projected A-copy carriers simultaneously supplies the two
-different A-copies in the *true* induced active lower target and all
-seven coarsened selected local-input certificates. Neither a
-separately selected projected copy nor an independent hTargetTwo
-witness is assumed. The lower selected stage and its arrow remain
-explicit conditional inputs; this is not the missing PictureStep. -/
-theorem ForestTailStage.orderedTrueActiveSelected_localInputBundle_of_nontrivial
-    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA] [Nonempty UA]
-    {B : RelStructure L.withOrder VB}
-    {D : RelStructure L.withOrder P}
-    {family : Set (Embedding B D)}
-    {t : List ℕ}
-    {targetTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered B) t.length}
-    {allowed : Fin (t.length + 1) → Set P}
-    (old : ForestTailStage A₀.ordered B D family t targetTrain allowed)
-    (e : Embedding A₀.ordered D)
-    (large : StructuralRamsey.Partite.System L.withOrder UA Q)
-    {lowerFamily : Set (Embedding
-      (actualActiveSubsystemPartite A₀.ordered old.system
-        e.toFunctionEmbedding).toRelStructure large.toRelStructure)}
-    {lowerCuts : List ℕ}
-    {lowerTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered
-      (actualActiveSubsystemPartite A₀.ordered old.system
-        e.toFunctionEmbedding).toRelStructure) lowerCuts.length}
-    (fineAllowed : Fin (lowerCuts.length + 1) → Set UA)
-    (lower : ForestTailStage A₀.ordered
-      (actualActiveSubsystemPartite A₀.ordered old.system
-        e.toFunctionEmbedding).toRelStructure
-      large.toRelStructure lowerFamily lowerCuts lowerTrain
-      (fun ν => large.part ⁻¹' fineAllowed ν))
-    (hBaseLinear : ALinear A₀.ordered D)
-    (hBaseStrong : ∀ b : DesignatedCopy B D old.system family,
-      b ∈ old.selected → AStrong A₀.ordered D (copyCarrier b.base))
-    (hPhysical : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
-      A₀.ordered old.system e.toFunctionEmbedding,
-      copyCarrier a.val ≠ copyCarrier b.val)
-    (hHigh : 3 ≤ t.headD 0)
-    (hLarge : large.IsPartiteOver A₀.ordered)
-    (hFamilyParts : ∀ b, b ∈ lowerFamily →
-      ∀ x : activeCarrier A₀.ordered old.system e.toFunctionEmbedding,
-        large.part (b x) =
-          (actualActiveSubsystemPartite A₀.ordered old.system
-            e.toFunctionEmbedding).part x)
-    (q : ℕ) (hq : q ≤ lowerCuts.headD 0)
-    (κ : Type w) [Nonempty κ]
-    (hArrow : DesignatedArrow lower κ) :
-    (∃ a b : Embedding A₀.ordered
-      (actualActiveSubsystemPartite A₀.ordered old.system
-        e.toFunctionEmbedding).toRelStructure,
-      ¬ SameCopy a b) ∧
-    (let Target := actualActiveSubsystemPartite A₀.ordered old.system
-      e.toFunctionEmbedding
-    let E := lower.system.coarsenVia large lower.isPartite
-    let I := {b : DesignatedCopy
-      Target.toRelStructure large.toRelStructure lower.system lowerFamily //
-      b ∈ lower.selected}
-    let f : I → StructuralRamsey.Partite.Embedding Target E :=
-      fun i => selectedPartiteGluingFamily_of_largeBase
-        Target large lower.system lower.isPartite lowerFamily
-        hFamilyParts lower.selected i
-    E.IsPartiteOver A₀.ordered ∧
-      IrreduciblesExtendTo A₀.ordered E.toRelStructure ∧
-      Function.Injective (fun i : I =>
-        bSupportPiece A₀.ordered ((f i).toEmbedding)) ∧
-      FiniteMixedForestThrough
-        (RelationalMixedSupportTest A₀.ordered
-          (fun i : I => (f i).toEmbedding)) q ∧
-      (∀ (ν : Fin (lowerCuts.length + 1)) (i : I)
-        (a b : Embedding A₀.ordered Target.toRelStructure),
-        lower.train.rel ν
-          (actualEdge ((f i).toEmbedding.comp a))
-          (actualEdge ((f i).toEmbedding.comp b)) ↔
-        lowerTrain.rel ν (actualEdge a) (actualEdge b)) ∧
-      lower.train.AdjacentParameters (fun edge => edge.1)
-        (fun ν => E.part ⁻¹' fineAllowed ν) ∧
-      StructuralRamsey.Partite.Arrow
-        (StructuralRamsey.Partite.transversal A₀.ordered) Target E κ) := by
-  classical
-  obtain ⟨projected, partner, hDistinct⟩ := hPhysical
-  constructor
-  · exact activeTarget_twoGenuineCopies_of_nontrivialFibre
-      A₀.ordered old.system e.toFunctionEmbedding
-      ⟨projected, partner, hDistinct⟩
-  · exact ForestTailStage.orderedTrueActiveSelected_localInputBundle
-      A₀ old e large fineAllowed lower
-      hBaseLinear hBaseStrong projected hHigh hLarge hFamilyParts q hq κ hArrow
-
+/-!
+The nontrivial physical-fibre specialization is intentionally defined
+only once, in TrainRecursiveOrderedNontrivialSelectedInputs.  That
+independent clean-main module derives the same source-level inputs
+directly from the actual two projected physical copies.  Do not
+reintroduce a second declaration under the same global theorem name.
+-/
 end StructuralRamsey.Girth.TrainRecursiveWitness
