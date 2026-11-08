@@ -145,6 +145,64 @@ theorem attachedSelectedPicture_length_two_has_standard_owner
     A hA B D C family selected e R f T U hShared μ
     hLinear K hAccept owner hAllowed hAllCore
 
+
+/-- Every admissible EXACTLY-TWO-geometric-owner-cut original output
+cycle, of ANY permitted length, has a genuine standard owner.
+If every owner were a singleton physical core edge, each adjacent
+pair would have different owners by literal edge-label distinctness.
+There would be a cut at EVERY position, so exactly two cuts forces
+the entire original source length to equal two. The independent
+linear-pretrain edge-only obstruction rules out that final case.
+
+This does not assume FullSystemGirthGT of the output, which is the
+ultimate theorem being proved, or any supreme-cycle plan. -/
+theorem attachedSelectedPicture_two_cut_has_standard_owner_of_linear
+    (hLinear : (Out).LinearPretrain)
+    {n : ℕ} (K : (Out).BigCycle n)
+    (hAccept : K.Acceptable)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
+    (hTwoCuts : cyclicOwnerChanges owner = 2) :
+    ∃ j : Fin n, ∃ i : I, owner j = Sum.inl i := by
+  classical
+  by_contra hNoStandard
+  push_neg at hNoStandard
+  have hAllCore : ∀ j : Fin n, ∃ b : CoreEdge,
+      owner j = Sum.inr b := by
+    intro j
+    cases hOwner : owner j with
+    | inl i =>
+        exact False.elim (hNoStandard j i hOwner)
+    | inr b =>
+        exact ⟨b, hOwner⟩
+  have hAllChanges : ∀ j : Fin n,
+      owner j ≠ owner (cyclicSucc j) := by
+    intro j hSame
+    obtain ⟨b, hb⟩ := hAllCore j
+    have hAt := hAllowed j
+    rw [hb] at hAt
+    change K.label j = Sum.inr (CoreActual b) at hAt
+    have hNext := hAllowed (cyclicSucc j)
+    rw [← hSame, hb] at hNext
+    change K.label (cyclicSucc j) = Sum.inr (CoreActual b) at hNext
+    exact K.adjacent_ne j (hAt.trans hNext.symm)
+  have hFilter :
+      (Finset.univ.filter
+        (fun j : Fin n => owner j ≠ owner (cyclicSucc j))) =
+          Finset.univ := by
+    ext j
+    simp [hAllChanges j]
+  have hCount : cyclicOwnerChanges owner = n := by
+    change (Finset.univ.filter
+      (fun j : Fin n => owner j ≠ owner (cyclicSucc j))).card = n
+    rw [hFilter]
+    simp
+  have hn : n = 2 := by omega
+  subst n
+  exact attachedSelectedPicture_two_core_owners_length_two_false
+    A hA B D C family selected e R f T U hShared μ
+    hLinear K hAccept owner hAllowed hAllCore
+
 end ActualTwoCoreLengthTwo
 
 end StructuralRamsey.Girth
