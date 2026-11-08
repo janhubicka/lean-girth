@@ -110,6 +110,10 @@ checks=(
   CheckOriginalSelectedCoreVertexPreimage
   CheckActualTwoCycleOwnerShadowCoreIncidence
   CheckActualTwoCycleOriginalBVertexLocalFromMinimalShadow
+  CheckTwoCycleOriginalShortSupreme
+  CheckTwoCycleOriginalLongSupreme
+  CheckTwoCycleOriginalLocalToGlobal
+  CheckActualTwoCycleOriginalBVertexGlobalSupreme
 )
 
 for check in "${checks[@]}"; do
