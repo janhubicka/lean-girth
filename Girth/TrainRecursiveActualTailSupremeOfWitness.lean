@@ -80,9 +80,7 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
       (Out j.castSucc).LinearPretrain)
     (hStrong : ∀ r : Embedding B D, r ∈ family →
       AStrong A D (copyCarrier r))
-    (hTwoCopies : ∀ b : Selected, ∃ a d : OldEdge,
-      a ≠ d ∧ a.1 ⊆ copyCarrier b.1.embedding ∧
-        d.1 ⊆ copyCarrier b.1.embedding)
+    (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
     (hOldStrong : AStrong A S.system.toRelStructure
       (activeCarrier A S.system e.toFunctionEmbedding))
     (hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)))
@@ -91,6 +89,27 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     ∀ j : Fin t.length, 0 < j.val →
       (Out j.castSucc).SupremeCycleBound (t.get j) := by
   intro j hj
+  have hTwoCopies : ∀ r : Selected, ∃ a d : OldEdge,
+      a ≠ d ∧ a.1 ⊆ copyCarrier r.1.embedding ∧
+        d.1 ⊆ copyCarrier r.1.embedding := by
+    obtain ⟨a, b, hDistinct⟩ := hTargetTwo
+    intro r
+    refine ⟨actualEdge (r.1.embedding.comp a),
+      actualEdge (r.1.embedding.comp b), ?_, ?_, ?_⟩
+    · intro hab
+      apply hDistinct
+      apply sameCopy_of_comp r.1.embedding
+      change copyCarrier (r.1.embedding.comp a) =
+        copyCarrier (r.1.embedding.comp b)
+      exact congrArg (fun edge : OldEdge => edge.1) hab
+    · change copyCarrier (r.1.embedding.comp a) ⊆
+        copyCarrier r.1.embedding
+      rintro x ⟨u, rfl⟩
+      exact ⟨a u, rfl⟩
+    · change copyCarrier (r.1.embedding.comp b) ⊆
+        copyCarrier r.1.embedding
+      rintro x ⟨u, rfl⟩
+      exact ⟨b u, rfl⟩
   have hOld : (selectedPictureOrderOneData A B D S.system family
       S.selected S.train j.castSucc).SupremeCycleBound (t.get j) :=
     (S.tailGirth j hj).2
