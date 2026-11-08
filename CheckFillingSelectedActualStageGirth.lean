@@ -1,0 +1,3 @@
+import Girth.TrainFillingSelectedActualStageGirth
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualFilledTailGirth_of_trueStage
