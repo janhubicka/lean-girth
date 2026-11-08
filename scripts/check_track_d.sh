@@ -98,6 +98,7 @@ checks=(
   CheckTrainRecursiveTrueActiveStrongHJInitialStage
   CheckTrainRecursiveTrueActiveAdjacentParameters
   CheckTrainRecursiveCanonicalFineParametersCast
+  CheckTrainRecursiveSelectedCoreGirthFromActualStage
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
