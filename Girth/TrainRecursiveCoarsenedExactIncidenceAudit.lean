@@ -39,67 +39,59 @@ variable (Old : StructuralRamsey.Partite.System L P X)
 variable (α : UA ↪ P)
 variable (D : StructuralRamsey.Partite.System L UA V)
 
-local notation "Source" =>
-  Old.toRelStructure.induce (activeCarrier A Old α)
-local notation "Target" =>
-  actualActiveSubsystemPartite A Old α
-
-variable {family : Set (Embedding Source D.toRelStructure)}
+variable {family : Set (Embedding (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure)}
 variable {t : List ℕ}
-variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length}
+variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A (Old.toRelStructure.induce (activeCarrier A Old α))) t.length}
 variable {allowed : Fin (t.length + 1) → Set V}
-variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
+variable (S : ForestTailStage A (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure family t targetTrain allowed)
 variable (hFamilyParts : ∀ b, b ∈ family →
   ∀ x : activeCarrier A Old α,
     D.part (b x) = activeSourcePart A Old α x)
 
-local notation "Selected" =>
-  {b : DesignatedCopy Source D.toRelStructure S.system family //
-    b ∈ S.selected}
--- Avoid quoting a field-projection syntax node in local notation:
--- Lean's quotation prechecker cannot elaborate that syntax here.
--- The fully qualified field yields the identical physical embedding.
-local notation "Gluing" => fun i : Selected =>
-  StructuralRamsey.Partite.Embedding.toEmbedding
-    (selectedPartiteGluingFamily_of_largeBase
-      Target D S.system S.isPartite family hFamilyParts
-      S.selected i)
-
 include hFamilyParts
 
-/-- No physical A-support edge, source embedding, or selected label is
-changed when the genuine lower witness is part-coarsened. -/
+/-- The underlying A-support edges, actual selected labels and all wagon
+parents agree with the original selected lower stage at every cut. -/
 theorem ForestTailStage.coarsenedSelected_original_incidence_eq
     (μ : Fin (t.length + 1)) :
     activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      Gluing S.train μ =
-    (selectedPictureOrderOneData A Source D.toRelStructure S.system
-      family S.selected S.train μ).reindexDesignated (Equiv.refl Selected) := by
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family // b ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A Old α)
+          D S.system S.isPartite family hFamilyParts
+          S.selected i).toEmbedding) S.train μ =
+    (selectedPictureOrderOneData A (Old.toRelStructure.induce (activeCarrier A Old α))
+      D.toRelStructure S.system family S.selected S.train μ).reindexDesignated
+      (Equiv.refl _) := by
   change activeGluingWitnessOrderOneData A Old α
       S.system.toRelStructure
-      (fun i : Selected => i.1.embedding) S.train μ =
-    (selectedPictureOrderOneData A Source D.toRelStructure S.system
-      family S.selected S.train μ).reindexDesignated (Equiv.refl Selected)
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family // b ∈ S.selected} => i.1.embedding) S.train μ =
+    (selectedPictureOrderOneData A (Old.toRelStructure.induce (activeCarrier A Old α))
+      D.toRelStructure S.system family S.selected S.train μ).reindexDesignated
+      (Equiv.refl _)
   exact activeGluingWitness_eq_reindexed_selectedPicture
-    A Source D.toRelStructure Old S.system family S.selected α
-    (fun i : Selected => i.1.embedding) S.train μ
-    (Equiv.refl Selected) (fun _ => rfl)
+    A (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure Old S.system family S.selected α
+    (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family // b ∈ S.selected} => i.1.embedding) S.train μ
+    (Equiv.refl _) (fun _ => rfl)
 
-/-- Global full-system girth is equivalent for the LITERAL coarsened
-selected gluing witnesses and the true selected lower stage at ANY
-cutoff.  There is no new girth assumption; it follows from equality
-of the complete incidence data with its honest index equivalence. -/
+/-- Full simultaneous system-girth is equivalent for the two LITERAL
+incidence records, at any cut and any cutoff. -/
 theorem ForestTailStage.coarsenedSelected_fullSystem_iff_original
     (μ : Fin (t.length + 1)) (q : ℕ) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      Gluing S.train μ).FullSystemGirthGT q ↔
-    (selectedPictureOrderOneData A Source D.toRelStructure
-      S.system family S.selected S.train μ).FullSystemGirthGT q := by
-  rw [S.coarsenedSelected_original_incidence_eq A Old α D hFamilyParts μ]
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family // b ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          (actualActiveSubsystemPartite A Old α)
+          D S.system S.isPartite family hFamilyParts
+          S.selected i).toEmbedding) S.train μ).FullSystemGirthGT q ↔
+    (selectedPictureOrderOneData A (Old.toRelStructure.induce (activeCarrier A Old α))
+      D.toRelStructure S.system family S.selected S.train μ).FullSystemGirthGT q := by
+  rw [S.coarsenedSelected_original_incidence_eq
+    A Old α D hFamilyParts μ]
   exact OrderOneData.reindexDesignated_fullSystemGirth_iff
-    (selectedPictureOrderOneData A Source D.toRelStructure
-      S.system family S.selected S.train μ) (Equiv.refl Selected) q
+    (selectedPictureOrderOneData A (Old.toRelStructure.induce (activeCarrier A Old α))
+      D.toRelStructure S.system family S.selected S.train μ) (Equiv.refl _) q
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
