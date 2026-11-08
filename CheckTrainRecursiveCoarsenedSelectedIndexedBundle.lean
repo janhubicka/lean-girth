@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveCoarsenedSelectedIndexedBundle
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_actualIndexedLocalInputBundle
