@@ -91,4 +91,70 @@ theorem selectedStageActualFilledTailGirth_of_trueStage
     (oldACarrier_edges_inter_subsingleton_of_aLinear
       A R hTemplateLinear)
 
+
+/-- The genuinely ORDERED shorter-train Ramsey witness supplies the
+complete old-cut FullSystemGirthGT certificate at EVERY proper cut,
+INCLUDING the old equality cut j=0, through its checked `allCutGirth`
+field. No doubled bottom forest and no additional target girth are
+needed.
+
+Use the canonical filling whose old edge family is the literal
+A-support of the shorter ordered stage. All *restored* positive
+system-girth coordinates then inherit the correct, original
+shorter-train cutoff values, without introducing a bound at the top.
+
+This is the cutoff-two application of the ORDER assertion, rather
+than the weaker FOREST assertion which lacks the j=0 certificate. -/
+theorem selectedStageActualFilledAllCuts_of_orderStage
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.OrderStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (R : RelStructure L X)
+    (place : OldACarrierEdge A S.system.toRelStructure → (X ↪ S.Vertex))
+    (hRange : ∀ f, Set.range (place f) = f.1)
+    (hCovers : ∀ x : X, ∃ a : Embedding A R, x ∈ copyCarrier a)
+    (hTemplateLinear : ALinear A R)
+    (j : Fin t.length) :
+    let H := UniformFillingData.ofSupportCopies A R
+      (supportCopies A S.system.toRelStructure) place hRange
+      (oldACarrier_edges_inter_subsingleton_of_aLinear
+        A S.system.toRelStructure S.aLinear)
+      hCovers
+    (selectedStageActualFilledData U A M T hm hSupport hLinear
+      D family allowed S.toForestTailStage H rfl j.castSucc).FullSystemGirthGT
+        (t.get j) := by
+  let H : UniformFillingData S.Vertex X :=
+    UniformFillingData.ofSupportCopies A R
+      (supportCopies A S.system.toRelStructure) place hRange
+      (oldACarrier_edges_inter_subsingleton_of_aLinear
+        A S.system.toRelStructure S.aLinear)
+      hCovers
+  have hOldBound :
+      (H.toTrainFilling.oldCutData
+        (selectedStageActualOldTrain U A M T hm hSupport hLinear
+          D family allowed S.toForestTailStage H rfl)
+        (fun i : {b : DesignatedCopy M D S.system family // b ∈ S.selected} =>
+          copyCarrier i.1.embedding)
+        (fun i : {b : DesignatedCopy M D S.system family // b ∈ S.selected} =>
+          {f : H.OldEdge | f.1 ⊆ copyCarrier i.1.embedding})
+        j.castSucc).FullSystemGirthGT (t.get j) := by
+    change
+      (selectedPictureOrderOneData A M D S.system family
+        S.selected S.train j.castSucc).FullSystemGirthGT (t.get j)
+    exact S.allCutGirth j
+  exact selectedStageActualFilledData_fullSystemGirthGT_of_old
+    U A M T hm hSupport hLinear D family allowed
+    S.toForestTailStage H rfl
+    j.castSucc (t.get j) hOldBound
+    (oldACarrier_edges_inter_subsingleton_of_aLinear
+      A R hTemplateLinear)
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
