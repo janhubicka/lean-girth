@@ -1,0 +1,3 @@
+import Girth.TrainFillingShorterArrowPhysicalOldWords
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.contractedOldEdge_commonWord_of_relationalRamsey
