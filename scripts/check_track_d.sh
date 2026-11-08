@@ -107,6 +107,7 @@ checks=(
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTwoCycleOriginalVertexFullSupreme
+  CheckActualTwoCutSourceTwoComplete
 )
 
 for check in "${checks[@]}"; do
