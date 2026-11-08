@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCoreLengthTwoObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_edge_only_two_of_linear
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_core_owners_length_two_false
