@@ -63,6 +63,34 @@ theorem BigCycle.no_edge_only_two_of_linear
   exact K.false_of_edge_only_of_labelledCutGirth
     edge hLabel hLinear.1 hAccept 2 (by decide) hCut hOrder
 
+
+/-- A length-two acceptable cycle in any linear pretrain must have
+a REAL designated source label, even though (A1) itself only forces
+this at numerical order one. The other two-connector cases are
+excluded by physical edge/wagon linearity; no output system-girth
+or global supreme-cycle hypothesis is involved. -/
+theorem BigCycle.designated_exists_two_of_linear
+    (D : OrderOneData V E I P)
+    (hLinear : D.LinearPretrain)
+    (K : D.BigCycle 2)
+    (hAccept : K.Acceptable) :
+    ∃ j : Fin 2, D.designated (K.label j) := by
+  classical
+  by_contra hNone
+  push_neg at hNone
+  have hOnly : ∀ j : Fin 2, ∃ b : E,
+      K.label j = Sum.inr b := by
+    intro j
+    cases hLabel : K.label j with
+    | inl i =>
+        have hD : D.designated (K.label j) := by
+          rw [hLabel]
+          trivial
+        exact False.elim (hNone j hD)
+    | inr b =>
+        exact ⟨b, hLabel⟩
+  exact K.no_edge_only_two_of_linear D hLinear hAccept hOnly
+
 end OrderOneData
 
 open StructuralRamsey.RelStructure
