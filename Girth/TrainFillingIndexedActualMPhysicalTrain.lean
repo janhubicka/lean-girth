@@ -3,6 +3,7 @@ import Girth.TrainFillingIndexedColouredInsertionOrder
 import Girth.TrainRecursiveParameterRestrictionKernel
 import Girth.TrainLabelledCutGirth
 import Girth.TrainRecursiveWitnessPass
+import Girth.TrainFillingSelectedStageTrainReflection
 
 set_option Elab.async false
 
@@ -213,6 +214,65 @@ noncomputable def actualIndexedContractedPhysicalTrain
     (actualIndexedContractedM_support_eq U enumerateX hEnumerate
       oldColour templateColour hColour hCoordinate hXBlocks)
     hLinear
+
+
+
+/-- A genuine selected shorter-train M-copy determines an injective
+physical edge map on ALL contracted (choice, first-wagon) labels.
+This is the composition of the exact source-edge equivalence with the
+selected stage's already-checked physical support-edge embedding.
+No new old-edge map is supplied as a hypothesis. -/
+noncomputable def selectedActualMPhysicalEdgeEmbedding [Nontrivial X]
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    {Base : Type v} (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (b : DesignatedCopy M D S.system family) :
+    (C × P) ↪ OldACarrierEdge A S.system.toRelStructure :=
+  (S.selectedPhysicalEdgeEmbedding b).comp
+    (contractedPhysicalEdgeEquiv U A M hSupport hLinear).toEmbedding
+
+/-- The genuine selected stage targetRestriction gives literal proper
+(and bottom/top) train preservation/reflection for EACH original
+contracted first wagon, because the source relation has already
+been transported to the real relational A-support train.
+This discharges the selected-train faithfulness condition as an
+actual witness theorem, not an independently postulated adapter field. -/
+theorem selectedActualMPhysicalEdgeEmbedding_train_iff [Nontrivial X]
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    {Base : Type v} (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (b : DesignatedCopy M D S.system family)
+    (hb : b ∈ S.selected)
+    (μ : Fin (t.length + 1)) (e f : C × P) :
+    S.train.rel μ
+      (selectedActualMPhysicalEdgeEmbedding U A M T hm hSupport
+        hLinear D family allowed S b e)
+      (selectedActualMPhysicalEdgeEmbedding U A M T hm hSupport
+        hLinear D family allowed S b f) ↔
+    (contractedChoiceTrain U T hm).rel μ e f := by
+  change S.train.rel μ
+      (S.selectedPhysicalEdgeEmbedding b
+        (contractedPhysicalEdgeEquiv U A M hSupport hLinear e))
+      (S.selectedPhysicalEdgeEmbedding b
+        (contractedPhysicalEdgeEquiv U A M hSupport hLinear f)) ↔ _
+  exact (S.selectedPhysicalEdgeEmbedding_train_iff b hb μ
+    (contractedPhysicalEdgeEquiv U A M hSupport hLinear e)
+    (contractedPhysicalEdgeEquiv U A M hSupport hLinear f)).trans
+      (contractedPhysicalTrain_rel_iff U A M T hm hSupport hLinear μ e f)
 
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
