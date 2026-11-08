@@ -1,0 +1,4 @@
+import Girth.TrainActualCutConnectorExactKinds
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cutConnector_exact_core_vertex
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_cutConnector_exact_core_wagon
