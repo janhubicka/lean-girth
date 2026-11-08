@@ -52,6 +52,7 @@ checks=(
   CheckTrainRecursiveRefinementForget
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveActiveTargetNoSmallBase
+  CheckTrainRecursiveTrueActiveTwoCopies
   CheckTrainRecursiveSelectedGluingIncidence
   CheckTrainRecursiveLargeBaseCoarsening
   CheckTrainRecursiveLargeBaseCutParameters
