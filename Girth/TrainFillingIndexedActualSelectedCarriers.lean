@@ -38,7 +38,7 @@ variable (U : C → PrivateWagonInput V P X)
 variable (H : UniformFillingData Y X)
 variable (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
 variable [LinearOrder X] [Finite X] [Nontrivial X]
-variable [LinearOrder (Vertex U)] [PartialOrder Y]
+variable [LinearOrder (Vertex U)] [LinearOrder Y]
 
 /-- A genuinely selected relational M-copy supplies all *old* carrier
 images, and the actual complete filling then supplies every physical
@@ -161,7 +161,7 @@ a theorem of the selected b plus its canonical target placements,
 with no independently postulated whole-carrier or pointwise equality. -/
 theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualIndexedM
     [LinearOrder C] [LinearOrder V] [Fintype V]
-    [LinearOrder P] [LinearOrder I] [LinearOrder Y]
+    [LinearOrder P] [LinearOrder I]
     {k : ℕ}
     (enumerateX : Fin k ≃ X) (hEnumerate : StrictMono enumerateX)
     (oldColour : V → I) (templateColour : X → I)
