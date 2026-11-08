@@ -127,7 +127,7 @@ theorem ForestTailStage.trueActive_completeLowerTargetGeometry
         Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm j.castSucc =
           jOld.castSucc := Fin.ext rfl
     rw [hIdx]
-    simpa only [jOld, lower] using
+    simpa only [U, jOld, lower, Fin.val_cast] using
       stage.trueActive_inducedAllLowerCutGirth e ht hq R jOld hPosOld
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
