@@ -86,6 +86,7 @@ checks=(
   CheckActualTwoCutCoreOwnerUnique
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutThreeLeFullSupreme
+  CheckActualGirthFromLengthTwoSource
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
   CheckActualTwoCutSingletonShortStandardTransfer
