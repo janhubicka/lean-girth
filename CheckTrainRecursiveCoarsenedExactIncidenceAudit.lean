@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCoarsenedExactIncidenceAudit
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_original_incidence_eq
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fullSystem_iff_original
