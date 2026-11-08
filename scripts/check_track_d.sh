@@ -98,6 +98,7 @@ checks=(
   CheckTrainRecursiveTrueActiveAdjacentParameters
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
+  CheckTrainRecursiveTrueActiveSelectedInputBundle
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveSelectedLowerActualInputs
