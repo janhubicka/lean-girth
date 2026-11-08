@@ -138,6 +138,7 @@ checks=(
   CheckTwoWagonCycleLocalObstruction
   CheckTrainRecursiveNontrivialActiveCoverage
   CheckTrainRecursiveOrderedNontrivialSelectedInputs
+  CheckTrainRecursiveTrueActiveIndexedNontrivialInputs
   CheckTrainRecursiveOrderedTrueActiveSelectedInputs
 )
 
