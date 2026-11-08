@@ -56,10 +56,14 @@ variable (hFamilyParts : ∀ b, b ∈ family →
 local notation "Selected" =>
   {b : DesignatedCopy Source D.toRelStructure S.system family //
     b ∈ S.selected}
+-- Avoid quoting a field-projection syntax node in local notation:
+-- Lean's quotation prechecker cannot elaborate that syntax here.
+-- The fully qualified field yields the identical physical embedding.
 local notation "Gluing" => fun i : Selected =>
-  (selectedPartiteGluingFamily_of_largeBase
-    Target D S.system S.isPartite family hFamilyParts
-    S.selected i).toEmbedding
+  StructuralRamsey.Partite.Embedding.toEmbedding
+    (selectedPartiteGluingFamily_of_largeBase
+      Target D S.system S.isPartite family hFamilyParts
+      S.selected i)
 
 include hFamilyParts
 
