@@ -1,0 +1,3 @@
+import Girth.TrainFillingActualEhnDesignatedColourArrow
+
+#print axioms StructuralRamsey.Girth.ehnIndexedTarget_monochromatic_of_designatedArrow

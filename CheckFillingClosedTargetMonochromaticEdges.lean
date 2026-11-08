@@ -1,0 +1,7 @@
+import Girth.TrainFillingClosedTargetMonochromaticEdges
+
+#print axioms StructuralRamsey.Girth.ofStrongEmbedding_selectedEdges_monochromatic
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_selectedEdges_monochromatic
+#print axioms StructuralRamsey.Girth.ehnIndexedPrivateChoiceFamily
+#print axioms StructuralRamsey.Girth.ehnIndexedPrivateChoiceFamily_templateEdges
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_indexedSelectedEdges_monochromatic
