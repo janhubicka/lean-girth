@@ -44,41 +44,18 @@ theorem originalPositiveCutoff_eq_lowerRetained
   have hIndex : j.val = k.val + 1 := by
     dsimp [k]
     omega
-  let lower := List.replicate (r + 1) (q - 1) ++ tail
-  have hSame :
-      (⟨j.val + r, by
-        have hjLt := j.isLt
-        simp only [List.length_cons] at hjLt
-        simp only [lower, List.length_append, List.length_replicate]
-        omega⟩ : Fin lower.length) =
-      ⟨(r + 1) + k.val, by
-        simp only [lower, List.length_append, List.length_replicate]
-        have hk := k.isLt
-        omega⟩ := by
-    apply Fin.ext
-    change j.val + r = r + 1 + k.val
-    omega
-  rw [show (List.replicate (r + 1) (q - 1) ++ tail).get
-      ⟨j.val + r, by
-        have hjLt := j.isLt
-        simp only [List.length_cons] at hjLt
-        simp only [List.length_append, List.length_replicate]
-        omega⟩ =
-      lower.get
-        ⟨(r + 1) + k.val, by
-          simp only [lower, List.length_append, List.length_replicate]
-          have hk := k.isLt
-          omega⟩ from congrArg (fun i : Fin lower.length => lower.get i) hSame]
+  have hOffset : j.val + r = (r + 1) + k.val := by omega
+  have hRetained := replicatedCutoff_at_retained (q - 1) (r + 1) tail k
+  change (List.replicate (r + 1) (q - 1) ++ tail)[(r + 1) + k.val] =
+    tail[k.val] at hRetained
+  change (List.replicate (r + 1) (q - 1) ++ tail)[j.val + r] =
+    (q :: tail)[j.val]
   calc
-    lower.get
-        ⟨(r + 1) + k.val, by
-          simp only [lower, List.length_append, List.length_replicate]
-          have hk := k.isLt
-          omega⟩ =
-        tail.get k := by
-          exact replicatedCutoff_at_retained (q - 1) (r + 1) tail k
-    _ = (q :: tail).get j := by
-      change tail[k.val] = (q :: tail)[j.val]
+    (List.replicate (r + 1) (q - 1) ++ tail)[j.val + r] =
+        (List.replicate (r + 1) (q - 1) ++ tail)[(r + 1) + k.val] := by
+      rw [hOffset]
+    _ = tail[k.val] := hRetained
+    _ = (q :: tail)[j.val] := by
       rw [hIndex]
       simp
 
