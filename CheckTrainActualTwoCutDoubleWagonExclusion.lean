@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCutDoubleWagonExclusion
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_absurd_of_fullSystemGirth_of_length_eq_two
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_double_wagon_absurd_of_witness
