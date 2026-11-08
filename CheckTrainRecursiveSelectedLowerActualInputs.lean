@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveSelectedLowerActualInputs
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalFineAllowed_all_constraints
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_actualLocalInputBundle
