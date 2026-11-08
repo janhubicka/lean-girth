@@ -175,4 +175,44 @@ theorem contractedPhysicalTrain_adjacentParameters [Nontrivial X]
     (contractedCarrier U) φ.symm.toEmbedding
     (fun e : OldACarrierEdge A M => e.1) hShrink allowed hOld
 
+
+/-- The shortened train on the ALREADY CONSTRUCTED full heterogeneous
+colour-block relational M. This uses exactly the checked actual
+M-support equality and physical first-wagon injectivity, not an
+independent choice of relational source edges or a postulated train
+on their carrier sets. -/
+noncomputable def actualIndexedContractedPhysicalTrain
+    {I : Type v}
+    [LinearOrder C] [LinearOrder V] [Fintype V]
+    [LinearOrder P] [LinearOrder X] [Finite X]
+    [LinearOrder I] [Nontrivial X]
+    {k m : ℕ}
+    (enumerateX : Fin k ≃ X) (hEnumerate : StrictMono enumerateX)
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 = templateColour ((U c).coordinate p z))
+    (hCoordinate : ∀ c : C, ∀ p : P,
+      StrictMono ((U c).coordinate p))
+    (hXBlocks : ∀ x y : X,
+      templateColour x ≠ templateColour y →
+      x < y → templateColour x < templateColour y)
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (T : EdgeTrainLevels P m) (hm : 0 < m) :
+    EdgeTrainLevels
+      (OldACarrierEdge
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i)))
+        (actualIndexedContractedM U oldColour templateColour)) m :=
+  contractedPhysicalTrain U
+    (colouredOrderedEdgeSource k
+      (fun i => templateColour (enumerateX i)))
+    (actualIndexedContractedM U oldColour templateColour)
+    T hm
+    (actualIndexedContractedM_support_eq U enumerateX hEnumerate
+      oldColour templateColour hColour hCoordinate hXBlocks)
+    hLinear
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
