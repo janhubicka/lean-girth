@@ -78,10 +78,15 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT (t.get j) := by
-  -- The coarsened partite system has the same relational reduct,
-  -- and selectedPartiteGluingFamily_of_largeBase retains each copy's
-  -- literal underlying relational embedding. Consequently the target
-  -- is definitionally the generic selected-gluing certificate.
+  -- FIRST force the complete physical type to match the already
+  -- audited generic selected-copy certificate. This change must be
+  -- definitional: if not, Lean must report a genuine elaboration
+  -- error instead of hiding a missing transport as `sorryAx`.
+  change (activeGluingWitnessOrderOneData A Old α
+    S.system.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} => i.1.embedding)
+    S.train j.castSucc).FullSystemGirthGT (t.get j)
   exact S.selectedGluing_fullSystem_at_positive
     A Old α D.toRelStructure
     (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
