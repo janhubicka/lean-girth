@@ -70,7 +70,7 @@ theorem selectedPicture_bottom_fullSystemGirthGT_of_doubleForest
   refine ⟨OrderOneData.BottomForestGeometry.linearPretrain O H, ?_⟩
   intro n cycle hAccept hOrder
   have hLength : n ≤ 2 * q :=
-    (cycle.length_le_twiceOrder O).trans hOrder
+    cycle.length_le_twiceOrder.trans hOrder
   exact selectedPicture_bottom_cycle_supreme_of_mixedForest
     A B D C family selected T hLinear hRigid a b hne
     (2 * q) hDoubleForest cycle hAccept hLength
