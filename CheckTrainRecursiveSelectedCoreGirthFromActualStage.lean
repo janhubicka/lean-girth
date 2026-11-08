@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveSelectedCoreGirthFromActualStage
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_coreGirth_of_actualStage
