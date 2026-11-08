@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveHJFreshSelectedFinitePass
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.constructFromPartiteTargetCuts_of_freshNontrivialRefiningSteps
