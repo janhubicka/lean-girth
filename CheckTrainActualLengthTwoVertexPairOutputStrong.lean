@@ -1,0 +1,3 @@
+import Girth.TrainActualLengthTwoVertexPairOutputStrong
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_length_two_vertex_pairEdge_full_supreme
