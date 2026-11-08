@@ -1,0 +1,4 @@
+import Girth.TrainActualLengthTwoWagonLabels
+
+#print axioms StructuralRamsey.Girth.OrderOneData.incident_edge_wagon_parent
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_connectors_all_designated
