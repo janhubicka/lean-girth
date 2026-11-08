@@ -1,0 +1,3 @@
+import Girth.TrainTwoWagonCycleLocalObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_impossible_of_localPieceSystemBound_two
