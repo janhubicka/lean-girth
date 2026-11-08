@@ -77,8 +77,6 @@ local notation "Old" => selectedPictureOrderOneData
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μ
 
-include hRel
-
 /-- At exact source length two every original label is incident with
 both original connectors; the cyclic orientation is explicitly checked. -/
 private theorem original_two_label_all_contacts
