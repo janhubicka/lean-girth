@@ -1,0 +1,3 @@
+import Girth.TrainOriginalSelectedCoreVertexPreimage
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_B_core_vertex_old_preimage
