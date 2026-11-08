@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveExactOriginalRetainedCutoff
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.originalPositiveCutoff_eq_lowerRetained
