@@ -220,9 +220,7 @@ theorem attachedSelectedPicture_two_cut_has_standard_owner_of_linear
     ext j
     simp [hAllChanges j]
   have hCount : cyclicOwnerChanges owner = n := by
-    unfold cyclicOwnerChanges
-    rw [hFilter]
-    simp
+    simpa [cyclicOwnerChanges, hAllChanges]
   have hn : n = 2 := by omega
   subst n
   exact attachedSelectedPicture_two_core_owners_length_two_false
