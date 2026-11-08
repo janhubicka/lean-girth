@@ -62,10 +62,10 @@ theorem selectedStageActualCopyEdges_eq_range
               obtain ⟨a, ha⟩ := e.2
               obtain ⟨x, y, hxy⟩ := exists_pair_ne UA
               have hx : a x ∈ e.1 := by
-                rw [← ha]
+                rw [ha]
                 exact ⟨x, rfl⟩
               have hy : a y ∈ e.1 := by
-                rw [← ha]
+                rw [ha]
                 exact ⟨y, rfl⟩
               exact hxy (a.injective
                 (hSub ⟨hx, hInside hx⟩ ⟨hy, hInside hy⟩))
