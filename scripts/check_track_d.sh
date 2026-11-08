@@ -134,6 +134,11 @@ checks=(
   CheckTrainRecursiveTrueActiveSelectedInputBundle
   CheckTrainRecursiveHJFreshSelectedFinitePass
   CheckFillingIndexedSelectedColourWord
+  CheckActualTwoCycleCoreConnectors
+  CheckTwoWagonCycleLocalObstruction
+  CheckTrainRecursiveNontrivialActiveCoverage
+  CheckTrainRecursiveOrderedNontrivialSelectedInputs
+  CheckTrainRecursiveOrderedTrueActiveSelectedInputs
 )
 
 for check in "${checks[@]}"; do
