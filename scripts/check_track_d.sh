@@ -94,6 +94,7 @@ checks=(
   CheckTrainRecursiveTrueActiveRetainedTailCuts
   CheckTrainRecursiveExactRetainedFullSystemGirth
   CheckTrainRecursiveExactOriginalRetainedCutoff
+  CheckTrainRecursiveActualFullSystemHeightTransport
   CheckTrainRecursiveTrueActiveLowerCutoffVector
   CheckTrainRecursiveExactHeightTransport
   CheckTrainRecursiveTrueActiveInitialLowerStage
