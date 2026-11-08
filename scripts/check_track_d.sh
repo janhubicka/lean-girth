@@ -49,6 +49,7 @@ checks=(
   CheckTrainRecursiveOneEdgeTarget
   CheckTrainRecursiveRefinementStepGirth
   CheckTrainRecursiveRefinementGirthGain
+  CheckTrainRecursiveFullRetainedWitnessTransfer
   CheckTrainRecursiveRefinementForget
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveActiveTargetNoSmallBase
