@@ -118,6 +118,33 @@ theorem attachedSelectedPicture_two_core_owners_length_two_false
   change K.label j = Sum.inr (CoreActual b) at h
   exact ⟨CoreActual b, h⟩
 
+
+/-- At original length two, every admissible geometric owner assignment
+has at least one REAL standard owner. This closes the length-two
+two-core-owner classification without invoking the unproved output
+SupremeCycleBound. No minimum-owner hypothesis is required. -/
+theorem attachedSelectedPicture_length_two_has_standard_owner
+    (hLinear : (Out).LinearPretrain)
+    (K : (Out).BigCycle 2)
+    (hAccept : K.Acceptable)
+    (owner : Fin 2 → I ⊕ CoreEdge)
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j)) :
+    ∃ j : Fin 2, ∃ i : I, owner j = Sum.inl i := by
+  classical
+  by_contra hNone
+  push_neg at hNone
+  have hAllCore : ∀ j : Fin 2, ∃ b : CoreEdge,
+      owner j = Sum.inr b := by
+    intro j
+    cases hOwner : owner j with
+    | inl i =>
+        exact False.elim (hNone j i hOwner)
+    | inr b =>
+        exact ⟨b, hOwner⟩
+  exact attachedSelectedPicture_two_core_owners_length_two_false
+    A hA B D C family selected e R f T U hShared μ
+    hLinear K hAccept owner hAllowed hAllCore
+
 end ActualTwoCoreLengthTwo
 
 end StructuralRamsey.Girth
