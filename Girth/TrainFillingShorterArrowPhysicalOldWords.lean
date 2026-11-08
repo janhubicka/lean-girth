@@ -1,5 +1,6 @@
 import Girth.TrainFillingIndexedContractedCarriers
 import Girth.ALinearRamsey
+import Girth.TrainRecursiveWitnessPass
 
 set_option Elab.async false
 
@@ -112,5 +113,100 @@ theorem contractedOldEdge_commonWord_of_relationalRamsey
       congrArg word hOldEdgeEq
     _ = χ (b.comp a₀) := hb a a₀
     _ = ρ := rfl
+
+
+/-- Preserve the ACTUALLY SELECTED strong shorter-stage M-copy while
+choosing the common physical old N-edge colour word.
+
+Unlike the bare relational-arrow corollary above, this theorem keeps
+the `DesignatedCopy` b and its proof `b ∈ S.selected`; hence the
+checked stage provides both A-strongness and reflection of every
+wagon relation for THIS SAME selected b. The old edge embedding β is
+constructed from b's full vertex map, and its exact whole-carrier
+equality is returned alongside the common colour word.
+
+Thus no arbitrary β or unselected Ramsey copy can be substituted
+during the final T-labelled target-realization assembly. -/
+theorem contractedOldEdge_commonWord_of_designatedArrow
+    {Base : Type v}
+    [Nonempty (C × P)]
+    (A : RelStructure L UA)
+    (M : RelStructure L (Vertex U))
+    (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    {t : List ℕ}
+    (T : EdgeTrainLevels (OldACarrierEdge A M) t.length)
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t T allowed)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (hArrow : TrainRecursiveWitness.DesignatedArrow S
+      (H.TemplateEdge → κ))
+    (word : H.OldEdge → H.TemplateEdge → κ) :
+    ∃ (b : DesignatedCopy M D S.system family),
+      b ∈ S.selected ∧
+      ∃ (β : (C × P) ↪ H.OldEdge) (ρ : H.TemplateEdge → κ),
+        (∀ cp : C × P, word (β cp) = ρ) ∧
+        (∀ cp : C × P,
+          (β cp).1 =
+            b.embedding.toFunctionEmbedding '' contractedCarrier U cp) := by
+  classical
+  let χ : Embedding A S.system.toRelStructure → H.TemplateEdge → κ :=
+    fun a => word ⟨copyCarrier a, by
+      rw [hOld]
+      exact ⟨a, rfl⟩⟩
+  obtain ⟨b, hb, hMono⟩ := hArrow χ
+  let vertex : Vertex U ↪ S.Vertex := b.embedding.toFunctionEmbedding
+  have hImage : ∀ cp : C × P,
+      vertex '' contractedCarrier U cp ∈ H.oldEdges := by
+    intro cp
+    rw [hOld]
+    have hc : contractedCarrier U cp ∈ supportCopies A M := by
+      rw [hSupport]
+      exact ⟨cp, rfl⟩
+    exact supportCopy_image_mem A M S.system.toRelStructure b.embedding
+      ⟨contractedCarrier U cp, hc⟩
+  let β : (C × P) ↪ H.OldEdge :=
+    contractedOldEdgeEmbedding U hLinear H vertex hImage
+  obtain ⟨cp₀⟩ := (inferInstance : Nonempty (C × P))
+  have hRep (cp : C × P) :
+      ∃ a : Embedding A M,
+        copyCarrier a = contractedCarrier U cp := by
+    have h : contractedCarrier U cp ∈ supportCopies A M := by
+      rw [hSupport]
+      exact ⟨cp, rfl⟩
+    obtain ⟨a, ha⟩ := h
+    exact ⟨a, ha.symm⟩
+  let a₀ : Embedding A M := Classical.choose (hRep cp₀)
+  let ρ : H.TemplateEdge → κ := χ (b.embedding.comp a₀)
+  refine ⟨b, hb, β, ρ, ?_, ?_⟩
+  · intro cp
+    let a : Embedding A M := Classical.choose (hRep cp)
+    have hCarrier : (β cp).1 = copyCarrier (b.embedding.comp a) := by
+      calc
+        (β cp).1 = vertex '' contractedCarrier U cp :=
+          contractedOldEdgeEmbedding_carrier U hLinear H vertex hImage cp
+        _ = vertex '' copyCarrier a :=
+          congrArg (fun F : Set (Vertex U) => vertex '' F)
+            (Classical.choose_spec (hRep cp)).symm
+        _ = copyCarrier (b.embedding.comp a) :=
+          (copyCarrier_comp_eq_image b.embedding a).symm
+    have hMember : copyCarrier (b.embedding.comp a) ∈ H.oldEdges := by
+      rw [hOld]
+      exact ⟨b.embedding.comp a, rfl⟩
+    have hOldEdgeEq :
+        β cp = (⟨copyCarrier (b.embedding.comp a), hMember⟩ : H.OldEdge) :=
+      Subtype.ext hCarrier
+    calc
+      word (β cp) = χ (b.embedding.comp a) :=
+        congrArg word hOldEdgeEq
+      _ = χ (b.embedding.comp a₀) := hMono a a₀
+      _ = ρ := rfl
+  · intro cp
+    exact contractedOldEdgeEmbedding_carrier U hLinear H vertex hImage cp
+
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
