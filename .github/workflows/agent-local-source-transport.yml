@@ -1,0 +1,49 @@
+name: Temporary girth sources for local Lean (transport only)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/agent-local-source-transport.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Export exact PR sources and pinned dependency repositories
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p transport deps
+          git fetch --no-tags origin main
+          for n in 1001 1005 1009 1012 1014 1016; do
+            git fetch --no-tags origin "+refs/pull/${n}/head:refs/heads/local-track-${n}"
+            git rev-parse "refs/heads/local-track-${n}" >> transport/PR_HEAD_SHAS
+          done
+          git bundle create transport/lean-girth-refs.bundle --all
+          git bundle verify transport/lean-girth-refs.bundle
+          git rev-parse origin/main > transport/MAIN_SHA
+          git show origin/main:lean-toolchain > transport/lean-toolchain
+          git show origin/main:lakefile.toml > transport/lakefile.toml
+          git clone --quiet https://github.com/janhubicka/partite-construction.git deps/partite-construction
+          git -C deps/partite-construction checkout --quiet d2394f65861528f27d68c4a42042285dafef301d
+          git clone --quiet https://github.com/janhubicka/lean-successors.git deps/successor-tree-lean
+          git -C deps/successor-tree-lean checkout --quiet f9513be1d92782e7a8c45916d32e6e11dc0e0dcf
+          git clone --quiet https://github.com/janhubicka/lean-ramsey-space-todorcevic.git deps/ramsey-space-todorcevic
+          git -C deps/ramsey-space-todorcevic checkout --quiet 54a9eb02f7f7bd2e942e95f7b44fc6f04f48892c
+          for d in deps/*; do printf '%s %s\n' "$d" "$(git -C "$d" rev-parse HEAD)" >> transport/DEPS_SHAS; done
+          tar -czf transport/girth-deps.tar.gz -C deps .
+          (cd transport && shasum -a 256 lean-girth-refs.bundle girth-deps.tar.gz > SHA256SUMS)
+          ls -lh transport
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-girth-local-source-20261108
+          path: transport/
+          compression-level: 0
+          retention-days: 3
