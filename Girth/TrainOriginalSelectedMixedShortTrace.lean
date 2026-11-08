@@ -265,5 +265,64 @@ theorem attachedSelectedPicture_original_mixed_short_of_shadow
     A hA B D C family selected e R f T U hShared hRel μ
     hq hOld i q x0 x hQx hX p hMeets hBridge
 
+/-- In a TRUE original source length-two mixed cycle, the short
+just constructed yields a complete globally valid simultaneous-supreme
+replacement of the ORIGINAL designated label. All boundary indices and
+both cyclic orientations are explicit; the other label is never pulled
+back into the original standard or replaced by a geometric owner. -/
+theorem attachedSelectedPicture_two_cycle_mixed_supreme_of_shadow
+    {qcut : ℕ} (hq : 1 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (hWitness : (Wit).FullSystemGirthGT qcut)
+    (K : (Out).BigCycle 2) (hAccept : K.Acceptable)
+    (target : Fin 2) (i : I) (q : Selected)
+    (hOriginal : K.label target = Sum.inl (i,q))
+    (x0 : X) (x : Y)
+    (hQx : x0 ∈ copyCarrier q.1.embedding)
+    (hX : Std i x0 = CoreEmb x)
+    (hIx : x ∈ (Wit).copyCarrier i)
+    (p : Quotient (U.wagonSetoid μ))
+    (hMixed :
+      (K.connector 0 = Sum.inl (CoreEmb x) ∧
+        K.connector 1 = Sum.inr (CoreWagon p)) ∨
+      (K.connector 0 = Sum.inr (CoreWagon p) ∧
+        K.connector 1 = Sum.inl (CoreEmb x)))
+    (hMeets : (Out).Meets (Sum.inl (i,q)) (CoreWagon p))
+    (a : I ⊕ CoreEdge)
+    (hOther : Sum.inl i ≠ a)
+    (hAx : x ∈ (Wit).carrier a)
+    (hAp : (Wit).Meets a p) :
+    K.HasSimultaneousSupreme := by
+  have hShort :=
+    attachedSelectedPicture_original_mixed_short_of_shadow
+      A hA B D C family selected e R f T U hShared hRel μ
+      hq hOld hWitness i q x0 x hQx hX hIx p hMeets
+      a hOther hAx hAp
+  obtain ⟨edge, hOwned, hXEdge, hPEdge⟩ := hShort
+  have hOwnTarget : edge ∈ (Out).edges (K.label target) := by
+    rw [hOriginal]
+    exact hOwned
+  have hAllInc : ∀ j : Fin 2,
+      (Out).Incident (Sum.inr edge) (K.connector j) := by
+    intro j
+    fin_cases j
+    · rcases hMixed with ⟨h0, _h1⟩ | ⟨h0, _h1⟩
+      · rw [h0]
+        exact hXEdge
+      · rw [h0]
+        exact hPEdge
+    · rcases hMixed with ⟨_h0, h1⟩ | ⟨_h0, h1⟩
+      · rw [h1]
+        exact hPEdge
+      · rw [h1]
+        exact hXEdge
+  have hTarget : (Out).designated (K.label target) := by
+    rw [hOriginal]
+    trivial
+  apply K.hasSimultaneousSupreme_of_all_shortValid
+    (Out) hAccept target hTarget
+  intro j _hNe
+  exact ⟨edge, hOwnTarget, hAllInc (trainCyclicPred j), hAllInc j⟩
+
 end OriginalSelectedMixedBridge
 end StructuralRamsey.Girth
