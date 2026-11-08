@@ -1,3 +1,5 @@
 import Girth.TrainFillingSelectedActualCopyEdges
 
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualCopyEdges_eq_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualOldCopyEdges_eq_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualFilledCopyEdges_eq_range
