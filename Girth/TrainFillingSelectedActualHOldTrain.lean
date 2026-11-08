@@ -48,7 +48,8 @@ def oldSupportEdgeEmbedding
     exact e.2⟩
   inj' := by
     intro e f h
-    exact Subtype.ext (congrArg Subtype.val h)
+    apply Subtype.ext
+    exact congrArg (fun x : OldACarrierEdge A N => x.1) h
 
 @[simp] theorem oldSupportEdgeEmbedding_carrier
     {W : Type v} (A : RelStructure L UA) (N : RelStructure L W)
