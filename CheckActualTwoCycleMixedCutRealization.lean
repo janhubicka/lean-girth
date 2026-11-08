@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCycleMixedCutRealization
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_cut_connector_realization
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_shape_full_supreme
