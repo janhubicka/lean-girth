@@ -1,5 +1,6 @@
 import Girth.TrainActualTwoCycleWitnessDoubleWagonExclusion
 import Girth.TrainRecursiveWitnessPass
+import Girth.ActiveCarrierStrong
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -81,13 +82,17 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     (hStrong : ∀ r : Embedding B D, r ∈ family →
       AStrong A D (copyCarrier r))
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
-    (hOldStrong : AStrong A S.system.toRelStructure
-      (activeCarrier A S.system e.toFunctionEmbedding))
+    (hBaseLinear : ALinear A D)
+    (hRigid : ∀ a : Embedding A D, SameCopy a e → a = e)
     (hWitness : ∀ j : Fin t.length, 0 < j.val →
       (Wit j.castSucc).FullSystemGirthGT (t.get j)) :
     ∀ j : Fin t.length, 0 < j.val →
       (Out j.castSucc).SupremeCycleBound (t.get j) := by
   intro j hj
+  have hOldStrong : AStrong A S.system.toRelStructure
+      (activeCarrier A S.system e.toFunctionEmbedding) :=
+    activeCarrier_aStrong_of_base_aLinear
+      A D S.system hA S.isPartite hBaseLinear e hRigid
   have hTwoCopies : ∀ r : Selected, ∃ a d : OldEdge,
       a ≠ d ∧ a.1 ⊆ copyCarrier r.1.embedding ∧
         d.1 ⊆ copyCarrier r.1.embedding := by
