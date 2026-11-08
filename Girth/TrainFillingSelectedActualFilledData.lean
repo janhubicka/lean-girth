@@ -193,4 +193,47 @@ theorem selectedStageActualFilledData_fullSystemGirthGT_of_old
     ν hOldBound (H.fibre_linear hTemplateLinear)
 
 
+
+/-- All inherited proper system-girth coordinates, with the precise
+cutoff-two index shift: old j.castSucc becomes restored j.castSucc.succ.
+In particular j = 0 (the old equality cut) is included; no
+universal-top system-girth coordinate is introduced.
+
+No FULL output system-girth certificate is assumed. All output
+certificates follow uniformly from the genuine OLD cut certificates
+and the local template-edge linearity theorem. -/
+theorem selectedStageActualFilledData_tailSystemGirth_of_old
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (g : Fin t.length → ℕ)
+    (hOldCuts : ∀ j : Fin t.length,
+      (H.toTrainFilling.oldCutData
+        (selectedStageActualOldTrain U A M T hm hSupport hLinear
+          D family allowed S H hOld)
+        (fun i : {b : DesignatedCopy M D S.system family // b ∈ S.selected} =>
+          copyCarrier i.1.embedding)
+        (fun i : {b : DesignatedCopy M D S.system family // b ∈ S.selected} =>
+          {f : H.OldEdge | f.1 ⊆ copyCarrier i.1.embedding})
+        j.castSucc).FullSystemGirthGT (g j))
+    (hTemplateLinear : ∀ a b : H.TemplateEdge, a ≠ b →
+      (a.1 ∩ b.1).Subsingleton) :
+    ∀ j : Fin t.length,
+      (selectedStageActualFilledData U A M T hm hSupport hLinear
+        D family allowed S H hOld j.castSucc).FullSystemGirthGT (g j) := by
+  intro j
+  exact selectedStageActualFilledData_fullSystemGirthGT_of_old
+    U A M T hm hSupport hLinear D family allowed S H hOld
+    j.castSucc (g j) (hOldCuts j) hTemplateLinear
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
