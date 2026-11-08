@@ -74,6 +74,7 @@ checks=(
   CheckActualTwoCutDistinctStandards
   CheckActualMinimalTwoCycleShadow
   CheckActualMinimalTwoCutResidualClosure
+  CheckOriginalSelectedCoreVertexPreimage
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
