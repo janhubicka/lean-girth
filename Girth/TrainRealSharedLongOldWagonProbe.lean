@@ -115,6 +115,8 @@ theorem sharedWitness_bridge_old_vertex_wagon_probe
     exact (Std i).injective hEq ▸ hz
   exact ⟨s, hOldVertex, hParent⟩
 
+include hRel
+
 /-- True lower LONG at copy i supplies an OLD pair edge or
 two OLD real support edges in one wagon with NO old pair. -/
 theorem sharedWitness_long_two_vertices_old_pair_or_wagon_probe
