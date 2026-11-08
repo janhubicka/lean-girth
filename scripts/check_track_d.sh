@@ -108,6 +108,8 @@ checks=(
   CheckCyclicTwoCutRunFibre
   CheckOriginalSelectedMixedShortTrace
   CheckOriginalSelectedMixedSourceClosure
+  CheckActualTwoCycleDesignatedOwnerForced
+  CheckActualTwoCycleMixedNoMinimality
 )
 
 for check in "${checks[@]}"; do
