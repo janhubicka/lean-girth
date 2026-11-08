@@ -106,6 +106,7 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckActualOriginalBMixedSharedWagonBridge
 )
 
 for check in "${checks[@]}"; do
