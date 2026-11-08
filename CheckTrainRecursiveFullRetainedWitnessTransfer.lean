@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveFullRetainedWitnessTransfer
+
+#print axioms StructuralRamsey.Girth.activeGluingWitness_retainedFull_exact
