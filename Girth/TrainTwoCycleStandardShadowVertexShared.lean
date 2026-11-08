@@ -32,9 +32,9 @@ variable {V E I P : Type v} (D : OrderOneData V E I P)
 /-- Both original labels of an exact length-two BigCycle are incident
 with both original connectors, in either cyclic orientation. -/
 theorem BigCycle.two_all_labels_incident
-    (K : D.BigCycle 2) (k at : Fin 2) :
-    D.Incident (K.label k) (K.connector at) := by
-  fin_cases k <;> fin_cases at
+    (K : D.BigCycle 2) (k pos : Fin 2) :
+    D.Incident (K.label k) (K.connector pos) := by
+  fin_cases k <;> fin_cases pos
   · exact K.left_incident 0
   · simpa [cyclicSucc] using K.right_incident 1
   · simpa [cyclicSucc] using K.right_incident 0
@@ -114,8 +114,8 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
     (j : I)
     (hShadow : owner (cyclicSucc target) = Sum.inl j)
     (hDistinct : i ≠ j)
-    (at : Fin 2) (x : Vertex)
-    (hVertex : K.connector at = Sum.inl x) :
+    (pos : Fin 2) (x : Vertex)
+    (hVertex : K.connector pos = Sum.inl x) :
     x ∈ copyCarrier CoreEmb ∧
     x ∈ (Wit).copyCarrier i ∧
     x ∈ (Wit).copyCarrier j := by
@@ -133,7 +133,7 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
     change (Out).carrier (K.label target) ⊆ copyCarrier (Std i)
       at hOriginalAllowed
     have hInc := OrderOneData.BigCycle.two_all_labels_incident
-      (Out) K target at
+      (Out) K target pos
     rw [hVertex] at hInc
     change x ∈ (Out).carrier (K.label target) at hInc
     exact hOriginalAllowed hInc
@@ -143,7 +143,7 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
     change (Out).carrier (K.label (cyclicSucc target)) ⊆
       copyCarrier (Std j) at hOtherAllowed
     have hInc := OrderOneData.BigCycle.two_all_labels_incident
-      (Out) K (cyclicSucc target) at
+      (Out) K (cyclicSucc target) pos
     rw [hVertex] at hInc
     change x ∈ (Out).carrier (K.label (cyclicSucc target)) at hInc
     exact hOtherAllowed hInc
