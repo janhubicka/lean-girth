@@ -177,11 +177,9 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
   obtain ⟨y, hy⟩ := hCore
   refine ⟨y, hy, ?_, ?_⟩
   · apply attachedSelectedPicture_core_standard_witness_Y
-      A B D C family selected e R f T U hShared μ i y
     rw [hy]
     exact hStdI
   · apply attachedSelectedPicture_core_standard_witness_Y
-      A B D C family selected e R f T U hShared μ j y
     rw [hy]
     exact hStdJ
 
