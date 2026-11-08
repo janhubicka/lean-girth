@@ -69,4 +69,45 @@ theorem selectedIndexedTargetEdges_colourWord_constant
     _ = ρ t := congrFun (hWords a₀.1) t
     _ = colour := hLocal a₀.1 t ht
 
+
+/-- The literal TWO-ARROW composition for the complete physical
+heterogeneous G0 target.
+
+The shorter ordered Ramsey witness chooses an embedding of ALL
+contracted first wagons with the SAME complete X-template colour word.
+The first EHN Ramsey witness then chooses one W* component whose
+selected local template edges are monochromatic in that word.
+
+Under exactly these two arrow interfaces, the entire genuinely
+selected physical G0 target edge set is monochromatic in H. No
+separate output physical edge map or pointwise carrier equation is
+assumed. This is the final colour calculation; existence of the
+older edge-arrow and EHN-arrow inputs is checked in their own modules,
+while their simultaneous prescribed-target strongness and wagon
+geometry are part of the remaining end-to-end application. -/
+theorem selectedIndexedTargetEdges_ramsey_of_two_arrows
+    (hOldArrow :
+      ∀ word : H.OldEdge → H.TemplateEdge → κ,
+        ∃ (β : (C × P) ↪ H.OldEdge)
+          (ρ : H.TemplateEdge → κ),
+          ∀ cp : C × P, word (β cp) = ρ)
+    (hLocalArrow :
+      ∀ ρ : H.TemplateEdge → κ,
+        ∃ (c : C) (colour : κ),
+          ∀ p : P, ∀ e : H.TemplateEdge,
+            e ∈ selectedCommonEdges U H.templateEdges hTemplate c p →
+              ρ e = colour)
+    (χ : H.toTrainFilling.NewEdge → κ) :
+    ∃ (β : (C × P) ↪ H.OldEdge) (c : C) (colour : κ),
+      ∀ a : Edge U, a ∈ targetEdges U c →
+        χ (selectedIndexedFilledEdgeEmbedding U H hTemplate β a) =
+          colour := by
+  obtain ⟨β, ρ, hWords⟩ := hOldArrow (H.colourWord χ)
+  obtain ⟨c, colour, hLocal⟩ := hLocalArrow ρ
+  refine ⟨β, c, colour, ?_⟩
+  exact selectedIndexedTargetEdges_colourWord_constant
+    U H hTemplate β χ ρ c colour
+    (fun p => hWords (c, p)) hLocal
+
+
 end StructuralRamsey.Girth.IndexedPrivateChoice
