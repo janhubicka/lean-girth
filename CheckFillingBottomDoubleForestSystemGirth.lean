@@ -1,0 +1,4 @@
+import Girth.TrainFillingBottomDoubleForestSystemGirth
+
+#print axioms StructuralRamsey.Girth.selectedPicture_bottom_fullSystemGirthGT_of_doubleForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.bottom_fullSystemGirthGT_of_doubleForest
