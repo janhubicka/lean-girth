@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualLowerCompleteTargetGeometry
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_completeLowerTargetGeometry
