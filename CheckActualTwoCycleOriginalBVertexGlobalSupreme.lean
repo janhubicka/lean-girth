@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleOriginalBVertexGlobalSupreme
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme
