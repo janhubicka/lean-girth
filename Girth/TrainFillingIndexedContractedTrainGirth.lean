@@ -200,53 +200,54 @@ theorem contractedChoiceTrain_parentBound
         (contractedCarrier U) μ)
       ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
       {z : Vertex U |
-        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
-          let local : ∀ c : C,
-              Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
-            fun c => T.wagonClassCarrier
-              (fun p => Set.range ((U c).place p)) μ
-          let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
-            fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
-          have hLocal : ∀ c : C, TrainParentIntersectionBound
-              (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
-            intro c
-            exact PrivateWagonInput.expandedWagonClass_parentBound
-              (U c) T μ ν hμν allowed (hOld c)
-          have hTagged : TrainParentIntersectionBound
-              (dependentTaggedCarriers local)
-              (fun cq : C × Quotient (T.wagonSetoid μ) =>
-                (cq.1, T.wagonParent μ ν hμν cq.2))
-              {z : Vertex U | z.2 ∈ allowedLocal z.1} :=
-            trainParentBound_dependentTagged local
-              (T.wagonParent μ ν hμν) allowedLocal hLocal
-          let fμ := contractedWagonClassEquiv U T hm μ hμ
-          let fν := contractedWagonClassEquiv U T hm ν hν
-          intro q r hqr hParent z hz
-          have hDistinct : fμ q ≠ fμ r := by
-            intro heq
-            exact hqr (fμ.injective heq)
-          have hParTagged :
-              ((fμ q).1, T.wagonParent μ ν hμν (fμ q).2) =
-              ((fμ r).1, T.wagonParent μ ν hμν (fμ r).2) := by
-            calc
-              _ = fν
-                  ((contractedChoiceTrain U T hm).wagonParent μ ν hμν q) :=
-                (contractedWagonClass_parent_eq U T hm
-                  μ ν hμν hμ hν q).symm
-              _ = fν
-                  ((contractedChoiceTrain U T hm).wagonParent μ ν hμν r) :=
-                congrArg fν hParent
-              _ = _ :=
-                contractedWagonClass_parent_eq U T hm μ ν hμν hμ hν r
-          have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
-            rw [← contractedWagonClass_carrier_eq_tagged
-              U T hm μ hμ q]
-            exact hz.1
-          have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
-            rw [← contractedWagonClass_carrier_eq_tagged
-              U T hm μ hμ r]
-            exact hz.2
-          exact hTagged hDistinct hParTagged ⟨hq, hr⟩
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)}
+:= by
+  let local : ∀ c : C,
+      Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
+    fun c => T.wagonClassCarrier
+      (fun p => Set.range ((U c).place p)) μ
+  let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
+    fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
+  have hLocal : ∀ c : C, TrainParentIntersectionBound
+      (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
+    intro c
+    exact PrivateWagonInput.expandedWagonClass_parentBound
+      (U c) T μ ν hμν allowed (hOld c)
+  have hTagged : TrainParentIntersectionBound
+      (dependentTaggedCarriers local)
+      (fun cq : C × Quotient (T.wagonSetoid μ) =>
+        (cq.1, T.wagonParent μ ν hμν cq.2))
+      {z : Vertex U | z.2 ∈ allowedLocal z.1} :=
+    trainParentBound_dependentTagged local
+      (T.wagonParent μ ν hμν) allowedLocal hLocal
+  let fμ := contractedWagonClassEquiv U T hm μ hμ
+  let fν := contractedWagonClassEquiv U T hm ν hν
+  intro q r hqr hParent z hz
+  have hDistinct : fμ q ≠ fμ r := by
+    intro heq
+    exact hqr (fμ.injective heq)
+  have hParTagged :
+      ((fμ q).1, T.wagonParent μ ν hμν (fμ q).2) =
+      ((fμ r).1, T.wagonParent μ ν hμν (fμ r).2) := by
+    calc
+      _ = fν
+          ((contractedChoiceTrain U T hm).wagonParent μ ν hμν q) :=
+        (contractedWagonClass_parent_eq U T hm
+          μ ν hμν hμ hν q).symm
+      _ = fν
+          ((contractedChoiceTrain U T hm).wagonParent μ ν hμν r) :=
+        congrArg fν hParent
+      _ = _ :=
+        contractedWagonClass_parent_eq U T hm μ ν hμν hμ hν r
+  have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ q]
+    exact hz.1
+  have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ r]
+    exact hz.2
+  exact hTagged hDistinct hParTagged ⟨hq, hr⟩
 
 
 /-- An original top-level wagon parent is constant on all lower
@@ -293,40 +294,41 @@ theorem contractedChoiceTrain_topParentBound
         (contractedCarrier U) μ)
       ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
       {z : Vertex U |
-        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
-          let local : ∀ c : C,
-              Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
-            fun c => T.wagonClassCarrier
-              (fun p => Set.range ((U c).place p)) μ
-          let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
-            fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
-          have hLocal : ∀ c : C, TrainParentIntersectionBound
-              (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
-            intro c
-            exact PrivateWagonInput.expandedWagonClass_parentBound
-              (U c) T μ ν hμν allowed (hOld c)
-          have hLocalPair : ∀ c : C,
-              ∀ ⦃a b : Quotient (T.wagonSetoid μ)⦄, a ≠ b →
-              local c a ∩ local c b ⊆ allowedLocal c := by
-            intro c a b hab
-            exact hLocal c hab
-              (oldWagonParent_eq_at_top T μ ν hμν hTop a b)
-          let fμ := contractedWagonClassEquiv U T hm μ hμ
-          intro q r hqr _ z hz
-          have hDistinct : fμ q ≠ fμ r := by
-            intro h
-            exact hqr (fμ.injective h)
-          have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
-            rw [← contractedWagonClass_carrier_eq_tagged
-              U T hm μ hμ q]
-            exact hz.1
-          have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
-            rw [← contractedWagonClass_carrier_eq_tagged
-              U T hm μ hμ r]
-            exact hz.2
-          exact dependentTagged_pairwise_intersection local
-            allowedLocal hLocalPair (fμ q) (fμ r)
-            hDistinct ⟨hq, hr⟩
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)}
+:= by
+  let local : ∀ c : C,
+      Quotient (T.wagonSetoid μ) → Set ((U c).Vertex) :=
+    fun c => T.wagonClassCarrier
+      (fun p => Set.range ((U c).place p)) μ
+  let allowedLocal : ∀ c : C, Set ((U c).Vertex) :=
+    fun c => ((Sum.inl : V → (U c).Vertex) '' allowed)
+  have hLocal : ∀ c : C, TrainParentIntersectionBound
+      (local c) (T.wagonParent μ ν hμν) (allowedLocal c) := by
+    intro c
+    exact PrivateWagonInput.expandedWagonClass_parentBound
+      (U c) T μ ν hμν allowed (hOld c)
+  have hLocalPair : ∀ c : C,
+      ∀ ⦃a b : Quotient (T.wagonSetoid μ)⦄, a ≠ b →
+      local c a ∩ local c b ⊆ allowedLocal c := by
+    intro c a b hab
+    exact hLocal c hab
+      (oldWagonParent_eq_at_top T μ ν hμν hTop a b)
+  let fμ := contractedWagonClassEquiv U T hm μ hμ
+  intro q r hqr _ z hz
+  have hDistinct : fμ q ≠ fμ r := by
+    intro h
+    exact hqr (fμ.injective h)
+  have hq : z ∈ dependentTaggedCarriers local (fμ q) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ q]
+    exact hz.1
+  have hr : z ∈ dependentTaggedCarriers local (fμ r) := by
+    rw [← contractedWagonClass_carrier_eq_tagged
+      U T hm μ hμ r]
+    exact hz.2
+  exact dependentTagged_pairwise_intersection local
+    allowedLocal hLocalPair (fμ q) (fμ r)
+    hDistinct ⟨hq, hr⟩
 
 
 
@@ -347,31 +349,32 @@ theorem contractedChoiceTrain_parentBound_allLevels
         (contractedCarrier U) μ)
       ((contractedChoiceTrain U T hm).wagonParent μ ν hμν)
       {z : Vertex U |
-        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)} := by
-          by_cases hμ : μ.val < m
-          · by_cases hν : ν.val < m
-            · exact contractedChoiceTrain_parentBound
-                U T hm μ ν hμν hμ hν allowed hOld
-            · have hTop : ν.val = m := by
-                have hbound := ν.isLt
-                omega
-              exact contractedChoiceTrain_topParentBound
-                U T hm μ ν hμν hμ hTop allowed hOld
-          · intro q r hqr _ z hz
-            have hTop : μ.val = m := by
-              have hbound := μ.isLt
-              omega
-            have hμeq : μ = ⟨m, Nat.lt_succ_self m⟩ := Fin.ext hTop
-            have hEq : q = r := by
-              induction q using Quotient.inductionOn with
-              | h p =>
-                  induction r using Quotient.inductionOn with
-                  | h s =>
-                      apply Quotient.sound
-                      change (contractedChoiceTrain U T hm).rel μ p s
-                      rw [hμeq]
-                      exact (contractedChoiceTrain U T hm).top p s
-            exact False.elim (hqr hEq)
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed)}
+:= by
+  by_cases hμ : μ.val < m
+  · by_cases hν : ν.val < m
+    · exact contractedChoiceTrain_parentBound
+        U T hm μ ν hμν hμ hν allowed hOld
+    · have hTop : ν.val = m := by
+        have hbound := ν.isLt
+        omega
+      exact contractedChoiceTrain_topParentBound
+        U T hm μ ν hμν hμ hTop allowed hOld
+  · intro q r hqr _ z hz
+    have hTop : μ.val = m := by
+      have hbound := μ.isLt
+      omega
+    have hμeq : μ = ⟨m, Nat.lt_succ_self m⟩ := Fin.ext hTop
+    have hEq : q = r := by
+      induction q using Quotient.inductionOn with
+      | h p =>
+          induction r using Quotient.inductionOn with
+          | h s =>
+              apply Quotient.sound
+              change (contractedChoiceTrain U T hm).rel μ p s
+              rw [hμeq]
+              exact (contractedChoiceTrain U T hm).top p s
+    exact False.elim (hqr hEq)
 
 
 
@@ -388,12 +391,13 @@ theorem contractedChoiceTrain_adjacentParameters
     (contractedChoiceTrain U T hm).AdjacentParameters
       (contractedCarrier U)
       (fun ν => {z : Vertex U |
-        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed ν)}) := by
-          intro μ ν hμν hSucc
-          apply contractedChoiceTrain_parentBound_allLevels
-            U T hm μ ν hμν (allowed ν)
-          intro c
-          exact hOld c μ ν hμν hSucc
+        z.2 ∈ ((Sum.inl : V → (U z.1).Vertex) '' allowed ν)})
+:= by
+  intro μ ν hμν hSucc
+  apply contractedChoiceTrain_parentBound_allLevels
+    U T hm μ ν hμν (allowed ν)
+  intro c
+  exact hOld c μ ν hμν hSucc
 
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
