@@ -91,6 +91,7 @@ checks=(
   CheckTrainRecursiveExactHeightTransport
   CheckTrainRecursiveTrueActiveInitialLowerStage
   CheckTrainRecursiveTrueActiveStrongHJInitialStage
+  CheckTrainTwoWagonFullSystemObstruction
 )
 
 for check in "${checks[@]}"; do
