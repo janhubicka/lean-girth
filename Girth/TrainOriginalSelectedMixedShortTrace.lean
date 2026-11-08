@@ -3,6 +3,7 @@ import Girth.TrainCoreWagonEmbedding
 import Girth.TrainActualStandardCoreIncidence
 import Girth.TrainGeneratedActualAllLevelRestriction
 import Girth.TrainSimultaneousSupreme
+import Girth.TrainShortOnlyPlanGlobal
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -83,7 +84,7 @@ local notation "Train" => generatedActualASupportTrain
   A hA C.toRelStructure S R f T U hShared
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-  (fun ν j p q h => (hRel ν j p q).mp h) hShared μ
+  (fun ν j p q h => Iff.mp (hRel ν j p q) h) hShared μ
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μ
 local notation "Out" => attachedSelectedPictureOrderOneData
@@ -123,7 +124,7 @@ theorem attachedSelectedPicture_original_B_core_vertex_preimage_Y
   change CoreEmb x ∈
     (fun z : Y => CoreEmb z) '' (Emb i s).1 at hImage
   obtain ⟨y, hy, hY⟩ := hImage
-  have hyx : y = x := CoreEmb.injective hY
+  have hyx : y = x := (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f).injective hY
   refine ⟨x0, hx0, hEq, s, ?_⟩
   simpa [hyx] using hy
 

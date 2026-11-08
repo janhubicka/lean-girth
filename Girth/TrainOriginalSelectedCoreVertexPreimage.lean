@@ -88,8 +88,7 @@ theorem attachedSelectedPicture_original_B_core_vertex_old_preimage
   obtain ⟨z, hz⟩ := hIntersect
   have hCoreLocal : x ∈ copyCarrier (f i) := by
     refine ⟨z, ?_⟩
-    apply CoreEmb.injective
-    exact hz
+    exact (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f).injective hz
   rw [activeCoreWitness_copyCarrier_eq
     A C e.toFunctionEmbedding R f U μ i]
   exact hCoreLocal

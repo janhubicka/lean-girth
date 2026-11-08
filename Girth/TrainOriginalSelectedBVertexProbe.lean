@@ -75,6 +75,8 @@ local notation "Wit" => sharedWitnessOrderOneData U μ
   (sharedOldACarrierCoreEmbedding A C.toRelStructure S R f)
   (Subtype.val : CoreEdge → Set Y)
 
+include hRel
+
 /-- Old SupremeCycleBound at cutoff >=2 supplies a local piece
 of the exact ORIGINAL SELECTED B-copy once its true old
 boundary vertices are images of lower core vertices and

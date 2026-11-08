@@ -113,7 +113,7 @@ theorem attachedSelectedPicture_two_cycle_original_standard_diff_other_of_two_ed
   apply hDifferent
   calc
     owner target = Sum.inl i := hOwn
-    _ = owner (cyclicSucc target) := hOther.symm
+    _ = owner (cyclicSucc target) := hOther
 
 end ActualN2NonminimalShadow
 end StructuralRamsey.Girth
