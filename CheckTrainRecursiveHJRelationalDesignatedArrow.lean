@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveHJRelationalDesignatedArrow
+
+#print axioms StructuralRamsey.Girth.relationalDesignatedArrow_of_partiteFamily_for_orderedA
+#print axioms StructuralRamsey.Girth.HJLineFamily.relationalDesignatedBaseArrow

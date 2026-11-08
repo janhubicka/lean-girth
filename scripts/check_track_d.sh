@@ -98,6 +98,7 @@ checks=(
   CheckTrainRecursiveTrueActiveAdjacentParameters
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
+  CheckTrainRecursiveHJRelationalDesignatedArrow
 )
 
 for check in "${checks[@]}"; do
