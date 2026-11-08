@@ -106,6 +106,10 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckActualMinimalTwoCycleShadow
+  CheckOriginalSelectedCoreVertexPreimage
+  CheckActualTwoCycleOwnerShadowCoreIncidence
+  CheckActualTwoCycleOriginalBVertexLocalFromMinimalShadow
 )
 
 for check in "${checks[@]}"; do
