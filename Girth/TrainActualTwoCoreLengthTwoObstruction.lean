@@ -84,11 +84,10 @@ theorem BigCycle.designated_exists_two_of_linear
     cases hLabel : K.label j with
     | inl i =>
         have hD : D.designated (K.label j) := by
-          rw [hLabel]
-          trivial
+          simp [hLabel, OrderOneData.designated]
         exact False.elim (hNone j hD)
     | inr b =>
-        exact ⟨b, hLabel⟩
+        exact ⟨b, rfl⟩
   exact K.no_edge_only_two_of_linear D hLinear hAccept hOnly
 
 end OrderOneData
