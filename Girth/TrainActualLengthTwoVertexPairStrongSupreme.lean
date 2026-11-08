@@ -61,23 +61,23 @@ theorem BigCycle.two_vertex_pairEdge_supreme_of_selectedStrong
   have hLabelVertices (k : Fin 2) (i : I)
       (hLabel : Z.label k = Sum.inl i) :
       x ∈ D.copyCarrier i ∧ y ∈ D.copyCarrier i := by
-    fin_cases k
-    · constructor
-      · have h := Z.left_incident (0 : Fin 2)
-        rw [hLabel, hx] at h
-        exact h
-      · have h := Z.right_incident (1 : Fin 2)
-        rw [show cyclicSucc (1 : Fin 2) = (0 : Fin 2) from by decide] at h
-        rw [hLabel, hy] at h
-        exact h
-    · constructor
-      · have h := Z.right_incident (0 : Fin 2)
-        rw [show cyclicSucc (0 : Fin 2) = (1 : Fin 2) from by decide] at h
-        rw [hLabel, hx] at h
-        exact h
-      · have h := Z.left_incident (1 : Fin 2)
-        rw [hLabel, hy] at h
-        exact h
+    have hCases : k = (0 : Fin 2) ∨ k = (1 : Fin 2) := by
+      fin_cases k <;> simp
+    rcases hCases with h0 | h1
+    · subst k
+      have hX := Z.left_incident (0 : Fin 2)
+      rw [hLabel, hx] at hX
+      have hY := Z.right_incident (1 : Fin 2)
+      rw [show cyclicSucc (1 : Fin 2) = (0 : Fin 2) from by decide] at hY
+      rw [hLabel, hy] at hY
+      exact ⟨hX, hY⟩
+    · subst k
+      have hX := Z.right_incident (0 : Fin 2)
+      rw [show cyclicSucc (0 : Fin 2) = (1 : Fin 2) from by decide] at hX
+      rw [hLabel, hx] at hX
+      have hY := Z.left_incident (1 : Fin 2)
+      rw [hLabel, hy] at hY
+      exact ⟨hX, hY⟩
   obtain ⟨k, hk⟩ := hSome
   have hOwn : b ∈ D.edges (Z.label k) := by
     cases hLabel : Z.label k with
