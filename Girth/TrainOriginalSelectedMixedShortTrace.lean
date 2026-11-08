@@ -341,12 +341,14 @@ theorem attachedSelectedPicture_two_cycle_mixed_supreme_of_shadow
       (Out).Incident (Sum.inr edge) (K.connector j) := by
     intro j
     fin_cases j
-    · rcases hMixed with ⟨h0, _h1⟩ | ⟨h0, _h1⟩
+    · change (Out).Incident (Sum.inr edge) (K.connector (0 : Fin 2))
+      rcases hMixed with ⟨h0, _h1⟩ | ⟨h0, _h1⟩
       · rw [h0]
         exact hXEdge
       · rw [h0]
         exact hPEdge
-    · rcases hMixed with ⟨_h0, h1⟩ | ⟨_h0, h1⟩
+    · change (Out).Incident (Sum.inr edge) (K.connector (1 : Fin 2))
+      rcases hMixed with ⟨_h0, h1⟩ | ⟨_h0, h1⟩
       · rw [h1]
         exact hPEdge
       · rw [h1]
