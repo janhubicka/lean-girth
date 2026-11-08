@@ -1,3 +1,4 @@
 import Girth.TrainFillingIndexedSelectedColourWord
 
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedTargetEdges_colourWord_constant
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedTargetEdges_ramsey_of_two_arrows
