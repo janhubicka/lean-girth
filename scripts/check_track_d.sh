@@ -65,6 +65,7 @@ checks=(
   CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
   CheckTrainRecursiveActualCoarsenedFullSystem
+  CheckTrainRecursiveCoarsenedGluingIdentity
   CheckTrainRecursiveCoarsenedSelectedRestriction
   CheckTrainRecursiveActualFineInputs
   CheckTrainRecursiveTrueActiveTargetSupportData
