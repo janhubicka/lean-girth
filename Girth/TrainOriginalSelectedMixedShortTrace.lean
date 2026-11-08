@@ -155,7 +155,7 @@ theorem attachedSelectedPicture_original_B_core_wagon_lower_meets
       CoreWagon (Quotient.mk (U.wagonSetoid μ) b)
     exact (generatedActualASupportTrain_coreWagonEmbedding_mk
       A hA C.toRelStructure S R f T U
-      (fun ν j v w h => (hRel ν j v w).mp h)
+      (fun ν j v w h => Iff.mp (hRel ν j v w) h)
       hShared μ b).symm
   have hSame : (Train).rel μ (StdEdge i old) (CoreActual b) :=
     Quotient.exact (hOldParent.trans hCoreParent.symm)
@@ -214,7 +214,7 @@ theorem attachedSelectedPicture_original_mixed_short_of_lower_bridge
           CoreWagon (Quotient.mk (U.wagonSetoid μ) (Emb i s)) :=
         (generatedActualASupportTrain_coreWagonEmbedding_mk
           A hA C.toRelStructure S R f T U
-          (fun ν j v w h => (hRel ν j v w).mp h)
+          (fun ν j v w h => Iff.mp (hRel ν j v w) h)
           hShared μ (Emb i s)).symm
       _ = CoreWagon p := congrArg CoreWagon hbParent
   have hOldRel : T.rel μ (InOld s) t := by
