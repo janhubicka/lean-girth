@@ -94,6 +94,8 @@ checks=(
   CheckTrainRecursiveTrueActiveAdjacentParameters
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
+  CheckTrainActualLengthTwoVertexPairStrongSupreme
+  CheckTrainActualLengthTwoVertexPairOutputStrong
 )
 
 for check in "${checks[@]}"; do
