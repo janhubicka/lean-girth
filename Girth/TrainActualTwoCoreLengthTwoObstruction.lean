@@ -168,7 +168,7 @@ theorem attachedSelectedPicture_length_two_has_standard_owner
     | inl i =>
         exact False.elim (hNone j i hOwner)
     | inr b =>
-        exact ⟨b, hOwner⟩
+        exact ⟨b, rfl⟩
   exact attachedSelectedPicture_two_core_owners_length_two_false
     A hA B D C family selected e R f T U hShared μ
     hLinear K hAccept owner hAllowed hAllCore
@@ -202,7 +202,7 @@ theorem attachedSelectedPicture_two_cut_has_standard_owner_of_linear
     | inl i =>
         exact False.elim (hNoStandard j i hOwner)
     | inr b =>
-        exact ⟨b, hOwner⟩
+        exact ⟨b, rfl⟩
   have hAllChanges : ∀ j : Fin n,
       owner j ≠ owner (cyclicSucc j) := by
     intro j hSame
