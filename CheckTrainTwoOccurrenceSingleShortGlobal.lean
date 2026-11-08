@@ -1,0 +1,5 @@
+import Girth.TrainTwoOccurrenceSingleShortGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_short_at_zero_simultaneous
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_short_at_one_simultaneous
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_short_at_other_simultaneous
