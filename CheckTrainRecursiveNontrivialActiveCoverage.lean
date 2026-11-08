@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveNontrivialActiveCoverage
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeCarrier_nonempty_of_projected
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_irreduciblesExtendTo_of_projected
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderedTrueActive_irreduciblesExtendTo_of_nontrivial
