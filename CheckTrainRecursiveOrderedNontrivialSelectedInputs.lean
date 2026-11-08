@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveOrderedNontrivialSelectedInputs
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderedTrueActiveSelected_localInputBundle_of_nontrivial
