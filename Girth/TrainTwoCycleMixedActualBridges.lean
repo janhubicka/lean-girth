@@ -54,17 +54,17 @@ theorem BigCycle.two_mixed_bridges_of_fullSystemGirth
     intro k
     rcases hMixed with h | h
     · rw [← h.1]
-      exact Z.two_every_label_incident_every_connector D k 0
+      exact BigCycle.two_every_label_incident_every_connector D Z k 0
     · rw [← h.2]
-      exact Z.two_every_label_incident_every_connector D k 1
+      exact BigCycle.two_every_label_incident_every_connector D Z k 1
   have hIncWagon : ∀ k : Fin 2,
       D.Incident (Z.label k) (Sum.inr p) := by
     intro k
     rcases hMixed with h | h
     · rw [← h.2]
-      exact Z.two_every_label_incident_every_connector D k 1
+      exact BigCycle.two_every_label_incident_every_connector D Z k 1
     · rw [← h.1]
-      exact Z.two_every_label_incident_every_connector D k 0
+      exact BigCycle.two_every_label_incident_every_connector D Z k 0
   have hVertex (k : Fin 2) : x ∈ D.carrier (Z.label k) := hIncVertex k
   have hWagon (k : Fin 2) : D.Meets (Z.label k) p := hIncWagon k
   have hDiff : Z.label (0 : Fin 2) ≠ Z.label (1 : Fin 2) := by
