@@ -1,5 +1,7 @@
 import Girth.TrainFillingIndexedMonotoneCarrierBridge
 import Girth.TrainFillingActualContractedColouredM
+import Girth.TrainFillingIndexedColouredInsertionOrder
+import Girth.TrainFillingColouredBlockMonotone
 
 set_option Elab.async false
 
@@ -103,5 +105,97 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualM
   exact selectedIndexedFilledEdgeEmbedding_carrier_of_strictMono
     U H hTemplate β vertex hSourceMono
     (fun cp => hCanonicalMono (β cp)) hFullCarrier a
+
+
+/-- The actual colour-block order built on ALL heterogeneous G0 vertices
+supplies the needed source placement monotonicity. An induced ordered
+M-copy whose target also concatenates colours automatically has a
+strictly monotone vertex map, even though the relational language
+only records comparisons *within* each colour.
+
+Thus the complete filled physical carrier equality requires only the
+genuine source coordinate compatibility, selected relational embedding,
+target block order, and canonical X-placements. Neither source nor
+selected strict monotonicity is separately assumed. -/
+theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualIndexedM
+    [LinearOrder C] [LinearOrder V] [Fintype V]
+    [LinearOrder P] [LinearOrder I] [LinearOrder Y]
+    {k : ℕ}
+    (enumerateX : Fin k ≃ X) (hEnumerate : StrictMono enumerateX)
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 = templateColour ((U c).coordinate p z))
+    (hCoordinate : ∀ c : C, ∀ p : P,
+      StrictMono ((U c).coordinate p))
+    (hXBlocks : ∀ x y : X,
+      templateColour x ≠ templateColour y →
+      x < y → templateColour x < templateColour y)
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (targetColour : Y → I)
+    (b : Embedding
+      (actualIndexedContractedM U oldColour templateColour)
+      (colouredOrderedEdgeTarget k H.oldEdges targetColour))
+    (hTargetBlocks : ∀ x y : Y,
+      targetColour x < targetColour y → x < y)
+    (hOldSupport : H.oldEdges =
+      supportCopies
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i)))
+        (colouredOrderedEdgeTarget k H.oldEdges targetColour))
+    (hCanonicalMono : ∀ f : H.OldEdge, StrictMono (H.place f))
+    (a : Edge U) :
+    (selectedIndexedFilledEdgeEmbedding U H hTemplate
+      (actualContractedSelectedOldEdgeEmbedding U enumerateX
+        oldColour templateColour hColour
+        (by
+          letI : LinearOrder (Vertex U) :=
+            colouredChoiceInsertionOrder U oldColour templateColour
+          intro cp i j _
+          exact colouredChoiceEnumerate_lt_iff U oldColour templateColour
+            enumerateX hEnumerate hColour hCoordinate hXBlocks cp i j)
+        hLinear
+        (colouredOrderedEdgeTarget k H.oldEdges targetColour)
+        b H hOldSupport) a).1 =
+      (fun z : Vertex U => b z) '' edgeCarrier U a := by
+  letI : LinearOrder (Vertex U) :=
+    colouredChoiceInsertionOrder U oldColour templateColour
+  have hOrdered : ∀ e : C × P, ∀ i j : Fin k,
+      templateColour (enumerateX i) = templateColour (enumerateX j) →
+      (i < j ↔
+        contractedEnumerationOfEquiv U enumerateX e i <
+          contractedEnumerationOfEquiv U enumerateX e j) := by
+    intro cp i j _
+    exact colouredChoiceEnumerate_lt_iff U oldColour templateColour
+      enumerateX hEnumerate hColour hCoordinate hXBlocks cp i j
+  have hSourceMono : ∀ cp : C × P,
+      StrictMono (fun x : X =>
+        tagVertex U cp.1 ((U cp.1).place cp.2 x)) := by
+    intro cp x y hxy
+    exact colouredChoicePlace_lt U oldColour templateColour
+      hColour hCoordinate hXBlocks cp hxy
+  have hSourceBlocks : ∀ x y : Vertex U,
+      contractedVertexColour U oldColour templateColour x ≠
+        contractedVertexColour U oldColour templateColour y →
+      x < y →
+      contractedVertexColour U oldColour templateColour x <
+        contractedVertexColour U oldColour templateColour y := by
+    intro x y hNe hxy
+    change colouredChoiceInsertionKey U oldColour templateColour x <
+      colouredChoiceInsertionKey U oldColour templateColour y at hxy
+    rcases Prod.Lex.toLex_lt_toLex.mp hxy with hColourLt | ⟨hEq, _⟩
+    · exact hColourLt
+    · exact False.elim (hNe hEq)
+  have hSelectedMono : StrictMono (fun z : Vertex U => b z) := by
+    exact colouredOrderedEmbedding_strictMono
+      k (Set.range (contractedCarrier U)) H.oldEdges
+      (contractedVertexColour U oldColour templateColour)
+      targetColour b hSourceBlocks hTargetBlocks
+  exact selectedIndexedFilledEdgeEmbedding_carrier_of_actualM
+    U H hTemplate enumerateX oldColour templateColour
+    hColour hOrdered hLinear
+    (colouredOrderedEdgeTarget k H.oldEdges targetColour)
+    b hOldSupport hSourceMono hSelectedMono hCanonicalMono a
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
