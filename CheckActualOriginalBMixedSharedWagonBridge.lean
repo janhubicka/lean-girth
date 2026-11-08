@@ -1,0 +1,3 @@
+import Girth.TrainActualOriginalBMixedSharedWagonBridge
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_B_mixed_short_of_lower_bridge
