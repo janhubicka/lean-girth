@@ -88,7 +88,7 @@ local notation "Train" => generatedActualASupportTrain
   A hA C.toRelStructure S R f T U hShared
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-    (fun ν j p q h => (hRel ν j p q).mp h) hShared μ
+    (fun ν j p q h => Iff.mp (hRel ν j p q) h) hShared μ
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 local notation "Wit" => sharedWitnessOrderOneData
@@ -132,7 +132,7 @@ theorem attachedSelectedPicture_two_cut_double_wagon_absurd_of_witness
         rw [hC] at hMap
         cases hMap
     | inr p =>
-        exact ⟨p, hC⟩
+        exact ⟨p, rfl⟩
   exact Z.two_wagon_absurd_of_fullSystemGirth_of_length_eq_two
     (Wit) hWitness hq hTwo hWitnessWagons
 
