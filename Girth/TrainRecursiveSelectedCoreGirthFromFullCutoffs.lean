@@ -64,8 +64,6 @@ local notation "Gluing" => fun i : Selected =>
     Target D S.system S.isPartite family hFamilyParts
     S.selected i
 
-include hFamilyParts
-
 /-- Exact arithmetic of the refined fine-train height; independent
 of the selected lower witness. -/
 private theorem selectedFineHeightEq {q r : ℕ} {tail : List ℕ} :
@@ -73,6 +71,8 @@ private theorem selectedFineHeightEq {q r : ℕ} {tail : List ℕ} :
       (List.replicate (r + 1) (q - 1) ++ tail).length := by
   simp only [List.length_cons, List.length_append, List.length_replicate]
   omega
+
+include hFamilyParts
 
 /-- In the true recursive selected fine witness, the indexed
 full-system gluing bounds at q-1/q are DERIVED from the lower selected
