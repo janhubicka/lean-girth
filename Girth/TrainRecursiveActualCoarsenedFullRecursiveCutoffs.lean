@@ -114,7 +114,8 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_recursiveCuts
   have hFull := S.coarsenedSelected_fullSystem_at_positive_mono
     A Old α D hFamilyParts j hjPos
     (if ν.val < d then q - 1 else q) hBudget
-  simpa only [hLevel] using hFull
+  rw [hLevel] at hFull
+  exact hFull
 
 /-- Restate the same genuine full-system certificate in the precise
 `ν ≤ extraCuts` form consumed by the refining-picture-step API.
