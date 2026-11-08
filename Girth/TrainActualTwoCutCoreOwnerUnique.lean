@@ -65,7 +65,7 @@ theorem cyclicOwner_two_cut_isolated_unique
       owner (by omega : 2 ≤ n) hTwo j hForward x
     simpa only [hThis] using hx
   by_contra hpq
-  have hQ := hOther q hpq.symm
+  have hQ := hOther q (fun heq => hpq heq.symm)
   by_cases hPred : trainCyclicPred q = p
   · have hSucc : cyclicSucc q ≠ p := by
       intro hh
@@ -151,7 +151,7 @@ theorem attachedSelectedPicture_two_cut_has_standard_owner
     | inl i =>
         exact (h ⟨k, i, ho⟩).elim
     | inr b =>
-        exact ⟨b, ho⟩
+        exact ⟨b, rfl⟩
   let p : Fin n := ⟨0, by omega⟩
   let q : Fin n := ⟨1, by omega⟩
   have hpq : p ≠ q := by
