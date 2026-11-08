@@ -155,14 +155,12 @@ theorem attachedSelectedPicture_two_cut_two_standards_full_supreme
     apply Fin.ext
     change (0 + 1) % cyclicOwnerChanges owner = 1
     rw [hTwo]
-    decide
   have hSucc1 : cyclicSucc (⟨1, by omega⟩ :
       Fin (cyclicOwnerChanges owner)) =
       (⟨0, by omega⟩ : Fin (cyclicOwnerChanges owner)) := by
     apply Fin.ext
     change (1 + 1) % cyclicOwnerChanges owner = 0
     rw [hTwo]
-    decide
   cases hC0 : Z.connector (⟨0, by omega⟩ :
       Fin (cyclicOwnerChanges owner)) with
   | inl x =>
