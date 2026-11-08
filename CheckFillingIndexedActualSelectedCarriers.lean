@@ -1,3 +1,5 @@
 import Girth.TrainFillingIndexedActualSelectedCarriers
 
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_carrier_of_actualM
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedActualIndexedOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding_carrier_of_actualIndexedM
