@@ -150,16 +150,18 @@ theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_s
   have hOldXY : x0 ≠ y0 := by
     intro h
     apply hxy
-    apply CoreEmb.injective
+    apply (CoreEmb).injective
     calc
       CoreEmb x = Std i x0 := hxStd.symm
       _ = Std i y0 := congrArg (fun z => Std i z) h
       _ = CoreEmb y := hyStd
   have hOther : (Sum.inl i : I ⊕ CoreEdge) ≠
-      owner (cyclicSucc target) :=
-    attachedSelectedPicture_two_cycle_original_standard_diff_shadow
+      owner (cyclicSucc target) := by
+    intro hh
+    have hNot := attachedSelectedPicture_two_cycle_original_standard_diff_shadow
       A hA B D C family selected e R f T U hShared μ
       K owner hAllowed hMinimal hTwo target i q hOriginal
+    exact hNot hh.symm
   have hShadow : x ∈ (Wit).carrier (owner (cyclicSucc target)) ∧
       y ∈ (Wit).carrier (owner (cyclicSucc target)) :=
     attachedSelectedPicture_two_cycle_other_owner_core_shadow
