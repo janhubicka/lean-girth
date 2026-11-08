@@ -132,6 +132,7 @@ checks=(
   CheckWagonTwoContactFreshOldDichotomy
   CheckTrainRecursiveTrueActiveTwoCopies
   CheckTrainRecursiveTrueActiveSelectedInputBundle
+  CheckTrainRecursiveSelectedSharedCoreTrain
   CheckTrainRecursiveHJFreshSelectedFinitePass
   CheckFillingIndexedSelectedColourWord
   CheckActualTwoCycleCoreConnectors
