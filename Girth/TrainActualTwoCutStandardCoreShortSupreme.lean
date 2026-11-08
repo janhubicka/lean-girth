@@ -143,7 +143,9 @@ theorem attachedSelectedPicture_two_cut_standard_core_full_supreme
       intro heq
       subst k
       have hFalse : False := by
-        simpa [OrderOneData.designated, hSource] using hk
+        have hDesignated : (Wit).designated (Z.label cut) := hk
+        rw [hSource] at hDesignated
+        exact hDesignated
       exact hFalse.elim
     have hPredNe : trainCyclicPred cut ≠ cut := by
       intro heq
