@@ -1,5 +1,6 @@
 import Girth.TrainRecursiveActualCoarsenedFullSystem
 import Girth.TrainRecursiveCutoffIndexAlignment
+import Girth.TrainRecursiveExactHeightTransport
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -145,5 +146,31 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_attachmentBudget
     simp only [hd, Nat.lt_succ_iff]
   rw [← hBudget]
   exact hFull
+
+/-- Exact height-transport into the old attachment API. The selected
+physical gluing family, all A-support edges and all wagon labels
+remain unchanged; only the Nat height index and its Fin coordinates
+are transported along the genuine arithmetic equality. -/
+theorem ForestTailStage.coarsenedSelected_fullSystem_for_attachmentHeight
+    {m r : ℕ}
+    (hLen : m = (List.replicate d (q - 1) ++ tail).length)
+    (hd : d = r + 1)
+    (hMonotone : (q :: tail).Pairwise (· ≤ ·))
+    (ν : Fin (m + 1))
+    (hPos : 0 < ν.val)
+    (hInterior : ν.val < m) :
+    (activeGluingWitnessOrderOneData A Old α
+      (S.system.coarsenVia D S.isPartite).toRelStructure
+      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+          b ∈ S.selected} =>
+        (selectedPartiteGluingFamily_of_largeBase
+          Target D S.system S.isPartite family hFamilyParts
+          S.selected i).toEmbedding)
+      (S.train.castHeight hLen.symm) ν).FullSystemGirthGT
+        (if ν.val ≤ r then q - 1 else q) := by
+  cases hLen
+  simpa only [EdgeTrainLevels.castHeight_rfl] using
+    S.coarsenedSelected_fullSystem_for_attachmentBudget
+      A Old α D hFamilyParts r hd hMonotone ν hPos hInterior
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
