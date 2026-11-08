@@ -67,7 +67,7 @@ local notation "CoreEmb" => RelStructure.Attachment.coreEmbedding
   C.toRelStructure S R f
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-  (fun ν j p q h => (hRel ν j p q).mp h) hShared μ
+  (fun ν j p q h => Iff.mp (hRel ν j p q) h) hShared μ
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
 local notation "Wit" => sharedWitnessOrderOneData U μ
