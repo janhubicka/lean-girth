@@ -220,8 +220,7 @@ theorem attachedSelectedPicture_two_cut_has_standard_owner_of_linear
     ext j
     simp [hAllChanges j]
   have hCount : cyclicOwnerChanges owner = n := by
-    change (Finset.univ.filter
-      (fun j : Fin n => owner j ≠ owner (cyclicSucc j))).card = n
+    unfold cyclicOwnerChanges
     rw [hFilter]
     simp
   have hn : n = 2 := by omega
