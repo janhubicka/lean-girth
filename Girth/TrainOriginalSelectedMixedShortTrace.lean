@@ -1,5 +1,6 @@
 import Girth.TrainSelectedPictureOutputIncidence
 import Girth.TrainCoreWagonEmbedding
+import Girth.TrainActualStandardCoreIncidence
 import Girth.TrainGeneratedActualAllLevelRestriction
 import Girth.TrainSimultaneousSupreme
 import Mathlib.Tactic
@@ -91,6 +92,42 @@ local notation "Wit" => sharedWitnessOrderOneData U μ
   Emb (Subtype.val : CoreEdge → Set Y)
 
 include hRel
+
+/-- An actual designated B-copy's true output incidence with a CORE
+wagon forces the ORIGINAL standard i to meet that same wagon in the
+real lower Y-vertex witness. The result does not need a geometric
+owner identity or any girth hypothesis. -/
+theorem attachedSelectedPicture_original_B_core_wagon_lower_meets
+    (i : I) (q : Selected)
+    (p : Quotient (U.wagonSetoid μ))
+    (hMeets : (Out).Meets (Sum.inl (i,q)) (CoreWagon p)) :
+    (Wit).Meets (Sum.inl i) p := by
+  obtain ⟨b, rfl⟩ := Quotient.exists_rep p
+  have hOriginal :
+      (Out).Meets (attachedSelectedPictureLabel
+        A hA B D C family selected e R f i (Sum.inl q))
+        (CoreWagon (Quotient.mk (U.wagonSetoid μ) b)) :=
+    hMeets
+  obtain ⟨old, _hOldInQ, hOldParent⟩ :=
+    (attachedSelectedPicture_meets_iff
+      A hA B D C family selected e R f T U hShared μ
+      i (Sum.inl q) (CoreWagon (Quotient.mk (U.wagonSetoid μ) b))).mp
+      hOriginal
+  have hCoreParent :
+      (Out).parent (CoreActual b) =
+        CoreWagon (Quotient.mk (U.wagonSetoid μ) b) := by
+    change Quotient.mk ((Train).wagonSetoid μ) (CoreActual b) =
+      CoreWagon (Quotient.mk (U.wagonSetoid μ) b)
+    exact (generatedActualASupportTrain_coreWagonEmbedding_mk
+      A hA C.toRelStructure S R f T U
+      (fun ν j v w h => (hRel ν j v w).mp h)
+      hShared μ b).symm
+  have hSame : (Train).rel μ (StdEdge i old) (CoreActual b) :=
+    Quotient.exact (hOldParent.trans hCoreParent.symm)
+  obtain ⟨s, _hOldRel, hCoreRel, _hLocal⟩ :=
+    generatedActualASupportTrain_standard_core_copy_local_incidence
+      A hA C.toRelStructure S R f T U hShared hRel μ i old b hSame
+  exact ⟨Emb i s, ⟨s, rfl⟩, Quotient.sound hCoreRel⟩
 
 /-- A true mixed lower bridge at the ORIGINAL selected copy's standard
 gives an ACTUAL output short owned by that same original selected B-label.
