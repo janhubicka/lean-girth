@@ -1,4 +1,5 @@
 import Girth.TrainActualTwoStandardDesignatedBlock
+import Girth.TrainActiveGluingWitness
 import Girth.TrainSelectedCycleGeometricOwners
 import Mathlib.Tactic
 
@@ -79,9 +80,19 @@ theorem attachedSelectedPicture_original_B_core_vertex_old_preimage
     ⟨x0, hEq⟩
   have hCore : CoreEmb x ∈ copyCarrier CoreEmb :=
     ⟨x, rfl⟩
-  exact activeAttached_mem_sharedWitness_of_standard_core
-    A C e.toFunctionEmbedding R f U μ
-    i (CoreEmb x) hStd hCore
+  have hIntersect :
+      CoreEmb x ∈ copyCarrier ((CoreEmb).comp (f i)) := by
+    rw [← attachment_copy_core_intersection
+      C.toRelStructure S R f i]
+    exact ⟨hStd, hCore⟩
+  obtain ⟨z, hz⟩ := hIntersect
+  have hCoreLocal : x ∈ copyCarrier (f i) := by
+    refine ⟨z, ?_⟩
+    apply CoreEmb.injective
+    exact hz
+  rw [activeCoreWitness_copyCarrier_eq
+    A C e.toFunctionEmbedding R f U μ i]
+  exact hCoreLocal
 
 end OriginalSelectedCoreVertex
 end StructuralRamsey.Girth
