@@ -126,13 +126,11 @@ theorem attachedSelectedPicture_two_cut_three_le_full_supreme
     change (0 + cyclicOwnerChanges owner - 1) %
       cyclicOwnerChanges owner = 1
     rw [hTwo]
-    decide
   have hPred1 : trainCyclicPred z1 = z0 := by
     apply Fin.ext
     change (1 + cyclicOwnerChanges owner - 1) %
       cyclicOwnerChanges owner = 0
     rw [hTwo]
-    decide
   cases hL0 : Z.label z0 with
   | inl i =>
       cases hL1 : Z.label z1 with
