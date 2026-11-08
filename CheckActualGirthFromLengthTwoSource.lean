@@ -1,0 +1,3 @@
+import Girth.TrainActualGirthFromLengthTwoSource
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_length_two_two_cut

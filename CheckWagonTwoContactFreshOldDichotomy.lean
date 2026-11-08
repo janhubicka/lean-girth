@@ -1,0 +1,3 @@
+import Girth.TrainWagonTwoContactFreshOldDichotomy
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_contacts_fresh_adjacent_or_old_straddle
