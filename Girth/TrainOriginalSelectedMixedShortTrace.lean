@@ -93,6 +93,40 @@ local notation "Wit" => sharedWitnessOrderOneData U μ
 
 include hRel
 
+/-- A genuine core vertex belonging to the ORIGINAL output
+designated B-label has a genuine old selected-copy preimage, and that
+same core vertex belongs to its literal standard's lower Y-witness.
+This performs the explicit CoreEmb pullback that an attached-vertex
+witness membership by itself does not supply. -/
+theorem attachedSelectedPicture_original_B_core_vertex_preimage_Y
+    (i : I) (q : Selected) (x : Y)
+    (hX : CoreEmb x ∈ (Out).copyCarrier (i,q)) :
+    ∃ x0 : X,
+      x0 ∈ copyCarrier q.1.embedding ∧
+      Std i x0 = CoreEmb x ∧
+      x ∈ (Wit).copyCarrier i := by
+  change CoreEmb x ∈
+    ((fun z : X => Std i z) '' copyCarrier q.1.embedding) at hX
+  obtain ⟨x0, hx0, hEq⟩ := hX
+  have hStd : CoreEmb x ∈ copyCarrier (Std i) :=
+    ⟨x0, hEq⟩
+  have hCore : CoreEmb x ∈ copyCarrier CoreEmb := ⟨x, rfl⟩
+  obtain ⟨s, _edge, hs, _hz, _hEq⟩ :=
+    activeAttached_coreStandard_pointwise_sharedAEdge
+      A C e.toFunctionEmbedding R f i (CoreEmb x) hStd hCore
+  have hImage :
+      CoreEmb x ∈ attachedCoreAEdgeCarrier
+        A C.toRelStructure S R f (Emb i s) := by
+    rw [← attachedSharedAEdgeCarrier_eq
+      A C.toRelStructure S R f i s]
+    exact hs
+  change CoreEmb x ∈
+    (fun z : Y => CoreEmb z) '' (Emb i s).1 at hImage
+  obtain ⟨y, hy, hY⟩ := hImage
+  have hyx : y = x := CoreEmb.injective hY
+  refine ⟨x0, hx0, hEq, s, ?_⟩
+  simpa [hyx] using hy
+
 /-- An actual designated B-copy's true output incidence with a CORE
 wagon forces the ORIGINAL standard i to meet that same wagon in the
 real lower Y-vertex witness. The result does not need a geometric
