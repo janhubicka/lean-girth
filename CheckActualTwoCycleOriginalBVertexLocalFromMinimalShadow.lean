@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleOriginalBVertexLocalFromMinimalShadow
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_shadow
