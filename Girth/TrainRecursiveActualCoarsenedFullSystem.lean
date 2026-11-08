@@ -96,11 +96,11 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
         (selectedPartiteGluingFamily_of_largeBase
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT q := by
-  have hFull := S.coarsenedSelected_fullSystem_at_positive
-    A Old α D hFamilyParts j hj
-  refine ⟨hFull.1, ?_⟩
-  intro n K hAccept hOrder
-  exact hFull.2 n K hAccept (by omega)
+      S.train j.castSucc).FullSystemGirthGT q :=
+  S.selectedGluing_fullSystem_at_positive_mono
+    A Old α D.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} => i.1.embedding)
+    (Equiv.refl _) (fun i => rfl) j hj q hq
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
