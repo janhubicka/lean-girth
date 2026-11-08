@@ -1,3 +1,4 @@
 import Girth.TrainOriginalSelectedMixedShortTrace
 
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_B_core_wagon_lower_meets
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_original_mixed_short_of_lower_bridge
