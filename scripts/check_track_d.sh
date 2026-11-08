@@ -106,6 +106,9 @@ checks=(
   CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
   CheckTrainRecursiveSelectedCoreGirthFromFullCutoffs
+  CheckTrainRecursiveCanonicalFineParametersCast
+  CheckTrainRecursiveSelectedCoreGirthFromActualStage
+  CheckTrainRecursiveSelectedCoreGirthFullFromLowerStage
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
