@@ -75,7 +75,7 @@ attachment hypotheses of the Path A theorem hold at those cuts.
 This discharges the *hTail* proof field of the nontrivial Track B local
 refinement, not the existence of the lower selected witness. -/
 theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
-    (hPositive : ∀ j : Fin t.length, 0 < j.val → 1 ≤ t.get j)
+    (hTwoCut : ∀ j : Fin t.length, 0 < j.val → 2 ≤ t.get j)
     (hLinear : ∀ j : Fin t.length, 0 < j.val →
       (Out j.castSucc).LinearPretrain)
     (hStrong : ∀ r : Embedding B D, r ∈ family →
@@ -83,7 +83,6 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
     (hOldStrong : AStrong A S.system.toRelStructure
       (activeCarrier A S.system e.toFunctionEmbedding))
-    (hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)))
     (hWitness : ∀ j : Fin t.length, 0 < j.val →
       (Wit j.castSucc).FullSystemGirthGT (t.get j)) :
     ∀ j : Fin t.length, 0 < j.val →
@@ -110,6 +109,17 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
         copyCarrier r.1.embedding
       rintro x ⟨u, rfl⟩
       exact ⟨b u, rfl⟩
+  have hFullGluing :
+      (activeGluingWitnessOrderOneData A S.system
+        e.toFunctionEmbedding R f U j.castSucc).FullSystemGirthGT
+          (t.get j) := by
+    rw [activeGluingWitnessOrderOneData_eq_shared
+      A S.system e.toFunctionEmbedding R f U j.castSucc]
+    exact hWitness j hj
+  have hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)) :=
+    activeGluingWitness_images_aStrong_of_fullSystemGirth
+      A S.system e.toFunctionEmbedding R f U j.castSucc
+      (t.get j) (hTwoCut j hj) hFullGluing
   have hOld : (selectedPictureOrderOneData A B D S.system family
       S.selected S.train j.castSucc).SupremeCycleBound (t.get j) :=
     (S.tailGirth j hj).2
@@ -117,7 +127,7 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     attachedSelectedPicture_fullSystemGirth_of_actual_witness
       A hA B D S.system family S.selected e R f S.train U
       hShared hRel j.castSucc
-      (t.get j) (hPositive j hj) (hLinear j hj) hStrong
+      (t.get j) (by omega : 1 ≤ t.get j) (hLinear j hj) hStrong
       hTwoCopies hOldStrong hCoreStrong hOld (hWitness j hj)
   exact hOut.2
 
