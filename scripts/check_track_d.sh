@@ -107,6 +107,7 @@ checks=(
   CheckTrainFirstRetainedCutCounterexample
   CheckCyclicTwoCutRunFibre
   CheckOriginalSelectedMixedShortTrace
+  CheckOriginalSelectedMixedSourceClosure
 )
 
 for check in "${checks[@]}"; do
