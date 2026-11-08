@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleDesignatedOwnerForced
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_original_standard_diff_other_of_two_edges

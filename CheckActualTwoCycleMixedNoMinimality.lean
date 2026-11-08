@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleMixedNoMinimality
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_full_supreme_of_two_edge_base
