@@ -101,6 +101,7 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveTrueActiveSelectedInputBundle
+  CheckTrainRecursiveOrderedTrueActiveSelectedInputs
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTrainRecursiveHJFreshSelectedFinitePass
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
