@@ -63,6 +63,8 @@ checks=(
   CheckTrainRecursiveStrongSupportedHJBase
   CheckTrainRecursiveCoarsenedStageParameters
   CheckTrainRecursiveCoarsenedSelectedFullSystem
+  CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
+  CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveCoarsenedSelectedRestriction
   CheckTrainRecursiveActualFineInputs
   CheckTrainRecursiveTrueActiveTargetSupportData
