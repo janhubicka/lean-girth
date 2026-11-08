@@ -1,5 +1,6 @@
 import Girth.TrainSelectedCycleGeometricOwners
 import Girth.TrainActualTwoStandardDesignatedBlock
+import Girth.TrainActiveGluingWitness
 import Girth.TrainSelectedCycleGeometricVertex
 import Mathlib.Tactic
 
@@ -131,16 +132,23 @@ theorem attachedSelectedPicture_two_cycle_other_owner_core_shadow
         exact h
       have hCoreX : CoreEmb x ∈ copyCarrier CoreEmb := ⟨x, rfl⟩
       have hCoreY : CoreEmb y ∈ copyCarrier CoreEmb := ⟨y, rfl⟩
-      have hWX : x ∈ (Wit).copyCarrier j :=
-        activeAttached_mem_sharedWitness_of_standard_core
-          A C e.toFunctionEmbedding R f U μ
-          j (CoreEmb x) (hSubset hxIn) hCoreX
-      have hWY : y ∈ (Wit).copyCarrier j :=
-        activeAttached_mem_sharedWitness_of_standard_core
-          A C e.toFunctionEmbedding R f U μ
-          j (CoreEmb y) (hSubset hyIn) hCoreY
-      rw [ho]
-      exact ⟨hWX, hWY⟩
+      have lift {v : Y} (hv : CoreEmb v ∈ copyCarrier (Std j)) :
+          v ∈ (Wit).copyCarrier j := by
+        have hCore : CoreEmb v ∈ copyCarrier CoreEmb := ⟨v, rfl⟩
+        have hInt :
+            CoreEmb v ∈ copyCarrier ((CoreEmb).comp (f j)) := by
+          rw [← attachment_copy_core_intersection
+            C.toRelStructure S R f j]
+          exact ⟨hv, hCore⟩
+        obtain ⟨z, hz⟩ := hInt
+        have hMem : v ∈ copyCarrier (f j) := by
+          refine ⟨z, ?_⟩
+          apply (CoreEmb).injective
+          exact hz
+        rw [activeCoreWitness_copyCarrier_eq
+          A C e.toFunctionEmbedding R f U μ j]
+        exact hMem
+      exact ⟨lift (hSubset hxIn), lift (hSubset hyIn)⟩
   | inr b =>
       have hLabel : K.label other = Sum.inr (CoreActual b) := by
         have h := hAllowed other
@@ -156,11 +164,10 @@ theorem attachedSelectedPicture_two_cycle_other_owner_core_shadow
         A hA C.toRelStructure S R f b] at hBX hBY
       obtain ⟨x', hxB, hxx⟩ := hBX
       obtain ⟨y', hyB, hyy⟩ := hBY
-      have hx' : x' = x := CoreEmb.injective hxx
-      have hy' : y' = y := CoreEmb.injective hyy
+      have hx' : x' = x := (CoreEmb).injective hxx
+      have hy' : y' = y := (CoreEmb).injective hyy
       subst x'
       subst y'
-      rw [ho]
       exact ⟨hxB, hyB⟩
 
 end ActualTwoCycleOtherOwnerShadow
