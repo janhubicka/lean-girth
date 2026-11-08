@@ -1,0 +1,5 @@
+import Girth.TrainActualGeometricDesignatedOwnerUnique
+
+#print axioms StructuralRamsey.Girth.attachment_privateStandardCarrier_subset_index
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_designated_geometric_standard_unique
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_designated_occurrence_owner_eq
