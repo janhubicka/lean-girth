@@ -109,6 +109,7 @@ checks=(
   CheckTrainRecursiveCanonicalFineParametersCast
   CheckTrainRecursiveSelectedCoreGirthFromActualStage
   CheckTrainRecursiveSelectedCoreGirthFullFromLowerStage
+  CheckTrainRecursiveCanonicalSelectedLowerCoreGirth
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
