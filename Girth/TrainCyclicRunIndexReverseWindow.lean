@@ -247,9 +247,9 @@ t and cyclicSucc t, including cyclic wraparound.
 No assumption of geometric ownership or physical wagon incidence is
 used here; those are provided separately by the checked Path A
 two-step long geometry theorem. -/
-theorem cyclicOwnerRunIndex_two_step_fibre
+theorem cyclicOwnerRunIndex_two_step_fibre_of_two_le
     (owner : Fin n → Owner)
-    (hn : 3 ≤ n) (hThree : 3 ≤ cyclicOwnerChanges owner)
+    (hn : 3 ≤ n) (hTwo : 2 ≤ cyclicOwnerChanges owner)
     (j : Fin (cyclicOwnerChanges owner))
     (t x : Fin n)
     (hPrev : cyclicOwnerCutIndex owner (trainCyclicPred j) =
@@ -320,6 +320,23 @@ theorem cyclicOwnerRunIndex_two_step_fibre
       · exact Or.inl (by rw [← hFirst]; exact hHead)
       · exact Or.inr (by rw [← hLast]; exact hTail)
     exact cyclic_two_step_wrap_window hn t x hCutOrder hSourceWindow
+
+/-- Backwards-compatible interface at three or more owner cuts.
+The physical two-step run window only needs TWO original owner cuts,
+as exposed by `cyclicOwnerRunIndex_two_step_fibre_of_two_le`. -/
+theorem cyclicOwnerRunIndex_two_step_fibre
+    (owner : Fin n → Owner)
+    (hn : 3 ≤ n) (hThree : 3 ≤ cyclicOwnerChanges owner)
+    (j : Fin (cyclicOwnerChanges owner))
+    (t x : Fin n)
+    (hPrev : cyclicOwnerCutIndex owner (trainCyclicPred j) =
+      trainCyclicPred t)
+    (hHere : cyclicOwnerCutIndex owner j = cyclicSucc t)
+    (hx : cyclicOwnerRunIndex owner (by omega) x = j) :
+    x = t ∨ x = cyclicSucc t := by
+  exact cyclicOwnerRunIndex_two_step_fibre_of_two_le
+    owner hn (by omega : 2 ≤ cyclicOwnerChanges owner)
+    j t x hPrev hHere hx
 
 /-- If the original cut immediately preceding p is pred p,
 then the ordinary linear interval (pred p, p] contains only p. -/
