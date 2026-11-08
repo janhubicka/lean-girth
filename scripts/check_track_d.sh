@@ -52,6 +52,7 @@ checks=(
   CheckTrainRecursiveRefinementForget
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveActiveTargetNoSmallBase
+  CheckTrainRecursiveTrueActiveTwoCopies
   CheckTrainRecursiveSelectedGluingIncidence
   CheckTrainRecursiveLargeBaseCoarsening
   CheckTrainRecursiveLargeBaseCutParameters
@@ -99,7 +100,9 @@ checks=(
   CheckTrainRecursiveTrueActiveAdjacentParameters
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
+  CheckTrainRecursiveTrueActiveSelectedInputBundle
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTrainRecursiveHJFreshSelectedFinitePass
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveSelectedLowerActualInputs
   CheckTrainActualGeometricDesignatedOwnerUnique
