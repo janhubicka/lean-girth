@@ -1,0 +1,193 @@
+import Girth.TrainSelectedPictureOutputIncidence
+import Girth.TrainCoreWagonEmbedding
+import Girth.TrainGeneratedActualAllLevelRestriction
+import Girth.TrainSimultaneousSupreme
+import Mathlib.Tactic
+
+set_option autoImplicit false
+set_option Elab.async false
+
+/-!
+# Path A: an original selected B-copy inherits a genuine mixed short
+
+This is a physical source-local transfer for the unresolved length-two
+vertex/wagon case. The original label is literally (i,q), NOT a chosen
+geometric owner. The actual output B-label meets a true core wagon, and
+the original selected old copy contains the old preimage of a core vertex.
+A real lower shared-witness bridge through that vertex and wagon yields
+one shared OLD A-edge in the right wagon. Exact restriction of the
+generated physical train reflects its wagon class to the old standard,
+where old SupremeCycleBound (at cutoff >=1) probes against the selected
+B-copy's own wagon incidence. This obtains a bridge INSIDE the original
+old selected B-copy, and transports that exact edge back to a genuine
+output ShortPiece of the ORIGINAL B-label.
+
+No whole-cycle pullback, no source-label/geometric-owner identification,
+no strength of the Hales--Jewett power, no support pruning, and no
+appendix or manuscript change. This lemma does not assert that a lower
+bridge exists; obtaining it from the actual two-cut geometry is separate.
+-/
+
+namespace StructuralRamsey.Girth
+open StructuralRamsey.RelStructure
+universe u v
+
+section OriginalSelectedMixedBridge
+
+variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
+variable (A : RelStructure L UA) (hA : A.Irreducible)
+variable (B : RelStructure L VB) (D : RelStructure L P)
+variable (C : StructuralRamsey.Partite.System L P X)
+variable (family : Set (RelStructure.Embedding B D))
+variable (selected : Set (DesignatedCopy B D C family))
+variable (e : RelStructure.Embedding A D) (R : RelStructure L Y)
+variable (f : I → RelStructure.Embedding
+  (C.toRelStructure.induce (activeCarrier A C e.toFunctionEmbedding)) R)
+variable {m : ℕ}
+variable (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) m)
+variable (U : EdgeTrainLevels (OldACarrierEdge A R) m)
+variable (hShared : ∀ _i : I, Nonempty
+  (SharedOldACarrierEdge A C.toRelStructure
+    (activeCarrier A C e.toFunctionEmbedding)))
+variable (hRel : ∀ (ν : Fin (m + 1)) (j : I)
+  (p q : SharedOldACarrierEdge A C.toRelStructure
+    (activeCarrier A C e.toFunctionEmbedding)),
+  T.rel ν p.1 q.1 ↔
+    U.rel ν (sharedOldACarrierCoreEmbedding A C.toRelStructure
+      (activeCarrier A C e.toFunctionEmbedding) R f j p)
+      (sharedOldACarrierCoreEmbedding A C.toRelStructure
+        (activeCarrier A C e.toFunctionEmbedding) R f j q))
+variable (μ : Fin (m + 1))
+
+local notation "S" => activeCarrier A C e.toFunctionEmbedding
+local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
+local notation "CoreEdge" => OldACarrierEdge A R
+local notation "Shared" => SharedOldACarrierEdge A C.toRelStructure S
+local notation "Selected" =>
+  {q : DesignatedCopy B D C family // q ∈ selected}
+local notation "InOld" => sharedOldACarrierInclusion A C.toRelStructure S
+local notation "Emb" => sharedOldACarrierCoreEmbedding
+  A C.toRelStructure S R f
+local notation "Std" => RelStructure.Attachment.copyEmbedding
+  C.toRelStructure S R f
+local notation "CoreEmb" => RelStructure.Attachment.coreEmbedding
+  C.toRelStructure S R f
+local notation "Eqv" => actualAPictureEdgeEquiv
+  A hA C.toRelStructure S R f
+local notation "StdEdge" => (fun (i : I) (a : OldEdge) =>
+  Eqv (physicalStandardEdge InOld Emb i a))
+local notation "CoreActual" => (fun (b : CoreEdge) =>
+  Eqv (physicalCoreEdge InOld I b))
+local notation "Train" => generatedActualASupportTrain
+  A hA C.toRelStructure S R f T U hShared
+local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
+  A hA C.toRelStructure S R f T U
+  (fun ν j p q h => (hRel ν j p q).mp h) hShared μ
+local notation "Old" => selectedPictureOrderOneData
+  A B D C family selected T μ
+local notation "Out" => attachedSelectedPictureOrderOneData
+  A hA B D C family selected e R f T U hShared μ
+local notation "Wit" => sharedWitnessOrderOneData U μ
+  Emb (Subtype.val : CoreEdge → Set Y)
+
+include hRel
+
+/-- A true mixed lower bridge at the ORIGINAL selected copy's standard
+gives an ACTUAL output short owned by that same original selected B-label.
+The ambient wagon is preserved, with no inserted wagon or relabelling. -/
+theorem attachedSelectedPicture_original_mixed_short_of_lower_bridge
+    {qcut : ℕ} (hq : 1 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (i : I) (q : Selected) (x0 : X) (x : Y)
+    (hQx : x0 ∈ copyCarrier q.1.embedding)
+    (hX : Std i x0 = CoreEmb x)
+    (p : Quotient (U.wagonSetoid μ))
+    (hMeets : (Out).Meets (Sum.inl (i,q)) (CoreWagon p))
+    (hWitness : (Wit).Bridge (Sum.inl i) x p) :
+    (Out).ShortPiece (Sum.inl (i,q))
+      (Sum.inl (CoreEmb x)) (Sum.inr (CoreWagon p)) := by
+  have hMeetsOriginal :
+      (Out).Meets (attachedSelectedPictureLabel
+        A hA B D C family selected e R f i (Sum.inl q)) (CoreWagon p) :=
+    hMeets
+  obtain ⟨t, htOwned, htParent⟩ :=
+    (attachedSelectedPicture_meets_iff
+      A hA B D C family selected e R f T U hShared μ
+      i (Sum.inl q) (CoreWagon p)).mp hMeetsOriginal
+  obtain ⟨b, hbOwned, hbParent, hbX⟩ := hWitness
+  change b ∈ Set.range (Emb i) at hbOwned
+  obtain ⟨s, hs⟩ := hbOwned
+  subst b
+  have hOldVertex : x0 ∈ (InOld s).1 := by
+    have hxImage : Std i x0 ∈
+        (fun z : X => Std i z) '' s.1.1 := by
+      rw [sharedOldACarrierCoreMap_image
+        A C.toRelStructure S R f i s]
+      exact ⟨x, hbX, hX.symm⟩
+    obtain ⟨z, hz, hzEq⟩ := hxImage
+    have hzx : z = x0 := (Std i).injective hzEq
+    exact hzx ▸ hz
+  have hSamePhysical : StdEdge i (InOld s) = CoreActual (Emb i s) := by
+    change Eqv (physicalStandardEdge InOld Emb i (InOld s)) =
+      Eqv (physicalCoreEdge InOld I (Emb i s))
+    rw [physicalStandardEdge_shared]
+    rfl
+  have hsOutParent :
+      (Out).parent (StdEdge i (InOld s)) = CoreWagon p := by
+    rw [hSamePhysical]
+    change Quotient.mk ((Train).wagonSetoid μ)
+      (CoreActual (Emb i s)) = CoreWagon p
+    calc
+      Quotient.mk ((Train).wagonSetoid μ) (CoreActual (Emb i s)) =
+          CoreWagon (Quotient.mk (U.wagonSetoid μ) (Emb i s)) :=
+        (generatedActualASupportTrain_coreWagonEmbedding_mk
+          A hA C.toRelStructure S R f T U
+          (fun ν j v w h => (hRel ν j v w).mp h)
+          hShared μ (Emb i s)).symm
+      _ = CoreWagon p := congrArg CoreWagon hbParent
+  have hOldRel : T.rel μ (InOld s) t := by
+    apply (generatedActualASupportTrain_restrict_standard
+      A hA C.toRelStructure S R f T U hRel hShared μ i (InOld s) t).mp
+    exact Quotient.exact (hsOutParent.trans htParent.symm)
+  have hOldParent : (Old).parent (InOld s) = (Old).parent t :=
+    Quotient.sound hOldRel
+  have hOneLocal : (Old).LocalPieceSystemBound 1 := by
+    intro n Z hAcc hBudget
+    exact (Old).localPieceSystemBound_of_supremeCycleBound
+      qcut hOld n Z hAcc (by omega)
+  have hBound : (Old).Bound :=
+    (Old).bound_of_localPieceSystemBound hOneLocal
+  have hCopyVertex : x0 ∈ (Old).copyCarrier q := hQx
+  have hOldMeets : (Old).Meets (Sum.inl q) ((Old).parent t) :=
+    ⟨t, htOwned, rfl⟩
+  have hOriginalBridge : (Old).Bridge (Sum.inl q) x0 ((Old).parent t) :=
+    (Old).bridge_of_incident_edge hBound (Sum.inl q)
+      x0 ((Old).parent t) hCopyVertex hOldMeets
+      (InOld s) hOldParent hOldVertex
+  obtain ⟨bOld, hbOldOwned, hbOldParent, hbOldX⟩ := hOriginalBridge
+  have hbOutOwned : StdEdge i bOld ∈
+      (Out).edges (Sum.inl (i,q)) :=
+    (attachedSelectedPicture_edges
+      A hA B D C family selected e R f T U hShared μ
+      i (Sum.inl q) (StdEdge i bOld)).mpr
+      ⟨bOld, hbOldOwned, rfl⟩
+  have hbOutX : CoreEmb x ∈ (StdEdge i bOld).1 := by
+    rw [actualAPictureEdgeEquiv_standard_carrier
+      A hA C.toRelStructure S R f i bOld]
+    exact ⟨x0, hbOldX, hX⟩
+  have hbOutRel :
+      (Train).rel μ (StdEdge i bOld) (StdEdge i t) := by
+    apply (generatedActualASupportTrain_restrict_standard
+      A hA C.toRelStructure S R f T U hRel hShared μ i bOld t).mpr
+    exact Quotient.exact hbOldParent
+  have hbOutParent :
+      (Out).parent (StdEdge i bOld) = CoreWagon p :=
+    (Quotient.sound hbOutRel).trans htParent
+  refine ⟨StdEdge i bOld, hbOutOwned, ?_, ?_⟩
+  · change CoreEmb x ∈ (StdEdge i bOld).1
+    exact hbOutX
+  · change (Out).Meets (Sum.inr (StdEdge i bOld)) (CoreWagon p)
+    exact ⟨StdEdge i bOld, rfl, hbOutParent⟩
+
+end OriginalSelectedMixedBridge
+end StructuralRamsey.Girth
