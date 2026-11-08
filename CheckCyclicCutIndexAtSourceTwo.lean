@@ -1,0 +1,3 @@
+import Girth.TrainCyclicCutIndexAtSourceTwo
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerCutIndex_val_eq_of_source_two
