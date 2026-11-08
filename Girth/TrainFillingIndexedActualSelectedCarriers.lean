@@ -107,16 +107,58 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualM
     (fun cp => hCanonicalMono (β cp)) hFullCarrier a
 
 
-/-- The actual colour-block order built on ALL heterogeneous G0 vertices
-supplies the needed source placement monotonicity. An induced ordered
-M-copy whose target also concatenates colours automatically has a
-strictly monotone vertex map, even though the relational language
-only records comparisons *within* each colour.
+/-- The genuine selected old-edge map on an ACTUAL heterogeneous
+colour-block-ordered M.  This is derived from the relational selected
+copy and the global source order, not supplied as independent physical
+input. The noncomputable definition chooses no target edge beyond
+the image determined by b. -/
+noncomputable def selectedActualIndexedOldEdgeEmbedding
+    [LinearOrder C] [LinearOrder V] [Fintype V]
+    [LinearOrder P] [LinearOrder I]
+    {k : ℕ}
+    (enumerateX : Fin k ≃ X) (hEnumerate : StrictMono enumerateX)
+    (oldColour : V → I) (templateColour : X → I)
+    (hColour : ∀ c : C, ∀ p : P,
+      ∀ z : {v : V // v ∈ (U c).oldCarrier p},
+        oldColour z.1 = templateColour ((U c).coordinate p z))
+    (hCoordinate : ∀ c : C, ∀ p : P,
+      StrictMono ((U c).coordinate p))
+    (hXBlocks : ∀ x y : X,
+      templateColour x ≠ templateColour y →
+      x < y → templateColour x < templateColour y)
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (targetColour : Y → I)
+    (b : Embedding
+      (actualIndexedContractedM U oldColour templateColour)
+      (colouredOrderedEdgeTarget k H.oldEdges targetColour))
+    (hOldSupport : H.oldEdges =
+      supportCopies
+        (colouredOrderedEdgeSource k
+          (fun i => templateColour (enumerateX i)))
+        (colouredOrderedEdgeTarget k H.oldEdges targetColour)) :
+    (C × P) ↪ H.OldEdge := by
+  letI : LinearOrder (Vertex U) :=
+    colouredChoiceInsertionOrder U oldColour templateColour
+  have hOrdered : ∀ e : C × P, ∀ i j : Fin k,
+      templateColour (enumerateX i) = templateColour (enumerateX j) →
+      (i < j ↔
+        contractedEnumerationOfEquiv U enumerateX e i <
+          contractedEnumerationOfEquiv U enumerateX e j) := by
+    intro cp i j _
+    exact colouredChoiceEnumerate_lt_iff U oldColour templateColour
+      enumerateX hEnumerate hColour hCoordinate hXBlocks cp i j
+  exact actualContractedSelectedOldEdgeEmbedding U enumerateX
+    oldColour templateColour hColour hOrdered hLinear
+    (colouredOrderedEdgeTarget k H.oldEdges targetColour)
+    b H hOldSupport
 
-Thus the complete filled physical carrier equality requires only the
-genuine source coordinate compatibility, selected relational embedding,
-target block order, and canonical X-placements. Neither source nor
-selected strict monotonicity is separately assumed. -/
+/-- With the checked global colour-block order, a genuine induced
+M-copy in an equally block-ordered N has a strictly increasing
+vertex map. All source full-X placements are increasing too.
+Consequently the filled H physical edge carrier identity is
+a theorem of the selected b plus its canonical target placements,
+with no independently postulated whole-carrier or pointwise equality. -/
 theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualIndexedM
     [LinearOrder C] [LinearOrder V] [Fintype V]
     [LinearOrder P] [LinearOrder I] [LinearOrder Y]
@@ -147,17 +189,9 @@ theorem selectedIndexedFilledEdgeEmbedding_carrier_of_actualIndexedM
     (hCanonicalMono : ∀ f : H.OldEdge, StrictMono (H.place f))
     (a : Edge U) :
     (selectedIndexedFilledEdgeEmbedding U H hTemplate
-      (actualContractedSelectedOldEdgeEmbedding U enumerateX
-        oldColour templateColour hColour
-        (by
-          letI : LinearOrder (Vertex U) :=
-            colouredChoiceInsertionOrder U oldColour templateColour
-          intro cp i j _
-          exact colouredChoiceEnumerate_lt_iff U oldColour templateColour
-            enumerateX hEnumerate hColour hCoordinate hXBlocks cp i j)
-        hLinear
-        (colouredOrderedEdgeTarget k H.oldEdges targetColour)
-        b H hOldSupport) a).1 =
+      (selectedActualIndexedOldEdgeEmbedding U H
+        enumerateX hEnumerate oldColour templateColour
+        hColour hCoordinate hXBlocks hLinear targetColour b hOldSupport) a).1 =
       (fun z : Vertex U => b z) '' edgeCarrier U a := by
   letI : LinearOrder (Vertex U) :=
     colouredChoiceInsertionOrder U oldColour templateColour
