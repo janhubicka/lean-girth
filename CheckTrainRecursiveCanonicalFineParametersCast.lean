@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveCanonicalFineParametersCast
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsened_adjacentParameters_castHeight_preimage
