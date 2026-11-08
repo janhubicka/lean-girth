@@ -161,7 +161,8 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     attachedSelectedPicture_fullSystemGirth_of_actual_witness
       A hA B D S.system family S.selected e R f S.train U
       hShared hRel j.castSucc
-      (t.get j) (by omega : 1 ≤ t.get j) hLinear hStrong
+      (t.get j) (Nat.le_trans (by decide : 1 ≤ 2) (hTwoCut j hj))
+      hLinear hStrong
       hTwoCopies hOldStrong hCoreStrong hOld (hWitness j hj)
   exact hOut.2
 
