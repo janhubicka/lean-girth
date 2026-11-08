@@ -75,35 +75,35 @@ noncomputable def selectedStageActualOldEdgeEmbedding
     (H : UniformFillingData S.Vertex X)
     (hOld : H.oldEdges = supportCopies A S.system.toRelStructure) :
     (C × P) ↪ H.OldEdge := by
-  have hImage (cp : C × P) :
-      b.embedding.toFunctionEmbedding '' contractedCarrier U cp ∈ H.oldEdges := by
-    rw [hOld]
-    have hSrc : contractedCarrier U cp ∈ supportCopies A M := by
-      rw [hSupport]
-      exact ⟨cp, rfl⟩
-    exact supportCopy_image_mem A M S.system.toRelStructure
-      b.embedding ⟨contractedCarrier U cp, hSrc⟩
-  exact contractedOldEdgeEmbedding U hLinear H
-    b.embedding.toFunctionEmbedding hImage
+          have hImage (cp : C × P) :
+              b.embedding.toFunctionEmbedding '' contractedCarrier U cp ∈ H.oldEdges := by
+            rw [hOld]
+            have hSrc : contractedCarrier U cp ∈ supportCopies A M := by
+              rw [hSupport]
+              exact ⟨cp, rfl⟩
+            exact supportCopy_image_mem A M S.system.toRelStructure
+              b.embedding ⟨contractedCarrier U cp, hSrc⟩
+          exact contractedOldEdgeEmbedding U hLinear H
+            b.embedding.toFunctionEmbedding hImage
 
-@[simp] theorem selectedStageActualOldEdgeEmbedding_carrier
-    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
-    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
-    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
-    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
-      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
-    (D : RelStructure L Base)
-    (family : Set (Embedding M D))
-    (allowed : Fin (t.length + 1) → Set Base)
-    (S : TrainRecursiveWitness.ForestTailStage A M D family t
-      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
-    (b : DesignatedCopy M D S.system family)
-    (H : UniformFillingData S.Vertex X)
-    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
-    (cp : C × P) :
-    (selectedStageActualOldEdgeEmbedding U A M T hm
-      hSupport hLinear D family allowed S b H hOld cp).1 =
-      b.embedding.toFunctionEmbedding '' contractedCarrier U cp := rfl
+        @[simp] theorem selectedStageActualOldEdgeEmbedding_carrier
+            (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+            {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+            (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+            (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+              ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+            (D : RelStructure L Base)
+            (family : Set (Embedding M D))
+            (allowed : Fin (t.length + 1) → Set Base)
+            (S : TrainRecursiveWitness.ForestTailStage A M D family t
+              (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+            (b : DesignatedCopy M D S.system family)
+            (H : UniformFillingData S.Vertex X)
+            (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+            (cp : C × P) :
+            (selectedStageActualOldEdgeEmbedding U A M T hm
+              hSupport hLinear D family allowed S b H hOld cp).1 =
+              b.embedding.toFunctionEmbedding '' contractedCarrier U cp := rfl
 
 /-- The selected H old edge, after the harmless carrier-subtype
 identification, IS the stage's checked selected physical edge of
@@ -128,15 +128,15 @@ theorem selectedStageOldEdge_eq_selectedPhysical
         hSupport hLinear D family allowed S b H hOld cp) =
       S.selectedPhysicalEdgeEmbedding b
         (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp) := by
-  apply Subtype.ext
-  change
-    (selectedStageActualOldEdgeEmbedding U A M T hm
-      hSupport hLinear D family allowed S b H hOld cp).1 =
-    b.embedding.toFunctionEmbedding ''
-      (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1
-  rw [selectedStageActualOldEdgeEmbedding_carrier
-    U A M T hm hSupport hLinear D family allowed S b H hOld cp,
-    contractedPhysicalEdgeEquiv_carrier U A M hSupport hLinear cp]
+          apply Subtype.ext
+          change
+            (selectedStageActualOldEdgeEmbedding U A M T hm
+              hSupport hLinear D family allowed S b H hOld cp).1 =
+            b.embedding.toFunctionEmbedding ''
+              (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1
+          rw [selectedStageActualOldEdgeEmbedding_carrier
+            U A M T hm hSupport hLinear D family allowed S b H hOld cp,
+            contractedPhysicalEdgeEquiv_carrier U A M hSupport hLinear cp]
 
 /-- This genuine selected stage defines the old train on the
 complete unchanged physical H old edge type. It is a literal
@@ -185,19 +185,19 @@ theorem selectedStageActualOldTrain_rel_iff
           hSupport hLinear D family allowed S b H hOld e)
         (selectedStageActualOldEdgeEmbedding U A M T hm
           hSupport hLinear D family allowed S b H hOld f) := by
-  change (contractedChoiceTrain U T hm).rel μ e f ↔
-    S.train.rel μ
-      (oldSupportEdgeEmbedding A S.system.toRelStructure H hOld
-        (selectedStageActualOldEdgeEmbedding U A M T hm
-          hSupport hLinear D family allowed S b H hOld e))
-      (oldSupportEdgeEmbedding A S.system.toRelStructure H hOld
-        (selectedStageActualOldEdgeEmbedding U A M T hm
-          hSupport hLinear D family allowed S b H hOld f))
-  rw [selectedStageOldEdge_eq_selectedPhysical
-    U A M T hm hSupport hLinear D family allowed S b H hOld e,
-    selectedStageOldEdge_eq_selectedPhysical
-      U A M T hm hSupport hLinear D family allowed S b H hOld f]
-  exact (selectedActualMPhysicalEdgeEmbedding_train_iff
-    U A M T hm hSupport hLinear D family allowed S b hb μ e f).symm
+          change (contractedChoiceTrain U T hm).rel μ e f ↔
+            S.train.rel μ
+              (oldSupportEdgeEmbedding A S.system.toRelStructure H hOld
+                (selectedStageActualOldEdgeEmbedding U A M T hm
+                  hSupport hLinear D family allowed S b H hOld e))
+              (oldSupportEdgeEmbedding A S.system.toRelStructure H hOld
+                (selectedStageActualOldEdgeEmbedding U A M T hm
+                  hSupport hLinear D family allowed S b H hOld f))
+          rw [selectedStageOldEdge_eq_selectedPhysical
+            U A M T hm hSupport hLinear D family allowed S b H hOld e,
+            selectedStageOldEdge_eq_selectedPhysical
+              U A M T hm hSupport hLinear D family allowed S b H hOld f]
+          exact (selectedActualMPhysicalEdgeEmbedding_train_iff
+            U A M T hm hSupport hLinear D family allowed S b hb μ e f).symm
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
