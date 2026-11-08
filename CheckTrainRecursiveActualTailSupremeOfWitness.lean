@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualTailSupremeOfWitness
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.attachedAllPositiveSupreme_of_actualWitness

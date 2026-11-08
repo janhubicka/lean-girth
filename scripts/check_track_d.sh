@@ -53,6 +53,7 @@ checks=(
   CheckTrainRecursiveSelectedPartiteCriterion
   CheckTrainRecursiveActiveTargetNoSmallBase
   CheckTrainRecursiveSelectedGluingIncidence
+  CheckTrainRecursiveActualTailSupremeOfWitness
   CheckTrainRecursiveLargeBaseCoarsening
   CheckTrainRecursiveLargeBaseCutParameters
   CheckTrainRecursiveCoarsenedRamseyArrow

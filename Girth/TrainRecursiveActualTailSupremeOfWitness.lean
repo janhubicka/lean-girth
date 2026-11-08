@@ -1,0 +1,105 @@
+import Girth.TrainActualTwoCycleWitnessDoubleWagonExclusion
+import Girth.TrainRecursiveWitnessPass
+
+set_option autoImplicit false
+set_option Elab.async false
+
+/-!
+# Track B: actual lower witness supplies ALL original positive tail supreme bounds
+
+The nontrivial refining PictureStep requests output SupremeCycleBound
+at every original positive old cut. This is NOT a fresh girth premise:
+the old ForestTailStage already has complete positive selected-picture
+FullSystemGirthGT; the genuine lower shared witness supplies full
+system girth at the corresponding cuts. Under the explicit attachment
+linearity and whole-copy strongness geometry, the Path A physical
+original-source theorem gives the output FullSystemGirthGT at each
+old positive cut, and hence its SupremeCycleBound projection.
+
+All physical edges, selected B labels, wagon relations and original
+cut indices are used without quotienting. The remaining job is to
+derive the lower witness's complete positive certificates and all
+attachment geometry from the actual selected lower induction.
+The Path A theorem itself remains a draft pending exact-head CI.
+-/
+
+namespace StructuralRamsey.Girth.TrainRecursiveWitness
+
+open StructuralRamsey.RelStructure
+
+universe u v
+variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
+variable (A : RelStructure L UA) (hA : A.Irreducible) [Finite UA]
+variable (B : RelStructure L VB) (D : RelStructure L P)
+variable {family : Set (Embedding B D)} {t : List ℕ}
+variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
+variable {allowed : Fin (t.length + 1) → Set P}
+variable (S : ForestTailStage A B D family t targetTrain allowed)
+variable (e : Embedding A D)
+variable (R : RelStructure L Y)
+variable (f : I → Embedding
+  (S.system.toRelStructure.induce
+    (activeCarrier A S.system e.toFunctionEmbedding)) R)
+variable (U : EdgeTrainLevels (OldACarrierEdge A R) t.length)
+variable (hShared : ∀ _i : I,
+  Nonempty (SharedOldACarrierEdge A S.system.toRelStructure
+    (activeCarrier A S.system e.toFunctionEmbedding)))
+variable (hRel : ∀ (ν : Fin (t.length + 1)) (i : I)
+  (p q : SharedOldACarrierEdge A S.system.toRelStructure
+    (activeCarrier A S.system e.toFunctionEmbedding)),
+  S.train.rel ν p.1 q.1 ↔
+    U.rel ν (sharedOldACarrierCoreEmbedding A S.system.toRelStructure
+      (activeCarrier A S.system e.toFunctionEmbedding) R f i p)
+      (sharedOldACarrierCoreEmbedding A S.system.toRelStructure
+        (activeCarrier A S.system e.toFunctionEmbedding) R f i q))
+
+local notation "Selected" =>
+  {b : DesignatedCopy B D S.system family // b ∈ S.selected}
+local notation "OldEdge" => OldACarrierEdge A S.system.toRelStructure
+local notation "Out" => fun ν : Fin (t.length + 1) =>
+  attachedSelectedPictureOrderOneData
+    A hA B D S.system family S.selected e R f S.train U hShared ν
+local notation "Wit" => fun ν : Fin (t.length + 1) =>
+  sharedWitnessOrderOneData U ν
+    (sharedOldACarrierCoreEmbedding A S.system.toRelStructure
+      (activeCarrier A S.system e.toFunctionEmbedding) R f)
+    (Subtype.val : OldACarrierEdge A R → Set Y)
+
+include hRel
+
+/-- The actual old selected ForestTailStage and genuine lower shared
+FullSystemGirthGT imply ALL original positive attached-output
+SupremeCycleBound certificates, provided the explicit physical
+attachment hypotheses of the Path A theorem hold at those cuts.
+
+This discharges the *hTail* proof field of the nontrivial Track B local
+refinement, not the existence of the lower selected witness. -/
+theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
+    (hPositive : ∀ j : Fin t.length, 0 < j.val → 1 ≤ t.get j)
+    (hLinear : ∀ j : Fin t.length, 0 < j.val →
+      (Out j.castSucc).LinearPretrain)
+    (hStrong : ∀ r : Embedding B D, r ∈ family →
+      AStrong A D (copyCarrier r))
+    (hTwoCopies : ∀ b : Selected, ∃ a d : OldEdge,
+      a ≠ d ∧ a.1 ⊆ copyCarrier b.1.embedding ∧
+        d.1 ⊆ copyCarrier b.1.embedding)
+    (hOldStrong : AStrong A S.system.toRelStructure
+      (activeCarrier A S.system e.toFunctionEmbedding))
+    (hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)))
+    (hWitness : ∀ j : Fin t.length, 0 < j.val →
+      (Wit j.castSucc).FullSystemGirthGT (t.get j)) :
+    ∀ j : Fin t.length, 0 < j.val →
+      (Out j.castSucc).SupremeCycleBound (t.get j) := by
+  intro j hj
+  have hOld : (selectedPictureOrderOneData A B D S.system family
+      S.selected S.train j.castSucc).SupremeCycleBound (t.get j) :=
+    (S.tailGirth j hj).2
+  have hOut : (Out j.castSucc).FullSystemGirthGT (t.get j) :=
+    attachedSelectedPicture_fullSystemGirth_of_actual_witness
+      A hA B D S.system family S.selected e R f S.train U
+      hShared hRel j.castSucc
+      (t.get j) (hPositive j hj) (hLinear j hj) hStrong
+      hTwoCopies hOldStrong hCoreStrong hOld (hWitness j hj)
+  exact hOut.2
+
+end StructuralRamsey.Girth.TrainRecursiveWitness
