@@ -1,5 +1,7 @@
 import Girth.TrainFillingIndexedActualMPhysicalTrain
 import Girth.TrainFillingSelectedRelationalStrongCover
+import Girth.TrainFillingSelectedActualHOldTrain
+import Girth.TrainFillingIndexedSelectedPhysicalMap
 
 set_option Elab.async false
 
@@ -88,5 +90,102 @@ theorem selectedStageActualCopyEdges_eq_range
               (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1 at hz
             obtain ⟨w, _, rfl⟩ := hz
             exact ⟨w, rfl⟩
+
+
+/-- At the genuinely selected M-copy, all complete old H-edges whose
+carriers are contained in its vertex image are precisely the actual
+old H-edges of the complete contracted first-wagon family.
+
+The exact equality is transported through the injective subtype
+change H.OldEdge ↪ OldACarrierEdge A N; strongness rules out any
+additional ambient old support edge inside the selected carrier. -/
+theorem selectedStageActualOldCopyEdges_eq_range
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (b : DesignatedCopy M D S.system family) (hb : b ∈ S.selected)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure) :
+    {f : H.OldEdge | f.1 ⊆ copyCarrier b.embedding} =
+    Set.range (selectedStageActualOldEdgeEmbedding U A M T hm
+      hSupport hLinear D family allowed S b H hOld) := by
+  ext f
+  constructor
+  · intro hInside
+    have hRel : oldSupportEdgeEmbedding A S.system.toRelStructure H hOld f ∈
+        {e : OldACarrierEdge A S.system.toRelStructure |
+          e.1 ⊆ copyCarrier b.embedding} := hInside
+    rw [selectedStageActualCopyEdges_eq_range U A M T hm hSupport
+      hLinear D family allowed S b hb] at hRel
+    obtain ⟨cp, hcp⟩ := hRel
+    refine ⟨cp, ?_⟩
+    apply (oldSupportEdgeEmbedding A S.system.toRelStructure H hOld).injective
+    calc
+      oldSupportEdgeEmbedding A S.system.toRelStructure H hOld
+          (selectedStageActualOldEdgeEmbedding U A M T hm
+            hSupport hLinear D family allowed S b H hOld cp) =
+        S.selectedPhysicalEdgeEmbedding b
+          (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp) :=
+        selectedStageOldEdge_eq_selectedPhysical U A M T hm
+          hSupport hLinear D family allowed S b H hOld cp
+      _ = oldSupportEdgeEmbedding A S.system.toRelStructure H hOld f := hcp
+  · rintro ⟨cp, rfl⟩
+    rw [selectedStageActualOldEdgeEmbedding_carrier U A M T hm
+      hSupport hLinear D family allowed S b H hOld cp]
+    rintro z ⟨w, _hw, rfl⟩
+    exact ⟨w, rfl⟩
+
+/-- The full ambient H *filled* physical edges whose old cover lies
+inside the selected M-copy are EXACTLY the selected image of all actual
+heterogeneous G0 edges. No filled edge is deleted, and no equality
+of output copy-edge families is a hypothesis.
+
+This discharges the copyEdges field used by the global parentwise
+scattering interface once the selected block is represented in H. -/
+theorem selectedStageActualFilledCopyEdges_eq_range
+    (A : RelStructure L UA) (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.ForestTailStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (b : DesignatedCopy M D S.system family) (hb : b ∈ S.selected)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges) :
+    {e : H.toTrainFilling.NewEdge |
+      H.toTrainFilling.cover e ∈
+        {f : H.OldEdge | f.1 ⊆ copyCarrier b.embedding}} =
+    Set.range (selectedIndexedFilledEdgeEmbedding U H hTemplate
+      (selectedStageActualOldEdgeEmbedding U A M T hm
+        hSupport hLinear D family allowed S b H hOld)) := by
+  let β := selectedStageActualOldEdgeEmbedding U A M T hm
+    hSupport hLinear D family allowed S b H hOld
+  have hOldEq :
+      {f : H.OldEdge | f.1 ⊆ copyCarrier b.embedding} =
+      Set.range β :=
+    selectedStageActualOldCopyEdges_eq_range U A M T hm
+      hSupport hLinear D family allowed S b hb H hOld
+  have hRewrite :
+      {e : H.toTrainFilling.NewEdge |
+        H.toTrainFilling.cover e ∈
+          {f : H.OldEdge | f.1 ⊆ copyCarrier b.embedding}} =
+      {e : H.toTrainFilling.NewEdge |
+        H.toTrainFilling.cover e ∈ Set.range β} := by
+    rw [hOldEq]
+  exact hRewrite.trans
+    (selectedIndexedFilledEdgeEmbedding_range U H hTemplate β).symm
+
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
