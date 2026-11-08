@@ -1,0 +1,5 @@
+import Girth.TrainTwoCycleMixedActualBridges
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_every_label_incident_every_connector
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_mixed_bridges_of_fullSystemGirth
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_mixed_bridges_of_fullSystemGirth_of_two

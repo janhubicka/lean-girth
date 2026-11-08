@@ -1,0 +1,3 @@
+import Girth.TrainTwoCycleOriginalLocalToGlobal
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_original_local_piece

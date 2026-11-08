@@ -1,0 +1,3 @@
+import Girth.TrainActualLongChosenStandardCarriers
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_long_piece_carriers_in_standard
