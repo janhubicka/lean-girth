@@ -3,6 +3,7 @@ import Girth.TrainActualStandardPhysicalMap
 import Girth.TrainPhysicalMapLocalPieces
 import Girth.TrainTwoCycleOriginalLocalToGlobal
 import Girth.TrainTwoCopyLocalSymmetry
+import Girth.TrainActualTwoCycleDesignatedOwnerForced
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -75,6 +76,7 @@ variable (μ : Fin (m + 1))
 
 local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "CoreEdge" => OldACarrierEdge A R
+local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μ
 local notation "Wit" => sharedWitnessOrderOneData U μ
@@ -177,6 +179,129 @@ theorem attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme
       (Out) hAccept hLinear target hDesignated hTargetPiece
   exact K.hasSimultaneousSupreme_of_hasSupremeAt
     (Out) target hFullTarget
+
+/-- The original physical two-vertex replacement only needs a
+literal source B-copy and an independent DISTINCT opposite owner,
+not a minimizing owner word. This is the exact interface needed
+by the two-cut residual-closure callback after #973. -/
+theorem attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme_of_distinct_shadow
+    {qcut : ℕ} (hq : 2 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (hWitness : (Wit).FullSystemGirthGT qcut)
+    (hOldStrong : AStrong A C.toRelStructure S)
+    (hCoreStrong : ∀ j : I, AStrong A R (copyCarrier (f j)))
+    (hLinear : (Out).LinearPretrain)
+    (K : (Out).BigCycle 2) (hAccept : K.Acceptable)
+    (owner : Fin 2 → I ⊕ CoreEdge)
+    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
+    (target : Fin 2) (i : I) (q : Selected)
+    (hOriginal : K.label target = Sum.inl (i, q))
+    (hOther : (Sum.inl i : I ⊕ CoreEdge) ≠ owner (cyclicSucc target))
+    (x y : Y)
+    (hX : K.connector (0 : Fin 2) = Sum.inl (CoreEmb x))
+    (hY : K.connector (1 : Fin 2) = Sum.inl (CoreEmb y)) :
+    K.HasSimultaneousSupreme := by
+  obtain ⟨x0, y0, _hQX, _hQY, hxStd, hyStd, hOldPiece⟩ :=
+    attachedSelectedPicture_two_cycle_original_B_vertex_local_of_distinct_shadow
+      A hA B D C family selected e R f T U hShared hRel μ
+      hq hOld hWitness K owner hAllowed target i q hOriginal hOther
+      x y hX hY
+  let M := attachedSelectedPicture_standard_physicalMap
+    A hA B D C family selected e R f T U hShared hRel μ
+    hOldStrong hCoreStrong i
+  have hMapped := M.localPiece_map
+    (Sum.inl q) (Sum.inl x0) (Sum.inl y0) hOldPiece
+  have hMapLabel :
+      M.mapLabel (Sum.inl q) = (Sum.inl (i, q) :
+        (I × Selected) ⊕
+          OldACarrierEdge A
+            (RelStructure.Attachment.attach C.toRelStructure S R f)) := by
+    rfl
+  have hMapX :
+      M.mapConnector (Sum.inl x0) = Sum.inl (CoreEmb x) := by
+    change Sum.inl (Std i x0) = Sum.inl (CoreEmb x)
+    rw [hxStd]
+  have hMapY :
+      M.mapConnector (Sum.inl y0) = Sum.inl (CoreEmb y) := by
+    change Sum.inl (Std i y0) = Sum.inl (CoreEmb y)
+    rw [hyStd]
+  rw [hMapLabel, hMapX, hMapY] at hMapped
+  have hTargetPiece :
+      (Out).ShortPiece (K.label target)
+        (K.connector (trainCyclicPred (cyclicSucc target)))
+        (K.connector (cyclicSucc target)) ∨
+      (Out).LongPiece (K.label target)
+        (K.connector (trainCyclicPred (cyclicSucc target)))
+        (K.connector (cyclicSucc target)) := by
+    have hPred : trainCyclicPred (cyclicSucc target) = target :=
+      trainCyclicPred_cyclicSucc_of_two_le
+        (by decide : 2 ≤ 2) target
+    rw [hPred]
+    have hIndex : target = (0 : Fin 2) ∨
+        target = (1 : Fin 2) := by
+      fin_cases target <;> simp
+    rcases hIndex with hIndex | hIndex
+    · subst target
+      simpa [cyclicSucc, hOriginal, hX, hY] using hMapped
+    · subst target
+      have hReverse :
+          (Out).ShortPiece (Sum.inl (i, q))
+              (Sum.inl (CoreEmb y)) (Sum.inl (CoreEmb x)) ∨
+          (Out).LongPiece (Sum.inl (i, q))
+              (Sum.inl (CoreEmb y)) (Sum.inl (CoreEmb x)) :=
+        (Out).piece_vertices_reverse
+          (Sum.inl (i, q)) (CoreEmb x) (CoreEmb y) hMapped
+      simpa [cyclicSucc, hOriginal, hX, hY] using hReverse
+  have hDesignated : (Out).designated (K.label target) := by
+    rw [hOriginal]
+    trivial
+  have hFullTarget : K.HasSupremeAt (Out) target :=
+    K.two_hasSupremeAt_of_original_local_piece
+      (Out) hAccept hLinear target hDesignated hTargetPiece
+  exact K.hasSimultaneousSupreme_of_hasSupremeAt
+    (Out) target hFullTarget
+
+/-- Entire original n=2 selected source global supreme for TWO core
+vertex connectors, under the existing final A-strong and two-old-edge
+selected target conditions. A minimum owner assignment is NOT needed.
+The literal original selected B-standard differs from the other
+geometric owner by the independently checked owner-uniqueness
+argument, then the genuine original B-local source piece is
+transported through the exact standard physical incidence map. -/
+theorem attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme_of_two_edges
+    [Finite UA]
+    (hBaseStrong : ∀ q : Selected,
+      AStrong A D (copyCarrier q.1.base))
+    (hTwoEdges : ∀ q : Selected, ∃ r t : OldEdge,
+      r ≠ t ∧ r.1 ⊆ copyCarrier q.1.embedding ∧
+        t.1 ⊆ copyCarrier q.1.embedding)
+    {qcut : ℕ} (hq : 2 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (hWitness : (Wit).FullSystemGirthGT qcut)
+    (hOldStrong : AStrong A C.toRelStructure S)
+    (hCoreStrong : ∀ j : I, AStrong A R (copyCarrier (f j)))
+    (hLinear : (Out).LinearPretrain)
+    (K : (Out).BigCycle 2) (hAccept : K.Acceptable)
+    (owner : Fin 2 → I ⊕ CoreEdge)
+    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
+    (hTwo : cyclicOwnerChanges owner = 2)
+    (target : Fin 2) (i : I) (q : Selected)
+    (hOriginal : K.label target = Sum.inl (i, q))
+    (x y : Y)
+    (hX : K.connector (0 : Fin 2) = Sum.inl (CoreEmb x))
+    (hY : K.connector (1 : Fin 2) = Sum.inl (CoreEmb y)) :
+    K.HasSimultaneousSupreme := by
+  have hOther : (Sum.inl i : I ⊕ CoreEdge) ≠
+      owner (cyclicSucc target) :=
+    attachedSelectedPicture_two_cycle_original_standard_diff_other_of_two_edges
+      A hA B D C family selected e R f T U hShared μ
+      hBaseStrong hTwoEdges K owner hAllowed hTwo target i q hOriginal
+  exact attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme_of_distinct_shadow
+    A hA B D C family selected e R f T U hShared hRel μ
+    hq hOld hWitness hOldStrong hCoreStrong hLinear
+    K hAccept owner hAllowed target i q hOriginal hOther
+    x y hX hY
+
 
 end OriginalBTwoCycleGlobalSupreme
 end StructuralRamsey.Girth
