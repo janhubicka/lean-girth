@@ -90,6 +90,8 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
     fun i => i.1.embedding
   have hMap : fCoarse = fOld := by
     funext i
+    apply Embedding.ext
+    intro x
     rfl
   have hTransfer :
       (activeGluingWitnessOrderOneData A Old α
