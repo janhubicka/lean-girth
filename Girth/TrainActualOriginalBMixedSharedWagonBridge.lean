@@ -87,7 +87,7 @@ local notation "Train" => generatedActualASupportTrain
   A hA C.toRelStructure S R f T U hShared
 local notation "CoreWagon" => generatedActualASupportTrain_coreWagonEmbedding
   A hA C.toRelStructure S R f T U
-  (fun ν j p q hp => (hRel ν j p q).mp hp) hShared μ
+  (fun ν j p q hp => Iff.mp (hRel ν j p q) hp) hShared μ
 local notation "StdWagon" => generatedActualASupportTrain_standardWagonEmbedding
   A hA C.toRelStructure S R f T U hRel hShared μ
 local notation "StdEdge" => (fun (i : I) (old : OldEdge) =>
