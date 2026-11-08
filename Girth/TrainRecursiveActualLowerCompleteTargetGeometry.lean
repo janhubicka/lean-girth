@@ -114,12 +114,12 @@ theorem ForestTailStage.trueActive_completeLowerTargetGeometry
   · rw [hHead]
     exact hSource.2.2
   · intro j hj
+    -- Dependent Fin indices must be CAST along hLen, not rewritten
+    -- inside j.isLt: rewriting the bound changes the type of j.
     let jOld : Fin ((q :: tail).length + R.extraCuts) :=
-      ⟨j.val, by
-        have h := j.isLt
-        rw [← hLen] at h
-        exact h⟩
-    have hPosOld : 0 < jOld.val := hj
+      Fin.cast hLen.symm j
+    have hPosOld : 0 < jOld.val := by
+      simpa only [jOld, Fin.val_cast] using hj
     apply U.castHeight_labelledCutGirth
       (fun edge : OldACarrierEdge A Target.toRelStructure => edge.1)
       hLen j.castSucc (lower.get j)
