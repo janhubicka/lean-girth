@@ -1,0 +1,5 @@
+import Girth.TrainTwoCycleStandardShadowVertexShared
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_all_labels_incident
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_same_kind_cutoff_ge_two
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
