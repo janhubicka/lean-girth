@@ -114,6 +114,7 @@ checks=(
   CheckTwoCycleOriginalLongSupreme
   CheckTwoCycleOriginalLocalToGlobal
   CheckActualTwoCycleOriginalBVertexGlobalSupreme
+  CheckActualTwoCycleDesignatedOwnerForced
 )
 
 for check in "${checks[@]}"; do
