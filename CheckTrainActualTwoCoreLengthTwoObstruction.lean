@@ -1,0 +1,7 @@
+import Girth.TrainActualTwoCoreLengthTwoObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.no_edge_only_two_of_linear
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_core_owners_length_two_false
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_length_two_has_standard_owner
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_has_standard_owner_of_linear
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.designated_exists_two_of_linear
