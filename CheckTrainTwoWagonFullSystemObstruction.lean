@@ -1,0 +1,4 @@
+import Girth.TrainTwoWagonFullSystemObstruction
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_no_localSupreme
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_wagon_absurd_of_fullSystemGirth
