@@ -1,0 +1,5 @@
+import Girth.TrainFillingSelectedActualFilledData
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualFilledData
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualFilledData_copyCarrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualFilledData_copyEdges_eq_range
