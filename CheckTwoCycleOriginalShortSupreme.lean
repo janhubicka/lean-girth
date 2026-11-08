@@ -1,0 +1,3 @@
+import Girth.TrainTwoCycleOriginalShortSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_common_short
