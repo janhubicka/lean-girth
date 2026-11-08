@@ -51,6 +51,7 @@ noncomputable def contractedPhysicalEdgeEquiv [Nontrivial X]
     (C × P) ≃ OldACarrierEdge A M := by
           let f : (C × P) → OldACarrierEdge A M := fun cp =>
             ⟨contractedCarrier U cp, by
+              change contractedCarrier U cp ∈ supportCopies A M
               rw [hSupport]
               exact ⟨cp, rfl⟩⟩
           apply Equiv.ofBijective f
@@ -235,8 +236,11 @@ noncomputable def selectedActualMPhysicalEdgeEmbedding [Nontrivial X]
       (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
     (b : DesignatedCopy M D S.system family) :
     (C × P) ↪ OldACarrierEdge A S.system.toRelStructure :=
-  (S.selectedPhysicalEdgeEmbedding b).comp
-    (contractedPhysicalEdgeEquiv U A M hSupport hLinear).toEmbedding
+  ⟨fun cp => S.selectedPhysicalEdgeEmbedding b
+      (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp), by
+    intro a c h
+    exact (contractedPhysicalEdgeEquiv U A M hSupport hLinear).injective
+      ((S.selectedPhysicalEdgeEmbedding b).injective h)⟩
 
 /-- The genuine selected stage targetRestriction gives literal proper
 (and bottom/top) train preservation/reflection for EACH original
