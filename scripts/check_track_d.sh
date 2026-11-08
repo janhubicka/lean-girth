@@ -73,6 +73,7 @@ checks=(
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
   CheckActualMinimalTwoCycleShadow
+  CheckActualMinimalTwoCutResidualClosure
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
