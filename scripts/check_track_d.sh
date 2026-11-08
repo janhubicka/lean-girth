@@ -99,6 +99,7 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTrainRecursiveHJFreshSelectedFinitePass
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveSelectedLowerActualInputs
   CheckTrainActualGeometricDesignatedOwnerUnique
