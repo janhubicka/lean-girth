@@ -49,16 +49,12 @@ variable (A : RelStructure L UA)
 variable (Old : StructuralRamsey.Partite.System L P X)
 variable (α : UA ↪ P)
 variable (D : StructuralRamsey.Partite.System L UA V)
-local notation "Source" =>
-  Old.toRelStructure.induce (activeCarrier A Old α)
-local notation "Target" =>
-  actualActiveSubsystemPartite A Old α
 
-variable {family : Set (Embedding Source D.toRelStructure)}
+variable {family : Set (Embedding (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure)}
 variable {t : List ℕ}
-variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A Source) t.length}
+variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A (Old.toRelStructure.induce (activeCarrier A Old α))) t.length}
 variable {allowed : Fin (t.length + 1) → Set V}
-variable (S : ForestTailStage A Source D.toRelStructure family t targetTrain allowed)
+variable (S : ForestTailStage A (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure family t targetTrain allowed)
 variable (hFamilyParts : ∀ b, b ∈ family →
   ∀ x : activeCarrier A Old α,
     D.part (b x) = activeSourcePart A Old α x)
@@ -72,20 +68,20 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
     (j : Fin t.length) (hj : 0 < j.val) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
           b ∈ S.selected} =>
         (selectedPartiteGluingFamily_of_largeBase
-          Target D S.system S.isPartite family hFamilyParts
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT (t.get j) := by
   change (activeGluingWitnessOrderOneData A Old α
     S.system.toRelStructure
-    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+    (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
     S.train j.castSucc).FullSystemGirthGT (t.get j)
   exact S.selectedGluing_fullSystem_at_positive
     A Old α D.toRelStructure
-    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+    (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
     (Equiv.refl _) (fun i => rfl) j hj
 
@@ -96,20 +92,20 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
     (q : ℕ) (hq : q ≤ t.get j) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
           b ∈ S.selected} =>
         (selectedPartiteGluingFamily_of_largeBase
-          Target D S.system S.isPartite family hFamilyParts
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train j.castSucc).FullSystemGirthGT q := by
   change (activeGluingWitnessOrderOneData A Old α
     S.system.toRelStructure
-    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+    (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
     S.train j.castSucc).FullSystemGirthGT q
   exact S.selectedGluing_fullSystem_at_positive_mono
     A Old α D.toRelStructure
-    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+    (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
     (Equiv.refl _) (fun i => rfl) j hj q hq
 
