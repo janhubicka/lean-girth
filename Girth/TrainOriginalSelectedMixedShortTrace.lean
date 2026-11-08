@@ -226,5 +226,44 @@ theorem attachedSelectedPicture_original_mixed_short_of_lower_bridge
   · change (Out).Meets (Sum.inr (StdEdge i bOld)) (CoreWagon p)
     exact ⟨StdEdge i bOld, rfl, hbOutParent⟩
 
+/-- The old selected-copy mixed short can be obtained directly from
+the REAL lower FullSystemGirthGT certificate and a second distinct
+witness shadow label, once both lower vertex incidences are known.
+The selected copy's lower wagon incidence is derived above from the
+literal original output B-copy, never assumed from geometric ownership.
+This is the intended composition point for the n=2 cut geometry. -/
+theorem attachedSelectedPicture_original_mixed_short_of_shadow
+    {qcut : ℕ} (hq : 1 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (hWitness : (Wit).FullSystemGirthGT qcut)
+    (i : I) (q : Selected) (x0 : X) (x : Y)
+    (hQx : x0 ∈ copyCarrier q.1.embedding)
+    (hX : Std i x0 = CoreEmb x)
+    (hIx : x ∈ (Wit).copyCarrier i)
+    (p : Quotient (U.wagonSetoid μ))
+    (hMeets : (Out).Meets (Sum.inl (i,q)) (CoreWagon p))
+    (a : I ⊕ CoreEdge)
+    (hOther : Sum.inl i ≠ a)
+    (hAx : x ∈ (Wit).carrier a)
+    (hAp : (Wit).Meets a p) :
+    (Out).ShortPiece (Sum.inl (i,q))
+      (Sum.inl (CoreEmb x)) (Sum.inr (CoreWagon p)) := by
+  have hLocal : (Wit).LocalPieceSystemBound 1 := by
+    intro n Z hAccept hOrder
+    exact (Wit).localPieceSystemBound_of_supremeCycleBound
+      qcut hWitness.2 n Z hAccept (by omega)
+  have hBound : (Wit).Bound :=
+    (Wit).bound_of_localPieceSystemBound hLocal
+  have hIp : (Wit).Meets (Sum.inl i) p :=
+    attachedSelectedPicture_original_B_core_wagon_lower_meets
+      A hA B D C family selected e R f T U hShared hRel μ
+      i q p hMeets
+  have hBridge : (Wit).Bridge (Sum.inl i) x p :=
+    ((Wit).both_bridges hBound (Sum.inl i) a x p
+      hOther hIx hAx hIp hAp).1
+  exact attachedSelectedPicture_original_mixed_short_of_lower_bridge
+    A hA B D C family selected e R f T U hShared hRel μ
+    hq hOld i q x0 x hQx hX p hMeets hBridge
+
 end OriginalSelectedMixedBridge
 end StructuralRamsey.Girth
