@@ -96,19 +96,21 @@ old-source local short or long piece. The physical old endpoints
 are constructed from the original q (not postulated), and the
 distinct lower shadow and its two vertex incidences are derived
 from the actual other geometric owner. -/
-theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_shadow
+/-- The genuine two-vertex original B-copy old local piece requires
+only a DISTINCT lower owner shadow, not minimality. The two real old
+endpoint preimages and lower vertex incidences are derived, rather
+than supplied. This is the direct interface for arbitrary two-cut
+assignments once the designated-copy owner is fixed. -/
+theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_of_distinct_shadow
     {qcut : ℕ} (hq : 2 ≤ qcut)
     (hOld : (Old).SupremeCycleBound qcut)
     (hWitness : (Wit).FullSystemGirthGT qcut)
     (K : (Out).BigCycle 2)
     (owner : Fin 2 → I ⊕ CoreEdge)
     (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
-    (hMinimal : ∀ other : Fin 2 → I ⊕ CoreEdge,
-      (∀ k, GeomAllowed (K.label k) (other k)) →
-        cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
-    (hTwo : cyclicOwnerChanges owner = 2)
     (target : Fin 2) (i : I) (q : Selected)
     (hOriginal : K.label target = Sum.inl (i, q))
+    (hOther : (Sum.inl i : I ⊕ CoreEdge) ≠ owner (cyclicSucc target))
     (x y : Y)
     (hX : K.connector (0 : Fin 2) = Sum.inl (CoreEmb x))
     (hY : K.connector (1 : Fin 2) = Sum.inl (CoreEmb y)) :
@@ -155,13 +157,6 @@ theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_s
       CoreEmb x = Std i x0 := hxStd.symm
       _ = Std i y0 := congrArg (fun z => Std i z) h
       _ = CoreEmb y := hyStd
-  have hOther : (Sum.inl i : I ⊕ CoreEdge) ≠
-      owner (cyclicSucc target) := by
-    intro hh
-    have hNot := attachedSelectedPicture_two_cycle_original_standard_diff_shadow
-      A hA B D C family selected e R f T U hShared μ
-      K owner hAllowed hMinimal hTwo target i q hOriginal
-    exact hNot hh.symm
   have hShadow : x ∈ (Wit).carrier (owner (cyclicSucc target)) ∧
       y ∈ (Wit).carrier (owner (cyclicSucc target)) :=
     attachedSelectedPicture_two_cycle_other_owner_core_shadow
@@ -176,6 +171,42 @@ theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_s
       x0 y0 x y hOldXY hxy hxOld hyOld hxStd hyStd
       hxWit hyWit hShadow.1 hShadow.2
   exact ⟨x0, y0, hxOld, hyOld, hxStd, hyStd, hPiece⟩
+
+
+theorem attachedSelectedPicture_two_cycle_original_B_vertex_local_from_minimal_shadow
+    {qcut : ℕ} (hq : 2 ≤ qcut)
+    (hOld : (Old).SupremeCycleBound qcut)
+    (hWitness : (Wit).FullSystemGirthGT qcut)
+    (K : (Out).BigCycle 2)
+    (owner : Fin 2 → I ⊕ CoreEdge)
+    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
+    (hMinimal : ∀ other : Fin 2 → I ⊕ CoreEdge,
+      (∀ k, GeomAllowed (K.label k) (other k)) →
+        cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
+    (hTwo : cyclicOwnerChanges owner = 2)
+    (target : Fin 2) (i : I) (q : Selected)
+    (hOriginal : K.label target = Sum.inl (i, q))
+    (x y : Y)
+    (hX : K.connector (0 : Fin 2) = Sum.inl (CoreEmb x))
+    (hY : K.connector (1 : Fin 2) = Sum.inl (CoreEmb y)) :
+    ∃ x0 y0 : X,
+      x0 ∈ (Old).copyCarrier q ∧
+      y0 ∈ (Old).copyCarrier q ∧
+      Std i x0 = CoreEmb x ∧
+      Std i y0 = CoreEmb y ∧
+      ((Old).ShortPiece (Sum.inl q) (Sum.inl x0) (Sum.inl y0) ∨
+        (Old).LongPiece (Sum.inl q) (Sum.inl x0) (Sum.inl y0)) := by
+  have hOther : (Sum.inl i : I ⊕ CoreEdge) ≠
+      owner (cyclicSucc target) := by
+    intro hh
+    have hNot := attachedSelectedPicture_two_cycle_original_standard_diff_shadow
+      A hA B D C family selected e R f T U hShared μ
+      K owner hAllowed hMinimal hTwo target i q hOriginal
+    exact hNot hh.symm
+  exact attachedSelectedPicture_two_cycle_original_B_vertex_local_of_distinct_shadow
+    A hA B D C family selected e R f T U hShared hRel μ
+    hq hOld hWitness K owner hAllowed target i q hOriginal hOther
+    x y hX hY
 
 end OriginalBTwocycleShadow
 end StructuralRamsey.Girth
