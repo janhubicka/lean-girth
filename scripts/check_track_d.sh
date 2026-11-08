@@ -64,6 +64,7 @@ checks=(
   CheckTrainRecursiveCoarsenedStageParameters
   CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
+  CheckTrainRecursiveActualHeightCutoffApplication
   CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveCoarsenedSelectedRestriction
   CheckTrainRecursiveActualFineInputs
@@ -122,3 +123,4 @@ python3 scripts/check_order_one_bridge.py
 python3 scripts/check_output_connector_layout.py
 python3 scripts/check_two_cut_singleton_orientation.py
 python3 scripts/check_two_cut_core_isolation.py
+python3 scripts/check_track_b_retained_cutoff.py
