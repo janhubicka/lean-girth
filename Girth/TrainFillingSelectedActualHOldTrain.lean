@@ -43,6 +43,7 @@ def oldSupportEdgeEmbedding
     (hOld : H.oldEdges = supportCopies A N) :
     H.OldEdge ↪ OldACarrierEdge A N where
   toFun e := ⟨e.1, by
+    change e.1 ∈ supportCopies A N
     rw [← hOld]
     exact e.2⟩
   inj' := by
