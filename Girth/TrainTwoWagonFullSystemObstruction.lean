@@ -69,8 +69,9 @@ theorem BigCycle.two_wagon_no_localSupreme
         D.LongPiece (Z.label (1 : Fin 2))
           (Sum.inr q) (Sum.inr p) := by
       simpa [trainCyclicPred, hp, hq] using h
-    exact hpq (D.piece_two_wagon_forces_eq
-      (Z.label (1 : Fin 2)) q p hAt).symm
+    have hqp : q = p := D.piece_two_wagon_forces_eq
+      (Z.label (1 : Fin 2)) q p hAt
+    exact hpq hqp.symm
 
 /-- Even an edge-only two-wagon word has acceptable order two.
 Thus FullSystemGirthGT q, q>=2, excludes it, with no assumption
