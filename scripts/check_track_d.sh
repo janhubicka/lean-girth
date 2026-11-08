@@ -100,6 +100,8 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTrainRecursiveActualCoarsenedFullSystem
+  CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveSelectedLowerActualInputs
   CheckTrainActualGeometricDesignatedOwnerUnique
