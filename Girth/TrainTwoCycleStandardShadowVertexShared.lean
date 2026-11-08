@@ -93,9 +93,9 @@ local notation "CoreEmb" => RelStructure.Attachment.coreEmbedding
   C.toRelStructure S R f
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
-local notation "Wit" => sharedWitnessOrderOneData U μ
+local notation "WitAttached" => sharedWitnessOrderOneData U μ
   (sharedOldACarrierCoreEmbedding A C.toRelStructure S R f)
-  (Subtype.val : CoreEdge → Set Y)
+  (attachedCoreAEdgeCarrier A C.toRelStructure S R f)
 local notation "LabelMap" => attachedSelectedPictureLabel
   A hA B D C family selected e R f
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
@@ -117,8 +117,8 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
     (pos : Fin 2) (x : Vertex)
     (hVertex : K.connector pos = Sum.inl x) :
     x ∈ copyCarrier CoreEmb ∧
-    x ∈ (Wit).copyCarrier i ∧
-    x ∈ (Wit).copyCarrier j := by
+    x ∈ (WitAttached).copyCarrier i ∧
+    x ∈ (WitAttached).copyCarrier j := by
   have hOriginalAllowed :
       GeomAllowed (K.label target) (Sum.inl i) := by
     rw [hOriginal]
