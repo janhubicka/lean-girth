@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveTwoCopies
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.activeTarget_twoGenuineCopies_of_nontrivialFibre
