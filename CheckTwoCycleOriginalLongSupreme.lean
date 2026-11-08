@@ -1,0 +1,3 @@
+import Girth.TrainTwoCycleOriginalLongSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_longValid

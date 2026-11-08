@@ -1,0 +1,3 @@
+import Girth.TrainRealSharedShortOldPairProbe
+
+#print axioms StructuralRamsey.Girth.sharedWitness_short_two_vertices_old_pair_probe

@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCycleSourceExcludingDoubleWagon
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_supreme_of_no_double_wagon
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_no_double_wagon

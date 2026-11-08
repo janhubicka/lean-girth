@@ -1,0 +1,6 @@
+import Girth.TrainOriginalCopyProbePhysicalMap
+
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.original_copy_local_piece_map_of_old_two_vertex_probe
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.original_copy_short_map_of_old_mixed_bridge_probe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.original_copy_short_map_of_shared_wagon_contact

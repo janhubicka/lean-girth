@@ -118,6 +118,29 @@ checks=(
   CheckTwoCycleMixedActualBridges
   CheckTwoStandardNoPairCommonLong
   CheckWagonTwoContactFreshOldDichotomy
+  CheckCyclicCutIndexAtSourceTwo
+  CheckTwoCycleOriginalDesignatedOfLinear
+  CheckTwoCycleOriginalLocalToGlobal
+  CheckTwoCycleOriginalLongSupreme
+  CheckTwoCycleOriginalShortSupreme
+  CheckActualMinimalTwoCutResidualClosure
+  CheckActualMinimalTwoCycleShadow
+  CheckOriginalSelectedCoreVertexPreimage
+  CheckActualTwoCycleDesignatedOwnerForced
+  CheckActualTwoCycleOriginalBVertexGlobalSupreme
+  CheckActualTwoCycleOriginalBVertexLocalFromMinimalShadow
+  CheckActualTwoCycleOwnerShadowCoreIncidence
+  CheckOldCopyLocalProbePieces
+  CheckOriginalCopyProbePhysicalMap
+  CheckOriginalSelectedBVertexProbe
+  CheckPhysicalMapLocalPieces
+  CheckRealSharedLongOldWagonProbe
+  CheckRealSharedShortOldPairProbe
+  CheckWitnessCopyShadowProbe
+  CheckOriginalSelectedMixedShortTrace
+  CheckOriginalSelectedMixedSourceClosure
+  CheckActualTwoCycleCoreConnectors
+  CheckActualTwoCycleSourceExcludingDoubleWagon
 )
 
 for check in "${checks[@]}"; do
