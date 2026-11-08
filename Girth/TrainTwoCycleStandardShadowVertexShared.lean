@@ -93,13 +93,37 @@ local notation "CoreEmb" => RelStructure.Attachment.coreEmbedding
   C.toRelStructure S R f
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μ
-local notation "WitAttached" => sharedWitnessOrderOneData U μ
-  (sharedOldACarrierCoreEmbedding A C.toRelStructure S R f)
-  (attachedCoreAEdgeCarrier A C.toRelStructure S R f)
+local notation "Emb" => sharedOldACarrierCoreEmbedding
+  A C.toRelStructure S R f
+local notation "WitY" => sharedWitnessOrderOneData U μ
+  Emb (Subtype.val : CoreEdge → Set Y)
 local notation "LabelMap" => attachedSelectedPictureLabel
   A hA B D C family selected e R f
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μ
+
+/-- Pull an actual shared core-standard vertex membership back through
+the injective core embedding to the TRUE lower Y-vertex witness. The
+attached-vertex witness and lower Y-vertex witness are not definally equal. -/
+theorem attachedSelectedPicture_core_standard_witness_Y
+    (i : I) (x : Y)
+    (hStd : CoreEmb x ∈ copyCarrier (Std i)) :
+    x ∈ (WitY).copyCarrier i := by
+  have hCore : CoreEmb x ∈ copyCarrier CoreEmb := ⟨x, rfl⟩
+  obtain ⟨s, _edge, hs, _hz, _hEq⟩ :=
+    activeAttached_coreStandard_pointwise_sharedAEdge
+      A C e.toFunctionEmbedding R f i (CoreEmb x) hStd hCore
+  have hImage : CoreEmb x ∈
+      attachedCoreAEdgeCarrier A C.toRelStructure S R f (Emb i s) := by
+    rw [← attachedSharedAEdgeCarrier_eq
+      A C.toRelStructure S R f i s]
+    exact hs
+  change CoreEmb x ∈
+      (fun y : Y => CoreEmb y) '' (Emb i s).1 at hImage
+  obtain ⟨y, hy, hEq⟩ := hImage
+  have hYX : y = x := CoreEmb.injective hEq
+  refine ⟨s, ?_⟩
+  simpa [hYX] using hy
 
 /-- A vertex connector of a literal original selected label (i,q),
 whose other literal source label has distinct geometric standard owner j,
@@ -116,9 +140,9 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
     (hDistinct : i ≠ j)
     (pos : Fin 2) (x : Vertex)
     (hVertex : K.connector pos = Sum.inl x) :
-    x ∈ copyCarrier CoreEmb ∧
-    x ∈ (WitAttached).copyCarrier i ∧
-    x ∈ (WitAttached).copyCarrier j := by
+    ∃ y : Y, CoreEmb y = x ∧
+      y ∈ (WitY).copyCarrier i ∧
+      y ∈ (WitY).copyCarrier j := by
   have hOriginalAllowed :
       GeomAllowed (K.label target) (Sum.inl i) := by
     rw [hOriginal]
@@ -150,11 +174,16 @@ theorem attachedSelectedPicture_two_cycle_standard_shadow_vertex_shared
   have hCore : x ∈ copyCarrier CoreEmb :=
     attachment_copy_copy_intersection_subset_core
       C.toRelStructure S R f hDistinct ⟨hStdI, hStdJ⟩
-  refine ⟨hCore, ?_, ?_⟩
-  · exact activeAttached_mem_sharedWitness_of_standard_core
-      A C e.toFunctionEmbedding R f U μ i x hStdI hCore
-  · exact activeAttached_mem_sharedWitness_of_standard_core
-      A C e.toFunctionEmbedding R f U μ j x hStdJ hCore
+  obtain ⟨y, hy⟩ := hCore
+  refine ⟨y, hy, ?_, ?_⟩
+  · apply attachedSelectedPicture_core_standard_witness_Y
+      A B D C family selected e R f T U hShared μ i y
+    rw [hy]
+    exact hStdI
+  · apply attachedSelectedPicture_core_standard_witness_Y
+      A B D C family selected e R f T U hShared μ j y
+    rw [hy]
+    exact hStdJ
 
 end TwoCycleStandardShadow
 end StructuralRamsey.Girth
