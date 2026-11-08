@@ -99,6 +99,10 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTrainFirstRetainedCutCounterexample
+  CheckTrainTwoWagonFullSystemObstruction
+  CheckTrainActualGeometricDesignatedOwnerUnique
+  CheckActualTwoCutCoreOwnerUnique
 )
 
 for check in "${checks[@]}"; do

@@ -1,0 +1,4 @@
+import Girth.TrainFirstRetainedCutCounterexample
+
+#print axioms StructuralRamsey.Girth.fourEdgePath_end_edges_disjoint
+#print axioms StructuralRamsey.Girth.groupedFourEdgePath_not_labelledGirthGT_three

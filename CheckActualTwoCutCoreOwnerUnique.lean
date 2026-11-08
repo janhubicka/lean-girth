@@ -1,0 +1,5 @@
+import Girth.TrainActualTwoCutCoreOwnerUnique
+
+#print axioms StructuralRamsey.Girth.cyclicOwner_two_cut_isolated_unique
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_core_owner_unique
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cut_has_standard_owner
