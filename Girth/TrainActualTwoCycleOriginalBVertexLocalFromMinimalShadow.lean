@@ -89,7 +89,7 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 
 include hRel
 
-/-- At any genuine original source length-two selected-output cycle
+/- At any genuine original source length-two selected-output cycle
 with TWO core vertex connectors and a minimal two-cut geometric
 assignment, an original selected B-label (i,q) has its own literal
 old-source local short or long piece. The physical old endpoints
