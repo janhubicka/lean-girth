@@ -1,0 +1,3 @@
+import Girth.TrainActualLengthTwoVertexPairStrongSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_vertex_pairEdge_supreme_of_selectedStrong
