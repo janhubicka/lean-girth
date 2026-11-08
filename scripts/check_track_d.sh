@@ -72,6 +72,7 @@ checks=(
   CheckTrainActualSupremeResidualClosure
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
+  CheckActualTwoCutCoreOwnerUnique
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
@@ -110,4 +111,5 @@ python3 scripts/check_boundary_transport.py
 python3 scripts/check_boundary_girth.py
 python3 scripts/check_order_one_bridge.py
 python3 scripts/check_output_connector_layout.py
+python3 scripts/check_two_cut_core_isolation.py
 python3 scripts/check_two_cut_singleton_orientation.py
