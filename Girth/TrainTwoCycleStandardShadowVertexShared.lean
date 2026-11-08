@@ -104,7 +104,7 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 
 /-- Pull an actual shared core-standard vertex membership back through
 the injective core embedding to the TRUE lower Y-vertex witness. The
-attached-vertex witness and lower Y-vertex witness are not definally equal. -/
+attached-vertex witness and lower Y-vertex witness are not definitionally equal. -/
 theorem attachedSelectedPicture_core_standard_witness_Y
     (i : I) (x : Y)
     (hStd : CoreEmb x ∈ copyCarrier (Std i)) :
