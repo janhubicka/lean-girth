@@ -41,19 +41,15 @@ variable (Old : StructuralRamsey.Partite.System L P X)
 variable (α : UA ↪ P)
 variable (D : StructuralRamsey.Partite.System L UA V)
 
-local notation "Source" =>
-  Old.toRelStructure.induce (activeCarrier A Old α)
-local notation "Target" =>
-  actualActiveSubsystemPartite A Old α
 
 variable {q d : ℕ} {tail : List ℕ}
-variable {family : Set (Embedding Source D.toRelStructure)}
+variable {family : Set (Embedding (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure)}
 variable {targetTrain : EdgeTrainLevels
-  (OldACarrierEdge A Source)
+  (OldACarrierEdge A (Old.toRelStructure.induce (activeCarrier A Old α)))
   (List.replicate d (q - 1) ++ tail).length}
 variable {allowed :
   Fin ((List.replicate d (q - 1) ++ tail).length + 1) → Set V}
-variable (S : ForestTailStage A Source D.toRelStructure family
+variable (S : ForestTailStage A (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure family
   (List.replicate d (q - 1) ++ tail) targetTrain allowed)
 variable (hFamilyParts : ∀ b, b ∈ family →
   ∀ x : activeCarrier A Old α,
@@ -72,10 +68,10 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_recursiveCuts
     (hInterior : ν.val < (List.replicate d (q - 1) ++ tail).length) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
           b ∈ S.selected} =>
         (selectedPartiteGluingFamily_of_largeBase
-          Target D S.system S.isPartite family hFamilyParts
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train ν).FullSystemGirthGT
         (if ν.val < d then q - 1 else q) := by
@@ -131,10 +127,10 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_attachmentBudget
     (hInterior : ν.val < (List.replicate d (q - 1) ++ tail).length) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
           b ∈ S.selected} =>
         (selectedPartiteGluingFamily_of_largeBase
-          Target D S.system S.isPartite family hFamilyParts
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       S.train ν).FullSystemGirthGT
         (if ν.val ≤ r then q - 1 else q) := by
@@ -161,10 +157,10 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_for_attachmentHeight
     (hInterior : ν.val < m) :
     (activeGluingWitnessOrderOneData A Old α
       (S.system.coarsenVia D S.isPartite).toRelStructure
-      (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+      (fun i : {b : DesignatedCopy (Old.toRelStructure.induce (activeCarrier A Old α)) D.toRelStructure S.system family //
           b ∈ S.selected} =>
         (selectedPartiteGluingFamily_of_largeBase
-          Target D S.system S.isPartite family hFamilyParts
+          (actualActiveSubsystemPartite A Old α) D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
       (S.train.castHeight hLen.symm) ν).FullSystemGirthGT
         (if ν.val ≤ r then q - 1 else q) := by
