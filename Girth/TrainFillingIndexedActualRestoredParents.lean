@@ -54,37 +54,37 @@ theorem selectedIndexedRestoredParent_iff
       (Quotient.mk
           (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ)
           (selectedIndexedFilledEdgeEmbedding U H hTemplate β b)) := by
-  have hOld :
-      properParentOf U (fun p => Quotient.mk (T.wagonSetoid ν) p) a =
-        properParentOf U (fun p => Quotient.mk (T.wagonSetoid ν) p) b ↔
-      (contractedChoiceTrain U T hm).rel ν
-        (a.1, a.2.1) (b.1, b.2.1) := by
-    change contractedProperParent U T ν (a.1, a.2.1) =
-        contractedProperParent U T ν (b.1, b.2.1) ↔ _
-    exact contractedProperParent_eq_iff_rel U T hm ν hProper
-      (a.1, a.2.1) (b.1, b.2.1)
-  constructor
-  · intro hp
-    have hr : S.rel ν (β (a.1, a.2.1)) (β (b.1, b.2.1)) :=
-      (hFaithful (a.1, a.2.1) (b.1, b.2.1)).mp (hOld.mp hp)
-    apply Quotient.sound
-    apply (H.toTrainFilling.inheritedTrain_rel_succ S ν
-      (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
-      (selectedIndexedFilledEdgeEmbedding U H hTemplate β b)).mpr
-    simpa only [selectedIndexedFilledEdgeEmbedding_cover] using hr
-  · intro hp
-    have hr :
-        (H.toTrainFilling.inheritedTrain S).rel ν.succ
-          (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
-          (selectedIndexedFilledEdgeEmbedding U H hTemplate β b) :=
-      Quotient.exact hp
-    have hs : S.rel ν (β (a.1, a.2.1)) (β (b.1, b.2.1)) := by
-      have hh := (H.toTrainFilling.inheritedTrain_rel_succ S ν
-        (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
-        (selectedIndexedFilledEdgeEmbedding U H hTemplate β b)).mp hr
-      simpa only [selectedIndexedFilledEdgeEmbedding_cover] using hh
-    exact hOld.mpr
-      ((hFaithful (a.1, a.2.1) (b.1, b.2.1)).mpr hs)
+          have hOld :
+              properParentOf U (fun p => Quotient.mk (T.wagonSetoid ν) p) a =
+                properParentOf U (fun p => Quotient.mk (T.wagonSetoid ν) p) b ↔
+              (contractedChoiceTrain U T hm).rel ν
+                (a.1, a.2.1) (b.1, b.2.1) := by
+            change contractedProperParent U T ν (a.1, a.2.1) =
+                contractedProperParent U T ν (b.1, b.2.1) ↔ _
+            exact contractedProperParent_eq_iff_rel U T hm ν hProper
+              (a.1, a.2.1) (b.1, b.2.1)
+          constructor
+          · intro hp
+            have hr : S.rel ν (β (a.1, a.2.1)) (β (b.1, b.2.1)) :=
+              (hFaithful (a.1, a.2.1) (b.1, b.2.1)).mp (hOld.mp hp)
+            apply Quotient.sound
+            apply (H.toTrainFilling.inheritedTrain_rel_succ S ν
+              (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
+              (selectedIndexedFilledEdgeEmbedding U H hTemplate β b)).mpr
+            simpa only [selectedIndexedFilledEdgeEmbedding_cover] using hr
+          · intro hp
+            have hr :
+                (H.toTrainFilling.inheritedTrain S).rel ν.succ
+                  (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
+                  (selectedIndexedFilledEdgeEmbedding U H hTemplate β b) :=
+              Quotient.exact hp
+            have hs : S.rel ν (β (a.1, a.2.1)) (β (b.1, b.2.1)) := by
+              have hh := (H.toTrainFilling.inheritedTrain_rel_succ S ν
+                (selectedIndexedFilledEdgeEmbedding U H hTemplate β a)
+                (selectedIndexedFilledEdgeEmbedding U H hTemplate β b)).mp hr
+              simpa only [selectedIndexedFilledEdgeEmbedding_cover] using hh
+            exact hOld.mpr
+              ((hFaithful (a.1, a.2.1) (b.1, b.2.1)).mpr hs)
 
 /-- The actual restored quotient wagon injection is CONSTRUCTED from
 the selected physical edge embedding and faithful shorter-train
@@ -101,19 +101,19 @@ noncomputable def selectedIndexedRestoredWagonEmbedding
         S.rel ν (β e) (β f)) :
     ProperWagon (Q := Quotient (T.wagonSetoid ν)) U ↪
       Quotient (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) := by
-  have hParent : Function.Surjective
-      (fun p : P => Quotient.mk (T.wagonSetoid ν) p) := by
-    intro q
-    induction q using Quotient.inductionOn with
-    | h p => exact ⟨p, rfl⟩
-  exact reconstructedProperWagonEmbedding U
-    (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
-    (selectedIndexedFilledEdgeEmbedding U H hTemplate β)
-    (fun e : H.toTrainFilling.NewEdge =>
-      Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e)
-    hParent hLocal
-    (selectedIndexedRestoredParent_iff U H hTemplate
-      T hm S β ν hProper hFaithful)
+          have hParent : Function.Surjective
+              (fun p : P => Quotient.mk (T.wagonSetoid ν) p) := by
+            intro q
+            induction q using Quotient.inductionOn with
+            | h p => exact ⟨p, rfl⟩
+          exact reconstructedProperWagonEmbedding U
+            (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
+            (selectedIndexedFilledEdgeEmbedding U H hTemplate β)
+            (fun e : H.toTrainFilling.NewEdge =>
+              Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e)
+            hParent hLocal
+            (selectedIndexedRestoredParent_iff U H hTemplate
+              T hm S β ν hProper hFaithful)
 
 /-- The constructed wagon map commutes with physical parents on all
 actual heterogeneous G0 edges. No independently assumed wagon image
@@ -135,18 +135,18 @@ theorem selectedIndexedRestoredWagonEmbedding_parent
       Quotient.mk
         (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ)
         (selectedIndexedFilledEdgeEmbedding U H hTemplate β a) := by
-  have hParent : Function.Surjective
-      (fun p : P => Quotient.mk (T.wagonSetoid ν) p) := by
-    intro q
-    induction q using Quotient.inductionOn with
-    | h p => exact ⟨p, rfl⟩
-  exact reconstructedProperWagonEmbedding_parent U
-    (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
-    (selectedIndexedFilledEdgeEmbedding U H hTemplate β)
-    (fun e : H.toTrainFilling.NewEdge =>
-      Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e)
-    hParent hLocal
-    (selectedIndexedRestoredParent_iff U H hTemplate
-      T hm S β ν hProper hFaithful) a
+          have hParent : Function.Surjective
+              (fun p : P => Quotient.mk (T.wagonSetoid ν) p) := by
+            intro q
+            induction q using Quotient.inductionOn with
+            | h p => exact ⟨p, rfl⟩
+          exact reconstructedProperWagonEmbedding_parent U
+            (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
+            (selectedIndexedFilledEdgeEmbedding U H hTemplate β)
+            (fun e : H.toTrainFilling.NewEdge =>
+              Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e)
+            hParent hLocal
+            (selectedIndexedRestoredParent_iff U H hTemplate
+              T hm S β ν hProper hFaithful) a
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
