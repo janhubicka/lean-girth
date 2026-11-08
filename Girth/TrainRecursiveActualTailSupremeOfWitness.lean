@@ -43,9 +43,11 @@ variable (f : I → Embedding
   (S.system.toRelStructure.induce
     (activeCarrier A S.system e.toFunctionEmbedding)) R)
 variable (U : EdgeTrainLevels (OldACarrierEdge A R) t.length)
-variable (hShared : ∀ _i : I,
-  Nonempty (SharedOldACarrierEdge A S.system.toRelStructure
-    (activeCarrier A S.system e.toFunctionEmbedding)))
+variable (active : StructuralRamsey.Partite.ProjectedEmbedding
+  A S.system e.toFunctionEmbedding)
+local notation "hShared" =>
+  activeCarrier_all_standard_copies_meet_core
+    A S.system e.toFunctionEmbedding active I
 variable (hRel : ∀ (ν : Fin (t.length + 1)) (i : I)
   (p q : SharedOldACarrierEdge A S.system.toRelStructure
     (activeCarrier A S.system e.toFunctionEmbedding)),
@@ -78,8 +80,6 @@ This discharges the *hTail* proof field of the nontrivial Track B local
 refinement, not the existence of the lower selected witness. -/
 theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     (hTwoCut : ∀ j : Fin t.length, 0 < j.val → 2 ≤ t.get j)
-    (active : StructuralRamsey.Partite.ProjectedEmbedding
-      A S.system e.toFunctionEmbedding)
     (hStrong : ∀ r : Embedding B D, r ∈ family →
       AStrong A D (copyCarrier r))
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
