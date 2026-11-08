@@ -1,0 +1,3 @@
+import Girth.TrainFillingOrderStageCanonicalAllCutGirth
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT
