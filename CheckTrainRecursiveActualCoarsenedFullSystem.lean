@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveActualCoarsenedFullSystem
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fullSystem_at_positive
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
