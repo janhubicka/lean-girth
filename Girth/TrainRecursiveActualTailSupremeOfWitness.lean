@@ -1,6 +1,7 @@
 import Girth.TrainActualTwoCycleWitnessDoubleWagonExclusion
 import Girth.TrainRecursiveWitnessPass
 import Girth.ActiveCarrierStrong
+import Girth.TrainSelectedPictureStageGeometry
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -77,8 +78,8 @@ This discharges the *hTail* proof field of the nontrivial Track B local
 refinement, not the existence of the lower selected witness. -/
 theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     (hTwoCut : ∀ j : Fin t.length, 0 < j.val → 2 ≤ t.get j)
-    (hLinear : ∀ j : Fin t.length, 0 < j.val →
-      (Out j.castSucc).LinearPretrain)
+    (active : StructuralRamsey.Partite.ProjectedEmbedding
+      A S.system e.toFunctionEmbedding)
     (hStrong : ∀ r : Embedding B D, r ∈ family →
       AStrong A D (copyCarrier r))
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
@@ -125,6 +126,34 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     activeGluingWitness_images_aStrong_of_fullSystemGirth
       A S.system e.toFunctionEmbedding R f U j.castSucc
       (t.get j) (hTwoCut j hj) hFullGluing
+  have hHeight : 2 ≤ t.length := by
+    have hjLt := j.isLt
+    omega
+  have hCoreCut : ∀ μ : Fin (t.length + 1),
+      0 < μ.val → μ.val < t.length →
+      (activeGluingWitnessOrderOneData A S.system
+        e.toFunctionEmbedding R f U μ).FullSystemGirthGT 2 := by
+    intro μ hPos hLt
+    let k : Fin t.length := ⟨μ.val, hLt⟩
+    have hk : 0 < k.val := hPos
+    have hq : 2 ≤ t.get k := hTwoCut k hk
+    have hActual :
+        (activeGluingWitnessOrderOneData A S.system
+          e.toFunctionEmbedding R f U μ).FullSystemGirthGT (t.get k) := by
+      rw [activeGluingWitnessOrderOneData_eq_shared
+        A S.system e.toFunctionEmbedding R f U μ]
+      have hCast : k.castSucc = μ := Fin.ext rfl
+      simpa only [← hCast] using hWitness k hk
+    refine ⟨hActual.1, ?_⟩
+    intro n K hAccept hOrder
+    exact hActual.2 n K hAccept (by omega)
+  have hGeometry :=
+    S.activeAttachment_allLevels_linear_and_strong_of_two_le_height
+      hA hBaseLinear e hRigid active R f U hHeight
+      (fun μ _ _ i p q => hRel μ i p q)
+      (fun _ => 2) (fun _ _ _ => Nat.le_refl 2) hCoreCut
+  have hLinear : (Out j.castSucc).LinearPretrain := by
+    exact (hGeometry.2 j.castSucc).1
   have hOld : (selectedPictureOrderOneData A B D S.system family
       S.selected S.train j.castSucc).SupremeCycleBound (t.get j) :=
     (S.tailGirth j hj).2
@@ -132,7 +161,7 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
     attachedSelectedPicture_fullSystemGirth_of_actual_witness
       A hA B D S.system family S.selected e R f S.train U
       hShared hRel j.castSucc
-      (t.get j) (by omega : 1 ≤ t.get j) (hLinear j hj) hStrong
+      (t.get j) (by omega : 1 ≤ t.get j) hLinear hStrong
       hTwoCopies hOldStrong hCoreStrong hOld (hWitness j hj)
   exact hOut.2
 
