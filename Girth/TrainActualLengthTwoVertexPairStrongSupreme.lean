@@ -63,15 +63,21 @@ theorem BigCycle.two_vertex_pairEdge_supreme_of_selectedStrong
       x ∈ D.copyCarrier i ∧ y ∈ D.copyCarrier i := by
     fin_cases k
     · constructor
-      · simpa [hLabel, hx, OrderOneData.Incident, OrderOneData.carrier]
-          using Z.left_incident (0 : Fin 2)
-      · simpa [hLabel, hy, cyclicSucc, OrderOneData.Incident,
-          OrderOneData.carrier] using Z.right_incident (1 : Fin 2)
+      · have h := Z.left_incident (0 : Fin 2)
+        rw [hLabel, hx] at h
+        exact h
+      · have h := Z.right_incident (1 : Fin 2)
+        rw [show cyclicSucc (1 : Fin 2) = (0 : Fin 2) from by decide] at h
+        rw [hLabel, hy] at h
+        exact h
     · constructor
-      · simpa [hLabel, hx, cyclicSucc, OrderOneData.Incident,
-          OrderOneData.carrier] using Z.right_incident (0 : Fin 2)
-      · simpa [hLabel, hy, OrderOneData.Incident, OrderOneData.carrier]
-          using Z.left_incident (1 : Fin 2)
+      · have h := Z.right_incident (0 : Fin 2)
+        rw [show cyclicSucc (0 : Fin 2) = (1 : Fin 2) from by decide] at h
+        rw [hLabel, hx] at h
+        exact h
+      · have h := Z.left_incident (1 : Fin 2)
+        rw [hLabel, hy] at h
+        exact h
   obtain ⟨k, hk⟩ := hSome
   have hOwn : b ∈ D.edges (Z.label k) := by
     cases hLabel : Z.label k with
