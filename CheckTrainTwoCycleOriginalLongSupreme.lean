@@ -1,0 +1,6 @@
+import Girth.TrainTwoCycleOriginalLongSupreme
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_long_fresh
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_local_piece
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSupremeAt_of_long
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_hasSimultaneousSupreme_of_long
