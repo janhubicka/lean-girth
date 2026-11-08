@@ -77,8 +77,13 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive
         (selectedPartiteGluingFamily_of_largeBase
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT (t.get j) :=
-  S.selectedGluing_fullSystem_at_positive
+      S.train j.castSucc).FullSystemGirthGT (t.get j) := by
+  change (activeGluingWitnessOrderOneData A Old α
+    S.system.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} => i.1.embedding)
+    S.train j.castSucc).FullSystemGirthGT (t.get j)
+  exact S.selectedGluing_fullSystem_at_positive
     A Old α D.toRelStructure
     (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
@@ -96,8 +101,13 @@ theorem ForestTailStage.coarsenedSelected_fullSystem_at_positive_mono
         (selectedPartiteGluingFamily_of_largeBase
           Target D S.system S.isPartite family hFamilyParts
           S.selected i).toEmbedding)
-      S.train j.castSucc).FullSystemGirthGT q :=
-  S.selectedGluing_fullSystem_at_positive_mono
+      S.train j.castSucc).FullSystemGirthGT q := by
+  change (activeGluingWitnessOrderOneData A Old α
+    S.system.toRelStructure
+    (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
+        b ∈ S.selected} => i.1.embedding)
+    S.train j.castSucc).FullSystemGirthGT q
+  exact S.selectedGluing_fullSystem_at_positive_mono
     A Old α D.toRelStructure
     (fun i : {b : DesignatedCopy Source D.toRelStructure S.system family //
         b ∈ S.selected} => i.1.embedding)
