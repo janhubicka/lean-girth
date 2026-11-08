@@ -111,6 +111,7 @@ theorem ForestTailStage.coarsenedSelected_coreGirth_of_lowerFineStage
     exact S.coarsenedSelected_fullSystem_for_attachmentHeight
       A Old α D hFamilyParts hLen rfl hMonotone ν hPos hInterior
   exact activeFineWitness_supportGirth
+    (m := (q :: tail).length) (d := r) (q := q)
     A hA Old α E Gluing
     (by simp : 0 < (q :: tail).length) hq
     T fineAllowed hParams hSingleton hForest hFull
