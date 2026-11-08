@@ -106,6 +106,7 @@ checks=(
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
   CheckTrainRecursiveHJRelationalDesignatedArrow
+  CheckTwoCycleOriginalVertexFullSupreme
 )
 
 for check in "${checks[@]}"; do
