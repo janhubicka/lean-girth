@@ -58,6 +58,8 @@ variable (hFamilyParts : ∀ b, b ∈ family →
   ∀ x : activeCarrier A Old α,
     D.part (b x) = activeSourcePart A Old α x)
 
+include hFamilyParts
+
 /-- The complete PHYSICAL gluing full-system certificate at every
 positive proper fine cut, at exactly the q-1/q thresholds required by
 the actual first-wagon refinement attachment. No independent hFull
