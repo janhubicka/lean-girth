@@ -31,18 +31,31 @@ jobs:
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
           restore-keys: |
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
-      - name: Install elan with download retries
+      - name: Select exact Linux Lean without downloading elan
         shell: bash
         run: |
           set -euo pipefail
-          for attempt in 1 2 3 4; do
-            if curl --retry 3 --retry-all-errors --retry-delay 5 -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none; then
-              break
-            fi
-            if [[ $attempt == 4 ]]; then exit 1; fi
-            sleep $((attempt * 10))
-          done
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          SYSROOT="$HOME/.elan/toolchains/leanprover--lean4---v4.35.0-rc3"
+          if [[ ! -x "$SYSROOT/bin/lean" ]]; then
+            echo "Pinned toolchain cache absent; restore the official Linux release"
+            mkdir -p "$RUNNER_TEMP/agent-lean-toolchain"
+            for attempt in 1 2 3 4; do
+              if curl -fL --retry 3 --retry-all-errors --retry-delay 5 \
+                -o "$RUNNER_TEMP/agent-lean-linux.tar.zst" \
+                https://github.com/leanprover/lean4/releases/download/v4.35.0-rc3/lean-4.35.0-rc3-linux.tar.zst; then
+                break
+              fi
+              if [[ $attempt == 4 ]]; then exit 1; fi
+              sleep $((attempt * 10))
+            done
+            echo "1526de16c0496f16b46a168f26c990af4e3796505273c3342fec17d72d763997  $RUNNER_TEMP/agent-lean-linux.tar.zst" | sha256sum -c -
+            tar -I zstd -xf "$RUNNER_TEMP/agent-lean-linux.tar.zst" -C "$RUNNER_TEMP/agent-lean-toolchain"
+            SYSROOT="$RUNNER_TEMP/agent-lean-toolchain/lean-4.35.0-rc3-linux"
+          fi
+          test -x "$SYSROOT/bin/lean"
+          test -x "$SYSROOT/bin/lake"
+          echo "$SYSROOT/bin" >> "$GITHUB_PATH"
+          echo "LEAN_SYSROOT=$SYSROOT" >> "$GITHUB_ENV"
       - name: Download exact pinned mathlib cache
         shell: bash
         run: |
