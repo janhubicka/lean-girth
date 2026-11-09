@@ -27,18 +27,10 @@ power, constructed recursive lower-stage arrow or attached-output
 SupremeCycleBound is postulated. This is circulation only.
 -/
 
-namespace StructuralRamsey.Girth.TrainRecursiveWitness
+namespace StructuralRamsey.Girth
 
-open StructuralRamsey.RelStructure
-
-universe u v
-variable {L : RelLanguage.{u}} {UA VB P Q E W : Type v}
-
-private theorem canonicalActualLowerHeight (q d : ℕ) (tail : List ℕ) :
-    (q :: tail).length + d =
-      (List.replicate (d + 1) (q - 1) ++ tail).length := by
-  simp only [List.length_cons, List.length_append, List.length_replicate]
-  omega
+universe v
+variable {UA P E W : Type v}
 
 /-- In a real first-wagon refinement, the canonical fine A-parts
 are singleton at EVERY inserted parent, including the overlapping
@@ -53,7 +45,7 @@ theorem FirstWagonRefinement.canonicalLowerParent_subsingleton
     (α : UA ↪ P)
     {n : ℕ} (hLen : m + R.extraCuts = n) :
     ∀ j : Fin (R.extraCuts + 1),
-      (fineAllowedFromRefinement m R.extraCuts hm α allowed R.permitted
+      (TrainRecursiveWitness.fineAllowedFromRefinement m R.extraCuts hm α allowed R.permitted
         (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm
           (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen)
             (firstRefinementParent m R.extraCuts hm j)))).Subsingleton := by
@@ -65,6 +57,21 @@ theorem FirstWagonRefinement.canonicalLowerParent_subsingleton
         firstRefinementParent m R.extraCuts hm j := Fin.ext rfl
   rw [hCancel]
   exact (R.canonicalFineAllowed_all_constraints allowed α).1 j
+
+end StructuralRamsey.Girth
+
+namespace StructuralRamsey.Girth.TrainRecursiveWitness
+
+open StructuralRamsey.RelStructure
+
+universe u v
+variable {L : RelLanguage.{u}} {UA VB P Q : Type v}
+
+private theorem canonicalActualLowerHeight (q d : ℕ) (tail : List ℕ) :
+    (q :: tail).length + d =
+      (List.replicate (d + 1) (q - 1) ++ tail).length := by
+  simp only [List.length_cons, List.length_append, List.length_replicate]
+  omega
 
 /-- A selected lower stage with its canonical allowed A-part parameters
 and genuine selected part-preserving base copies has physical support
