@@ -167,8 +167,6 @@ theorem attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
             exact bigCycle_cast_connector (Wit) hTwo Z 0
       _ = Z.connector j₀ := by
             congr 1
-            apply Fin.ext
-            rfl
       _ = Sum.inr p := hp
   have hq₂ : Z₂.connector (1 : Fin 2) = Sum.inr q := by
     calc
@@ -177,8 +175,6 @@ theorem attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
             exact bigCycle_cast_connector (Wit) hTwo Z 1
       _ = Z.connector j₁ := by
             congr 1
-            apply Fin.ext
-            rfl
       _ = Sum.inr q := hqW
   exact OrderOneData.BigCycle.two_wagon_impossible_of_localPieceSystemBound_two
     (Wit) hLocal Z₂ p q hp₂ hq₂
