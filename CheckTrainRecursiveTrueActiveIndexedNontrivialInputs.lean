@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveTrueActiveIndexedNontrivialInputs
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderedTrueActiveSelected_indexedInputAndTwoCopies_of_nontrivial
