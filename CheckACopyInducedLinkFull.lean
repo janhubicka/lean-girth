@@ -1,0 +1,4 @@
+import Girth.ACopyInducedLinkFull
+
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkFull.full_physical_node_domain_of_induced_link
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkFull.decorated_fullNodeDomains_of_induced_links

@@ -1,0 +1,7 @@
+import Girth.ACopySupportAssembly
+
+#print axioms StructuralRamsey.Girth.ACopySupportAssembly.support_range_of_chartwise_nodes
+#print axioms StructuralRamsey.Girth.ACopySupportAssembly.supportEquiv
+#print axioms StructuralRamsey.Girth.ACopySupportAssembly.copyCarrier_eq_nodeCarrier
+#print axioms StructuralRamsey.Girth.ACopySupportAssembly.physicalNodeCarrier_injective
+#print axioms StructuralRamsey.Girth.ACopySupportAssembly.decoratedSupportEquiv
