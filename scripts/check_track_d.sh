@@ -108,6 +108,7 @@ checks=(
   CheckTrainRecursiveCoarsenedSelectedIndexedBundle
   CheckTrainRecursiveTrueActiveInitialLowerStageCuts
   CheckTrainRecursiveSelectedLowerActualInputs
+  CheckTrainRecursiveCoarsenedExactIncidenceAudit
   CheckTrainActualGeometricDesignatedOwnerUnique
   CheckActualTwoCutCoreOwnerUnique
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
