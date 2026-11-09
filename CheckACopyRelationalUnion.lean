@@ -1,0 +1,5 @@
+import Girth.ACopyRelationalUnion
+
+#print axioms StructuralRamsey.Girth.ACopyRelationalUnion.coreEmbedding
+#print axioms StructuralRamsey.Girth.ACopyRelationalUnion.sourceEmbedding
+#print axioms StructuralRamsey.Girth.ACopyRelationalUnion.sourceAgreement_of_core
