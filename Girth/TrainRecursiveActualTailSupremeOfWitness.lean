@@ -143,7 +143,7 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_actualWitness
       rw [activeGluingWitnessOrderOneData_eq_shared
         A S.system e.toFunctionEmbedding R f U μ]
       have hCast : k.castSucc = μ := Fin.ext rfl
-      simpa only [← hCast] using hWitness k hk
+      simpa only [hCast] using hWitness k hk
     refine ⟨hActual.1, ?_⟩
     intro n K hAccept hOrder
     exact hActual.2 n K hAccept (by omega)
