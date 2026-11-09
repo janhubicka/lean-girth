@@ -68,14 +68,14 @@ def coreEmbedding
     intro sym x
     constructor
     · intro hx
-      exact Or.inl ⟨x, (fun _ => rfl), hx⟩
-    · intro hx
       rcases hx with ⟨y, hy, hr⟩ | ⟨i, y, hy, hr⟩
       · have hxy : y = x := by
           funext k
           exact hCore (hy k)
         simpa [hxy] using hr
       · exact (hAgree i sym x y (fun k => (hy k).symm)).mpr hr
+    · intro hx
+      exact Or.inl ⟨x, (fun _ => rfl), hx⟩
 
 /-- The same for any source. Relations contributed by other standards
 are reflected using full overlap agreement, not just point equality. -/
@@ -90,11 +90,11 @@ def sourceEmbedding (i : I)
     intro sym x
     constructor
     · intro hx
-      exact Or.inr ⟨i, x, (fun _ => rfl), hx⟩
-    · intro hx
       rcases hx with ⟨y, hy, hr⟩ | ⟨j, y, hy, hr⟩
       · exact (hAgree i sym y x (fun k => hy k)).mp hr
       · exact (hSourceAgree j i sym y x (fun k => hy k)).mp hr
+    · intro hx
+      exact Or.inr ⟨i, x, (fun _ => rfl), hx⟩
 
 /-- In an exact star, two different standards intersect only inside
 the core. Agreement of the core with each standard consequently gives
