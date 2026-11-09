@@ -112,11 +112,13 @@ theorem attachedSelectedPicture_fullSystemGirth_of_intrinsic_geometry
   have hCoreStrong : ∀ i : I, AStrong A R (copyCarrier (f i)) :=
     activeGluingWitness_images_aStrong_of_fullSystemGirth
       A C e.toFunctionEmbedding R f U μ q hq hActiveWitness
+  let core := RelStructure.Attachment.coreEmbedding
+    C.toRelStructure S R f
   have hCoreImage :
       (sharedWitnessOrderOneData U μ Emb CoreCar).FullSystemGirthGT q :=
     sharedWitnessOrderOneData_fullSystemGirth_vertexImage
       U μ Emb (fun edge : CoreEdge => edge.1)
-      CoreEmb.toFunctionEmbedding hWitness
+      core.toFunctionEmbedding hWitness
   have hLocal :
       (sharedWitnessOrderOneData U μ Emb CoreCar).LocalPieceSystemBound 2 := by
     intro n Z hAccept hOrder
