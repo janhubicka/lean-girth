@@ -66,6 +66,8 @@ checks=(
   CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
   CheckTrainRecursiveActualCoarsenedFullSystem
+  CheckTrainRecursiveCoarsenedGluingIdentity
+  CheckTrainRecursiveActualHeightCutoffApplication
   CheckTrainRecursiveCoarsenedSelectedRestriction
   CheckTrainRecursiveActualFineInputs
   CheckTrainRecursiveTrueActiveTargetSupportData
@@ -161,3 +163,4 @@ python3 scripts/check_output_connector_layout.py
 python3 scripts/check_two_cut_singleton_orientation.py
 python3 scripts/check_two_cut_core_isolation.py
 python3 scripts/check_two_cut_old_wagon_orientation.py
+python3 scripts/check_track_b_retained_cutoff.py
