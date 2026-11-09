@@ -1,0 +1,3 @@
+import Girth.ACopyInducedLinkSupport
+
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkSupport.decoratedSupportEquiv_of_induced_links
