@@ -1,0 +1,10 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.labelledGirthGT_of_singleton_intersections' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.labelledFibreGirthGT_of_singleton_intersections' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_singletonAndPositiveChildBounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_singletonAndPositiveSystemBounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

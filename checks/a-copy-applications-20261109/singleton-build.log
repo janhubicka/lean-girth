@@ -1,0 +1,31 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+Girth/TrainRecursiveRefinementGlobalCutGirth.lean:50:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+Girth/TrainRecursiveRefinementGlobalCutGirth.lean:58:4: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Girth/TrainRecursiveRefinementGlobalCutGirth.lean:59:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries

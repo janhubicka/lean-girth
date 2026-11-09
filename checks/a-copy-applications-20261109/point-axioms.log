@@ -1,0 +1,72 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopyPointStar.Data.coreOccurrence_injective' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourceOccurrence_injective' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyPointStar.Data.occurrence_compatible' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyPointStar.Data.coreMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourceMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.corePoint_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourcePoint_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourcePoint_eq_corePoint_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sharedPoint_eq' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.distinct_sourcePoint_eq_iff_core' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.distinct_sourcePoint_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.coreImage_eq_range_coreMap' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourceImage_eq_range_sourceMap' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourcePoint_mem_coreImage_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.sourceImage_inter_coreImage' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.distinct_sourceImage_inter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.point_covered' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyPointStar.Data.nodePoint_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.output' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.output_rel_core_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.output_rel_source_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.nodePoint_covered' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyPointStar.Data.outputPointEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyPointStar.Data.outputPointEquiv_nodePoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyPointStarRegression.transitive_cross_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.transitive_generated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.no_core_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.no_source_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.private_off_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.private_sources_separate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.shared_raw_nodes_distinct' does not depend on any axioms
+'ACopyPointStarRegression.shared_raw_carriers_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.raw_output_not_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyPointStarRegression.source_diagrams_linear' depends on axioms: [propext]
+'ACopyPointStarFullDomainRegression.diagrams_linear' depends on axioms: [propext]
+'ACopyPointStarFullDomainRegression.missing_edge_coordinates_glue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyPointStarFullDomainRegression.missing_edge_carriers_equal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyPointStarFullDomainRegression.missing_edge_nodes_separate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

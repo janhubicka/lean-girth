@@ -1,0 +1,104 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+StructuralRamsey.Girth.ACopyLayeredStar.generated_zero_iff_shared.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (D : Diagram Core I Source Shared) (x y : Raw) :
+  Generated D 0 x y ↔ Relation.EqvGen (SharedStep D) x y
+StructuralRamsey.Girth.ACopyLayeredStar.generated_nested.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) {m n : ℕ} (hmn : m ≤ n) {x y : Raw} (h : Generated D m x y) :
+  Generated D n x y
+StructuralRamsey.Girth.ACopyLayeredStar.generated_iff_normal.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (D : Diagram Core I Source Shared) (n : ℕ) (x y : Raw) :
+  Generated D n x y ↔
+    ClassStar.normal (SourceStar.contact (D.coreEq n) (D.sourceEq n) D.alpha D.beta)
+        (SourceStar.classes (D.coreEq n) (D.sourceEq n) x) =
+      ClassStar.normal (SourceStar.contact (D.coreEq n) (D.sourceEq n) D.alpha D.beta)
+        (SourceStar.classes (D.coreEq n) (D.sourceEq n) y)
+StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_mk_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (D : Diagram Core I Source Shared) (n : ℕ) (x y : Raw) :
+  (nodeSetoid D n) (Quot.mk (Step D 0) x) (Quot.mk (Step D 0) y) ↔ Generated D n x y
+StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_source_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (D : Diagram Core I Source Shared) (n : ℕ) (i : I) (a b : Source i) :
+  (nodeSetoid D n) (nodeSource D i a) (nodeSource D i b) ↔ (D.sourceEq n i) a b
+StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) {m n : ℕ} (hmn : m ≤ n) (i : I)
+  (a : Quotient (D.sourceEq m i)) : parent D hmn (sourceMap D m i a) = sourceMap D n i (sourceParent D hmn i a)
+StructuralRamsey.Girth.ACopyLayeredStar.contact_parent.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) {m n : ℕ} (hmn : m ≤ n) (i : I)
+  (a : Quotient (D.sourceEq m i)) (c : Quotient (D.coreEq m)) (h : contact D m i a = some c) :
+  contact D n i (sourceParent D hmn i a) = some (coreParent D hmn c)
+StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap_eq_coreMap_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (D : Diagram Core I Source Shared) {m n : ℕ} (hmn : m ≤ n) (i : I)
+  (a : Quotient (D.sourceEq m i)) (c : Quotient (D.coreEq n)) :
+  parent D hmn (sourceMap D m i a) = coreMap D n c ↔ contact D n i (sourceParent D hmn i a) = some c
+StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonEquiv.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) (n : ℕ) : Quotient (nodeSetoid D n) ≃ Wagon D n
+StructuralRamsey.Girth.ACopyLayeredStar.generated_top.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) (top : ℕ) (hCore : ∀ (c d : Core), (D.coreEq top) c d)
+  (hSource : ∀ (i : I) (a b : Source i), (D.sourceEq top i) a b) (hShared : ∀ (i : I), Nonempty (Shared i))
+  (x y : Raw) : Generated D top x y
+StructuralRamsey.Girth.ACopyLayeredStar.uniqueTop.{u, v, w, z} {Core : Type u} {I : Type v} {Source : I → Type w}
+  {Shared : I → Type z} (D : Diagram Core I Source Shared) [Nonempty Core] (top : ℕ)
+  (hCore : ∀ (c d : Core), (D.coreEq top) c d) (hSource : ∀ (i : I) (a b : Source i), (D.sourceEq top i) a b)
+  (hShared : ∀ (i : I), Nonempty (Shared i)) : Unique (Wagon D top)
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_zero_iff_shared' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyLayeredStar.step_nested' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_nested' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_core_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_source_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_iff_normal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_mk' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_refl' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_comp' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_surjective' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.coreParent' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.sourceParent' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.coreMap' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.sourceMap' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.coreMap_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.sourceMap_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_coreMap' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.contact_parent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.sourceMap_eq_coreMap_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap_eq_coreMap_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeCore' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSource' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeCore_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSource_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_mk_iff' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_nested' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_zero' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_core_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_source_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonMap' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonMap_bijective' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonEquiv' depends on axioms: [Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.top_source_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.generated_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.top_subsingleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyLayeredStar.uniqueTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.levelEq' does not depend on any axioms
+'ACopyLayeredStarRegression.level_nested' depends on axioms: [propext, Quot.sound]
+'ACopyLayeredStarRegression.diagram' depends on axioms: [propext, Quot.sound]
+'ACopyLayeredStarRegression.child_private' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.parent_contacts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.private_child_core_parent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.child_not_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.basic_nodes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.merge_at_parent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyLayeredStarRegression.top_universal' depends on axioms: [propext, Classical.choice, Quot.sound]

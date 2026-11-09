@@ -1,0 +1,221 @@
+{
+  "date": "2026-11-09",
+  "checkout": "/workspace/scratch/095f642caf71/lean-girth-a-copy",
+  "published_base": "191ac8a6d5fc99b7cf314ea1df7d8451949f666a",
+  "lean_version": "4.35.0-rc3",
+  "module_build_exit": 0,
+  "regression_check_exit": 0,
+  "strict_axiom_audit_exit": 0,
+  "audit_declaration_count": 50,
+  "module_declaration_count": 40,
+  "regression_declaration_count": 10,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "axioms_by_declaration": {
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_core_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_source_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_iff_normal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_mk": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_refl": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_comp": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_surjective": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.coreParent": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.sourceParent": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.coreMap": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.sourceMap": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.coreMap_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.sourceMap_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_coreMap": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.contact_parent": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.sourceMap_eq_coreMap_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.parent_sourceMap_eq_coreMap_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeCore_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSource_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_mk_iff": [
+      "propext",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_nested": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_zero": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_core_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_source_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonMap": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonMap_bijective": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeWagonEquiv": [
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.top_source_core": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_top": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.top_subsingleton": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSetoid_top": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.uniqueTop": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.level_nested": [
+      "propext",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.diagram": [
+      "propext",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.child_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.parent_contacts": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.private_child_core_parent": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.child_not_core": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.basic_nodes_distinct": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.merge_at_parent": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyLayeredStarRegression.top_universal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_zero_iff_shared": [],
+    "StructuralRamsey.Girth.ACopyLayeredStar.step_nested": [],
+    "StructuralRamsey.Girth.ACopyLayeredStar.generated_nested": [],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeCore": [],
+    "StructuralRamsey.Girth.ACopyLayeredStar.nodeSource": [],
+    "ACopyLayeredStarRegression.levelEq": []
+  },
+  "sha256": {
+    "Girth/ACopyLayeredStar.lean": "1e7b8b23931b3f0bd786a37dadcb1ea40c9c6e41c944f10461f29c00b27f4b8b",
+    "CheckACopyLayeredStar.lean": "e8587f42358519e9a6fee5fc53ccc04ddfcae4847b494446337fd39dce5a6376",
+    "checks/a-copy-applications-20261109/layered-build.log": "0d8d35ed4e538ffad88915df4a75358424bc1466463235a55e4526fe83e180ce",
+    "checks/a-copy-applications-20261109/layered-axioms.log": "65b780bb03df3269839feb28b6da9129599f1af190e52b112f2048438efb629f",
+    "checks/a-copy-applications-20261109/layered-strict-audit.log": "192067961548e43ee42e7b5e7395d7fab247b679b8073a2f07941641a8aa1c12",
+    "checks/a-copy-applications-20261109/layered-provenance.md": "0147fb61d4a59de12b3f5026080010efc447c274ec51966641b576c96e790dce"
+  },
+  "scope": "Nat-indexed generated node/wagon hierarchy with actual level-zero node pushout, exact restrictions, quotient parents, upward contact, and universal top. No physical point/node compatibility or carrier formula.",
+  "diagnostics": [
+    "Pre-existing Lake batteries working-tree warning only."
+  ]
+}

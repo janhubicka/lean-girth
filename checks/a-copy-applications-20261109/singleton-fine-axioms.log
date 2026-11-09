@@ -1,0 +1,5 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.selectedPicture_actualSupport_girthGain_of_singletonSystemCuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

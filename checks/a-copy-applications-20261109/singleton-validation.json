@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-09",
+  "lean_version": "4.35.0-rc3",
+  "compile_exit": 0,
+  "strict_audit_exit": 0,
+  "declarations": 5,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "scope": "Local first-child acyclicity, reconstruction without bottom girth, and actual global gain with retained-first-cut bound. No removal of mixed forests from outer step.",
+  "source_sha256": {
+    "Girth/TrainSingletonFirstCut.lean": "ee390b72ffeeb5c59293836a6248118eb9889ce1b568f6fd45343a26d5a62326",
+    "Girth/TrainSingletonFineWitnessBounds.lean": "08818a59f77a142b248b041b616fb08d4f9ad3c28fb3120bcae5dbda9019b56a",
+    "CheckTrainSingletonFirstCut.lean": "b998d54eb0b48a41d19564f7e013ae1623533239a8f14d193beec54d6cc01563",
+    "CheckTrainSingletonFineWitnessBounds.lean": "b494785bb9175bdf3487c4f3e9d74fa500ec99e4e0edca40ccdd7e3378c486e3"
+  }
+}

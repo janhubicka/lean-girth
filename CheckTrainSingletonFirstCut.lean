@@ -1,0 +1,6 @@
+import Girth.TrainSingletonFirstCut
+
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_singleton_intersections
+#print axioms StructuralRamsey.Girth.labelledFibreGirthGT_of_singleton_intersections
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_singletonAndPositiveChildBounds
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.ofFineTrain_of_singletonAndPositiveSystemBounds
