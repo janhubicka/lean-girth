@@ -1,0 +1,29 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.CoherentOverlap.right_unique' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.left_unique' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.overlapEquiv' depends on axioms: [Classical.choice]
+'StructuralRamsey.Girth.CoherentOverlap.overlapEquiv_eq_iff' depends on axioms: [Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.occurrenceSetoid' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.nodePoint_eq_iff' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.nodePoint_injective' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.nodeEmbedding' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.carrier_inter' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.point_covered' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.linear_iff_carrier_inter' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.carrier_injective_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.carrier_eq_iff_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.carrierRangeEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.carrierRangeEquiv_val' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.toAmbient_injective' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.mem_range_toAmbient_iff' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.toAmbient_surjective_iff' does not depend on any axioms
+'StructuralRamsey.Girth.CoherentOverlap.ambientEquiv' depends on axioms: [Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.ambientEquiv_nodePoint' depends on axioms: [Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.CoherentOverlap.of_nodeEmbeddings_rel_iff' depends on axioms: [propext, Quot.sound]

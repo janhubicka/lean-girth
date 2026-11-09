@@ -1,0 +1,137 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_iff_normal.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t))
+  (x y : ClassStar.Raw Core Source) :
+  SourceStar.Generated coreEq sourceEq alpha beta x y ↔
+    ClassStar.normal (SourceStar.contact coreEq sourceEq alpha beta) (SourceStar.classes coreEq sourceEq x) =
+      ClassStar.normal (SourceStar.contact coreEq sourceEq alpha beta) (SourceStar.classes coreEq sourceEq y)
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_core_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t))
+  (c d : Core) : SourceStar.Generated coreEq sourceEq alpha beta (Sum.inl c) (Sum.inl d) ↔ coreEq c d
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t)) (i : I)
+  (a b : Source i) :
+  SourceStar.Generated coreEq sourceEq alpha beta (Sum.inr ⟨i, a⟩) (Sum.inr ⟨i, b⟩) ↔ (sourceEq i) a b
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_core_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t)) (i : I)
+  (a : Source i) (c : Core) :
+  SourceStar.Generated coreEq sourceEq alpha beta (Sum.inr ⟨i, a⟩) (Sum.inl c) ↔
+    ∃ s, (sourceEq i) (beta i s) a ∧ coreEq (alpha i s) c
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.core_classMap_injective.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t)) :
+  Function.Injective fun c => SourceStar.classToQuotient coreEq sourceEq alpha beta (Sum.inl c)
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.source_classMap_injective.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t))
+  (i : I) : Function.Injective fun a => SourceStar.classToQuotient coreEq sourceEq alpha beta (Sum.inr ⟨i, a⟩)
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_distinct_sources_iff.{u, v, w, z} {Core : Type u}
+  {I : Type v} {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core)
+  (sourceEq : (i : I) → Setoid (Source i)) (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t))
+  (i j : I) (hij : i ≠ j) (a : Source i) (b : Source j) :
+  SourceStar.Generated coreEq sourceEq alpha beta (Sum.inr ⟨i, a⟩) (Sum.inr ⟨j, b⟩) ↔
+    ∃ c,
+      SourceStar.Generated coreEq sourceEq alpha beta (Sum.inr ⟨i, a⟩) (Sum.inl c) ∧
+        SourceStar.Generated coreEq sourceEq alpha beta (Sum.inr ⟨j, b⟩) (Sum.inl c)
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientEquiv.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t)) :
+  Quot (SourceStar.Step coreEq sourceEq alpha beta) ≃
+    ↑(Set.range (ClassStar.normal (SourceStar.contact coreEq sourceEq alpha beta)))
+StructuralRamsey.Girth.ACopyExactStar.ClassStar.normal_range_iff.{u, v, w} {Core : Type u} {I : Type v}
+  {Source : I → Type w} (contact : (i : I) → Source i → Option Core) (x : ClassStar.Raw Core Source) :
+  x ∈ Set.range (ClassStar.normal contact) ↔
+    match x with
+    | Sum.inl val => True
+    | Sum.inr ⟨i, a⟩ => contact i a = none
+StructuralRamsey.Girth.ACopyExactStar.SourceStar.private_label_range_iff.{u, v, w, z} {Core : Type u} {I : Type v}
+  {Source : I → Type w} {Shared : I → Type z} (coreEq : Setoid Core) (sourceEq : (i : I) → Setoid (Source i))
+  (alpha : (i : I) → Shared i → Core) (beta : (i : I) → Shared i → Source i)
+  (compatible : ∀ (i : I) (s t : Shared i), coreEq (alpha i s) (alpha i t) ↔ (sourceEq i) (beta i s) (beta i t)) (i : I)
+  (a : Quotient (sourceEq i)) :
+  Sum.inr ⟨i, a⟩ ∈ Set.range (ClassStar.normal (SourceStar.contact coreEq sourceEq alpha beta)) ↔ ¬∃ s, ⟦beta i s⟧ = a
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_normal' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_iff_normal' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_core_iff' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_source_core_iff' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_source_iff' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_distinct_sources_iff' depends on axioms: [propext,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.normal_range_iff' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientNormal' depends on axioms: [propext]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientNormal_bijective' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.touch_unique' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.touch_injective' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_eq_some_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_eq_none_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.private_label_range_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient_classes' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient_contact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_iff_class_generated' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_iff_normal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_core_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_core_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.core_classMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.source_classMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.classes_surjective' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientNormal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientNormal_bijective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientEquiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_distinct_sources_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyExactStarRegression.compatible' depends on axioms: [propext]
+'ACopyExactStarRegression.transitive_source_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyExactStarRegression.transitive_cross_source' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyExactStarRegression.no_source_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyExactStarRegression.private_sources_separate' depends on axioms: [propext, Classical.choice, Quot.sound]

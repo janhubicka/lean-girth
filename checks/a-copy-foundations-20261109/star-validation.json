@@ -1,0 +1,186 @@
+{
+  "date": "2026-11-09",
+  "checkout": "/workspace/scratch/095f642caf71/lean-girth-a-copy",
+  "lean_version": "4.35.0-rc3",
+  "mathlib_revision": "5bd58ac291422a21f412ae354c91e7d172255a2c",
+  "module_build_exit": 0,
+  "check_exit": 0,
+  "strict_audit_exit": 0,
+  "audit_declaration_count": 37,
+  "module_audit_count": 32,
+  "regression_audit_count": 5,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "axioms_by_declaration": {
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_iff_normal": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_core_iff": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_source_core_iff": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_source_iff": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_distinct_sources_iff": [
+      "propext",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.normal_range_iff": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientNormal": [
+      "propext"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientNormal_bijective": [
+      "propext",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.quotientEquiv": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.touch_unique": [
+      "propext",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.touch_injective": [
+      "propext",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_eq_some_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.contact_eq_none_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.private_label_range_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient_classes": [
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.classToQuotient_contact": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_iff_class_generated": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_iff_normal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_core_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_source_core_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.core_classMap_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.source_classMap_injective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientNormal": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientNormal_bijective": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.quotientEquiv": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.generated_distinct_sources_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyExactStarRegression.compatible": [
+      "propext"
+    ],
+    "ACopyExactStarRegression.transitive_source_core": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyExactStarRegression.transitive_cross_source": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyExactStarRegression.no_source_fold": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "ACopyExactStarRegression.private_sources_separate": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "StructuralRamsey.Girth.ACopyExactStar.ClassStar.generated_normal": [],
+    "StructuralRamsey.Girth.ACopyExactStar.SourceStar.classes_surjective": []
+  },
+  "sha256": {
+    "Girth/ACopyExactStar.lean": "262fa43711c04686526830514e7e45c3c8adaeef7b99cdc077183e57d4d315d0",
+    "CheckACopyExactStar.lean": "6a0adc713b2d0f562cf4a89652f11765def1d2ed07ca109f93866aec7df71d95",
+    "checks/a-copy-foundations-20261109/star-build.log": "0d8d35ed4e538ffad88915df4a75358424bc1466463235a55e4526fe83e180ce",
+    "checks/a-copy-foundations-20261109/star-axioms.log": "1ec430bbf5c193933682ff6307f09114774cc47ef2de83d854c2395c24f093c8",
+    "checks/a-copy-foundations-20261109/star-strict-audit.log": "63fa181dcb7a3d4b3abb5a01cdb5933ad8e76118725b432dd7c0cfbe31c5025a",
+    "checks/a-copy-foundations-20261109/star-provenance.md": "fd599901ff0dbc5312859a309e5e1185429215c8d21af41fbef0315a8760116c"
+  },
+  "scope": "Abstract exact-star quotient theorem on original source setoids, including generated equivalence normal form. Point-occurrence and wagon applications remain uninstantiated.",
+  "diagnostics": [
+    "Pre-existing Lake batteries working-tree warning only."
+  ]
+}

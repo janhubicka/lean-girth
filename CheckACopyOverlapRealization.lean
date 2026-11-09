@@ -1,0 +1,23 @@
+import Girth.ACopyOverlapRealization
+
+#print axioms StructuralRamsey.Girth.CoherentOverlap.right_unique
+#print axioms StructuralRamsey.Girth.CoherentOverlap.left_unique
+#print axioms StructuralRamsey.Girth.CoherentOverlap.overlapEquiv
+#print axioms StructuralRamsey.Girth.CoherentOverlap.overlapEquiv_eq_iff
+#print axioms StructuralRamsey.Girth.CoherentOverlap.occurrenceSetoid
+#print axioms StructuralRamsey.Girth.CoherentOverlap.nodePoint_eq_iff
+#print axioms StructuralRamsey.Girth.CoherentOverlap.nodePoint_injective
+#print axioms StructuralRamsey.Girth.CoherentOverlap.nodeEmbedding
+#print axioms StructuralRamsey.Girth.CoherentOverlap.carrier_inter
+#print axioms StructuralRamsey.Girth.CoherentOverlap.point_covered
+#print axioms StructuralRamsey.Girth.CoherentOverlap.linear_iff_carrier_inter
+#print axioms StructuralRamsey.Girth.CoherentOverlap.carrier_injective_of_linear
+#print axioms StructuralRamsey.Girth.CoherentOverlap.carrier_eq_iff_of_linear
+#print axioms StructuralRamsey.Girth.CoherentOverlap.carrierRangeEquiv
+#print axioms StructuralRamsey.Girth.CoherentOverlap.carrierRangeEquiv_val
+#print axioms StructuralRamsey.Girth.CoherentOverlap.toAmbient_injective
+#print axioms StructuralRamsey.Girth.CoherentOverlap.mem_range_toAmbient_iff
+#print axioms StructuralRamsey.Girth.CoherentOverlap.toAmbient_surjective_iff
+#print axioms StructuralRamsey.Girth.CoherentOverlap.ambientEquiv
+#print axioms StructuralRamsey.Girth.CoherentOverlap.ambientEquiv_nodePoint
+#print axioms StructuralRamsey.Girth.CoherentOverlap.of_nodeEmbeddings_rel_iff
