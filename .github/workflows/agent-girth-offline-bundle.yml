@@ -123,8 +123,8 @@ jobs:
           split -b 300000000 -d -a 2 agent-bundle/lake.tar.zst agent-bundle/lake.tar.zst.part-
           (cd agent-bundle && sha256sum lake.tar.zst.part-* > LAKE_PART_SHA256SUMS)
           rm agent-bundle/lake.tar.zst
-          bash tools/restore_local_lean_girth.sh --verify-only agent-bundle "$RUNNER_TEMP/girth-verification-only"
           rm -rf agent-bundle/source-files
+          bash tools/restore_local_lean_girth.sh --verify-only agent-bundle "$RUNNER_TEMP/girth-verification-only"
       - name: Upload manifest and source
         uses: actions/upload-artifact@v4
         with:
