@@ -65,7 +65,7 @@ local notation "Gluing" => fun i : Selected =>
     Target D S.system S.isPartite family hFamilyParts
     S.selected i
 
-include hFamilyParts
+include hA hFamilyParts
 
 /-- Physical support girth of the canonical coarsened lower stage
 follows from its ORIGINAL selected bottom mixed forest, actual train
@@ -81,18 +81,18 @@ theorem ForestTailStage.coarsenedSelected_coreGirth_of_actualStage
           (firstRefinementParent m d hm j))).Subsingleton)
     (hFull : ∀ ν : Fin (m + d + 1), 0 < ν.val →
       ν.val < m + d →
-      (activeGluingWitnessOrderOneData A Old α E.toRelStructure
+      (activeGluingWitnessOrderOneData A Old α (S.system.coarsenVia D S.isPartite).toRelStructure
         (fun i : Selected => (Gluing i).toEmbedding)
         (S.train.castHeight hLen.symm) ν).FullSystemGirthGT
           (if ν.val ≤ d then q - 1 else q)) :
-    GirthGT (supportCopies A E.toRelStructure) q := by
+    GirthGT (supportCopies A (S.system.coarsenVia D S.isPartite).toRelStructure) q := by
   let actualFineAllowed : Fin (m + d + 1) → Set UA :=
     fun ν => fineAllowed
       (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen) ν)
   have hParameters :
       (S.train.castHeight hLen.symm).AdjacentParameters
         (fun edge => edge.1)
-        (fun ν => E.part ⁻¹' actualFineAllowed ν) :=
+        (fun ν => (S.system.coarsenVia D S.isPartite).part ⁻¹' actualFineAllowed ν) :=
     S.coarsened_adjacentParameters_castHeight_preimage
       A Source D fineAllowed hLen
   have hForest : FiniteMixedForestThrough
