@@ -1,0 +1,41 @@
+Independent final FullDomain cross-review — PASS (2026-11-09)
+Reviewer: coverage/outer track.
+
+Reviewed frozen source hashes:
+  Girth/ACopyFullDomain.lean
+  b1d9e4de0dedf2a612222f32e911f1abfd3d71a024abba4230f9fafce195c112
+  CheckACopyFullDomain.lean
+  fe325ba2f6f6db0139578ede90af7e926710970e559ac3b9a06a027e44591482
+
+The endpoint nodeCarrier_injective is mathematically sound under its stated
+hypotheses. FullNodeDomains is native source-point carrier containment in
+the native shared point domain, followed by existence of the shared node.
+It is not an assumption about equality of output node labels or carriers.
+Core and source carrier injectivity are likewise properties before gluing.
+
+The proof derives cross-source carrier containment in the core from the
+actual generated decorated-point intersections, invokes full node domains,
+and reduces the resulting shared representatives to core carrier injectivity.
+Same-source carrier equalities reflect through the injective source point map.
+No output linearity or completeness of actual relational copies is assumed.
+No hidden Nonempty/Nontrivial K premise is needed: when K is empty, the full-
+node-domain condition itself forces every source node to be a shared node.
+
+The finite regression is substantive: the three-edge path is locally linear
+(path_linear), and its outer two nodes cover every shared point; omitting
+the middle node from the node domain still leaves two distinct quotient
+nodes with equal point carriers. Thus point coverage cannot replace node
+fullness. The full induced-node-domain variant repairs injectivity using the
+new theorem, rather than postulating output faithfulness.
+
+Independently reran check_axioms.py against the final 19-declaration check:
+PASS, with only propext, Classical.choice, Quot.sound. Comment-aware source
+scan found no sorry/sorryAx/admit/axiom/unsafe/native_decide/implemented_by.
+See coverage-domain-independent-audit.log. Final hashes verified directly.
+
+Remaining scope: this proves uniqueness of generated basic nodes from their
+carriers under honest local faithfulness and full node domains. It does not
+construct relational induced chart embeddings, establish all actual A-copy
+coverage for a raw diagram, prove output linearity, or complete the recursive
+Ramsey induction. ACopyChartCoverage separately validates exact relational
+support once those full embedded charts and irreducible coverage are given.

@@ -1,0 +1,1420 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+⚠ [3137/3309] Replayed PartiteConstruction.Relational.Basic
+warning: PartiteConstruction/Relational/Basic.lean: imports `Mathlib.Data.Fintype.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Relational/Basic.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Relational/Basic.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3138/3309] Replayed PartiteConstruction.Structure.Basic
+warning: PartiteConstruction/Structure/Basic.lean: imports `Mathlib.Data.Fintype.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Structure/Basic.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Structure/Basic.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Structure/Basic.lean:162:44: Variable name `hS` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hS
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3143/3309] Replayed SuccessorTree.StarLine
+warning: SuccessorTree/StarLine.lean: imports `Mathlib.Data.Fintype.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/StarLine.lean: imports `Mathlib.Data.List.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3145/3309] Replayed SuccessorTree.HalesJewett.Forcing
+warning: SuccessorTree/HalesJewett/Forcing.lean: imports `Mathlib.Data.Set.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/Forcing.lean: imports `Mathlib.Data.Fintype.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/Forcing.lean:75:52: This simp argument is unused:
+  not_not
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Large, Avoids, not_forall, not_exists]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: SuccessorTree/HalesJewett/Forcing.lean:191:2: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [partition]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3146/3309] Replayed SuccessorTree.HalesJewett.Composition
+warning: SuccessorTree/HalesJewett/Composition.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3147/3309] Replayed SuccessorTree.HalesJewett.AlphabetLift
+warning: SuccessorTree/HalesJewett/AlphabetLift.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetLift.lean:107:2: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: SuccessorTree/HalesJewett/AlphabetLift.lean:178:12: This simp argument is unused:
+  nestedSubspace
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [prefixApply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3148/3309] Replayed SuccessorTree.Support
+warning: SuccessorTree/Support.lean: imports `Mathlib.Data.Finset.Dedup` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3149/3309] Replayed SuccessorTree.HalesJewett.AlphabetEquiv
+warning: SuccessorTree/HalesJewett/AlphabetEquiv.lean: imports `Mathlib.Data.Fintype.Option` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetEquiv.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3151/3309] Replayed SuccessorTree.HalesJewett.ForcingLemmaTwo
+warning: SuccessorTree/HalesJewett/ForcingLemmaTwo.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/ForcingLemmaTwo.lean:120:4: Unused tactic linter: `change W'.eval (c :: U.eval v) ∈ A` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [3152/3309] Replayed SuccessorTree.HalesJewett.ForcingFusion
+warning: SuccessorTree/HalesJewett/ForcingFusion.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3154/3309] Replayed SuccessorTree.HalesJewett.LineSchedule
+warning: SuccessorTree/HalesJewett/LineSchedule.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/LineSchedule.lean: imports `Mathlib.Data.List.OfFn` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/LineSchedule.lean: imports `Mathlib.Data.List.GetD` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/LineSchedule.lean: imports `Mathlib.Data.Nat.Find` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/LineSchedule.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/LineSchedule.lean:254:6: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [lineBucketSize]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3155/3309] Replayed SuccessorTree.HalesJewett.FiniteVariableWord
+warning: SuccessorTree/HalesJewett/FiniteVariableWord.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/FiniteVariableWord.lean:189:40: This simp argument is unused:
+  variableIndices
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexedSymbol.fromLine, parameterCount, ih, List.replicate_succ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3156/3309] Replayed SuccessorTree.HalesJewett.GreedyLimit
+warning: SuccessorTree/HalesJewett/GreedyLimit.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3157/3309] Replayed SuccessorTree.HalesJewett.ForcingLemmaOne
+warning: SuccessorTree/HalesJewett/ForcingLemmaOne.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/ForcingLemmaOne.lean: imports `Mathlib.Data.List.OfFn` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/ForcingLemmaOne.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/ForcingLemmaOne.lean:32:26: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3158/3309] Replayed SuccessorTree.HalesJewett.ForcingMaximal
+warning: SuccessorTree/HalesJewett/ForcingMaximal.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3159/3309] Replayed SuccessorTree.HalesJewett.ForcingFusionLimit
+warning: SuccessorTree/HalesJewett/ForcingFusionLimit.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3160/3309] Replayed SuccessorTree.HalesJewett.ForcingProposition
+warning: SuccessorTree/HalesJewett/ForcingProposition.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3161/3309] Replayed SuccessorTree.HalesJewett.AlphabetInduction
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean: imports `Mathlib.Data.Fintype.Option` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean: imports `Mathlib.Data.Fintype.Pigeonhole` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean: imports `Mathlib.Data.Fintype.EquivFin` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:182:6: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [Nat.ne_of_gt hd]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:236:2: Try this: intro κ _instκ colour
+
+Note: This linter can be disabled with `set_option linter.tacticAnalysis.introMerge false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:416:2: Try this: intro hα κ hκ colour
+
+Note: This linter can be disabled with `set_option linter.tacticAnalysis.introMerge false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:432:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:433:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:435:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: SuccessorTree/HalesJewett/AlphabetInduction.lean:443:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3163/3309] Replayed PartiteConstruction.Functional.Induced
+warning: PartiteConstruction/Functional/Induced.lean:281:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3164/3309] Replayed PartiteConstruction.Structure.FreeAmalgamationClass
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean: imports `Mathlib.Data.Fintype.Card` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:184:39: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [huv]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:266:4: Try this: intro hnodecomp H E F C Dsrc Esrc Fsrc Csrc sE sF iE iF hfree e
+
+Note: This linter can be disabled with `set_option linter.tacticAnalysis.introMerge false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:327:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:329:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:331:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:332:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Structure/FreeAmalgamationClass.lean:352:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3165/3309] Replayed PartiteConstruction.Structure.IrreducibleHomImage
+warning: PartiteConstruction/Structure/IrreducibleHomImage.lean:181:39: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [huv]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3171/3309] Replayed PartiteConstruction.Structure.Relationalize
+warning: PartiteConstruction/Structure/Relationalize.lean: imports `Mathlib.Data.Fin.Tuple.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3174/3309] Replayed PartiteConstruction.Functional.Closed
+warning: PartiteConstruction/Functional/Closed.lean:421:6: Unused tactic linter: `change (Structure.ofGraph R).graph.rel (.inr F) (Structure.funcTuple x y)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [3180/3309] Replayed PartiteConstruction.Functional.ClosedPartite
+warning: PartiteConstruction/Functional/ClosedPartite.lean:167:14: This simp argument is unused:
+  lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [y, Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine, hi0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:168:10: This simp argument is unused:
+  Partite.NonInduced.lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, y, Structure.funcTuple, forgetLine, hi0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:168:38: This simp argument is unused:
+  forgetLine
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, y, Structure.funcTuple, Partite.NonInduced.lineMap, hi0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:168:50: This simp argument is unused:
+  hi0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, y, Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:189:20: This simp argument is unused:
+  lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:190:16: This simp argument is unused:
+  Partite.NonInduced.lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, Structure.funcTuple, forgetLine, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:190:44: This simp argument is unused:
+  forgetLine
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, Structure.funcTuple, Partite.NonInduced.lineMap, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:190:56: This simp argument is unused:
+  hi
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:244:20: This simp argument is unused:
+  lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [eargs, Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:245:16: This simp argument is unused:
+  Partite.NonInduced.lineMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, eargs, Structure.funcTuple, forgetLine, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:245:44: This simp argument is unused:
+  forgetLine
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, eargs, Structure.funcTuple, Partite.NonInduced.lineMap, hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:245:56: This simp argument is unused:
+  hi
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lineMap, eargs, Structure.funcTuple, Partite.NonInduced.lineMap, forgetLine]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: PartiteConstruction/Functional/ClosedPartite.lean:349:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3185/3309] Replayed PartiteConstruction.Relational.Attachment
+warning: PartiteConstruction/Relational/Attachment.lean:118:10: Unused tactic linter: `change a.1 = copyMap B S D f i x0.1` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [3192/3309] Replayed PartiteConstruction.Functional.HalfClosedConstruction
+warning: PartiteConstruction/Functional/HalfClosedConstruction.lean:252:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/HalfClosedConstruction.lean:289:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/HalfClosedConstruction.lean:285:8: Variable name `S₀` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _S₀
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3194/3309] Replayed PartiteConstruction.Functional.ClosedPictureRepair
+warning: PartiteConstruction/Functional/ClosedPictureRepair.lean:422:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Functional/ClosedPictureRepair.lean:428:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3197/3309] Replayed PartiteConstruction.Functional.HalfClosedPartite
+warning: PartiteConstruction/Functional/HalfClosedPartite.lean:44:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/HalfClosedPartite.lean:99:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3198/3309] Replayed PartiteConstruction.Functional.SingletonExpansion
+warning: PartiteConstruction/Functional/SingletonExpansion.lean: imports `Mathlib.Data.Finset.Sort` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Functional/SingletonExpansion.lean:184:2: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3199/3309] Replayed PartiteConstruction.Functional.SingletonReduction
+warning: PartiteConstruction/Functional/SingletonReduction.lean:56:25: Variable name `B` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _B
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Functional/SingletonReduction.lean:63:5: Variable name `A` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _A
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3205/3309] Replayed PartiteConstruction.Functional.RecursiveConstruction
+warning: PartiteConstruction/Functional/RecursiveConstruction.lean:279:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/RecursiveConstruction.lean:354:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/RecursiveConstruction.lean:425:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/RecursiveConstruction.lean:450:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3208/3309] Replayed PartiteConstruction.Functional.SemiClosedPictureProperty
+warning: PartiteConstruction/Functional/SemiClosedPictureProperty.lean:149:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3211/3309] Replayed PartiteConstruction.Functional.SingletonHalfClosedConstruction
+warning: PartiteConstruction/Functional/SingletonHalfClosedConstruction.lean:116:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/SingletonHalfClosedConstruction.lean:111:8: Variable name `S₀` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _S₀
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3212/3309] Replayed PartiteConstruction.Functional.SingletonHalfClosedPartite
+warning: PartiteConstruction/Functional/SingletonHalfClosedPartite.lean:52:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3213/3309] Replayed PartiteConstruction.Functional.SemiClosedRecursiveConstruction
+warning: PartiteConstruction/Functional/SemiClosedRecursiveConstruction.lean:89:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/SemiClosedRecursiveConstruction.lean:179:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/SemiClosedRecursiveConstruction.lean:211:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3214/3309] Replayed PartiteConstruction.Functional.ClosedConstruction
+warning: PartiteConstruction/Functional/ClosedConstruction.lean:164:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/ClosedConstruction.lean:198:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/ClosedConstruction.lean:194:8: Variable name `S₀` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _S₀
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3216/3309] Replayed PartiteConstruction.Relational.Order
+warning: PartiteConstruction/Relational/Order.lean: imports `Mathlib.Order.Prod.Lex.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3220/3309] Replayed PartiteConstruction.Ramsey.Finite
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Data.Finset.Card` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Data.Finset.Sort` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Data.Fin.Tuple.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Data.Fintype.Pi` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Combinatorics.Pigeonhole` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Ramsey/Finite.lean: imports `Mathlib.Order.Monotone.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3225/3309] Replayed PartiteConstruction.Ramsey.Ordered
+warning: PartiteConstruction/Ramsey/Ordered.lean:61:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/Ordered.lean:62:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/Ordered.lean:108:4: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [tuple, βemb, βfun]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: PartiteConstruction/Ramsey/Ordered.lean:124:23: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3226/3309] Replayed PartiteConstruction.Functional.OrderedRecursive
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:108:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:137:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:138:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:143:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:157:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:181:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:182:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:191:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Functional/OrderedRecursive.lean:210:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3229/3309] Replayed PartiteConstruction.Structure.WeakHomomorphism
+warning: PartiteConstruction/Structure/WeakHomomorphism.lean:64:25: Variable name `B` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _B
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3231/3309] Replayed PartiteConstruction.Relational.FreeAmalgamationClass
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean: imports `Mathlib.Data.Fintype.Card` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:71:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:127:39: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [hval]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:142:10: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:104:4: Unused tactic linter: `change x.1 = b` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:110:4: Unused tactic linter: `change x.1 = a` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:194:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:196:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:198:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:199:10: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Relational/FreeAmalgamationClass.lean:217:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3236/3309] Replayed PartiteConstruction.Partite.InducedConstruction
+warning: PartiteConstruction/Partite/InducedConstruction.lean:78:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Partite/InducedConstruction.lean:165:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3244/3309] Replayed PartiteConstruction.Iterated.ControlCompletion
+warning: PartiteConstruction/Iterated/ControlCompletion.lean:126:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/ControlCompletion.lean:163:21: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [xs]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3245/3309] Replayed PartiteConstruction.Iterated.FinalAttachment
+warning: PartiteConstruction/Iterated/FinalAttachment.lean:428:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalAttachment.lean:429:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3246/3309] Replayed PartiteConstruction.Iterated.LooseStrictificationObstruction
+warning: PartiteConstruction/Iterated/LooseStrictificationObstruction.lean:160:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/LooseStrictificationObstruction.lean:187:18: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/LooseStrictificationObstruction.lean:200:20: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [3249/3309] Replayed PartiteConstruction.Iterated.ControlCompletionCompatible
+warning: PartiteConstruction/Iterated/ControlCompletionCompatible.lean:154:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3250/3309] Replayed PartiteConstruction.Iterated.ControlCompletionEmbedding
+warning: PartiteConstruction/Iterated/ControlCompletionEmbedding.lean:92:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3252/3309] Replayed PartiteConstruction.Iterated.ProjectedPartialLocalTreeLike
+warning: PartiteConstruction/Iterated/ProjectedPartialLocalTreeLike.lean:29:5: Variable name `hproj` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hproj
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3253/3309] Replayed PartiteConstruction.Iterated.TraceSelector
+warning: PartiteConstruction/Iterated/TraceSelector.lean:56:26: This simp argument is unused:
+  Fintype.card_congr (Equiv.refl (Option T))
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [TraceSpace]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3254/3309] Replayed PartiteConstruction.Iterated.ProjectedPartialRestoration
+warning: PartiteConstruction/Iterated/ProjectedPartialRestoration.lean:55:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/ProjectedPartialRestoration.lean:152:24: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/ProjectedPartialRestoration.lean:152:39: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/ProjectedPartialRestoration.lean:155:24: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: PartiteConstruction/Iterated/ProjectedPartialRestoration.lean:155:39: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3260/3309] Replayed PartiteConstruction.Iterated.PureCopyProjectedCompatible
+warning: PartiteConstruction/Iterated/PureCopyProjectedCompatible.lean:93:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3264/3309] Replayed PartiteConstruction.Iterated.ProjectedGlue
+warning: PartiteConstruction/Iterated/ProjectedGlue.lean:85:6: Unused tactic linter: `change pE (sE d) = z.1` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: PartiteConstruction/Iterated/ProjectedGlue.lean:99:6: Unused tactic linter: `change pF (sF d) = z.1` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [3265/3309] Replayed PartiteConstruction.Iterated.WeakStep
+warning: PartiteConstruction/Iterated/WeakStep.lean:103:6: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStep.lean:152:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStep.lean:227:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStep.lean:228:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStep.lean:229:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3269/3309] Replayed PartiteConstruction.Iterated.ProjectedRelativeLabelledLocalTreeLike
+warning: PartiteConstruction/Iterated/ProjectedRelativeLabelledLocalTreeLike.lean:34:8: Variable name `hproj` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hproj
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Iterated/ProjectedRelativeLabelledLocalTreeLike.lean:123:5: Variable name `hHist` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hHist
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Iterated/ProjectedRelativeLabelledLocalTreeLike.lean:125:17: Variable name `hj` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hj
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3273/3309] Replayed PartiteConstruction.Iterated.PureCopyProjectedHistory
+warning: PartiteConstruction/Iterated/PureCopyProjectedHistory.lean:97:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3274/3309] Replayed PartiteConstruction.Iterated.WeakStepTreeCompletion
+warning: PartiteConstruction/Iterated/WeakStepTreeCompletion.lean:136:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepTreeCompletion.lean:205:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepTreeCompletion.lean:206:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepTreeCompletion.lean:207:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3275/3309] Replayed PartiteConstruction.Iterated.WeakStepProjectedPartial
+warning: PartiteConstruction/Iterated/WeakStepProjectedPartial.lean:136:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepProjectedPartial.lean:205:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepProjectedPartial.lean:206:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/WeakStepProjectedPartial.lean:207:12: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3276/3309] Replayed PartiteConstruction.Iterated.WeakTrace
+warning: PartiteConstruction/Iterated/WeakTrace.lean:59:6: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3277/3309] Replayed PartiteConstruction.Iterated.WeakTraceTreeCompletion
+warning: PartiteConstruction/Iterated/WeakTraceTreeCompletion.lean:42:6: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3278/3309] Replayed PartiteConstruction.Iterated.InducedTraceLocal
+warning: PartiteConstruction/Iterated/InducedTraceLocal.lean:104:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3279/3309] Replayed PartiteConstruction.Iterated.InducedTraceTreeCompletion
+warning: PartiteConstruction/Iterated/InducedTraceTreeCompletion.lean:113:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3280/3309] Replayed PartiteConstruction.Iterated.InducedTraceTreeCompletionPartial
+warning: PartiteConstruction/Iterated/InducedTraceTreeCompletionPartial.lean:113:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3282/3309] Replayed PartiteConstruction.Iterated.RootedWitness
+warning: PartiteConstruction/Iterated/RootedWitness.lean:37:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/RootedWitness.lean:38:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3283/3309] Replayed PartiteConstruction.Iterated.FinalAttachmentBudget
+warning: PartiteConstruction/Iterated/FinalAttachmentBudget.lean:101:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalAttachmentBudget.lean:102:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3285/3309] Replayed PartiteConstruction.Iterated.IndexedTarget
+warning: PartiteConstruction/Iterated/IndexedTarget.lean:86:28: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/IndexedTarget.lean:96:30: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/IndexedTarget.lean:103:30: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [3286/3309] Replayed PartiteConstruction.Iterated.UniformAttachment
+warning: PartiteConstruction/Iterated/UniformAttachment.lean:96:27: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [3287/3309] Replayed PartiteConstruction.Iterated.AttachmentTrace
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:58:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:58:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:63:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:63:20: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:97:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/AttachmentTrace.lean:101:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3288/3309] Replayed PartiteConstruction.Iterated.UniformAttachmentBound
+warning: PartiteConstruction/Iterated/UniformAttachmentBound.lean:77:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/UniformAttachmentBound.lean:78:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/UniformAttachmentBound.lean:148:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/UniformAttachmentBound.lean:149:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3293/3309] Replayed PartiteConstruction.Iterated.FinalCompletion
+warning: PartiteConstruction/Iterated/FinalCompletion.lean:181:6: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalCompletion.lean:216:7: Variable name `j` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _j
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3295/3309] Replayed PartiteConstruction.Iterated.FinalSupportStage
+warning: PartiteConstruction/Iterated/FinalSupportStage.lean:102:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalSupportStage.lean:104:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalSupportStage.lean:105:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalSupportStage.lean:107:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/FinalSupportStage.lean:225:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3298/3309] Replayed PartiteConstruction.Iterated.SparseningIteration
+warning: PartiteConstruction/Iterated/SparseningIteration.lean:54:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningIteration.lean:52:6: Variable name `S` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _S
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Iterated/SparseningIteration.lean:85:6: Variable name `T` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _T
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Iterated/SparseningIteration.lean:122:6: Variable name `S` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _S
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3299/3309] Replayed PartiteConstruction.Iterated.SparseningUniformFinal
+warning: PartiteConstruction/Iterated/SparseningUniformFinal.lean:40:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningUniformFinal.lean:41:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningUniformFinal.lean:47:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningUniformFinal.lean:77:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningUniformFinal.lean:79:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3303/3309] Replayed PartiteConstruction.Iterated.SparseningTheorem
+warning: PartiteConstruction/Iterated/SparseningTheorem.lean:44:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningTheorem.lean:87:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Iterated/SparseningTheorem.lean:89:4: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3307/3309] Replayed PartiteConstruction.Iterated.IntersectionStrongProjectedGlue
+warning: PartiteConstruction/Iterated/IntersectionStrongProjectedGlue.lean:123:6: Unused tactic linter: `change pE (sE d) = z.1` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: PartiteConstruction/Iterated/IntersectionStrongProjectedGlue.lean:136:6: Unused tactic linter: `change pF (sF d) = z.1` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [3309/3328] Replayed PartiteConstruction.Ramsey.FreeAmalgamation
+warning: PartiteConstruction/Ramsey/FreeAmalgamation.lean:47:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/FreeAmalgamation.lean:48:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/FreeAmalgamation.lean:54:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/FreeAmalgamation.lean:68:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3310/3328] Replayed PartiteConstruction.Iterated.HistoryStrength
+warning: PartiteConstruction/Iterated/HistoryStrength.lean:46:4: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: PartiteConstruction/Iterated/HistoryStrength.lean:48:22: This simp argument is unused:
+  hxList
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [history, H]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [3314/3328] Replayed PartiteConstruction.Functional.WeakInduced
+warning: PartiteConstruction/Functional/WeakInduced.lean:131:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3315/3328] Replayed PartiteConstruction.Structure.GeneratedWeakHomImage
+warning: PartiteConstruction/Structure/GeneratedWeakHomImage.lean:130:39: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [huv]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [3319/3328] Replayed PartiteConstruction.Functional.EHNStage
+warning: PartiteConstruction/Functional/EHNStage.lean:86:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3320/3328] Replayed PartiteConstruction.Functional.EHNInitial
+warning: PartiteConstruction/Functional/EHNInitial.lean:42:23: Variable name `root` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _root
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: PartiteConstruction/Functional/EHNInitial.lean:87:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3322/3328] Replayed PartiteConstruction.Functional.EHNConstruction
+warning: PartiteConstruction/Functional/EHNConstruction.lean:69:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3323/3328] Replayed PartiteConstruction.Ramsey.FreeAmalgamationFunctions
+warning: PartiteConstruction/Ramsey/FreeAmalgamationFunctions.lean:73:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/FreeAmalgamationFunctions.lean:74:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/FreeAmalgamationFunctions.lean:87:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3324/3328] Replayed PartiteConstruction.Ramsey.ForbiddenFunctions
+warning: PartiteConstruction/Ramsey/ForbiddenFunctions.lean:172:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/ForbiddenFunctions.lean:173:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: PartiteConstruction/Ramsey/ForbiddenFunctions.lean:188:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [3328/3328] Built Girth.ACopyChartCoverage (2.7s)
+Build completed successfully (3328 jobs).

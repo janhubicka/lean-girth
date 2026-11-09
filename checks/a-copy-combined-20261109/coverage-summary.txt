@@ -1,0 +1,44 @@
+ACopyChartCoverage validation track — PASS (2026-11-09)
+
+The new module uses actual RelStructure embeddings and existing Support,
+factorThroughRange, irreducible_side, and sameCopy_of_range_subset APIs.
+No pre-existing source file was edited.
+
+Validated public declarations in namespace
+StructuralRamsey.Girth.ACopyChartCoverage:
+  factors_through_chart
+  occurrenceCarriers_eq_supportCopies
+  occurrence_quotient_eq_iff
+  occurrenceQuotientEquivSupport
+  occurrenceQuotientEquivSupport_mk
+  actual_copy_eq_chart
+  coversIrreducibles_freeAmalgam
+
+These establish the relational claims of manuscript lem:chartfaithfulness
+when the full chart embeddings and induced-irreducible coverage are given.
+They derive exact physical support and the quotient by equality of occurrence
+carriers. Physical types need not be finite or rigid for that quotient.
+The finite-B assertion yields SameCopy, not equality of embedding maps or
+identification of chart labels. Preservation applies to a genuine
+IsFreeAmalgam and keeps the two source indexed chart families.
+
+Boundary regressions passed:
+- distinct duplicate chart labels survive, while physical occurrences merge;
+- distinct automorphic embeddings of a nonrigid irreducible Boolean type
+  yield the same physical occurrence quotient;
+- two singleton charts form an actual free amalgam covering all irreducibles,
+  but miss an actual reducible two-point copy, so irreducibility is essential;
+- an infinite irreducible complete structure has a proper isomorphic copy,
+  so finite-B image equality cannot be generalized without another hypothesis.
+
+Final build used runtime/with-lean-slot.sh. The new module has no warnings;
+legacy dependency replay warnings remain. CheckACopyChartCoverage.lean passed,
+and strict check_axioms.py accepted all 21 requested declarations with only
+propext, Classical.choice, and Quot.sound. Comment-aware source scan found no
+sorry, sorryAx, admit, axiom, unsafe, native_decide, or implemented_by tokens.
+Final source hashes are recorded in coverage-status.json.
+
+Scope not proved here: constructing full relational chart embeddings from
+binary overlap records, or showing an existing raw node equivalence agrees
+with equality of occurrence carriers. These require the separate decorated
+realization/full-link-domain bridge. This is not complete draft validation.

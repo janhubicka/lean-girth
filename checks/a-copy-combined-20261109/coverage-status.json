@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-09",
+  "source_base": "853bfa9208b67bcff56d867eca0ddd6805ee8137",
+  "module_build": "PASS",
+  "regression_lean_check": "PASS",
+  "strict_axiom_audit": {
+    "declarations": 21,
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "files": [
+    {
+      "path": "Girth/ACopyChartCoverage.lean",
+      "sha256": "b55d809992c387c7dffa32eb19a75316aab49081f9cc7e71376ae400a0ec8156",
+      "lines": 161,
+      "forbidden_code_tokens": []
+    },
+    {
+      "path": "CheckACopyChartCoverage.lean",
+      "sha256": "ab03404d6b361650eb91e91f1923c4be6341ee16e8a4e50dd8fdb21df4b5b56f",
+      "lines": 189,
+      "forbidden_code_tokens": []
+    }
+  ],
+  "scope": "Concrete embedded relational chart coverage, occurrence quotient exactness, finite actual-chart equality, and preservation under an actual induced free amalgam. Binary raw-node realization and identification through complete link domains are separate."
+}

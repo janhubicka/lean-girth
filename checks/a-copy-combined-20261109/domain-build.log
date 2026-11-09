@@ -1,0 +1,12 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+⚠ [3137/3142] Replayed Girth.ACopyExactStar
+warning: Girth/ACopyExactStar.lean: imports `Mathlib.Logic.Relation` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: Girth/ACopyExactStar.lean: imports `Mathlib.Data.Quot` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: Girth/ACopyExactStar.lean: imports `Mathlib.Tactic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [3138/3142] Replayed Girth.ACopyOverlapRealization
+warning: Girth/ACopyOverlapRealization.lean: imports `Mathlib.Data.Set.Function` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: Girth/ACopyOverlapRealization.lean: imports `Mathlib.Logic.Equiv.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: Girth/ACopyOverlapRealization.lean: imports `Mathlib.Logic.Embedding.Basic` from package `mathlib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [3142/3142] Built Girth.ACopyFullDomain (2.5s)
+Build completed successfully (3142 jobs).

@@ -1,0 +1,37 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopyChartCoverage.factors_through_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.occurrenceCarriers_eq_supportCopies' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.occurrence_quotient_eq_iff' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.occurrenceQuotientEquivSupport' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.occurrenceQuotientEquivSupport_mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.actual_copy_eq_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyChartCoverage.coversIrreducibles_freeAmalgam' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyChartCoverageRegression.complete_irreducible' depends on axioms: [propext]
+'ACopyChartCoverageRegression.duplicatedChart_coverage' does not depend on any axioms
+'ACopyChartCoverageRegression.duplicate_occurrences_distinct' does not depend on any axioms
+'ACopyChartCoverageRegression.duplicate_occurrences_identified' depends on axioms: [propext, Quot.sound]
+'ACopyChartCoverageRegression.automorphic_embeddings_distinct' does not depend on any axioms
+'ACopyChartCoverageRegression.automorphic_occurrences_identified' depends on axioms: [propext, Quot.sound]
+'ACopyChartCoverageRegression.duplicatedChart_exact_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyChartCoverageRegression.finite_actual_copy_is_chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyChartCoverageRegression.singleton_free_amalgam' does not depend on any axioms
+'ACopyChartCoverageRegression.singleton_charts_cover_irreducibles' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyChartCoverageRegression.discrete_pair_not_irreducible' does not depend on any axioms
+'ACopyChartCoverageRegression.reducible_copy_missing_from_occurrences' depends on axioms: [propext, Quot.sound]
+'ACopyChartCoverageRegression.infiniteChart_coverage' does not depend on any axioms
+'ACopyChartCoverageRegression.infinite_actual_copy_not_chart' depends on axioms: [propext]

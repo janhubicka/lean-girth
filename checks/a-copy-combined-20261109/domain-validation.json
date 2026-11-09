@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-09",
+  "module": "Girth/ACopyFullDomain.lean",
+  "checks": "CheckACopyFullDomain.lean",
+  "lean_version": "4.35.0-rc3",
+  "mathlib_commit": "5bd58ac291422a21f412ae354c91e7d172255a2c",
+  "source_sha256": {
+    "Girth/ACopyFullDomain.lean": "b1d9e4de0dedf2a612222f32e911f1abfd3d71a024abba4230f9fafce195c112",
+    "CheckACopyFullDomain.lean": "fe325ba2f6f6db0139578ede90af7e926710970e559ac3b9a06a027e44591482"
+  },
+  "checked_declarations": [
+    "StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_core_subset",
+    "StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_source_subset",
+    "StructuralRamsey.Girth.ACopyFullDomain.core_carrier_eq_iff",
+    "StructuralRamsey.Girth.ACopyFullDomain.source_carrier_eq_iff",
+    "StructuralRamsey.Girth.ACopyFullDomain.source_node_shared_of_subset_core",
+    "StructuralRamsey.Girth.ACopyFullDomain.source_node_eq_core_of_carrier_eq",
+    "StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_injective",
+    "StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_eq_iff",
+    "ACopyFullDomainRegression.coord_eq_iff",
+    "ACopyFullDomainRegression.path_linear",
+    "ACopyFullDomainRegression.local_core_faithful",
+    "ACopyFullDomainRegression.local_source_faithful",
+    "ACopyFullDomainRegression.outer_nodes_cover_all_points",
+    "ACopyFullDomainRegression.middle_nodes_distinct",
+    "ACopyFullDomainRegression.middle_carriers_equal",
+    "ACopyFullDomainRegression.outer_domain_not_full",
+    "ACopyFullDomainRegression.point_coverage_insufficient",
+    "ACopyFullDomainRegression.complete_domain_full",
+    "ACopyFullDomainRegression.complete_domain_faithful"
+  ],
+  "count": 19,
+  "strict_axiom_audit": "passed; only propext, Classical.choice and Quot.sound allowed",
+  "new_source_warnings": [],
+  "runtime_warning": "pre-existing local Batteries compatibility adjustment; prior dependency warnings retained in build log",
+  "scope": "Output node-carrier injectivity from native source/core carrier injectivity and full induced shared node domains. Eight general lemmas and eleven regression/helper declarations. No output linearity, genuine relational realization, actual-copy completeness, or recursive witness existence is assumed or proved."
+}

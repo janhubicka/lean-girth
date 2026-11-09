@@ -1,0 +1,73 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.coreMap_mk' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceMap_mk' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.coreMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceMap_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.coreRecord_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceRecord_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceRecord_eq_coreRecord_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceImage_inter_coreImage' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.distinct_sourceImage_inter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sharedPoint_eq' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.nodePoint' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.nodePoint_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.output_rel_core_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.output_rel_source_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.coreDiagramEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.sourceDiagramEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.supportedPoint_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.supportedPoint_range_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.point_has_record' does not depend on any axioms
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.mem_core_wagonCarrier_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.core_wagonCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.private_sourceMap_ne_other' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.private_wagonCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyDecoratedStar.Data.wagonCarrier_mono' depends on axioms: [Quot.sound]
+'ACopyDecoratedStarRegression.private_node_class' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyDecoratedStarRegression.private_wagon_meets_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyDecoratedStarRegression.retained_record_can_be_supported' depends on axioms: [propext, Quot.sound]
+'ACopyDecoratedStarRegression.core_three_unsupported' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyDecoratedStarRegression.supported_realization_not_surjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyDecoratedStarRegression.private_child_core_parent_carrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyDecoratedStarRegression.empty_top_uninhabited' does not depend on any axioms

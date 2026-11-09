@@ -1,0 +1,29 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_core_subset' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_source_subset' depends on axioms: [Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.core_carrier_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.source_carrier_eq_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.source_node_shared_of_subset_core' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.source_node_eq_core_of_carrier_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyFullDomain.nodeCarrier_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.coord_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.path_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.local_core_faithful' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.local_source_faithful' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.outer_nodes_cover_all_points' depends on axioms: [propext, Quot.sound]
+'ACopyFullDomainRegression.middle_nodes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.middle_carriers_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.outer_domain_not_full' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.point_coverage_insufficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.complete_domain_full' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyFullDomainRegression.complete_domain_faithful' depends on axioms: [propext, Classical.choice, Quot.sound]
