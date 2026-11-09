@@ -97,7 +97,7 @@ def sourceRelEmbedding
     (hAgree : CoreSourceAgreement C S D.coreMap D.sourceMap)
     (i : I) :
     Embedding (S i) (relationalUnion D C S) := by
-  have hStandards : SourceSourceAgreement C S D.coreMap D.sourceMap :=
+  have hStandards : SourceSourceAgreement S D.sourceMap :=
     sourceAgreement_of_core C S D.coreMap D.sourceMap
       (fun j => D.sourceMap_injective j)
       (fun j k hjk p hp => D.source_pair_meets_core j k hjk p hp)
