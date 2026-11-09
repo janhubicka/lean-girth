@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveSelectedSharedCoreTrain
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.selectedSharedCore_train_iff_of_actualLower
