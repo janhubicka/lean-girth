@@ -29,6 +29,15 @@ namespace StructuralRamsey.Girth
 open StructuralRamsey.RelStructure
 
 universe u v
+/-- Transporting a real BigCycle along equality of occurrence counts
+preserves its physical connector at the correspondingly cast index. -/
+private theorem bigCycle_cast_connector
+    {V E I P : Type v} (D : OrderOneData V E I P)
+    {n m : ℕ} (h : n = m) (Z : D.BigCycle n) (j : Fin m) :
+    (h ▸ Z).connector j = Z.connector (Fin.cast h.symm j) := by
+  cases h
+  rfl
+
 section ActualTwoCycleNoTwoWagons
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
@@ -95,7 +104,7 @@ theorem attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
     False := by
   have hTwice : K.twiceOrder = 4 := by
     simp [OrderOneData.BigCycle.twiceOrder, Fin.sum_univ_two,
-      cyclicSucc, connectorKind, twiceOccurrenceWeight, h0, h1]
+      cyclicSucc, OrderOneData.connectorKind, twiceOccurrenceWeight, h0, h1]
   have hq : 2 ≤ qcut := by omega
   have hLocal : (Wit).LocalPieceSystemBound 2 := by
     intro n Z' hAcceptZ hOrderZ
@@ -141,7 +150,7 @@ theorem attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
         rw [hz] at hImg0
         cases hImg0
     | inr p =>
-        exact ⟨p, hz⟩
+        exact ⟨p, rfl⟩
   obtain ⟨q, hqW⟩ :
       ∃ q : Quotient (U.wagonSetoid μ), Z.connector j₁ = Sum.inr q := by
     cases hz : Z.connector j₁ with
@@ -149,16 +158,30 @@ theorem attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
         rw [hz] at hImg1
         cases hImg1
     | inr q =>
-        exact ⟨q, hz⟩
+        exact ⟨q, rfl⟩
   let Z₂ : (Wit).BigCycle 2 := hTwo ▸ Z
   have hp₂ : Z₂.connector (0 : Fin 2) = Sum.inr p := by
-    cases hTwo
-    simpa [Z₂, j₀] using hp
+    calc
+      Z₂.connector (0 : Fin 2) =
+          Z.connector (Fin.cast hTwo.symm (0 : Fin 2)) := by
+            exact bigCycle_cast_connector (Wit) hTwo Z 0
+      _ = Z.connector j₀ := by
+            congr 1
+            apply Fin.ext
+            rfl
+      _ = Sum.inr p := hp
   have hq₂ : Z₂.connector (1 : Fin 2) = Sum.inr q := by
-    cases hTwo
-    simpa [Z₂, j₁] using hqW
-  exact (Wit).BigCycle.two_wagon_impossible_of_localPieceSystemBound_two
-    hLocal Z₂ p q hp₂ hq₂
+    calc
+      Z₂.connector (1 : Fin 2) =
+          Z.connector (Fin.cast hTwo.symm (1 : Fin 2)) := by
+            exact bigCycle_cast_connector (Wit) hTwo Z 1
+      _ = Z.connector j₁ := by
+            congr 1
+            apply Fin.ext
+            rfl
+      _ = Sum.inr q := hqW
+  exact OrderOneData.BigCycle.two_wagon_impossible_of_localPieceSystemBound_two
+    (Wit) hLocal Z₂ p q hp₂ hq₂
 
 /-- Candidate full one-level attached-output system girth.
 This composes the real old selected bound, real witness bound,
