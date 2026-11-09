@@ -106,6 +106,7 @@ checks=(
   CheckTrainRecursiveCanonicalFineParametersCast
   CheckTrainRecursiveRefinementForwardParameters
   CheckTrainRecursiveTrueActiveFineParameters
+  CheckTrainRecursiveActualLowerCompleteTargetGeometry
   CheckTrainRecursiveHJRelationalDesignatedArrow
   CheckTrainRecursiveCoarsenedSelectedFamilyArrow
   CheckTrainRecursiveCoarsenedSelectedIndexedBundle
