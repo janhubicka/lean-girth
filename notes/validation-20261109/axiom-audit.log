@@ -1,0 +1,224 @@
+=== CheckSimultaneousSegmentClassification.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.attachedSelectedPicture_short_original_cut_contacts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_reduced_short_cuts_adjacent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicOwnerCutIndex_pred_ne_reverse_succ_of_three_cuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_reduced_short_forces_singleton_three_cuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_any_plan_nontarget_nonsingleton_is_long' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_long_cut_piece_wagon_is_old_connector' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicOwnerCutIndex_no_reverse_single_uncut_gap_of_three_cuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicOwnerCutIndex_old_uncut_straddle_forward_of_three_cuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_long_nonadjacent_two_step_of_cut_fresh' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_long_nonadjacent_two_step' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_nontarget_nonadjacent_two_step' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicOwnerRunIndex_singleton_fibre' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.cyclicOwnerRunIndex_two_step_fibre' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.cyclicExpandReducedPieces_long_singleton' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicExpandReducedPieces_long_two_step' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.expanded_run_plan_localIncidence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_localPieceIncidence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.cyclicExpandReducedPieces_long_inverse' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_plan_long_fresh_of_three_cuts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_localLongA2Geometry' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_long_fresh' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 21 declarations; only the standard logical axioms occur.
+
+=== CheckActualSimultaneousSegmentTransfer.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_keep_iff_target_owner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_simultaneous_segment_certificate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_simultaneous_segment_transfer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_long_wagons_pairwise' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_resultWord_connectors_nodup' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.arbitrary_replacement_complete_of_three_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_one_pass_supreme_of_old_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 8 declarations; only the standard logical axioms occur.
+
+=== CheckActualOriginalTwoCycleSupreme.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.attachedSelectedPicture_original_designated_core_pair' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_original_designated_mixed_bridge' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_original_two_cycle_supreme_of_owner_bridges' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_original_two_cycle_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 5 declarations; only the standard logical axioms occur.
+
+=== CheckTwoCutGeometricSupreme.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.sharedWitness_two_vertex_pairEdge_shortValid_of_aStrong' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_pairEdge_geometric_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_standard_core_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 3 declarations; only the standard logical axioms occur.
+
+=== CheckActualBottomReducedTransfer.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.OrderOneData.BigCycle.longValid_absurd_of_parent_injective' does not depend on any axioms
+'StructuralRamsey.Girth.OrderOneData.BigCycle.supreme_piece_short_of_parent_injective' does not depend on any axioms
+'StructuralRamsey.Girth.OrderOneData.bridge_of_parent_injective' does not depend on any axioms
+'StructuralRamsey.Girth.OrderOneData.BigCycle.two_mixed_bridges_of_bottom_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.two_supreme_of_bottom_mixed_bridges' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_two_standards_bottom_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_bottom_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_original_two_bottom_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_bottom_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_bottom_mixed_bridges_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 10 declarations; only the standard logical axioms occur.
+
+=== CheckActualCirculationCycleTransfer.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.attachedSelectedPicture_circulation_cycle_transfer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 1 declarations; only the standard logical axioms occur.
+
+=== CheckSimplifiedCirculationInterfaces.lean ===
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth/.lake/packages/batteries
+'StructuralRamsey.Girth.strongSupportPieces_meet_baseFinePartAtMostOne' does not depend on any axioms
+'StructuralRamsey.Girth.no_short_untouched_cycle_of_transversal_local_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_standard_mappedBigCycle_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_zero_cut_supreme_of_old_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_one_pass_supreme_of_old_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_reduced_supreme_of_fullSystem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_full_supreme_of_old_and_witness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_expanded_plan_keep_iff_target_owner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fixed_plan_simultaneous_segment_certificate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_three_cut_simultaneous_segment_transfer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_two_standards_full_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_two_cut_three_le_full_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_two_cut_cases' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_length_two_two_cut' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.length_eq_two_of_order_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.OrderOneData.BigCycle.connectors_mixed_of_order_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.EdgeTrainLevels.bottom_parent_injective' depends on axioms: [propext]
+'StructuralRamsey.Girth.attachedSelectedPicture_bottom_reduced_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.attachedSelectedPicture_bottom_mixed_bridges_supreme' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Checked 20 declarations; only the standard logical axioms occur.

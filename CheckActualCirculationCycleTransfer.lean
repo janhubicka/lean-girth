@@ -1,0 +1,3 @@
+import Girth.TrainActualCirculationCycleTransfer
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_circulation_cycle_transfer
