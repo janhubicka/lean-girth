@@ -123,7 +123,7 @@ theorem attachedSelectedPicture_two_cycle_supreme_of_no_double_wagon
       · obtain ⟨x, y, hX, hY⟩ := hVertex
         have hTwice : K.twiceOrder = 4 := by
           simp [OrderOneData.BigCycle.twiceOrder, Fin.sum_univ_two,
-            cyclicSucc, connectorKind, twiceOccurrenceWeight, hX, hY]
+            cyclicSucc, OrderOneData.connectorKind, twiceOccurrenceWeight, hX, hY]
         have hq : 2 ≤ qcut := by omega
         exact attachedSelectedPicture_two_cycle_original_B_vertex_full_supreme
           A hA B D C family selected e R f T U hShared hRel μ
