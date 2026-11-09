@@ -1,0 +1,39 @@
+name: Temporary Track B offline source transfer
+on:
+  push:
+    branches:
+      - circulation-b-local-source-bundle-20261109
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Archive pinned source repositories without Lean downloads
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=/tmp/lean-girth-offline-repos
+          mkdir -p "$root"
+          cp -a . "$root/lean-girth"
+          git clone --quiet https://github.com/janhubicka/partite-construction.git "$root/partite-construction"
+          git -C "$root/partite-construction" checkout --quiet d2394f65861528f27d68c4a42042285dafef301d
+          git clone --quiet https://github.com/janhubicka/lean-successors.git "$root/lean-successors"
+          git -C "$root/lean-successors" checkout --quiet f9513be1d92782e7a8c45916d32e6e11dc0e0dcf
+          git clone --quiet https://github.com/janhubicka/lean-ramsey-space-todorcevic.git "$root/ramsey-space-todorcevic"
+          git -C "$root/ramsey-space-todorcevic" checkout --quiet 54a9eb02f7f7bd2e942e95f7b44fc6f04f48892c
+          for dir in "$root"/*; do git -C "$dir" rev-parse HEAD; done > source-commits.txt
+          tar -I 'zstd -T2 -3' -cf girth-pinned-source-bundle.tar.zst -C "$root" .
+          sha256sum girth-pinned-source-bundle.tar.zst > girth-pinned-source-sha256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: girth-pinned-source-bundle-20261109
+          path: |
+            girth-pinned-source-bundle.tar.zst
+            girth-pinned-source-sha256.txt
+            source-commits.txt
+          compression-level: 0
+          retention-days: 1
