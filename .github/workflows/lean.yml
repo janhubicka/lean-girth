@@ -31,14 +31,27 @@ jobs:
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
       - name: Install elan
         run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          set -euo pipefail
+          curl --retry 3 --retry-all-errors --retry-delay 5 -fsS https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download Mathlib cache
         run: |
           # Restored caches can retain this lock after an interrupted dependency checkout.
           # No Git process is active before this first Lake invocation.
           rm -f .lake/packages/batteries/.git/index.lock
-          lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+          # Toolchain and mathlib download endpoints can intermittently return 504.
+          # Retry only this acquisition step; proof compilation and axiom audits remain strict.
+          for attempt in 1 2 3 4; do
+            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup; then
+              exit 0
+            fi
+            if [[ $attempt -eq 4 ]]; then
+              echo "::error::Pinned Lean/mathlib acquisition failed after four attempts"
+              exit 1
+            fi
+            echo "::warning::Pinned Lean/mathlib acquisition failed on attempt $attempt; retrying"
+            sleep $((10 * attempt))
+          done
       - name: Inventory source and test audit checkers
         run: |
           python3 scripts/test_audit_circulation.py
