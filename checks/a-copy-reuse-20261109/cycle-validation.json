@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-09",
+  "module": "Girth/ACopyCycleLocalization.lean",
+  "checks": "CheckACopyCycleLocalization.lean",
+  "lean_version": "4.35.0-rc3",
+  "mathlib_commit": "5bd58ac291422a21f412ae354c91e7d172255a2c",
+  "source_sha256": {
+    "Girth/ACopyCycleLocalization.lean": "dbb144242ba250c67fa163151710e9f9e2160a838ca484f6a6abcc8cba7ddeb7",
+    "CheckACopyCycleLocalization.lean": "51dac46d629e99251c893a372415b6aa827983a8303177d76dc9f430aa8adf81"
+  },
+  "checked_declarations": [
+    "StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_acyclic",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_used_acyclic",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.used_card_le_length",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.used_card_lt_length_of_not_injective",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_girth_of_used_card",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.labelledCycle_owner_constant_of_girth",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.singleton_refinement_localizes",
+    "StructuralRamsey.Girth.ACopyCycleLocalization.retainedCut_localizes",
+    "ACopyCycleLocalizationRegression.private_connectors_allowed",
+    "ACopyCycleLocalizationRegression.duplicate_carriers_fail_labelled_girth",
+    "ACopyCycleLocalizationRegression.duplicate_carriers_collapsed_girth",
+    "ACopyCycleLocalizationRegression.repeated_connector_counterexample"
+  ],
+  "count": 12,
+  "strict_axiom_audit": "passed; only propext, Classical.choice and Quot.sound allowed",
+  "new_source_warnings": [],
+  "runtime_warning": "pre-existing local Batteries compatibility adjustment; dependency warnings retained in build log",
+  "scope": "Transition-only cyclic-owner localization and used-label cardinality helpers; concrete singleton-refinement and retained quotient-cut wrappers; four boundary regressions. No recursive witness existence or diagram realization assembly is proved here."
+}

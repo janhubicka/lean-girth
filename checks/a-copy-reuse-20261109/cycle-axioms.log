@@ -1,0 +1,34 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_acyclic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_used_acyclic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.used_card_le_length' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.used_card_lt_length_of_not_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.cyclicOwner_constant_of_girth_of_used_card' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.labelledCycle_owner_constant_of_girth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.singleton_refinement_localizes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopyCycleLocalization.retainedCut_localizes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyCycleLocalizationRegression.private_connectors_allowed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopyCycleLocalizationRegression.duplicate_carriers_fail_labelled_girth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopyCycleLocalizationRegression.duplicate_carriers_collapsed_girth' depends on axioms: [propext, Quot.sound]
+'ACopyCycleLocalizationRegression.repeated_connector_counterexample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
