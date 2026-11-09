@@ -60,9 +60,19 @@ theorem full_physical_node_domain_of_induced_link
     exact (Classical.choose_spec (hPre a)).symm
   refine ⟨q, hSource ?_⟩
   have hComp : SameCopy (j.comp b) (j.comp (link q)) := by
-    change Set.range (j.comp b) = Set.range (j.comp (link q))
-    simp only [Set.range_comp']
-    exact congrArg (Set.image j) hq
+    apply Set.Subset.antisymm
+    · rintro _ ⟨a, rfl⟩
+      have ha : b a ∈ copyCarrier (link q) := by
+        rw [← hq]
+        exact ⟨a, rfl⟩
+      obtain ⟨z, hz⟩ := ha
+      exact ⟨z, congrArg j hz⟩
+    · rintro _ ⟨a, rfl⟩
+      have ha : link q a ∈ copyCarrier b := by
+        rw [hq]
+        exact ⟨a, rfl⟩
+      obtain ⟨z, hz⟩ := ha
+      exact ⟨z, congrArg j hz⟩
   calc
     copyCarrier (source (beta q)) = copyCarrier (j.comp (link q)) := (hBeta q).symm
     _ = copyCarrier (j.comp b) := hComp.symm
