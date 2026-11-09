@@ -32,7 +32,7 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 open StructuralRamsey.RelStructure
 
 universe u v
-variable {L : RelLanguage.{u}} {UA VB P Q : Type v}
+variable {L : RelLanguage.{u}} {UA VB P Q E W : Type v}
 
 private theorem canonicalActualLowerHeight (q d : ℕ) (tail : List ℕ) :
     (q :: tail).length + d =
