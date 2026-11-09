@@ -61,9 +61,25 @@ jobs:
             track-d-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
       - name: Install elan
+        shell: bash
         run: |
           set -euo pipefail
-          curl --retry 3 --retry-all-errors --retry-delay 5 -fsS https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          # Retry the installer itself: it fetches the pinned Lean binary
+          # after the init script has downloaded successfully.
+          curl -fsSL --retry 4 --retry-all-errors --retry-delay 8 \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o "$RUNNER_TEMP/lean-elan-init.sh"
+          for attempt in 1 2 3 4 5; do
+            if sh "$RUNNER_TEMP/lean-elan-init.sh" -y --default-toolchain none; then
+              break
+            fi
+            if [[ "$attempt" -eq 5 ]]; then
+              echo "::error::pinned elan bootstrap failed after five attempts"
+              exit 1
+            fi
+            echo "::warning::elan bootstrap attempt $attempt failed; retrying pinned toolchain"
+            sleep "$((12 * attempt))"
+          done
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download Mathlib cache
         run: |
