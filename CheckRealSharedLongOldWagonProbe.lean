@@ -1,0 +1,6 @@
+import Girth.TrainRealSharedLongOldWagonProbe
+
+#print axioms StructuralRamsey.Girth.sharedWitness_edge_vertex_old_mem
+#print axioms StructuralRamsey.Girth.sharedWitness_long_two_vertices_old_pair_or_wagon_probe
+
+#print axioms StructuralRamsey.Girth.sharedWitness_bridge_old_vertex_wagon_probe

@@ -1,0 +1,6 @@
+import Girth.TrainOldCopyLocalProbePieces
+
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_local_piece_of_pair_or_wagon_probe
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_mixed_bridge_of_old_physical_probe
+
+#print axioms StructuralRamsey.Girth.OrderOneData.copy_bridge_of_old_shared_wagon_edge

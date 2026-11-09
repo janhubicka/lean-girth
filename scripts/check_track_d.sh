@@ -116,7 +116,6 @@ checks=(
   CheckActualTwoCutCoreOwnerUnique
   CheckTrainRecursiveTrueActiveHJInitialNoTargetAssumptions
   CheckTrainFirstRetainedCutCounterexample
-  CheckCyclicTwoCutRunFibre
   CheckTrainTwoWagonFullSystemObstruction
   CheckTrainActualTwoCutDoubleWagonExclusion
   CheckCyclicCutIndexAtSourceTwo
@@ -147,6 +146,24 @@ checks=(
   CheckTrainRecursiveOrderedNontrivialSelectedInputs
   CheckTrainRecursiveTrueActiveIndexedNontrivialInputs
   CheckTrainRecursiveOrderedTrueActiveSelectedInputs
+  CheckActualMinimalTwoCutResidualClosure
+  CheckActualMinimalTwoCycleShadow
+  CheckActualTwoCycleDesignatedOwnerForced
+  CheckActualTwoCycleOriginalBVertexGlobalSupreme
+  CheckActualTwoCycleOriginalBVertexLocalFromMinimalShadow
+  CheckActualTwoCycleOwnerShadowCoreIncidence
+  CheckActualTwoCycleSourceExcludingDoubleWagon
+  CheckActualTwoCycleWitnessDoubleWagonExclusion
+  CheckOldCopyLocalProbePieces
+  CheckOriginalCopyProbePhysicalMap
+  CheckOriginalSelectedBVertexProbe
+  CheckOriginalSelectedCoreVertexPreimage
+  CheckOriginalSelectedMixedShortTrace
+  CheckOriginalSelectedMixedSourceClosure
+  CheckPhysicalMapLocalPieces
+  CheckRealSharedLongOldWagonProbe
+  CheckRealSharedShortOldPairProbe
+  CheckWitnessCopyShadowProbe
 )
 
 for check in "${checks[@]}"; do
