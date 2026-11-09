@@ -122,7 +122,7 @@ theorem sourceAgreement_of_core
       have hy : source i (x k) ∈ Set.range (source j) :=
         ⟨y k, (hxy k).symm⟩
       obtain ⟨z, hz⟩ := hCross i j hij _ ⟨hx, hy⟩
-      exact ⟨z, hz.symm⟩
+      exact ⟨z, hz⟩
     let z : Fin (L.arity sym) → CorePoint := fun k => Classical.choose (hPre k)
     have hzx : ∀ k, core (z k) = source i (x k) :=
       fun k => Classical.choose_spec (hPre k)
