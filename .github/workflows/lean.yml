@@ -30,15 +30,40 @@ jobs:
           restore-keys: |
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
       - name: Install elan
+        shell: bash
         run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          set -euo pipefail
+          # Retry the exact pinned Lean bootstrap on transient 5xx errors.
+          # A proof/build failure is never retried or hidden.
+          curl -fsSL --retry 4 --retry-all-errors --retry-delay 8             https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh             -o "$RUNNER_TEMP/lean-elan-init.sh"
+          for attempt in 1 2 3 4 5; do
+            if sh "$RUNNER_TEMP/lean-elan-init.sh" -y --default-toolchain none; then
+              break
+            fi
+            if [[ "$attempt" -eq 5 ]]; then
+              echo "::error::elan bootstrap failed after 5 attempts"
+              exit 1
+            fi
+            sleep "$((attempt * 12))"
+          done
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Download Mathlib cache
+        shell: bash
         run: |
+          set -euo pipefail
           # Restored caches can retain this lock after an interrupted dependency checkout.
           # No Git process is active before this first Lake invocation.
-          rm -f .lake/packages/batteries/.git/index.lock
-          lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup
+          for attempt in 1 2 3 4 5; do
+            rm -f .lake/packages/batteries/.git/index.lock
+            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup; then
+              break
+            fi
+            if [[ "$attempt" -eq 5 ]]; then
+              echo "::error::pinned Mathlib cache retrieval failed after 5 attempts"
+              exit 1
+            fi
+            sleep "$((attempt * 12))"
+          done
       - name: Inventory source and test audit checkers
         run: |
           python3 scripts/test_audit_circulation.py
