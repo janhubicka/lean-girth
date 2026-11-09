@@ -63,14 +63,20 @@ jobs:
           lean --version
           lake --version
           python3 - <<'PY'
-          import json
+          import json, subprocess
           from pathlib import Path
-          m=json.loads(Path('lake-manifest.json').read_text())
-          p={x['name']:x for x in m['packages']}
-          assert p['mathlib']['rev']=='5bd58ac291422a21f412ae354c91e7d172255a2c'
-          assert p['partite-construction']['rev']=='d2394f65861528f27d68c4a42042285dafef301d'
-          assert p['successor-tree-lean']['rev']=='f9513be1d92782e7a8c45916d32e6e11dc0e0dcf'
-          print('Verified mathlib, partite construction and successor-tree source revisions')
+          manifest=json.loads(Path('lake-manifest.json').read_text())
+          packages={x['name']:x for x in manifest['packages']}
+          assert packages['mathlib']['rev']=='5bd58ac291422a21f412ae354c91e7d172255a2c'
+          pins={
+            'partite-construction':'d2394f65861528f27d68c4a42042285dafef301d',
+            'successor-tree-lean':'f9513be1d92782e7a8c45916d32e6e11dc0e0dcf'
+          }
+          for folder,pin in pins.items():
+              path=Path('.lake/packages')/folder
+              actual=subprocess.check_output(['git','-C',str(path),'rev-parse','HEAD'],text=True).strip()
+              assert actual==pin, f'{folder}: {actual} != {pin}'
+          print('Verified exact mathlib and checked-out partite/successor Git revisions')
           PY
       - name: Compile Track A and check kernel axioms
         continue-on-error: true
