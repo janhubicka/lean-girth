@@ -82,7 +82,7 @@ are reflected using full overlap agreement, not just point equality. -/
 def sourceEmbedding (i : I)
     (hSource : Function.Injective (source i))
     (hAgree : CoreSourceAgreement C S core source)
-    (hSourceAgree : SourceSourceAgreement C S core source) :
+    (hSourceAgree : SourceSourceAgreement S source) :
     Embedding (S i) (union C S core source) where
   toFun := source i
   injective := hSource
@@ -106,7 +106,7 @@ theorem sourceAgreement_of_core
       ∀ p, p ∈ Set.range (source i) ∩ Set.range (source j) →
         p ∈ Set.range core)
     (hAgree : CoreSourceAgreement C S core source) :
-    SourceSourceAgreement C S core source := by
+    SourceSourceAgreement S source := by
   intro i j sym x y hxy
   by_cases hij : i = j
   · subst j
