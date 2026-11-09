@@ -127,7 +127,22 @@ theorem ForestTailStage.trueActive_completeLowerTargetGeometry
         Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm j.castSucc =
           jOld.castSucc := Fin.ext rfl
     rw [hIdx]
-    simpa only [U, jOld, lower, Fin.val_cast] using
-      stage.trueActive_inducedAllLowerCutGirth e ht hq R jOld hPosOld
+    -- The lower-vector theorem uses a Fin built from jOld.val.
+    -- It has the same value as j, but changing proof certificates of
+    -- the bounds is not a definitional rewrite of List.get indices.
+    let jActual : Fin lower.length := ⟨jOld.val, by
+      rw [lowerReplacementCutoff_length]
+      exact jOld.isLt⟩
+    have hSameIndex : jActual = j := by
+      apply Fin.ext
+      simp only [jActual, jOld, Fin.val_cast]
+    have hCut := stage.trueActive_inducedAllLowerCutGirth
+      e ht hq R jOld hPosOld
+    change LabelledGirthGT
+      (U.wagonClassCarrier
+        (fun edge : OldACarrierEdge A Target.toRelStructure => edge.1)
+        jOld.castSucc) (lower.get jActual) at hCut
+    rw [hSameIndex] at hCut
+    exact hCut
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
