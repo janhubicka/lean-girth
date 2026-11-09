@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualRetainedSelectedWitnessGirth
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_retainedSharedFullSystem_of_realStage
