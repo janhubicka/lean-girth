@@ -1,0 +1,29 @@
+StructuralRamsey.Girth.forestOfCopies_sumBridge_of_allowed_connectors_of_linear.{v} {W I J : Type v} [Fintype I]
+  [Fintype J] {F : I → HypergraphPiece W} {G : J → HypergraphPiece W} (hF : ForestOfCopies F) (hG : ForestOfCopies G)
+  (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdgesF : ∀ (i : I), (F i).edges ⊆ E)
+  (hEdgesG : ∀ (j : J), (G j).edges ⊆ E) (i0 : I) (j0 : J)
+  (hCross : ∀ (x : W) (i : I) (j : J), x ∈ (F i).carrier → x ∈ (G j).carrier → x ∈ (F i0).carrier ∧ x ∈ (G j0).carrier)
+  (hConnector : AllowedIntersection (F i0) (G j0)) : ForestOfCopies (sumPieces F G)
+StructuralRamsey.Girth.forestOfCopies_sumPieces_of_subsingleton_union_overlap_of_linear.{v} {W I J : Type v} [Fintype I]
+  [Fintype J] {F : I → HypergraphPiece W} {G : J → HypergraphPiece W} [Nonempty I] [Nonempty J] (hF : ForestOfCopies F)
+  (hG : ForestOfCopies G) (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdgesF : ∀ (i : I), (F i).edges ⊆ E)
+  (hEdgesG : ∀ (j : J), (G j).edges ⊆ E) (hSmall : ((⋃ i, (F i).carrier) ∩ ⋃ j, (G j).carrier).Subsingleton) :
+  ForestOfCopies (sumPieces F G)
+StructuralRamsey.Girth.forestOfCopies_sumPieces_of_common_edge_anchors_of_linear.{v} {W I J : Type v} [Fintype I]
+  [Fintype J] {F : I → HypergraphPiece W} {G : J → HypergraphPiece W} (hF : ForestOfCopies F) (hG : ForestOfCopies G)
+  (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdgesF : ∀ (i : I), (F i).edges ⊆ E)
+  (hEdgesG : ∀ (j : J), (G j).edges ⊆ E) (i0 : I) (j0 : J) (e : Set W) (hFi : (F i0).carrier = e)
+  (hGj : (G j0).carrier = e) (heFi : e ∈ (F i0).edges) (heGj : e ∈ (G j0).edges)
+  (hOverlap : (⋃ i, (F i).carrier) ∩ ⋃ j, (G j).carrier ⊆ e) : ForestOfCopies (sumPieces F G)
+'StructuralRamsey.Girth.forestOfCopies_sumBridge_of_allowed_connectors_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.forestOfCopies_sumPieces_of_subsingleton_union_overlap_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.forestOfCopies_sumPieces_of_common_edge_anchors_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'CompactForestGluingRegression.singleton_link' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CompactForestGluingRegression.singleton_link_member_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CompactForestGluingRegression.full_edge_link' depends on axioms: [propext, Classical.choice, Quot.sound]

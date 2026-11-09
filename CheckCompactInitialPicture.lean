@@ -1,0 +1,13 @@
+import Girth.CompactInitialPicture
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.initial_bottomSystemGirth_of_supportGirth
+#check StructuralRamsey.Girth.TrainRecursiveWitness.initialPicture_systemGirth_and_mixedForest
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initial_bottomSystemGirth_of_supportGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialPicture_systemGirth_and_mixedForest
+
+-- Existing geometric work reused by the joint picture-zero bridge.
+#print axioms StructuralRamsey.Girth.forest_selected_embeddedTarget_of_girthGT
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected_mixedForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_fullSystemGirth_of_targetCut
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_labelledCutGirth_of_edgeGirth

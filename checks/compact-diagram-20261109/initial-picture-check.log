@@ -1,0 +1,50 @@
+StructuralRamsey.Girth.TrainRecursiveWitness.initial_bottomSystemGirth_of_supportGirth.{u, v}
+  {L : StructuralRamsey.RelLanguage} {UA VB P : Type v} (A : StructuralRamsey.RelStructure L UA) (hA : A.Irreducible)
+  [Nonempty UA] (B : StructuralRamsey.RelStructure L VB) [Nonempty VB] (D : StructuralRamsey.RelStructure L P)
+  (family : Set (B.Embedding D)) [Nonempty ↑family] {m : ℕ}
+  (T : StructuralRamsey.Girth.EdgeTrainLevels (StructuralRamsey.Girth.OldACarrierEdge A B) m) (hm : 0 < m) (q : ℕ)
+  (hq : 2 ≤ q) (hGirth : StructuralRamsey.Girth.GirthGT (StructuralRamsey.Girth.supportCopies A B) q) :
+  (StructuralRamsey.Girth.selectedPictureOrderOneData A B D
+        (StructuralRamsey.Partite.Initial.picture B fun b => (↑b).toFunctionEmbedding) family
+        (StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected B D family)
+        (StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain A hA B (fun b => (↑b).toFunctionEmbedding) T hm)
+        ⟨0, ⋯⟩).FullSystemGirthGT
+    q
+StructuralRamsey.Girth.TrainRecursiveWitness.initialPicture_systemGirth_and_mixedForest.{u, v}
+  {L : StructuralRamsey.RelLanguage} {UA VB P : Type v} (A : StructuralRamsey.RelStructure L UA) (hA : A.Irreducible)
+  [Nonempty UA] (B : StructuralRamsey.RelStructure L VB) [Nonempty VB] [Finite VB]
+  (D : StructuralRamsey.RelStructure L P) (family : Set (B.Embedding D)) [Nonempty ↑family] (t : List ℕ) (ht : t ≠ [])
+  (hTwo : ∀ (j : Fin t.length), 2 ≤ t.get j)
+  (T : StructuralRamsey.Girth.EdgeTrainLevels (StructuralRamsey.Girth.OldACarrierEdge A B) t.length)
+  (hGirth : StructuralRamsey.Girth.GirthGT (StructuralRamsey.Girth.supportCopies A B) (t.headD 0))
+  (hTargetCuts :
+    ∀ (j : Fin t.length),
+      0 < ↑j → StructuralRamsey.Girth.LabelledGirthGT (T.wagonClassCarrier (fun edge => ↑edge) j.castSucc) (t.get j)) :
+  (∀ (j : Fin t.length),
+      (StructuralRamsey.Girth.selectedPictureOrderOneData A B D
+            (StructuralRamsey.Partite.Initial.picture B fun b => (↑b).toFunctionEmbedding) family
+            (StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected B D family)
+            (StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain A hA B (fun b => (↑b).toFunctionEmbedding) T ⋯)
+            j.castSucc).FullSystemGirthGT
+        (t.get j)) ∧
+    StructuralRamsey.Girth.FiniteMixedForestThrough
+      (StructuralRamsey.Girth.TrainRecursiveWitness.testedAB A B D
+        (StructuralRamsey.Partite.Initial.picture B fun b => (↑b).toFunctionEmbedding) family
+        (StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected B D family))
+      (t.headD 0)
+'StructuralRamsey.Girth.TrainRecursiveWitness.initial_bottomSystemGirth_of_supportGirth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.TrainRecursiveWitness.initialPicture_systemGirth_and_mixedForest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.forest_selected_embeddedTarget_of_girthGT' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.TrainRecursiveWitness.initialSelected_mixedForest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.TrainRecursiveWitness.initialTrain_fullSystemGirth_of_targetCut' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.EdgeTrainLevels.bottom_labelledCutGirth_of_edgeGirth' depends on axioms: [propext, Quot.sound]

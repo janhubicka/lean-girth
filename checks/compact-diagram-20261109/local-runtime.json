@@ -1,0 +1,32 @@
+{
+  "toolchain": "leanprover/lean4:v4.35.0-rc3",
+  "lean_commit": "470d5ce1400764999581fd26d5d72b00d990b0f4",
+  "official_archive_sha256": "1526de16c0496f16b46a168f26c990af4e3796505273c3342fec17d72d763997",
+  "toolchain_artifacts": [
+    13629344423,
+    13630395948
+  ],
+  "source_workflow_run": 42512209025,
+  "source_repository": "janhubicka/lean-gluing-eppa",
+  "repository_head": "0a5bf1f11c1411003f8933701aad54e77f41c128",
+  "dependency_pins": {
+    "\u00absuccessor-tree-lean\u00bb": "f9513be1d92782e7a8c45916d32e6e11dc0e0dcf",
+    "\u00abpartite-construction\u00bb": "d2394f65861528f27d68c4a42042285dafef301d",
+    "\u00abramsey-space-todorcevic\u00bb": "54a9eb02f7f7bd2e942e95f7b44fc6f04f48892c",
+    "mathlib": "5bd58ac291422a21f412ae354c91e7d172255a2c",
+    "plausible": "b7fb2b866d25bd937a2069931f9733197521cb27",
+    "LeanSearchClient": "c35806f43135ab3f254429d0c00bd13fc0123f77",
+    "importGraph": "103cd9a46972ee39d9defb2f54ae49823b1228eb",
+    "proofwidgets": "87dfe779d5dfd03142ee4fe158911b8eb553ec98",
+    "aesop": "a92ed98e694702934d40d12f24a1a449144db43e",
+    "Qq": "37b0ba0b26109cf9f9c541f0f9557e50cfa1a3b9",
+    "batteries": "950339ce0fd0cc0673a22d87036075737586aed2",
+    "Cli": "843844fa601dd56767b1eb22b7ada5b64d5e567a"
+  },
+  "compatibility": "readlink of own /proc/<getpid>/exe redirected to /proc/self/exe because numeric PIDs differ from exposed proc namespace; official binaries unchanged",
+  "smoke": "Mathlib.Data.Finset.Basic import, arithmetic by decide, Nat.add_comm #print axioms passed",
+  "lake_smoke": "lake env lean MathlibSmoke.lean passed in private lean-girth checkout",
+  "dependency_warning": "Batteries checkout is missing docs/README.md only; inspected diff, no proof-source changes",
+  "validation_branch": "validation/compact-diagram-20261109",
+  "local_dependency_manifest_matches_base": true
+}

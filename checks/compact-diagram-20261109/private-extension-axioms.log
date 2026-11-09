@@ -1,0 +1,17 @@
+'StructuralRamsey.Girth.CompactPrivateExtension.restricted_strong' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.toPrivateWagonInput' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.toPrivateWagonInput_coordinate' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.selected_edge_carrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.componentGeometry' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.range_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.sum_support_covered' does not depend on any axioms
+'StructuralRamsey.Girth.CompactPrivateExtension.ofStrongEmbedding' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.CompactPrivateExtension.ofStrongEmbedding_coordinate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

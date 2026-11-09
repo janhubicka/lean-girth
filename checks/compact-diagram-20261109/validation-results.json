@@ -1,0 +1,47 @@
+{
+  "base_commit": "2f900df5b3ee3c32e6471f143dd720bfea27781a",
+  "draft_baseline_commit": "fb53f5ae80dcac7f6c8c088decca85b5e6edd5be",
+  "branch": "validation/compact-diagram-20261109",
+  "toolchain": "leanprover/lean4:v4.35.0-rc3",
+  "lean_commit": "470d5ce1400764999581fd26d5d72b00d990b0f4",
+  "local_kernel_checks": [
+    {
+      "check": "CheckCompactDiagramForest.lean",
+      "log": "checks/compact-diagram-20261109/forest-axioms.log",
+      "result": "Checked 8 declarations; only the standard logical axioms occur.",
+      "exit_code": 0
+    },
+    {
+      "check": "CheckCompactForestGluing.lean",
+      "log": "checks/compact-diagram-20261109/forest-gluing-axioms.log",
+      "result": "Checked 6 declarations; only the standard logical axioms occur.",
+      "exit_code": 0
+    },
+    {
+      "check": "CheckCompactInitialPicture.lean",
+      "log": "checks/compact-diagram-20261109/initial-picture-check.log",
+      "result": "Checked 6 declarations; only the standard logical axioms occur.",
+      "exit_code": 0
+    },
+    {
+      "check": "CheckCompactPrivateExtension.lean",
+      "log": "checks/compact-diagram-20261109/private-extension-axioms.log",
+      "result": "Checked 9 declarations; only the standard logical axioms occur.",
+      "exit_code": 0
+    }
+  ],
+  "only_standard_axioms": true,
+  "admitted_proof_tokens": false,
+  "source_sha256": {
+    "CheckCompactDiagramForest.lean": "07f18160b947579609d8d2ab4530555d3d0f88e96354b60001575307b7401822",
+    "CheckCompactForestGluing.lean": "fbb749d86d2429d1e3b4e534f2eef64df863146b475c53c6048e3d68ef5576ad",
+    "CheckCompactInitialPicture.lean": "085de130426114a48aaa4477ffdb9a6b493261e04f0f26180af45041544f5d2d",
+    "CheckCompactPrivateExtension.lean": "faee3ed5084489bd6d79b3cd05bbab5f3766ac1c3dca104669c9aede8f5bd853",
+    "Girth/CompactDiagramForest.lean": "1f6cb898a7098f3c3a3d1a1c60fde68cd3b6cad15885637cfdbdbd25767f3a4c",
+    "Girth/CompactForestGluing.lean": "d6805e1ce6f7d2c4236065d7e92374f00a0a83e8c2251d59f263edf152af7344",
+    "Girth/CompactInitialPicture.lean": "2b8f4334397e71401db91dc8d78a1d389f62c855e961f10a9ace83fd547aad68",
+    "Girth/CompactPrivateExtension.lean": "baf768aba575037f2d2fe2086c94dee8faa86828eb2c0493fd32987a7073ccc9"
+  },
+  "full_repository_build": false,
+  "scope": "Focused new bridges and finite regressions; not a completed recursive witness or quotient-faithfulness proof."
+}

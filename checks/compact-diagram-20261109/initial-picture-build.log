@@ -1,0 +1,333 @@
+BUILD Girth.TrainCutoffLexRank
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+libc++abi: terminating due to uncaught exception of type lean::memory_exception: excessive memory consumption detected at 'interpreter' (potential solution: increase memory consumption threshold)
+
+RETRY using cgroup memory cap and two runtime slots; no optional -M3000
+BUILD Girth.TrainCutoffLexRank
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainCutoffWellFounded
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainRecursiveWitness
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainTaggedQuotientCarrier
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainPhysicalParameterBridgeComposite
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainPhysicalParameterBridgeComposite.lean:34:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainPhysicalParameterBridgeComposite.lean:145:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainActualWagonCarrierGeometry
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainActualInteriorParentQuotientBridge
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-compact/.lake/packages/batteries
+BUILD Girth.TrainActualPhysicalParameterComposite
+
+CONTINUE direct Lean, explicit LEAN_PATH, cgroup cap and two runtime slots
+BUILD Girth.TrainActualPhysicalParameterComposite
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainActualPhysicalParameterComposite.lean:41:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainActualASupportTrainTransport
+BUILD Girth.TrainWagonQuotientTransport
+BUILD Girth.TrainActualSupportParameterTransport
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainActualSupportParameterTransport.lean:44:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainFullSystemGirthParameter
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainFullSystemGirthParameter.lean:57:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainUniversalTopOrderOne
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainUniversalTopOrderOne.lean:93:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainAllAdjacentParameterPreservation
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainAllAdjacentParameterPreservation.lean:61:17: warning: Variable name `i` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _i
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BUILD Girth.TrainRecursiveWitnessPass
+BUILD Girth.InitialDesignated
+BUILD Girth.InitialACopyGeometry
+BUILD Girth.TrainRecursiveWitnessInitial
+BUILD Girth.TrainRecursiveWitnessInitialParameters
+BUILD Girth.TrainRecursiveWitnessInitialSupreme
+BUILD Girth.TrainRecursiveInitialTailLocalization
+BUILD Girth.LabelledWagonCutRestriction
+BUILD Girth.TrainRecursiveInitialTailGirth
+BUILD Girth.TrainRecursiveInitialTailIncidence
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainRecursiveInitialTailIncidence.lean:121:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainRecursiveInitialTailIncidence.lean:122:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.TrainRecursiveInitialTailBudget
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainRecursiveInitialTailBudget.lean:102:2: warning: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainRecursiveInitialTailBudget.lean:103:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.TrainEdgeOnlyConstantParent
+BUILD Girth.ForestDisjoint
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestDisjoint.lean:50:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.ForestGirth
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestGirth.lean:41:6: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [pieceListEdges] at he
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestGirth.lean:65:6: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [pieceListEdges] at h
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestGirth.lean:97:4: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [hEq]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD Girth.ForestStar
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestStar.lean:58:14: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [h]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD Girth.InitialComponentForest
+BUILD Girth.InitialForestCompletion
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/InitialForestCompletion.lean:273:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/InitialForestCompletion.lean:279:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.TrainRecursiveInitialTailSystem
+BUILD Girth.ForestDistinctBoundaryAllowed
+BUILD Girth.ForestDistinctBoundaryAuxiliary
+BUILD Girth.ForestDistinctBoundaryAugmented
+BUILD Girth.ForestDistinctBoundaryRunningCore
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestDistinctBoundaryRunningCore.lean:88:33: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp at hxBoundary
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD Girth.ForestDistinctBoundaryRunningAll
+BUILD Girth.ForestDistinctBoundarySkeleton
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestDistinctBoundarySkeleton.lean:102:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.ForestDistinctBoundaryNoSelectedCycle
+BUILD Girth.ForestDistinctBoundaryGirth
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestDistinctBoundaryGirth.lean:80:10: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [G, physical, boundaryPortSkeleton, boundaryIncidenceGraph, ha, hb] at hab'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestDistinctBoundaryGirth.lean:80:10: warning: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [G, physical, boundaryPortSkeleton, boundaryIncidenceGraph, ha, hb] at hab'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD Girth.ForestDistinctBoundaryAuxDelete
+BUILD Girth.ForestDistinctBoundaryComplete
+BUILD Girth.ForestLocalEdgeGirth
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestLocalEdgeGirth.lean:75:10: warning: This simp argument is unused:
+  BoundaryPortExact
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [selected, S, port, HypergraphPiece.oneEdge]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+BUILD Girth.ForestRecursiveInitialMixed
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:51:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:53:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:115:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:136:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:150:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:151:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:153:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:154:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/ForestRecursiveInitialMixed.lean:206:4: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD Girth.TrainSystemCutGirthTwo
+BUILD Girth.TrainSystemCutMinimalCycle
+BUILD Girth.TrainSystemCutPrefixShortcut
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainSystemCutPrefixShortcut.lean:45:20: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainSystemCutPrefixShortcut.lean:47:38: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainSystemCutPrefixShortcut.lean:50:21: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainSystemCutPrefixShortcut.lean:53:21: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵n̵e̵g̵d̲i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+BUILD Girth.TrainSystemCutFirstWagonWindow
+BUILD Girth.TrainSystemCutOutsideWagonWindow
+BUILD Girth.TrainSystemCutCycleRotation
+/workspace/scratch/095f642caf71/lean-girth-compact/Girth/TrainSystemCutCycleRotation.lean:40:4: warning: Unused tactic linter: `change C.vertex ((finCycle s) i) ∈ carrier (C.label ((finCycle s) (cyclicSucc i)))` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+BUILD Girth.TrainSystemCutWindowTransport
+BUILD Girth.TrainSystemCutAllWagonWindow
+BUILD Girth.TrainSystemCutWagonSeed
+BUILD Girth.TrainSystemCutWagonRetype
+BUILD Girth.TrainSystemCutExpansionAssembly
+BUILD Girth.TrainSystemCutPhysicalPieces
+BUILD Girth.TrainSystemCutGirthFullConverse
+BUILD Girth.TrainRecursiveRefinement
+BUILD Girth.TrainRecursiveRefinementForget
+BUILD Girth.TrainRecursivePhysicalCutTransfer
+BUILD Girth.TrainRecursiveMixedBottomRefinement
+BUILD Girth.TrainBottomOrdinaryLabelledGirth
+BUILD Girth.TrainRecursiveBottomEqualityBridge
+BUILD Girth.CompactInitialPicture

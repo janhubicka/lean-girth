@@ -1,0 +1,11 @@
+import Girth.CompactPrivateExtension
+
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.restricted_strong
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.toPrivateWagonInput
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.toPrivateWagonInput_coordinate
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.selected_edge_carrier
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.componentGeometry
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.range_inter
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.sum_support_covered
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.ofStrongEmbedding
+#print axioms StructuralRamsey.Girth.CompactPrivateExtension.ofStrongEmbedding_coordinate

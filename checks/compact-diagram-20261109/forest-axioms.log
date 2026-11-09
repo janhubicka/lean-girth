@@ -1,0 +1,34 @@
+StructuralRamsey.Girth.JoinTree.compact_mem_carrier_of_mem_path.{v} {W ι : Type v} {F : ι → HypergraphPiece W}
+  (J : JoinTree F) {i j k : ι} (p : J.tree.Walk i j) (hp : p.IsPath) (hk : k ∈ p.support) {x : W}
+  (hxi : x ∈ (F i).carrier) (hxj : x ∈ (F j).carrier) : x ∈ (F k).carrier
+StructuralRamsey.Girth.JoinTree.pairwiseAllowed_of_linkAllowed_of_linear.{v} {W ι : Type v} {F : ι → HypergraphPiece W}
+  (J : JoinTree F) (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdges : ∀ (i : ι), (F i).edges ⊆ E)
+  (hLink : ∀ ⦃i j : ι⦄, J.tree.Adj i j → AllowedIntersection (F i) (F j)) : PairwiseAllowed F
+StructuralRamsey.Girth.JoinTree.forestOfCopies_of_linkAllowed_of_linear.{v} {W ι : Type v} {F : ι → HypergraphPiece W}
+  (J : JoinTree F) (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdges : ∀ (i : ι), (F i).edges ⊆ E)
+  (hLink : ∀ ⦃i j : ι⦄, J.tree.Adj i j → AllowedIntersection (F i) (F j)) : ForestOfCopies F
+StructuralRamsey.Girth.JoinTree.edge_occurrence_preconnected_of_linkAllowed_of_linear.{v} {W ι : Type v}
+  {F : ι → HypergraphPiece W} (J : JoinTree F) (E : Set (Set W)) (hLinear : LinearEdgeSet E)
+  (hEdges : ∀ (i : ι), (F i).edges ⊆ E) (hLink : ∀ ⦃i j : ι⦄, J.tree.Adj i j → AllowedIntersection (F i) (F j))
+  (e : Set W) (hBig : ¬e.Subsingleton) : (SimpleGraph.induce {i | e ∈ (F i).edges} J.tree).Preconnected
+StructuralRamsey.Girth.forestOfCopies_iff_empty_or_linkAllowed_joinTree_of_linear.{v} {W ι : Type v}
+  {F : ι → HypergraphPiece W} (E : Set (Set W)) (hLinear : LinearEdgeSet E) (hEdges : ∀ (i : ι), (F i).edges ⊆ E) :
+  ForestOfCopies F ↔ IsEmpty ι ∨ ∃ J, ∀ ⦃i j : ι⦄, J.tree.Adj i j → AllowedIntersection (F i) (F j)
+'StructuralRamsey.Girth.JoinTree.compact_mem_carrier_of_mem_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.JoinTree.pairwiseAllowed_of_linkAllowed_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.JoinTree.forestOfCopies_of_linkAllowed_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.JoinTree.edge_occurrence_preconnected_of_linkAllowed_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.forestOfCopies_iff_empty_or_linkAllowed_joinTree_of_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'CompactDiagramForestRegression.leaves_not_allowed' depends on axioms: [propext]
+'CompactDiagramForestRegression.ambient_not_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CompactDiagramForestRegression.not_forest' depends on axioms: [propext, Quot.sound]
