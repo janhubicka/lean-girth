@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-09",
+  "module": "Girth/ACopySeedSynchronization.lean",
+  "checks": "CheckACopySeedSynchronization.lean",
+  "lean_version": "4.35.0-rc3",
+  "mathlib_commit": "5bd58ac291422a21f412ae354c91e7d172255a2c",
+  "source_sha256": {
+    "Girth/ACopySeedSynchronization.lean": "cc492cb7c10b321b7b5d732fa8d3d6b395d9e13333bff28ebb2a15e5197f83ba",
+    "CheckACopySeedSynchronization.lean": "057c11939d3b22a88a7c9dbb20c1c6fc11c4adec71e7eb31af644e9c3490f071"
+  },
+  "checked_declarations": [
+    "StructuralRamsey.Girth.ACopySeedSynchronization.familyArrow_of_synchronizes",
+    "StructuralRamsey.Girth.ACopySeedSynchronization.factor_through_of_fibreConstant",
+    "StructuralRamsey.Girth.ACopySeedSynchronization.backwardFusion",
+    "StructuralRamsey.Girth.ACopySeedSynchronization.factorization_of_finitePass",
+    "StructuralRamsey.Girth.ACopySeedSynchronization.synchronizes_of_factorizingSelections",
+    "StructuralRamsey.Girth.ACopySeedSynchronization.synchronizes_of_finitePass",
+    "ACopySeedSynchronizationRegression.base_arrow",
+    "ACopySeedSynchronizationRegression.projection_exact",
+    "ACopySeedSynchronizationRegression.projection_injective",
+    "ACopySeedSynchronizationRegression.projection_respects",
+    "ACopySeedSynchronizationRegression.every_chart_lifts",
+    "ACopySeedSynchronizationRegression.lifted_disjoint",
+    "ACopySeedSynchronizationRegression.lifted_cover",
+    "ACopySeedSynchronizationRegression.lifted_not_arrow",
+    "ACopySeedSynchronizationRegression.not_synchronized",
+    "ACopySeedSynchronizationRegression.empty_fibre_extension"
+  ],
+  "count": 16,
+  "strict_axiom_audit": "passed; only propext, Classical.choice and Quot.sound allowed",
+  "new_source_warnings": [],
+  "runtime_warning": "pre-existing local Batteries compatibility adjustment",
+  "scope": "Six abstract colour-selection theorems plus ten finite regression declarations; local-step existence, geometry, faithful realization and recursive assembly remain inputs/unproved here."
+}

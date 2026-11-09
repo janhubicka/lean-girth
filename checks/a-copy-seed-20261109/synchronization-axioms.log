@@ -1,0 +1,24 @@
+warning: batteries: repository has local changes:
+  /workspace/scratch/095f642caf71/lean-girth-a-copy/.lake/packages/batteries
+'StructuralRamsey.Girth.ACopySeedSynchronization.familyArrow_of_synchronizes' does not depend on any axioms
+'StructuralRamsey.Girth.ACopySeedSynchronization.factor_through_of_fibreConstant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopySeedSynchronization.backwardFusion' depends on axioms: [propext, Quot.sound]
+'StructuralRamsey.Girth.ACopySeedSynchronization.factorization_of_finitePass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'StructuralRamsey.Girth.ACopySeedSynchronization.synchronizes_of_factorizingSelections' does not depend on any axioms
+'StructuralRamsey.Girth.ACopySeedSynchronization.synchronizes_of_finitePass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'ACopySeedSynchronizationRegression.base_arrow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.projection_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.projection_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.projection_respects' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.every_chart_lifts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.lifted_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.lifted_cover' does not depend on any axioms
+'ACopySeedSynchronizationRegression.lifted_not_arrow' does not depend on any axioms
+'ACopySeedSynchronizationRegression.not_synchronized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ACopySeedSynchronizationRegression.empty_fibre_extension' depends on axioms: [propext, Classical.choice, Quot.sound]
