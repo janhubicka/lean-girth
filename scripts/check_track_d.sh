@@ -65,6 +65,7 @@ checks=(
   CheckTrainRecursiveCoarsenedStageParameters
   CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
+  CheckTrainRecursiveActualHeightCutoffApplication
   CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveCoarsenedSelectedRestriction
   CheckTrainRecursiveActualFineInputs
@@ -154,6 +155,7 @@ for check in "${checks[@]}"; do
   python3 scripts/check_axioms.py "${check}.log" "${check}.lean"
 done
 
+python3 scripts/check_track_b_retained_cutoff.py
 python3 scripts/check_boundary_transport.py
 python3 scripts/check_boundary_girth.py
 python3 scripts/check_order_one_bridge.py
