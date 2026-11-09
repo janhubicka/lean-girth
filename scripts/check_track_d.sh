@@ -29,6 +29,7 @@ checks=(
   CheckForestToSupremeActualGeometry
   CheckTrainRecursiveWitness
   CheckTrainRecursiveWitnessPass
+  CheckTrainRecursiveIntrinsicTailSupreme
   CheckTrainRecursiveWitnessInitial
   CheckTrainRecursiveWitnessInitialParameters
   CheckTrainRecursiveWitnessInitialSupreme
