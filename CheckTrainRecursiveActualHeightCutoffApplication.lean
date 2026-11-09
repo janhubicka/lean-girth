@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveActualHeightCutoffApplication
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.actualReplicatedCutoff_height_eq
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fullSystem_for_actualHeight
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.actualReplicatedCutoff_retainedValue
