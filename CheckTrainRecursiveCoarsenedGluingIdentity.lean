@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCoarsenedGluingIdentity
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_gluingEmbedding_eq
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_gluingData_eq
