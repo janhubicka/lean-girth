@@ -1,0 +1,4 @@
+import Girth.ACopyActualLinkDomain
+
+#print axioms StructuralRamsey.Girth.ACopyActualLinkDomain.inducedNodeMap
+#print axioms StructuralRamsey.Girth.ACopyActualLinkDomain.inducedNodeMap_range_iff

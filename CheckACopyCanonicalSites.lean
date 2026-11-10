@@ -1,0 +1,8 @@
+import Girth.ACopyCanonicalSites
+
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.representative_carrier
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.representative_carrier_injective
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.representative_complete
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.representative_eq_of_rigid
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.embeddingsEquivSupport
+#print axioms StructuralRamsey.Girth.ACopyCanonicalSites.orderedEmbeddingsEquivSupport
