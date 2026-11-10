@@ -65,6 +65,7 @@ checks=(
   CheckTrainRecursiveCoarsenedStageParameters
   CheckTrainRecursiveCoarsenedSelectedFullSystem
   CheckTrainRecursiveActualCoarsenedFullRecursiveCutoffs
+  CheckTrainRecursiveActualSelectedCoreGirth
   CheckTrainRecursiveActualCoarsenedFullSystem
   CheckTrainRecursiveCoarsenedGluingIdentity
   CheckTrainRecursiveActualHeightCutoffApplication
