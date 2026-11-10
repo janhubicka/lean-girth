@@ -60,10 +60,10 @@ theorem source_pair_meets_core
     (hp : p ∈ Set.range (D.sourceMap i) ∩ Set.range (D.sourceMap j)) :
     p ∈ Set.range D.coreMap := by
   have hi : p ∈ D.sourceImage i := by
-    rw [← D.source_range i]
+    rw [← source_range D i]
     exact hp.1
   have hj : p ∈ D.sourceImage j := by
-    rw [← D.source_range j]
+    rw [← source_range D j]
     exact hp.2
   have hshared : p ∈ D.sharedImage i ∩ D.sharedImage j := by
     rw [← D.distinct_sourceImage_inter i j hij]
@@ -100,7 +100,7 @@ def sourceRelEmbedding
   have hStandards : SourceSourceAgreement S D.sourceMap :=
     sourceAgreement_of_core C S D.coreMap D.sourceMap
       (fun j => D.sourceMap_injective j)
-      (fun j k hjk p hp => D.source_pair_meets_core j k hjk p hp)
+      (fun j k hjk p hp => source_pair_meets_core D j k hjk p hp)
       hAgree
   exact ACopyRelationalUnion.sourceEmbedding C S D.coreMap D.sourceMap
     i (D.sourceMap_injective i) hAgree hStandards
