@@ -1,0 +1,4 @@
+import Girth.ACopyFaithfulStar
+
+#print axioms StructuralRamsey.Girth.ACopyFaithfulStar.localACompleteness_of_core_and_sources
+#print axioms StructuralRamsey.Girth.ACopyFaithfulStar.actual_physical_support_equiv_of_full_links

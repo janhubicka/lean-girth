@@ -1,0 +1,4 @@
+import Girth.ACopyStarChartCoverage
+
+#print axioms StructuralRamsey.Girth.ACopyStarChartCoverage.irreducible_set_core_or_source
+#print axioms StructuralRamsey.Girth.ACopyStarChartCoverage.starChartCoversIrreducibles

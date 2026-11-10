@@ -1,0 +1,70 @@
+name: Focused A-copy star chart adapter
+
+on:
+  push:
+    branches:
+      - validation/a-copy-star-chart-adapter-20261110
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache Lean toolchain
+        uses: actions/cache@v5
+        with:
+          path: ~/.elan/toolchains
+          key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
+      - name: Cache Lake dependencies
+        uses: actions/cache@v5
+        with:
+          path: .lake
+          key: a-copy-focused-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
+      - name: Install elan
+        run: |
+          set -euo pipefail
+          curl --retry 3 --retry-all-errors --retry-delay 5 -fsS https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Acquire pinned Mathlib cache
+        run: |
+          set -euo pipefail
+          rm -f .lake/packages/batteries/.git/index.lock
+          for attempt in 1 2 3; do
+            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup; then exit 0; fi
+            if [[ $attempt -eq 3 ]]; then exit 1; fi
+            sleep $((10 * attempt))
+          done
+      - name: Compile only the new interface
+        run: |
+          set -euo pipefail
+          lake build Girth.ACopyStarChartAdapter
+      - name: Strict transitive axiom audit
+        run: |
+          set -euo pipefail
+          lake env lean CheckACopyRelationalUnion.lean | tee CheckACopyRelationalUnion.log
+          lake env lean CheckACopyDecoratedRelationalStar.lean | tee CheckACopyDecoratedRelationalStar.log
+          lake env lean CheckACopyInducedLinkRelations.lean | tee CheckACopyInducedLinkRelations.log
+          lake env lean CheckACopyStarChartAdapter.lean | tee CheckACopyStarChartAdapter.log
+          python3 scripts/check_axioms.py CheckACopyRelationalUnion.log CheckACopyRelationalUnion.lean
+          python3 scripts/check_axioms.py CheckACopyDecoratedRelationalStar.log CheckACopyDecoratedRelationalStar.lean
+          python3 scripts/check_axioms.py CheckACopyInducedLinkRelations.log CheckACopyInducedLinkRelations.lean
+          python3 scripts/check_axioms.py CheckACopyStarChartAdapter.log CheckACopyStarChartAdapter.lean
+      - name: Check source for admitted/unsafe code
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path("Girth/ACopyStarChartAdapter.lean")
+          s=p.read_text()
+          s=re.sub(r"/-.*?-/", "", s, flags=re.S)
+          s=re.sub(r"--[^\n]*", "", s)
+          assert not re.search(r"\b(sorry|sorryAx|admit|axiom|unsafe|native_decide|implemented_by)\b", s)
+          print("No admitted proofs or unsafe tokens.")
+          PY

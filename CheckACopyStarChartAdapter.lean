@@ -1,0 +1,5 @@
+import Girth.ACopyStarChartAdapter
+
+#print axioms StructuralRamsey.Girth.ACopyStarChartAdapter.chartPoints
+#print axioms StructuralRamsey.Girth.ACopyStarChartAdapter.chartStructure
+#print axioms StructuralRamsey.Girth.ACopyStarChartAdapter.chartEmbedding
