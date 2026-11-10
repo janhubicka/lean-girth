@@ -28,6 +28,7 @@ namespace StructuralRamsey.Girth.ACopyActualRelationalStar
 open StructuralRamsey.RelStructure
 open ACopyLayeredStar ACopyDecoratedStar ACopyFullDomain
 open ACopyStarChartAdapter ACopyStarChartCoverage ACopyFaithfulStar
+open ACopyDecoratedRelationalStar
 open ACopyNodeRelationalLift
 
 universe u v
