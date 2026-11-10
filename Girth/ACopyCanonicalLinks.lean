@@ -55,7 +55,8 @@ theorem nodeMap_injective
 theorem nodeMap_mem_image
     (j : Embedding Q H) (p : supportCopies A Q) :
     (nodeMap j p).val = j '' p.val := by
-  rw [nodeMap_carrier, representative_carrier]
+  change copyCarrier (j.comp (representative p)) = j '' p.val
+  rw [← representative_carrier p]
   ext x
   constructor
   · rintro ⟨a, rfl⟩
