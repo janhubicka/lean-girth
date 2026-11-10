@@ -41,6 +41,7 @@ theorem source_core_eq_link_witness
     ∃ p : PQ i,
       Quotient.mk D.coreEq (D.alpha i p) = x ∧
       Quotient.mk (D.sourceEq i) (D.beta i p) = y := by
+  revert hxy
   refine Quotient.inductionOn x ?_
   intro a
   refine Quotient.inductionOn y ?_
