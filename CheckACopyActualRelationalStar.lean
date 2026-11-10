@@ -1,0 +1,6 @@
+import Girth.ACopyActualRelationalStar
+
+#print axioms StructuralRamsey.Girth.ACopyActualRelationalStar.sameCopy_comp
+#print axioms StructuralRamsey.Girth.ACopyActualRelationalStar.core_native_carrier_eq
+#print axioms StructuralRamsey.Girth.ACopyActualRelationalStar.source_native_carrier_eq
+#print axioms StructuralRamsey.Girth.ACopyActualRelationalStar.actual_support_equiv_of_native_star
