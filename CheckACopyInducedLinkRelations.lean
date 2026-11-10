@@ -1,0 +1,6 @@
+import Girth.ACopyInducedLinkRelations
+
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkRelations.source_core_eq_link_witness
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkRelations.core_source_agreement_of_full_induced_links
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkRelations.core_embedding_of_full_induced_links
+#print axioms StructuralRamsey.Girth.ACopyInducedLinkRelations.source_embedding_of_full_induced_links
