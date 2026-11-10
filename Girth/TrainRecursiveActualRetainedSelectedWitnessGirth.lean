@@ -97,6 +97,8 @@ theorem ForestTailStage.coarsenedSelected_retainedSharedFullSystem_of_realStage
   have hLen : lowerCuts.length = m + r :=
     actualReplicatedCutoff_height_eq q r tail
   let T := S.train.castHeight hLen
+  -- Reduce the three local `let` bindings in the statement before introducing the cut.
+  dsimp only
   intro j hj
   let μ : Fin (m + 1) := j.castSucc
   let ν : Fin (m + r + 1) :=
