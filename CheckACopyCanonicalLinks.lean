@@ -1,0 +1,7 @@
+import Girth.ACopyCanonicalLinks
+
+#print axioms StructuralRamsey.Girth.ACopyCanonicalLinks.nodeMap_carrier
+#print axioms StructuralRamsey.Girth.ACopyCanonicalLinks.nodeMap_injective
+#print axioms StructuralRamsey.Girth.ACopyCanonicalLinks.nodeMap_mem_image
+#print axioms StructuralRamsey.Girth.ACopyCanonicalLinks.representative_nodeMap_commutes_of_rigid
+#print axioms StructuralRamsey.Girth.ACopyCanonicalLinks.ordered_representative_nodeMap_commutes
