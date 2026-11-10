@@ -1,0 +1,5 @@
+import Girth.ACopyNodeRelationalLift
+
+#print axioms StructuralRamsey.Girth.ACopyNodeRelationalLift.raw_node_coordinate_eq
+#print axioms StructuralRamsey.Girth.ACopyNodeRelationalLift.nodeRelEmbedding
+#print axioms StructuralRamsey.Girth.ACopyNodeRelationalLift.node_rel_embedding_coordinates
