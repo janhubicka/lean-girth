@@ -43,9 +43,9 @@ theorem nodeMap_carrier
 needed here because physical nodes are already carrier sets. -/
 theorem nodeMap_injective
     (j : Embedding Q H) :
-    Function.Injective (nodeMap j) := by
+    Function.Injective (nodeMap (A := A) j) := by
   intro p q h
-  apply representative_carrier_injective
+  apply (representative_carrier_injective (A := A) (H := Q))
   have hComp : SameCopy (j.comp (representative p))
       (j.comp (representative q)) :=
     congrArg Subtype.val h
