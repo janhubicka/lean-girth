@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCanonicalActualLowerCoreGirth
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalLowerParent_subsingleton
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.canonicalSelectedLower_coreGirth_from_actualLower
