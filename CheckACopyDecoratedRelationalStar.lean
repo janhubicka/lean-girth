@@ -1,0 +1,7 @@
+import Girth.ACopyDecoratedRelationalStar
+
+#print axioms StructuralRamsey.Girth.ACopyDecoratedRelationalStar.core_range
+#print axioms StructuralRamsey.Girth.ACopyDecoratedRelationalStar.source_range
+#print axioms StructuralRamsey.Girth.ACopyDecoratedRelationalStar.source_pair_meets_core
+#print axioms StructuralRamsey.Girth.ACopyDecoratedRelationalStar.coreRelEmbedding
+#print axioms StructuralRamsey.Girth.ACopyDecoratedRelationalStar.sourceRelEmbedding
