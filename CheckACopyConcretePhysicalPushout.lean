@@ -1,0 +1,6 @@
+import Girth.ACopyConcretePhysicalPushout
+
+#print axioms StructuralRamsey.Girth.ACopyConcretePhysicalPushout.toGenuine
+#print axioms StructuralRamsey.Girth.ACopyConcretePhysicalPushout.fromGenuine
+#print axioms StructuralRamsey.Girth.ACopyConcretePhysicalPushout.physicalNodesEquivGenuine
+#print axioms StructuralRamsey.Girth.ACopyConcretePhysicalPushout.actualPictureNodeSupportEquiv
