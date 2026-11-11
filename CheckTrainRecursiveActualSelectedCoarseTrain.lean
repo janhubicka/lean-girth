@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualSelectedCoarseTrain
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarseSharedTrain_iff_of_realRefinedLower
