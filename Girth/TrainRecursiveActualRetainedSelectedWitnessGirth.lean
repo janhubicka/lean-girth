@@ -104,8 +104,9 @@ theorem ForestTailStage.coarsenedSelected_retainedSharedFullSystem_of_realStage
   let ν : Fin (m + r + 1) :=
     EdgeTrainLevels.firstForgetIndex m r μ
   have hν : ν.val = j.val + r := by
-    simp only [ν, μ, EdgeTrainLevels.firstForgetIndex,
-      Nat.ne_of_gt hj, ↓reduceIte]
+    have hμ : μ.val = j.val := rfl
+    change (if μ.val = 0 then 0 else μ.val + r) = j.val + r
+    rw [hμ, if_neg (Nat.ne_of_gt hj)]
   let k : Fin lowerCuts.length := ⟨ν.val, by
     rw [hLen]
     have hjLt := j.isLt
