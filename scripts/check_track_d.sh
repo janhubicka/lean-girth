@@ -174,6 +174,7 @@ checks=(
   CheckRealSharedShortOldPairProbe
   CheckWitnessCopyShadowProbe
   CheckActualOneLevelGirthIntrinsic
+  CheckTrainRecursiveIntrinsicTailSupreme
 )
 
 for check in "${checks[@]}"; do
