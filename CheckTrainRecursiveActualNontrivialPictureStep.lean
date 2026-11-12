@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualNontrivialPictureStep
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.actualNontrivialPictureStep_of_selectedLower
