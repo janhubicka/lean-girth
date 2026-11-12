@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveSelectedFineTrainHeight
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.castHeight_rel_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_fineRestriction_castHeight
