@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveActualPairedTailInputs
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarseSharedTrain_iff_of_realRefinedLower
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_originalTailAndTrain_of_realRefinedStage
