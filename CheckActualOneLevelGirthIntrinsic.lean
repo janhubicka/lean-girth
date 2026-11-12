@@ -1,0 +1,3 @@
+import Girth.TrainActualOneLevelGirthIntrinsic
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_intrinsic_geometry
