@@ -175,6 +175,7 @@ checks=(
   CheckWitnessCopyShadowProbe
   CheckActualOneLevelGirthIntrinsic
   CheckTrainRecursiveIntrinsicTailSupreme
+  CheckTrainRecursiveActualAttachedPositive
 )
 
 for check in "${checks[@]}"; do
