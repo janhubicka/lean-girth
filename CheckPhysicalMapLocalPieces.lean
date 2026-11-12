@@ -1,0 +1,7 @@
+import Girth.TrainPhysicalMapLocalPieces
+
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.shortPiece_map_local
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.longPiece_map_local
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.localPiece_map
+
+#print axioms StructuralRamsey.Girth.OrderOneData.LiteralPhysicalMap.source_parent_eq_of_output_parent_eq

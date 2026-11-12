@@ -1,0 +1,3 @@
+import Girth.TrainActualMinimalTwoCutResidualClosure
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_minimal_two_cut_cases

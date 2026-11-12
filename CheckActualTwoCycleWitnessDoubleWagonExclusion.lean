@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCycleWitnessDoubleWagonExclusion
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_no_double_wagon_of_witness
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_actual_witness
