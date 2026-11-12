@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveCanonicalFineAllowedHeight
+
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.canonicalFineAllowed_castHeight_all_constraints
