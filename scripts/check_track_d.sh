@@ -68,6 +68,7 @@ checks=(
   CheckTrainRecursiveActualSelectedCoreGirth
   CheckTrainRecursiveCanonicalActualLowerCoreGirth
   CheckTrainRecursiveActualCoarsenedFullSystem
+  CheckTrainRecursiveActualRetainedSelectedWitnessGirth
   CheckTrainRecursiveCoarsenedGluingIdentity
   CheckTrainRecursiveActualHeightCutoffApplication
   CheckTrainRecursiveCoarsenedSelectedRestriction
