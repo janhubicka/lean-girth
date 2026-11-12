@@ -176,6 +176,7 @@ checks=(
   CheckActualOneLevelGirthIntrinsic
   CheckTrainRecursiveIntrinsicTailSupreme
   CheckTrainRecursiveActualAttachedPositive
+  CheckTrainRecursiveCanonicalFineAllowedHeight
 )
 
 for check in "${checks[@]}"; do
