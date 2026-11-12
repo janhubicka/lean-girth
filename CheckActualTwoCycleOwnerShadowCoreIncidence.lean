@@ -1,0 +1,4 @@
+import Girth.TrainActualTwoCycleOwnerShadowCoreIncidence
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.two_all_label_connector_incidence
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_other_owner_core_shadow
