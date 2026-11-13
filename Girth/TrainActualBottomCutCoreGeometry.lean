@@ -1,6 +1,7 @@
 import Girth.TrainActualBottomDesignatedBoundary
 import Girth.TrainActualCutConnectorLift
 import Girth.TrainCoreWagonEmbedding
+import Girth.TrainActualNormalizedMinimalOwners
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -245,6 +246,56 @@ theorem attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
     A hA B D C family selected e R f T U hShared
     hLinear hStrong K hNormalized owner hAllowed hMinimal
     k hLeftCut hRightCut hCoreMixed
+
+
+/-- One actual output bottom cycle can be simultaneously short-normalized
+and assigned minimum GEOMETRIC owners, with no mixed singleton segment.
+Its connector word and order are unchanged; every later genuinely
+supreme ORIGINAL B-label pulls back to the initial cycle. This is the
+precise input to the separate finite segment-word budget theorem. -/
+theorem attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
+    [Nontrivial UA]
+    (hPhysical : ALinear A Actual)
+    (hStrong : ∀ q : Selected, AStrong A D (copyCarrier q.1.base))
+    {n : ℕ} (K : (Out).BigCycle n)
+    (hAccept : K.Acceptable) (hn : 3 ≤ n) :
+    ∃ Z : (Out).BigCycle n,
+      Z.Acceptable ∧ Z.twiceOrder = K.twiceOrder ∧
+      Z.MixedNormalized Out ∧
+      (∀ j : Fin n, Z.connector j = K.connector j) ∧
+      ∃ owner : Fin n → I ⊕ CoreEdge,
+        (∀ j, GeomAllowed (Z.label j) (owner j)) ∧
+        (∀ other : Fin n → I ⊕ CoreEdge,
+          (∀ j, GeomAllowed (Z.label j) (other j)) →
+          cyclicOwnerChanges owner ≤ cyclicOwnerChanges other) ∧
+        (∀ k : Fin n,
+          owner (trainCyclicPred k) ≠ owner k →
+          owner k ≠ owner (cyclicSucc k) →
+          ¬ ∃ x : RelStructure.Attachment.Vertex S (W := Y) (I := I),
+            ∃ p : Quotient ((Train).wagonSetoid μBottom),
+              (Z.connector (trainCyclicPred k) = Sum.inl x ∧
+                Z.connector k = Sum.inr p) ∨
+              (Z.connector (trainCyclicPred k) = Sum.inr p ∧
+                Z.connector k = Sum.inl x)) ∧
+        (∀ kZ : Fin n, Z.HasSupremeAt Out kZ →
+          ∃ kK : Fin n, K.label kK = Z.label kZ ∧
+            K.HasSupremeAt Out kK) := by
+  let H := attachedSelectedPicture_bottomForestGeometry
+    A hA B D C family selected e R f T U hShared hPhysical
+  have hOutputLinear : (Out).LinearPretrain :=
+    OrderOneData.BottomForestGeometry.linearPretrain Out H
+  obtain ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
+      ⟨owner, hAllowed, hMinimal⟩, hPull⟩ :=
+    attachedSelectedPicture_exists_normalized_minimal_geometric_owners
+      A hA B D C family selected e R f T U hShared
+      K hAccept hOutputLinear hn
+  refine ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
+    owner, hAllowed, hMinimal, ?_, hPull⟩
+  intro k hLeft hRight hMixed
+  exact attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
+    A hA B D C family selected e R f T U hShared hRel
+    hPhysical hStrong Z hZNormal owner hAllowed hMinimal
+    k hLeft hRight hMixed
 
 end ActualBottomCutGeometry
 
