@@ -1,4 +1,4 @@
-import Girth.TrainMinimalOwnerReassignment
+import Girth.TrainCyclicOwnerIsolatedNonincrease
 import Girth.TrainBottomWagonNeighbourEdge
 
 /-!
@@ -135,9 +135,29 @@ theorem BigCycle.bottom_minimal_no_isolated_edge_wagon
       change D.carrier (C.label k) ⊆ stdCarrier s
       simpa only [hLabel, D.carrier] using hSub
   obtain ⟨s, hCan, hAdj⟩ := hNeighbour
-  exact minimalCyclicOwner_no_isolated_adjacent_reassignment
-    C.length_ge_two
-    (fun j a => C.BottomGeometricAllowed D stdCarrier coreToEdge j a)
-    owner hAllowed hMinimal k hLeftCut hRightCut (Sum.inl s) hCan hAdj
+  classical
+  let alternative : Fin n → Std ⊕ Core :=
+    cyclicReplaceOwner owner k (Sum.inl s)
+  have hAltAllowed : ∀ j,
+      C.BottomGeometricAllowed D stdCarrier coreToEdge j (alternative j) := by
+    intro j
+    by_cases hj : j = k
+    · subst j
+      have hChoice : alternative k = Sum.inl s := by
+        simp [alternative, cyclicReplaceOwner]
+      rw [hChoice]
+      exact hCan
+    · have hSame : alternative j = owner j := by
+        simp [alternative, cyclicReplaceOwner, hj]
+      rw [hSame]
+      exact hAllowed j
+  have hAdjacent : owner (cyclicSucc k) = Sum.inl s ∨
+      owner (trainCyclicPred k) = Sum.inl s := by
+    rcases hAdj with hp | hs
+    · exact Or.inr hp.symm
+    · exact Or.inl hs.symm
+  have hStrict := cyclicOwnerChanges_replace_isolated_strict_of_neighbor
+    C.length_ge_two owner k (Sum.inl s) hLeftCut hRightCut hAdjacent
+  exact (not_lt_of_ge (hMinimal alternative hAltAllowed)) hStrict
 
 end StructuralRamsey.Girth.OrderOneData
