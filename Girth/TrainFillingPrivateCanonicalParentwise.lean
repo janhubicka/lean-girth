@@ -59,13 +59,17 @@ noncomputable def canonicalFilledSelectedData
   parent := fun e =>
     Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e
 
-/-- The actual selected canonical filling data admit a genuine
+/-- This formulation asks only for exact physical filled-edge
+carriers, the precise geometric field of global scattering.
+The ordered-carrier theorem can supply it without separately
+identifying every X-coordinate pointwise. -/
+/-- The exact physical-edge carrier statement suffices for the
 faithful parentwise realization. The constructed record has
 physical and quotient-wagon injectivity and all exact image laws.
 Only *input* train faithfulness and literal canonical placement
 compatibility are premises; neither output girth nor output
 parentwise identity is assumed. -/
-noncomputable def canonicalFilledSelectedFaithfulRealization
+noncomputable def canonicalFilledSelectedFaithfulRealization_of_carrier
     (H : UniformFillingData Y X)
     (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
     (vertex : I → Vertex U ↪ Y)
@@ -77,9 +81,9 @@ noncomputable def canonicalFilledSelectedFaithfulRealization
     (hFaithful : ∀ i : I, ∀ a b : C × P,
       (contractedChoiceTrain U T hm).rel ν a b ↔
         S.rel ν (β i a) (β i b))
-    (hPlace : ∀ (i : I) (c : C) (p : P) (x : X),
-      H.place (β i (c, p)) x =
-        vertex i (tagVertex U c ((U c).place p x))) :
+    (hEdgeCarrier : ∀ (i : I) (a : Edge U),
+      (selectedIndexedFilledEdgeEmbedding U H hTemplate (β i) a).1 =
+        vertex i '' edgeCarrier U a) :
     FaithfulParentwisePhysicalRealization U
       (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
       (canonicalFilledSelectedData U H vertex β S ν) where
@@ -105,10 +109,7 @@ noncomputable def canonicalFilledSelectedFaithfulRealization
             (selectedIndexedFilledEdgeEmbedding U H hTemplate (β i) b))
     exact selectedIndexedRestoredParent_iff U H hTemplate T hm S
       (β i) ν hProper (hFaithful i) a b
-  edgeCarrier_eq := by
-    intro i a
-    exact selectedIndexedFilledEdgeEmbedding_carrier
-      U H hTemplate (β i) (vertex i) (hPlace i) a
+  edgeCarrier_eq := hEdgeCarrier
   copyCarrier_eq := by
     intro i
     rfl
@@ -116,6 +117,36 @@ noncomputable def canonicalFilledSelectedFaithfulRealization
     intro i
     exact (selectedIndexedFilledEdgeEmbedding_range
       U H hTemplate (β i)).symm
+
+/-- The actual selected canonical filling data admit a genuine
+faithful parentwise realization. The constructed record has
+physical and quotient-wagon injectivity and all exact image laws.
+Only *input* train faithfulness and literal canonical placement
+compatibility are premises; neither output girth nor output
+parentwise identity is assumed. -/
+noncomputable def canonicalFilledSelectedFaithfulRealization
+    (H : UniformFillingData Y X)
+    (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
+    (vertex : I → Vertex U ↪ Y)
+    (β : I → (C × P) ↪ H.OldEdge)
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (S : EdgeTrainLevels H.OldEdge m)
+    (ν : Fin (m + 1)) (hProper : ν.val < m)
+    (hLocal : ∀ c : C, Nonempty (U c).LocalEdge)
+    (hFaithful : ∀ i : I, ∀ a b : C × P,
+      (contractedChoiceTrain U T hm).rel ν a b ↔
+        S.rel ν (β i a) (β i b))
+    (hPlace : ∀ (i : I) (c : C) (p : P) (x : X),
+      H.place (β i (c, p)) x =
+        vertex i (tagVertex U c ((U c).place p x))) :
+    FaithfulParentwisePhysicalRealization U
+      (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
+      (canonicalFilledSelectedData U H vertex β S ν) :=
+  canonicalFilledSelectedFaithfulRealization_of_carrier
+    U H hTemplate vertex β T hm S ν hProper hLocal hFaithful
+    (fun i a =>
+      selectedIndexedFilledEdgeEmbedding_carrier
+        U H hTemplate (β i) (vertex i) (hPlace i) a)
 
 /-- Once the OLD full system-girth bound is supplied by the genuine
 shorter OrderStage and the canonical filling theorem, the resulting
