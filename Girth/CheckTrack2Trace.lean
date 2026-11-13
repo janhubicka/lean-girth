@@ -20,5 +20,7 @@ import Girth.ForestOldActiveGirth
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
 
 #print axioms StructuralRamsey.Girth.girthGT_of_forestCompletion_designated_traces
+#print axioms StructuralRamsey.Girth.aOneEdge_smallOrWholeBoundary_of_aStrong
+#print axioms StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
 #print axioms StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
