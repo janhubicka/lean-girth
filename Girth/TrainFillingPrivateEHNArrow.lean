@@ -96,9 +96,9 @@ theorem exists_colouredRamsey_unequalSummandPrivateChoices
         (StructuralRamsey.Structure.Embedding
           (targetClosureExpansion A B) C) →
           PrivateWagonInput V P X),
-        (∀ b, (U b).templateEdges =
-          supportCopies A (closureRelReduct C)) ∧
-        (∀ ρ :
+        ∃ (hTemplate : ∀ b, (U b).templateEdges =
+          supportCopies A (closureRelReduct C)),
+        ∀ ρ :
           {e : Set X // e ∈ supportCopies A (closureRelReduct C)} → κ,
           ∃ (b : StructuralRamsey.Structure.Embedding
                (targetClosureExpansion A B) C)
@@ -108,11 +108,7 @@ theorem exists_colouredRamsey_unequalSummandPrivateChoices
                 e ∈ supportCopies A (closureRelReduct C)},
                 e ∈ selectedCommonEdges U
                   (supportCopies A (closureRelReduct C))
-                  (fun b => by
-                    simpa only using
-                      (show (U b).templateEdges =
-                        supportCopies A (closureRelReduct C) from rfl))
-                  b p → ρ e = colour) := by
+                  hTemplate b p → ρ e = colour := by
   classical
   obtain ⟨X, hFinite, ord, C, hClass, hRamsey⟩ :=
     closedTargetRamseyFamily_of_monotone_embeddings
