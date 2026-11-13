@@ -111,7 +111,7 @@ theorem attachedSelectedPicture_bottom_cut_connector_core
   | inl y =>
       left
       refine ⟨y, ?_⟩
-      simpa only [Sum.map_inl] using hMap.symm
+      simpa using hMap.symm
   | inr w =>
       induction w using Quotient.inductionOn with
       | h b =>
