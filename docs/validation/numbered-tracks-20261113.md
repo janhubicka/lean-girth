@@ -6,10 +6,10 @@ This is a **new** validation plan, not a renaming of legacy tracks A–G. Existi
 
 - Audited proposed manuscript: 41 pages, 69 numbered mathematical statements, 23 reachable TeX inputs.
 - Canonical reachable-source SHA-256: `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-- Manuscript `janhubicka/girth` pre-integration `main`: `c195cdbaaabbafe53ac313fd283ffcaa0a159494`.
+- Manuscript **current `main`** after audited tag-first merge: [`8c9cfa6eb6d817a08f3009fe048fc0be07426ece`](https://github.com/janhubicka/girth/commit/8c9cfa6eb6d817a08f3009fe048fc0be07426ece), from merged [PR #445](https://github.com/janhubicka/girth/pull/445). Pre-merge `main` was `c195cdbaaabbafe53ac313fd283ffcaa0a159494`.
 - `lean-girth` baseline: `e57c954c6417604d35332adfdf3304a225281eca`, pinned to `leanprover/lean4:v4.35.0-rc3`.
-- Manuscript source is staged as [girth draft PR #445](https://github.com/janhubicka/girth/pull/445), exact current head `79e451ecbfa5668be414e08001f4c96a5af1efbb`; spawn validation against that SHA until the tag-first merge occurs. The 23 printed TeX input files have byte-identical Git blobs to the audited archive.
-- Manuscript publishing is **pending creation/verification of the requested Git tag**. A backup **branch** exists at `girth/backup/main-before-eppa-20261113-c195cdba` but this is not a Git tag. Do not claim manuscript `main` already contains the revision.
+- The 23 reachable TeX inputs in merged PR #445 have byte-identical Git blobs to the audited archive. **Pin all new validation to the merged commit** `8c9cfa6eb6d817a08f3009fe048fc0be07426ece` and the manifest digest above, rather than the old PR head.
+- The annotated tag [`girth-main-before-eppa-preparation-20261113-c195cdba`](https://github.com/janhubicka/girth/tree/girth-main-before-eppa-preparation-20261113-c195cdba) was verified to dereference to the exact old `main` commit `c195cdbaaabbafe53ac313fd283ffcaa0a159494` **before** PR #445 was merged. The backup branch remains available. The required safeguard is satisfied.
 - [Programme index issue #1060](https://github.com/janhubicka/lean-girth/issues/1060). The previous digest in that issue refers to an earlier, unexported candidate; use the exact digest above.
 
 ## Tracks to spawn
@@ -47,4 +47,4 @@ This is a **new** validation plan, not a renaming of legacy tracks A–G. Existi
 4. Prefer local Lean; do not trigger paid GitHub Actions solely for this plan. Existing CI successes are historical, not a new build.
 5. Legacy lettered tracks remain historical. New work is labelled **Track 1** to **Track 8** only.
 
-**Status as of creation:** tracking/cleanup only; no new Lean formalization or exact-head kernel run is asserted by this document.
+**Status:** Manuscript PR #445 is merged and pinned. Repository preparation and historic PR cleanup are complete; **no new Lean kernel verification of the 41-page revision** is asserted here.
