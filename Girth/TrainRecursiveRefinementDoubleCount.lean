@@ -9,7 +9,7 @@ set_option Elab.async false
 
 Candidate, NOT YET KERNEL-VALIDATED at this commit. Do not promote a
 manuscript validation mark until a local build and strict axiom audit.
-No new axioms, `sorry`, geometry, or global girth assumptions are used.
+No new axioms, proof gaps, geometry, or global girth assumptions are used.
 
 If every label of a finite function has two distinct preimages, select
 two preimages per label. This gives an injection from `Bool × Label`
