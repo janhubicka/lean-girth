@@ -74,18 +74,21 @@ theorem selectedUnionPrivateChoices_commonLocalArrow
   intro p e he
   change e ∈ selectedCommonEdges U (supportCopies A R) hTemplate c p at he
   obtain ⟨f, hf, hfe⟩ := he
-  have hEq : (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) =
-      (f : {a : Set X // a ∈ supportCopies A R}) := by
+  -- In this concrete family the local edge type is definitionally
+  -- the common support-edge type; only the membership proof is changed
+  -- by choiceTemplateEquiv. The original selected edge f, not its
+  -- transported common label, is the element of (U c).selectedEdges.
+  have hColour : ρ f = colour := hLocal p f hf
+  have hEq :
+      (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) =
+        (f : {a : Set X // a ∈ supportCopies A R}) := by
     apply Subtype.ext
     rfl
-  have hMem :
-      (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) ∈
-        (U c).selectedEdges p := by
-    rw [hEq]
-    exact hf
-  have hColour :=
-    hLocal p (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) hMem
-  simpa only [hfe] using hColour
+  calc
+    ρ e = ρ (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) :=
+      congrArg ρ hfe.symm
+    _ = ρ f := congrArg ρ hEq
+    _ = colour := hColour
 
 end SummandPrivateTemplate
 end StructuralRamsey.Girth
