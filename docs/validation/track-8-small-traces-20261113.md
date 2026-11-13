@@ -31,7 +31,7 @@ Relevant reusable Lean interfaces:
 - Girth/ForestStructuralABCompletion.lean: actual A/B support-piece completion, **conditional** on local construction and geometry.
 - Girth/ActualDesignatedSupportBridge.lean: ambient B-copies and exact designated support.
 - Girth/MixedForestInduction.lean: mixedForest_embeds_supportedTree_of_bMemberSupport (requires actual forest, support of shared vertices, A→B, two distinct A vertices).
-- Girth/SupportedTree.lean: supported attachment constructors; its forgetful tree bridge has no converse.
+- Girth/SupportedTree.lean: supported attachment constructors; its forgetful tree bridge has no converse. Its gluePoint constructor records A-support in the accumulated old amalgam, not syntactically in a named old B-constituent. For the manuscript's stricter incident-constituent formulation, use A irreducibility and ASupportedTreeAmalgam.aCopy_contained_in_copy to localize that A-copy inside a constituent B-copy; do not silently identify these definitions without this adapter.
 - Girth/ForestTreeRewire.lean: deletion of one-edge pieces, **not** arbitrary deletion of forest subfamilies.
 
 Required new formal adapters: finite trace family/graph and chordal-clique-tree proof; full outer actual-copy forest completion; positive-arity relation coverage including repeated coordinates; ambient/designated carrier identification; shared-support transfer; induced restriction and nullary values. Track 2 must supply the completed join-tree lifting theorem and track 7 the genuine indexed recursive witness. A conditional forest interface is not the main theorem.
