@@ -39,6 +39,62 @@ variable {L : RelLanguage.{u}}
 variable {C V P X UA : Type v}
 variable (U : C → PrivateWagonInput V P X)
 
+/-- The actual OrderStage supplies all parent maps and range data.
+This version requires ONLY exact physical carrier transport,
+which the existing ordered-carrier theorem can derive. -/
+/-- An actual selected OrderStage constructs every field of the
+parentwise realization at one proper restored cut. Neither old-edge
+range, selected vertex map, edge map, wagon map, nor cut reflection
+is an application premise; all come from the SAME selected stage. -/
+noncomputable def actualOrderStageFaithfulParentwise_of_carrier [Nontrivial X]
+    (A : RelStructure L UA)
+    (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    {Base : Type v} (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.OrderStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
+    (hLocal : ∀ c : C, Nonempty (U c).LocalEdge)
+    (ν : Fin (t.length + 1)) (hProper : ν.val < t.length)
+    (hEdgeCarrier : ∀ (i : ActualOrderParent U A M T hm
+                     hSupport hLinear D family allowed S)
+                   (a : Edge U),
+      (selectedIndexedFilledEdgeEmbedding U H hTemplate
+        (actualOrderParentOldEdge U A M T hm
+          hSupport hLinear D family allowed S H hOld i) a).1 =
+      (actualOrderParentVertex U A M T hm
+        hSupport hLinear D family allowed S i) '' edgeCarrier U a) :
+    FaithfulParentwisePhysicalRealization U
+      (fun p : P => Quotient.mk (T.wagonSetoid ν) p)
+      (canonicalFilledSelectedData U H
+        (actualOrderParentVertex U A M T hm
+          hSupport hLinear D family allowed S)
+        (actualOrderParentOldEdge U A M T hm
+          hSupport hLinear D family allowed S H hOld)
+        (actualSelectedFilledOldTrain U A M T hm
+          hSupport hLinear D family allowed S.toForestTailStage
+            H hOld) ν) := by
+  let vertex := actualOrderParentVertex U A M T hm
+    hSupport hLinear D family allowed S
+  let β := actualOrderParentOldEdge U A M T hm
+    hSupport hLinear D family allowed S H hOld
+  let oldTrain := actualSelectedFilledOldTrain U A M T hm
+    hSupport hLinear D family allowed S.toForestTailStage H hOld
+  exact canonicalFilledSelectedFaithfulRealization_of_carrier
+    U H hTemplate vertex β T hm oldTrain ν hProper hLocal
+    (fun i a b => actualOrderParentOldEdge_faithful
+      U A M T hm hSupport hLinear D family allowed
+        S H hOld i ν a b)
+    hEdgeCarrier
+
+
 /-- An actual selected OrderStage constructs every field of the
 parentwise realization at one proper restored cut. Neither old-edge
 range, selected vertex map, edge map, wagon map, nor cut reflection
@@ -78,17 +134,15 @@ noncomputable def actualOrderStageFaithfulParentwise [Nontrivial X]
         (actualSelectedFilledOldTrain U A M T hm
           hSupport hLinear D family allowed S.toForestTailStage
             H hOld) ν) := by
-  let vertex := actualOrderParentVertex U A M T hm
-    hSupport hLinear D family allowed S
-  let β := actualOrderParentOldEdge U A M T hm
-    hSupport hLinear D family allowed S H hOld
-  let oldTrain := actualSelectedFilledOldTrain U A M T hm
-    hSupport hLinear D family allowed S.toForestTailStage H hOld
-  exact canonicalFilledSelectedFaithfulRealization
-    U H hTemplate vertex β T hm oldTrain ν hProper hLocal
-    (fun i a b => actualOrderParentOldEdge_faithful
-      U A M T hm hSupport hLinear D family allowed
-        S H hOld i ν a b)
-    hPlace
+  exact actualOrderStageFaithfulParentwise_of_carrier
+    U A M T hm hSupport hLinear D family allowed S H hOld
+      hTemplate hLocal ν hProper
+    (fun i a =>
+      selectedIndexedFilledEdgeEmbedding_carrier U H hTemplate
+        (actualOrderParentOldEdge U A M T hm
+          hSupport hLinear D family allowed S H hOld i)
+        (actualOrderParentVertex U A M T hm
+          hSupport hLinear D family allowed S i)
+        (hPlace i) a)
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
