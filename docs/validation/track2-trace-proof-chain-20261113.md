@@ -1,0 +1,46 @@
+# Numbered Track 2: proof chain and remaining validation gates
+
+Status: **source-level candidate, not kernel-verified** (13 November 2026).
+
+## Exact sources and separation of branches
+
+- Frozen circulation reference: `janhubicka/girth/main@8c9cfa6eb6d817a08f3009fe048fc0be07426ece`, reachable-source digest `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
+- Unmerged paper simplifications: [`edit/track2-forest-trace-20261113`](https://github.com/janhubicka/girth/tree/edit/track2-forest-trace-20261113). The accepted version is not modified.
+- Unmerged Lean candidate: [`validation/2-trace-girth-candidate`](https://github.com/janhubicka/lean-girth/tree/validation/2-trace-girth-candidate), created from `98e40142f95cf818f498ed21faf9302a50fe7832`. Source candidate head prior to this note: `c3fd87fea6edfaafacb884f5b3d003fed7bcbb18`.
+- No paid GitHub Actions checks launched. This checkout did **not** run Lean; local compiler/mathlib binaries are unavailable. The exact candidate `#print axioms` commands are in `Girth/CheckTrack2Trace.lean`, but have not been executed.
+
+## Exact theorem chain
+
+| Manuscript role | Candidate / existing Lean source | Contract |
+| --- | --- | --- |
+| `lem:foresttracegirth` | `ForestTraceAcyclic.girthGT_union_of_forest_edge_traces`, `girthGT_selected_of_forest_edge_traces` | Linear H, edges of size ≥2, every member traces at most one H-edge, selected edges occur as whole traces. Uses checked `girthGT_union_of_forest`; avoids another leaf induction. |
+| Indexed finite Berge-cycle contradiction | `ForestActiveTraceGirth.girthGT_of_bounded_smallOrWhole_forest_completions` | Turn a cycle into an injectively indexed family of mandatory edges; complete it, then pull back acyclicity. |
+| **Actual forest completion → active girth** | `ForestCompletionTraceBridge.girthGT_of_forestCompletion_designated_traces` | Consume the existing `ForestCompletionProperty` and `ForestCompletionWitness` records. Selected A-edges lie wholly inside S; require the boundary classification only for *added designated B-members*. The earlier stronger all-tested-piece version was removed. |
+| Actual selected B boundary | `ForestActiveTraceBoundary.projectedBCopy_smallOrWhole_activeBoundary` | The existing `projectedCopy_activeCarrier_intersection_classify` plus actual membership in the B-member's own A-support, not merely carrier intersection. |
+| True **old** active subsystem girth | `ForestOldActiveGirth.oldActiveSupport_girthGT_of_designatedCompletion`, `oldActiveInduced_girthGT_of_designatedCompletion` | Exact designated A/B piece predicates; old A-linearity, base B-projection A-strongness, genuine finite completion, two distinct vertices of A. Recover the actual induced active support via the existing mapped-support equivalence. Does **not** assume processed-output girth. |
+| Structural step already implemented conditionally | `ForestStructuralABCompletion.assemble_actual_AB_from_local_copy_cover` | Reuse the old completed picture and an actual local witness with A-copy coverage, local forest bound and output A-linearity. The generic join-tree lemma's singleton-helper refinement is **not** needed to apply this theorem to the edge-covered structural construction. |
+| Direct increment | `ForestActualRecursiveIncrement.actualPartiteDesignatedAB_mixedForest_of_relationalLocal` | A local witness, q=2 base versus q≥3 predecessor, whole gluing-image strongness, and independent output A-linearity/girth two. Do not derive the ambient girth assumption circularly from the desired forest. |
+
+## Adversarial audit conclusions
+
+1. The active-girth conclusion is about the *old* induced subsystem `(C.induce S).toRelStructure`, not `ProcessedActiveGirth.processed_activeSubsystem_girthGT_of_local`, which concerns the *new processed* subsystem.
+2. The image edge set `H` must be exactly `mappedSupportCopies A (C.induce S) C incl`, rather than all ambient A-support edges or an arbitrary set of labelled edge occurrences. The endpoint constructs its containment, image-membership and reflection proof.
+3. A designated B-copy's boundary must be a genuine complete A-support edge of that B-piece. The existing factorization `bSupportPiece_eq_embeddedACopySupportPiece` supplies this.
+4. For the **general** `lem:joinlift`, `forestOfCopies_lift_local_of_linear` is too strong on singleton separators. The generic helper adapter can attach one temporary singleton per *oriented singleton link* **after** local completion, without entering the completion budget. Per-vertex deduplication is unnecessary. The checked `selectedForest_of_distinctOwnerRequestImages` and short auxiliary deletion are reuse candidates. This general proof is independent of the structural theorem's edge-covered use.
+5. Retain requests that are also selected or added local-completion members. Deleting such members would change the claimed result. No arbitrary-subfamily heredity is available.
+6. There is **no new kernel certification yet**: a well-typed-looking Lean source candidate, a text audit and finite diagnostics cannot establish that Lean elaborates the statements or that `#print axioms` is clean.
+
+## Exact completion gates
+
+From a checkout of this candidate branch with the pinned toolchain and mathlib cache:
+
+```bash
+LEAN_NUM_THREADS=1 lake build Girth.CheckTrack2Trace
+lake env lean Girth/CheckTrack2Trace.lean
+```
+
+After a successful compilation, inspect the printed assumptions of every new theorem, reject `sorryAx` and unapproved axioms, and record source commit and exact imported declarations. Then prove the remaining exact **manuscript forest-extension ↔ typed support completion** adapter; check both its nonempty and empty finite-selection cases. Only then promote a validation marker for `lem:puresubsystem`. The separate general `lem:joinlift` and end-to-end `prop:certpres` remain open.
+
+## Reproducible finite tests
+
+The paper branch's `validation/numbered-tracks/check_trace_and_singleton.py` covers triangles and squares with 0–2 auxiliary member carriers; the negative square test was independently executed locally with 667 configurations and all possible labelled trees. It is a bounded counterexample diagnostic, not a general proof.
