@@ -1,0 +1,119 @@
+# Track 5: direct cutoff-two filling — statement and interface audit
+
+Date: 2026-11-13. Work queue: [#1056](https://github.com/janhubicka/lean-girth/issues/1056).
+Numbered programme: [#1060](https://github.com/janhubicka/lean-girth/issues/1060).
+
+## Exact target and safety boundary
+
+- Base manuscript: \`janhubicka/girth/main@8c9cfa6eb6d817a08f3009fe048fc0be07426ece\`, 41-page revision, baseline reachable-source digest
+  \`45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec\`.
+- Base Lean: \`janhubicka/lean-girth/main@98e40142f95cf818f498ed21faf9302a50fe7832\`, with historic checked proof library based on \`e57c954c6417604d35332adfdf3304a225281eca\`.
+- Manuscript draft branch: \`revision/track5-private-summands-20261113\`.
+- Lean draft branch: \`validation/5-filling-cutoff-two\`.
+- Neither branch changes a completed validation mark to green. No new Lean kernel check or TeX compilation is claimed; no paid Actions requested. The manuscript **branch** has different sources from the pinned **main** digest.
+
+## Manuscript target and old reusable endpoints
+
+| Manuscript assertion | Reusable Lean declaration / boundary | Current status |
+| --- | --- | --- |
+| \`obs:canonicalfilling\` — canonical filling, exact edge pairs, inherited parameters, selected train embedding | \`UniformFillingData.toTrainFilling\`, \`edgeEquiv\`, \`generated_linear\`; \`TrainFilling.inheritedTrain_adjacentParameters\` and inherited wagon maps | Reusable components. Complete selected-copy adapter is **open**. |
+| \`thm:derivation\` — full system-girth preservation through filling | \`TrainFilling.filled_fullSystemGirthGT\` in \`Girth/TrainFillingSystemGirth.lean\` | Historical proved transfer. Actual application needs old full bound and generated-edge linearity; neither output girth nor edge deletion may be assumed. |
+| \`thm:scattering\` — designated-subcopy restriction | \`OrderOneData.DesignatedSubcopyFamily.fullSystemGirthGT_of_components\` in \`Girth/TrainDesignatedSubcopyGirth.lean\` | Historical proved transfer. Requires concrete full parentwise realization and local target geometry. |
+| \`lem:privateextension\` — different first-wagon summands | \`PrivateWagonInput.range_inter\`, \`PrivateWagonInput.componentGeometry\`, indexed private labelled-girth and cut-parameter adapters | New English preparatory lemma and candidate unequal-summand Lean adapter; complete kernel check **open**. |
+| \`lem:tailraw\` — direct cutoff-two Ramsey witness, indexed target and arrow | \`IndexedPrivateChoice.selectedIndexedFilledEdgeEmbedding\`, \`selectedIndexedTargetEdges_ramsey_of_two_arrows\`, \`selectedActualMPhysicalEdgeEmbedding_train_iff\`, \`IndexedPrivateChoice.ParentwiseRealization.target_fullSystemGirthGT\` | Conditional pieces exist, but no constructed final indexed \`(j,s)\` witness, nor a proof of exact all-level actual parentwise realization. Remains **open**. |
+
+## Substantial application gap found
+
+The literal English argument sets \`W = disjoint union_p F_p\` and
+\`s_p = s ∘ u_p : F_p -> X\`. It does **not** identify each \`F_p\` with
+the entire \`W\`. The previous special-purpose constructor
+\`UniformPrivateTemplate.toPrivateWagonInput\` and the EHN indexed
+constructor in \`TrainFillingRamseyIndexedChoices.lean\` instead require
+\`identify : forall p, oldCarrier(p) ≃ W\`, which can fail even by
+cardinality. Using them without a new adapter would silently change
+the statement.
+
+Two new candidate modules repair this *interface*, without claiming
+to finish the cutoff-two theorem:
+
+1. \`TrainFillingPrivateSummand.lean\`:
+   \`SummandPrivateTemplate.toPrivateWagonInput\` constructs the
+   \`PrivateWagonInput\` for unequal \`F_p\` from each summand's genuine
+   local strong embedding and individual selected edges, while keeping
+   the same complete template-edge family of \`X\`.
+2. \`TrainFillingPrivateSelectedUnion.lean\`:
+   \`aStrong_compose\` proves transitivity of strong inducedness via
+   factorization of A-copies through the selected image;
+   \`SummandPrivateTemplate.fromSelectedUnion\` builds all summand
+   templates from one and the same \`s : W -> X\` and the actual
+   inclusions \`u_p : F_p -> W\`, assuming each \`u_p\` is A-strong
+   (to be derived from the explicit disjoint union) and each
+   \`F_p\` is A-covered.
+
+**Proof of the new transitivity statement (paper-level):**
+If an A-copy \`a\` in \`X\` meets \`s(u(F))\` in at least two points,
+it also meets \`s(W)\` twice. Strongness of \`s\` forces \`a\`
+inside \`s(W)\`; factor \`a=s∘b\` through \`s\`. Injectivity of \`s\`
+gives two points of \`b\` in \`u(F)\`; strongness of \`u\` forces
+\`b\` into \`u(F)\`, hence \`a\` into \`s(u(F))\`. This is not a
+new hypothesis of output strongness.
+
+The new English preparation lemma spells out actual first-wagon
+intersection equalities, transported ordered edge types,
+proper-cut labelled girth, strong embedding \`T -> M_s[X]\`, and both
+local scattering conditions. Section 16 now uses it in place of
+repeating all these facts inside the Ramsey argument.
+
+## Adversarial checks and remaining obligations
+
+1. **No assumption of first-wagon equipotence.** Every source summand has
+   its own type, inclusion and coordinate; a *single* \`s(W)\` must be
+   used across all summands for colour uniformity.
+2. **Exact physical label indices.** Use the complete pairs
+   \`(old edge f, local X-edge e)\`, not a carrier quotient with lost
+   occurrences. Restricting a selected copy is not deleting ambient
+   filled edges.
+3. **Old-parent index first.** Target labels are \`(selected j, choice s)\`;
+   the \`s\` components are disjoint only for the *same j*. Different
+   selected \`j\` may overlap.
+4. **Shared universal top.** Do not demand a girth bound or proper
+   wagon separation at the universal top.
+5. **Nontrivial template edges.** The proof uses the unique old cover
+   of each filled edge, which requires each \`X\`-edge to contain at
+   least two vertices; this has been made explicit in both new
+   manuscript lemma statements.
+6. **Construct, don't assume, final realization.** Need to derive
+   the \`ParentwiseRealization\` vertex map, complete physical edge
+   map, exact carriers, copy ranges and proper wagon parent map from
+   an actual selected \`M\`-copy \`j\`. The existing faithfully
+   indexed adapter \`FaithfulParentwisePhysicalRealization\` still
+   asks for actual carrier and edge-parent identities.
+7. **No circular girth.** Derive old \`N\` full system girth from
+   \`RR_h\`, use actual generated-edge linearity, then call
+   \`filled_fullSystemGirthGT\`, then scattering; do not postulate
+   output bound.
+8. **Exact indexed arrow.** Colour each \`N\` edge by its *entire*
+   function \`E(X)->r\`. First select one \`j(M)\` carrying a common
+   colour-word \`rho\`, then choose one \`s(W)\` monochromatic under
+   that same \`rho\`. Transport physical edges via
+   \`iota_{j[f]}[e] = j[iota_f[e]]\`. The abstract colour-word lemma
+   does not by itself construct the final embedding.
+9. **Order and parts.** Need the actual coloured-edge enumeration,
+   global within-part order extension, all shifted \`A_2,...\`
+   parameter identities, and selected-copy reflection at every
+   proper cut. Reuse the existing indexed ordered-placement and
+   actual-selected-train modules.
+10. **Build obligations.** Run local \`lake env lean\` on both new
+    files, exact-head dependency build, source scans for \`sorryAx\`
+    and \`#print axioms\` for the exported declarations. These steps
+    have **not** been executed on this branch.
+
+## Next minimal integration goal
+
+Compose the specific \`SummandPrivateTemplate.fromSelectedUnion\`
+with the EHN witness of the disjoint union (without requiring
+\`F_p ≃ W\`), then the checked actual contracted-\`M\` equivalence,
+and finally construct \`FaithfulParentwisePhysicalRealization\` for
+every selected \`j\`. Only after this yields the actual \`(j,s)\`
+arrow, the exact indexed girth bound, and a local Lean build/axiom
+audit can \`lem:tailraw\` receive a verified marker.
