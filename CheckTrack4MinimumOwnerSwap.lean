@@ -5,6 +5,8 @@ import Girth.TrainActualNormalizedMinimalOwners
 import Girth.TrainActualBottomDesignatedBoundary
 import Girth.TrainActualBottomCutCoreGeometry
 import Girth.TrainDirectCyclicCutBudget
+import Girth.TrainActualBottomForestReducedSupreme
+import Girth.TrainActualWitnessBottomForestGeometry
 
 
 #print axioms StructuralRamsey.Girth.OrderOneData.parent_eq_of_edge_label_wagon_incidence
@@ -41,3 +43,9 @@ import Girth.TrainDirectCyclicCutBudget
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twice_ownerCuts_le_twiceOrder_of_no_mixed
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ownerCuts_le_cutoff_of_no_mixed
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.hasSimultaneousSupreme_of_bottomLocalForest_A2_A3
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_reduced_supreme_of_localForest
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_normalized_reduced_supreme
+#print axioms StructuralRamsey.Girth.activeGluingWitness_bottomForestGeometry
+#print axioms StructuralRamsey.Girth.sharedWitness_bottomForestGeometry_of_aLinear
