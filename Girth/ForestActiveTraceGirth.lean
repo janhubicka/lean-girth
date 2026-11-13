@@ -1,5 +1,6 @@
 import Girth.ForestTraceAcyclic
 import Girth.Berge
+import Girth.ForestDistinctBoundaryAllowed
 
 /-!
 # Active girth from bounded forest completion: Track 2 candidate
@@ -71,5 +72,38 @@ theorem girthGT_of_bounded_trace_forest_completions
   let c' : BergeCycle (Set.range c.edge) :=
     c.ofEdgeMem (fun i => ⟨i, rfl⟩)
   exact hRangeGirth ⟨c', hc⟩
+
+/-- Same girth conclusion when each completed member has the existing
+`SmallOrWholeEdgeBoundary` property, including membership of the
+whole trace edge in that member's own support. This interface is
+suited to the checked active-boundary and mixed-owner modules. -/
+theorem girthGT_of_bounded_smallOrWhole_forest_completions
+    (S : Set W) (H : Set (Set W)) (m : ℕ)
+    (hLinear : LinearEdgeSet H)
+    (hEdgeBig : ∀ e : Set W, e ∈ H → ¬ e.Subsingleton)
+    (hComplete :
+      ∀ (N : Type v) [Fintype N]
+        (edge : N → Set W),
+        Function.Injective edge →
+        (∀ n : N, edge n ∈ H) →
+        Fintype.card N ≤ m →
+        ∃ (J : Type v), ∃ (finite : Fintype J),
+          letI : Fintype J := finite
+          ∃ F : J → HypergraphPiece W,
+            ForestOfCopies F ∧
+            (∀ j : J, SmallOrWholeEdgeBoundary H S (F j)) ∧
+            (∀ n : N, ∃ j : J,
+              (F j).carrier ∩ S = edge n)) :
+    GirthGT H m := by
+  apply girthGT_of_bounded_trace_forest_completions
+    S H m hLinear hEdgeBig
+  intro N _ edge hInj hEdges hCard
+  obtain ⟨J, finite, F, hForest, hBoundary, hEdgeTrace⟩ :=
+    hComplete N edge hInj hEdges hCard
+  refine ⟨J, finite, F, hForest, ?_, hEdgeTrace⟩
+  intro j
+  rcases hBoundary j with hSmall | ⟨e, he, _hOwn, hEq⟩
+  · exact Or.inl hSmall
+  · exact Or.inr ⟨e, he, hEq⟩
 
 end StructuralRamsey.Girth
