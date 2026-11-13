@@ -122,3 +122,60 @@ and finally construct \`FaithfulParentwisePhysicalRealization\` for
 every selected \`j\`. Only after this yields the actual \`(j,s)\`
 arrow, the exact indexed girth bound, and a local Lean build/axiom
 audit can \`lem:tailraw\` receive a verified marker.
+
+
+## Continuation: one EHN selected union supplies the local indexed arrow
+
+Additional candidate files on the SAME Track 5 branch (not kernel checked):
+
+- \`Girth/TrainFillingPrivateSelectedColour.lean\`:
+  \`selectedUnion_summand_monochromatic\` and
+  \`SummandPrivateTemplate.selectedEdges_monochromatic_of_selectedUnion\`.
+  These show a physical A-support edge in any individual first-wagon
+  summand is monochromatic whenever the *one enclosing selected W-copy*
+  is monochromatic, without choosing separately for different p.
+- \`Girth/TrainFillingPrivateSelectedFamily.lean\`:
+  \`selectedUnionPrivateChoices\` builds the entire choice-indexed
+  heterogeneous G0 family \`C -> PrivateWagonInput\` from one
+  selected W-embedding per c, with literal same template-edge family.
+  \`selectedUnionPrivateChoices_localArrow\` transports a global W-arrow
+  into uniform local monochromaticity for all first wagons.
+- \`Girth/TrainFillingPrivateSelectedIndexedArrow.lean\`:
+  \`selectedUnionPrivateChoices_commonLocalArrow\` converts the local
+  result through \`choiceTemplateEquiv\` to the exact
+  \`selectedCommonEdges\` type of \`selectedIndexedTargetEdges_ramsey_of_two_arrows\`.
+- \`Girth/TrainFillingPrivateEHNArrow.lean\`:
+  \`closedTargetRamseyFamily_supportArrow\` pulls a physical-edge-word
+  colouring back along actual A-embeddings of X, invokes the genuine
+  closed-target Ramsey arrow, and chooses its common colour from a
+  specified nonempty A-copy of W.
+  \`exists_colouredRamsey_unequalSummandPrivateChoices\` packages the EHN
+  witness, all selected closed W-copies, their A-strong composed summands,
+  common template support family and exact \`selectedCommonEdges\` arrow.
+
+**Referee point:** These declarations are candidate English-to-Lean adapters,
+NOT a kernel-verified Ramsey theorem. They still take the finite ordered
+A-linear W and actual relational component embeddings \`F_p -> W\` as
+data; constructing this disjoint-union W and showing the inclusions
+A-strong and each component A-covered remain source application
+obligations. The \`Nonempty (Embedding A W)\` hypothesis in the
+supportArrow is real: a monochromatic *colour* cannot be extracted
+from an empty selected A-edge family without a default \`κ\` element.
+Here it follows from the nonempty edge type and nonempty first wagons;
+it has not been silently erased.
+
+After this local EHN portion, the **hard gap** is no longer an
+independent colour choice in each F_p, but the genuine selected
+shorter-stage \`M -> N\` strong train embedding with exact canonical
+X-placements, and a \`FaithfulParentwisePhysicalRealization\` for
+every selected old parent. This is needed to convert the already
+available physical two-arrow colour calculation into the final
+\`(j,s)\`-indexed Ramsey witness and full tail system girth.
+
+**Build constraint in this session:** the runtime has no Lean/lake
+binary, cannot resolve github.com from its container, and none of
+the large precompiled Lean/mathlib archive ZIPs is mounted. Old
+GitHub CI successes certify older exact heads only. As instructed,
+no paid Actions have been triggered. All new declarations retain
+unverified status until a local exact-head compilation and
+\`#print axioms\` audit can be performed.
