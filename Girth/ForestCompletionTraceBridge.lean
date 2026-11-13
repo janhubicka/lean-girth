@@ -59,6 +59,7 @@ theorem girthGT_of_forestCompletion_designated_traces
     exact hTestEdge (edge n) (hEdges n)
   obtain ⟨J, finiteJ, family, hWitness⟩ :=
     hComplete N selected hSelectedTest hCard
+  letI : Fintype J := finiteJ
   refine ⟨J, finiteJ, family, hWitness.1, ?_, ?_⟩
   · intro j
     rcases hWitness.2.2 j with ⟨n, hEq⟩ | hDesignated
