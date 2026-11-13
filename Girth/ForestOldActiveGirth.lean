@@ -2,6 +2,8 @@ import Girth.ForestActiveTraceBoundary
 import Girth.ForestCompleteBSupportIntrinsic
 import Girth.LinearityGirthTwo
 import Girth.DesignatedPicture
+import Girth.SupportGirthEmbeddingEquiv
+import Girth.ForestCoreFactorBoundary
 
 /-!
 # Old active-subsystem girth from the real designated-picture invariant
@@ -126,5 +128,68 @@ theorem oldActiveSupport_girthGT_of_designatedCompletion
     exact projectedBCopy_smallOrWhole_activeBoundary
       A B D C e q.base q.lift
       (hBaseStrong q) H hAllActiveEdges
+
+/-- The exact old active-subsystem girth conclusion in the manuscript:
+the support of the induced active structure, on its own subtype
+vertex type, has no Berge cycle of length at most m.
+
+The mapped active edge set and the ambient embedded-copy membership
+are constructed rather than assumed; only the real quantified
+forest-completion invariant, base B-projection strongness, old
+A-linearity and the fact |A| ≥ 2 are used. -/
+theorem oldActiveInduced_girthGT_of_designatedCompletion
+    (A : RelStructure L UA)
+    (u w : UA) (huw : u ≠ w)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (e : RelStructure.Embedding A D)
+    (hOldLinear : ALinear A C.toRelStructure)
+    (hBaseStrong :
+      ∀ q : DesignatedCopy B D C family,
+        AStrong A D (copyCarrier q.base))
+    (m : ℕ)
+    (hComplete :
+      ForestCompletionProperty
+        (testedPictureABSupport A B D C family)
+        (designatedPictureASupport A B D C family) m) :
+    GirthGT
+      (supportCopies A
+        (C.induce
+          (activeCarrier A C e.toFunctionEmbedding)).toRelStructure) m := by
+  classical
+  let S := activeCarrier A C e.toFunctionEmbedding
+  let active := (C.induce S).toRelStructure
+  let incl : RelStructure.Embedding active C.toRelStructure :=
+    (StructuralRamsey.Partite.System.inclusion C S).toEmbedding
+  let H : Set (Set X) :=
+    mappedSupportCopies A active C.toRelStructure incl
+  have hEdgeEmb :
+      ∀ z : Set X, z ∈ H →
+        ∃ a : RelStructure.Embedding A C.toRelStructure,
+          z = copyCarrier a := by
+    intro z hz
+    obtain ⟨a, ha⟩ := hz
+    exact ⟨incl.comp a, ha⟩
+  have hActiveSub : ∀ z : Set X, z ∈ H → z ⊆ S := by
+    intro z hz
+    obtain ⟨a, ha⟩ := hz
+    rw [ha]
+    rintro x ⟨u, rfl⟩
+    exact (a u).2
+  have hAllActiveEdges :
+      ∀ a : RelStructure.Embedding A C.toRelStructure,
+        copyCarrier a ⊆ S → copyCarrier a ∈ H := by
+    intro a hSub
+    apply embeddedACopy_mem_mappedCoreSupport A incl a
+    intro x hx
+    exact ⟨⟨x, hSub hx⟩, rfl⟩
+  have hMapped : GirthGT H m :=
+    oldActiveSupport_girthGT_of_designatedCompletion
+      A u w huw B D C family e hOldLinear hBaseStrong
+      H hEdgeEmb hActiveSub hAllActiveEdges m hComplete
+  exact girthGT_source_of_mappedSupportCopies
+    A active C.toRelStructure incl m hMapped
 
 end StructuralRamsey.Girth
