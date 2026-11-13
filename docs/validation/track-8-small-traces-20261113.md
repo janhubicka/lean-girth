@@ -55,7 +55,11 @@ It enumerates **all** covers by distinct nonempty subsets of each n-point univer
 
 Each of those 112 four-vertex covers has an obstruction using three selected members. **Bounded enumeration is not a proof.**
 
-## 5. Status and promotion gate
+## 5. Reusable-source static scan (not an axiom audit)
+
+At Lean documentation baseline 98e40142f95cf818f498ed21faf9302a50fe7832, source-read these eight existing modules: SupportedTree, MixedForestInduction, MixedForestStep, ForestTreeRewire, ForestCompletionProperty, ForestStructuralABCompletion, ActualDesignatedSupportBridge and ForestCompletionWitness. None contains a direct Lean declaration/body use of sorry, admit, sorryAx, axiom, opaque, constant or unsafe (comments excluded). Their source blob SHAs were read and pinned in this audit pass. This is **only** a static local-module scan: imports, elaborated hypotheses, historical compilation and transitive axioms still require an actual Lean environment and \`#print axioms\`.
+
+## 6. Status and promotion gate
 
 - lem:smalltraces: written argument audited; **kernel proof OPEN**.
 - cor:smallrelational: logically derived from actual-copy forest-extension plus coverage; **exact Lean adapter OPEN**.
