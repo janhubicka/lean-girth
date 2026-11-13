@@ -143,3 +143,5 @@ theorem exists_colouredRamsey_unequalSummandPrivateChoices
   exact SummandPrivateTemplate.selectedUnionPrivateChoices_commonLocalArrow
     A B (closureRelReduct C) oldCarrier local include
       hInclude hCovered chosen hStrong hFirstArrow
+
+end StructuralRamsey.Girth
