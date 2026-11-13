@@ -78,10 +78,15 @@ repeating all these facts inside the Ramsey argument.
    selected \`j\` may overlap.
 4. **Shared universal top.** Do not demand a girth bound or proper
    wagon separation at the universal top.
-5. **Nontrivial template edges.** The proof uses the unique old cover
-   of each filled edge, which requires each \`X\`-edge to contain at
-   least two vertices; this has been made explicit in both new
-   manuscript lemma statements.
+5. **Nontrivial template edges and linear first-wagon carriers.**
+   The proof uses the unique old cover of each filled edge, which
+   requires each \`X\`-edge to have at least two vertices. Separately,
+   *linearity of T's underlying edges does not imply linearity of its
+   first-wagon carriers*: two distinct first wagons can share two
+   vertices via different original edges. The new preparation lemma
+   therefore explicitly assumes linearity of \`W_1(T)\`. This holds in
+   \`lem:tailraw\` because the first tail wagon-girth bound is
+   \`>h_1>=2\`; without it the shortened train M need not be linear.
 6. **Construct, don't assume, final realization.** Need to derive
    the \`ParentwiseRealization\` vertex map, complete physical edge
    map, exact carriers, copy ranges and proper wagon parent map from
