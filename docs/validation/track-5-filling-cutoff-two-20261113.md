@@ -281,3 +281,74 @@ higher proper cuts before invoking filling and scattering.
 The remaining work is the actual selected G0-to-H indexed
 parentwise realization at each inherited positive cut,
 not a new abstract theorem asserting the missing old bound.
+
+
+## Latest consolidation — selected OrderStage and full parentwise data
+
+**This section supersedes the older "remaining gap" lists above.**
+All new declarations listed here are **candidates, not Lean-kernel
+certificates**. No paid CI run or validation-marker promotion.
+
+- \`TrainFillingPrivateSelectedOldRange.lean\` proves that the
+  actual induced selected M-copy b contains **exactly** those old
+  N A-support edges whose full carriers lie in b(M). After the
+  physical contracted edge equivalence, the range of the genuine
+  indexed β_b is precisely this set; there is no extra copy-edge
+  selection or ambient edge deletion.
+- \`TrainFillingPrivateCanonicalParentwise.lean\` constructs the FULL
+  ambient parentwise data \`canonicalFilledSelectedData\` from old
+  physical edge maps and the entire cover-preimage edge family.
+  Its new primary \`canonicalFilledSelectedFaithfulRealization_of_carrier\`
+  assumes only exact filled-edge **carrier images**, and derives
+  complete edge/copy ranges and proper-wagon maps/parent equations
+  from already checked indexed transport. The original stronger
+  pointwise-placement interface remains as a wrapper, not a
+  necessary hypothesis.
+- \`TrainFillingPrivateCanonicalCutBridge.lean\` identifies the
+  indexed record with the existing checked \`inheritedCutData\`
+  under the selected old range equality, so it can reuse the
+  existing global scattering and canonical filling theorems
+  rather than re-prove system-girth cycles.
+- \`TrainFillingPrivateActualOrderParent.lean\` defines genuine
+  parent indices \`{b // b∈S.selected}\` for the actual shortened
+  \`OrderStage\`, builds the vertex map and β_b from SAME selected b,
+  and derives all-cut train faithfulness and old-edge range equality.
+- \`TrainFillingPrivateActualOrderRealization.lean\` composes
+  these constructions into
+  \`actualOrderStageFaithfulParentwise_of_carrier\`, with actual
+  source train/old β and complete target carrier identities at a
+  proper positive restored cut. Different selected parents are
+  allowed to overlap; the universal top is excluded.
+- \`TrainFillingPrivateSelectedFamily.lean\` also derives local
+  X-template edge nonemptiness from a genuine A-copy in W,
+  discharging the proper-wagon reconstruction's local nonempty
+  input in the actual application.
+
+**Remaining decisive work:**
+(1) instantiate the actual ordered colour-block contracted M on
+the EHN-selected family of potentially unequal first wagons and
+discharge its support/parameter/order assumptions;
+(2) use checked ordered-placement/carrier uniqueness to establish
+exact physical G0→H carrier transport for the actual selected M-copy,
+without assuming pointwise placements;
+(3) identify the same H/trains at each old cut with the concrete
+\`OrderStage.canonicalFilledCut_fullSystemGirthGT\` input (including
+the old equality cut), then use
+\`canonicalFilledSelectedData_eq_inheritedCutData\`;
+(4) compose the genuine lower selected RR_h arrow and one
+EHN-selected W-copy to obtain the indexed monochromatic T-copy;
+(5) actually compile this branch and run all \`#print axioms\`
+checks before promoting any verification mark. The current
+container has no lean/lake/elan binary or mounted prebuilt
+mathlib Lean artifacts.
+
+**Adversarial source correction:** An initial colour-word adapter
+incorrectly treated a transported common-edge subtype as an
+original locally selected edge. This was changed to use the actual
+local element before applying \`choiceTemplateEquiv\`. The proof
+of A-strongness composition was checked for the orientation of
+Set.range witnesses (\`inc y = x\`); the correct symmetry is
+recorded in its source.
+
+No theorem is claimed closed by the presence of these source files;
+all latest source work remains isolated on draft PR #1063.
