@@ -1,5 +1,6 @@
 import Girth.TrainFillingPrivateEHNArrow
 import Girth.TrainFillingPrivateSelectedRestoredWagons
+import Girth.TrainFillingPrivateCanonicalParentwise
 import Girth.TrainFillingOrderStageCanonicalAllCutGirth
 
 /-!
@@ -34,6 +35,8 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #check StructuralRamsey.Girth.IndexedPrivateChoice.exists_stageSelectedActualMPhysicalFaithful
 #check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_faithful
 #check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
+#check StructuralRamsey.Girth.IndexedPrivateChoice.canonicalFilledSelectedFaithfulRealization
+#check StructuralRamsey.Girth.IndexedPrivateChoice.canonicalFilledSelected_targetFullSystemGirthGT
 #check StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT
 
 #print axioms StructuralRamsey.Girth.aStrong_compose
@@ -51,3 +54,5 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.canonicalFilledSelected_targetFullSystemGirthGT
