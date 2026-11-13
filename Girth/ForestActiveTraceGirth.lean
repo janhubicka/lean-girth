@@ -101,6 +101,7 @@ theorem girthGT_of_bounded_smallOrWhole_forest_completions
   letI : Fintype N := finite
   obtain ⟨J, finite, F, hForest, hBoundary, hEdgeTrace⟩ :=
     hComplete N edge hInj hEdges hCard
+  letI : Fintype J := finite
   refine ⟨J, finite, F, hForest, ?_, hEdgeTrace⟩
   intro j
   rcases hBoundary j with hSmall | ⟨e, he, _hOwn, hEq⟩
