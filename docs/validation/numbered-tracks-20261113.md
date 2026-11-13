@@ -8,6 +8,7 @@ This is a **new** validation plan, not a renaming of legacy tracks A–G. Existi
 - Canonical reachable-source SHA-256: `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
 - Manuscript `janhubicka/girth` pre-integration `main`: `c195cdbaaabbafe53ac313fd283ffcaa0a159494`.
 - `lean-girth` baseline: `e57c954c6417604d35332adfdf3304a225281eca`, pinned to `leanprover/lean4:v4.35.0-rc3`.
+- Manuscript source is staged as [girth draft PR #445](https://github.com/janhubicka/girth/pull/445), exact current head `79e451ecbfa5668be414e08001f4c96a5af1efbb`; spawn validation against that SHA until the tag-first merge occurs. The 23 printed TeX input files have byte-identical Git blobs to the audited archive.
 - Manuscript publishing is **pending creation/verification of the requested Git tag**. A backup **branch** exists at `girth/backup/main-before-eppa-20261113-c195cdba` but this is not a Git tag. Do not claim manuscript `main` already contains the revision.
 - [Programme index issue #1060](https://github.com/janhubicka/lean-girth/issues/1060). The previous digest in that issue refers to an earlier, unexported candidate; use the exact digest above.
 
