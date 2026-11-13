@@ -235,10 +235,15 @@ promote):
    by the candidate chain; the vertex map, physical carrier
    equality, selected parent \`copyCarrier\`/\`copyEdges\` and final
    target indexed by \`(b,c)\` still require exact assembly.
-4. Prove the old \`N\` full system-girth input at each cut used
-   for the filling theorem **without** invoking the desired output
-   girth. The lower-stage stage supplies only its stated tail
-   coordinates; do not invent a missing bottom system bound.
+4. Use the correct shorter **OrderStage** from \`RR_h\`, not only
+   its underlying \`ForestTailStage\`, at the actual cutoff-two
+   call site. \`OrderStage.allCutGirth\` supplies EVERY old proper
+   cut, including equality zero; a bare \`ForestTailStage\` supplies
+   only its stated positive-tail bounds. Reuse the existing
+   \`TrainFillingOrderStageCanonicalAllCutGirth.lean\` theorem
+   \`OrderStage.canonicalFilledCut_fullSystemGirthGT\` for the
+   genuine canonical \`N[X]\` filling. No output-girth premise
+   or separate bottom-forest-to-order detour is necessary here.
 5. Combine the actual selected parentwise family with the
    already-available indexed EHN local arrow and selected physical
    colour-word theorem. Only then may \`lem:tailraw\` be closed.
@@ -250,3 +255,29 @@ and forbidden top-level \`sorry\`, \`admit\` or \`axiom\` declarations;
 a missing final EHN namespace terminator was corrected in a
 follow-up commit. The TeX draft retains open/partial markers.
 No successful Lean or full PDF build is being represented by this check.
+
+
+### Adversarial correction: first old cut is present in the ORDER witness
+
+The source statement \`RR_h\` at
+\`paper/10-cycle-conditions.tex\` explicitly requires full
+system-girth \`>h_j\` at *every* old cut indexed by \`j\`,
+including bottom equality. The Lean class
+\`TrainRecursiveWitness.OrderStage\` extends \`ForestTailStage\`
+with \`allCutGirth : ∀ j : Fin t.length, ...\`, no \`j>0\`
+restriction. The existing
+\`Girth/TrainFillingOrderStageCanonicalAllCutGirth.lean\`
+provides the exact canonical filling transfer:
+\`OrderStage.canonicalFilledCut_fullSystemGirthGT\`.
+Its inputs are the actual OrderStage, the entire old A-support
+of N, genuine local A-support coverage/linearity and the
+canonical full-X placement. This reuse is preferable to
+reconstructing the first-cut order proof from the weaker
+forest-tail data.
+
+Accordingly, the manuscript draft now explicitly says that
+\`RR_h\` provides the old **equality** cut as well as all
+higher proper cuts before invoking filling and scattering.
+The remaining work is the actual selected G0-to-H indexed
+parentwise realization at each inherited positive cut,
+not a new abstract theorem asserting the missing old bound.
