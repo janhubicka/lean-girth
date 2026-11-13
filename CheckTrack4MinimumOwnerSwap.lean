@@ -4,6 +4,7 @@ import Girth.TrainBottomNormalizedNoMixed
 import Girth.TrainActualNormalizedMinimalOwners
 import Girth.TrainActualBottomDesignatedBoundary
 import Girth.TrainActualBottomCutCoreGeometry
+import Girth.TrainDirectCyclicCutBudget
 
 
 #print axioms StructuralRamsey.Girth.OrderOneData.parent_eq_of_edge_label_wagon_incidence
@@ -35,3 +36,8 @@ import Girth.TrainActualBottomCutCoreGeometry
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
 
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
+
+#print axioms StructuralRamsey.Girth.twice_cyclicOwnerChanges_le_kindWeight
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.twice_ownerCuts_le_twiceOrder_of_no_mixed
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.ownerCuts_le_cutoff_of_no_mixed
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
