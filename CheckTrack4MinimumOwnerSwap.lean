@@ -1,5 +1,6 @@
 import Girth.TrainActualMinimalCoreOwnerSwap
 import Girth.TrainBottomWagonNeighbourEdge
+import Girth.TrainBottomMinimalEdgeSingleton
 
 #print axioms StructuralRamsey.Girth.cyclicOwnerChanges_lt_of_isolated_edit
 #print axioms StructuralRamsey.Girth.minimalCyclicOwner_no_isolated_adjacent_reassignment
@@ -9,3 +10,7 @@ import Girth.TrainBottomWagonNeighbourEdge
 #print axioms StructuralRamsey.Girth.OrderOneData.BottomForestGeometry.edgeCarrier_subset_of_wagon_meet
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.next_carrier_contains_bottom_wagon_edge
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.previous_carrier_contains_bottom_wagon_edge
+
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_next_standard_of_edge_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_previous_standard_of_edge_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_minimal_no_isolated_edge_wagon
