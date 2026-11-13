@@ -126,7 +126,7 @@ theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_core_boundary
     (hBoundary : ∀ a : (I × {q : DesignatedCopy B D C family // q ∈ selected}) ⊕ ActualEdge,
       (Out).designated a →
         SmallOrWholeEdgeBoundary
-          (Set.range (fun b : CoreEdge => (CoreActual b).1))
+          (Set.univ : Set (Set (RelStructure.Attachment.Vertex S (W := Y) (I := I)))
           (copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))
           ((Out).bottomForestPiece
             (attachedSelectedPicture_bottomForestGeometry
@@ -172,7 +172,7 @@ theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_core_boundary
     (fun i : I => copyCarrier (Std i)) CoreActual
     owner hAllowed' hMinimal'
     (copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))
-    (Set.range (fun b : CoreEdge => (CoreActual b).1))
+    (Set.univ : Set (Set (RelStructure.Attachment.Vertex S (W := Y) (I := I))))
     hBoundary k hLeftCut hRightCut hCoreMixed
 
 end ActualBottomGeometry
