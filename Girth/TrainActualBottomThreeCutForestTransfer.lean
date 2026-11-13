@@ -159,10 +159,10 @@ theorem attachedSelectedPicture_bottom_normalized_three_cut_original_supreme
         cyclicOwnerChanges owner ≤ q ∧
         (3 ≤ cyclicOwnerChanges owner →
           K.HasSimultaneousSupreme) := by
+  let HOut := attachedSelectedPicture_bottomForestGeometry
+    A hA B D C family selected e R f T U hShared hPhysical
   have hOutputLinear : (Out).LinearPretrain :=
-    (attachedSelectedPicture_bottomForestGeometry
-      A hA B D C family selected e R f T U hShared
-      hPhysical).linearPretrain Out
+    OrderOneData.BottomForestGeometry.linearPretrain Out HOut
   obtain ⟨Z, hZAccept, hZOrder, _hZNormal, _hZConnector,
     owner, hAllowed, hMinimal, hBudget, hPull⟩ :=
     attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
