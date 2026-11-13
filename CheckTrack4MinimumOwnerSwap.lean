@@ -1,0 +1,5 @@
+import Girth.TrainActualMinimalCoreOwnerSwap
+
+#print axioms StructuralRamsey.Girth.cyclicOwnerChanges_lt_of_isolated_edit
+#print axioms StructuralRamsey.Girth.minimalCyclicOwner_no_isolated_adjacent_reassignment
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_minimal_no_adjacent_containing_standard
