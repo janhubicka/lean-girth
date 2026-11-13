@@ -6,9 +6,9 @@ This is a **new** validation plan, not a renaming of legacy tracks A–G. Existi
 
 - Audited proposed manuscript: 41 pages, 69 numbered mathematical statements, 23 reachable TeX inputs.
 - Canonical reachable-source SHA-256: `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-- Manuscript **current `main`** after audited tag-first merge: [`8c9cfa6eb6d817a08f3009fe048fc0be07426ece`](https://github.com/janhubicka/girth/commit/8c9cfa6eb6d817a08f3009fe048fc0be07426ece), from merged [PR #445](https://github.com/janhubicka/girth/pull/445). Pre-merge `main` was `c195cdbaaabbafe53ac313fd283ffcaa0a159494`.
+- Manuscript **frozen baseline**: [`8c9cfa6eb6d817a08f3009fe048fc0be07426ece`](https://github.com/janhubicka/girth/commit/8c9cfa6eb6d817a08f3009fe048fc0be07426ece) from merged PR #445, with exact source hash above. **Current editorially clarified `main`** is [`6e2048b7cbc6d16c27dfcdaf8e67924f5906f846`](https://github.com/janhubicka/girth/commit/6e2048b7cbc6d16c27dfcdaf8e67924f5906f846), after merged PRs #446 (Track 7), #449 (Track 8) and #447 (Track 3). These changes preserve labels and the validation markers, but the baseline SHA-256 is **not** the digest of the current edited source. Pre-tag `main` was `c195cdba`.
 - `lean-girth` baseline: `e57c954c6417604d35332adfdf3304a225281eca`, pinned to `leanprover/lean4:v4.35.0-rc3`.
-- The 23 reachable TeX inputs in merged PR #445 have byte-identical Git blobs to the audited archive. **Pin all new validation to the merged commit** `8c9cfa6eb6d817a08f3009fe048fc0be07426ece` and the manifest digest above, rather than the old PR head.
+- The 23 reachable TeX inputs in merged PR #445 have byte-identical Git blobs to the audited archive. **Pin completed historical baseline certificates to `8c9cfa6e` and its digest.** For any claim about the now-current editorially clarified manuscript, separately pin `6e2048b7` and regenerate the current-source digest; no old source digest is reused for changed TeX.
 - The annotated tag [`girth-main-before-eppa-preparation-20261113-c195cdba`](https://github.com/janhubicka/girth/tree/girth-main-before-eppa-preparation-20261113-c195cdba) was verified to dereference to the exact old `main` commit `c195cdbaaabbafe53ac313fd283ffcaa0a159494` **before** PR #445 was merged. The backup branch remains available. The required safeguard is satisfied.
 - [Programme index issue #1060](https://github.com/janhubicka/lean-girth/issues/1060). The previous digest in that issue refers to an earlier, unexported candidate; use the exact digest above.
 
@@ -63,3 +63,11 @@ Do **not** pre-create eight empty remote branches: `.github/workflows/lean.yml` 
 - `validation/8-small-traces-theorem` (#1059)
 
 Prior lettered branches remain as historical sources. **Do not cherry-pick a historical PR wholesale** before comparing exact shared files and hypotheses. Begin each numbered branch with a source-to-Lean statement mapping, record its base SHA, then import/reuse the necessary established declarations.
+
+## Evening merge queue checkpoint (13 November)
+
+- GitHub `lean-girth/main` advanced to `76bf2ac4648d4218e9a73823a16224a066a2b259` by fully green historical CI workflow-retry PR #1035. No proof source, Lean dependencies or strict axiom checker were changed by this PR.
+- Obsolete #1030/#1033 retry PRs and #1022/#1031/#1037 proof stacks were closed. For the latter three, **every added Lean source/checker Git blob already matches current main**, and all their focused checker registrations exist on main. The closure is deduplication, not deletion or new validation.
+- Numbered new Track 4/5/7/3 Lean PRs #1064/#1063/#1066/#1067 remain draft and **uncompiled** at exact head. Historical CI successes for the same component theorem do not certify these new wrappers.
+- Manuscript editorial PRs #446/#449/#447 were merged after a static source/statement/marker check; **no fresh full TeX rebuild or Lean kernel verification** was executed for their combined current-main version in this checkpoint.
+- Reuse-adjusted validation estimate stays approximately 56%; all eight numbered tracks remain open, and none is signed off by the new version's full Lean kernel.
