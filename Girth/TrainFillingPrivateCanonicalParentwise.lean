@@ -19,8 +19,10 @@ They keep all ambient H edges and all quotient wagon labels.
 This file constructs every field of
 FaithfulParentwisePhysicalRealization from:
 * actual source train relation reflection of beta_i;
-* exact canonical X-point placements on each selected first wagon;
+* exact physical filled-edge carrier images;
 * genuine nonemptiness of the common X-template edge type.
+The older pointwise coordinate condition is retained only as a
+convenient sufficient condition for exact carrier images.
 
 In particular, NO output copyEdges equality, parent injection,
 parent-commutation equation, edge-carrier equation or output girth
@@ -59,16 +61,11 @@ noncomputable def canonicalFilledSelectedData
   parent := fun e =>
     Quotient.mk (((H.toTrainFilling).inheritedTrain S).wagonSetoid ν.succ) e
 
-/-- This formulation asks only for exact physical filled-edge
-carriers, the precise geometric field of global scattering.
-The ordered-carrier theorem can supply it without separately
-identifying every X-coordinate pointwise. -/
-/-- The exact physical-edge carrier statement suffices for the
-faithful parentwise realization. The constructed record has
-physical and quotient-wagon injectivity and all exact image laws.
-Only *input* train faithfulness and literal canonical placement
-compatibility are premises; neither output girth nor output
-parentwise identity is assumed. -/
+/-- The exact physical-edge carrier statement suffices for
+the faithful parentwise realization. The constructed record
+contains all physical edge and wagon maps with their exact laws;
+no separate pointwise coordinate identification, output girth,
+or independently postulated output wagon data is required. -/
 noncomputable def canonicalFilledSelectedFaithfulRealization_of_carrier
     (H : UniformFillingData Y X)
     (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
