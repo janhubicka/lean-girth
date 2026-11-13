@@ -97,7 +97,8 @@ theorem girthGT_of_bounded_smallOrWhole_forest_completions
     GirthGT H m := by
   apply girthGT_of_bounded_trace_forest_completions
     S H m hLinear hEdgeBig
-  intro N _ edge hInj hEdges hCard
+  intro N finite edge hInj hEdges hCard
+  letI : Fintype N := finite
   obtain ⟨J, finite, F, hForest, hBoundary, hEdgeTrace⟩ :=
     hComplete N edge hInj hEdges hCard
   refine ⟨J, finite, F, hForest, ?_, hEdgeTrace⟩
