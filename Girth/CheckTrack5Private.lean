@@ -25,6 +25,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #check StructuralRamsey.Girth.aStrong_compose
 #check StructuralRamsey.Girth.SummandPrivateTemplate.fromSelectedUnion
 #check StructuralRamsey.Girth.selectedUnion_summand_monochromatic
+#check StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localEdge_nonempty
 #check StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localArrow
 #check StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_commonLocalArrow
 #check StructuralRamsey.Girth.closedTargetRamseyFamily_supportArrow
@@ -36,6 +37,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.aStrong_compose
 #print axioms StructuralRamsey.Girth.selectedUnion_summand_monochromatic
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedEdges_monochromatic_of_selectedUnion
+#print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localEdge_nonempty
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localArrow
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_commonLocalArrow
 #print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_supportArrow
