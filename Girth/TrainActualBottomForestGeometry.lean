@@ -108,6 +108,73 @@ theorem attachedSelectedPicture_bottomGeometricAllowed_iff
   | inl i => rfl
   | inr b => rfl
 
+
+/-- The exact real-output version of the no-mixed-singleton interface.
+The two remaining geometric inputs are the complete B-boundary theorem
+and the fact that a genuine mixed cut has a core vertex and a *whole*
+core wagon edge. It uses the already-minimized geometric owner word and
+does not assume any full-system-girth conclusion. -/
+theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_core_boundary
+    [Nontrivial UA] (hLinear : ALinear A Actual)
+    {n : ℕ} (K : (Out).BigCycle n)
+    (hNormalized : K.MixedNormalized Out)
+    (owner : Fin n → I ⊕ CoreEdge)
+    (hAllowed : ∀ j, GeomAllowed (K.label j) (owner j))
+    (hMinimal : ∀ other : Fin n → I ⊕ CoreEdge,
+      (∀ j, GeomAllowed (K.label j) (other j)) →
+      cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
+    (hBoundary : ∀ a : (I × {q : DesignatedCopy B D C family // q ∈ selected}) ⊕ ActualEdge,
+      (Out).designated a →
+        SmallOrWholeEdgeBoundary
+          (Set.range (fun b : CoreEdge => (CoreActual b).1))
+          (copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))
+          ((Out).bottomForestPiece
+            (attachedSelectedPicture_bottomForestGeometry
+              A hA B D C family selected e R f T U hShared hLinear) a))
+    (k : Fin n)
+    (hLeftCut : owner (trainCyclicPred k) ≠ owner k)
+    (hRightCut : owner k ≠ owner (cyclicSucc k))
+    (hCoreMixed :
+      ∃ x : RelStructure.Attachment.Vertex S (W := Y) (I := I),
+      ∃ p : Quotient ((Train).wagonSetoid μBottom),
+        ((K.connector (trainCyclicPred k) = Sum.inl x ∧
+          K.connector k = Sum.inr p) ∨
+         (K.connector (trainCyclicPred k) = Sum.inr p ∧
+          K.connector k = Sum.inl x)) ∧
+        x ∈ copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f) ∧
+        (∀ a : ActualEdge, (Out).parent a = p →
+          a.1 ⊆ copyCarrier
+            (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))) :
+    False := by
+  let H := attachedSelectedPicture_bottomForestGeometry
+    A hA B D C family selected e R f T U hShared hLinear
+  have hAllowed' : ∀ j : Fin n,
+      K.BottomGeometricAllowed Out
+        (fun i : I => copyCarrier (Std i))
+        CoreActual j (owner j) := by
+    intro j
+    exact (attachedSelectedPicture_bottomGeometricAllowed_iff
+      A hA B D C family selected e R f T U hShared
+      K j (owner j)).2 (hAllowed j)
+  have hMinimal' : ∀ other : Fin n → I ⊕ CoreEdge,
+      (∀ j, K.BottomGeometricAllowed Out
+        (fun i : I => copyCarrier (Std i))
+        CoreActual j (other j)) →
+      cyclicOwnerChanges owner ≤ cyclicOwnerChanges other := by
+    intro other ho
+    apply hMinimal other
+    intro j
+    exact (attachedSelectedPicture_bottomGeometricAllowed_iff
+      A hA B D C family selected e R f T U hShared
+      K j (other j)).1 (ho j)
+  exact K.bottom_normalized_minimal_no_mixed_singleton_of_boundary
+    Out H hNormalized
+    (fun i : I => copyCarrier (Std i)) CoreActual
+    owner hAllowed' hMinimal'
+    (copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))
+    (Set.range (fun b : CoreEdge => (CoreActual b).1))
+    hBoundary k hLeftCut hRightCut hCoreMixed
+
 end ActualBottomGeometry
 
 end StructuralRamsey.Girth
