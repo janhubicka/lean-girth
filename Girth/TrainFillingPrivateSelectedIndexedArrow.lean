@@ -85,7 +85,7 @@ theorem selectedUnionPrivateChoices_commonLocalArrow
     exact hf
   have hColour :=
     hLocal p (choiceTemplateEquiv U (supportCopies A R) hTemplate c f) hMem
-  rwa [← hfe] at hColour
+  simpa only [hfe] using hColour
 
 end SummandPrivateTemplate
 end StructuralRamsey.Girth
