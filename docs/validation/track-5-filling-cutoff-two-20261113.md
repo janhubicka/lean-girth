@@ -179,3 +179,74 @@ GitHub CI successes certify older exact heads only. As instructed,
 no paid Actions have been triggered. All new declarations retain
 unverified status until a local exact-head compilation and
 \`#print axioms\` audit can be performed.
+
+
+## Continuation: actual shorter-stage physical copy and restored wagons
+
+The next candidate chain reuses the EXISTING selected \`ForestTailStage\`,
+rather than introducing an independent selected embedding \`M -> N\`:
+
+- \`TrainFillingPrivateStageSelectedPhysical.lean\` derives a
+  **single** physical edge injection from a genuine selected lower-stage
+  copy \`b\`, with exact complete first-wagon carriers and faithful
+  equivalence for **every** train cut. It packages
+  \`selectedActualMPhysicalEdgeEmbedding\` and
+  \`selectedActualMPhysicalEdgeEmbedding_train_iff\`.
+- \`TrainFillingPrivateSelectedStageFilling.lean\` transports the
+  actual filled old-edge type (which must equal the **full**
+  A-support of \`S.system.toRelStructure\`) to the lower-stage
+  physical support edges. It constructs the canonical selected
+  \`(choice,first-wagon) -> H.OldEdge\` map from the genuine selected
+  relational \`b\`, proves exact complete carrier images, defines
+  the corresponding H-old train by an edge equivalence and derives
+  every-cut faithfulness from the stage's *actual*
+  \`targetRestriction\`. No independent β/hFaithful input.
+- \`TrainFillingPrivateSelectedRestoredWagons.lean\` instantiates
+  the existing \`selectedIndexedRestoredWagonEmbedding\` with that
+  **actual** β and transported old train. This constructs one
+  injective positive-cut proper-wagon map and its exact physical
+  parent equation, under genuine source quotient and local template
+  nonemptiness. It correctly does **not** treat the shared universal
+  top as a proper cut.
+
+An exact-head gate is included in \`Girth/CheckTrack5Private.lean\`.
+It imports both the EHN and stage branches and includes targeted
+\`#check\` and \`#print axioms\` probes. This file has **not** been
+executed: presence of a probe is not kernel validation.
+
+**Remaining genuinely hard application obligations** (do not silently
+promote):
+
+1. Show the concrete contracted colour-block relational \`M\`
+   from the selected EHN family has precisely the original
+   \`(choice,first-wagon)\` complete A-support carriers. The older
+   indexed actual-M support theorem is reusable, but its hypotheses
+   must be discharged from the new unequal-summand model.
+2. Obtain the actual selected shorter \`ForestTailStage\` from
+   \`RR_h\` and transport its partite predicates and orders through
+   the canonical placements. For each selected old parent \`b\`,
+   establish pointwise canonical-placement compatibility
+   \`H.place (β_b (c,p)) x = b(tagVertex c (U_c.place p x))\`,
+   or derive the corresponding **complete** physical carrier identity
+   from ordered carrier uniqueness as in the older adapter.
+3. Construct a \`FaithfulParentwisePhysicalRealization\` into
+   the unchanged full \`H=N[X]\`. The selected β, all-cut
+   parent reflection and proper-wagon embeddings are now supplied
+   by the candidate chain; the vertex map, physical carrier
+   equality, selected parent \`copyCarrier\`/\`copyEdges\` and final
+   target indexed by \`(b,c)\` still require exact assembly.
+4. Prove the old \`N\` full system-girth input at each cut used
+   for the filling theorem **without** invoking the desired output
+   girth. The lower-stage stage supplies only its stated tail
+   coordinates; do not invent a missing bottom system bound.
+5. Combine the actual selected parentwise family with the
+   already-available indexed EHN local arrow and selected physical
+   colour-word theorem. Only then may \`lem:tailraw\` be closed.
+
+**Adversarial source check (not Lean elaboration):** ten new Lean
+files on this branch (including the check gate) were inspected for
+balanced braces, balanced namespace declarations, dependencies,
+and forbidden top-level \`sorry\`, \`admit\` or \`axiom\` declarations;
+a missing final EHN namespace terminator was corrected in a
+follow-up commit. The TeX draft retains open/partial markers.
+No successful Lean or full PDF build is being represented by this check.
