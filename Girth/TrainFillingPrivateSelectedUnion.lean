@@ -83,8 +83,8 @@ theorem aStrong_compose
         _ = w := hx'
         _ = sel (inc y') := hy'.symm)
     have heq : b x = b x' :=
-      hSmall ⟨⟨x, rfl⟩, ⟨y, hxy.symm⟩⟩
-        ⟨⟨x', rfl⟩, ⟨y', hx'y'.symm⟩⟩
+      hSmall ⟨⟨x, rfl⟩, ⟨y, hxy⟩⟩
+        ⟨⟨x', rfl⟩, ⟨y', hx'y'⟩⟩
     calc
       z = a x := hx.symm
       _ = sel (b x) := Classical.choose_spec (hFactor x)
@@ -98,7 +98,7 @@ theorem aStrong_compose
   refine ⟨y, ?_⟩
   calc
     (sel.comp inc) y = sel (inc y) := rfl
-    _ = sel (b x) := congrArg sel hy
+    _ = sel (b x) := congrArg sel hy.symm
     _ = a x := (Classical.choose_spec (hFactor x)).symm
     _ = z := hx
 
