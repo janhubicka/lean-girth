@@ -90,8 +90,8 @@ theorem selectedEdges_monochromatic_of_selectedUnion
         hInclude hSelected hCovered).selectedEdges p) :
     ρ e = colour := by
   obtain ⟨f, hf⟩ := he
-  change f.1 ∈ supportCopies A (local p) at f.2
-  obtain ⟨a, ha⟩ := f.2
+  have hfSupport : f.1 ∈ supportCopies A (local p) := f.2
+  obtain ⟨a, ha⟩ := hfSupport
   have hfImage :
       e.1 = (selected.comp (include p)).toFunctionEmbedding '' f.1 := by
     exact hf
@@ -106,7 +106,7 @@ theorem selectedEdges_monochromatic_of_selectedUnion
     calc
       e.1 = (selected.comp (include p)).toFunctionEmbedding '' f.1 := hfImage
       _ = (selected.comp (include p)).toFunctionEmbedding '' copyCarrier a :=
-        congrArg _ ha
+        by rw [ha]
       _ = copyCarrier ((selected.comp (include p)).comp a) :=
         UniformPrivateTemplate.image_copyCarrier_comp
           A (local p) R (selected.comp (include p)) a
