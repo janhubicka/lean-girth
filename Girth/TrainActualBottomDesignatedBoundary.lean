@@ -139,6 +139,58 @@ theorem attachedSelectedPicture_bottom_designated_boundary
         rw [hIntersection, hWhole]
         exact (copyCarrier_comp_eq_image (Std i) oldA).symm
 
+
+/-- The actual bottom no-mixed-singleton step with the designated-copy
+boundary fully discharged from the original strongly induced base
+projection. Only the genuinely geometric *cut connector is in the core*
+premise remains. No forest or system-girth theorem is assumed. -/
+theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_base_strong
+    [Nontrivial UA]
+    (hLinear : ALinear A Actual)
+    (hStrong : ∀ q : Selected, AStrong A D (copyCarrier q.1.base))
+    {n : ℕ} (K : (Out).BigCycle n)
+    (hNormalized : K.MixedNormalized Out)
+    (owner : Fin n → I ⊕ OldACarrierEdge A R)
+    (hAllowed : ∀ j,
+      selectedOutputGeometricOwnerAllowed
+        A hA B D C family selected e R f T U hShared μBottom
+          (K.label j) (owner j))
+    (hMinimal : ∀ other : Fin n → I ⊕ OldACarrierEdge A R,
+      (∀ j,
+        selectedOutputGeometricOwnerAllowed
+          A hA B D C family selected e R f T U hShared μBottom
+            (K.label j) (other j)) →
+      cyclicOwnerChanges owner ≤ cyclicOwnerChanges other)
+    (k : Fin n)
+    (hLeftCut : owner (trainCyclicPred k) ≠ owner k)
+    (hRightCut : owner k ≠ owner (cyclicSucc k))
+    (hCoreMixed :
+      ∃ x : RelStructure.Attachment.Vertex S (W := Y) (I := I),
+      ∃ p : Quotient
+        ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared)
+          .wagonSetoid μBottom),
+        ((K.connector (trainCyclicPred k) = Sum.inl x ∧
+            K.connector k = Sum.inr p) ∨
+          (K.connector (trainCyclicPred k) = Sum.inr p ∧
+            K.connector k = Sum.inl x)) ∧
+        x ∈ copyCarrier Core ∧
+        (∀ a : ActualEdge, (Out).parent a = p →
+          a.1 ⊆ copyCarrier Core)) : False := by
+  let H := attachedSelectedPicture_bottomForestGeometry
+    A hA B D C family selected e R f T U hShared hLinear
+  have hBoundary : ∀ a : (I × Selected) ⊕ ActualEdge,
+      (Out).designated a →
+        SmallOrWholeEdgeBoundary
+          (Set.univ :
+            Set (Set (RelStructure.Attachment.Vertex S (W := Y) (I := I))))
+          (copyCarrier Core) ((Out).bottomForestPiece H a) :=
+    attachedSelectedPicture_bottom_designated_boundary
+      A hA B D C family selected e R f T U hShared H hStrong
+  exact attachedSelectedPicture_bottom_no_mixed_singleton_of_core_boundary
+    A hA B D C family selected e R f T U hShared hLinear
+    K hNormalized owner hAllowed hMinimal
+    hBoundary k hLeftCut hRightCut hCoreMixed
+
 end ActualSelectedBottomBoundary
 
 end StructuralRamsey.Girth
