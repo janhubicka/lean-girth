@@ -1,5 +1,6 @@
 import Girth.TrainFillingPrivateEHNArrow
 import Girth.TrainFillingPrivateSelectedRestoredWagons
+import Girth.TrainFillingOrderStageCanonicalAllCutGirth
 
 /-!
 # Track 5: exact-head local Lean and axiom gate
@@ -33,6 +34,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #check StructuralRamsey.Girth.IndexedPrivateChoice.exists_stageSelectedActualMPhysicalFaithful
 #check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_faithful
 #check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
+#check StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT
 
 #print axioms StructuralRamsey.Girth.aStrong_compose
 #print axioms StructuralRamsey.Girth.selectedUnion_summand_monochromatic
@@ -47,3 +49,5 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldEdgeEmbedding_carrier
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_faithful
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT
