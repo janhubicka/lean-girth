@@ -2,6 +2,7 @@ import Girth.TrainRecursiveActualRetainedSelectedWitnessGirth
 import Girth.TrainRecursiveIntrinsicTailSupreme
 import Girth.TrainRecursiveFineWitnessTransport
 import Girth.TrainRecursiveCoarsenedSelectedRestriction
+import Girth.TrainRecursiveSelectedHeightRestriction
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -38,17 +39,6 @@ open StructuralRamsey.RelStructure
 
 universe u v
 variable {L : RelLanguage.{u}} {UA VB P V : Type v}
-
-/-- A height cast changes only the Fin coordinate; it changes no
-edge, wagon, or label relation. -/
-private theorem castHeight_rel_iff_selected
-    {W : Type v} {m n : ℕ}
-    (S : EdgeTrainLevels W m) (h : m = n)
-    (ν : Fin (n + 1)) (a b : W) :
-    (S.castHeight h).rel ν a b ↔
-      S.rel (Fin.cast (congrArg (fun k : ℕ => k + 1) h).symm ν) a b := by
-  cases h
-  rfl
 
 /-- The genuine lower forest stage supplies ALL actual attached positive
 tail SupremeCycleBound values, without any hRel, hWitness or hTail
@@ -140,22 +130,8 @@ theorem ForestTailStage.attachedAllPositiveSupreme_of_refinedSelectedLower
       (i : I) (a b : Embedding A Target.toRelStructure),
       T.rel ν (actualEdge ((f i).comp a)) (actualEdge ((f i).comp b)) ↔
         SourceCut.rel ν (actualEdge a) (actualEdge b) := by
-    intro ν i a b
-    let νLower : Fin
-        ((List.replicate (R.extraCuts + 1) (q - 1) ++ tail).length + 1) :=
-      Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm ν
-    have hBack :
-        Fin.cast (congrArg (fun k : ℕ => k + 1) hLen.symm).symm νLower =
-          ν := Fin.ext rfl
-    have hRaw := lower.coarsenedSelected_trainRestriction
-      A Target Large hFamilyParts νLower i a b
-    have hRHS :
-        lower.train.rel νLower
-          (actualEdge ((f i).comp a)) (actualEdge ((f i).comp b)) ↔
-        SourceCut.rel ν (actualEdge a) (actualEdge b) := by
-      simpa only [castHeight_rel_iff_selected, hBack] using hRaw
-    exact (castHeight_rel_iff_selected lower.train hLen ν
-      (actualEdge ((f i).comp a)) (actualEdge ((f i).comp b))).trans hRHS
+    exact lower.coarsenedSelected_trainRestriction_castBack
+      A Target Large SourceCut hLen hFamilyParts
   have hRel : ∀ (ν : Fin ((q :: tail).length + 1)) (i : I)
       (p s : SharedOldACarrierEdge A old.system.toRelStructure
         (activeCarrier A old.system e.toFunctionEmbedding)),
