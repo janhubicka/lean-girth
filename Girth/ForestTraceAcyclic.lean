@@ -1,5 +1,6 @@
 import Girth.ForestAllSupportGirth
 import Girth.RestrictedForestGirth
+import Girth.ForestCarrierCorner
 
 /-!
 # Acyclic edge traces of a forest: Track 2 candidate
