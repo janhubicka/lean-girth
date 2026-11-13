@@ -1,0 +1,47 @@
+import Girth.TrainFillingPrivateEHNArrow
+import Girth.TrainFillingPrivateSelectedRestoredWagons
+
+/-!
+# Track 5: exact-head local Lean and axiom gate
+
+Candidate modules for the 2026-11-13 manuscript source digest
+45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec.
+
+This is a gate FILE, not a proof certificate. Its checks become evidence
+only after an actual local Lean 4 elaboration with the pinned
+lean-toolchain and the complete dependencies on this exact branch.
+Do not promote a validation mark from the presence of these commands.
+
+Run:
+  LEAN_NUM_THREADS=1 lake env lean Girth/CheckTrack5Private.lean
+or:
+  LEAN_NUM_THREADS=1 lake build Girth.CheckTrack5Private
+
+Audit the output for sorryAx, unapproved axioms, hidden hypotheses and
+unelaborated imports. External EHN/classical axioms remain explicit.
+-/
+
+#check StructuralRamsey.Girth.SummandPrivateTemplate.toPrivateWagonInput
+#check StructuralRamsey.Girth.aStrong_compose
+#check StructuralRamsey.Girth.SummandPrivateTemplate.fromSelectedUnion
+#check StructuralRamsey.Girth.selectedUnion_summand_monochromatic
+#check StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localArrow
+#check StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_commonLocalArrow
+#check StructuralRamsey.Girth.closedTargetRamseyFamily_supportArrow
+#check StructuralRamsey.Girth.exists_colouredRamsey_unequalSummandPrivateChoices
+#check StructuralRamsey.Girth.IndexedPrivateChoice.exists_stageSelectedActualMPhysicalFaithful
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_faithful
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
+
+#print axioms StructuralRamsey.Girth.aStrong_compose
+#print axioms StructuralRamsey.Girth.selectedUnion_summand_monochromatic
+#print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedEdges_monochromatic_of_selectedUnion
+#print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_localArrow
+#print axioms StructuralRamsey.Girth.SummandPrivateTemplate.selectedUnionPrivateChoices_commonLocalArrow
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_supportArrow
+#print axioms StructuralRamsey.Girth.exists_colouredRamsey_unequalSummandPrivateChoices
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.stageSelectedActualMPhysicalEdge_carrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.exists_stageSelectedActualMPhysicalFaithful
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_faithful
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedRestoredWagonEmbedding_parent
