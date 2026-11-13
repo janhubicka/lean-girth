@@ -48,3 +48,18 @@ This is a **new** validation plan, not a renaming of legacy tracks A–G. Existi
 5. Legacy lettered tracks remain historical. New work is labelled **Track 1** to **Track 8** only.
 
 **Status:** Manuscript PR #445 is merged and pinned. Repository preparation and historic PR cleanup are complete; **no new Lean kernel verification of the 41-page revision** is asserted here.
+
+## Branch policy for spawned tracks
+
+Do **not** pre-create eight empty remote branches: `.github/workflows/lean.yml` runs a full Lean job on every branch push. Start from the current `lean-girth/main` after the documentation-only preparation commits, and publish a numbered branch only with its first useful change. Suggested names:
+
+- `validation/1-closures-cutoff-three` (#1052)
+- `validation/2-join-trees-forests` (#1053)
+- `validation/3-wagons-linearity` (#1054)
+- `validation/4-system-girth-conversion` (#1055)
+- `validation/5-filling-cutoff-two` (#1056)
+- `validation/6-refinements` (#1057)
+- `validation/7-recursive-witness` (#1058)
+- `validation/8-small-traces-theorem` (#1059)
+
+Prior lettered branches remain as historical sources. **Do not cherry-pick a historical PR wholesale** before comparing exact shared files and hypotheses. Begin each numbered branch with a source-to-Lean statement mapping, record its base SHA, then import/reuse the necessary established declarations.
