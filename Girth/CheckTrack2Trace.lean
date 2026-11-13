@@ -9,3 +9,6 @@ import Girth.ForestActiveTraceGirth
 
 #check StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
 #print axioms StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
+
+#check StructuralRamsey.Girth.girthGT_of_bounded_smallOrWhole_forest_completions
+#print axioms StructuralRamsey.Girth.girthGT_of_bounded_smallOrWhole_forest_completions
