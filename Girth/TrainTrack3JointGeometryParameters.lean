@@ -2,6 +2,7 @@ import Girth.TrainSelectedPictureIntrinsicGeometry
 import Girth.TrainActualIntrinsicParameters
 import Girth.TrainFullSystemGirthParameter
 
+set_option autoImplicit false
 set_option Elab.async false
 
 /-!
