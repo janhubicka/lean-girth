@@ -1,4 +1,4 @@
-import Girth.ForestTraceAcyclic
+import Girth.ForestActiveTraceGirth
 
 /-! Exact Track 2 trace-lemma axiom gate. Not yet executed locally. -/
 
@@ -6,3 +6,6 @@ import Girth.ForestTraceAcyclic
 #check StructuralRamsey.Girth.girthGT_selected_of_forest_edge_traces
 #print axioms StructuralRamsey.Girth.girthGT_union_of_forest_edge_traces
 #print axioms StructuralRamsey.Girth.girthGT_selected_of_forest_edge_traces
+
+#check StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
+#print axioms StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
