@@ -2,6 +2,7 @@ import Girth.TrainActualBottomDesignatedBoundary
 import Girth.TrainActualCutConnectorLift
 import Girth.TrainCoreWagonEmbedding
 import Girth.TrainActualNormalizedMinimalOwners
+import Girth.TrainDirectCyclicCutBudget
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -296,6 +297,63 @@ theorem attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
     A hA B D C family selected e R f T U hShared hRel
     hPhysical hStrong Z hZNormal owner hAllowed hMinimal
     k hLeft hRight hMixed
+
+
+/-- An acceptable real attached bottom cycle of length at least three
+admits an equally ordered normalized cycle with a MINIMUM geometric
+owner word whose number of cuts is at most the requested cycle-order
+cutoff. The elementary direct cyclic charging argument avoids an
+artificial segment-block representation. This still does not prove
+supremeness of the output; the reduced forest and transfer are separate. -/
+theorem attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
+    [Nontrivial UA]
+    (hPhysical : ALinear A Actual)
+    (hStrong : ∀ q : Selected, AStrong A D (copyCarrier q.1.base))
+    {n q : ℕ} (K : (Out).BigCycle n)
+    (hAccept : K.Acceptable) (hn : 3 ≤ n)
+    (hOrder : K.twiceOrder ≤ 2 * q) :
+    ∃ Z : (Out).BigCycle n,
+      Z.Acceptable ∧ Z.twiceOrder = K.twiceOrder ∧
+      Z.MixedNormalized Out ∧
+      (∀ j : Fin n, Z.connector j = K.connector j) ∧
+      ∃ owner : Fin n → I ⊕ CoreEdge,
+        (∀ j, GeomAllowed (Z.label j) (owner j)) ∧
+        (∀ other : Fin n → I ⊕ CoreEdge,
+          (∀ j, GeomAllowed (Z.label j) (other j)) →
+          cyclicOwnerChanges owner ≤ cyclicOwnerChanges other) ∧
+        cyclicOwnerChanges owner ≤ q ∧
+        (∀ kZ : Fin n, Z.HasSupremeAt Out kZ →
+          ∃ kK : Fin n, K.label kK = Z.label kZ ∧
+            K.HasSupremeAt Out kK) := by
+  obtain ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
+    owner, hAllowed, hMinimal, hNoMixed, hPull⟩ :=
+    attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
+      A hA B D C family selected e R f T U hShared hRel
+      hPhysical hStrong K hAccept hn
+  have hKinds (k : Fin n)
+      (hLeft : owner (trainCyclicPred k) ≠ owner k)
+      (hRight : owner k ≠ owner (cyclicSucc k)) :
+      OrderOneData.connectorKind (Z.connector (trainCyclicPred k)) =
+        OrderOneData.connectorKind (Z.connector k) := by
+    have hNo := hNoMixed k hLeft hRight
+    cases hPrev : Z.connector (trainCyclicPred k) with
+    | inl x =>
+        cases hHere : Z.connector k with
+        | inl y => rfl
+        | inr p =>
+            exact False.elim (hNo
+              ⟨x, p, Or.inl ⟨hPrev, hHere⟩⟩)
+    | inr p =>
+        cases hHere : Z.connector k with
+        | inl x =>
+            exact False.elim (hNo
+              ⟨x, p, Or.inr ⟨hPrev, hHere⟩⟩)
+        | inr w => rfl
+  have hBudget : cyclicOwnerChanges owner ≤ q :=
+    Z.ownerCuts_le_cutoff_of_no_mixed Out owner hKinds
+      (by rw [hZOrder]; exact hOrder)
+  exact ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
+    owner, hAllowed, hMinimal, hBudget, hPull⟩
 
 end ActualBottomCutGeometry
 
