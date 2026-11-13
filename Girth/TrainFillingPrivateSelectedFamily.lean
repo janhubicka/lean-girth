@@ -70,6 +70,34 @@ theorem selectedUnionPrivateChoices_templateEdges
       hInclude hCovered choice hStrong c).templateEdges =
       supportCopies A R := rfl
 
+/-- The complete local X-template edge type is nonempty for
+EVERY selected W-copy. A single original A-copy in W, composed with
+the selected W-embedding, supplies a genuine physical A-support edge
+of X. This removes a separate nonemptiness assumption from the
+restored proper-wagon map in the cutoff-two application. -/
+theorem selectedUnionPrivateChoices_localEdge_nonempty
+    {L : RelLanguage.{u}}
+    {UA W X V P C : Type v}
+    (A : RelStructure L UA)
+    (B : RelStructure L W)
+    (R : RelStructure L X)
+    (oldCarrier : P → Set V)
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
+    (include : (p : P) → RelStructure.Embedding (local p) B)
+    (hInclude : ∀ p, AStrong A B (copyCarrier (include p)))
+    (hCovered : ∀ p (x : {x : V // x ∈ oldCarrier p}),
+      ∃ a : RelStructure.Embedding A (local p), x ∈ copyCarrier a)
+    (choice : C → RelStructure.Embedding B R)
+    (hStrong : ∀ c, AStrong A R (copyCarrier (choice c)))
+    (hAB : Nonempty (RelStructure.Embedding A B))
+    (c : C) :
+    Nonempty (selectedUnionPrivateChoices A B R oldCarrier local
+      include hInclude hCovered choice hStrong c).LocalEdge := by
+  obtain ⟨a⟩ := hAB
+  refine ⟨⟨copyCarrier ((choice c).comp a), ?_⟩⟩
+  change copyCarrier ((choice c).comp a) ∈ supportCopies A R
+  exact ⟨(choice c).comp a, rfl⟩
+
 /-- Monochromaticity of one *entire* selected W-copy under each
 word-colouring yields a single colour for all selected local edges
 of every first wagon in that same choice. No independent
