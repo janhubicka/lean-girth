@@ -28,6 +28,7 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.track1_rightCopy_reflect_left
 #print axioms StructuralRamsey.Girth.track1_leftCopy_reflect_right
 #print axioms StructuralRamsey.Girth.track1_girthGT_three_freeAmalgam_of_aStrong
+#print axioms StructuralRamsey.Girth.targetClosure_mem_ElementaryCAThreeClass
 #print axioms StructuralRamsey.Girth.ElementaryCAThreeClass_freeAmalgamationClass
 #print axioms StructuralRamsey.Girth.track1_selectedOrderedRamseyFamily_triangleFree
 #print axioms StructuralRamsey.Girth.track1_three_boundaries_forest_of_core
