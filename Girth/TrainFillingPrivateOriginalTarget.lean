@@ -55,8 +55,7 @@ edge family of the complete private filling. -/
 theorem originalSelectedEdge_mem_target
     (e : T.OriginalEdge) :
     T.originalSelectedEdge e ∈ T.toPrivateWagonInput.targetEdges := by
-  change T.originalSelectedEdge e |>.2 ∈
-    T.toPrivateWagonInput.selectedEdges e.1
+  change (T.originalSelectedEdge e).2 ∈ T.selectedEdges e.1
   exact ⟨e.2, rfl⟩
 
 /-- The full physical carrier of a selected original edge in M[X]
