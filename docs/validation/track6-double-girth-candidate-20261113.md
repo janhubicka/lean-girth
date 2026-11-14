@@ -42,3 +42,73 @@ Bounded Python diagnostic (not Lean): 142,416 set-partition words through length
 - Source-level inspection confirmed pinned Mathlib defines `finRotate : ∀ n, Equiv.Perm (Fin n)` and `Fintype.card_bool`, which are used by the candidate; this is API inspection, not a compilation result.
 
 **Next exact-head gate:** compile `DoubleCount`, `DoubleStep`, `DoubleGirth`, `PhysicalFineGirthDouble` in order and run their printed axioms before changing any manuscript validation marker. Reuse all existing `g+1` certificates without waiting for the stronger estimate.
+
+## 14 November evening: complete cut vector and independent geometry
+
+The newest Track 6 additions are intentionally split between the new
+doubling theorem and interfaces already supplied by the old formalization.
+
+| Module | New endpoint | Contract and provenance |
+|---|---|---|
+| `TrainRecursiveRefinementDoubleStep.lean` | `BergeCycle.child_constant_of_singleton_intersections_twice` | Direct physical-cycle counterpart of the labelled (2g+1) one-step lemma. |
+| `TrainRecursiveRefinementDoubleGirth.lean` | `FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice` | Actual irreducible A-support, LOCAL first wagon; no retained global first-cut assumption. |
+| `TrainRecursiveRefinementAllRetainedCuts.lean` | `allRetainedLabelledCutGirth`, `allRetainedLabelledCutGirth_mono` | Independent of doubling; aggregates existing exact quotient-index transfer at **every** old positive level. Requires actual old cut certificates. |
+| `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_sharedFineCutVector` | Combines the **existing** global inserted-cut theorem with each separately retained old positive cutoff. The head/tail pointwise comparisons are explicit arithmetic inputs; it does not assume a new global fine-girth conclusion. |
+| `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_inducedFineCutVector` | Transports the preceding whole vector from shared physical A-support to the true induced active relational A-support via the existing injective source map. |
+
+### Existing formal components reused
+
+- `TrainRecursiveParentChildCutGirth.lean`:
+  `EdgeTrainLevels.labelledCutGirth_of_parent_and_children`,
+  `FirstWagonRefinement.labelledCutGirth_inserted_of_retained`.
+  The latter descends from a **global retained parent cut** and all
+  actual parent-local child bounds; it is not a theorem that local
+  child bounds alone give global girth.
+- `TrainRecursiveTrueActiveRefinementCutGirth.lean`:
+  `ForestTailStage.trueActive_sharedInsertedCutGirth` and
+  `trueActive_inducedInsertedCutGirth`; the old stage supplies
+  the global first retained cut.
+- `TrainRecursiveTrueActiveRetainedTailCuts.lean`:
+  `trueActive_sharedRetainedTailCutGirth` and
+  `trueActive_inducedRetainedTailCutGirth`, retaining the
+  stronger individual old tail entries, not just the head.
+- `TrainRecursiveRefinementForget.lean` and
+  `TrainRecursiveRefinementParameters.lean`: exact relation,
+  wagon-class, parent, and parameter restoration.
+- `TrainRecursiveCoarsenedSelectedRestriction.lean` and
+  `TrainRecursiveCoarsenedSelectedFamilyArrow.lean`:
+  indexed selected embeddings/arrow remain separate genuine
+  lower-stage interfaces, not consequences of girth alone.
+
+The main conditional real-fine-support double-girth wrapper remains
+`selectedPicture_actualSupport_girthGain_twice_of_fineSystemCuts`.
+Both versions of the new complete-cut-vector theorem require a
+REAL `ForestTailStage` and a REAL `FirstWagonRefinement`;
+neither theorem creates them.
+
+**Exact-head check command to run after the toolchain is restored:**
+
+```sh
+LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
+```
+
+The central audit file now contains **20** source-level `#print axioms`
+queries. These have **not been executed**; there is no kernel certificate
+and the entire Track 6 remains open. The old (g+1) recursion path is
+independent of doubling and must remain so.
+
+### Adversarial finite diagnostics and source conflicts
+
+The manuscript-branch checker now additionally verifies that two
+distinct quotient-wagon labels with identical carriers form a genuine
+labelled Berge 2-cycle and that deduplicating them invalidly removes
+it. It also checks the ordinary acyclic four-edge path whose grouped
+wagon cut forms a labelled Berge 3-cycle. The local suite passed;
+these checks are bounded diagnostic evidence, not formal proofs.
+
+Current `girth/main` has moved since the frozen 41-page baseline,
+but none of `paper/04-local-forests.tex`,
+`paper/15-refinements.tex`, or `Makefile` is modified by those
+intervening commits. Do not overwrite concurrent updates to other
+paper sections. The Track 6 manuscript changes remain on their own
+branch; they have not been merged.
