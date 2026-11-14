@@ -17,10 +17,12 @@ def has_join_tree(bags):
     if n <= 1:
         return True
     edges = sorted(
-        ((a & b).bit_count(), i, j)
-        for i, a in enumerate(bags)
-        for j, b in enumerate(bags) if i < j
-    , reverse=True)
+        [
+            ((a & b).bit_count(), i, j)
+            for i, a in enumerate(bags)
+            for j, b in enumerate(bags) if i < j
+        ], reverse=True
+    )
     parents = list(range(n))
 
     def root(i):
