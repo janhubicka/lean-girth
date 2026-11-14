@@ -138,4 +138,33 @@ theorem forestOfCopies_sum_of_common_edge
     JF JG hF.pairwiseAllowed hG.pairwiseAllowed
     i0 j0 hCrossOcc hCrossAllowed
 
+/-- Binary gluing with a separator which is either subsingleton
+or carried by a retained one-edge request on BOTH sides. This is
+the precise leaf-induction interface of the general join-tree
+lifting argument, including the case where an isolated singleton
+is not present in any local member. -/
+theorem forestOfCopies_sum_of_smallOrEdge_overlap
+    [Fintype I] [Nonempty I] [Fintype J] [Nonempty J]
+    {F : I → HypergraphPiece W}
+    {G : J → HypergraphPiece W}
+    (hF : ForestOfCopies F)
+    (hG : ForestOfCopies G)
+    (hSeparator :
+      ((⋃ i : I, (F i).carrier) ∩
+        (⋃ j : J, (G j).carrier)).Subsingleton ∨
+      ∃ (e : Set W) (i0 : I) (j0 : J),
+        F i0 = HypergraphPiece.oneEdge e ∧
+        G j0 = HypergraphPiece.oneEdge e ∧
+        ((⋃ i : I, (F i).carrier) ∩
+          (⋃ j : J, (G j).carrier)) ⊆ e) :
+    ForestOfCopies (sumPieces F G) := by
+  rcases hSeparator with hSmall | ⟨e, i0, j0, hReqF, hReqG, hSub⟩
+  · exact forestOfCopies_sum_of_subsingleton_overlap hF hG hSmall
+  · apply forestOfCopies_sum_of_common_edge
+      hF hG e i0 j0 hReqF hReqG
+    intro i j x hx
+    apply hSub
+    exact ⟨Set.mem_iUnion.mpr ⟨i, hx.1⟩,
+      Set.mem_iUnion.mpr ⟨j, hx.2⟩⟩
+
 end StructuralRamsey.Girth
