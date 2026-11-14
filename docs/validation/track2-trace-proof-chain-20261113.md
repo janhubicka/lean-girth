@@ -26,7 +26,7 @@ Status: **source-level candidate, not kernel-verified** (updated 14 November 202
 1. The active-girth conclusion is about the *old* induced subsystem `(C.induce S).toRelStructure`, not `ProcessedActiveGirth.processed_activeSubsystem_girthGT_of_local`, which concerns the *new processed* subsystem.
 2. The image edge set `H` must be exactly `mappedSupportCopies A (C.induce S) C incl`, rather than all ambient A-support edges or an arbitrary set of labelled edge occurrences. The endpoint constructs its containment, image-membership and reflection proof.
 3. A designated B-copy's boundary must be a genuine complete A-support edge of that B-piece. The existing factorization `bSupportPiece_eq_embeddedACopySupportPiece` supplies this.
-4. For the **general** `lem:joinlift`, `forestOfCopies_lift_local_of_linear` is too strong on singleton separators. The generic helper adapter can attach one temporary singleton per *oriented singleton link* **after** local completion, without entering the completion budget. Per-vertex deduplication is unnecessary. The checked `selectedForest_of_distinctOwnerRequestImages` and short auxiliary deletion are reuse candidates. This general proof is independent of the structural theorem's edge-covered use.
+4. For the **general** `lem:joinlift`, the older `forestOfCopies_lift_local_of_linear` is too strong on singleton separators. A new direct leaf-induction source candidate (`ForestGeneralJoinLift`) now proves the required labelled forest without singleton helpers; `ForestRetainedSetLift` handles duplicate and omitted one-edge members. This is independent of the simpler edge-covered structural application.
 5. Retain requests that are also selected or added local-completion members. Deleting such members would change the claimed result. No arbitrary-subfamily heredity is available.
 6. There is **no new kernel certification yet**: a well-typed-looking Lean source candidate, a text audit and finite diagnostics cannot establish that Lean elaborates the statements or that `#print axioms` is clean.
 
@@ -39,7 +39,7 @@ LEAN_NUM_THREADS=1 lake build Girth.CheckTrack2Trace
 lake env lean Girth/CheckTrack2Trace.lean
 ```
 
-After a successful compilation, inspect the printed assumptions of every new theorem, reject `sorryAx` and unapproved axioms, and record source commit and exact imported declarations. Then prove the remaining exact **manuscript forest-extension ↔ typed support completion** adapter; check both its nonempty and empty finite-selection cases. Only then promote a validation marker for `lem:puresubsystem`. The general `lem:joinlift` now has a labelled recursive *source candidate*, while its exact unlabelled finite-set normalization, real Lean compilation, and end-to-end `prop:certpres` remain open.
+After a successful compilation, inspect the printed assumptions of every new theorem, reject `sorryAx` and unapproved axioms, and record source commit and exact imported declarations. The finite-set A/B-copy-to-support adapter is also present as a source candidate (`ForestOldActiveSetGirth`). Check both its nonempty and empty finite-selection cases in a real Lean build. Only then promote a validation marker for `lem:puresubsystem`. The general `lem:joinlift` now has a retained finite-SET source candidate; exact Lean compilation, detailed manuscript-to-type matching, and end-to-end `prop:certpres` remain open.
 
 ## Reproducible finite tests
 
@@ -219,11 +219,10 @@ unelaborated definitional equality during transitivity.
 **Status remains candidate-only.** No local compiler/matching
 mathlib bundle is available in this environment. The four new
 cross-intersection theorem bodies have not been elaborated,
-and no executed `#print axioms` result exists. The *full*
-general singleton-free join-tree lifting theorem remains
-unformalized. The actual edge-covered structural completion
-still reuses existing checked components; it need not wait
-for the generic theorem.
+and no executed `#print axioms` result exists. A direct
+recursive general lift and set-normalization source candidate
+are described below. The actual edge-covered structural
+completion also reuses existing checked components.
 
 
 ## 14 November — general singleton-free join-tree lifting candidate
@@ -262,18 +261,76 @@ than only its edge-covered structural specialization.
   to remove **only** unselected one-edge requests after
   the whole labelled union has been assembled.
 
-**Remaining distinction:** These theorems are formulated for
-*labelled* dependent families, including potentially duplicated
-physical edge requests across different owners. The revised
-manuscript's result is an unlabelled finite **set** of
-selected and locally added members. To certify the exact set
-statement, one must choose and retain one label per genuine
-member, show any other duplicate labels correspond only to
-one-edge separator requests, then invoke short-auxiliary
-deletion and reindexing. That final set-normalization adapter
-is NOT part of the new recursive theorem.
+**Set-valued continuation (added afterward):** The labelled
+lift is composed with `ForestDuplicateLabelNormalization`,
+`ForestDuplicateLabelGeometry` and `ForestRetainedSetLift`.
+Ambient linearity and edge-nonempty local members imply that
+only one-edge members can occur under different labels; these
+can be deleted, leaving the finite set of distinct pieces.
+Removing all omitted one-edge requests leaves precisely the
+selected-plus-locally-completed finite set. The exact result is
+`forestOfCopies_lift_without_singleton_retained_set`.
+The new statements are still source candidates, not compiled.
 
 The two modules have corresponding `#check` and
 `#print axioms` declarations in `Girth/CheckTrack2Trace.lean`.
 All are **uncompiled** because local Lean/mathlib artifacts and
 network egress are absent. No `leanverified` mark was promoted.
+
+
+## 14 November — exact set-normalization and retained completion
+
+The generic manuscript lift has now been expressed as a complete
+**conditional source-level theorem chain**; no extra singleton
+connector or copy-uniqueness axiom is postulated:
+
+1. `ForestDuplicateLabelNormalization.finiteImage_of_duplicate_oneEdge`
+   takes a forest indexed by arbitrary labels and extracts a forest
+   indexed by its **set of distinct underlying pieces**, assuming
+   repeated labels represent one-edge members. One representative
+   is chosen for each underlying member; all other labels are
+   deleted using the previously checked one-edge deletion theorem.
+2. `ForestDuplicateLabelGeometry.isOneEdge_of_linear_carrier_subset_edge`
+   proves that an edge-nonempty member contained in an ambient
+   edge of a linear hypergraph with edges of size at least two
+   is itself a one-edge member.
+   `duplicatedLocalMember_isOneEdge_of_ambient_linear`
+   applies this to repetitions both within a local family and
+   across owners. Along the owner path, running intersection
+   puts the repeated member in a separator; the outer allowed
+   intersection and ambient linearity force it to be one-edge.
+3. `forestOfCopies_lift_local_without_singleton_on_set`
+   combines (1) and (2) with the direct recursive forest lift.
+4. `ForestRetainedSetLift.restrict_to_retained_finset`
+   removes only the omitted one-edge members from a forest on
+   the finite image set, and reindexes the survivors by their
+   **actual underlying piece**.
+   `forestOfCopies_lift_without_singleton_retained_set`
+   combines all steps. Its retained-set parameter may be
+   instantiated with the union of selected members and local
+   designated completion additions; it has no singleton-edge
+   coverage premise.
+
+The English `lem:joinlift` now uses **labelled** disjoint unions
+in its leaf induction (bridging, rather than identifying, the
+two copies of each requested edge), followed by one-edge
+duplicate deletion and removal of unselected requests. It keeps
+`\mathcal F_Q = \mathcal N_Q \cup \mathcal R_Q \cup \mathcal X_Q`
+explicit, with `\mathcal R_Q` the requested edges. This
+matches the proposed Lean construction directly.
+
+A bounded executable regression for the two binary joins
+(`validation/numbered-tracks/check_binary_separator_gluing.py`)
+includes 7,224 singleton/empty-cross cases and 177 whole-edge
+cases, with up to two labelled members on each side over
+four vertices. No counterexample was found. The model explicitly
+distinguishes carrier inclusion from actual ownership of
+the separator edge. These finite tests are not general proofs.
+
+**Verification status:** 33 candidate theorem declarations currently
+have 33 corresponding `#print axioms` checks in the focused
+gate; none has been executed, and no new source has been
+Lean-compiled. No `sorry` or `admit` tokens were found in
+the new modules during static inspection. A successful
+exact-head build and axiom inspection is a hard prerequisite
+to promoting `\leanopen` or calling Track 2 validated.
