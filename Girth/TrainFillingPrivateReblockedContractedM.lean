@@ -100,10 +100,14 @@ theorem actualIndexedContractedM_support_of_reblockedX
       ∀ c : C, ∀ p : P, StrictMono ((U c).coordinate p) :=
     selectedCoordinates_mono_after_colourBlockSort
       U oldColour templateColour hColour hCoordinate hOldBlocks
+  have hNewBlocks :
+      letI : LinearOrder X := colourBlockOrder templateColour
+      ∀ x y : X, templateColour x ≠ templateColour y →
+        x < y → templateColour x < templateColour y := by
+    intro x y hDifferent hxy
+    exact colourBlockOrder_blocks templateColour x y hDifferent hxy
   letI : LinearOrder X := colourBlockOrder templateColour
   exact actualIndexedContractedM_support_eq U enumerateX
-    hEnumerate oldColour templateColour hColour hNewMono
-    (fun x y hDifferent hxy =>
-      colourBlockOrder_blocks templateColour x y hDifferent hxy)
+    hEnumerate oldColour templateColour hColour hNewMono hNewBlocks
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
