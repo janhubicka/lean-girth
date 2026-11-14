@@ -7,6 +7,7 @@ import Girth.ForestJoinTreeHelly
 import Girth.ForestTraceMissingFaces
 import Girth.ForestTraceLocalCompletion
 import Girth.FiniteTraceConformalLocal
+import Girth.FiniteTraceSimplicial
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -91,3 +92,9 @@ all printed axioms before promoting a validation mark.
 
 #print axioms StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
 #print axioms StructuralRamsey.Girth.traceConformal_of_local_completion
+
+#check StructuralRamsey.Girth.JoinTree.private_leaf_occurs_only
+#check StructuralRamsey.Girth.tracePairGraph_private_leaf_simplicial
+
+#print axioms StructuralRamsey.Girth.JoinTree.private_leaf_occurs_only
+#print axioms StructuralRamsey.Girth.tracePairGraph_private_leaf_simplicial
