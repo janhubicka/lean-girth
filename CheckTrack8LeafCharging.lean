@@ -2,6 +2,7 @@ import Girth.ForestTraceLeafCharging
 import Girth.FiniteTraceCoverage
 import Girth.FiniteTraceMaximal
 import Girth.ForestTraceRestriction
+import Girth.FiniteTracePairGraph
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -50,3 +51,11 @@ all printed axioms before promoting a validation mark.
 
 #print axioms StructuralRamsey.Girth.maximalTrace_selection_ncard_of_joinTree
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_maximalJoinTree
+
+#check StructuralRamsey.Girth.traceVertices_isClique
+#check StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#check StructuralRamsey.Girth.maximalClique_has_maximalTrace
+
+#print axioms StructuralRamsey.Girth.traceVertices_isClique
+#print axioms StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#print axioms StructuralRamsey.Girth.maximalClique_has_maximalTrace
