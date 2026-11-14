@@ -39,3 +39,16 @@ The companion branch revision/track8-leaf-trace-induction-20261114 replaces a ro
 4. Transport positive-arity tuples and vertices using the new exact trace-selection adapters; handle nullary relations by induced embeddings; finish the ordered/unordered copy-colouring extraction.
 
 **Status:** new written Lean proof modules drafted and source-reviewed, build unavailable in this runtime (no lean/lake/elan or downloadable Lean toolchain); no paid GitHub Actions triggered, and no markers changed.
+
+## 14 November evening: sharper modular endpoint
+
+The branch also adds:
+
+- \`Girth/ForestTraceRestriction.lean\`: \`HypergraphPiece.traceCarrier\`, \`JoinTree.traceCarrier\`, and \`setBagPiece_traceCarrier\`. The *same* join tree and its running intersections survive restriction of all bags to Z. This does **not** assert heredity for arbitrary subfamilies.
+- \`Girth/FiniteTraceMaximal.lean\`: \`exists_maximal_nonempty_trace\` uses finite partial-order maximality on the actual original-index family; \`maximalTraceRepresentative\` chooses a distinct original member for each distinct maximal nonempty trace; its injectivity is proved, preventing duplicate-index overcounting.
+- \`maximalTrace_card_le_of_joinTree\` reuses leaf charging on bags whose **vertices are elements of the subtype Z**, not the ambient universe. \`maximalTrace_selection_ncard_of_joinTree\` proves the numerical bound on the actual SELECTED ORIGINAL MEMBERS using \`Set.ncard_range_of_injective\`. \`smallTrace_selection_of_maximalJoinTree\` handles **both** the nonempty and empty trace cases, giving exactly a selected family with \`selected.ncard ≤ Z.ncard\`.
+
+The sole combinatorial **hypothesis** of \`smallTrace_selection_of_maximalJoinTree\` is \`hTree\`: any nonempty family of distinct maximal original traces must have a join tree. It still needs to be **proved from** the manuscript's bounded internal completion assumption, via chordality/conformality (and a chordal clique-tree theorem). Do not treat the conditional endpoint as validation of lemma lem:smalltraces. Mathlib's current graph library does not supply the whole chordal clique-tree bridge as a ready-to-use verified theorem for this project.
+
+The exact-head check file was updated with checks and axiom-print requests for the new declarations. No Lean binary was installed or invoked; no new validation marks were promoted.
+
