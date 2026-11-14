@@ -93,6 +93,8 @@ theorem ForestTailStage.actual_positive_full_of_Ft
       ∀ b : DesignatedCopy B D stage.system family,
         b ∈ stage.selected → AStrong A D (copyCarrier b.base))
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
+    (hCutoff : ∀ j : Fin (q :: tail).length,
+      2 ≤ (q :: tail).get j)
     (hInterior : ∀ μ : Fin ((q :: tail).length + 1),
       0 < μ.val → μ.val < (q :: tail).length →
       ∀ (i : I) (p r : SharedOldACarrierEdge A stage.system.toRelStructure S),
@@ -140,7 +142,7 @@ theorem ForestTailStage.actual_positive_full_of_Ft
     A hA B D stage.system family stage.selected e E.toRelStructure RF
       stage.train U Shared hRel j.castSucc
     stage.isPartite hBaseLinear hRigid hStrong hTwo
-    ((q :: tail).get j) (by have hCut:=stage.tailGirth j hj; omega)
+    ((q :: tail).get j) (hCutoff j)
     (stage.tailGirth j hj) (hPositive j hj)
 
 /-- All actual ActiveAttachmentBounds and the next selected
@@ -153,6 +155,8 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
       ∀ b : DesignatedCopy B D stage.system family,
         b ∈ stage.selected → AStrong A D (copyCarrier b.base))
     (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
+    (hCutoff : ∀ j : Fin (q :: tail).length,
+      2 ≤ (q :: tail).get j)
     (hProjectedPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
       A stage.system e.toFunctionEmbedding,
       copyCarrier a.val ≠ copyCarrier b.val)
@@ -207,7 +211,7 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
   have hOutPositive :=
     stage.actual_positive_full_of_Ft
       hA hBaseLinear e hRigid active E f U
-      hReady.2 hSelectedStrong hTargetTwo hInterior hPositive
+      hReady.2 hSelectedStrong hTargetTwo hCutoff hInterior hPositive
   have hInteriorTwo : ∀ μ : Fin ((q :: tail).length + 1),
       0 < μ.val → μ.val < (q :: tail).length →
       (activeGluingWitnessOrderOneData
@@ -226,12 +230,8 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
       (Out j.castSucc).SupremeCycleBound ((q :: tail).get j) := by
     intro j hj
     exact (hOutPositive j hj).2
-  have hLocalTwo : 2 ≤ (q :: tail).headD 0 :=
-    by simpa using
-      (show 2 ≤ q from by
-        have hRead := hReady.1
-        have hF := stage.tailGirth
-        omega)
+  have hLocalTwo : 2 ≤ (q :: tail).headD 0 := by
+    simpa using hCutoff (⟨0, by simp⟩ : Fin (q :: tail).length)
   have hBounds : ActiveAttachmentBounds stage hA e active E f U :=
     ActiveAttachmentBounds.of_sameVector_finiteMixed
       stage hA e active E f U
