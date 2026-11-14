@@ -62,6 +62,30 @@ theorem supportCoveredVertices_is_covered
   obtain ⟨a, ha⟩ := hx
   exact ⟨⟨copyCarrier a, ⟨a, rfl⟩⟩, ha⟩
 
+/-- The disjoint union W of the original first wagons is
+A-covered whenever every vertex belongs to some summand and each
+summand is covered by its own A-edges. There is no separate
+assumption that an EHN witness somehow supplies extra edges of W. -/
+theorem coveredUnion_of_coveredSummands
+    {L : RelLanguage.{u}} {UA W V P : Type v}
+    (A : RelStructure L UA) (B : RelStructure L W)
+    (oldCarrier : P → Set V)
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
+    (include : (p : P) → Embedding (local p) B)
+    (hUnion : ∀ w : W,
+      ∃ (p : P) (x : {x : V // x ∈ oldCarrier p}),
+        include p x = w)
+    (hLocalCover : ∀ p (x : {x : V // x ∈ oldCarrier p}),
+      ∃ a : Embedding A (local p), x ∈ copyCarrier a) :
+    ∀ w : W, ∃ a : Embedding A B, w ∈ copyCarrier a := by
+  intro w
+  obtain ⟨p, x, hx⟩ := hUnion w
+  obtain ⟨a, hxA⟩ := hLocalCover p x
+  obtain ⟨u, hu⟩ := hxA
+  refine ⟨(include p).comp a, ⟨u, ?_⟩⟩
+  change include p (a u) = w
+  exact (congrArg (include p) hu).trans hx
+
 /-- Crucial link for the Ramsey witness: the image of ANY
 relationally selected W-copy lies inside the supported X
 positions if every vertex of W is in some A-copy. All
@@ -85,6 +109,27 @@ theorem selectedCoveredUnion_range_subset
     change selected (a u) = z
     exact (congrArg selected hu).trans hw
   exact ⟨selected.comp a, hz⟩
+
+/-- Every EHN-selected W-copy of a genuine union of individually
+covered first wagons lies inside the supported X reduct. The
+same chosen copy covers all its first-wagon summands. -/
+theorem selectedCoveredUnion_range_subset_of_summands
+    {L : RelLanguage.{u}} {UA W X V P : Type v}
+    (A : RelStructure L UA) (B : RelStructure L W)
+    (R : RelStructure L X)
+    (oldCarrier : P → Set V)
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
+    (include : (p : P) → Embedding (local p) B)
+    (hUnion : ∀ w : W,
+      ∃ (p : P) (x : {x : V // x ∈ oldCarrier p}),
+        include p x = w)
+    (hLocalCover : ∀ p (x : {x : V // x ∈ oldCarrier p}),
+      ∃ a : Embedding A (local p), x ∈ copyCarrier a)
+    (selected : Embedding B R) :
+    copyCarrier selected ⊆ supportCoveredVertices A R :=
+  selectedCoveredUnion_range_subset A B R selected
+    (coveredUnion_of_coveredSummands A B oldCarrier local include
+      hUnion hLocalCover)
 
 /-- The supported vertex subtype remains finite when the EHN
 template X was finite. -/
