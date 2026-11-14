@@ -10,6 +10,7 @@ import Girth.TrainFillingPrivateMonotoneEHN
 import Girth.TrainFillingPrivateMonotoneSummands
 import Girth.TrainFillingPrivateColourBlockOrder
 import Girth.TrainFillingPrivateMonotoneExistence
+import Girth.TrainFillingPrivateCoveredEHN
 import Girth.TrainFillingPrivateActualIndexedArrow
 import Girth.TrainFillingPrivateParentwiseColour
 import Girth.TrainFillingOrderStageCanonicalAllCutGirth
@@ -118,3 +119,12 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 #check StructuralRamsey.Girth.SummandPrivateTemplate.exists_colouredRamsey_monotoneUnequalSummands
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.exists_colouredRamsey_monotoneUnequalSummands
+
+#check StructuralRamsey.Girth.supportCoveredVertices
+#check StructuralRamsey.Girth.supportCopies_subset_coveredVertices
+#check StructuralRamsey.Girth.supportCoveredVertices_is_covered
+#check StructuralRamsey.Girth.selectedCoveredUnion_range_subset
+#check StructuralRamsey.Girth.finite_supportCoveredVertices
+#print axioms StructuralRamsey.Girth.supportCopies_subset_coveredVertices
+#print axioms StructuralRamsey.Girth.supportCoveredVertices_is_covered
+#print axioms StructuralRamsey.Girth.selectedCoveredUnion_range_subset
