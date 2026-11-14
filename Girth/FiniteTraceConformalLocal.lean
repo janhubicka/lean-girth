@@ -55,7 +55,7 @@ theorem pairCliqueOn_contained_of_local_completion
     hAll K hK hCover hClique hBudget
   intro T
   induction T using Finset.strongInductionOn with
-  | H T ih =>
+  | _ T ih =>
     intro hT hCoverT hCliqueT hBudgetT
     by_cases hOne : T.card = 1
     · obtain ⟨x, hEq⟩ := Finset.card_eq_one.mp hOne
