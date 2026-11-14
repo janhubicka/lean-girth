@@ -1,4 +1,5 @@
 import Girth.TrainRecursivePhysicalFineGirthDouble
+import Girth.TrainRecursiveRefinementAllRetainedCuts
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -36,3 +37,8 @@ This is *not* a substitute for checking the selected lower witness.
 
 #print axioms StructuralRamsey.Girth.selectedPicture_actualSupport_girthGain_twice_of_fineSystemCuts
 #print axioms StructuralRamsey.Girth.selectedPicture_actualSupport_girthGain_twice_of_firstUniversal
+
+#print axioms StructuralRamsey.Girth.BergeCycle.child_constant_of_singleton_intersections_twice
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.allRetainedLabelledCutGirth
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.allRetainedLabelledCutGirth_mono
