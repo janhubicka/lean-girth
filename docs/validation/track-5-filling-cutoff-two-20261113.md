@@ -352,3 +352,26 @@ recorded in its source.
 
 No theorem is claimed closed by the presence of these source files;
 all latest source work remains isolated on draft PR #1063.
+
+
+### Concrete counterexample: why the first-wagon carrier hypothesis is necessary
+
+Take the linear graph with vertices \`a,b,c,d\` and four physical
+edges \`ab,ac,bd,cd\`. Every pair of distinct physical edges meets
+in at most one vertex. Partition the physical edges into two
+first wagons \`F_1={ab,ac}\` and \`F_2={bd,cd}\`.
+
+Then \`V(F_1)={a,b,c}\` and \`V(F_2)={b,c,d}\`, so the
+first-wagon carriers share both \`b\` and \`c\`. The shortened
+edges \`f_1,f_2\` from the private-extension recipe would still
+share these two old vertices and hence would **not** form a
+linear hypergraph. This is a genuine falsifier of the tempting
+statement "T is edge-linear, therefore its first-wagon
+carrier family is linear."
+
+The actual cutoff-two input rules the configuration out:
+\`girth(W_1(T))>h_1>=2\` excludes the labelled length-two
+Berge cycle with connectors b and c. Therefore the explicit
+first-wagon carrier linearity hypothesis in
+\`lem:privateextension\` is both necessary for the local
+proof and already discharged by the intended application.
