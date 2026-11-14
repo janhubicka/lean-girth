@@ -1,5 +1,6 @@
 import Girth.ForestOldActiveSetGirth
 import Girth.ForestDirectIncrementLinearity
+import Girth.ForestSeparatorCrossAllowed
 import Girth.ForestCopySetCompletion
 
 /-! Exact Track 2 trace-lemma axiom gate. Not yet executed locally. -/
@@ -45,3 +46,12 @@ import Girth.ForestCopySetCompletion
 #check StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
 #print axioms StructuralRamsey.Girth.linearEdgeSet_of_finiteMixedForestThrough_oneEdges
 #print axioms StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
+
+#check StructuralRamsey.Girth.allowedIntersection_oneEdge_self
+#check StructuralRamsey.Girth.ownEdge_of_allowed_oneEdge_large
+#check StructuralRamsey.Girth.allowedIntersection_with_local_request
+#check StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
+#print axioms StructuralRamsey.Girth.allowedIntersection_oneEdge_self
+#print axioms StructuralRamsey.Girth.ownEdge_of_allowed_oneEdge_large
+#print axioms StructuralRamsey.Girth.allowedIntersection_with_local_request
+#print axioms StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
