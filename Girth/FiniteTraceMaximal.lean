@@ -49,9 +49,8 @@ theorem exists_maximal_nonempty_trace
   have hSfinite : S.Finite := Set.toFinite S
   have hSnonempty : S.Nonempty := ⟨i, hiS⟩
   obtain ⟨j, hjS, hjMax⟩ :=
-    Set.Finite.exists_maximal_wrt
-      (f := fun j : ι => traceOn F Z j)
-      (s := S) hSfinite hSnonempty
+    Set.Finite.exists_maximalFor
+      (fun j : ι => traceOn F Z j) S hSfinite hSnonempty
   have hij : traceOn F Z i ⊆ traceOn F Z j := hjS
   have hjNonempty : (traceOn F Z j).Nonempty := by
     obtain ⟨x, hx⟩ := hi
@@ -59,10 +58,7 @@ theorem exists_maximal_nonempty_trace
   refine ⟨j, ⟨hjNonempty, ?_⟩, hij⟩
   intro k hjk
   have hkS : k ∈ S := hij.trans hjk
-  have hEq : traceOn F Z j = traceOn F Z k :=
-    hjMax k hkS hjk
-  simpa only [hEq] using
-    (Set.Subset.rfl : traceOn F Z k ⊆ traceOn F Z k)
+  exact hjMax k hkS hjk
 
 /-- The set of *distinct* maximal nonempty trace sets.  Its elements
 are subsets of Z and have actual original-cover witnesses. -/
