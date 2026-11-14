@@ -10,6 +10,18 @@ fi
 log="${1:-/tmp/track1-lean-exact-head.log}"
 echo "Git head: $(git rev-parse HEAD)"
 echo "Toolchain: $(cat lean-toolchain)"
+# Ensure the focused gate cannot silently lose theorem probes or introduce
+# explicit placeholders while retaining a green shell exit status.
+probe_count=$(grep -c '^#print axioms ' CheckTrack1.lean)
+if (( probe_count < 18 )); then
+  echo "ERROR: Track 1 focused axiom probes unexpectedly reduced ($probe_count)" >&2
+  exit 1
+fi
+if grep -nE '^[[:space:]]*(sorry|admit|axiom)[[:space:]]' Girth/Track1*.lean; then
+  echo "ERROR: explicit placeholder/axiom found in Track 1 candidate source" >&2
+  exit 1
+fi
+echo "Focused Track 1 theorem axiom probes: $probe_count"
 # CheckTrack1 imports new modules not listed in the default Girth.lean
 # umbrella. Build the exact imported module DAG first, otherwise `lean`
 # fails to resolve their absent .olean files even if sources are correct.
