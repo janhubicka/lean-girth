@@ -30,7 +30,9 @@ theorem splitPhysicalEdges_girthGT
   classical
   rintro ⟨c, hcLen⟩
   have hChoice (i : Fin c.length) :
-      ∃ e : H.OldEdge, c.edge i = H.splitEdge e := c.edge_mem i
+      ∃ e : H.OldEdge, c.edge i = H.splitEdge e := by
+    obtain ⟨e, he⟩ := c.edge_mem i
+    exact ⟨e, he.symm⟩
   choose e he using hChoice
   let oldEdge : Fin c.length → Set V := fun i => (e i).1
   have hOldMem (i : Fin c.length) : oldEdge i ∈ H.edges := (e i).2
