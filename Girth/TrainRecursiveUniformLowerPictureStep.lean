@@ -76,9 +76,6 @@ theorem ForestTailStage.refiningPictureStep_of_uniformLowerRank
     (by simp : 0 < (q :: tail).length)
     (q - 1) e.toFunctionEmbedding remaining hReady
   let R := Classical.choice hR
-  let active : StructuralRamsey.Partite.ProjectedEmbedding
-      A₀.ordered old.system e.toFunctionEmbedding :=
-    Classical.choose hPair
   let Source := actualActiveSubsystemPartite A₀.ordered old.system
     e.toFunctionEmbedding
   letI : Finite old.Vertex := old.finiteVertex
@@ -88,7 +85,7 @@ theorem ForestTailStage.refiningPictureStep_of_uniformLowerRank
   obtain ⟨N, _hN, hLargePartite, lowerFamily,
     hParts, _hLowerStrong, lower, hLowerArrow⟩ :=
     ForestTailStage.exists_realSelectedLower_of_uniformRank
-      A₀ B D old e active ht hq R κ hLowerAtR
+      A₀ B D old e hPair ht hq R κ hLowerAtR
   let Large := StructuralRamsey.Partite.Induced.power Source N
   exact ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
     A₀ B D old ht hq e hPair R Large lower
