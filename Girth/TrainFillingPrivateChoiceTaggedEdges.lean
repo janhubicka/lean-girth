@@ -58,7 +58,31 @@ theorem selectedTaggedOriginalEdge_injective
     (tagEdge_injective (U S) c) hef
   exact (S c).originalSelectedEdge_injective hLocal
 
-/-- The selected original physical edge is in the correct component
+/-- The complete choice-c original target edge family in
+heterogeneous G0 is EXACTLY the image of every original
+first-wagon A-support edge, tagged by c and its owner p.
+No unused template edge is added to this distinguished target. -/
+theorem selectedTaggedOriginalEdge_range_eq_targetEdges (c : C) :
+    Set.range (selectedTaggedOriginalEdge S c) =
+      targetEdges (U S) c := by
+  ext f
+  constructor
+  · rintro ⟨e, rfl⟩
+    exact selectedTaggedOriginalEdge_mem_target S c e
+  · rintro ⟨a, ha, htag⟩
+    have hLocal :
+        a ∈ (S c).toPrivateWagonInput.targetEdges := ha
+    have hRange := (S c).originalSelectedEdge_range_eq_targetEdges
+    have hMem : a ∈ Set.range (S c).originalSelectedEdge := by
+      rw [hRange]
+      exact hLocal
+    obtain ⟨e, he⟩ := hMem
+    refine ⟨e, ?_⟩
+    change tagEdge (U S) c ((S c).originalSelectedEdge e) = f
+    rw [he]
+    exact htag
+
+
 of the actual target family, rather than being a phantom edge set. -/
 theorem selectedTaggedOriginalEdge_mem_target
     (c : C) (e : (S c).OriginalEdge) :
