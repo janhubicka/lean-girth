@@ -29,6 +29,8 @@ import Girth.ForestCopySetCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
 
 #check StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
+#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
+#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
 #check StructuralRamsey.Girth.testedPictureABSupport_iff_label
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 #print axioms StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
