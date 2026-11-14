@@ -8,6 +8,7 @@ import Girth.TrainFillingPrivateActualOrderStrictMono
 import Girth.TrainFillingPrivateActualLabelledArrow
 import Girth.TrainFillingPrivateMonotoneEHN
 import Girth.TrainFillingPrivateMonotoneSummands
+import Girth.TrainFillingPrivateColourBlockOrder
 import Girth.TrainFillingPrivateActualIndexedArrow
 import Girth.TrainFillingPrivateParentwiseColour
 import Girth.TrainFillingOrderStageCanonicalAllCutGirth
@@ -103,3 +104,13 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.MonotoneClosedTargetRamseyFamily.toClosedTargetRamseyFamily
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_coordinate_strictMono
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_commonLocalArrow
+
+#check StructuralRamsey.Girth.colourBlockOrder
+#check StructuralRamsey.Girth.colourBlockOrder_of_colour_lt
+#check StructuralRamsey.Girth.colourBlockOrder_of_same_colour
+#check StructuralRamsey.Girth.colourBlockOrder_blocks
+#check StructuralRamsey.Girth.strictMono_into_colourBlockOrder
+#check StructuralRamsey.Girth.strictMono_between_colourBlockOrders
+#print axioms StructuralRamsey.Girth.colourBlockOrder_blocks
+#print axioms StructuralRamsey.Girth.strictMono_into_colourBlockOrder
+#print axioms StructuralRamsey.Girth.strictMono_between_colourBlockOrders
