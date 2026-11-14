@@ -371,3 +371,134 @@ Track 1 owner-splitting argument on this branch. Once its
 exact selected-order/marked-splitting bridge is kernel-checked,
 use it to supply the missing covered X and the permissible
 EHN choices in the actual Track 5 shortened M.
+
+
+## 14 November, 20:00+ — corrected tagged source T and full target bijection
+
+**Mathematical correctness fix (manuscript PR #450):** In the
+disjoint-union shortened M, the expression j[e] from the previous
+colour calculation was ill-typed: e is an original T-edge, whereas
+j has domain V(M), whose vertices carry a **choice tag** s.
+Define the literal summand injection
+\`α_s : M_s → M\`, its original-vertex inclusion
+\`ε_s : V(T) → V(M_s)\`, and the vertex map
+\`τ_s = α_s ∘ ε_s : V(T) → V(M)\`. Let
+\`bar f_{s,p} = α_s[f_{s,p}]\`. Then the genuinely
+selected filled-edge identity is
+
+\[
+  \iota_{j[\bar f_{s,p}]}[s_p(e)]
+     = j[\alpha_s[\beta_{s,p}[s_p(e)]]]
+     = j[\tau_s(e)].
+\]
+
+This identifies the SAME old selected parent j and ONE EHN-selected
+s on every original first-wagon edge, including those sharing
+original T-vertices across different F_p. Only the vertices of
+M_s are tag-copied; τ_s is a **vertex map**, not an attempted
+train embedding of height m+1 into shorter height m.
+
+The new preliminary private-extension proof now spells out the
+correct *original train relation* calculation, for e∈F_p
+and e'∈F_q:
+\`e ~_{ν+1}^T e'  iff  f_p ~_ν^{M_s} f_q
+     iff β_p[s_p(e)] ~_{ν+1}^{M_s[X]} β_q[s_q(e')]\`.
+The original bottom equality is protected by edge injectivity;
+the restored top is universal. At any proper inherited cut
+the tagged source parent (s,quotient(p)) is transported by
+the actual shorter-stage selected M-copy.
+
+### New candidate Lean source (not kernel checked)
+
+- \`TrainFillingPrivateOriginalTarget\` defines the genuine
+  first-wagon source edge index \`Σ p, supportCopies(A,F_p)\`
+  for unequal wagon types, gives its selected-template map,
+  **injectivity**, exact physical **carrier image**, and the
+  exact selected target edge-set **surjectivity**:
+  \`range originalSelectedEdge = targetEdges\`.
+- \`TrainFillingPrivateChoiceTaggedTarget\` defines
+  \`τ_s(v) = ⟨s, Sum.inl v⟩\`, proves its injectivity,
+  exact range identity with \`targetCarrier\` and disjointness
+  between distinct EHN choice tags.
+- \`TrainFillingPrivateChoiceTaggedEdges\` builds every
+  actual heterogeneous selected physical edge with the s
+  and p labels, proves its actual carrier is \`τ_s[e]\`,
+  injectivity and **exact equality** between its range and
+  the entire designated \`targetEdges U s\`.
+- \`TrainFillingPrivateOriginalImageInH\` applies the SAME
+  selected parent i to those chosen original edges, derives
+  the actual physical edge carrier equality
+  \`edgeCarrier(R.edge i (tagged e)) = (j_i ∘ τ_s)[e]\`,
+  preserves vertex/edge injectivity, and proves
+  \`range(original T edge map) = R.targetEdges(i,s)\`,
+  not just subset containment.
+- \`TrainFillingPrivateOriginalTrainInH\` computes all actual
+  proper-wagon parent images, reflects their equality precisely
+  to original first-wagon train relations, and separates
+  distinct EHN choices within the SAME parent.
+- \`TrainFillingPrivateOriginalColoursOrders\` derives
+  exact unary colours of τ_s(v) and the original within-part
+  order from the actual colour-first insertion order and the
+  genuine selected \`Embedding(M,N)\`; no independently
+  postulated target predicate or monotonicity field.
+- \`TrainFillingPrivateColourCompatibility\` proves
+  the actual hColour input of coloured contracted M follows
+  from the original F_p→W inclusion and SAME selected
+  W→X unary-colour embeddings.
+- \`TrainFillingPrivateReblockedContractedM\` derives
+  increasing X coordinates and the predicate-block property
+  after reordering X by colour, using old-colour compatibility
+  and original block-ordered V; these were previously
+  independent hCoordinate/hXBlocks premises.
+- \`TrainFillingPrivateReblockedEnumeration\` removes the
+  last arbitrary increasing-enumeration premise using the
+  existing Mathlib \`Fintype.orderIsoFinOfCardEq\`;
+  no edge is lost or altered by changing the X order.
+- \`TrainFillingPrivateCanonicalTargetStrong\` applies
+  the checked \`ComponentDecomposition.target_strong_of_parent_strong\`
+  theorem to the complete unchanged canonical H: two target
+  vertices in an ambient H-edge give two vertices of its old
+  cover, which the old selected parent strongness captures.
+- \`TrainFillingPrivateActualParentStrong\` now exports
+  \`actualOrderParent_oldStrong\` separately and reuses it.
+  \`TrainFillingPrivateActualLabelledStrong\` applies that
+  genuine shorter \`OrderStage\` strongness and the checked
+  global scattering theorem to the same selected pair (j,s).
+  No output target strongness or output girth is assumed.
+
+**Bounded regression actually executed:** Extended
+\`/mnt/data/track5_private_smoke.py\` and ran it successfully.
+It now checks the corrected τ_s edge-image formula,
+bottom edge injectivity, original first-positive wagon
+preservation/reflection, shared untagged universal top,
+unary colour-compatibility, increasing EHN selected W-copies
+before/after colour-block sorting, monotonically inserted
+first-wagon coordinates, and increasing X enumeration.
+Original unequal 3/4-vertex wagons, two choices, overlapping
+selected N-parents and all 80 ambient filled occurrences remain
+in the tests. These are *finite sanity checks*, not Lean proofs
+or an arbitrary-colouring Ramsey theorem.
+
+**Source audit:** The ten recent candidate Lean files have
+balanced braces, properly paired namespaces and \`/-...\-/\`
+comment delimiters, and no \`sorry\`, \`admit\`, or new
+\`axiom\` declarations. The source audit caught and repaired
+one truncated comment and a forward theorem reference in
+\`TrainFillingPrivateChoiceTaggedEdges\`. The extended
+\`Girth/CheckTrack5Private.lean\` contains the new
+\`#check\`/\`#print axioms\` probes. **They have NOT been run
+in Lean.**
+
+**Current exact remaining obligations:** (i) instantiate the
+actual Track 1 covered, owner-split, order-preserving EHN
+choice family from checked evidence (its independent validation
+is still open); (ii) discharge source W's concrete first-wagon
+coloured/order structure and actual original T-edge index
+identification; (iii) instantiate the actual shorter \`RR_h\`
+selected \`OrderStage\` on that full heterogeneous coloured M;
+(iv) combine its all-cut full system-girth with the SAME
+canonical H and selected parentwise family, including old
+equality zero; (v) build the **exact-head local Lean kernel
+and axiom checks** and a manual full manuscript PDF.
+Until then PRs #1063 and #450 remain draft/unmerged and
+\`lem:tailraw\` remains \`leanopen\`.
