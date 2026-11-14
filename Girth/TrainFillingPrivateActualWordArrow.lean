@@ -79,7 +79,7 @@ theorem actualOrderStage_oldColourWordArrow_indexed
     (H : UniformFillingData S.Vertex X)
     (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
     (κ : Type w)
-    (hSourceA : Nonempty (Embedding A M))
+    (hCP : Nonempty (C × P))
     (hArrow : TrainRecursiveWitness.DesignatedArrow
       S.toForestTailStage (H.TemplateEdge → κ)) :
     ∀ word : H.OldEdge → H.TemplateEdge → κ,
@@ -99,7 +99,8 @@ theorem actualOrderStage_oldColourWordArrow_indexed
   obtain ⟨b, hb, hMono⟩ := hArrow χ
   let β := actualSelectedFilledOldEdgeEmbedding U A M T hm
     hSupport hLinear D family allowed S.toForestTailStage b H hOld
-  let a₀ : Embedding A M := Classical.choice hSourceA
+  let a₀ : Embedding A M :=
+    Classical.choice (sourceA_nonempty_of_contractedSupport U A M hSupport hCP)
   refine ⟨b, hb, χ (b.embedding.comp a₀), ?_⟩
   intro cp
   let e := contractedPhysicalEdgeEquiv U A M hSupport hLinear cp
@@ -154,7 +155,7 @@ theorem actualOrderStage_oldColourWordArrow
     (H : UniformFillingData S.Vertex X)
     (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
     (κ : Type w)
-    (hSourceA : Nonempty (Embedding A M))
+    (hCP : Nonempty (C × P))
     (hArrow : TrainRecursiveWitness.DesignatedArrow
       S.toForestTailStage (H.TemplateEdge → κ)) :
     ∀ word : H.OldEdge → H.TemplateEdge → κ,
@@ -165,7 +166,7 @@ theorem actualOrderStage_oldColourWordArrow
   obtain ⟨b, _, ρ, hWord⟩ :=
     actualOrderStage_oldColourWordArrow_indexed
       U A M T hm hSupport hLinear D family allowed S
-      H hOld κ hSourceA hArrow word
+      H hOld κ hCP hArrow word
   exact ⟨actualSelectedFilledOldEdgeEmbedding U A M T hm
     hSupport hLinear D family allowed S.toForestTailStage b H hOld, ρ, hWord⟩
 
