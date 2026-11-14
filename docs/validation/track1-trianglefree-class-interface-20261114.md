@@ -119,8 +119,8 @@ Additional source files now exist on this branch:
   embedding/girth transfer; amalgamation uses the relational theorem.
   `c_B` is still arbitrary, so no second closure language or
   extra unary function is introduced.
-- `Girth/Track1TriangleFreeSelectedFamily.lean`: specialize the
-  earlier `Track1OrderedSelectedFamily` argument to this restricted
+- `Girth/Track1TriangleFreeSelectedFamily.lean`: directly reproduce
+  the existing checked EHN lifting pattern in this restricted
   class, retaining the actual full **fresh-order-respecting** B-target
   embeddings, their strongness, controlled intersections, and a
   selected Ramsey arrow. The witness's A-support girth is also >3.
