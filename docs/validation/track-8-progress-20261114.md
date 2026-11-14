@@ -77,3 +77,16 @@ The exact-head check file was updated with checks and axiom-print requests for t
 
 **Manual source audit only.** The new Helly proof is recursive on the number of join-tree labels; its \`termination_by\` decreases by removing the leaf. As for all new Track 8 code, its source has not yet been accepted by the Lean kernel or checked with executed \`#print axioms\`.
 
+
+## 14 November late: local-completion-to-conformality source proof
+
+An additional adversarial source audit found an **actual Mathlib API error** in \`Girth/FiniteTraceMaximal.lean\`: \`Set.Finite.exists_maximal_wrt\` does not exist at the pinned Mathlib source. The existing theorem is \`Set.Finite.exists_maximalFor\`, which returns reverse inclusion (not equality). This was corrected. Exact Mathlib source checked at pin \`5bd58ac291422a21f412ae354c91e7d172255a2c\` via the pinned partite-construction manifest. Cardinality theorem signatures were also changed to \`Nat.card\` and local \`Fintype.ofFinite\` instances, avoiding implicit subtype-\`Fintype\` synthesis in theorem statements.
+
+New proof decomposition:
+- \`Girth/ForestTraceMissingFaces.lean\`: direct missing-face version of join-tree Helly, for **original indexed bags**.
+- \`Girth/ForestTraceLocalCompletion.lean\`: \`HasInternalJoinTreeCompletions\` quantifies over original finite index subfamilies and completions \`N ⊆ S\`; it forbids invented bags. \`exists_original_bag_covering_faces_of_card_ge_three\` uses ≤|K| selected missing faces and the locally completed join tree to force one original bag containing K, with the required third vertex proved from \`3 ≤ K.card\`.
+- \`Girth/FiniteTraceConformalLocal.lean\`: \`pairCliqueOn_contained_of_local_completion\` argues by strong induction on a nonempty finite clique: sizes 1 and 2 use vertex/pair coverage; sizes ≥3 use original members covering every deletion face, and the previous Helly lemma. \`traceConformal_of_local_completion\` transfers this to the actual pair graph on \`Z\`, with budget \`Z.ncard ≤ q\`. Thus the **conformality** half of the local-to-global proof now has a complete mathematical decomposition in Lean source, not a postulated \`TraceConformal\` hypothesis.
+
+This is substantial but **NOT a compiled certificate**: no Lean toolchain is available locally and no paid GitHub Actions were requested. \`#check\`/\`#print axioms\` for the new declarations are present in \`CheckTrack8LeafCharging.lean\` but unexecuted. Actual compilation may expose additional tactic/elaboration problems.
+
+**Remaining combinatorial bottleneck:** bounded internal completions force chordality of the trace pair graph; from chordality and the now-proved-source conformality, construct a finite join tree of *distinct maximal nonempty trace sets*, discharging the explicit \`hTree\` of the sharp \`selected.ncard ≤ Z.ncard\` result. The final structural consequence still needs the actual outer construction (Tracks 2 and 7). The manuscript already contains the corresponding correct written chordality/clique-tree proof. No validation marks promoted.
