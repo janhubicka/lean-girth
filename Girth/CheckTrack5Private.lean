@@ -13,6 +13,7 @@ import Girth.TrainFillingPrivateCoveredEHN
 import Girth.TrainFillingPrivateActualParentStrong
 import Girth.TrainFillingPrivateOriginalImageInH
 import Girth.TrainFillingPrivateOriginalTrainInH
+import Girth.TrainFillingPrivateAllCutCoherence
 import Girth.TrainFillingPrivateReblockedEnumeration
 import Girth.TrainFillingPrivateOriginalColoursOrders
 import Girth.TrainFillingPrivateRealUnionOrder
@@ -248,3 +249,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.colouredFirstWagonUnion_induced_aLinear
 #print axioms StructuralRamsey.Girth.originalFirstWagonCarrier_aStrong
 #print axioms StructuralRamsey.Girth.originalFirstWagonInducedACopy_owner
+
+-- Fixed-target proper-cut coherence, source candidate pending exact-head elaboration.
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_allProperCuts_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_fixedMap_injective
