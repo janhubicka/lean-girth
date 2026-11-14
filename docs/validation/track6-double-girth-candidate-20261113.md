@@ -105,7 +105,7 @@ The root `lakefile.toml` pins the partite-construction and successor-tree
 dependencies and `lean-toolchain` pins Lean v4.35.0-rc3; respect their
 transitive dependencies when restoring caches.
 
-The central audit file now contains **20** source-level `#print axioms`
+The central audit file now contains **22** source-level `#print axioms`
 queries. These have **not been executed**; there is no kernel certificate
 and the entire Track 6 remains open. The old (g+1) recursion path is
 independent of doubling and must remain so.
@@ -125,3 +125,20 @@ but none of `paper/04-local-forests.tex`,
 intervening commits. Do not overwrite concurrent updates to other
 paper sections. The Track 6 manuscript changes remain on their own
 branch; they have not been merged.
+
+### Height-one empty-tail specialization and axiom inventory
+
+The doubled-girth module now additionally provides
+`FirstWagonRefinement.girthGT_heightOne_twice` and
+`FirstWagonRefinement.actualSupport_girthGT_heightOne_twice`.
+For a true height-one train, `T.top` itself proves that its first
+positive relation is universal, so the empty-tail statement no longer
+needs an independently supplied universality hypothesis. This is an
+exactly stronger interface for the empty-tail branch, conditional only
+on the original first-wagon refinement and edge transversality.
+
+A fresh static source audit fetched **all six candidate modules** and
+the central checker, counted **22 theorem declarations and 22 fully
+qualified #print axioms requests**, and found no active source
+`axiom`, `sorry` or `admit` declarations. This is **not** a Lean
+elaboration/axiom certificate; all new statements are still candidates.
