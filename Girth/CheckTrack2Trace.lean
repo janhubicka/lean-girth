@@ -1,6 +1,6 @@
 import Girth.ForestOldActiveSetGirth
 import Girth.ForestDirectIncrementLinearity
-import Girth.ForestBinarySeparatorLift
+import Girth.ForestGeneralJoinLift
 import Girth.ForestCopySetCompletion
 
 /-! Exact Track 2 trace-lemma axiom gate. Not yet executed locally. -/
@@ -60,3 +60,10 @@ import Girth.ForestCopySetCompletion
 #check StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
 #print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_subsingleton_overlap
 #print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
+
+#check StructuralRamsey.Girth.forestOfCopies_sum_of_smallOrEdge_overlap
+#check StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
+#check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_then_delete
+#print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_smallOrEdge_overlap
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_then_delete
