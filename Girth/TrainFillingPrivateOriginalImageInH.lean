@@ -48,6 +48,34 @@ theorem ParentwiseRealization.originalTaggedEdge_mem_target
   exact ⟨selectedTaggedOriginalEdge S c e,
     selectedTaggedOriginalEdge_mem_target S c e, rfl⟩
 
+/-- The complete distinguished target edge set under the
+actual selected pair (i,c) is EXACTLY the image of the
+original first-wagon A-support edge set. No extra ambient
+X-template edge is added to the selected T-copy, and no
+original target edge is dropped. Together with the
+injectivity theorem below this gives an edge-set bijection. -/
+theorem ParentwiseRealization.originalTaggedEdge_range_eq_targetEdges
+    (R : ParentwiseRealization (U S) parent D)
+    (i : I) (c : C) :
+    Set.range (fun e : (S c).OriginalEdge =>
+      R.edge i (selectedTaggedOriginalEdge S c e)) =
+        R.targetEdges (i,c) := by
+  ext f
+  constructor
+  · rintro ⟨e, rfl⟩
+    exact R.originalTaggedEdge_mem_target S i c e
+  · rintro ⟨a, ha, hImage⟩
+    have hRange := selectedTaggedOriginalEdge_range_eq_targetEdges S c
+    have hMem : a ∈ Set.range (selectedTaggedOriginalEdge S c) := by
+      rw [hRange]
+      exact ha
+    obtain ⟨e, he⟩ := hMem
+    refine ⟨e, ?_⟩
+    calc
+      R.edge i (selectedTaggedOriginalEdge S c e) =
+          R.edge i a := congrArg (R.edge i) he
+      _ = f := hImage
+
 /-- The literal original T edge map into the filled ambient H
 is injective for every selected pair (i,c). Its source
 injectivity comes from each local first-wagon A-support map
