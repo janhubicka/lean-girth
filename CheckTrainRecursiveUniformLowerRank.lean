@@ -1,0 +1,8 @@
+import Girth.TrainRecursiveUniformPartiteForest
+import Girth.TrainRecursiveUniformLowerHJBridge
+import Girth.TrainRecursiveUniformLowerPictureStep
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedPartiteForest
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.exists_realSelectedLower_of_uniformRank
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.refiningPictureStep_of_uniformLowerRank
