@@ -86,7 +86,6 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
           (Fin.cast (congrArg (fun k : ℕ => k + 1)
             (actualReplicatedCutoff_height_eq q R.extraCuts tail)).symm ρ))))
     (hBaseLinear : ALinear A₀.ordered D)
-    (hRigid : ∀ a : Embedding A₀.ordered D, SameCopy a e → a = e)
     (hStrong : ∀ b : Embedding B D, b ∈ family →
       AStrong A₀.ordered D (copyCarrier b))
     (hTargetTwo : ∃ a b : Embedding A₀.ordered B, ¬ SameCopy a b)
@@ -144,6 +143,8 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
   rcases hIndexed with
     ⟨_hTwo, hPartite, hEcoverage, hInjective, hForest,
       _hRestrictionLower, hParametersLower, hIndexedArrow⟩
+  have hRigid : ∀ a : Embedding A D, SameCopy a e → a = e :=
+    fun a ha => ordered_embedding_eq_of_sameCopy a e ha
   have hTwoCut : ∀ j : Fin (q :: tail).length, 0 < j.val →
       2 ≤ (q :: tail).get j := by
     intro j _
