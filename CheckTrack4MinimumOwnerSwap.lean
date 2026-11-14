@@ -15,6 +15,7 @@ import Girth.ForestConstantOneEdgeLocal
 import Girth.TrainActualBottomSingleEdgeLocalPreservation
 import Girth.TrainForestStageToOrderStage
 import Girth.TrainActualForestAttachmentOrderStep
+import Girth.TrainActualForestAttachmentOrderStepOneEdge
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -107,3 +108,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_bottom_full_of_finiteMixed
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_orderPictureStep_of_actualBottom
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_orderPictureStep_of_singleEdge
