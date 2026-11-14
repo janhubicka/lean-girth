@@ -219,6 +219,24 @@ theorem FirstWagonRefinement.actualSupport_girthGT_of_retainedFirstCut_twice
   intro s hs
   exact ⟨⟨s, hs⟩, rfl⟩
 
+/-- The complete actual A-support has the doubled bound when every physical
+A-edge belongs to one original first wagon.  This is the empty-tail case. -/
+theorem FirstWagonRefinement.actualSupport_girthGT_of_first_universal_twice
+    (A : RelStructure L UA) (hA : A.Irreducible)
+    (C : StructuralRamsey.Partite.System L P X)
+    {m : ℕ} {T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) m}
+    {hm : 0 < m} {allowed : Set P} {g : ℕ}
+    (R : FirstWagonRefinement T hm (fun e => e.val) C.part allowed g)
+    (hg : 2 ≤ g)
+    (hFirstUniversal : ∀ e f : OldACarrierEdge A C.toRelStructure,
+      T.rel ⟨1, by omega⟩ e f) :
+    GirthGT (supportCopies A C.toRelStructure) (2 * g + 1) := by
+  have hRange := R.girthGT_of_first_universal_twice hg
+    (actualASupport_part_injOn A hA C) hFirstUniversal
+  apply girthGT_of_subset ?_ hRange
+  intro s hs
+  exact ⟨⟨s, hs⟩, rfl⟩
+
 end Actual
 end StructuralRamsey.Girth
 
