@@ -1,4 +1,6 @@
-import Girth.TrainRecursiveActualLowerTailSupreme
+import Girth.TrainRecursiveActualAttachedPositive
+import Girth.TrainRecursiveSelectedFineTrainHeight
+import Girth.TrainRecursiveCanonicalFineParametersCast
 import Girth.TrainRecursiveFineWitnessStep
 import Girth.TrainRecursiveTrueActiveIndexedNontrivialInputs
 import Girth.TrainRecursiveActualHeightCutoffApplication
@@ -51,8 +53,6 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       targetTrain allowed)
     (ht : Admissible (q :: tail)) (hq : 2 < q)
     (e : Embedding A₀.ordered D)
-    (active : StructuralRamsey.Partite.ProjectedEmbedding
-      A₀.ordered old.system e.toFunctionEmbedding)
     (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
       A₀.ordered old.system e.toFunctionEmbedding,
       copyCarrier a.val ≠ copyCarrier b.val)
@@ -84,7 +84,7 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
           (by simp : 0 < (q :: tail).length)
           e.toFunctionEmbedding allowed R.permitted
           (Fin.cast (congrArg (fun k : ℕ => k + 1)
-            (actualReplicatedCutoff_height_eq q R.extraCuts tail)).symm ρ))))
+            (actualReplicatedCutoff_height_eq q R.extraCuts tail)) ρ))))
     (hBaseLinear : ALinear A₀.ordered D)
     (hStrong : ∀ b : Embedding B D, b ∈ family →
       AStrong A₀.ordered D (copyCarrier b))
@@ -142,45 +142,31 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       (q - 1) hLowerBudget κ hLowerArrow
   rcases hIndexed with
     ⟨_hTwo, hPartite, hEcoverage, hInjective, hForest,
-      _hRestrictionLower, hParametersLower, hIndexedArrow⟩
+      _hRestrictionLower, _hParametersLower, hIndexedArrow⟩
   have hRigid : ∀ a : Embedding A D, SameCopy a e → a = e :=
     fun a ha => ordered_embedding_eq_of_sameCopy a e ha
   have hTwoCut : ∀ j : Fin (q :: tail).length, 0 < j.val →
       2 ≤ (q :: tail).get j := by
     intro j _
     exact ht.two_le _ (List.get_mem _)
-  have hTail := old.attachedAllPositiveSupreme_of_refinedSelectedLower
-    A (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
-    B D e active R Large lower hFamilyParts
-    hTwoCut hStrong hTargetTwo hBaseLinear hRigid
-  have hRestriction : ∀ (ν : Fin (m + d + 1)) (i : I)
-      (a b : Embedding A (old.system.toRelStructure.induce
-        (activeCarrier A old.system e.toFunctionEmbedding))),
-      T.rel ν (actualEdge ((f i).toEmbedding.comp a))
-        (actualEdge ((f i).toEmbedding.comp b)) ↔
-      (R.train.restrict (inducedACarrierToShared A
-        old.system.toRelStructure
-        (activeCarrier A old.system e.toFunctionEmbedding))).rel ν
-          (actualEdge a) (actualEdge b) := by
-    exact lower.coarsenedSelected_trainRestriction_castBack
-      A Target Large
-      (R.train.restrict (inducedACarrierToShared
-        A old.system.toRelStructure
-        (activeCarrier A old.system e.toFunctionEmbedding)))
-      hLen hFamilyParts
-  have hAllowedIndex (ν : Fin (m + d + 1)) :
-      fineAllowedLower (Fin.cast
-        (congrArg (fun k : ℕ => k + 1) hLen).symm ν) =
-        fineAllowed ν := by
-    cases hLen
-    rfl
-  have hParameters : T.AdjacentParameters (fun edge => edge.1)
-      (fun ν => E.part ⁻¹' fineAllowed ν) := by
-    have hCast := lower.train.castHeight_adjacentParameters
-      (fun edge => edge.1) hLen
-      (fun ρ => E.part ⁻¹' fineAllowedLower ρ)
-      hParametersLower
-    simpa only [hAllowedIndex] using hCast
+  let active : StructuralRamsey.Partite.ProjectedEmbedding
+      A old.system e.toFunctionEmbedding := Classical.choose hPair
+  have hTail :=
+    ForestTailStage.attachedAllPositiveSupreme_of_realRefinedLower
+      A (RelStructure.ordered_hereditarilyIrreducible A₀).irreducible
+      B D old e active Large R lower hFamilyParts
+      hTwoCut hStrong hTargetTwo hBaseLinear hRigid
+  have hRestriction := lower.coarsenedSelected_fineRestriction_castHeight
+    A Target Large
+    (R.train.restrict (inducedACarrierToShared A
+      old.system.toRelStructure
+      (activeCarrier A old.system e.toFunctionEmbedding)))
+    hLen hFamilyParts
+  have hParameters : T.AdjacentParameters
+      (fun edge => edge.1)
+      (fun ν => E.part ⁻¹' fineAllowed ν) :=
+    lower.coarsened_adjacentParameters_castHeight_preimage
+      A Target.toRelStructure Large fineAllowedLower hLen.symm
   have hAllowed := fineAllowedFromRefinement_all_constraints
     m d (by simp : 0 < m) e.toFunctionEmbedding allowed R.permitted
     R.permitted_subset R.permitted_subsingleton
@@ -195,8 +181,8 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
     exact lower.coarsenedSelected_fullSystem_for_actualHeight
       A old.system e.toFunctionEmbedding Large hFamilyParts
       ht.nondecreasing ν hPos hInterior
-  exact old.refiningPictureStep_of_fineWitness
-    A₀ hBaseLinear e active E f
+  exact ForestTailStage.refiningPictureStep_of_fineWitness
+    A₀ old hBaseLinear e active E f
     (by simp : 0 < m) hq R T fineAllowed
     hPartite hEcoverage hBaseStrong hTargetTwo hPair
     hInjective hForest hRestriction hParameters
