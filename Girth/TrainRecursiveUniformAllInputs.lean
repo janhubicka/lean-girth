@@ -61,6 +61,7 @@ theorem UniformSelectedPartiteOrderAllInputs.finPower
     (r n : ℕ) (hr : 0 < r) :
     letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
     UniformSelectedPartiteOrder A₀ t (Fin (r ^ n)) := by
+  letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
   exact UniformSelectedPartiteOrderAllColours.finPower A₀ t (h A₀) r n hr
 
 /-- The new q>2 rank step is pointwise in the current edge structure
