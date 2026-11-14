@@ -22,6 +22,7 @@ import Girth.TrainActualCutoffTwoFromMixed
 import Girth.TrainActualAttachmentBoundsFromFiniteMixed
 import Girth.TrainActualFtNontrivialLocalStep
 import Girth.TrainForestStageCoveredNontrivialPass
+import Girth.TrainForestStageTrueActiveSameVectorGirth
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -161,3 +162,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.covered_profileStep_of_nontrivial_order
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_of_nontrivial_order_steps
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedBottomCutGirth
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedSameVectorCutGirth
