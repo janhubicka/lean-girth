@@ -34,11 +34,11 @@ Existing checked Lean infrastructure nearly covers this operation:
 
 ## New draft theorem candidates on this branch
 
-- `Track1OrderedSelectedFamily`: **fresh-order-respecting full selected B family** from the original (unmarked) EHN proof. Its arrow proof reuses the original `targetClosureLift` and the already-proved closed-image geometry. This is still necessary for *both* extraction variants.
+- `Track1TriangleFreeSelectedFamily`: **fresh-order-respecting selected B family** directly in the triangle-free canonical closure class; it reuses `targetClosureLift` and closed-image geometry without a duplicate unmarked intermediate module.
 - `Track1OwnerSplitGirth`: for every `g`, `GirthGT H.edges g` implies `GirthGT H.splitPhysicalEdges g`. Each connector between distinct split edges is an allowed unsplit vertex, so the cycle projects injectively on connectors and physical edges.
 - `Track1OwnerSplitCoverage`: define output carrier as `selectedLiftCarrier` (union of selected lift ranges), output edges as `selectedLiftEdges`. Prove every selected edge is contained in that carrier. Under the explicit old-edge selected-cover hypothesis, all physical split edges are retained.
 - `Track1OwnerSplitOrderArrow`: one global projection-first order on the token vertices, together with the colour-arrow transfer for the selected old family.
-- `Track1CutoffThreeReuse`: direct 3-boundary forest adapter to checked `selectedForest_of_distinctOwners_girthOnly`. The older finite `Fin 3` elementary proof remains a separate presentation check.
+- `Track1CutoffThreeReuse`: direct 3-boundary forest adapter to checked `selectedForest_of_distinctOwners_girthOnly`. The bespoke uncompiled Fin-3 Lean proof was removed; the paper retains its elementary English argument.
 
 Every one of these new files is an **UNCOMPILED DRAFT**, even though it
 contains no intentional `sorry` and displays `#print axioms`. No green
