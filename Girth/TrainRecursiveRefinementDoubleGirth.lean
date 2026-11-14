@@ -77,11 +77,32 @@ theorem false_of_short_labelledCycle_in_firstWagon_twice
           intro a b hne
           exact R.parameters step (fun h => hne (Subtype.ext h))
             (a.property.trans b.property.symm)
-        have hGirth : LabelledGirthGT carrier g := R.childGirth step p
-        have hChild := C.child_constant_of_singleton_intersections_twice
-          child carrier part (R.permitted step) (R.permitted_subsingleton step)
-          (fun i => hEdgePart (C.label i)) hContained hIntersection
-          g hg hGirth hLength
+        have hChild : ∀ i j : Fin C.length, child i = child j := by
+          by_cases hk0 : k = 0
+          · -- The bottom children are distinct edge labels.  Their
+            -- singleton-part intersections already rule out any cycle;
+            -- no bottom child-girth bound is used in this branch.
+            subst k
+            exfalso
+            have hNotInjective : ¬ Function.Injective child :=
+              C.child_not_injective_of_singleton_intersections
+                child carrier part (R.permitted step)
+                (R.permitted_subsingleton step)
+                (fun i => hEdgePart (C.label i))
+                hContained hIntersection
+            apply hNotInjective
+            intro i j hij
+            have hRel : R.train.rel μ (C.label i) (C.label j) :=
+              Quotient.exact (congrArg Subtype.val hij)
+            have hEdgeEq : C.label i = C.label j :=
+              (R.train.bottom _ _).mp (by
+                simpa [μ, step, firstRefinementChild] using hRel)
+            exact C.label_injective hEdgeEq
+          · have hGirth : LabelledGirthGT carrier g := R.childGirth step p
+            exact C.child_constant_of_singleton_intersections_twice
+              child carrier part (R.permitted step) (R.permitted_subsingleton step)
+              (fun i => hEdgePart (C.label i)) hContained hIntersection
+              g hg hGirth hLength
         apply ih (by omega)
         intro i j
         exact Quotient.exact (congrArg Subtype.val (hChild i j))
