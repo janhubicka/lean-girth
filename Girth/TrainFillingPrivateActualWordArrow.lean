@@ -46,6 +46,81 @@ of ALL contracted first-wagon edges with a common full word.
 The witness β is exactly the physical map of the same selected
 relational M-copy b. Neither edge ownership nor monochromaticity
 on unselected local words is postulated. -/
+theorem actualOrderStage_oldColourWordArrow_indexed
+    [Nontrivial X]
+    (A : RelStructure L UA)
+    (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    {Base : Type v} (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.OrderStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (κ : Type w)
+    (hSourceA : Nonempty (Embedding A M))
+    (hArrow : TrainRecursiveWitness.DesignatedArrow
+      S.toForestTailStage (H.TemplateEdge → κ)) :
+    ∀ word : H.OldEdge → H.TemplateEdge → κ,
+      ∃ (b : DesignatedCopy M D S.system family),
+        b ∈ S.selected ∧
+          ∃ (ρ : H.TemplateEdge → κ),
+            ∀ cp : C × P,
+              word (actualSelectedFilledOldEdgeEmbedding U A M T hm
+                hSupport hLinear D family allowed S.toForestTailStage
+                b H hOld cp) = ρ := by
+  classical
+  intro word
+  let χ : Embedding A S.system.toRelStructure → H.TemplateEdge → κ :=
+    fun a => word ⟨copyCarrier a, by
+      rw [hOld]
+      exact ⟨a, rfl⟩⟩
+  obtain ⟨b, hb, hMono⟩ := hArrow χ
+  let β := actualSelectedFilledOldEdgeEmbedding U A M T hm
+    hSupport hLinear D family allowed S.toForestTailStage b H hOld
+  let a₀ : Embedding A M := Classical.choice hSourceA
+  refine ⟨b, hb, χ (b.embedding.comp a₀), ?_⟩
+  intro cp
+  let e := contractedPhysicalEdgeEquiv U A M hSupport hLinear cp
+  obtain ⟨a, ha⟩ := e.2
+  have hCarrier : (β cp).1 = copyCarrier (b.embedding.comp a) := by
+    calc
+      (β cp).1 =
+          b.embedding.toFunctionEmbedding '' contractedCarrier U cp :=
+        actualSelectedFilledOldEdgeEmbedding_carrier U A M T hm
+          hSupport hLinear D family allowed S.toForestTailStage b H hOld cp
+      _ = b.embedding.toFunctionEmbedding '' e.1 := by
+        change b.embedding.toFunctionEmbedding '' contractedCarrier U cp =
+          b.embedding.toFunctionEmbedding ''
+            (contractedPhysicalEdgeEquiv U A M hSupport hLinear cp).1
+        rw [contractedPhysicalEdgeEquiv_carrier]
+      _ = b.embedding.toFunctionEmbedding '' copyCarrier a := by rw [ha]
+      _ = copyCarrier (b.embedding.comp a) :=
+        UniformPrivateTemplate.image_copyCarrier_comp
+          A M S.system.toRelStructure b.embedding a
+  have hEq :
+      β cp = (⟨copyCarrier (b.embedding.comp a), by
+        rw [hOld]
+        exact ⟨b.embedding.comp a, rfl⟩⟩ : H.OldEdge) := by
+    apply Subtype.ext
+    exact hCarrier
+  calc
+    word (β cp) = χ (b.embedding.comp a) := by
+      change word (β cp) =
+        word (⟨copyCarrier (b.embedding.comp a), by
+          rw [hOld]
+          exact ⟨b.embedding.comp a, rfl⟩⟩ : H.OldEdge)
+      exact congrArg word hEq
+    _ = χ (b.embedding.comp a₀) := hMono a a₀
+
+
+/-- Project the INDEXED actual selected parent to the abstract old-word
+arrow used by the existing physical colour-transfer lemma. For an
+end-to-end indexed target, use the stronger theorem above to retain b. -/
 theorem actualOrderStage_oldColourWordArrow
     [Nontrivial X]
     (A : RelStructure L UA)
@@ -69,45 +144,12 @@ theorem actualOrderStage_oldColourWordArrow
       ∃ (β : (C × P) ↪ H.OldEdge)
         (ρ : H.TemplateEdge → κ),
         ∀ cp : C × P, word (β cp) = ρ := by
-  classical
   intro word
-  let χ : Embedding A S.system.toRelStructure → H.TemplateEdge → κ :=
-    fun a => word ⟨copyCarrier a, by
-      rw [hOld]
-      exact ⟨a, rfl⟩⟩
-  obtain ⟨b, hb, hMono⟩ := hArrow χ
-  let β := actualSelectedFilledOldEdgeEmbedding U A M T hm
-    hSupport hLinear D family allowed S.toForestTailStage b H hOld
-  let a₀ : Embedding A M := Classical.choice hSourceA
-  refine ⟨β, χ (b.embedding.comp a₀), ?_⟩
-  intro cp
-  let e := contractedPhysicalEdgeEquiv U A M hSupport hLinear cp
-  obtain ⟨a, ha⟩ := e.2
-  have hCarrier : (β cp).1 = copyCarrier (b.embedding.comp a) := by
-    calc
-      (β cp).1 =
-          b.embedding.toFunctionEmbedding '' contractedCarrier U cp :=
-        actualSelectedFilledOldEdgeEmbedding_carrier U A M T hm
-          hSupport hLinear D family allowed S.toForestTailStage b H hOld cp
-      _ = b.embedding.toFunctionEmbedding '' e.1 := by
-        rw [contractedPhysicalEdgeEquiv_carrier]
-      _ = b.embedding.toFunctionEmbedding '' copyCarrier a := by rw [ha]
-      _ = copyCarrier (b.embedding.comp a) :=
-        UniformPrivateTemplate.image_copyCarrier_comp
-          A M S.system.toRelStructure b.embedding a
-  have hEq :
-      β cp = (⟨copyCarrier (b.embedding.comp a), by
-        rw [hOld]
-        exact ⟨b.embedding.comp a, rfl⟩⟩ : H.OldEdge) := by
-    apply Subtype.ext
-    exact hCarrier
-  calc
-    word (β cp) = χ (b.embedding.comp a) := by
-      change word (β cp) =
-        word (⟨copyCarrier (b.embedding.comp a), by
-          rw [hOld]
-          exact ⟨b.embedding.comp a, rfl⟩⟩ : H.OldEdge)
-      exact congrArg word hEq
-    _ = χ (b.embedding.comp a₀) := hMono a a₀
+  obtain ⟨b, _, ρ, hWord⟩ :=
+    actualOrderStage_oldColourWordArrow_indexed
+      U A M T hm hSupport hLinear D family allowed S
+      H hOld κ hSourceA hArrow word
+  exact ⟨actualSelectedFilledOldEdgeEmbedding U A M T hm
+    hSupport hLinear D family allowed S.toForestTailStage b H hOld, ρ, hWord⟩
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
