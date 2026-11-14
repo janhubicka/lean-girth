@@ -141,4 +141,57 @@ theorem firstWagonSummandEmbedding_colour
       (firstWagonSummandEmbedding oldCarrier local hPositive p x) =
       oldColour x.1 := rfl
 
+
+/-- If every original A-copy in each F_p is increasing and
+the actual component inclusions are increasing, then EVERY
+A-copy in the genuine tagged W is increasing. The spanning
+A-edge ensures that it lies in one component, where the
+original local monotonicity applies.
+
+This is exactly the hmono input of ordered EHN. It is NOT
+a claim that every future closed X-copy is monotone:
+those are restricted separately to the selected family. -/
+theorem firstWagonDisjointUnion_allACopies_strictMono
+    {UA : Type v} [LinearOrder UA]
+    (A : RelStructure L UA)
+    (oldCarrier : P → Set V)
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
+    (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
+    (hSpan : HasSpanningRelation A)
+    (oldColour : V → I)
+    (hOldBlocks : ∀ x y : V,
+      oldColour x ≠ oldColour y →
+      x < y → oldColour x < oldColour y)
+    (hLocalMono : ∀ p : P, ∀ a : Embedding A (local p),
+      StrictMono a) :
+    letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
+      firstWagonUnionOrder oldCarrier oldColour
+    ∀ a : Embedding A (firstWagonDisjointUnion oldCarrier local),
+      StrictMono a := by
+  letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
+    firstWagonUnionOrder oldCarrier oldColour
+  intro a
+  obtain ⟨p, hInside⟩ :=
+    firstWagonUnion_Acopy_in_one_summand A oldCarrier local
+      hPositive hSpan a
+  let inc := firstWagonSummandEmbedding oldCarrier local hPositive p
+  have hFactor : ∀ x : UA,
+      ∃ y : {x : V // x ∈ oldCarrier p}, a x = inc y := by
+    intro x
+    obtain ⟨y, hy⟩ := hInside ⟨x, rfl⟩
+    exact ⟨y, hy.symm⟩
+  let b : Embedding A (local p) :=
+    a.factorThroughRange inc hFactor
+  have hEq : inc.comp b = a := by
+    apply Embedding.ext
+    intro x
+    exact (Classical.choose_spec (hFactor x)).symm
+  have hInc : StrictMono inc :=
+    firstWagonSummandEmbedding_strictMono oldCarrier local
+      hPositive oldColour hOldBlocks p
+  have hComposed : StrictMono (inc.comp b) :=
+    hInc.comp (hLocalMono p b)
+  rw [hEq] at hComposed
+  exact hComposed
+
 end StructuralRamsey.Girth
