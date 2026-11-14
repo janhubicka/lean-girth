@@ -77,3 +77,9 @@ all printed axioms before promoting a validation mark.
 #print axioms StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
 #print axioms StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
 #print axioms StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+
+#check StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#check StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
+
+#print axioms StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
