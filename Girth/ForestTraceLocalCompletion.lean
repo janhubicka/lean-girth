@@ -92,4 +92,47 @@ theorem exists_original_bag_covering_missing_faces
       S J hSet hThird faceBagS hFaceS
   exact ⟨i, fun x hx => hiK hx⟩
 
+/-- A set of at least three vertices has a vertex distinct from any
+two prescribed vertices.  This is the simple counting fact used to
+discharge the third-vertex hypothesis for minimal uncovered cliques. -/
+theorem exists_third_vertex_of_card_ge_three
+    (K : Finset W)
+    (hThree : 3 ≤ K.card)
+    (x y : W) :
+    ∃ z : W, z ∈ K ∧ z ≠ x ∧ z ≠ y := by
+  classical
+  by_contra h
+  have hSubset : K ⊆ ({x, y} : Finset W) := by
+    intro z hz
+    by_cases hzx : z = x
+    · simp [hzx]
+    by_cases hzy : z = y
+    · simp [hzy]
+    exact (h ⟨z, hz, hzx, hzy⟩).elim
+  have hBound : K.card ≤ ({x, y} : Finset W).card :=
+    Finset.card_le_card hSubset
+  have hTwo : ({x, y} : Finset W).card ≤ 2 :=
+    Finset.card_le_two
+  omega
+
+/-- The missing-face completion lemma for K of size at least three.
+Only the budget |K| ≤ q remains explicit. -/
+theorem exists_original_bag_covering_faces_of_card_ge_three
+    [Fintype ι]
+    (F : ι → Set W) (q : ℕ)
+    (hLocal : HasInternalJoinTreeCompletions F q)
+    (K : Finset W) (hK : K.Nonempty)
+    (hThree : 3 ≤ K.card)
+    (faceBag : W → ι)
+    (hFace :
+      ∀ z : W, z ∈ K →
+        ∀ x : W, x ∈ K → x ≠ z → x ∈ F (faceBag z))
+    (hBudget : K.card ≤ q) :
+    ∃ i : ι, ∀ x : W, x ∈ K → x ∈ F i := by
+  apply exists_original_bag_covering_missing_faces
+    F q hLocal K hK ?_ faceBag hFace hBudget
+  intro x _ y _
+  exact exists_third_vertex_of_card_ge_three K hThree x y
+
+
 end StructuralRamsey.Girth
