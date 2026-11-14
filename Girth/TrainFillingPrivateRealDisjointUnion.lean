@@ -41,7 +41,7 @@ variable {L : RelLanguage.{u}} {V P : Type v}
 unequal local first-wagon relational types. -/
 abbrev FirstWagonUnionVertex
     (oldCarrier : P → Set V) :=
-  (p : P) × {x : V // x ∈ oldCarrier p}
+  Sigma fun p : P => {x : V // x ∈ oldCarrier p}
 
 /-- Relational disjoint union: each relation tuple must lie
 entirely in a SINGLE summand, and carry that summand's
