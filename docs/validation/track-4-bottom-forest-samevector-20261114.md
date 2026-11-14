@@ -38,3 +38,14 @@
 ## Reuse and size discipline
 
 Existing checked modules reused rather than duplicated include `TrainFillingMixedNormalization`, `TrainCyclicOwnerIsolatedNonincrease`, `TrainActualCutIndexedBigCycle`, `ForestToSupremeBottom/Cycle`, `TrainActualZeroCutGlobalSupreme`, `TrainActualThreeCutOnePassSupreme`, `TrainActualTwoCutSymmetricShortSupreme`, `TrainActualTwoCutSingletonShortStandardTransfer`, `TrainActualIntrinsicParameters`, and `TrainRecursiveWitnessPass`. New source files are intended as small compositional interfaces, not replacements for the checked old proof.
+
+
+## Further finite picture-step integration (2026-11-14)
+
+- TrainForestStageToOrderStage.lean: ForestTailStage.withBottomSystemGirth turns a NONEMPTY forest-tail stage into an OrderStage by adding only the bottom full system-girth coordinate; all higher coordinates are already in ForestTailStage.tailGirth. The same file contains ForestTailStage.ramseyOrderPass_of_ready_bottom: an explicit conditional composition with the checked finite ForestTailStage.ramseyPass and the terminal Ready [] bottom-girth obligation.
+- TrainActualSameVectorForestWithParameters.lean: combines bottom mixed-forest preservation, exact positive proper-cut full-system bounds and the intrinsic adjacent-parameter theorem. Local positive full system girth supplies the actual order-one bridges; no universal top system-girth coordinate is introduced.
+- TrainActualForestAttachmentOrderStep.lean: under a genuine selected same-q local mixed forest, previous bottom full bound, exact selected image injectivity, two distinct local source A-copies, partite geometry and the existing ActiveAttachmentBounds, constructs a NEXT order stage and its actual selected PictureStep using the checked partite stage constructor. The reusable activeAttachment_orderPictureStep_of_actualBottom isolates the final stage packaging.
+- ForestConstantOneEdgeLocal.lean, TrainActualBottomSingleEdgeLocalPreservation.lean and TrainActualForestAttachmentOrderStepOneEdge.lean: handle the single-edge local active target without wrongly requiring two distinct active A-edges or deduplicating one-edge labels. The finite witness must be chosen to have genuinely one physical core edge, and its core A-linearity/gluing strongness are explicit. Repeated labels for that one-edge member form a forest via a star.
+- The finite construction still must provide the per-step local witnesses and the Ready recursion, including old bottom bound transport and the chosen one-edge alternative. These wrappers are conditional, not an unconditional proof of F_t -> R_t.
+
+**Offline kernel limitation:** the recovered local setup note and restore script apply to a prior lean-gluing-eppa bundle and pinned Mathlib dependencies; no matching lean-girth toolchain-plus-partite-construction/lean-successors dependency cache is mounted. A local Lean-version match alone is insufficient to run this repository. No GitHub CI jobs were requested.
