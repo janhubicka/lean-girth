@@ -1,4 +1,4 @@
-import Girth.TrainColouredOwnerSelectedLift
+import Girth.TrainColouredOwnerSelectedStrong
 import Girth.Support
 
 /-!
@@ -91,7 +91,33 @@ theorem oldStrong_of_aStrong
     _ = copyCarrier a := hImg
     _ = f.1 := hfa.symm
 
+/-- Directly apply the checked owner-splitting strongness theorem,
+with its old-edge hypothesis *derived* from the selected A-strong range. -/
+theorem selected_strong_of_aStrong
+    (A : StructuralRamsey.RelStructure L UA)
+    (B : StructuralRamsey.RelStructure L VB)
+    (D : StructuralRamsey.RelStructure L V)
+    (H : ColouredEdgeOwnerSplit V I)
+    (S : ColouredOwnerSelectedCopy (W := VB) H)
+    (b : RelStructure.Embedding B D)
+    (hEmbed : ∀ v : VB, S.embedding v = b v)
+    (hSupport : ∀ f : H.OldEdge,
+      ∃ a : RelStructure.Embedding A D, f.1 = copyCarrier a)
+    (hSrc : ∀ a : RelStructure.Embedding A B,
+      copyCarrier a ∈ S.sourceEdges)
+    (hStrong : AStrong A D (copyCarrier b))
+    (f : H.OldEdge) (z w : H.Vertex)
+    (hzw : z ≠ w)
+    (hzEdge : z ∈ H.splitEdge f) (hwEdge : w ∈ H.splitEdge f)
+    (hzCopy : z ∈ Set.range S.lift)
+    (hwCopy : w ∈ Set.range S.lift) :
+    ∃ a : S.SourceEdge, S.physicalEdge a = f := by
+  exact S.selected_strong_of_old
+    (oldStrong_of_aStrong A B D H S b hEmbed hSupport hSrc hStrong)
+    f z w hzw hzEdge hwEdge hzCopy hwCopy
+
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.oldStrong_of_aStrong
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selected_strong_of_aStrong
 
 end ColouredOwnerSelectedCopy
 end StructuralRamsey.Girth
