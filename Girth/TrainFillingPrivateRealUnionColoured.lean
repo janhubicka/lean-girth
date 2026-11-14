@@ -1,4 +1,5 @@
 import Girth.TrainFillingPrivateRealUnionOrder
+import Girth.TrainFillingPrivateRealUnionLinear
 import Girth.TrainFillingColouredOrderedEdgePresentation
 
 set_option Elab.async false
@@ -92,5 +93,29 @@ theorem colouredFirstWagonSummand_aStrong
       oldCarrier local
       (colouredOrderedEdgeLanguage_positive_arity k hk)
       (colouredOrderedEdgeSource_hasSpanningRelation k sourceColour) p
+
+
+/-- The exact disjoint-union W required by the FIRST EHN arrow
+is A-linear whenever the ORIGINAL coloured-edge structure T
+is A-linear. This is not a new property of the Ramsey witness,
+nor an independent hBlin assumption on an artificial W.
+
+All F_p are actual induced restrictions of the same original D,
+so A-linearity passes to them and then to their disjoint union. -/
+theorem colouredFirstWagonUnion_induced_aLinear
+    {I : Type u} {V P : Type v}
+    (k : ℕ) (hk : 2 ≤ k)
+    (sourceColour : Fin k → I)
+    (D : RelStructure (colouredOrderedEdgeLanguage I k) V)
+    (hD : ALinear (colouredOrderedEdgeSource (v := v) k sourceColour) D)
+    (oldCarrier : P → Set V) :
+    ALinear (colouredOrderedEdgeSource (v := v) k sourceColour)
+      (firstWagonDisjointUnion oldCarrier
+        (fun p => D.induce (oldCarrier p))) :=
+  firstWagonDisjointUnion_induced_aLinear
+    (colouredOrderedEdgeSource (v := v) k sourceColour)
+      D hD oldCarrier
+      (colouredOrderedEdgeLanguage_positive_arity k hk)
+      (colouredOrderedEdgeSource_hasSpanningRelation k sourceColour)
 
 end StructuralRamsey.Girth
