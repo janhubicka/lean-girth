@@ -44,3 +44,43 @@ After a successful compilation, inspect the printed assumptions of every new the
 ## Reproducible finite tests
 
 The paper branch's `validation/numbered-tracks/check_trace_and_singleton.py` covers triangles and squares with 0–2 auxiliary member carriers; the negative square test was independently executed locally with 667 configurations and all possible labelled trees. It is a bounded counterexample diagnostic, not a general proof.
+
+## 14 November continuation: source-level repairs
+
+- The original cycle argument passed `Fin c.length : Type 0` to a
+  `ForestCompletionProperty` indexed in `Type v`. The revised
+  `girthGT_of_bounded_trace_forest_completions` instead uses the finite
+  subtype `{e : Set W // e ∈ Set.range c.edge} : Type v`.
+  The surjection from `Fin c.length` to that subtype proves
+  the cardinal bound, while `Subtype.val` injectivity distinguishes
+  physical cycle edges. The relevant Mathlib
+  `Fintype.card_le_of_surjective` API was checked in public Mathlib
+  source; **Lean elaboration of this candidate was not run**.
+- `Girth/ForestFiniteSetCompletion.lean` now defines
+  `FinsetForestCompletionProperty` and its
+  `FinsetForestCompletionProperty.toIndexed` theorem.
+  Its proof takes the image of an arbitrary finite indexed
+  selection and uses `Finset.card_image_le` to control
+  repetitions without an injectivity assumption.
+- `Girth/ForestOldActiveSetGirth.lean` gives the
+  `oldActiveInduced_girthGT_of_supportFinsetCompletion`
+  endpoint, invoking the preceding finite-set adapter
+  and the existing `oldActiveInduced_girthGT_of_designatedCompletion`.
+  This is a precise **support-set** interface, not yet an
+  identification of actual relational copies with their support pieces.
+- Removed the unused generic A-strong one-edge-boundary lemma
+  from `ForestActiveTraceBoundary.lean`. Only the
+  projected-designated-B boundary statement is needed:
+  the selected A-edges already lie inside the old active subsystem.
+- The paper edits were copied onto the **current editorial main**
+  in [`edit/track2-forest-trace-rebased-20261114`](https://github.com/janhubicka/girth/tree/edit/track2-forest-trace-rebased-20261114);
+  this preserves parallel Track 3, 7 and 8 changes. The old
+  41-page digest is the frozen baseline, not the digest of
+  the new branch. The English proof of `lem:foresttracegirth`
+  was shortened to the same trace-piece/forest-union argument
+  used by the Lean candidate.
+
+The exact source and axiom gate still need a focused, **real**
+Lean compilation with pinned dependencies. The source edits
+are not evidence of a successful kernel check. Do not upgrade
+validation markers yet.
