@@ -25,7 +25,7 @@ The companion branch revision/track8-leaf-trace-induction-20261114 replaces a ro
 
 ## Adversarial check and numerical diagnostics
 
-- On finite n-point universes with n <= 4, exhaustive independent enumeration finds **no** antichain of nonempty bags with a join tree and without an injective assignment of representative vertices. Counts of join-tree antichains for n=1,2,3,4: 1,4,17,109 respectively. This is a **bounded diagnostic**, not a kernel proof.
+- On finite n-point universes with n <= 4, exhaustive independent enumeration finds **no** antichain of nonempty bags with a join tree and without an injective assignment of representative vertices. Counts of join-tree antichains for n=1,2,3,4: 1,4,17,109 respectively. Reproduce independently using `python3 checks/track8_leaf_charging_bounded.py` (it imports the previously merged `checks/track8_small_traces_bounded.py`). This is a **bounded diagnostic**, not a kernel proof.
 - The prior exhaustive cover checker was independently rerun: among four-vertex covers, 112 have too many maximal traces; each has a selected three-member subfamily admitting no internal join-tree completion.
 - The new Lean proof constructs the injection by leaf induction; it cannot assume the chosen maximal traces themselves have a join tree until the remaining local-to-global bridge is proved.
 - The relationship between an A-supported point attachment in Lean and the manuscript's incident-B-constituent support remains an explicit irreducibility adapter.
