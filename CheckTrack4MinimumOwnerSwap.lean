@@ -166,3 +166,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ActiveWagonGirth
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeWagonGirth_of_bottomReady
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_of_Ft_eligible_steps
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_strong_train_of_covered
