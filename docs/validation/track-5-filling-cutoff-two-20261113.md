@@ -436,19 +436,20 @@ and the final labelled train embedding remain to close.
 ### Independent bounded finite smoke test (14 November)
 
 A local Python test (not a Lean proof) was executed successfully on a
-two-choice graph model. The original T has first wagons
-\`F_0={ab,bc}\` and \`F_1={cd,de}\`, whose carriers meet only at c.
-Their **disjoint union** W has six tagged vertices and four
+two-choice graph model. The original T has **unequal** first wagons
+\`F_0={ab,bc}\` (three vertices) and
+\`F_1={cd,de,ef}\` (four vertices), whose carriers meet only at c.
+Their **disjoint union** W has seven tagged vertices and five
 support edges. X consists of two separate induced copies of W,
-hence has twelve vertices and eight edges and supplies two
+hence has fourteen vertices and ten edges and supplies two
 genuinely strong selected W-copies.
 
 For each choice and first wagon, the test constructs the exact
 canonical \`β_{s,p}:V(X)->f_{s,p}\` map and *all* filled edges.
-It checks injectivity and 12-point complete contracted carriers;
+It checks injectivity and 14-point complete contracted carriers;
 first-wagon linearity; precise one-point within-choice
 intersections and disjointness across distinct choices; uniqueness
-of each new edge's old cover; full edge coverage (32 physical
+of each new edge's old cover; full edge coverage (40 physical
 filled occurrences); strong inducedness of the original target
 inside each filled component; target vertex coverage; and the
 same selected W-copy/complete colour-word condition on every
