@@ -132,6 +132,7 @@ theorem forestOfCopies_lift_without_singleton_on_distinct_image
   have hWhole : ForestOfCopies family :=
     forestOfCopies_lift_local_without_singleton_requests
       JOuter hLocal hContain hEdgeRequest
-  exact hWhole.finiteImage_of_duplicate_oneEdge family hDuplicateOneEdge
+  exact ForestOfCopies.finiteImage_of_duplicate_oneEdge
+    family hWhole hDuplicateOneEdge
 
 end StructuralRamsey.Girth
