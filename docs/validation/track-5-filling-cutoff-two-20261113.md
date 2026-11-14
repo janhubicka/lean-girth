@@ -431,3 +431,35 @@ certificate, or completed \`lem:tailraw\` is asserted. Exact
 partite/ordered M instantiation, true carrier transport, the
 canonical inherited cut equality at the actual OrderStage,
 and the final labelled train embedding remain to close.
+
+
+### Independent bounded finite smoke test (14 November)
+
+A local Python test (not a Lean proof) was executed successfully on a
+two-choice graph model. The original T has first wagons
+\`F_0={ab,bc}\` and \`F_1={cd,de}\`, whose carriers meet only at c.
+Their **disjoint union** W has six tagged vertices and four
+support edges. X consists of two separate induced copies of W,
+hence has twelve vertices and eight edges and supplies two
+genuinely strong selected W-copies.
+
+For each choice and first wagon, the test constructs the exact
+canonical \`β_{s,p}:V(X)->f_{s,p}\` map and *all* filled edges.
+It checks injectivity and 12-point complete contracted carriers;
+first-wagon linearity; precise one-point within-choice
+intersections and disjointness across distinct choices; uniqueness
+of each new edge's old cover; full edge coverage (32 physical
+filled occurrences); strong inducedness of the original target
+inside each filled component; target vertex coverage; and the
+same selected W-copy/complete colour-word condition on every
+selected target edge.
+
+It additionally executes the explicit \`ab,ac,bd,cd\`
+counterexample to prove that mere old edge-linearity does not
+ensure first-wagon carrier linearity.
+
+**Result:** all assertions passed in the local Python runtime.
+This is only a bounded regression and mathematical sanity check:
+it does not validate the general finite theorem, EHN existence,
+the full selected parentwise Lean constructor, or the final Ramsey
+arrow under arbitrary colourings. No validation marker was promoted.
