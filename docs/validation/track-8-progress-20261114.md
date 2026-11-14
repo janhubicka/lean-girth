@@ -90,3 +90,30 @@ New proof decomposition:
 This is substantial but **NOT a compiled certificate**: no Lean toolchain is available locally and no paid GitHub Actions were requested. \`#check\`/\`#print axioms\` for the new declarations are present in \`CheckTrack8LeafCharging.lean\` but unexecuted. Actual compilation may expose additional tactic/elaboration problems.
 
 **Remaining combinatorial bottleneck:** bounded internal completions force chordality of the trace pair graph; from chordality and the now-proved-source conformality, construct a finite join tree of *distinct maximal nonempty trace sets*, discharging the explicit \`hTree\` of the sharp \`selected.ncard ≤ Z.ncard\` result. The final structural consequence still needs the actual outer construction (Tracks 2 and 7). The manuscript already contains the corresponding correct written chordality/clique-tree proof. No validation marks promoted.
+
+## 14 November further continuation — exact original-index completion and direct conformality
+
+Two new Lean source modules extend the pipeline:
+
+* \`Girth/ForestTraceMissingFaces.lean\` proves a direct missing-face Helly reduction, first for any join tree and then for a finite join-tree completion indexed by **original cover members**.
+* \`Girth/ForestTraceLocalCompletion.lean\` defines \`HasInternalJoinTreeCompletions F q\` on original finite index subfamilies. It requires every nonempty selected \`N\` of size ≤ q to be included in an original-index \`S\` admitting a join tree. Its missing-face lemma takes at most |K| deletion-face indices, all in the original cover. \`exists_third_vertex_of_card_ge_three\` discharges the three-vertex separation for |K| ≥ 3.
+* \`Girth/FiniteTraceConformalLocal.lean\` contains a full written Lean source argument: by strong induction on a nonempty finite pair clique K of size ≤ q, cover it by a single original member. The |K|=1 case uses coverage, |K|=2 uses a pair-graph edge witness, and larger K use inductively covered deletion faces and the local join-tree/Helly step. \`traceConformal_of_local_completion\` then transfers the result to the pair graph on \`Z\` when \`Z.ncard ≤ q\`.
+
+The new declarations are added to \`CheckTrack8LeafCharging.lean\` for future **exact-head #check and #print axioms**. **These proof scripts have NOT been elaborated by Lean**. No marker can be promoted until they compile and their transitive axioms are inspected.
+
+Independent local Python exhaustive diagnostic \`checks/track8_local_conformality_bounded.py\` checks all distinct-nonempty-subset covers on each universe n≤4, selects the face witnesses of the smallest uncovered clique, and verifies that no original-cover join-tree completion exists for those selected indices. Actual results:
+
+| n | covers | nonconformal covers | explicit missing-face obstructions | false join-tree completions |
+|---:|---:|---:|---:|---:|
+|1|1|0|0|0|
+|2|5|0|0|0|
+|3|109|8|8|0|
+|4|32297|10576|10576|0|
+
+For n=4 the uncovered minimal clique has size 3 in 9552 cases and size 4 in 1024 cases. All chosen obstructions use ≤|K| original members. The bounded check supports **only** the finite diagnostic, not the general theorem.
+
+A concrete Mathlib API repair was made in \`FiniteTraceMaximal\`: use \`Set.Finite.exists_maximalFor\`, not nonexistent \`exists_maximal_wrt\`; the theorem's conclusion is a **reverse inclusion**, not equality. Source compatibility was compared against the pinned Mathlib tree \`5bd58ac291422a21f412ae354c91e7d172255a2c\`. Cardinality proof declarations now explicitly create finite subtype instances and use \`Nat.card\` at interfaces.
+
+**Remaining pure combinatorics**: (a) exclude chordless cycles in the trace pair graph under the same bounded local-completion premise, (b) construct the finite maximal-clique join tree of a chordal graph and transfer it to distinct maximal original traces. The sharp |Z| selection theorem is already source-proved **under that join-tree input**. The actual structural extraction remains dependent on Tracks 2 and 7.
+
+The PR is draft and unverified; the container has no Lean/lake/elan and DNS access was unavailable, and no paid Actions run was requested. No validation marks were promoted.
