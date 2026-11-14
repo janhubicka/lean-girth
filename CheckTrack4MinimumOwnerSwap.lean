@@ -22,6 +22,7 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.next_carrier_contains_bottom_wagon_edge
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.previous_carrier_contains_bottom_wagon_edge
 
+#print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.BottomGeometricAllowed
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_next_standard_of_edge_wagon
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_previous_standard_of_edge_wagon
 #print axioms StructuralRamsey.Girth.OrderOneData.BigCycle.bottom_minimal_no_isolated_edge_wagon
