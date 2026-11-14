@@ -63,8 +63,8 @@ theorem UniformSelectedPartiteOrderAllColours.finPower
     (t : List ℕ)
     (h : UniformSelectedPartiteOrderAllColours A₀ t)
     (r n : ℕ) (hr : 0 < r) :
+    letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
     UniformSelectedPartiteOrder A₀ t (Fin (r ^ n)) := by
-  letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
   exact h (Fin (r ^ n))
 
 /-- The *real* larger-cutoff proof from the previous module preserves
