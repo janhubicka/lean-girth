@@ -136,38 +136,4 @@ theorem actualOrderStage_oldColourWordArrow_indexed
     _ = χ (b.embedding.comp a₀) := hMono a a₀
 
 
-/-- Project the INDEXED actual selected parent to the abstract old-word
-arrow used by the existing physical colour-transfer lemma. For an
-end-to-end indexed target, use the stronger theorem above to retain b. -/
-theorem actualOrderStage_oldColourWordArrow
-    [Nontrivial X]
-    (A : RelStructure L UA)
-    (M : RelStructure L (Vertex U))
-    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
-    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
-    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
-      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
-    {Base : Type v} (D : RelStructure L Base)
-    (family : Set (Embedding M D))
-    (allowed : Fin (t.length + 1) → Set Base)
-    (S : TrainRecursiveWitness.OrderStage A M D family t
-      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
-    (H : UniformFillingData S.Vertex X)
-    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
-    (κ : Type w)
-    (hCP : Nonempty (C × P))
-    (hArrow : TrainRecursiveWitness.DesignatedArrow
-      S.toForestTailStage (H.TemplateEdge → κ)) :
-    ∀ word : H.OldEdge → H.TemplateEdge → κ,
-      ∃ (β : (C × P) ↪ H.OldEdge)
-        (ρ : H.TemplateEdge → κ),
-        ∀ cp : C × P, word (β cp) = ρ := by
-  intro word
-  obtain ⟨b, _, ρ, hWord⟩ :=
-    actualOrderStage_oldColourWordArrow_indexed
-      U A M T hm hSupport hLinear D family allowed S
-      H hOld κ hCP hArrow word
-  exact ⟨actualSelectedFilledOldEdgeEmbedding U A M T hm
-    hSupport hLinear D family allowed S.toForestTailStage b H hOld, ρ, hWord⟩
-
 end StructuralRamsey.Girth.IndexedPrivateChoice
