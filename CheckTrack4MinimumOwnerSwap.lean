@@ -20,6 +20,7 @@ import Girth.TrainForestStageCoveredBottomReadyPass
 import Girth.TrainInitialOrderStageSelectedCoverage
 import Girth.TrainActualCutoffTwoFromMixed
 import Girth.TrainActualAttachmentBoundsFromFiniteMixed
+import Girth.TrainActualFtNontrivialLocalStep
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -152,3 +153,7 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ready_identity_of_subsingleton_physical_fibre
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ActiveAttachmentBounds.of_sameVector_finiteMixed
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.allBaseStrong_of_selected
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.actual_positive_full_of_Ft
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderPictureStep_of_nontrivial_Ft
