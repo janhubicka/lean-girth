@@ -11,6 +11,7 @@ import Girth.TrainFillingPrivateMonotoneSummands
 import Girth.TrainFillingPrivateColourBlockOrder
 import Girth.TrainFillingPrivateMonotoneExistence
 import Girth.TrainFillingPrivateCoveredEHN
+import Girth.TrainFillingPrivateActualParentStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
 import Girth.TrainFillingPrivateParentwiseColour
 import Girth.TrainFillingOrderStageCanonicalAllCutGirth
@@ -128,3 +129,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.supportCopies_subset_coveredVertices
 #print axioms StructuralRamsey.Girth.supportCoveredVertices_is_covered
 #print axioms StructuralRamsey.Girth.selectedCoveredUnion_range_subset
+
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderParent_filledEdges_eq_contained
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderParent_filledEdges_eq_contained
