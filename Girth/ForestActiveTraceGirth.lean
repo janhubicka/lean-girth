@@ -72,7 +72,10 @@ theorem girthGT_of_bounded_trace_forest_completions
       Fintype.card_le_of_surjective
         (fun i : Fin c.length =>
           (⟨c.edge i, ⟨i, rfl⟩⟩ : N)) hSurj
-    simpa using hle.trans hc
+    calc
+      Fintype.card N ≤ Fintype.card (Fin c.length) := hle
+      _ = c.length := by simp
+      _ ≤ m := hc
   have hEdges : ∀ n : N, edge n ∈ H := by
     rintro ⟨e, ⟨i, hi⟩⟩
     change e ∈ H
