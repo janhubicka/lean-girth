@@ -1,15 +1,15 @@
 import Girth.ForestCompletionTraceBridge
 import Girth.ForestRelationalBoundarySupport
-import Girth.ActiveCarrierStrong
 
 /-!
 # Actual A- and projected B-copy traces on the old active subsystem
 
-These are the two geometric inputs to the trace-completion girth
-bridge. An A-edge meeting the A-strong active carrier in two
-vertices lies wholly inside it. A projected B-copy meeting the
-active carrier in two vertices has exactly one internal A-copy
-as boundary, and that copy lies in its complete own A-support.
+Only the ADDED designated B-pieces need a geometric trace
+classification. The selected A-edges are already whole active
+edges and require no separate A-strongness lemma. A projected
+B-copy meeting the active carrier in two vertices has exactly
+one internal A-copy as boundary, belonging to its own complete
+A-support.
 
 The local edge-family membership is intentionally explicit so
 that the corollaries can use the actual induced A-support rather
@@ -24,29 +24,6 @@ open StructuralRamsey.RelStructure
 universe u v
 variable {L : RelLanguage.{u}}
 variable {UA VB P X : Type v}
-
-/-- Any ambient A-edge has empty/singleton or complete A-edge
-trace on an A-strong set, and the full-edge alternative belongs
-to its own one-edge support piece. -/
-theorem aOneEdge_smallOrWholeBoundary_of_aStrong
-    (A : RelStructure L UA)
-    (C : RelStructure L X)
-    (S : Set X)
-    (hStrong : AStrong A C S)
-    (H : Set (Set X))
-    (hActiveEdge :
-      ∀ a : RelStructure.Embedding A C,
-        copyCarrier a ⊆ S → copyCarrier a ∈ H)
-    (a : RelStructure.Embedding A C) :
-    SmallOrWholeEdgeBoundary H S
-      (HypergraphPiece.oneEdge (copyCarrier a)) := by
-  classical
-  by_cases hSmall : (copyCarrier a ∩ S).Subsingleton
-  · exact Or.inl hSmall
-  · have hSub : copyCarrier a ⊆ S := hStrong a hSmall
-    refine Or.inr ⟨copyCarrier a, hActiveEdge a hSub, ?_, ?_⟩
-    · simp [HypergraphPiece.oneEdge]
-    · exact Set.inter_eq_left.mpr hSub
 
 /-- The base A-strongness hypothesis for a projected B-copy
 identifies its actual whole-edge/vertex boundary on the old
