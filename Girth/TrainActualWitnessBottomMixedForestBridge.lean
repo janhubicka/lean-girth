@@ -1,6 +1,7 @@
 import Girth.TrainActualWitnessBottomForestGeometry
 import Girth.ForestActualRecursiveSupport
 import Girth.ForestMixedLocalForestBridge
+import Girth.ForestConstantOneEdgeLocal
 import Girth.ForestToSupremeActualGeometry
 
 set_option autoImplicit false
@@ -173,6 +174,31 @@ theorem activeGluingWitness_bottom_localForest_of_finiteMixed
     obtain ⟨c, hc⟩ := edge.2
     exact Or.inr ⟨c, congrArg HypergraphPiece.oneEdge hc⟩
   · exact hMixed
+
+
+/-- Single-edge local target specialization: even if several gluing
+indices happen to name the SAME one-edge support, the literal
+bottom family is a forest through EVERY finite cutoff. The only
+premises state that all selected support pieces and ambient core
+A-edges really have that unique physical carrier. -/
+theorem activeGluingWitness_bottom_localForest_of_singleEdge
+    (H : (Local).BottomForestGeometry)
+    (edge : Set Y)
+    (hCopies : ∀ i : I,
+      bSupportPiece A (f i) = HypergraphPiece.oneEdge edge)
+    (hEdges : ∀ b : CoreEdge, b.1 = edge)
+    (q : ℕ) :
+    LocalForestThrough ((Local).bottomForestPiece H) q := by
+  apply localForestThrough_of_constant_oneEdge
+    ((Local).bottomForestPiece H) edge
+  intro label
+  cases label with
+  | inl i =>
+      exact (activeGluingWitness_bottom_piece_designated
+        A C α R f U H i).trans (hCopies i)
+  | inr b =>
+      rw [activeGluingWitness_bottom_piece_edge
+        A C α R f U H b, hEdges b]
 
 end ActualWitnessMixedForestBridge
 end StructuralRamsey.Girth
