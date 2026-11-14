@@ -61,8 +61,7 @@ intended circulation. All Ramsey selections are the original
 selected train family; all actual edge/wagon labels are retained. -/
 theorem ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed_physicalArrow
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (a b : Embedding A (stage.system.toRelStructure.induce S))
     (hTwoSource : ¬ SameCopy a b)
     (hSelectedImages : Function.Injective
@@ -88,7 +87,7 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed_physica
     embeddingArrow_of_physicalEdgeArrow RF hCarrierRigid hPhysicalArrow
   exact stage.activeAttachment_orderPictureStep_of_finiteMixed
     hA hBaseLinear e hRigid active E f U bounds
-    hOldBottom hAllBaseStrong a b hTwoSource
+    hOldBottom hBaseCovered a b hTwoSource
     hSelectedImages hLocalMixed κ hEmbeddingArrow
 
 end ActualPhysicalEdgeArrow
