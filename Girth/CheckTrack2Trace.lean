@@ -40,3 +40,8 @@ import Girth.ForestCopySetCompletion
 
 #check StructuralRamsey.Girth.actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
+
+#check StructuralRamsey.Girth.linearEdgeSet_of_finiteMixedForestThrough_oneEdges
+#check StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
+#print axioms StructuralRamsey.Girth.linearEdgeSet_of_finiteMixedForestThrough_oneEdges
+#print axioms StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
