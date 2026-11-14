@@ -2,6 +2,7 @@ import Girth.TrainForestStageBottomReadyPass
 import Girth.TrainRecursiveWitnessInitialStage
 import Girth.TrainRecursiveInitialTailSystem
 import Girth.LinearityGirthTwo
+import Girth.TrainLabelledPhysicalToOrdinaryGirth
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -52,7 +53,6 @@ noncomputable def initialOrderStage_of_allTargetCuts
     (hSupportNonempty : Nonempty (OldACarrierEdge A B))
     (hSupportCovers : ∀ b : VB,
       ∃ e : OldACarrierEdge A B, b ∈ e.1)
-    (hGirth : GirthGT (supportCopies A B) q)
     (hTargetParameters : ∀ b : family,
       targetTrain.AdjacentParameters (fun edge => edge.1)
         (fun ν => b.1 ⁻¹' allowed ν))
@@ -68,6 +68,10 @@ noncomputable def initialOrderStage_of_allTargetCuts
     obtain ⟨a, _⟩ := edge.2
     obtain ⟨u⟩ := (inferInstance : Nonempty UA)
     exact ⟨a u⟩
+  have hGirth : GirthGT (supportCopies A B) q :=
+    ordinaryGirth_of_targetBottomLabelledCut A B targetTrain q
+      (by simpa using hTargetCut
+        (⟨0, by simp⟩ : Fin (q :: tail).length))
   have hTargetLinear : ALinear A B :=
     aLinear_of_girthGT_two A B
       (girthGT_mono hGirth (by
