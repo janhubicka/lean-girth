@@ -59,7 +59,7 @@ theorem actualOrderStage_indexedFilledColourArrow
     (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
     (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
     (κ : Type w)
-    (hSourceA : Nonempty (Embedding A M))
+    (hCP : Nonempty (C × P))
     (hLowerArrow : TrainRecursiveWitness.DesignatedArrow
       S.toForestTailStage (H.TemplateEdge → κ))
     (hLocalArrow : ∀ ρ : H.TemplateEdge → κ,
@@ -79,7 +79,7 @@ theorem actualOrderStage_indexedFilledColourArrow
   obtain ⟨b, hb, ρ, hWords⟩ :=
     actualOrderStage_oldColourWordArrow_indexed U A M T hm
       hSupport hLinear D family allowed S H hOld κ
-      hSourceA hLowerArrow (H.colourWord χ)
+      hCP hLowerArrow (H.colourWord χ)
   obtain ⟨c, colour, hMono⟩ := hLocalArrow ρ
   refine ⟨b, hb, c, colour, ?_⟩
   exact selectedIndexedTargetEdges_colourWord_constant
