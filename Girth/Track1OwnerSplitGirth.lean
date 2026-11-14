@@ -55,7 +55,9 @@ theorem splitPhysicalEdges_girthGT
       · have hlast : i.val + 1 = c.length := by omega
         rw [hlast, Nat.mod_self]
         omega
-    exact hmod (by simpa [cyclicSucc] using hval)
+    have hnVal : (i.val + 1) % c.length = i.val := by
+      simpa [cyclicSucc] using hval.symm
+    exact hmod hnVal
   have hEdgeNe (i : Fin c.length) : e i ≠ e (cyclicSucc i) := by
     intro heq
     apply hNextNe i
