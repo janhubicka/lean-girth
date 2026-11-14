@@ -56,7 +56,7 @@ theorem ForestTailStage.firstRefinement_of_ready_head
         A old.system.toRelStructure (activeCarrier A old.system α)))
       ht (fun edge => edge.1.1) old.system.part
       (allowed ⟨1, Nat.succ_lt_succ ht⟩) g) := by
-  exact hReady α (List.mem_cons_self)
+  exact hReady α (by simp)
 
 /-- Given a *genuine* selected lower witness for the entire refined active
 target, construct the next actual stage and preserve refinement readiness
