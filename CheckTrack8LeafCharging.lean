@@ -63,3 +63,6 @@ all printed axioms before promoting a validation mark.
 
 #check StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
 #print axioms StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+
+#check StructuralRamsey.Girth.traceConformal_of_joinTree
+#print axioms StructuralRamsey.Girth.traceConformal_of_joinTree
