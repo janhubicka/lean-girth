@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActualLowerRefiningStep
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
