@@ -1,4 +1,4 @@
-import Girth.TrainFillingPrivateCoveredEHN
+import Girth.Support
 import Girth.TrainFillingPrivateColourBlockOrder
 
 set_option Elab.async false
