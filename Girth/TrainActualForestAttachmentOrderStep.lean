@@ -128,6 +128,30 @@ theorem ForestTailStage.activeAttachment_bottom_full_of_finiteMixed
     A hA B D stage.system family stage.selected e E f
     stage.train U Shared Bottom hStrong hTwo q).mp hRaw
 
+/-- The partite attachment already supplies the exact selected Ramsey
+picture step once its actual selected bottom system-girth bound is known.
+All positive bounds and train parameters are fields of the constructed
+forest stage; no separate stage reconstruction is necessary. -/
+theorem ForestTailStage.activeAttachment_orderPictureStep_of_actualBottom
+    (hBottomActual : (ActualBottom).FullSystemGirthGT q)
+    (κ : Type w) [Nonempty κ]
+    (hArrow : ∀ χ : Embedding A E.toRelStructure → κ,
+      ∃ i : I, ∀ c d : Embedding A (stage.system.induce S).toRelStructure,
+        χ ((f i).toEmbedding.comp c) = χ ((f i).toEmbedding.comp d)) :
+    ∃ R : OrderStage A B D family (q :: tail) targetTrain allowed,
+      PictureStep stage R.toForestTailStage e.toFunctionEmbedding κ := by
+  let newStage := stage.activeAttachment_of_local_bounds
+    hA hBaseLinear e hRigid active E f U bounds
+  have hBottomNew :
+      (selectedPictureOrderOneData
+        A B D newStage.system family newStage.selected
+        newStage.train Bottom).FullSystemGirthGT q := by
+    exact hBottomActual
+  let R := newStage.withBottomSystemGirth hBottomNew
+  refine ⟨R, ?_⟩
+  exact stage.activeAttachment_pictureStep_of_familyArrow
+    hA hBaseLinear e hRigid active E f U bounds κ hArrow
+
 /-- The new attachment is an actual ORDER stage once the LOCAL same-q
 forest produces its bottom bound. The finite Ramsey arrow at this
 profile uses exactly the already constructed selected transition. -/
@@ -147,22 +171,14 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed
         χ ((f i).toEmbedding.comp c) = χ ((f i).toEmbedding.comp d)) :
     ∃ R : OrderStage A B D family (q :: tail) targetTrain allowed,
       PictureStep stage R.toForestTailStage e.toFunctionEmbedding κ := by
-  let newStage := stage.activeAttachment_of_local_bounds
-    hA hBaseLinear e hRigid active E f U bounds
-  have hBottomRaw : (ActualBottom).FullSystemGirthGT q :=
+  have hBottomActual : (ActualBottom).FullSystemGirthGT q :=
     stage.activeAttachment_bottom_full_of_finiteMixed
       hA hBaseLinear e hRigid active E f U bounds
       hOldBottom hAllBaseStrong a b hTwoSource
       hSelectedImages hLocalMixed
-  have hBottomNew :
-      (selectedPictureOrderOneData
-        A B D newStage.system family newStage.selected
-        newStage.train Bottom).FullSystemGirthGT q := by
-    exact hBottomRaw
-  let R := newStage.withBottomSystemGirth hBottomNew
-  refine ⟨R, ?_⟩
-  exact stage.activeAttachment_pictureStep_of_familyArrow
-    hA hBaseLinear e hRigid active E f U bounds κ hArrow
+  exact stage.activeAttachment_orderPictureStep_of_actualBottom
+    hA hBaseLinear e hRigid active E f U bounds
+    hBottomActual κ hArrow
 
 end ActualOrderAttachment
 end StructuralRamsey.Girth.TrainRecursiveWitness
