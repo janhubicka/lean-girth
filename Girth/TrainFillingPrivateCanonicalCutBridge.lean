@@ -79,6 +79,44 @@ theorem canonicalFilledSelectedData_fullSystemGirthGT_of_inherited
     U H vertex β S ν hRange]
   exact hGirth
 
+/-- Full system girth of the actual labelled (parent,choice)
+family follows from the SAME inherited canonical filling record,
+using only physical filled-edge carrier equality. No pointwise
+coordinate identity or output girth is a premise of scattering. -/
+theorem canonicalFilledSelected_targetFullSystemGirthGT_of_inherited_carrier
+    (H : UniformFillingData Y X)
+    (hTemplate : ∀ c : C, (U c).templateEdges = H.templateEdges)
+    (vertex : I → Vertex U ↪ Y)
+    (β : I → (C × P) ↪ H.OldEdge)
+    {m : ℕ} (T : EdgeTrainLevels P m) (hm : 0 < m)
+    (S : EdgeTrainLevels H.OldEdge m)
+    (ν : Fin (m + 1)) (hProper : ν.val < m)
+    (hLocal : ∀ c : C, Nonempty (U c).LocalEdge)
+    (hFaithful : ∀ i : I, ∀ a b : C × P,
+      (contractedChoiceTrain U T hm).rel ν a b ↔
+        S.rel ν (β i a) (β i b))
+    (hEdgeCarrier : ∀ (i : I) (a : Edge U),
+      (selectedIndexedFilledEdgeEmbedding U H hTemplate (β i) a).1 =
+        vertex i '' edgeCarrier U a)
+    (hRange : ∀ i : I, Set.range (β i) =
+      {f : H.OldEdge | f.1 ⊆ Set.range (vertex i)})
+    {g : ℕ}
+    (hGirth :
+      (H.toTrainFilling.inheritedCutData S
+        (fun i : I => Set.range (vertex i))
+        (fun i : I => {f : H.OldEdge |
+          f.1 ⊆ Set.range (vertex i)}) ν).FullSystemGirthGT g) :
+    (((canonicalFilledSelectedFaithfulRealization_of_carrier U H hTemplate
+        vertex β T hm S ν hProper hLocal hFaithful hEdgeCarrier)
+        .toParentwiseRealization).designatedFamily.target).FullSystemGirthGT g := by
+  have hBound :
+      (canonicalFilledSelectedData U H vertex β S ν).FullSystemGirthGT g :=
+    canonicalFilledSelectedData_fullSystemGirthGT_of_inherited
+      U H vertex β S ν hRange hGirth
+  exact (canonicalFilledSelectedFaithfulRealization_of_carrier
+    U H hTemplate vertex β T hm S ν hProper hLocal
+      hFaithful hEdgeCarrier).target_fullSystemGirthGT hBound
+
 /-- After the old OrderStage cut has been canonically filled, the
 same genuinely realized (old parent, selected local choice) family
 inherits full system girth directly. No second ad hoc girth proof
