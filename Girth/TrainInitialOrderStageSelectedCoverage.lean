@@ -1,5 +1,6 @@
 import Girth.TrainInitialOrderStageFromTargetCuts
 import Girth.TrainActualSelectedBaseCoverage
+import Girth.TrainForestStageCoveredBottomReadyPass
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -90,9 +91,16 @@ theorem initialCoveredOrderStage_bottomReady
     let S := initialCoveredOrderStage_of_allTargetCuts
       A hA B D family q tail ht targetTrain allowed
       hSupportNonempty hSupportCovers hTargetParameters hCutoff hTargetCut
-    S.1.toForestTailStage.CoversBase := by
-  exact (initialCoveredOrderStage_of_allTargetCuts
+    S.1.toForestTailStage.CoveredBottomReady := by
+  let S := initialCoveredOrderStage_of_allTargetCuts
     A hA B D family q tail ht targetTrain allowed
-    hSupportNonempty hSupportCovers hTargetParameters hCutoff hTargetCut).2
+    hSupportNonempty hSupportCovers hTargetParameters hCutoff hTargetCut
+  have hBottom :
+      (selectedPictureOrderOneData A B D S.1.system family S.1.selected
+        S.1.train
+        (⟨0, by simp⟩ : Fin ((q :: tail).length + 1))).FullSystemGirthGT q := by
+    simpa using S.1.allCutGirth
+      (⟨0, by simp⟩ : Fin (q :: tail).length)
+  exact ⟨hBottom, S.2⟩
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
