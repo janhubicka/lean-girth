@@ -148,7 +148,7 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
   have hTwoCut : ∀ j : Fin (q :: tail).length, 0 < j.val →
       2 ≤ (q :: tail).get j := by
     intro j _
-    exact ht.two_le _ (List.get_mem _)
+    exact ht.two_le _ (List.get_mem (q :: tail) j)
   let active : StructuralRamsey.Partite.ProjectedEmbedding
       A old.system e.toFunctionEmbedding := Classical.choose hPair
   have hTail :=
