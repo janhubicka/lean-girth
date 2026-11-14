@@ -93,14 +93,4 @@ theorem ActiveAttachmentBounds.all_base_strong_of_covered
   rw [← hBase]
   exact bounds.baseStrong q hq
 
-/-- The initial selected family contains one literal copy for every
-prescribed base B-embedding; the witness is the checked initial
-designated copy, with no new choice function or surjectivity axiom. -/
-theorem initialForestStage_coversBase
-    {S : ForestTailStage A B D family t targetTrain allowed}
-    (hInitial : ∀ b : Embedding B D, b ∈ family →
-      ∃ q : DesignatedCopy B D S.system family,
-        q ∈ S.selected ∧ q.base = b) :
-    S.CoversBase := hInitial
-
 end StructuralRamsey.Girth.TrainRecursiveWitness
