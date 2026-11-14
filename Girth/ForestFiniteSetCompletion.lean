@@ -50,7 +50,8 @@ theorem FinsetForestCompletionProperty.toIndexed
     (h : FinsetForestCompletionProperty tested designated m) :
     ForestCompletionProperty tested designated m := by
   classical
-  intro N _ selected hTest hCard
+  intro N hFinite selected hTest hCard
+  letI : Fintype N := hFinite
   let s : Finset (HypergraphPiece W) := Finset.univ.image selected
   have hTestS :
       ∀ T : HypergraphPiece W, T ∈ s → tested T := by
