@@ -11,6 +11,7 @@ import Girth.TrainActualBottomAtLeastThreeForestPreservation
 import Girth.TrainActualBottomFullSystemForestPreservation
 import Girth.TrainActualSameVectorForestCoordinates
 import Girth.TrainActualSameVectorForestWithParameters
+import Girth.ForestConstantOneEdgeLocal
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -88,3 +89,7 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_bottom_and_interior_of_sameVector
 
 #print axioms StructuralRamsey.Girth.attachedSelectedPicture_sameVector_bounds_and_parameters
+
+#print axioms StructuralRamsey.Girth.forestOfCopies_constant_oneEdge
+#print axioms StructuralRamsey.Girth.localForestThrough_of_constant_oneEdge
+#print axioms StructuralRamsey.Girth.activeGluingWitness_bottom_localForest_of_singleEdge
