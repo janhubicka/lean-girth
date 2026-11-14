@@ -143,6 +143,21 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
   rcases hIndexed with
     ⟨_hTwo, hPartite, hEcoverage, hInjective, hForest,
       _hRestrictionLower, _hParametersLower, hIndexedArrow⟩
+  -- This is the finite-index instance missing from historical Track D.
+  -- Physical injectivity implies injectivity of the selected embeddings
+  -- into the genuine finite lower witness.
+  letI : Finite I := Finite.of_injective
+    (fun i : I => (f i).toEmbedding.toFun)
+    (by
+      intro i j h
+      apply hInjective
+      have he : (f i).toEmbedding = (f j).toEmbedding := by
+        apply Embedding.ext
+        intro x
+        exact congrFun h x
+      exact congrArg
+        (fun g : Embedding Target.toRelStructure E.toRelStructure =>
+          bSupportPiece A g) he)
   have hRigid : ∀ a : Embedding A D, SameCopy a e → a = e :=
     fun a ha => ordered_embedding_eq_of_sameCopy a e ha
   have hTwoCut : ∀ j : Fin (q :: tail).length, 0 < j.val →
