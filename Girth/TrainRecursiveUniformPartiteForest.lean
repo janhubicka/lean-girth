@@ -7,8 +7,8 @@ set_option Elab.async false
 # A concrete, universal selected partite forest assertion
 
 The abstract Operators recursion must be instantiated with an assertion
-which works for EVERY genuine ordered A-partite target and EVERY finite
-large base with a prescribed part-preserving family. Its lower-rank
+which works for every genuine finite ordered A-partite input in the
+nontrivial, A-linear and strong-family regime of the q>2 induction. Its lower-rank
 hypothesis cannot be a single witness chosen for a particular processed
 profile, and cannot assume an already constructed current-rank PictureStep.
 
@@ -32,9 +32,10 @@ variable {L : RelLanguage.{u}} {UA : Type v}
 Unlike the abstract Operators.ForestWitness placeholder, the target,
 large base, lower allowed sets, selected family and resulting DesignatedArrow
 are the literal physical data used in the circulation.  The assertion
-quantifies over the entire target and base, and thus can be applied to a
-new active subsystem at *strictly smaller rank* without assuming its
-specific witness as an extra premise. -/
+quantifies over all targets and bases satisfying the *actual* strong,
+linear, two-copy input conditions. This suffices for the smaller-rank
+refined active subsystem without assuming its witness as an extra premise.
+One-copy targets remain a separate base/identity case. -/
 def UniformSelectedPartiteForest
     (A₀ : RelStructure L UA)
     [LinearOrder UA] [Finite UA] [Nonempty UA]
@@ -46,6 +47,13 @@ def UniformSelectedPartiteForest
       Target.toRelStructure Large.toRelStructure))
     (ht : Admissible t)
     (hTargetPartite : Target.IsPartiteOver A₀.ordered)
+    (hTargetLinear : ALinear A₀.ordered Target.toRelStructure)
+    (hTargetTwo : ∃ a b : Embedding A₀.ordered Target.toRelStructure,
+      ¬ SameCopy a b)
+    (hLargePartite : Large.IsPartiteOver A₀.ordered)
+    (hLargeLinear : ALinear A₀.ordered Large.toRelStructure)
+    (hFamilyStrong : ∀ b, b ∈ family →
+      AStrong A₀.ordered Large.toRelStructure (copyCarrier b))
     (hFamilyParts : ∀ b, b ∈ family → ∀ x : VB,
       Large.part (b x) = Target.part x)
     (targetTrain : EdgeTrainLevels
