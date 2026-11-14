@@ -2,10 +2,9 @@
 
 **14 November 2026. Status: candidate integration, not kernel-validated.**
 
-- Main manuscript: `girth/main` (moving, original audited 41-page baseline `8c9cfa6e`).
-- Existing preferred functional-closure draft: [girth PR #452](https://github.com/janhubicka/girth/pull/452), unmerged.
-- New *comparison only* manuscript branch:
-  [`revision/track1-owner-split-reuse-20261114`](https://github.com/janhubicka/girth/tree/revision/track1-owner-split-reuse-20261114).
+- Manuscript: the selected-owner splitting proof and cutoff-three simplification were merged to `girth/main` in [PR #454](https://github.com/janhubicka/girth/pull/454); the current main source should be used, not the old 41-page baseline.
+- Superseded arbitrary-unary alternative: [girth PR #452](https://github.com/janhubicka/girth/pull/452), closed without merge.
+- Current formalization: [draft lean-girth PR #1069](https://github.com/janhubicka/lean-girth/pull/1069), **not merged**.
 - Canonical validation issue: [#1052](https://github.com/janhubicka/lean-girth/issues/1052).
 
 ## Why this may be the faster route
@@ -38,6 +37,7 @@ Existing checked Lean infrastructure nearly covers this operation:
 - `Track1OwnerSplitGirth`: for every `g`, `GirthGT H.edges g` implies `GirthGT H.splitPhysicalEdges g`. Each connector between distinct split edges is an allowed unsplit vertex, so the cycle projects injectively on connectors and physical edges.
 - `Track1OwnerSplitCoverage`: define output carrier as `selectedLiftCarrier` (union of selected lift ranges), output edges as `selectedLiftEdges`. Prove every selected edge is contained in that carrier. Under the explicit old-edge selected-cover hypothesis, all physical split edges are retained.
 - `Track1OwnerSplitOrderArrow`: one global projection-first order on the token vertices, together with the colour-arrow transfer for the selected old family.
+- `Track1SelectedOldStrong`: deduce the checked owner-splitting strongness premise from the actual A-strong original selected embedding and support-edge membership.
 - `Track1CutoffThreeReuse`: direct 3-boundary forest adapter to checked `selectedForest_of_distinctOwners_girthOnly`. The bespoke uncompiled Fin-3 Lean proof was removed; the paper retains its elementary English argument.
 
 Every one of these new files is an **UNCOMPILED DRAFT**, even though it
@@ -48,7 +48,7 @@ manuscript status follows without an exact-head build and axiom report.
 
 1. Prove the `A`-girth>3 subclass of the canonical `c_A,c_B`
    free-amalgamation class, with no additional function.
-2. Compile and audit `track1_selectedOrderedRamseyFamily_of_monotone_embeddings`
+2. Compile and audit `track1_selectedOrderedRamseyFamily_triangleFree`
    (the previous public EHN endpoint returned only an unindexed arrow).
 3. Package the old selected B embeddings as actual
    `ColouredOwnerSelectedCopy` objects with exact physical old edge
