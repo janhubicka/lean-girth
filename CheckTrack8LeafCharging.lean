@@ -1,0 +1,79 @@
+import Girth.ForestTraceLeafCharging
+import Girth.FiniteTraceCoverage
+import Girth.FiniteTraceMaximal
+import Girth.ForestTraceRestriction
+import Girth.FiniteTracePairGraph
+import Girth.ForestJoinTreeHelly
+import Girth.ForestTraceMissingFaces
+import Girth.ForestTraceLocalCompletion
+
+/-!
+Track 8 exact-head Lean gate for the leaf-private charging component.
+This file deliberately does not assert that the small-trace theorem
+itself is closed.  Run with the pinned project toolchain and inspect
+all printed axioms before promoting a validation mark.
+-/
+
+#check StructuralRamsey.Girth.JoinTree.exists_leaf_private_vertex
+#check StructuralRamsey.Girth.JoinTree.exists_injective_representatives
+#check StructuralRamsey.Girth.JoinTree.card_le_of_antichain
+
+#print axioms StructuralRamsey.Girth.JoinTree.exists_leaf_private_vertex
+#print axioms StructuralRamsey.Girth.JoinTree.exists_injective_representatives
+#print axioms StructuralRamsey.Girth.JoinTree.card_le_of_antichain
+
+#check StructuralRamsey.Girth.coversNonemptyTraces_empty
+#check StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#check StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+
+#print axioms StructuralRamsey.Girth.coversNonemptyTraces_empty
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+
+#check StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#check StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#check StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#check StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#check StructuralRamsey.Girth.maximalTrace_card_le_of_joinTree
+#check StructuralRamsey.Girth.maximalTrace_selection_of_joinTree
+
+#print axioms StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_joinTree
+#print axioms StructuralRamsey.Girth.maximalTrace_selection_of_joinTree
+
+#check StructuralRamsey.Girth.JoinTree.traceCarrier
+#check StructuralRamsey.Girth.setBagPiece_traceCarrier
+#print axioms StructuralRamsey.Girth.JoinTree.traceCarrier
+#print axioms StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#check StructuralRamsey.Girth.maximalTrace_selection_ncard_of_joinTree
+#check StructuralRamsey.Girth.smallTrace_selection_of_maximalJoinTree
+
+#print axioms StructuralRamsey.Girth.maximalTrace_selection_ncard_of_joinTree
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_maximalJoinTree
+
+#check StructuralRamsey.Girth.traceVertices_isClique
+#check StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#check StructuralRamsey.Girth.maximalClique_has_maximalTrace
+
+#print axioms StructuralRamsey.Girth.traceVertices_isClique
+#print axioms StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#print axioms StructuralRamsey.Girth.maximalClique_has_maximalTrace
+
+#check StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+#print axioms StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+
+#check StructuralRamsey.Girth.traceConformal_of_joinTree
+#print axioms StructuralRamsey.Girth.traceConformal_of_joinTree
+
+#check StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#check StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#check StructuralRamsey.Girth.HasInternalJoinTreeCompletions
+#check StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+
+#print axioms StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#print axioms StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
