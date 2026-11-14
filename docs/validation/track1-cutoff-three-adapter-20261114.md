@@ -9,11 +9,11 @@ Issue: [lean-girth #1052](https://github.com/janhubicka/lean-girth/issues/1052).
 
 The English manuscript now has a direct elementary 3-member argument:
 `lem:threeboundaries` and `lem:threepicture`, preceding
-`prop:forestthree`. The file
-`Girth/Track1ThreeBoundaryKernel.lean` is an UNCOMPILED candidate
-for just the two finite kernels: from three narrow boundaries and
-`GirthGT H 3` to a possible middle, and from a middle to a
-3-member `JoinTree`. It does **not** prove the picture step.
+`prop:forestthree`. The bespoke uncompiled Fin-3 join-tree module was
+removed as redundant. The shorter `Girth/Track1CutoffThreeReuse.lean`
+instantiates the existing generic, previously checked
+`selectedForest_of_distinctOwners_girthOnly` at cutoff three.
+This handles the all-distinct case but **not** the actual picture step.
 
 For the paper-to-Lean end result, prefer the existing **conditional**
 `Girth/ForestActualDesignatedTrueActiveIncrement.lean` theorem
@@ -81,9 +81,9 @@ this with a direct 3-member path centred at `e^+`.
   already selected); zero failures at their stated finite scopes.
 - Independent negative tests catch a triangle core and the
   proper-subedge failure over an acyclic single-edge core.
-- Candidate Lean file has no `sorry` or `admit`, but **its syntax,
-  elaboration and axioms are UNVERIFIED**. The registered
-  `CheckTrack1ThreeBoundaryKernel.lean` is only a future gate.
+- The retained `Track1CutoffThreeReuse.lean` is uncompiled and its
+  elaboration and axioms remain unverified. `CheckTrack1.lean` is the
+  focused check entrypoint; it has not been executed.
 - The existing conditional picture theorem on `main` is reusable as
   a theorem declaration, but its required arguments have NOT been
   discharged for the new local witness.
