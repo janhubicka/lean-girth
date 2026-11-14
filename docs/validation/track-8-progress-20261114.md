@@ -117,3 +117,17 @@ A concrete Mathlib API repair was made in \`FiniteTraceMaximal\`: use \`Set.Fini
 **Remaining pure combinatorics**: (a) exclude chordless cycles in the trace pair graph under the same bounded local-completion premise, (b) construct the finite maximal-clique join tree of a chordal graph and transfer it to distinct maximal original traces. The sharp |Z| selection theorem is already source-proved **under that join-tree input**. The actual structural extraction remains dependent on Tracks 2 and 7.
 
 The PR is draft and unverified; the container has no Lean/lake/elan and DNS access was unavailable, and no paid Actions run was requested. No validation marks were promoted.
+
+## Final pass of 14 November — chordality preparation and integrity checks
+
+\`Girth/FiniteTraceSimplicial.lean\` now gives the first geometric proof step for chordality: \`JoinTree.private_leaf_occurs_only\` shows a vertex in a leaf bag but outside its parent occurs nowhere else, and \`tracePairGraph_private_leaf_simplicial\` proves that its neighbours in the trace pair graph form a clique. This isolates the exact leaf-elimination mechanism needed to exclude induced chordless cycles. **It does not yet prove the global chordality theorem.**
+
+A connector-based whole-branch static audit of the 10 new \`Girth/*.lean\` proof modules plus \`CheckTrack8LeafCharging.lean\` reports:
+- 11 files, 1,422 source lines, 30 theorem declarations;
+- no explicit \`sorry\`, \`admit\`, \`sorryAx\`, \`axiom\`, \`unsafe\` or \`opaque\` in proof bodies;
+- all local Girth import names in this new module collection resolve to either another new file or a known pre-existing source;
+- no internal import cycles, balanced delimiters.
+
+**WARNING:** none of these static properties establishes successful Lean elaboration or absence of transitive axioms. The pinned Lean runtime was not installed, and no exact-head CI was run. Retain all validation marks as open pending a real compilation and \`#print axioms\` audit.
+
+The manuscript trace-proof simplification and bag-union qualification were already merged in manuscript PR #453; no additional manuscript changes are necessary for this stage. The remaining mathematical work is the global leaf-elimination/no-induced-cycle proof and finite chordal maximal-clique join tree.
