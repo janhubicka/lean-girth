@@ -1,6 +1,7 @@
 import Girth.Track1TriangleFreeSelectedFamily
 import Girth.Track1CutoffThreeReuse
 import Girth.Track1OwnerSelectedFromEmbedding
+import Girth.Track1SelectedOldStrong
 import Girth.Track1OwnerSplitGirth
 import Girth.Track1OwnerSplitOrderArrow
 
@@ -34,3 +35,4 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLiftEdges_eq_splitPhysicalEdges
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.track1_selectedOrder_and_edgeRamsey
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.ofEdgeEmbedding
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.oldStrong_of_aStrong
