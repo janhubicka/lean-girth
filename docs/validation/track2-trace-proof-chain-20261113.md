@@ -173,3 +173,54 @@ These are **uncompiled source-level proof candidates** and were
 added to `Girth/CheckTrack2Trace.lean` for future exact-head
 axiom inspection. They do not promote a manuscript validation mark.
 
+
+
+## 14 November — separator cross-intersections and source-level robustness
+
+The proof of the general `lem:joinlift` needs one precise
+cross-family step, now separated into candidate
+`Girth/ForestSeparatorCrossAllowed.lean` (four theorem
+declarations, all in the focused axiom gate):
+
+1. `allowedIntersection_oneEdge_self`: the requested
+   `e^+` is allowed to meet itself, so the requesting member
+   does not create an exception to pairwise allowedness.
+2. `ownEdge_of_allowed_oneEdge_large`: any member meeting
+   `e^+` in at least two vertices contains `e` as an
+   **edge of its own support**, not merely as a carrier subset.
+3. `allowedIntersection_with_local_request`: every
+   member of a local forest has this allowed intersection
+   with its requested edge, including the member equal to
+   the request.
+4. `allowedIntersection_cross_of_common_request`: for
+   members of two local forests whose cross overlap is
+   contained in the same separator `e`, the cross
+   intersection is subsingleton, or equals the whole edge
+   `e` belonging to both supports.
+
+This justifies the previously compressed line “all cross
+intersections are allowed” in the English leaf proof.
+The associated manuscript proof now states that implication
+explicitly, before asserting running intersection for the
+spliced tree. A finite exhaustive check on four vertices
+covered 144 admissible cross-family configurations and found
+no counterexample. Without the own-edge condition,
+`F={a,b,c}` and `G={a,b,d}`, with `e={a,b}` and
+neither piece containing `e` as an edge, give a concrete
+failure. The bounded test is saved in the manuscript branch
+as `validation/numbered-tracks/check_cross_separator.py`.
+
+The short-cycle proof's finite index bound was also made
+explicit in Lean:
+`card (physical cycle edges) ≤ card (Fin cycle.length)
+= cycle.length ≤ m`. This avoids relying on an
+unelaborated definitional equality during transitivity.
+
+**Status remains candidate-only.** No local compiler/matching
+mathlib bundle is available in this environment. The four new
+cross-intersection theorem bodies have not been elaborated,
+and no executed `#print axioms` result exists. The *full*
+general singleton-free join-tree lifting theorem remains
+unformalized. The actual edge-covered structural completion
+still reuses existing checked components; it need not wait
+for the generic theorem.
