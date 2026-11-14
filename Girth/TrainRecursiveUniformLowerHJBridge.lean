@@ -4,6 +4,7 @@ import Girth.TrainRecursiveTrueActiveFineParameters
 import Girth.TrainRecursiveTrueActiveLowerCutoffVector
 import Girth.TrainRecursiveStrongSupportedHJBase
 import Girth.TrainRecursiveExactHeightTransport
+import Girth.TrainRecursiveTrueActiveTwoCopies
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -54,8 +55,9 @@ theorem ForestTailStage.exists_realSelectedLower_of_uniformRank
     (old : ForestTailStage A₀.ordered B D family (q :: tail)
       targetTrain allowed)
     (e : Embedding A₀.ordered D)
-    (projected : StructuralRamsey.Partite.ProjectedEmbedding
-      A₀.ordered old.system e.toFunctionEmbedding)
+    (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
+      A₀.ordered old.system e.toFunctionEmbedding,
+      copyCarrier a.val ≠ copyCarrier b.val)
     (ht : Admissible (q :: tail)) (hq : 2 < q)
     (R : FirstWagonRefinement
       (old.train.restrict (sharedOldACarrierInclusion
@@ -120,6 +122,12 @@ theorem ForestTailStage.exists_realSelectedLower_of_uniformRank
   have hSourceCovers : ∀ x : activeCarrier A old.system
       e.toFunctionEmbedding, ∃ a : Embedding A Source.toRelStructure,
       x ∈ copyCarrier a := hGeometry.2.2
+  let projected : StructuralRamsey.Partite.ProjectedEmbedding
+      A old.system e.toFunctionEmbedding := Classical.choose hPair
+  have hTargetTwo : ∃ a b : Embedding A Source.toRelStructure,
+      ¬ SameCopy a b :=
+    activeTarget_twoGenuineCopies_of_nontrivialFibre
+      A old.system e.toFunctionEmbedding hPair
   obtain ⟨hPhysical, hCovers, hGirthOld⟩ :=
     old.trueActive_initialSupportData e projected (q - 1) (by
       change q - 1 ≤ q
@@ -166,7 +174,7 @@ theorem ForestTailStage.exists_realSelectedLower_of_uniformRank
       (fun edge => edge.1) hLen.symm j.castSucc (lowerCuts.get j) hOne
   have hLowerAdmissible : Admissible lowerCuts :=
     ht.replace hq (Nat.succ_pos d)
-  obtain ⟨N, hN, hLargePartite, _hLargeLinear, _hLargeCovers,
+  obtain ⟨N, hN, hLargePartite, hLargeLinear, _hLargeCovers,
       lowerFamily, _hFamilyNonempty, hParts, hStrong, hHJArrow⟩ :=
     exists_largeBase_strongSupportedHJLineRamseyFamily
       A₀ Source hSourcePartite hSourceLinear hSourceCovers κ
@@ -184,7 +192,8 @@ theorem ForestTailStage.exists_realSelectedLower_of_uniformRank
     exact ⟨StructuralRamsey.Partite.Induced.lineEmbedding
       hSourcePartite W, hW, hMono⟩
   have hFinal := hLower Source Large lowerFamily
-    hLowerAdmissible hSourcePartite hParts
+    hLowerAdmissible hSourcePartite hSourceLinear hTargetTwo
+    hLargePartite hLargeLinear hStrong hParts
     lowerTrain lowerAllowed hPhysical hCovers hGirth
     hParams hCuts hFamilyArrow
   exact ⟨N, hN, hLargePartite, lowerFamily, hParts, hStrong, hFinal⟩
