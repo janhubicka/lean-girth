@@ -1,5 +1,6 @@
 import Girth.Track1TriangleFreeSelectedFamily
 import Girth.Track1CutoffThreeReuse
+import Girth.Track1SelectedMixedLF2
 import Girth.Track1OwnerSelectedFromEmbedding
 import Girth.Track1SelectedOldStrong
 import Girth.Track1OwnerSplitGirth
@@ -30,6 +31,7 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.ElementaryCAThreeClass_freeAmalgamationClass
 #print axioms StructuralRamsey.Girth.track1_selectedOrderedRamseyFamily_triangleFree
 #print axioms StructuralRamsey.Girth.track1_three_boundaries_forest_of_core
+#print axioms StructuralRamsey.Girth.track1_actualMixedLF2_of_strong_controlled
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.splitPhysicalEdges_girthGT
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLiftEdges_subset_carrier
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLiftEdges_eq_splitPhysicalEdges
