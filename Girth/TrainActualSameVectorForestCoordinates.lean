@@ -98,8 +98,8 @@ theorem attachedSelectedPicture_bottom_and_interior_of_sameVector
       (Old μ).FullSystemGirthGT (cutoff μ))
     (a b : RelStructure.Embedding A Active)
     (hTwoSource : ¬ SameCopy a b)
-    (hChosenDistinct : Function.Injective
-      (fun i : I => bSupportPiece A (f i)))
+    (hChosenImages : Function.Injective
+      (fun i : I => copyCarrier (f i)))
     (hBottomMixed : FiniteMixedForestThrough Tested (cutoff μBottom))
     (hFullPositive : ∀ μ : Fin (m + 1), 0 < μ.val → μ.val < m →
       (Wit μ).FullSystemGirthGT (cutoff μ)) :
@@ -115,7 +115,7 @@ theorem attachedSelectedPicture_bottom_and_interior_of_sameVector
       (cutoff μBottom) hBottomTwo
       (hOld μBottom (Or.inl rfl))
       hStrong hTwoSelected hActiveStrong
-      a b hTwoSource hChosenDistinct hBottomMixed
+      a b hTwoSource hChosenImages hBottomMixed
   · intro μ hPos hLt
     exact attachedSelectedPicture_fullSystemGirth_of_intrinsic_geometry
       A hA B D C family selected e R f T U hShared hRel μ
