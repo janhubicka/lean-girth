@@ -111,6 +111,9 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
   classical
   let A := A₀.ordered
   let m := (q :: tail).length
+  have hm : 0 < m := by
+    dsimp [m]
+    exact Nat.zero_lt_succ _
   let d := R.extraCuts
   let lowerCuts := List.replicate (d + 1) (q - 1) ++ tail
   let hLen : lowerCuts.length = m + d :=
@@ -125,7 +128,7 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       lowerFamily hFamilyParts lower.selected i
   let T := lower.train.castHeight hLen
   let fineAllowed := fineAllowedFromRefinement m d
-    (by simp : 0 < m) e.toFunctionEmbedding allowed R.permitted
+    hm e.toFunctionEmbedding allowed R.permitted
   let fineAllowedLower : Fin (lowerCuts.length + 1) → Set UA :=
     fun ρ => fineAllowed (Fin.cast
       (congrArg (fun k : ℕ => k + 1) hLen) ρ)
@@ -181,15 +184,18 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       fineAllowedLower (Fin.cast
         (congrArg (fun k : ℕ => k + 1) hLen).symm ν) =
         fineAllowed ν := by
-    cases hLen
-    rfl
+    change fineAllowed
+      (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen)
+        (Fin.cast (congrArg (fun k : ℕ => k + 1) hLen).symm ν)) =
+          fineAllowed ν
+    exact congrArg fineAllowed (Fin.ext rfl)
   have hParameters : T.AdjacentParameters (fun edge => edge.1)
       (fun ν => E.part ⁻¹' fineAllowed ν) := by
     have hCast := lower.coarsened_adjacentParameters_castHeight_preimage
       A Target.toRelStructure Large fineAllowedLower hLen.symm
     simpa only [hAllowedIndex] using hCast
   have hAllowed := fineAllowedFromRefinement_all_constraints
-    m d (by simp : 0 < m) e.toFunctionEmbedding allowed R.permitted
+    m d hm e.toFunctionEmbedding allowed R.permitted
     R.permitted_subset R.permitted_subsingleton
   rcases hAllowed with ⟨hSingleton, hFirst, hRetained⟩
   have hFull : ∀ ν : Fin (m + d + 1), 0 < ν.val →
@@ -204,7 +210,7 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       ht.nondecreasing ν hPos hInterior
   exact ForestTailStage.refiningPictureStep_of_fineWitness
     A₀ old hBaseLinear e active E f
-    (by simp : 0 < m) hq R T fineAllowed
+    hm hq R T fineAllowed
     hPartite hEcoverage hBaseStrong hTargetTwo hPair
     hInjective hForest hRestriction hParameters
     hSingleton hFirst hRetained hFull hTail
