@@ -1,5 +1,6 @@
 import Girth.FiniteTraceCoverage
 import Mathlib.Order.Preorder.Finite
+import Mathlib.Data.Set.Card
 
 /-!
 # Maximal nonempty traces represented by original cover members
@@ -205,5 +206,60 @@ theorem maximalTrace_selection_of_joinTree
   · exact ⟨maximalTraceRepresentative F Z,
       maximalTraceRepresentative_injective F Z, rfl⟩
   · exact maximalTrace_card_le_of_joinTree F Z J
+
+
+/-- Numerically exact small-trace conclusion, *conditional* only on the
+join tree of distinct maximal traces.  The number of selected ORIGINAL
+cover members is bounded, not merely the number of maximal trace types. -/
+theorem maximalTrace_selection_ncard_of_joinTree
+    [Fintype W] [Finite ι]
+    (F : ι → Set W) (Z : Set W)
+    [Nonempty (maximalNonemptyTraceSets F Z)]
+    (J : JoinTree (maximalTracePiece F Z)) :
+    ∃ selected : Set ι,
+      CoversNonemptyTraces F Z selected ∧
+      selected.ncard ≤ Z.ncard := by
+  classical
+  let reps := maximalTraceRepresentative F Z
+  have hCard := maximalTrace_card_le_of_joinTree F Z J
+  refine ⟨Set.range reps, maximalTraceRepresentatives_cover F Z, ?_⟩
+  calc
+    (Set.range reps).ncard =
+        Nat.card (maximalNonemptyTraceSets F Z) := by
+      exact Set.ncard_range_of_injective
+        (maximalTraceRepresentative_injective F Z)
+    _ = Fintype.card (maximalNonemptyTraceSets F Z) :=
+      Nat.card_eq_fintype_card
+    _ ≤ Fintype.card Z := hCard
+    _ = Z.ncard := Set.fintypeCard_eq_ncard Z
+
+/-- Final finite trace-cover formulation, including the empty case.
+The ONE open combinatorial input is now stated transparently:
+when any maximal nonempty trace exists, these distinct traces admit
+a running-intersection join tree.  The local-to-global proof of that
+input is the remaining chordality/conformality task. -/
+theorem smallTrace_selection_of_maximalJoinTree
+    [Fintype W] [Finite ι]
+    (F : ι → Set W) (Z : Set W)
+    (hTree :
+      Nonempty (maximalNonemptyTraceSets F Z) →
+        Nonempty (JoinTree (maximalTracePiece F Z))) :
+    ∃ selected : Set ι,
+      CoversNonemptyTraces F Z selected ∧
+      selected.ncard ≤ Z.ncard := by
+  classical
+  by_cases hα : Nonempty (maximalNonemptyTraceSets F Z)
+  · letI : Nonempty (maximalNonemptyTraceSets F Z) := hα
+    obtain ⟨J⟩ := hTree hα
+    exact maximalTrace_selection_ncard_of_joinTree F Z J
+  · refine ⟨∅, ?_, by simp⟩
+    intro i hi
+    obtain ⟨j, hj, _⟩ :=
+      exists_maximal_nonempty_trace F Z i hi
+    have hn :
+        Nonempty (maximalNonemptyTraceSets F Z) :=
+      ⟨⟨traceOn F Z j, hj.1, ⟨j, rfl⟩, hj.2⟩⟩
+    exact (hα hn).elim
+
 
 end StructuralRamsey.Girth
