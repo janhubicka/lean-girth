@@ -105,4 +105,35 @@ theorem strictMono_into_colourBlockOrder
       exact hWBlocks x y hSame hxy
     exact colourBlockOrder_of_colour_lt colourX hColours
 
+
+/-- Sorting BOTH source and target by their predicate colours
+preserves an old strictly increasing colour-preserving map,
+without asking that the old source order had any block property.
+This permits the disjoint union W and EHN template X to be put
+in compatible coloured block orders using the same witness. -/
+theorem strictMono_between_colourBlockOrders
+    {I W X : Type v}
+    [LinearOrder I] [LinearOrder W] [LinearOrder X]
+    (colourW : W → I) (colourX : X → I) (f : W → X)
+    (hPreserve : ∀ x : W, colourX (f x) = colourW x)
+    (hMono : StrictMono f) :
+    letI : LinearOrder W := colourBlockOrder colourW
+    letI : LinearOrder X := colourBlockOrder colourX
+    StrictMono f := by
+  change ∀ x y : W,
+    @LT.lt W (colourBlockOrder colourW).toLT x y →
+      @LT.lt X (colourBlockOrder colourX).toLT (f x) (f y)
+  intro x y hxy
+  have hKeys :
+      (toLex (colourW x, x) : I ×ₗ W) <
+        (toLex (colourW y, y) : I ×ₗ W) := hxy
+  rcases Prod.Lex.toLex_lt_toLex.mp hKeys with hDifferent | ⟨hSame, hOld⟩
+  · apply colourBlockOrder_of_colour_lt colourX
+    rw [hPreserve x, hPreserve y]
+    exact hDifferent
+  · apply colourBlockOrder_of_same_colour colourX
+    · rw [hPreserve x, hPreserve y]
+      exact hSame
+    · exact hMono hOld
+
 end StructuralRamsey.Girth
