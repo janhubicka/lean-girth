@@ -68,7 +68,7 @@ bookkeeping inputs discharged:
 The distinct first-wagon carrier hypotheses are not bundled
 into this identity; they are used by the subsequent checked
 contractedPhysicalEdgeEquiv and cut-girth theorems. -/
-theorem actualIndexedContractedM_support_of_reblockedX
+theorem actualIndexedContractedM_support_without_enumeration
     [Nontrivial X]
     (oldColour : V → I) (templateColour : X → I)
     (hColour : ∀ c : C, ∀ p : P,
