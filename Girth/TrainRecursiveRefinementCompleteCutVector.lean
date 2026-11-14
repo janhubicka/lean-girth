@@ -90,6 +90,47 @@ theorem ForestTailStage.trueActive_sharedFineCutVector
     exact labelledGirthGT_mono hCut
       (by simpa only [hShift] using hRetained j hj)
 
+/-- The same full pointwise fine-cut vector on the TRUE induced active
+relational A-support, rather than just the larger shared-edge support.
+
+This reuses the exact physical induced-to-shared label injection and
+vertex inclusion. No new girth assumption on the induced system. -/
+theorem ForestTailStage.trueActive_inducedFineCutVector
+    (stage : ForestTailStage A B D family t targetTrain allowed)
+    (e : Embedding A D) (ht : Admissible t)
+    (hm : 0 < t.length) (hq : 2 < t.headD 0)
+    (R : FirstWagonRefinement
+      (stage.train.restrict
+        (sharedOldACarrierInclusion A stage.system.toRelStructure
+          (activeCarrier A stage.system e.toFunctionEmbedding)))
+      hm
+      (fun edge : SharedOldACarrierEdge A stage.system.toRelStructure
+        (activeCarrier A stage.system e.toFunctionEmbedding) => edge.1.1)
+      stage.system.part
+      (allowed ⟨1, Nat.succ_lt_succ hm⟩)
+      (t.headD 0 - 1))
+    (cutoff : Fin (t.length + R.extraCuts + 1) → ℕ)
+    (hInserted : ∀ ρ : Fin (t.length + R.extraCuts + 1),
+      ρ.val ≤ R.extraCuts → cutoff ρ ≤ t.headD 0 - 1)
+    (hRetained : ∀ j : Fin t.length, 0 < j.val →
+      cutoff (EdgeTrainLevels.firstRefinementShift
+        t.length R.extraCuts j.castSucc) ≤ t.get j)
+    (ρ : Fin (t.length + R.extraCuts + 1))
+    (hProper : ρ.val < t.length + R.extraCuts) :
+    LabelledGirthGT
+      ((R.train.restrict
+        (inducedACarrierToShared A stage.system.toRelStructure
+          (activeCarrier A stage.system e.toFunctionEmbedding))).wagonClassCarrier
+        (fun edge : OldACarrierEdge A
+          (stage.system.toRelStructure.induce
+            (activeCarrier A stage.system e.toFunctionEmbedding)) => edge.1)
+        ρ) (cutoff ρ) := by
+  exact trueActive_inducedCutGirth_of_shared A stage.system
+    e.toFunctionEmbedding R.train ρ (cutoff ρ)
+    (stage.trueActive_sharedFineCutVector
+      e ht hm hq R cutoff hInserted hRetained ρ hProper)
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedFineCutVector
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedFineCutVector
