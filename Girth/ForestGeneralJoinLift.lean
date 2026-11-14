@@ -197,4 +197,41 @@ termination_by Fintype.card Q
 decreasing_by
   exact hcard
 
+
+/-- General lifting followed by deletion of exactly the unselected
+one-edge requests. The keep set may include local designated
+completion additions or requested edge members which coincide with
+selected members; only its COMPLEMENT has to be auxiliary.
+
+This is the labelled form needed before converting back to the
+manuscript's finite SET of actual selected and added members. -/
+theorem forestOfCopies_lift_without_singleton_then_delete
+    {K : Q → Type v}
+    [Fintype Q] [Nonempty Q]
+    [∀ q : Q, Fintype (K q)]
+    [∀ q : Q, Nonempty (K q)]
+    {P : Q → HypergraphPiece W}
+    (JOuter : JoinTree P)
+    {F : (q : Q) → K q → HypergraphPiece W}
+    (hLocal : ∀ q : Q, ForestOfCopies (F q))
+    (hContain :
+      ∀ q (k : K q), (F q k).carrier ⊆ (P q).carrier)
+    (hEdgeRequest :
+      ∀ ⦃q r : Q⦄ (hadj : JOuter.tree.Adj q r),
+        ¬((P q).carrier ∩ (P r).carrier).Subsingleton →
+        ∃ k : K q,
+          F q k = HypergraphPiece.oneEdge
+            ((P q).carrier ∩ (P r).carrier))
+    (keep : Finset (Sigma K))
+    (hAuxiliary :
+      ∀ z : Sigma K, z ∉ keep → (F z.1 z.2).IsOneEdge) :
+    ForestOfCopies
+      (fun z : {z : Sigma K // z ∈ keep} => F z.1.1 z.1.2) := by
+  classical
+  have hWhole :
+      ForestOfCopies (fun z : Sigma K => F z.1 z.2) :=
+    forestOfCopies_lift_local_without_singleton_requests
+      JOuter hLocal hContain hEdgeRequest
+  exact hWhole.restrict_of_oneEdge_outside keep hAuxiliary
+
 end StructuralRamsey.Girth
