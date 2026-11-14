@@ -1,5 +1,6 @@
 import Girth.ForestAuxiliaryDeletion
 import Girth.ForestMixedSetBound
+import Girth.ForestGeneralJoinLift
 
 /-!
 # From labelled forests to forests on their DISTINCT physical members
@@ -93,5 +94,44 @@ theorem ForestOfCopies.finiteImage_of_duplicate_oneEdge
     exact hRep P
   rw [hEqFamily] at hResult
   exact hResult
+
+
+/-- Set-valued conclusion of the singleton-free dependent join-tree
+lift, provided copies repeated under different owner labels
+are one-edge requests. This is the exact image-normalization
+premise left by the general forest proof. -/
+theorem forestOfCopies_lift_without_singleton_on_distinct_image
+    {Q : Type v} {K : Q → Type v}
+    [Fintype Q] [Nonempty Q]
+    [∀ q : Q, Fintype (K q)]
+    [∀ q : Q, Nonempty (K q)]
+    {P : Q → HypergraphPiece W}
+    (JOuter : JoinTree P)
+    {F : (q : Q) → K q → HypergraphPiece W}
+    (hLocal : ∀ q : Q, ForestOfCopies (F q))
+    (hContain :
+      ∀ q (k : K q), (F q k).carrier ⊆ (P q).carrier)
+    (hEdgeRequest :
+      ∀ ⦃q r : Q⦄ (hadj : JOuter.tree.Adj q r),
+        ¬((P q).carrier ∩ (P r).carrier).Subsingleton →
+        ∃ k : K q,
+          F q k = HypergraphPiece.oneEdge
+            ((P q).carrier ∩ (P r).carrier))
+    (hDuplicateOneEdge :
+      ∀ ⦃x y : Sigma K⦄,
+        x ≠ y →
+        F x.1 x.2 = F y.1 y.2 →
+        (F x.1 x.2).IsOneEdge) :
+    ForestOfCopies
+      (fun t : {t : HypergraphPiece W //
+        t ∈ Finset.univ.image
+          (fun z : Sigma K => F z.1 z.2)} => t.1) := by
+  classical
+  let family : Sigma K → HypergraphPiece W :=
+    fun z => F z.1 z.2
+  have hWhole : ForestOfCopies family :=
+    forestOfCopies_lift_local_without_singleton_requests
+      JOuter hLocal hContain hEdgeRequest
+  exact hWhole.finiteImage_of_duplicate_oneEdge family hDuplicateOneEdge
 
 end StructuralRamsey.Girth
