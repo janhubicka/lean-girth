@@ -116,9 +116,12 @@ theorem maximalTraceRepresentatives_cover
     ⟨maximalTraceRepresentative F Z T, ⟨T, rfl⟩, ?_⟩
   have hTraceEq :
       traceOn F Z j =
-        traceOn F Z (maximalTraceRepresentative F Z T) := by
-    simpa only [T] using
-      (maximalTraceRepresentative_spec F Z T)
-  simpa only [traceOn, hTraceEq] using hij
+        traceOn F Z (maximalTraceRepresentative F Z T) :=
+    maximalTraceRepresentative_spec F Z T
+  change traceOn F Z i ⊆
+    traceOn F Z (maximalTraceRepresentative F Z T)
+  calc
+    traceOn F Z i ⊆ traceOn F Z j := hij
+    _ = traceOn F Z (maximalTraceRepresentative F Z T) := hTraceEq
 
 end StructuralRamsey.Girth
