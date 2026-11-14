@@ -85,3 +85,30 @@ diagnostics specifically for `Finite I`, `hAllowedIndex`,
 
 This note is only an auditable proof-dependency/CI record. It makes no
 change to the manuscript, its validation markers, or the theorem statement.
+
+## 14 November exact-head CI failure and repaired candidate
+
+The exact-head full build [43618618449](https://github.com/janhubicka/lean-girth/actions/runs/43618618449)
+and focused Track D [43618618451](https://github.com/janhubicka/lean-girth/actions/runs/43618618451)
+for commit `5b4d3f7` **both failed after reaching the new Lean module**, not
+because of a network/bootstrap error. The failures in
+`TrainRecursiveActualLowerRefiningStep.lean` were precisely:
+
+- line 128: `simp made no progress` for the positive height;
+- line 184: dependent elimination failed at `cases hLen`;
+- lines 192 and 207: `simp made no progress` for the positive height.
+
+The newer candidate (source commits `7131e2e` and `5ca199e`--`cc6ccc5`)
+replaces these steps with explicit `hm : 0 < m` and a proof of the inverse
+`Fin.cast` identity by `Fin.ext rfl` and `congrArg fineAllowed`.
+It also exposes the actual first refinement directly from the maintained
+`FirstRefinementReady` property. These are **source-level fixes**, not yet
+Lean-certified. An independent exact-head full build and focused
+`#print axioms` audit is required before promoting their status.
+
+The mathematical boundary remains unchanged: `firstRefinement_of_ready_head`
+produces a canonical refinement from readiness, while the selected *lower
+Ramsey arrow* is a separate strictly-lower-rank obligation. This prevents
+mistaking a ready first refinement for a recursively constructed Ramsey
+witness. The current branch's `scripts/check_track7_local.sh` provides
+an additional focused reproducible gate.
