@@ -100,8 +100,8 @@ theorem ParentwiseRealization.selectedOriginalEdge_wagon_iff
     T.rel ν e.1 f.1 ↔
       D.parent (R.edge i (selectedTaggedOriginalEdge S c e)) =
       D.parent (R.edge i (selectedTaggedOriginalEdge S c f)) := by
-  rw [R.selectedOriginalEdge_parent S T ν D i c e,
-      R.selectedOriginalEdge_parent S T ν D i c f]
+  rw [ParentwiseRealization.selectedOriginalEdge_parent S T ν D R i c e,
+      ParentwiseRealization.selectedOriginalEdge_parent S T ν D R i c f]
   constructor
   · intro h
     exact congrArg (R.wagon i)
@@ -127,8 +127,8 @@ theorem ParentwiseRealization.selectedOriginalEdge_wagon_ne_of_choice_ne
   have hTags : (c, Quotient.mk (T.wagonSetoid ν) e.1) =
       (d, Quotient.mk (T.wagonSetoid ν) f.1) := by
     apply (R.wagon i).injective
-    simpa only [R.selectedOriginalEdge_parent S T ν D i c e,
-       R.selectedOriginalEdge_parent S T ν D i d f] using h
+    simpa only [ParentwiseRealization.selectedOriginalEdge_parent S T ν D R i c e,
+       ParentwiseRealization.selectedOriginalEdge_parent S T ν D R i d f] using h
   exact hcd (congrArg Prod.fst hTags)
 
 end StructuralRamsey.Girth.IndexedPrivateChoice
