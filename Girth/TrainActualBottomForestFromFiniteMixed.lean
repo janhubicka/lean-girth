@@ -98,8 +98,8 @@ theorem attachedSelectedPicture_bottom_fullSystemGirth_of_finiteMixed
     (hActiveStrong : AStrong A C.toRelStructure S)
     (a b : RelStructure.Embedding A Active)
     (hTwoSource : ¬ SameCopy a b)
-    (hChosenDistinct : Function.Injective
-      (fun i : I => bSupportPiece A (f i)))
+    (hChosenImages : Function.Injective
+      (fun i : I => copyCarrier (f i)))
     (hMixed : FiniteMixedForestThrough Tested q) :
     (Out).FullSystemGirthGT q := by
   have hCoreGirth : GirthGT (supportCopies A R) q := by
@@ -129,7 +129,10 @@ theorem attachedSelectedPicture_bottom_fullSystemGirth_of_finiteMixed
       ((Local).bottomForestPiece HLocal) q :=
     activeGluingWitness_bottom_localForest_of_finiteMixed
       A C e.toFunctionEmbedding R f U HLocal
-      a b hTwoSource hChosenDistinct q hMixed
+      a b hTwoSource
+      (activeGluingWitness_supportPiece_injective_of_distinct_images
+        A C e.toFunctionEmbedding R f hChosenImages)
+      q hMixed
   have hSharedWitness :
       ∃ H : (Wit).BottomForestGeometry,
         LocalForestThrough ((Wit).bottomForestPiece H) q := by
