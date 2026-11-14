@@ -134,6 +134,18 @@ theorem activeGluingWitness_not_oneEdge_of_two_sourceCopies
   · intro h
     exact hDistinct (sameCopy_of_comp (f i) h)
 
+/-- Selecting one gluing embedding per actual VERTEX IMAGE suffices
+for distinct complete A-support pieces: those pieces remember their
+entire vertex carrier, not just their family of A-edges. No A-strongness,
+girth, rigidity or extra choice of support-piece labels is needed. -/
+theorem activeGluingWitness_supportPiece_injective_of_distinct_images
+    (hImages : Function.Injective
+      (fun i : I => copyCarrier (f i))) :
+    Function.Injective (fun i : I => bSupportPiece A (f i)) := by
+  intro i j heq
+  apply hImages
+  exact congrArg HypergraphPiece.carrier heq
+
 /-- Faithfully pass from the finite SET-based mixed-forest theorem
 to the TRUE bottom gluing-witness indexed family at the SAME cutoff q.
 No multiset/duplicate-B assumption and no lower q-1 substitution. -/
