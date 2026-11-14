@@ -35,6 +35,50 @@ variable {L : RelLanguage.{u}}
 variable {C V P X UA : Type v}
 variable (U : C → PrivateWagonInput V P X)
 
+/-- The old selected copy's actual A-strongness, combined with
+the checked exact full old support range, forces EVERY ambient
+old N A-edge meeting that selected parent twice into its
+genuine selected old-edge image. This is the precise input
+to the canonical filled parent/target strongness transfer. -/
+theorem actualOrderParent_oldStrong [Nontrivial X]
+    (A : RelStructure L UA)
+    (M : RelStructure L (Vertex U))
+    {t : List ℕ} (T : EdgeTrainLevels P t.length) (hm : 0 < t.length)
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hLinear : ∀ c : C, ∀ p q : P, p ≠ q →
+      ((U c).oldCarrier p ∩ (U c).oldCarrier q).Subsingleton)
+    {Base : Type v} (D : RelStructure L Base)
+    (family : Set (Embedding M D))
+    (allowed : Fin (t.length + 1) → Set Base)
+    (S : TrainRecursiveWitness.OrderStage A M D family t
+      (contractedPhysicalTrain U A M T hm hSupport hLinear) allowed)
+    (H : UniformFillingData S.Vertex X)
+    (hOld : H.oldEdges = supportCopies A S.system.toRelStructure)
+    (i : ActualOrderParent U A M T hm
+      hSupport hLinear D family allowed S)
+    (f : H.OldEdge)
+    (hMeet : ¬ (f.1 ∩
+      Set.range (actualOrderParentVertex U A M T hm
+        hSupport hLinear D family allowed S i)).Subsingleton) :
+    f ∈ Set.range (actualOrderParentOldEdge U A M T hm
+      hSupport hLinear D family allowed S H hOld i) := by
+  have hRange :=
+    actualOrderParentOldEdge_range_eq_contained U A M T hm
+      hSupport hLinear D family allowed S H hOld i
+  have hfSupport : f.1 ∈ supportCopies A S.system.toRelStructure := by
+    rw [← hOld]
+    exact f.2
+  obtain ⟨a, ha⟩ := hfSupport
+  have hMeetA :
+      ¬ (copyCarrier a ∩ copyCarrier i.1.embedding).Subsingleton := by
+    rw [← ha]
+    exact hMeet
+  have hInside : copyCarrier a ⊆ copyCarrier i.1.embedding :=
+    S.toForestTailStage.strong i.1 i.2 a hMeetA
+  apply hRange.mpr
+  rw [ha]
+  exact hInside
+
 /-- A genuine selected shorter OrderStage copy, with its actual
 full A-support old edges, owns PRECISELY those filled H-edges
 whose entire carriers lie inside the selected parent vertex set.
@@ -80,19 +124,8 @@ theorem actualOrderParent_filledEdges_eq_contained [Nontrivial X]
       ¬ (f.1 ∩ copyCarrier i.1.embedding).Subsingleton →
         f ∈ Set.range β := by
     intro f hMeet
-    have hfSupport : f.1 ∈ supportCopies A S.system.toRelStructure := by
-      rw [← hOld]
-      exact f.2
-    obtain ⟨a, ha⟩ := hfSupport
-    have hMeetA :
-        ¬ (copyCarrier a ∩ copyCarrier i.1.embedding).Subsingleton := by
-      rw [← ha]
-      exact hMeet
-    have hInside : copyCarrier a ⊆ copyCarrier i.1.embedding :=
-      S.toForestTailStage.strong i.1 i.2 a hMeetA
-    apply hRange.mpr
-    rw [ha]
-    exact hInside
+    exact actualOrderParent_oldStrong U A M T hm hSupport hLinear
+      D family allowed S H hOld i f hMeet
   change Set.range (H.selectedFilledEdgeEmbedding β) =
     {e : H.toTrainFilling.NewEdge |
       e.1 ⊆ copyCarrier i.1.embedding}
