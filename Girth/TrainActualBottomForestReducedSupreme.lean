@@ -89,48 +89,5 @@ theorem attachedSelectedPicture_bottom_reduced_supreme_of_localForest
   exact Z.hasSimultaneousSupreme_of_bottomLocalForest_A2_A3
     Wit H q hLocal hBound hZA2 hZA3
 
-/-- The actual original bottom cycle has a normalized minimum owner
-assignment with <=q cuts and, whenever there are two or more cuts,
-the literal reduced witness is globally supreme. The genuine original
-B-label supreme-plan pullback is preserved, but NOT produced here. -/
-theorem attachedSelectedPicture_bottom_normalized_reduced_supreme
-    [Nontrivial UA]
-    (hPhysical : ALinear A Actual)
-    (hStrong : ∀ q : Selected, AStrong A D (copyCarrier q.1.base))
-    (H : (Wit).BottomForestGeometry)
-    (q : ℕ)
-    (hLocal : LocalForestThrough ((Wit).bottomForestPiece H) q)
-    {n : ℕ} (K : (Out).BigCycle n)
-    (hAccept : K.Acceptable) (hn : 3 ≤ n)
-    (hOrder : K.twiceOrder ≤ 2 * q) :
-    ∃ Z : (Out).BigCycle n,
-      Z.Acceptable ∧ Z.twiceOrder = K.twiceOrder ∧
-      (∀ k, Z.connector k = K.connector k) ∧
-      ∃ owner : Fin n → I ⊕ CoreEdge,
-      ∃ hAllowed : ∀ j, GeomAllowed (Z.label j) (owner j),
-        (∀ other : Fin n → I ⊕ CoreEdge,
-          (∀ j, GeomAllowed (Z.label j) (other j)) →
-          cyclicOwnerChanges owner ≤ cyclicOwnerChanges other) ∧
-        cyclicOwnerChanges owner ≤ q ∧
-        (∀ hCuts : 2 ≤ cyclicOwnerChanges owner,
-          (attachedSelectedPicture_geometric_cutBigCycle
-            A hA B D C family selected e R f T U hShared hRel μBottom
-            Z owner hAllowed hCuts).HasSimultaneousSupreme) ∧
-        (∀ kZ : Fin n, Z.HasSupremeAt Out kZ →
-          ∃ kK : Fin n, K.label kK = Z.label kZ ∧
-            K.HasSupremeAt Out kK) := by
-  obtain ⟨Z, hZAccept, hZOrder, _hZNormal, hZConnectors,
-    owner, hAllowed, hMinimal, hBudget, hPull⟩ :=
-    attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
-      A hA B D C family selected e R f T U hShared hRel
-      hPhysical hStrong K hAccept hn hOrder
-  refine ⟨Z, hZAccept, hZOrder, hZConnectors,
-    owner, hAllowed, hMinimal, hBudget, ?_, hPull⟩
-  intro hCuts
-  exact attachedSelectedPicture_bottom_reduced_supreme_of_localForest
-    A hA B D C family selected e R f T U hShared hRel
-    H q hLocal Z owner hAllowed hCuts hBudget
-    hZAccept.2.1 hZAccept.2.2
-
 end BottomReducedForest
 end StructuralRamsey.Girth
