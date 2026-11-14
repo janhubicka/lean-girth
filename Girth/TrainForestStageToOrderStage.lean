@@ -63,4 +63,49 @@ the underlying forest stage is definitionally the original one. -/
         S.train (⟨0, by simp⟩ : Fin ((q :: h).length + 1))).FullSystemGirthGT q) :
     (S.withBottomSystemGirth hBottom).toForestTailStage = S := rfl
 
+
+/-- The existing finite train-picture Ramsey pass produces an
+OrderStage, provided its terminal readiness invariant supplies
+the bottom full-system bound. Positive system-girth, original target
+restriction, selected-copy strongness, full train parameters and
+foresthood are ALL carried by the unchanged ForestTailStage.
+
+This is an explicit assembly criterion, NOT an assumption that
+an arbitrary forest stage already has bottom system girth: the
+terminal readiness-to-bottom implication is a genuine remaining
+proof obligation for the same-vector conversion. -/
+theorem ForestTailStage.ramseyOrderPass_of_ready_bottom
+    (S : ForestTailStage A B D family (q :: h) targetTrain allowed)
+    (profiles : List (UA ↪ P)) (κ : Type v) [Nonempty κ]
+    (Ready : List (UA ↪ P) →
+      ForestTailStage A B D family (q :: h) targetTrain allowed → Prop)
+    (hReady : Ready profiles S)
+    (hProfiles : ∀ α : UA ↪ P, α ∈ profiles)
+    (hBase : ∀ χ : RelStructure.Embedding A D → κ,
+      ∃ b : RelStructure.Embedding B D, b ∈ family ∧
+        ∀ a₁ a₂ : RelStructure.Embedding A B,
+          χ (b.comp a₁) = χ (b.comp a₂))
+    (hLift : ∀ b : RelStructure.Embedding B D, b ∈ family →
+      ∃ a : DesignatedCopy B D S.system family,
+        a ∈ S.selected ∧ a.base = b)
+    (step : ∀ (α : UA ↪ P) (remaining : List (UA ↪ P))
+      (T : ForestTailStage A B D family (q :: h) targetTrain allowed),
+      Ready (α :: remaining) T →
+        ∃ R : ForestTailStage A B D family (q :: h) targetTrain allowed,
+          Ready remaining R ∧ PictureStep T R α κ)
+    (hTerminalBottom :
+      ∀ T : ForestTailStage A B D family (q :: h) targetTrain allowed,
+        Ready [] T →
+        (selectedPictureOrderOneData A B D T.system family T.selected
+          T.train (⟨0, by simp⟩ : Fin ((q :: h).length + 1))).FullSystemGirthGT q) :
+    ∃ T : OrderStage A B D family (q :: h) targetTrain allowed,
+      Ready [] T.toForestTailStage ∧
+      DesignatedArrow T.toForestTailStage κ := by
+  obtain ⟨R, hReadyR, hArrow⟩ :=
+    S.ramseyPass profiles κ Ready hReady hProfiles hBase hLift step
+  let T := R.withBottomSystemGirth (hTerminalBottom R hReadyR)
+  refine ⟨T, ?_, ?_⟩
+  · exact hReadyR
+  · exact hArrow
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
