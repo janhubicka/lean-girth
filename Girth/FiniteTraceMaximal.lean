@@ -124,4 +124,86 @@ theorem maximalTraceRepresentatives_cover
     traceOn F Z i ⊆ traceOn F Z j := hij
     _ = traceOn F Z (maximalTraceRepresentative F Z T) := hTraceEq
 
+/-- The maximal trace T, viewed as a bag on the vertex set Z.
+Every such T is already contained in Z.  Support edges are irrelevant
+to the running-intersection counting argument. -/
+def maximalTracePiece
+    (F : ι → Set W) (Z : Set W)
+    (T : maximalNonemptyTraceSets F Z) :
+    HypergraphPiece Z where
+  carrier := {x : Z | x.1 ∈ T.1}
+  edges := ∅
+  edge_subset_carrier := by
+    intro e he
+    exact False.elim he
+
+/-- A join tree on the DISTINCT maximal nonempty traces yields a
+sharp cardinality bound by leaf-private-vertex charging.
+The join tree is an explicit *input* here; deriving it from small
+local completions is the outstanding combinatorial bridge. -/
+theorem maximalTrace_card_le_of_joinTree
+    [Fintype W]
+    (F : ι → Set W) (Z : Set W)
+    [Nonempty (maximalNonemptyTraceSets F Z)]
+    (J : JoinTree (maximalTracePiece F Z)) :
+    Fintype.card (maximalNonemptyTraceSets F Z) ≤ Fintype.card Z := by
+  classical
+  have hNonempty :
+      ∀ T : maximalNonemptyTraceSets F Z,
+        (maximalTracePiece F Z T).carrier.Nonempty := by
+    intro T
+    obtain ⟨x, hxT⟩ := T.property.1
+    obtain ⟨i, hEq⟩ := T.property.2.1
+    have hxZ : x ∈ Z := by
+      rw [hEq] at hxT
+      exact hxT.2
+    exact ⟨⟨x, hxZ⟩, hxT⟩
+  have hAntichain :
+      ∀ ⦃T U : maximalNonemptyTraceSets F Z⦄,
+        T ≠ U →
+          ¬ (maximalTracePiece F Z T).carrier ⊆
+            (maximalTracePiece F Z U).carrier := by
+    intro T U hTU hSub
+    have hTSubU : T.1 ⊆ U.1 := by
+      intro x hxT
+      obtain ⟨i, hEq⟩ := T.property.2.1
+      have hxZ : x ∈ Z := by
+        rw [hEq] at hxT
+        exact hxT.2
+      have hxU := hSub (show
+        (⟨x, hxZ⟩ : Z) ∈ (maximalTracePiece F Z T).carrier
+        from hxT)
+      exact hxU
+    obtain ⟨i, hUEq⟩ := U.property.2.1
+    have hTSubTrace : T.1 ⊆ traceOn F Z i := by
+      simpa only [← hUEq] using hTSubU
+    have hTraceSubT := T.property.2.2 i hTSubTrace
+    have hUSubT : U.1 ⊆ T.1 := by
+      simpa only [hUEq] using hTraceSubT
+    exact hTU (Subtype.ext
+      (Set.Subset.antisymm hTSubU hUSubT))
+  exact J.card_le_of_antichain hNonempty hAntichain
+
+/-- Exact conditional version of the last step of the small-trace
+lemma: selected indices are ORIGINAL cover members (no invented
+bags), they dominate every nonempty trace, and the number of
+distinct maximal traces is at most the size of Z. -/
+theorem maximalTrace_selection_of_joinTree
+    [Fintype W] [Finite ι]
+    (F : ι → Set W) (Z : Set W)
+    [Nonempty (maximalNonemptyTraceSets F Z)]
+    (J : JoinTree (maximalTracePiece F Z)) :
+    ∃ selected : Set ι,
+      CoversNonemptyTraces F Z selected ∧
+      (∃ reps : maximalNonemptyTraceSets F Z → ι,
+        Function.Injective reps ∧
+        selected = Set.range reps) ∧
+      Fintype.card (maximalNonemptyTraceSets F Z) ≤ Fintype.card Z := by
+  classical
+  refine ⟨Set.range (maximalTraceRepresentative F Z), ?_, ?_, ?_⟩
+  · exact maximalTraceRepresentatives_cover F Z
+  · exact ⟨maximalTraceRepresentative F Z,
+      maximalTraceRepresentative_injective F Z, rfl⟩
+  · exact maximalTrace_card_le_of_joinTree F Z J
+
 end StructuralRamsey.Girth
