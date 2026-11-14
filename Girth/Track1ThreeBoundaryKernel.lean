@@ -1,4 +1,5 @@
 import Girth.Berge
+import Girth.Forest
 import Mathlib.Tactic
 
 /-!
@@ -121,6 +122,45 @@ theorem three_boundary_middle_of_girthGT_three
   }
   exact hGirth ⟨c, by decide⟩
 
+
+/-- Once a middle member contains every intersection of the other two,
+the three pieces form a join-tree forest.  The elementary star tree
+argument works even if the pieces have isolated/private vertices. -/
+theorem forestOfCopies_fin_three_of_middle
+    (F : Fin 3 → HypergraphPiece W)
+    (hPair : PairwiseAllowed F)
+    (m : Fin 3)
+    (hMiddle : ∀ i j : Fin 3, i ≠ m → j ≠ m → i ≠ j →
+      (F i).carrier ∩ (F j).carrier ⊆ (F m).carrier) :
+    ForestOfCopies F := by
+  classical
+  refine ⟨hPair, Or.inr ⟨{
+    tree := SimpleGraph.starGraph m
+    isTree := SimpleGraph.isTree_starGraph m
+    running := ?_
+  }⟩⟩
+  intro x
+  by_cases hx : x ∈ (F m).carrier
+  · exact starGraph_induce_preconnected_of_mem_center m hx
+  · letI : Subsingleton {i : Fin 3 // x ∈ (F i).carrier} := ⟨by
+      intro a b
+      apply Subtype.ext
+      by_contra hab
+      have ha : a.1 ≠ m := by
+        intro h
+        apply hx
+        simpa only [h] using a.2
+      have hb : b.1 ≠ m := by
+        intro h
+        apply hx
+        simpa only [h] using b.2
+      have hInter : x ∈ (F a.1).carrier ∩ (F b.1).carrier :=
+        ⟨a.2, b.2⟩
+      exact hx (hMiddle a.1 b.1 ha hb hab hInter)
+    ⟩
+    exact SimpleGraph.Preconnected.of_subsingleton
+
 #print axioms StructuralRamsey.Girth.three_boundary_middle_of_girthGT_three
+#print axioms StructuralRamsey.Girth.forestOfCopies_fin_three_of_middle
 
 end StructuralRamsey.Girth
