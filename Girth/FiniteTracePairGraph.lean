@@ -1,5 +1,7 @@
 import Girth.FiniteTraceMaximal
 import Mathlib.Combinatorics.SimpleGraph.Clique
+import Girth.ForestTraceRestriction
+import Girth.ForestJoinTreeHelly
 
 /-!
 # Pair graph and conformality interfaces for finite traces
@@ -121,5 +123,39 @@ theorem maximalClique_has_maximalTrace
     rw [hEq] at hxK
     exact hxK
   exact ⟨hxi, hxZ⟩
+
+
+/-- A genuine join tree of all ORIGINAL restricted bags is conformal.
+The diagonal case uses the original cover of Z; distinct pairs are
+covered by the definition of the pair graph.  The proof reuses the
+direct leaf-induction Helly lemma and does not use any chordal result. -/
+theorem traceConformal_of_joinTree
+    (F : ι → Set W) (Z : Set W)
+    [Fintype ι] [Nonempty ι]
+    (J : JoinTree
+      (fun i : ι => (setBagPiece (F i)).traceCarrier Z))
+    (hCover :
+      ∀ x : Z, ∃ i : ι, x.1 ∈ F i) :
+    TraceConformal F Z := by
+  intro K hK hClique
+  have hPair :
+      ∀ x : Z, x ∈ K →
+        ∀ y : Z, y ∈ K →
+          ∃ i : ι,
+            x ∈ ((setBagPiece (F i)).traceCarrier Z).carrier ∧
+            y ∈ ((setBagPiece (F i)).traceCarrier Z).carrier := by
+    intro x hx y hy
+    by_cases hxy : x = y
+    · subst y
+      obtain ⟨i, hxi⟩ := hCover x
+      exact ⟨i, hxi, hxi⟩
+    · have hAdj : (tracePairGraph F Z).Adj x y :=
+        hClique hx hy hxy
+      obtain ⟨_, i, hxi, hyi⟩ := hAdj
+      exact ⟨i, hxi, hyi⟩
+  obtain ⟨i, hi⟩ :=
+    J.pairCovered_in_one_bag hK hPair
+  exact ⟨i, hi⟩
+
 
 end StructuralRamsey.Girth
