@@ -69,6 +69,22 @@ theorem PictureStep.coversBase
   obtain ⟨g, _hg⟩ := h colour
   exact g.coversBase hS
 
+/-- Strongness of the selected base projections extends to the
+ENTIRE prescribed base family as soon as selected lifts cover it.
+This elementary implication does not need an attachment witness,
+and so can be used while constructing ActiveAttachmentBounds. -/
+theorem ForestTailStage.allBaseStrong_of_selected
+    (stage : ForestTailStage A B D family t targetTrain allowed)
+    (hCovered : stage.CoversBase)
+    (hSelectedStrong : ∀ q : DesignatedCopy B D stage.system family,
+      q ∈ stage.selected → AStrong A D (copyCarrier q.base)) :
+    ∀ b : Embedding B D, b ∈ family →
+      AStrong A D (copyCarrier b) := by
+  intro b hb
+  obtain ⟨q, hq, hBase⟩ := hCovered b hb
+  rw [← hBase]
+  exact hSelectedStrong q hq
+
 /-- The OLD base-strongness condition of the checked source-transfer
 theorems follows from the actual SELECTED strongness in the local
 attachment specification, provided each base member has a selected
