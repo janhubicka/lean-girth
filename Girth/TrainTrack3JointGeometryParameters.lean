@@ -25,6 +25,24 @@ universe u v
 
 variable {L : RelLanguage.{u}} {UA VB P X Y I : Type v}
 
+/-- The pinned partite dependency literally induces the same underlying
+relational substructure. No isomorphism or new hypothesis is involved. -/
+theorem track3_partiteInduce_toRelStructure_eq
+    (C : StructuralRamsey.Partite.System L P X) (S : Set X) :
+    (C.induce S).toRelStructure = C.toRelStructure.induce S := rfl
+
+/-- The underlying relational structure of the pinned partite attachment
+is definitionally the free relational attachment on exactly the same core,
+standard indices, and actual vertices. -/
+theorem track3_partiteAttachment_toRelStructure_eq
+    (C : StructuralRamsey.Partite.System L P X) (S : Set X)
+    (R : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) R) :
+    (StructuralRamsey.Partite.Attachment.attach C S R f).toRelStructure =
+      RelStructure.Attachment.attach C.toRelStructure S R.toRelStructure
+        (fun i => (f i).toEmbedding) := rfl
+
+
 /-- A genuine partite attachment has output A-linearity, every generated wagon
 A-strong and all adjacent parameters, conditional only on the actual source
 picture/cut geometry and the original lower witness full-system bounds.
@@ -113,6 +131,8 @@ theorem track3_joint_geometry_and_parameters
       (fun i => (f i).toEmbedding) U ν] at hFull
     exact OrderOneData.bound_of_fullSystemGirth_ge_one _ (g ν)
       (Nat.le_trans (by decide : 1 ≤ 2) (hg ν hPos hLt)) hFull
+  -- The partite attachment is definitionally the same actual relational
+  -- attachment used by hGeo; see track3_partiteAttachment_toRelStructure_eq.
   have hParams := activeAttached_actualASupport_allAdjacentParameters_of_intrinsic
     A hA C e.toFunctionEmbedding active R f T U allowedParts
     hOldParams hCoreParams hInterior hOrderOne
