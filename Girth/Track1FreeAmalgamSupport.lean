@@ -41,8 +41,8 @@ theorem track1_supportCopies_freeAmalgam_union
   · rintro ⟨a, rfl⟩
     rcases irreducibleCopy_side_of_freeAmalgam hfree hA a with
       ⟨aL, haL⟩ | ⟨aR, haR⟩
-    · exact Or.inl ⟨aL, haL.symm⟩
-    · exact Or.inr ⟨aR, haR.symm⟩
+    · exact Or.inl ⟨aL, haL⟩
+    · exact Or.inr ⟨aR, haR⟩
   · rintro (⟨aL, rfl⟩ | ⟨aR, rfl⟩)
     · exact ⟨iL.comp aL, rfl⟩
     · exact ⟨iR.comp aR, rfl⟩
