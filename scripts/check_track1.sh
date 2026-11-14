@@ -10,14 +10,32 @@ fi
 log="${1:-/tmp/track1-lean-exact-head.log}"
 echo "Git head: $(git rev-parse HEAD)"
 echo "Toolchain: $(cat lean-toolchain)"
+# CheckTrack1 imports new modules not listed in the default Girth.lean
+# umbrella. Build the exact imported module DAG first, otherwise `lean`
+# fails to resolve their absent .olean files even if sources are correct.
+echo "Building the five focused module roots and their dependencies"
+set +e
+LEAN_NUM_THREADS=1 lake build \
+  Girth.Track1TriangleFreeSelectedFamily \
+  Girth.Track1CutoffThreeReuse \
+  Girth.Track1OwnerSelectedFromEmbedding \
+  Girth.Track1OwnerSplitGirth \
+  Girth.Track1OwnerSplitOrderArrow > "$log" 2>&1
+build_code=$?
+set -e
+cat "$log"
+if (( build_code != 0 )); then
+  echo "ERROR: focused module build failed (exit $build_code)" >&2
+  exit "$build_code"
+fi
 echo "Running: lake env lean CheckTrack1.lean"
 set +e
-lake env lean CheckTrack1.lean > "$log" 2>&1
+LEAN_NUM_THREADS=1 lake env lean CheckTrack1.lean >> "$log" 2>&1
 code=$?
 set -e
 cat "$log"
 if (( code != 0 )); then
-  echo "ERROR: Lean elaboration failed (exit $code)" >&2
+  echo "ERROR: focused Lean checker elaboration failed (exit $code)" >&2
   exit "$code"
 fi
 if grep -E '(sorryAx|_sorry|unknown constant|unknown identifier)' "$log"; then
