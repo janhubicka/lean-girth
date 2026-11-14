@@ -52,3 +52,5 @@ This is *not* a substitute for checking the selected lower witness.
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.allRetainedLabelledCutGirth_mono
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedFineCutVector
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedFineCutVector
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_heightOne_twice
+#print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_heightOne_twice
