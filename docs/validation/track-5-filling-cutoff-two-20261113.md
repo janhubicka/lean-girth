@@ -314,3 +314,57 @@ interface, not a new hypothesis of the mathematical theorem.
 It avoids the invalid shortcut "all closed copies are ordered"
 and does not reintroduce any requirement that
 \`F_p ≃ W\`.
+
+
+### Upstream Track 1 dependency checked against newer main (14 November)
+
+The manuscript has advanced beyond the original frozen source:
+[girth PR #454](https://github.com/janhubicka/girth/pull/454),
+[#455](https://github.com/janhubicka/girth/pull/455), and
+[#456](https://github.com/janhubicka/girth/pull/456)
+have been merged on main. The Track 5 draft still bases its
+two edited inputs on the pinned 41-page source and is kept
+separate, currently mergeable but UNMERGED. Those Track 1
+merges do **not** constitute a new Lean certificate.
+
+In the currently merged \`paper/04-coloured-edges.tex\`,
+\`lem:markededgesplit\` has an explicit necessary hypothesis:
+
+> A vertex of the coloured target B in a predicate outside the
+> chosen allowed set S is incident with at most ONE edge of B.
+
+For the cutoff-two application B=W (the tagged disjoint union
+of first wagons), this condition is **derived**, not assumed:
+inside each F_p, the train parameter A_1 allows two original
+edges to meet only in A_1 predicates, and no edges cross the
+disjoint summands W. A vertex of W in a predicate outside A_1
+therefore lies in at most one edge. The Track 5 manuscript
+now says explicitly why \`lem:unrestricted\` applies with
+S=A_1. If this marking condition were omitted, the claimed
+first parameter of X would not follow just from an arbitrary
+A-linear functional EHN output.
+
+The newer Track 1 manuscript obtains the entire **covered,
+ordered, parameter-restricted** X from:
+1. an unmarked functional EHN witness with an actual
+   increasing selected family;
+2. the owner-splitting construction that retains only selected
+   target edges/vertices and splits vertices in forbidden
+   predicates; and
+3. the colour extension argument preserving the arrow and
+   labelled chosen copies.
+
+Track 1 issue [#1052](https://github.com/janhubicka/lean-girth/issues/1052)
+still reports its full ordered selected-family/owner-splitting
+Lean proof as OPEN. Therefore our new Track 5 modules
+\`PrivateMonotoneEHN\`, \`PrivateColourBlockOrder\` and
+\`PrivateCoveredEHN\` should be understood as **reusable
+preparation**, not an independent replacement for the entire
+\`lem:unrestricted\` witness with its \`A_1\` parameter and
+all selected incidence properties.
+
+**Coordination boundary:** Do not duplicate or diverge from the
+Track 1 owner-splitting argument on this branch. Once its
+exact selected-order/marked-splitting bridge is kernel-checked,
+use it to supply the missing covered X and the permissible
+EHN choices in the actual Track 5 shortened M.
