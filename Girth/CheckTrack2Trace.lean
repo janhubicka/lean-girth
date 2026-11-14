@@ -1,4 +1,5 @@
 import Girth.ForestOldActiveSetGirth
+import Girth.ForestCopySetCompletion
 
 /-! Exact Track 2 trace-lemma axiom gate. Not yet executed locally. -/
 
@@ -26,3 +27,10 @@ import Girth.ForestOldActiveSetGirth
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
 #print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
+
+#check StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
+#check StructuralRamsey.Girth.testedPictureABSupport_iff_label
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
+#print axioms StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
+#print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
