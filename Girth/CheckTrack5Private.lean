@@ -132,3 +132,8 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 #check StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderParent_filledEdges_eq_contained
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderParent_filledEdges_eq_contained
+
+#check StructuralRamsey.Girth.coveredUnion_of_coveredSummands
+#check StructuralRamsey.Girth.selectedCoveredUnion_range_subset_of_summands
+#print axioms StructuralRamsey.Girth.coveredUnion_of_coveredSummands
+#print axioms StructuralRamsey.Girth.selectedCoveredUnion_range_subset_of_summands
