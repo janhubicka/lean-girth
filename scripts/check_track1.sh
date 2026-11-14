@@ -13,11 +13,12 @@ echo "Toolchain: $(cat lean-toolchain)"
 # CheckTrack1 imports new modules not listed in the default Girth.lean
 # umbrella. Build the exact imported module DAG first, otherwise `lean`
 # fails to resolve their absent .olean files even if sources are correct.
-echo "Building the six focused module roots and their dependencies"
+echo "Building the seven focused module roots and their dependencies"
 set +e
 LEAN_NUM_THREADS=1 lake build \
   Girth.Track1TriangleFreeSelectedFamily \
   Girth.Track1CutoffThreeReuse \
+  Girth.Track1SelectedMixedLF2 \
   Girth.Track1OwnerSelectedFromEmbedding \
   Girth.Track1SelectedOldStrong \
   Girth.Track1OwnerSplitGirth \
