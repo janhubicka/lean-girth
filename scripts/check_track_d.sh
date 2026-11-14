@@ -176,6 +176,7 @@ checks=(
   CheckActualOneLevelGirthIntrinsic
   CheckTrainRecursiveIntrinsicTailSupreme
   CheckTrainRecursiveActualAttachedPositive
+  CheckTrainRecursiveActualLowerRefiningStep
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
 )
