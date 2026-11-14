@@ -73,7 +73,8 @@ theorem JoinTree.exists_injective_representatives
       ∀ i : ι, f i ∈ (F i).carrier := by
   classical
   by_cases hsub : Subsingleton ι
-  · let i₀ : ι := Classical.choice (inferInstance : Nonempty ι)
+  · letI : Subsingleton ι := hsub
+    let i₀ : ι := Classical.choice (inferInstance : Nonempty ι)
     obtain ⟨x, hx⟩ := hNonempty i₀
     let f : ι → W := fun _ => x
     refine ⟨f, ?_, ?_⟩
