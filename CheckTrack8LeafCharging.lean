@@ -44,3 +44,9 @@ all printed axioms before promoting a validation mark.
 #check StructuralRamsey.Girth.setBagPiece_traceCarrier
 #print axioms StructuralRamsey.Girth.JoinTree.traceCarrier
 #print axioms StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#check StructuralRamsey.Girth.maximalTrace_selection_ncard_of_joinTree
+#check StructuralRamsey.Girth.smallTrace_selection_of_maximalJoinTree
+
+#print axioms StructuralRamsey.Girth.maximalTrace_selection_ncard_of_joinTree
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_maximalJoinTree
