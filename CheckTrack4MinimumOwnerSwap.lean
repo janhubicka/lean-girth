@@ -101,3 +101,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.withBottomSystemGirth
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.withBottomSystemGirth_forget
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_of_ready_bottom
