@@ -14,6 +14,7 @@ import Girth.TrainActualSameVectorForestWithParameters
 import Girth.ForestConstantOneEdgeLocal
 import Girth.TrainActualBottomSingleEdgeLocalPreservation
 import Girth.TrainForestStageToOrderStage
+import Girth.TrainActualForestAttachmentOrderStep
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -103,3 +104,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.withBottomSystemGirth_forget
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_of_ready_bottom
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_bottom_full_of_finiteMixed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed
