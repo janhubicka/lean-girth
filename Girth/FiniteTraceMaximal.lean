@@ -143,8 +143,10 @@ theorem maximalTrace_card_le_of_joinTree
     (F : ι → Set W) (Z : Set W)
     [Nonempty (maximalNonemptyTraceSets F Z)]
     (J : JoinTree (maximalTracePiece F Z)) :
-    Fintype.card (maximalNonemptyTraceSets F Z) ≤ Fintype.card Z := by
+    Nat.card (maximalNonemptyTraceSets F Z) ≤ Nat.card Z := by
   classical
+  letI : Fintype (maximalNonemptyTraceSets F Z) := Fintype.ofFinite _
+  letI : Fintype Z := Fintype.ofFinite _
   have hNonempty :
       ∀ T : maximalNonemptyTraceSets F Z,
         (maximalTracePiece F Z T).carrier.Nonempty := by
@@ -179,7 +181,8 @@ theorem maximalTrace_card_le_of_joinTree
       simpa only [hUEq] using hTraceSubT
     exact hTU (Subtype.ext
       (Set.Subset.antisymm hTSubU hUSubT))
-  exact J.card_le_of_antichain hNonempty hAntichain
+  simpa only [Nat.card_eq_fintype_card] using
+    (J.card_le_of_antichain hNonempty hAntichain)
 
 /-- Exact conditional version of the last step of the small-trace
 lemma: selected indices are ORIGINAL cover members (no invented
@@ -195,7 +198,7 @@ theorem maximalTrace_selection_of_joinTree
       (∃ reps : maximalNonemptyTraceSets F Z → ι,
         Function.Injective reps ∧
         selected = Set.range reps) ∧
-      Fintype.card (maximalNonemptyTraceSets F Z) ≤ Fintype.card Z := by
+      Nat.card (maximalNonemptyTraceSets F Z) ≤ Nat.card Z := by
   classical
   refine ⟨Set.range (maximalTraceRepresentative F Z), ?_, ?_, ?_⟩
   · exact maximalTraceRepresentatives_cover F Z
@@ -216,6 +219,7 @@ theorem maximalTrace_selection_ncard_of_joinTree
       CoversNonemptyTraces F Z selected ∧
       selected.ncard ≤ Z.ncard := by
   classical
+  letI : Fintype Z := Fintype.ofFinite _
   let reps := maximalTraceRepresentative F Z
   have hCard := maximalTrace_card_le_of_joinTree F Z J
   refine ⟨Set.range reps, maximalTraceRepresentatives_cover F Z, ?_⟩
@@ -224,10 +228,10 @@ theorem maximalTrace_selection_ncard_of_joinTree
         Nat.card (maximalNonemptyTraceSets F Z) := by
       exact Set.ncard_range_of_injective
         (maximalTraceRepresentative_injective F Z)
-    _ = Fintype.card (maximalNonemptyTraceSets F Z) :=
-      Nat.card_eq_fintype_card
-    _ ≤ Fintype.card Z := hCard
-    _ = Z.ncard := Set.fintypeCard_eq_ncard Z
+    _ ≤ Nat.card Z := hCard
+    _ = Z.ncard := by
+      simpa only [Nat.card_eq_fintype_card] using
+        (Set.fintypeCard_eq_ncard Z)
 
 /-- Final finite trace-cover formulation, including the empty case.
 The ONE open combinatorial input is now stated transparently:
