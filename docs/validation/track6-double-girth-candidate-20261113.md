@@ -86,11 +86,24 @@ Both versions of the new complete-cut-vector theorem require a
 REAL `ForestTailStage` and a REAL `FirstWagonRefinement`;
 neither theorem creates them.
 
-**Exact-head check command to run after the toolchain is restored:**
+**Exact-head check procedure after restoring the pinned toolchain and all dependencies:**
+
+The new imports need compiled `.olean` objects first. Use Lake's named-module build targets (and limit Lean workers under low memory), then execute the checker:
 
 ```sh
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleCount
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementAllRetainedCuts
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
 LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
 ```
+
+Do not use an unpinned mathematical library or silently `lake update`.
+The root `lakefile.toml` pins the partite-construction and successor-tree
+dependencies and `lean-toolchain` pins Lean v4.35.0-rc3; respect their
+transitive dependencies when restoring caches.
 
 The central audit file now contains **20** source-level `#print axioms`
 queries. These have **not been executed**; there is no kernel certificate
