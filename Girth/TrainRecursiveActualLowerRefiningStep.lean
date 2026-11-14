@@ -1,8 +1,6 @@
 import Girth.TrainRecursiveActualLowerTailSupreme
 import Girth.TrainRecursiveFineWitnessStep
-import Girth.TrainRecursiveCoarsenedSelectedIndexedBundle
-import Girth.TrainRecursiveTrueActiveCoverage
-import Girth.TrainRecursiveTrueActiveTwoCopies
+import Girth.TrainRecursiveTrueActiveIndexedNontrivialInputs
 import Girth.TrainRecursiveActualHeightCutoffApplication
 import Girth.TrainRecursiveCanonicalFineAllowed
 
@@ -136,17 +134,16 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       b ∈ old.selected → AStrong A D (copyCarrier b.base) := by
     intro b _
     exact hStrong b.base b.base_mem
-  have hCoverage : IrreduciblesExtendTo A Target.toRelStructure :=
-    old.orderedTrueActive_irreduciblesExtendTo_of_nontrivial
-      A₀ hBaseLinear hBaseStrong e hPair (by omega : 3 ≤ q)
   have hLowerBudget : q - 1 ≤ lowerCuts.headD 0 := by
     simp [lowerCuts, List.replicate_succ]
-  have hIndexed := lower.coarsenedSelected_actualIndexedLocalInputBundle
-    A Target Large lowerFamily fineAllowedLower hLarge hCoverage
-    hFamilyParts (q - 1) hLowerBudget κ hLowerArrow
+  have hIndexed :=
+    old.orderedTrueActiveSelected_indexedInputAndTwoCopies_of_nontrivial
+      A₀ e Large fineAllowedLower lower hBaseLinear hBaseStrong hPair
+      (by omega : 3 ≤ q) hLarge hFamilyParts
+      (q - 1) hLowerBudget κ hLowerArrow
   rcases hIndexed with
-    ⟨hPartite, hEcoverage, hInjective, hForest, _hRestrictionLower,
-      hParametersLower, hIndexedArrow⟩
+    ⟨_hTwo, hPartite, hEcoverage, hInjective, hForest,
+      _hRestrictionLower, hParametersLower, hIndexedArrow⟩
   have hTwoCut : ∀ j : Fin (q :: tail).length, 0 < j.val →
       2 ≤ (q :: tail).get j := by
     intro j _
