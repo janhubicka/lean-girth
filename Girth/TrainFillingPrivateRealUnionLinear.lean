@@ -169,4 +169,27 @@ theorem firstWagonDisjointUnion_aLinear
       congrArg Sigma.fst (hxz.trans hyz.symm)
     exact False.elim (hpq heq)
 
+
+/-- When the actual F_p are induced substructures of the
+ORIGINAL A-linear relational train T, W is automatically
+A-linear. This removes a separate hBlin hypothesis from the
+first EHN application: it is inherited from the old T
+using the checked aLinear_induce theorem and the exact
+disjoint-union support decomposition above. -/
+theorem firstWagonDisjointUnion_induced_aLinear
+    (A : RelStructure L UA)
+    (D : RelStructure L V)
+    (hOldLinear : ALinear A D)
+    (oldCarrier : P → Set V)
+    (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
+    (hSpan : HasSpanningRelation A) :
+    ALinear A
+      (firstWagonDisjointUnion oldCarrier
+        (fun p => D.induce (oldCarrier p))) := by
+  apply firstWagonDisjointUnion_aLinear
+    A oldCarrier (fun p => D.induce (oldCarrier p))
+      hPositive hSpan
+  intro p
+  exact aLinear_induce hOldLinear (oldCarrier p)
+
 end StructuralRamsey.Girth
