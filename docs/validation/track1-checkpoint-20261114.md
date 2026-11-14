@@ -13,7 +13,7 @@ The revised manuscript has been merged; TeX compilation remains manual.
 | `obs:functionalinput` | `FunctionalEHNClass.ElementaryCAClass_freeAmalgamationClass` | `Track1TriangleFreeEHNClass` adds the restricted class and positive girth; source candidate only |
 | `lem:basedclosure` | `TargetClosure.targetClosed_classify_nonempty`; `ClosureEmbeddingGeometry` | **No new target-closure language needed.** Optional canonical `c_M` and arbitrary `d` both removed from the preferred manuscript proof |
 | `thm:AlinearRamsey` | `ALinearRamsey.closedTargetRamseyFamily_of_monotone_embeddings`; full closure embedding properties | `Track1TriangleFreeSelectedFamily`: same ordered EHN construction in the girth>3 class with explicit fresh-order-preserving selected family; source candidate only |
-| `lem:unrestricted` | `TrainColouredEdgeOwnerSplit`, `SelectedLift`, `SelectedStrong`, `WholeEdgeIntersection`, `InducedUniformLift`, `ProjectionOrder`, `ExactColourTransfer` | `OwnerSplitGirth`, `OwnerSplitCoverage`, `OwnerSplitOrderArrow`, `OwnerSelectedFromEmbedding` plus final selected-family restriction/arrow; source candidates and final packaging pending |
+| `lem:unrestricted` | `TrainColouredEdgeOwnerSplit`, `SelectedLift`, `SelectedStrong`, `WholeEdgeIntersection`, `InducedUniformLift`, `ProjectionOrder`, `ExactColourTransfer` | `OwnerSplitGirth`, `OwnerSplitCoverage`, `OwnerSplitOrderArrow`, `OwnerSelectedFromEmbedding`, and `Track1SelectedOldStrong` (derive owner-split hOldStrong from actual A-strong selected B copy), plus final selected-family restriction/arrow; source candidates and final packaging pending |
 | `lem:threeboundaries` | `ForestDistinctOwnersGirthOnly.selectedForest_of_distinctOwners_girthOnly` | Specialization `Track1CutoffThreeReuse` only; the redundant bespoke three-node proof has been **deleted** |
 | `lem:threepicture` | `ForestActualDesignatedTrueActiveIncrement.actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull` | Derive actual local mixed LF2 and true-active attachment data; existing theorem is conditional |
 | `prop:forestthree` | Existing partite geometry/fusion component lemmas | Finish selected local Ramsey witness, full backward fusion, order coarsening and isolated target vertices |
@@ -21,10 +21,10 @@ The revised manuscript has been merged; TeX compilation remains manual.
 ## Build readiness and exact validation gate
 
 - `CheckTrack1.lean` imports **all** surviving candidate modules through
-  five roots and prints ten key theorem axiom sets. The new files are not
+  six roots and prints sixteen key theorem axiom sets. The new files are not
   imported by the repository's default `Girth.lean`: a normal
   `lake build Girth` does **not** validate them.
-- `scripts/check_track1.sh` first builds those five dependency roots
+- `scripts/check_track1.sh` first builds those six dependency roots
   with `LEAN_NUM_THREADS=1`, and *then* elaborates
   `CheckTrack1.lean` and rejects any printed `sorryAx`.
   A syntax-only shell check of the script passed.
@@ -77,3 +77,15 @@ These are bounded support diagnostics, **not** EHN or Lean proofs.
 
 **No Lean module or PR was merged, no green validation marker promoted,
 and no GitHub Actions build was launched.**
+
+## CI attempt (14 November, current)
+
+Draft [Lean PR #1069](https://github.com/janhubicka/lean-girth/pull/1069)
+requests an exact-head compiler run on this branch. GitHub's full Lean
+workflow is separate from the broken manuscript TeX Action.
+CI status must be checked at the *current* PR head SHA: a previous
+queued run on an older SHA is not evidence for newer edits.
+The new `Girth/Track1SelectedOldStrong.lean` bridge supplies the
+old physical-edge support-reflection hypothesis directly from
+an actual A-strong selected B-embedding, provided the retained
+edges really are A-copies. This remains an uncompiled candidate.
