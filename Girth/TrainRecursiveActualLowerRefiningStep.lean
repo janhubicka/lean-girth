@@ -36,6 +36,28 @@ open StructuralRamsey.RelStructure
 universe u v w
 variable {L : RelLanguage.{u}} {UA VB P V : Type v}
 
+/-- In the current nontrivial profile the required genuine first-wagon
+refinement is an output of the already maintained readiness invariant.
+No independent refinement-existence assumption is necessary for the
+outer finite pass.  The lower-rank selected witness is separate. -/
+theorem ForestTailStage.firstRefinement_of_ready_head
+    {A : RelStructure L UA}
+    {B : RelStructure L VB} {D : RelStructure L P}
+    {family : Set (Embedding B D)} {t : List ℕ}
+    {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
+    {allowed : Fin (t.length + 1) → Set P}
+    (old : ForestTailStage A B D family t targetTrain allowed)
+    (ht : 0 < t.length) (g : ℕ) (α : UA ↪ P)
+    (remaining : List (UA ↪ P))
+    (hReady : ForestTailStage.FirstRefinementReady
+      ht g (α :: remaining) old) :
+    Nonempty (FirstWagonRefinement
+      (old.train.restrict (sharedOldACarrierInclusion
+        A old.system.toRelStructure (activeCarrier A old.system α)))
+      ht (fun edge => edge.1.1) old.system.part
+      (allowed ⟨1, Nat.succ_lt_succ ht⟩) g) := by
+  exact hReady α (List.mem_cons_self)
+
 /-- Given a *genuine* selected lower witness for the entire refined active
 target, construct the next actual stage and preserve refinement readiness
 for the unprocessed profiles. The lower selected copy index is retained
