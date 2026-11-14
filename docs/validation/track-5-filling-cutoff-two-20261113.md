@@ -375,3 +375,59 @@ Berge cycle with connectors b and c. Therefore the explicit
 first-wagon carrier linearity hypothesis in
 \`lem:privateextension\` is both necessary for the local
 proof and already discharged by the intended application.
+
+
+## 14 November continuation — keep the actual Ramsey-parent index
+
+Previous checked \`TrainFillingIndexedSelectedColourWord.lean\` can
+produce a monochromatic selected target edge set from two abstract
+arrows, but its hOldArrow returns merely an injection
+\`β : (choice,first wagon) -> N-old-edges\`. If used by itself,
+that conclusion does NOT identify the selected lower-stage copy
+\`b\` required for the \`(b,c)\`-indexed designated family.
+
+The new candidate \`TrainFillingPrivateActualWordArrow.lean\`
+therefore first constructs the stronger
+\`actualOrderStage_oldColourWordArrow_indexed\`:
+for every complete word-colouring of the FULL old N A-support
+edge family, it returns a genuine selected lower \`OrderStage\`
+copy \`b∈S.selected\` and a common word \`ρ\`, with
+\`word(β_b(c,p))=ρ\` for **every** choice c and first wagon p.
+Here \`β_b\` is exactly the already constructed physical
+selected old-edge embedding of that same b.
+Only afterwards does
+\`actualOrderStage_oldColourWordArrow\` forget b to recover
+the old abstract hOldArrow interface.
+
+The new \`TrainFillingPrivateActualIndexedArrow.lean\`
+then applies the checked literal filled-edge colour calculation
+to this **indexed** old arrow and the EHN-selected local arrow:
+for every χ on the actual physical filled edges, it returns
+\`b∈S.selected\`, one choice c and a colour k, and asserts
+χ is k on **every** edge of \`targetEdges U c\` under the
+actual filled physical edge embedding of β_b. This avoids an
+unindexed or phantom monochromatic target. The vertex embedding
+and original parts/orders/train relations still need the
+already isolated real parentwise carrier adapter.
+
+A further small theorem
+\`sourceA_nonempty_of_contractedSupport\` derives an actual
+source A-embedding from the exact full M-support equality and a
+nonempty (choice, first wagon) index. This isolates the real
+nonemptiness condition used to select a common word in the
+lower arrow; it is not an unexplained default colour.
+
+**Correctness example for first-wagon linearity:** The four
+physical edges \`ab,ac,bd,cd\` form an ordinary linear graph.
+Assign \`F_1={ab,ac}\`, \`F_2={bd,cd}\`. Then
+\`V(F_1)={a,b,c}\`, \`V(F_2)={b,c,d}\` intersect
+at two vertices b,c. Thus their contracted first-wagon
+edges cannot form a linear M unless the extra labelled
+\`W_1(T)\`-girth assumption rules out this configuration.
+
+**Validation boundary:** All of these are branch-only candidates,
+not elaborated Lean theorems. No green marker, exact-head CI
+certificate, or completed \`lem:tailraw\` is asserted. Exact
+partite/ordered M instantiation, true carrier transport, the
+canonical inherited cut equality at the actual OrderStage,
+and the final labelled train embedding remain to close.
