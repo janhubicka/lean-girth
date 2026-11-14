@@ -1,0 +1,5 @@
+import Girth.TrainFillingSelectedActualRestoredWagons
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageRestoredParent_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualRestoredWagonEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualRestoredWagonEmbedding_parent
