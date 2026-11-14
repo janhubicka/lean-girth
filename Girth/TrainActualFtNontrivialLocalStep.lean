@@ -223,6 +223,7 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
     have hμ : j.castSucc = μ := Fin.ext rfl
     rw [← hμ]
     obtain ⟨hLin, hSup⟩ := hPositive j hj
+    have hAtLeastTwo : 2 ≤ (q :: tail).get j := hCutoff j
     refine ⟨hLin, ?_⟩
     intro n C hAccept hOrder
     exact hSup n C hAccept (by omega)
