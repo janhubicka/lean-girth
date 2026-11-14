@@ -4,6 +4,7 @@ import Girth.TrainRecursiveTrueActiveFineParameters
 import Girth.TrainRecursiveTrueActiveLowerCutoffVector
 import Girth.TrainRecursiveStrongSupportedHJBase
 import Girth.TrainRecursiveExactHeightTransport
+import Girth.TrainRecursiveActualHeightCutoffApplication
 import Girth.TrainRecursiveTrueActiveTwoCopies
 
 set_option autoImplicit false
