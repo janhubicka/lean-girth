@@ -60,6 +60,7 @@ theorem joinTreeCompletion_missingFaces_contains
       ∀ x : W, x ∈ K → x ≠ z →
         x ∈ F (faceBag z).1) :
     ∃ i : ι, i ∈ S ∧ K ⊆ F i := by
+  classical
   obtain ⟨i, hi⟩ :=
     J.missingFaces_contained_in_one_bag
       hK hThird faceBag hFace
