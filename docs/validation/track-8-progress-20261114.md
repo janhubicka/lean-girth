@@ -52,3 +52,19 @@ The sole combinatorial **hypothesis** of \`smallTrace_selection_of_maximalJoinTr
 
 The exact-head check file was updated with checks and axiom-print requests for the new declarations. No Lean binary was installed or invoked; no new validation marks were promoted.
 
+
+## Further 14 November work: original-index maximalization and pair graph
+
+- \`Girth/FiniteTraceMaximal.lean\` now produces exactly the conclusion needed from the combinatorial lemma: \`smallTrace_selection_of_maximalJoinTree\` constructs \`selected : Set ι\`, proves \`CoversNonemptyTraces F Z selected\`, and proves **\`selected.ncard ≤ Z.ncard\`**. Duplicate original indices are controlled by the injective representative choice. The empty family of nonempty traces is treated separately, without inventing any nonempty trace or demanding a cover member for an empty Z. Its single explicit extra input \`hTree\` is **not** proved by the file.
+- \`Girth/FiniteTracePairGraph.lean\` isolates \`tracePairGraph\` and \`TraceConformal\`: it proves every original trace is a graph clique, a maximal original trace is a maximal clique under conformality, and conversely every maximal nonempty clique equals a maximal original trace. This is the precise graph-to-bags adapter required after the chordality/conformality argument, not a chordal graph theorem.
+- \`Girth/ForestTraceRestriction.lean\` provides the restriction of all original completion bags to Z, preserving exactly their running intersections and their original index type.
+
+**Remaining independent mathematics, in recommended formal order:**
+
+1. Prove subtree Helly for finite \`SimpleGraph.IsTree\` and the induced-occurrence-subtree interface from \`Girth/Forest.lean\`.
+2. Use Helly to show that every clique with no original containing trace produces ≤|Z| chosen cover members with no internal join-tree completion (minimal uncovered clique).
+3. Show that an induced chordless cycle in the trace pair graph produces ≤|Z| *distinct* original edge-supporting members, and its restricted join-tree completion is impossible (chordality).
+4. Construct a clique join tree of the finite chordal pair graph and transfer it, by conformality, to \`maximalTracePiece\`; discharge \`hTree\`.
+5. Only then close the general small-trace lemma and use exact outer actual-copy forest completion for the induced relational corollary.
+
+**No status inflation:** these are manually drafted Lean proofs; exact-head elaboration and \`#print axioms\` have not run. A static no-holes/delimiter scan is not a kernel certificate. The external EHN Ramsey input and the Tracks 2/7 recursive outputs remain separate from these finite combinatorial lemmas.
