@@ -12,7 +12,9 @@ this follows independently: old-picture mixed forests through q >= 2, local-core
 girth > m >= 2, base A-linearity and rigidity, and A-strong gluing
 images imply output A-linearity by the checked attachment geometry.
 
-This wrapper also DERIVES old-picture A-linearity from its genuine\n two-member mixed-forest hypothesis; no extra old-linearity input remains.\n It supplies output linearity before applying
+This wrapper also derives old-picture A-linearity from its genuine
+two-member mixed-forest hypothesis; no extra old-linearity input remains.
+It supplies output linearity before applying
 the existing finite mixed forest theorem, including its m=2 case.
 It neither constructs the local Ramsey witness nor assumes the
 desired output forest property.
