@@ -1,12 +1,12 @@
 # Numbered Track 2: proof chain and remaining validation gates
 
-Status: **source-level candidate, not kernel-verified** (13 November 2026).
+Status: **source-level candidate, not kernel-verified** (updated 14 November 2026).
 
 ## Exact sources and separation of branches
 
 - Frozen circulation reference: `janhubicka/girth/main@8c9cfa6eb6d817a08f3009fe048fc0be07426ece`, reachable-source digest `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-- Unmerged paper simplifications: [`edit/track2-forest-trace-20261113`](https://github.com/janhubicka/girth/tree/edit/track2-forest-trace-20261113). The accepted version is not modified.
-- Unmerged Lean candidate: [`validation/2-forest-trace-rebased-20261114`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-rebased-20261114), created from `98e40142f95cf818f498ed21faf9302a50fe7832`. Source candidate moved onto current main on 14 November for Track 2 review.
+- Unmerged current paper edits: [`edit/track2-current-proof-20261114`](https://github.com/janhubicka/girth/tree/edit/track2-current-proof-20261114), based on `girth/main@61b5a511ceb7bf4bb483ccdcf564306af23b7dc6`; this preserves the independently rewritten cutoff-three proof. The frozen reference is not modified.
+- Unmerged Lean candidate: [`validation/2-forest-trace-rebased-20261114`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-rebased-20261114), based on `lean-girth/main@b0b3c49a7d2b47150f146df588b5868be9d6cce3`. The previous `98e40142` source candidate is preserved on its historical branch; this branch contains its checked-for-overlap source files and newer interface adapters.
 - No paid GitHub Actions checks launched. This checkout did **not** run Lean; local compiler/mathlib binaries are unavailable. The exact candidate `#print axioms` commands are in `Girth/CheckTrack2Trace.lean`, but have not been executed.
 
 ## Exact theorem chain
@@ -84,3 +84,56 @@ The exact source and axiom gate still need a focused, **real**
 Lean compilation with pinned dependencies. The source edits
 are not evidence of a successful kernel check. Do not upgrade
 validation markers yet.
+
+
+## 14 November — actual copy-set interface closed as a conditional theorem
+
+The candidate now adds two direct **source-level formal adapters**.
+
+- `Girth/ForestCopySetCompletion.lean` defines
+  `FinsetLabelForestCompletionProperty` for finite SETS of labels of
+  actual copies, measured using the **complete support-piece** forest.
+  Its `toSupportIndexed` theorem takes any finite indexed family of
+  selected support pieces, chooses a genuine copy label for each
+  tested support, takes the finite set of chosen labels, applies
+  copy-set forest extension, and returns the existing
+  `ForestCompletionProperty` with all selected pieces surviving
+  and every extra member designated. The image cardinality is
+  at most the original family size, and no support-map injectivity,
+  arbitrary subfamily heredity, or fabricated output bound is used.
+- The converse `FinsetForestCompletionProperty.toLabelFinset`
+  turns any finite-support-set completion property into a
+  copy-label-set completion property, again with no injectivity
+  assumption on support. This isolates the two natural descriptions
+  of the manuscript's finite-set condition.
+- `Girth/ForestOldActiveSetGirth.lean` defines
+  `pictureABLabelSupport` on the genuine sum type
+  `Embedding A C ⊕ DesignatedCopy B D C family`, using a
+  one-edge A-piece or the full B-support piece respectively.
+  `testedPictureABSupport_iff_label` proves that the
+  **tested support predicate is precisely the image of these
+  actual labels**. Finally,
+  `oldActiveInduced_girthGT_of_actualCopySets` derives the old
+  active induced-subsystem girth directly from a finite-set
+  forest-extension hypothesis on these labels. No injectivity
+  of the support map is assumed.
+
+This closes the **translation between finite actual-copy sets and
+the existing typed support-completion invariant**, conditional on the
+manuscript's mixed-forest extension hypothesis and the stated base
+strongness/linearity assumptions. It does not construct the Ramsey
+witness needed in other tracks and it does not certify the paper's
+different general singleton-free join-tree statement.
+
+The focused `Girth/CheckTrack2Trace.lean` now contains
+`#check` and `#print axioms` probes for all new endpoints,
+including the bidirectional set adapters. No local Lean toolchain or
+pinned mathlib cache was found in the container; direct GitHub
+egress failed DNS. Hence **no new kernel claim is made**, even
+where a proof term contains no `sorry`.
+
+The manuscript branch was synchronized again onto the current
+source, preserving the separately revised `paper/07-forest-increment.tex`.
+Only the independent output-linearity preface was transported into
+that proof; the older Track 2 copy of that entire file was NOT
+pushed, so the newer cutoff-three result is preserved.
