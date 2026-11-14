@@ -74,8 +74,11 @@ certificate for any candidate added in this PR.
 
 1. **Unequal first wagons:** `PrivateSummand`,
    `PrivateSelectedUnion`, `PrivateSelectedColour`,
-   `PrivateSelectedFamily`, `PrivateSelectedIndexedArrow` and
-   `PrivateEHNArrow`. These construct local private embeddings of
+   `PrivateSelectedFamily` and `PrivateSelectedIndexedArrow`.
+   The older all-closure `PrivateEHNArrow` candidate was deleted
+   because it did not retain the EHN selection order; the valid
+   route goes through `PrivateMonotoneEHN`, `PrivateMonotoneSummands`
+   and `PrivateMonotoneExistence`. These construct private embeddings of
    different types `Fₚ` from ONE selected `s(W)`, derive
    A-strongness by composition, supply complete common X support,
    and derive the exact local `selectedCommonEdges` Ramsey arrow
