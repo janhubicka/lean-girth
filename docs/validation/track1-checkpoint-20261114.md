@@ -15,16 +15,16 @@ The revised manuscript has been merged; TeX compilation remains manual.
 | `thm:AlinearRamsey` | `ALinearRamsey.closedTargetRamseyFamily_of_monotone_embeddings`; full closure embedding properties | `Track1TriangleFreeSelectedFamily`: same ordered EHN construction in the girth>3 class with explicit fresh-order-preserving selected family; source candidate only |
 | `lem:unrestricted` | `TrainColouredEdgeOwnerSplit`, `SelectedLift`, `SelectedStrong`, `WholeEdgeIntersection`, `InducedUniformLift`, `ProjectionOrder`, `ExactColourTransfer` | `OwnerSplitGirth`, `OwnerSplitCoverage`, `OwnerSplitOrderArrow`, `OwnerSelectedFromEmbedding`, and `Track1SelectedOldStrong` (derive owner-split hOldStrong from actual A-strong selected B copy), plus final selected-family restriction/arrow; source candidates and final packaging pending |
 | `lem:threeboundaries` | `ForestDistinctOwnersGirthOnly.selectedForest_of_distinctOwners_girthOnly` | Specialization `Track1CutoffThreeReuse` only; the redundant bespoke three-node proof has been **deleted** |
-| `lem:threepicture` | `ForestActualDesignatedTrueActiveIncrement.actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull` | Derive actual local mixed LF2 and true-active attachment data; existing theorem is conditional |
+| `lem:threepicture` | `ForestActualDesignatedTrueActiveIncrement.actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull`; `TrainRecursiveBaseRamsey.mixedForestThrough_two_of_strong_controlledFamily`; `ForestActualRecursiveSupport.actualRecursiveMixedLocalForest` | `Track1SelectedMixedLF2` composes the two checked LF2 bridges; still requires distinct selected support representatives and true-active attachment data. The actual picture endpoint remains conditional |
 | `prop:forestthree` | Existing partite geometry/fusion component lemmas | Finish selected local Ramsey witness, full backward fusion, order coarsening and isolated target vertices |
 
 ## Build readiness and exact validation gate
 
 - `CheckTrack1.lean` imports **all** surviving candidate modules through
-  six roots and prints sixteen key theorem axiom sets. The new files are not
+  seven roots and prints eighteen key theorem axiom sets. The new files are not
   imported by the repository's default `Girth.lean`: a normal
   `lake build Girth` does **not** validate them.
-- `scripts/check_track1.sh` first builds those six dependency roots
+- `scripts/check_track1.sh` first builds those seven dependency roots
   with `LEAN_NUM_THREADS=1`, and *then* elaborates
   `CheckTrack1.lean` and rejects any printed `sorryAx`.
   A syntax-only shell check of the script passed.
@@ -89,3 +89,27 @@ The new `Girth/Track1SelectedOldStrong.lean` bridge supplies the
 old physical-edge support-reflection hypothesis directly from
 an actual A-strong selected B-embedding, provided the retained
 edges really are A-copies. This remains an uncompiled candidate.
+
+## Continued validation after merging the global-bottom version
+
+The manuscript's marked-isolated vertices now use one global tag
+`(x,⊥)` (merged PR #457), matching the checked
+`ColouredOwnerSelectedCopy.lift`. A reproducible finite regression
+of precisely that variant was merged in girth PR #458;
+**309,549** bounded cases passed, including marked isolated sources.
+The previous private-tag finite tests should not be mistaken for a
+test of the merged shared-bottom representation.
+
+New candidate `Girth/Track1SelectedOldStrong.lean` proves that the
+owner-splitting library's old-edge strongness input follows from
+a genuine A-strong selected B-image and the fact that retained edges
+are actual A-support copies; a second theorem composes this with
+the existing checked selected-strongness result.
+New candidate `Girth/Track1SelectedMixedLF2.lean` composes the
+existing checked mixed-pair forest theorem with its actual-owner
+transport, without pruning any ambient A-edge.
+These files have focused `#print axioms` probes but **have not
+yet been compiled**. Their remaining hypotheses must be supplied
+from the exact selected EHN family and the actual picture attachment.
+Draft Lean PR #1069 is the ongoing compiler gate, not a certificate
+until its exact-head runs are verified.
