@@ -43,7 +43,7 @@ does not identify two different physical occurrence labels. -/
 theorem firstWagonDisjointUnion_supportCopies_iff
     (A : RelStructure L UA)
     (oldCarrier : P → Set V)
-    (local : (p : P) => RelStructure L {x : V // x ∈ oldCarrier p})
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
     (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
     (hSpan : HasSpanningRelation A)
     (e : Set (FirstWagonUnionVertex oldCarrier)) :
