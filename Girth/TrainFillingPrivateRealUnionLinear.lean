@@ -1,4 +1,4 @@
-import Girth.TrainFillingPrivateRealUnionColoured
+import Girth.TrainFillingPrivateRealDisjointUnion
 import Girth.TrainFillingPrivateUniform
 
 set_option Elab.async false
