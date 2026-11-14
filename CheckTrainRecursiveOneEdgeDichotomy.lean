@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveOneEdgeDichotomy
+
+#print axioms StructuralRamsey.Girth.supportCopies_subsingleton_of_no_two
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.exists_orderStage_of_no_two_copies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.two_copies_or_one_edge_order_stage
