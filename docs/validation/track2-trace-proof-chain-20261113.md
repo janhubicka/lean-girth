@@ -39,7 +39,7 @@ LEAN_NUM_THREADS=1 lake build Girth.CheckTrack2Trace
 lake env lean Girth/CheckTrack2Trace.lean
 ```
 
-After a successful compilation, inspect the printed assumptions of every new theorem, reject `sorryAx` and unapproved axioms, and record source commit and exact imported declarations. Then prove the remaining exact **manuscript forest-extension ↔ typed support completion** adapter; check both its nonempty and empty finite-selection cases. Only then promote a validation marker for `lem:puresubsystem`. The separate general `lem:joinlift` and end-to-end `prop:certpres` remain open.
+After a successful compilation, inspect the printed assumptions of every new theorem, reject `sorryAx` and unapproved axioms, and record source commit and exact imported declarations. Then prove the remaining exact **manuscript forest-extension ↔ typed support completion** adapter; check both its nonempty and empty finite-selection cases. Only then promote a validation marker for `lem:puresubsystem`. The general `lem:joinlift` now has a labelled recursive *source candidate*, while its exact unlabelled finite-set normalization, real Lean compilation, and end-to-end `prop:certpres` remain open.
 
 ## Reproducible finite tests
 
@@ -224,3 +224,56 @@ general singleton-free join-tree lifting theorem remains
 unformalized. The actual edge-covered structural completion
 still reuses existing checked components; it need not wait
 for the generic theorem.
+
+
+## 14 November — general singleton-free join-tree lifting candidate
+
+The generic join-tree lemma has now been reduced to and expressed
+using a **complete recursive source-level Lean candidate**, rather
+than only its edge-covered structural specialization.
+
+- `Girth/ForestBinarySeparatorLift.lean` contains
+  `forestOfCopies_sum_of_subsingleton_overlap`,
+  `forestOfCopies_sum_of_common_edge`, and the unified
+  `forestOfCopies_sum_of_smallOrEdge_overlap`.
+  They use the existing checked `forestOfCopies_sumBridge`
+  theorem. For singleton or empty total cross overlap, one
+  chooses connector nodes only if the shared vertex actually
+  occurs in both forests; otherwise arbitrary connecting nodes
+  work. For an edge (e), the local `e^+` requests remain
+  on both sides, and every cross-family intersection of
+  size at least two is the whole edge owned by both pieces.
+  **No ambient vertex coverage by support edges is required.**
+- `Girth/ForestGeneralJoinLift.lean` contains
+  `forestOfCopies_lift_local_without_singleton_requests`.
+  It uses the existing outer-tree leaf-deletion/parent theorem
+  `JoinTree.mem_parent_of_mem_leaf_and_other` and the
+  dependent-family equivalence `sigmaSplitAt`. For each leaf,
+  the full cross intersection of the locally assembled
+  forest with the leaf is contained in its **outer**
+  leaf-parent separator. If the separator is subsingleton,
+  use the first binary lemma with *no connector request*.
+  Otherwise use precisely the two retained one-edge
+  requests. This is a direct recursion on
+  `Fintype.card Q`.
+- The same file gives
+  `forestOfCopies_lift_without_singleton_then_delete`,
+  applying the existing short-auxiliary deletion theorem
+  to remove **only** unselected one-edge requests after
+  the whole labelled union has been assembled.
+
+**Remaining distinction:** These theorems are formulated for
+*labelled* dependent families, including potentially duplicated
+physical edge requests across different owners. The revised
+manuscript's result is an unlabelled finite **set** of
+selected and locally added members. To certify the exact set
+statement, one must choose and retain one label per genuine
+member, show any other duplicate labels correspond only to
+one-edge separator requests, then invoke short-auxiliary
+deletion and reindexing. That final set-normalization adapter
+is NOT part of the new recursive theorem.
+
+The two modules have corresponding `#check` and
+`#print axioms` declarations in `Girth/CheckTrack2Trace.lean`.
+All are **uncompiled** because local Lean/mathlib artifacts and
+network egress are absent. No `leanverified` mark was promoted.
