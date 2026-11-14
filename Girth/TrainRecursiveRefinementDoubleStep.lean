@@ -126,7 +126,44 @@ theorem child_constant_of_singleton_intersections_twice
   exact CyclicIncidenceData.no_cyclicIncidenceData_of_acyclic hAcyclic raw.compress
 
 end LabelledBergeCycle
+
+namespace BergeCycle
+
+/-- A physical Berge cycle is a labelled cycle with its actual edge
+carriers as labels.  The doubled one-step localization therefore also
+applies without an additional injectivity assumption on a synthetic
+reindexing of edges.  This is the direct geometric statement used in
+the manuscript. -/
+theorem child_constant_of_singleton_intersections_twice
+    {H : Set (Set V)} (C : BergeCycle H)
+    (child : Fin C.length → Child) (carrier : Child → Set V)
+    (part : V → Part) (allowed : Set Part)
+    (hAllowed : allowed.Subsingleton)
+    (hEdgePart : ∀ i, Set.InjOn part (C.edge i))
+    (hContained : ∀ i, C.edge i ⊆ carrier (child i))
+    (hIntersection : ∀ a b : Child, a ≠ b →
+      (carrier a ∩ carrier b) ⊆ part ⁻¹' allowed)
+    (g : ℕ) (hg : 2 ≤ g) (hGirth : LabelledGirthGT carrier g)
+    (hLength : C.length ≤ 2 * g + 1) :
+    ∀ i j : Fin C.length, child i = child j := by
+  let labelled : LabelledBergeCycle (fun e : Set V => e) := {
+    length := C.length
+    hlength := C.hlength
+    label := C.edge
+    vertex := C.vertex
+    label_injective := C.edge_injective
+    vertex_injective := C.vertex_injective
+    left_mem := C.left_mem
+    right_mem := C.right_mem
+  }
+  exact labelled.child_constant_of_singleton_intersections_twice
+    child carrier part allowed hAllowed hEdgePart hContained
+    hIntersection g hg hGirth hLength
+
+end BergeCycle
 end StructuralRamsey.Girth
+
+#print axioms StructuralRamsey.Girth.BergeCycle.child_constant_of_singleton_intersections_twice
 
 #print axioms StructuralRamsey.Girth.LabelledBergeCycle.child_has_second_occurrence_of_singleton_intersections
 #print axioms StructuralRamsey.Girth.LabelledBergeCycle.child_constant_of_singleton_intersections_twice
