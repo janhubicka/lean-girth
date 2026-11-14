@@ -96,3 +96,42 @@ and full functional-class adapter on the pinned Lean head; run
 `sorryAx`; confirm the selected family retains the fresh
 order and that the unmarked target expansion belongs to the
 triangle-free class. The external EHN input remains explicit.
+
+## 14 November follow-up — concrete draft adapters
+
+Additional source files now exist on this branch:
+
+- `Girth/Track1FreeAmalgamSupport.lean`: exact equality of the whole
+  A-support with the two mapped constituent support families, and
+  the cross-side intersection-in-base property, reusing
+  `irreducibleCopy_side_of_freeAmalgam` and
+  `freeAmalgam_side_intersection`.
+- `Girth/Track1StrongAmalgamGirthThree.lean`: factor a right A-copy
+  meeting the common base twice into the left constituent by the
+  **already proved** `freeAmalgam_left_aStrong`; the converse uses
+  `freeAmalgam_right_aStrong`. Combining those reflections, the
+  support-union equality, existing A-linearity, and the three-edge
+  lemma yields the exact relational statement:
+  `track1_girthGT_three_freeAmalgam_of_aStrong`.
+- `Girth/Track1TriangleFreeEHNClass.lean`: define
+  `ElementaryCAThreeClass` by the original canonical pair closure,
+  A-linearity, and support girth>3. Heredity uses the checked support
+  embedding/girth transfer; amalgamation uses the relational theorem.
+  `c_B` is still arbitrary, so no second closure language or
+  extra unary function is introduced.
+- `Girth/Track1TriangleFreeSelectedFamily.lean`: specialize the
+  earlier `Track1OrderedSelectedFamily` argument to this restricted
+  class, retaining the actual full **fresh-order-respecting** B-target
+  embeddings, their strongness, controlled intersections, and a
+  selected Ramsey arrow. The witness's A-support girth is also >3.
+
+All four are **UNCOMPILED candidates** and their axiom-checker
+files have not been executed. Their conclusions are exact interfaces,
+not newly verified results. They make the remaining proof-decomposition
+clear: the analytical girth>3 restriction is separate from the
+owner-splitting coloured witness and cutoff-three partite fusion.
+
+The finite negative control omitting A-strong closure is part of
+[the merged distinct-source diagnostic](https://github.com/janhubicka/girth/pull/456).
+The author will manually compile the TeX manuscript; none of these
+Lean files changes the source or promotes validation markers.
