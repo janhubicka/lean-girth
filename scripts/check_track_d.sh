@@ -179,6 +179,7 @@ checks=(
   CheckTrainRecursiveActualLowerRefiningStep
   CheckTrainRecursiveUniformLowerRank
   CheckTrainRecursiveUniformAllColours
+  CheckTrainRecursiveUniformAllInputs
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
 )
