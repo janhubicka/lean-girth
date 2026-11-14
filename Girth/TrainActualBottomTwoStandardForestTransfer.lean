@@ -1,6 +1,5 @@
 import Girth.TrainActualBottomForestReducedSupreme
 import Girth.TrainActualTwoCutSymmetricShortSupreme
-import Girth.TrainBottomTwoLabelCommonShort
 import Mathlib.Tactic
 
 set_option autoImplicit false
