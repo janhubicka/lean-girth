@@ -126,4 +126,55 @@ theorem ForestTailStage.ramseyOrderPass_strong_train_of_covered
   intro χ
   exact hArrow.strongTrain χ
 
+
+/-- The physically correct next-profile alternative is an IDENTITY
+step when the fibre is subsingleton, or an actual selected ORDER
+attachment otherwise. A fictitious one-edge ActiveAttachmentBounds
+certificate is NOT needed (and at q>2 its two-source-edge field
+would be impossible for a single-edge fibre). Both alternatives
+preserve bottom readiness and selected base coverage. -/
+theorem ForestTailStage.ready_step_of_identity_or_order_attachment
+    (S : ForestTailStage A B D family (q :: tail) targetTrain allowed)
+    (hReady : S.CoveredBottomReady)
+    (α : UA ↪ P) (κ : Type w) [Nonempty κ]
+    (hAlternative :
+      PictureStep S S α κ ∨
+      ∃ R : OrderStage A B D family (q :: tail) targetTrain allowed,
+        PictureStep S R.toForestTailStage α κ) :
+    ∃ T : ForestTailStage A B D family (q :: tail) targetTrain allowed,
+      T.CoveredBottomReady ∧ PictureStep S T α κ := by
+  rcases hAlternative with hIdentity | ⟨R, hPicture⟩
+  · exact ⟨S, hReady, hIdentity⟩
+  · have hCoverR : R.toForestTailStage.CoversBase :=
+      hPicture.coversBase hReady.2
+    have hBottomR : R.toForestTailStage.BottomReady := by
+      simpa using R.allCutGirth
+        (⟨0, by simp⟩ : Fin (q :: tail).length)
+    exact ⟨R.toForestTailStage, ⟨hBottomR, hCoverR⟩, hPicture⟩
+
+/-- The checked identity-PictureStep theorem handles ordered
+A-profiles whose ACTUAL physical image family has at most one
+member. This path never calls the forest witness and works at
+every cutoff, including all q>2; no false two-source-edge premise. -/
+theorem ForestTailStage.ready_identity_of_subsingleton_physical_fibre
+    {L₀ : RelLanguage.{u}} {UA₀ VB₀ P₀ : Type v}
+    (A₀ : RelStructure L₀ UA₀) [LinearOrder UA₀] [Finite UA₀]
+    (B₀ : RelStructure L₀.withOrder VB₀)
+    (D₀ : RelStructure L₀.withOrder P₀)
+    (family₀ : Set (RelStructure.Embedding B₀ D₀))
+    (t₀ : List ℕ)
+    (targetTrain₀ : EdgeTrainLevels
+      (OldACarrierEdge A₀.ordered B₀) t₀.length)
+    (allowed₀ : Fin (t₀.length + 1) → Set P₀)
+    (S : ForestTailStage A₀.ordered B₀ D₀ family₀ t₀
+      targetTrain₀ allowed₀)
+    (α : UA₀ ↪ P₀) (κ : Type w)
+    (hPhysical : (Set.range (fun e :
+      StructuralRamsey.Partite.ProjectedEmbedding
+        A₀.ordered S.system α => copyCarrier e.val)).Subsingleton) :
+    PictureStep S S α κ :=
+  pictureStep_self_of_subsingleton_physical_fibre
+    A₀ B₀ D₀ family₀ t₀ targetTrain₀ allowed₀ S
+    α κ hPhysical
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
