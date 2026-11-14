@@ -36,3 +36,4 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.track1_selectedOrder_and_edgeRamsey
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.ofEdgeEmbedding
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.oldStrong_of_aStrong
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selected_strong_of_aStrong
