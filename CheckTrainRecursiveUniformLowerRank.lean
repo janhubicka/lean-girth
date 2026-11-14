@@ -2,6 +2,7 @@ import Girth.TrainRecursiveUniformPartiteForest
 import Girth.TrainRecursiveUniformLowerHJBridge
 import Girth.TrainRecursiveUniformLowerPictureStep
 import Girth.TrainRecursiveUniformLargerCutoff
+import Girth.TrainRecursiveUniformOperators
 
 #check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedPartiteForest
 
@@ -9,3 +10,7 @@ import Girth.TrainRecursiveUniformLargerCutoff
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.refiningPictureStep_of_uniformLowerRank
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForest_largerCutoff
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedPartiteOrder
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteOperators
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForest_of_remainingOperators
