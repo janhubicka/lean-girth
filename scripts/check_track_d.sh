@@ -81,6 +81,8 @@ checks=(
   CheckActualPositiveCutTwoCutRankGate
   CheckActualTwoCutDistinctStandards
   CheckCyclicTwoCutRunFibre
+  CheckCyclicCutIndexAtSourceTwo
+  CheckActualTwoCycleMixedCoreCut
   CheckActualTwoCutStandardCoreShortSupreme
   CheckActualTwoCutShortSingletonOrientation
   CheckCyclicTwoCutSingletonComplement
