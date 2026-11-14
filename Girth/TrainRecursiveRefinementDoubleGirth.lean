@@ -200,6 +200,21 @@ open StructuralRamsey.RelStructure
 
 variable {L : RelLanguage.{u}} {UA X P : Type v}
 
+/-- The doubled local girth bound for the complete physical A-support
+inside a single original first wagon.  This is independent of the
+global retained-first-cut assumption, which is needed only when
+localizing cycles across distinct first wagons. -/
+theorem FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice
+    (A : RelStructure L UA) (hA : A.Irreducible)
+    (C : StructuralRamsey.Partite.System L P X)
+    {m : ℕ} {T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) m}
+    {hm : 0 < m} {allowed : Set P} {g : ℕ}
+    (R : FirstWagonRefinement T hm (fun e => e.val) C.part allowed g)
+    (hg : 2 ≤ g) (a : OldACarrierEdge A C.toRelStructure) :
+    GirthGT {s : Set X | ∃ e : OldACarrierEdge A C.toRelStructure,
+      T.rel ⟨1, by omega⟩ a e ∧ s = e.val} (2 * g + 1) :=
+  R.girthGT_firstWagon_twice hg (actualASupport_part_injOn A hA C) a
+
 /-- Discharge edge transversality using the existing actual irreducible
 A-support geometry, but keep the complete physical first-cut hypothesis. -/
 theorem FirstWagonRefinement.actualSupport_girthGT_of_retainedFirstCut_twice
