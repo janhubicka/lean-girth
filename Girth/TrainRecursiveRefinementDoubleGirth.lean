@@ -193,6 +193,20 @@ theorem girthGT_of_retainedFirstCut_twice
     GirthGT (Set.range edge) (min (2 * g + 1) h) :=
   (R.labelledGirthGT_of_retainedFirstCut_twice hg hEdgePart h hh hFirstCut).range_girth
 
+/-- For a height-one old train the first positive relation is the
+universal top by definition. Thus the empty-tail doubled physical girth
+needs NO separately supplied universality hypothesis. -/
+theorem girthGT_heightOne_twice
+    (T : EdgeTrainLevels E 1) (edge : E → Set W)
+    (part : W → P) (firstAllowed : Set P) (g : ℕ)
+    (R : FirstWagonRefinement T (by decide : 0 < 1)
+      edge part firstAllowed g)
+    (hg : 2 ≤ g) (hEdgePart : ∀ e : E, Set.InjOn part (edge e)) :
+    GirthGT (Set.range edge) (2 * g + 1) := by
+  apply R.girthGT_of_first_universal_twice hg hEdgePart
+  intro e f
+  simpa only using T.top e f
+
 end FirstWagonRefinement
 
 section Actual
@@ -251,6 +265,21 @@ theorem FirstWagonRefinement.actualSupport_girthGT_of_first_universal_twice
   apply girthGT_of_subset ?_ hRange
   intro s hs
   exact ⟨⟨s, hs⟩, rfl⟩
+
+/-- Empty-tail physical A-support variant. Height one forces the
+old first wagon to be universal, so no extraneous input is needed. -/
+theorem FirstWagonRefinement.actualSupport_girthGT_heightOne_twice
+    (A : RelStructure L UA) (hA : A.Irreducible)
+    (C : StructuralRamsey.Partite.System L P X)
+    (T : EdgeTrainLevels (OldACarrierEdge A C.toRelStructure) 1)
+    {allowed : Set P} {g : ℕ}
+    (R : FirstWagonRefinement T (by decide : 0 < 1)
+      (fun e => e.val) C.part allowed g)
+    (hg : 2 ≤ g) :
+    GirthGT (supportCopies A C.toRelStructure) (2 * g + 1) := by
+  apply R.actualSupport_girthGT_of_first_universal_twice A hA C hg
+  intro e f
+  simpa only using T.top e f
 
 end Actual
 end StructuralRamsey.Girth
