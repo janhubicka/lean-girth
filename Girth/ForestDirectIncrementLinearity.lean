@@ -1,17 +1,18 @@
 import Girth.ForestActualRecursiveIncrement
 import Girth.ActiveCarrierStrong
 import Girth.LinearityGirthTwo
+import Girth.ForestTwoMemberLinearity
 
 /-!
 # The direct forest increment without a circular output-girth premise
 
 The older actual partite forest-increment endpoint assumes that the
 OUTPUT support already has girth greater than two. In the manuscript
-this follows independently: old-picture A-linearity, local-core
+this follows independently: old-picture mixed forests through q >= 2, local-core
 girth > m >= 2, base A-linearity and rigidity, and A-strong gluing
 images imply output A-linearity by the checked attachment geometry.
 
-This wrapper supplies that intermediate conclusion before applying
+This wrapper also DERIVES old-picture A-linearity from its genuine\n two-member mixed-forest hypothesis; no extra old-linearity input remains.\n It supplies output linearity before applying
 the existing finite mixed forest theorem, including its m=2 case.
 It neither constructs the local Ramsey witness nor assumes the
 desired output forest property.
@@ -36,7 +37,6 @@ theorem actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
     (C : StructuralRamsey.Partite.System L P X)
     (hPartite : C.IsPartiteOver D)
     (hBaseLinear : ALinear A D)
-    (hOldLinear : ALinear A C.toRelStructure)
     (family : Set (RelStructure.Embedding B D))
     (selectedOld : Set (DesignatedCopy B D C family))
     (e : RelStructure.Embedding A D)
@@ -79,6 +79,9 @@ theorem actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
         (∃ i : I, ∃ q : DesignatedCopy B D C family,
           q ∈ selectedOld ∧
           T = bSupportPiece A (q.transportToStandard f i).embedding)) m := by
+  have hOldLinear : ALinear A C.toRelStructure :=
+    aLinear_of_finiteMixedForestThrough_oneEdges
+      A C.toRelStructure testedOld m hm hOldForest hTestA
   have hCoreLinear : ALinear A E.toRelStructure := by
     intro a b hDifferent
     exact pairwise_subsingleton_of_girthGT_two
