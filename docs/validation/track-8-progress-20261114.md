@@ -68,3 +68,12 @@ The exact-head check file was updated with checks and axiom-print requests for t
 5. Only then close the general small-trace lemma and use exact outer actual-copy forest completion for the induced relational corollary.
 
 **No status inflation:** these are manually drafted Lean proofs; exact-head elaboration and \`#print axioms\` have not run. A static no-holes/delimiter scan is not a kernel certificate. The external EHN Ramsey input and the Tracks 2/7 recursive outputs remain separate from these finite combinatorial lemmas.
+
+## Leaf-induction Helly reduction (new)
+
+\`Girth/ForestJoinTreeHelly.lean\` now gives a direct **recursive Lean proof source** for \`JoinTree.pairCovered_in_one_bag\`. For nonempty K, assume every two (including equal) vertices occur together in some original bag of a finite join tree. Choose a leaf. If it already contains K, finish. Otherwise pick x0 in K outside the leaf; any pair formerly witnessed only in that leaf occurs together in the parent, because its two vertices also appear with x0 in bags outside the leaf. Delete the leaf, preserve pair coverage, and recurse. This avoids importing a separate general finite-subtree Helly theorem.
+
+\`Girth/FiniteTracePairGraph.lean\` applies the new Helly declaration to prove \`traceConformal_of_joinTree\`: a running-intersection family of all original bags, restricted to Z and covering Z, has a conformal pair graph. Diagonal pairs use explicit vertex coverage; distinct pairs use the pair-graph edge witnesses. The reverse direction (no induced cycle in the pair graph of a tree of bags) and local-to-global clique-tree construction remain unformalized.
+
+**Manual source audit only.** The new Helly proof is recursive on the number of join-tree labels; its \`termination_by\` decreases by removing the leaf. As for all new Track 8 code, its source has not yet been accepted by the Lean kernel or checked with executed \`#print axioms\`.
+
