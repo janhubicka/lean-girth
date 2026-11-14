@@ -162,11 +162,17 @@ theorem ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage
       old.system.toRelStructure
       (activeCarrier A old.system e.toFunctionEmbedding)))
     hLen hFamilyParts
-  have hParameters : T.AdjacentParameters
-      (fun edge => edge.1)
-      (fun ν => E.part ⁻¹' fineAllowed ν) :=
-    lower.coarsened_adjacentParameters_castHeight_preimage
+  have hAllowedIndex (ν : Fin (m + d + 1)) :
+      fineAllowedLower (Fin.cast
+        (congrArg (fun k : ℕ => k + 1) hLen).symm ν) =
+        fineAllowed ν := by
+    cases hLen
+    rfl
+  have hParameters : T.AdjacentParameters (fun edge => edge.1)
+      (fun ν => E.part ⁻¹' fineAllowed ν) := by
+    have hCast := lower.coarsened_adjacentParameters_castHeight_preimage
       A Target.toRelStructure Large fineAllowedLower hLen.symm
+    simpa only [hAllowedIndex] using hCast
   have hAllowed := fineAllowedFromRefinement_all_constraints
     m d (by simp : 0 < m) e.toFunctionEmbedding allowed R.permitted
     R.permitted_subset R.permitted_subsingleton
