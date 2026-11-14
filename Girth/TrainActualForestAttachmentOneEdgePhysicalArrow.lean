@@ -59,8 +59,7 @@ edge-colouring arrow, with no two-A-source-edge assumption. A later
 ordered corollary discharges hCarrierRigid from finite source order. -/
 theorem ForestTailStage.activeAttachment_orderPictureStep_of_singleEdge_physicalArrow
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (hCoreLinear : ALinear A E.toRelStructure)
     (hCoreStrong : ∀ i : I,
       AStrong A E.toRelStructure (copyCarrier (RF i)))
@@ -88,7 +87,7 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_singleEdge_physical
     embeddingArrow_of_physicalEdgeArrow RF hCarrierRigid hPhysicalArrow
   exact stage.activeAttachment_orderPictureStep_of_singleEdge
     hA hBaseLinear e hRigid active E f U bounds
-    hOldBottom hAllBaseStrong hCoreLinear hCoreStrong
+    hOldBottom hBaseCovered hCoreLinear hCoreStrong
     oneEdge hAllCopies hAllEdges κ hEmbeddingArrow
 
 end SingleEdgePhysicalArrow
