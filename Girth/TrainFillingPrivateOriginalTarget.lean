@@ -58,6 +58,28 @@ theorem originalSelectedEdge_mem_target
   change (T.originalSelectedEdge e).2 ∈ T.selectedEdges e.1
   exact ⟨e.2, rfl⟩
 
+/-- The selected target of this complete private first-wagon
+construction contains EXACTLY the original first-wagon A-support
+edges, with their actual owner p. This is equality of the
+complete physical edge family, not merely containment of
+original T-edges in a larger selected substructure. -/
+theorem originalSelectedEdge_range_eq_targetEdges :
+    Set.range T.originalSelectedEdge =
+      T.toPrivateWagonInput.targetEdges := by
+  ext f
+  constructor
+  · rintro ⟨e, rfl⟩
+    exact T.originalSelectedEdge_mem_target e
+  · intro hf
+    rcases f with ⟨p, a⟩
+    change a ∈ T.selectedEdges p at hf
+    obtain ⟨e, he⟩ := hf
+    refine ⟨⟨p, e⟩, ?_⟩
+    apply Prod.ext
+    · rfl
+    · apply Subtype.ext
+      exact he.symm
+
 /-- The full physical carrier of a selected original edge in M[X]
 is precisely the old vertex set of that original edge, embedded
 by Sum.inl. All extra X-positions are private; none leaks into
