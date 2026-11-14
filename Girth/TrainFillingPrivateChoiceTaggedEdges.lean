@@ -58,6 +58,14 @@ theorem selectedTaggedOriginalEdge_injective
     (tagEdge_injective (U S) c) hef
   exact (S c).originalSelectedEdge_injective hLocal
 
+/-- The selected original physical edge is in the correct component
+of the actual target family, rather than being a phantom edge set. -/
+theorem selectedTaggedOriginalEdge_mem_target
+    (c : C) (e : (S c).OriginalEdge) :
+    selectedTaggedOriginalEdge S c e ∈ targetEdges (U S) c := by
+  exact ⟨(S c).originalSelectedEdge e,
+    (S c).originalSelectedEdge_mem_target e, rfl⟩
+
 /-- The complete choice-c original target edge family in
 heterogeneous G0 is EXACTLY the image of every original
 first-wagon A-support edge, tagged by c and its owner p.
@@ -82,13 +90,6 @@ theorem selectedTaggedOriginalEdge_range_eq_targetEdges (c : C) :
     rw [he]
     exact htag
 
-
-of the actual target family, rather than being a phantom edge set. -/
-theorem selectedTaggedOriginalEdge_mem_target
-    (c : C) (e : (S c).OriginalEdge) :
-    selectedTaggedOriginalEdge S c e ∈ targetEdges (U S) c := by
-  exact ⟨(S c).originalSelectedEdge e,
-    (S c).originalSelectedEdge_mem_target e, rfl⟩
 
 /-- Literal carrier identity in the actual tagged heterogeneous M.
 Every original first-wagon edge maps onto exactly its old vertex
