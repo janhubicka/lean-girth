@@ -53,6 +53,20 @@ def UniformSelectedPartiteOrderAllColours
   ∀ (κ : Type) [Fintype κ] [Nonempty κ],
     UniformSelectedPartiteOrder A₀ t κ
 
+/-- The exact larger palette required in the cutoff-two filling
+proof: r colours of each of n old edges become r^n finite colours.
+This is direct specialisation of the universal order predicate, not
+an unproved fixed-colour Ramsey amplification lemma. -/
+theorem UniformSelectedPartiteOrderAllColours.finPower
+    (A₀ : RelStructure L UA)
+    [LinearOrder UA] [Finite UA] [Nonempty UA]
+    (t : List ℕ)
+    (h : UniformSelectedPartiteOrderAllColours A₀ t)
+    (r n : ℕ) (hr : 0 < r) :
+    UniformSelectedPartiteOrder A₀ t (Fin (r ^ n)) := by
+  letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
+  exact h (Fin (r ^ n))
+
 /-- The *real* larger-cutoff proof from the previous module preserves
 universal quantification over palettes. The only induction calls are
 at strictly smaller repeated-(q-1) vectors of positive depth. -/
