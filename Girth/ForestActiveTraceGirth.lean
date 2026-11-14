@@ -50,21 +50,45 @@ theorem girthGT_of_bounded_trace_forest_completions
             (∀ n : N, ∃ j : J,
               (F j).carrier ∩ S = edge n)) :
     GirthGT H m := by
+  classical
   rintro ⟨c, hc⟩
-  have hCard : Fintype.card (Fin c.length) ≤ m := by
-    simpa using hc
+  -- The forest-completion interface indexes families in Type v.
+  -- A raw Fin c.length is Type 0, so use the actual finite edge set
+  -- as a subtype of Set W : Type v. This also deduplicates physical edges.
+  let N : Type v := {e : Set W // e ∈ Set.range c.edge}
+  letI : Fintype N := (Set.finite_range c.edge).fintype
+  let edge : N → Set W := Subtype.val
+  have hEdgeInj : Function.Injective edge := Subtype.val_injective
+  have hSurj :
+      Function.Surjective
+        (fun i : Fin c.length =>
+          (⟨c.edge i, ⟨i, rfl⟩⟩ : N)) := by
+    rintro ⟨e, he⟩
+    obtain ⟨i, hi⟩ := he
+    refine ⟨i, ?_⟩
+    exact Subtype.ext hi
+  have hCard : Fintype.card N ≤ m := by
+    have hle : Fintype.card N ≤ Fintype.card (Fin c.length) :=
+      Fintype.card_le_of_surjective
+        (fun i : Fin c.length =>
+          (⟨c.edge i, ⟨i, rfl⟩⟩ : N)) hSurj
+    simpa using hle.trans hc
+  have hEdges : ∀ n : N, edge n ∈ H := by
+    rintro ⟨e, ⟨i, hi⟩⟩
+    change e ∈ H
+    rw [← hi]
+    exact c.edge_mem i
   obtain ⟨J, finite, F, hForest, hTrace, hEdgeTrace⟩ :=
-    hComplete (Fin c.length) c.edge c.edge_injective
-      (fun n => c.edge_mem n) hCard
+    hComplete N edge hEdgeInj hEdges hCard
   letI : Fintype J := finite
   have hRangeSub : Set.range c.edge ⊆ H := by
-    rintro e ⟨n, rfl⟩
-    exact c.edge_mem n
+    rintro e ⟨i, rfl⟩
+    exact c.edge_mem i
   have hRangeTrace :
       ∀ e : Set W, e ∈ Set.range c.edge →
         ∃ j : J, (F j).carrier ∩ S = e := by
-    rintro e ⟨n, rfl⟩
-    exact hEdgeTrace n
+    intro e he
+    exact hEdgeTrace ⟨e, he⟩
   have hRangeGirth : GirthGT (Set.range c.edge) m :=
     girthGT_selected_of_forest_edge_traces
       F hForest S H hLinear hEdgeBig hTrace
