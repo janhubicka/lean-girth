@@ -6,6 +6,7 @@ import Girth.TrainFillingPrivateCanonicalCutBridge
 import Girth.TrainFillingPrivateActualOrderParent
 import Girth.TrainFillingPrivateActualOrderRealization
 import Girth.TrainFillingPrivateActualIndexedArrow
+import Girth.TrainFillingPrivateParentwiseColour
 import Girth.TrainFillingOrderStageCanonicalAllCutGirth
 
 /-!
@@ -81,3 +82,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderStage_oldColourWordArrow_indexed
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderStage_indexedFilledColourArrow
+
+#check StructuralRamsey.Girth.IndexedPrivateChoice.ParentwiseRealization.designatedTarget_monochromatic
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.ParentwiseRealization.designatedTarget_monochromatic
