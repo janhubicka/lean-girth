@@ -137,3 +137,39 @@ source, preserving the separately revised `paper/07-forest-increment.tex`.
 Only the independent output-linearity preface was transported into
 that proof; the older Track 2 copy of that entire file was NOT
 pushed, so the newer cutoff-three result is preserved.
+
+## 14 November — direct forest increment without an output-girth premise
+
+The old `ForestActualRecursiveIncrement.actualPartiteDesignatedAB_mixedForest_of_relationalLocal`
+still lists output ambient girth (>2) as a premise. The candidate
+`Girth/ForestDirectIncrementLinearity.lean` provides an independent
+geometric derivation of that premise before invoking the theorem.
+
+- `Girth/ForestTwoMemberLinearity.lean` proves
+  `linearEdgeSet_of_finiteMixedForestThrough_oneEdges` and
+  `aLinear_of_finiteMixedForestThrough_oneEdges`.
+  Every actual ambient A-edge is tested; for (m\ge2), its
+  two-member mixed-forest property rules out two different
+  support edges meeting in two vertices. Thus old A-linearity
+  follows from the OLD forest hypothesis, instead of being a
+  new assumption.
+- `hCoreGirth > m\ge2` gives local-core A-linearity via
+  `pairwise_subsingleton_of_girthGT_two`.
+- Base A-linearity, rigid processed A-copy and actual A-strong
+  gluing images give global output A-linearity through
+  `activeAttachment_geometry_of_base_aLinear`.
+  The pre-existing `girthGT_two_of_aLinear` converts this
+  to the exact output support-girth-two input of the older
+  increment theorem.
+- `actualPartiteDesignatedAB_mixedForest_of_strongLinearStep`
+  combines these steps and the original conditional direct
+  increment for every (m\ge2), retaining its honest
+  `m=2` local-base disjunction and whole-gluing-image
+  strongness assumptions. It neither invokes the desired
+  output forest property to prove linearity nor postulates
+  a new Ramsey witness.
+
+These are **uncompiled source-level proof candidates** and were
+added to `Girth/CheckTrack2Trace.lean` for future exact-head
+axiom inspection. They do not promote a manuscript validation mark.
+
