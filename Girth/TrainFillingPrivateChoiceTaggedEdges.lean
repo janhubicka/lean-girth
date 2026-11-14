@@ -46,6 +46,18 @@ noncomputable def selectedTaggedOriginalEdge
     Edge (U S) :=
   tagEdge (U S) c ((S c).originalSelectedEdge e)
 
+/-- Distinct original first-wagon edges stay distinct after
+tagging the selected copy by c. The bottom equality relation is
+therefore preserved and reflected, not merely the positive cuts. -/
+theorem selectedTaggedOriginalEdge_injective
+    (c : C) :
+    Function.Injective (selectedTaggedOriginalEdge S c) := by
+  intro e f hef
+  have hLocal : (S c).originalSelectedEdge e =
+      (S c).originalSelectedEdge f :=
+    (tagEdge_injective (U S) c) hef
+  exact (S c).originalSelectedEdge_injective hLocal
+
 /-- The selected original physical edge is in the correct component
 of the actual target family, rather than being a phantom edge set. -/
 theorem selectedTaggedOriginalEdge_mem_target
