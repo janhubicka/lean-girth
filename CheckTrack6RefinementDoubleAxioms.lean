@@ -15,9 +15,16 @@ historical validation markers. A successful run must inspect the
 printed axiom sets and reject any sorryAx/unapproved axiom.
 
 Pinned toolchain: leanprover/lean4:v4.35.0-rc3.
-Use from repository root:
+Build the imported modules first, in dependency order. Lake imports
+precompiled .olean modules, not unbuilt source files:
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleCount
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementAllRetainedCuts
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
+Then execute from the repository root:
   LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
-Or first build imported modules with Lake, then check this file.
 This is *not* a substitute for checking the selected lower witness.
 -/
 
