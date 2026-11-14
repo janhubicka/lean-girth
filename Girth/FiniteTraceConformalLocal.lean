@@ -122,4 +122,63 @@ theorem pairCliqueOn_contained_of_local_completion
     exact exists_original_bag_covering_faces_of_card_ge_three
       F q hLocal T hT hThree faceBag hFace hBudgetT
 
+/-- The exact conformality conclusion for a finite trace vertex set Z.
+Every clique in the pair graph is covered by an ORIGINAL member;
+in particular this is not an unrestricted claim about the empty
+clique or arbitrary ambient vertices outside Z. -/
+theorem traceConformal_of_local_completion
+    [Fintype W] [Fintype ι]
+    (F : ι → Set W) (Z : Set W) (q : ℕ)
+    (hCover : ∀ x : W, x ∈ Z → ∃ i : ι, x ∈ F i)
+    (hLocal : HasInternalJoinTreeCompletions F q)
+    (hBudget : Z.ncard ≤ q) :
+    TraceConformal F Z := by
+  classical
+  letI : Fintype Z := Fintype.ofFinite _
+  intro K hK hClique
+  let S : Finset Z := K.toFinset
+  let T : Finset W := S.image Subtype.val
+  have hT : T.Nonempty := by
+    obtain ⟨x, hx⟩ := hK
+    refine ⟨x.1, Finset.mem_image.mpr ?_⟩
+    exact ⟨x, by simpa only [S, Set.mem_toFinset] using hx, rfl⟩
+  have hCoverT :
+      ∀ x : W, x ∈ T → ∃ i : ι, x ∈ F i := by
+    intro x hx
+    obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp hx
+    exact hCover u.1 u.2
+  have hCliqueT : PairCliqueOn F T := by
+    intro x hx y hy hxy
+    obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp hx
+    obtain ⟨v, hv, rfl⟩ := Finset.mem_image.mp hy
+    have huK : u ∈ K := by
+      simpa only [S, Set.mem_toFinset] using hu
+    have hvK : v ∈ K := by
+      simpa only [S, Set.mem_toFinset] using hv
+    have huv : u ≠ v := by
+      intro eq
+      exact hxy (congrArg Subtype.val eq)
+    exact (hClique huK hvK huv).2
+  have hBudgetT : T.card ≤ q := by
+    have hImg : T.card ≤ S.card := Finset.card_image_le
+    have hSub : S.card ≤ Fintype.card Z := by
+      calc
+        S.card ≤ (Finset.univ : Finset Z).card :=
+          Finset.card_le_card (Finset.subset_univ S)
+        _ = Fintype.card Z := Finset.card_univ
+    calc
+      T.card ≤ S.card := hImg
+      _ ≤ Fintype.card Z := hSub
+      _ = Z.ncard := Set.fintypeCard_eq_ncard Z
+      _ ≤ q := hBudget
+  obtain ⟨i, hi⟩ :=
+    pairCliqueOn_contained_of_local_completion
+      F q hLocal T hT hCoverT hCliqueT hBudgetT
+  refine ⟨i, ?_⟩
+  intro z hz
+  apply hi z.1
+  exact Finset.mem_image.mpr
+    ⟨z, by simpa only [S, Set.mem_toFinset] using hz, rfl⟩
+
+
 end StructuralRamsey.Girth
