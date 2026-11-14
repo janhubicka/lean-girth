@@ -78,8 +78,7 @@ with the original B-copy labels and the entire ordered train retained.
 No F_t two-source-edge/injective-support premise is introduced. -/
 theorem ForestTailStage.activeAttachment_orderPictureStep_of_singleEdge
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (hCoreLinear : ALinear A E.toRelStructure)
     (hCoreStrong : ∀ i : I, AStrong A E.toRelStructure (copyCarrier (RF i)))
     (oneEdge : Set Y)
@@ -99,6 +98,10 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_singleEdge
       (RelStructure.Attachment.attach
         stage.system.toRelStructure S E.toRelStructure RF) := by
     exact newStage.aLinear
+  have hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
+      AStrong A D (copyCarrier b) :=
+    ActiveAttachmentBounds.all_base_strong_of_covered
+      stage hA e active E f U bounds hBaseCovered
   have hStrong : ∀ r : Selected,
       AStrong A D (copyCarrier r.1.base) :=
     fun r => bounds.baseStrong r.1 r.2
