@@ -63,8 +63,7 @@ system bounds. This is the single per-fibre interface for the
 later finite Ready induction. -/
 theorem ForestTailStage.activeAttachment_orderPictureStep_of_physical_local_alternatives
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (hAlternative :
       (∃ (a b : Embedding A (stage.system.toRelStructure.induce S)),
         ¬ SameCopy a b ∧
@@ -93,11 +92,11 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_physical_local_alte
       ⟨hCoreLinear, hCoreStrong, edge, hAllCopies, hAllEdges⟩
   · exact stage.activeAttachment_orderPictureStep_of_finiteMixed_physicalArrow
       hA hBaseLinear e hRigid active E f U bounds
-      hOldBottom hAllBaseStrong a b hTwoSource hDistinct hMixed
+      hOldBottom hBaseCovered a b hTwoSource hDistinct hMixed
       κ hCarrierRigid hPhysicalArrow
   · exact stage.activeAttachment_orderPictureStep_of_singleEdge_physicalArrow
       hA hBaseLinear e hRigid active E f U bounds
-      hOldBottom hAllBaseStrong hCoreLinear hCoreStrong
+      hOldBottom hBaseCovered hCoreLinear hCoreStrong
       edge hAllCopies hAllEdges κ hCarrierRigid hPhysicalArrow
 
 end LocalPhysicalAlternative
