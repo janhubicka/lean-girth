@@ -206,3 +206,111 @@ full system girth.
 
 **No new validation mark is justified.** This is an adversarial
 source audit and an explicit, testable integration plan.
+
+
+## 14 November further adversarial repair: keep ordered EHN witnesses
+
+**New precise flaw in the previous local EHN adapter:** the existing
+\`closedTargetRamseyFamily_of_monotone_embeddings\` proves its Ramsey
+arrow by first taking an **ordered** EHN target embedding, then
+forgets the auxiliary linear-order relation when it returns a
+\`ClosedTargetRamseyFamily\`. The final exported type quantifies
+over closure embeddings with no strict monotonicity certificate.
+Therefore indexing the private choices by **all** such embeddings
+does *not* by itself prove the \`hCoordinate\` hypotheses needed
+by \`actualIndexedContractedM_support_eq\`.
+
+Candidate repair, still uncompiled:
+
+- \`TrainFillingPrivateMonotoneEHN.lean\` retains the genuine
+  increasing EHN-selected embedding as part of a stronger
+  \`MonotoneClosedTargetRamseyFamily\` statement. It follows
+  the already checked ordered EHN proof without adding a
+  Ramsey-theoretic assumption; the ordinary result is obtained
+  by forgetting the certificate.
+- \`TrainFillingPrivateMonotoneSummands.lean\` indexes choices
+  only by the genuine closed embeddings **with** a
+  \`StrictMono\` certificate, not every closure embedding.
+  It derives monotonicity of all individual
+  \`s_p = s ∘ u_p\` coordinates from the increasing component
+  inclusions and derives the one-common-colour EHN local arrow
+  on this restricted index family.
+- \`TrainFillingPrivateMonotoneExistence.lean\` combines the
+  ordered EHN theorem and these unequal-summand constructions
+  into a single existence statement with a common full X-edge
+  family, increasing local coordinates and the actual indexed
+  local Ramsey arrow.
+- \`TrainFillingPrivateColourBlockOrder.lean\` constructs the
+  **colour-first, old-order-second** total order by
+  \`LinearOrder.lift'\` through \`I ×ₗ X\`. It proves
+  the missing \`hXBlocks\` property and proves that
+  a colour-preserving increasing W→X embedding remains
+  increasing after colour-block sorting, either just X
+  when W already has blocks, or BOTH W and X. This
+  does **not** assert that an arbitrary functional EHN
+  closure embedding preserves the colours: that must
+  be derived from the concrete unary predicates when
+  instantiating the ordered relational target.
+
+**Separate uncovered-vertex issue:** \`ElementaryCAClass A R\`
+means A-linear reduct plus canonical binary closure c_A;
+it does NOT assert that every vertex of the produced EHN X
+lies in an A-copy. The paper uses a **covered** witness X,
+so the formal interface must either produce this genuinely
+or explicitly trim X after the EHN selection.
+
+\`TrainFillingPrivateCoveredEHN.lean\` now proves:
+  (1) the union of all A-support edge carriers has no uncovered
+  vertices by definition, and each original edge is contained;
+  (2) if each original F_p is A-covered and the component
+  inclusions cover W, then W is A-covered; and
+  (3) every chosen W→X image survives entirely in the
+  A-supported vertex reduct, with no loss of an original edge.
+The **full induced-structure retyping and Ramsey-arrow transfer**
+to the covered vertex type is **still open**. No coverage of the
+original C is assumed.
+
+**Parent strongness:** a new candidate
+\`TrainFillingPrivateActualParentStrong.lean\` derives
+\`actualOrderParent_filledEdges_eq_contained\`: the full
+filled-edge image of a genuine selected lower M-parent is
+EXACTLY the set of ambient H-edges contained in its
+selected vertex carrier. It uses the already checked
+\`UniformFillingData.selectedFilledEdgeEmbedding_range_eq_contained\`,
+the actual selected old support range, old
+\`OrderStage.strong\`, and the two-vertex template condition.
+No output girth or arbitrary output strongness appears.
+
+All new declarations have been added to
+\`Girth/CheckTrack5Private.lean\` with appropriate
+\`#check\`/\`#print axioms\` probes. These probes have
+**not** been executed in Lean. Source-level delimiter/import
+checks are not kernel verification.
+
+### Current outstanding gates, not assumptions
+
+1. Produce the **actual relational disjoint union** W with
+   selected increasing component inclusions, full A-coverage
+   and the correct unary predicates/within-colour orders.
+2. Retype the EHN-selected family to the **covered** X
+   support (preserving the arrow), then derive the actual
+   vertex colour function from the unary relations. Sort
+   the X order by colour blocks, preserving selected monotonicity.
+3. Instantiate the checked real coloured-order M support
+   theorem and the genuine shorter \`RR_h\` OrderStage with
+   the exact same X, selected choice family, support and
+   global partite order.
+4. Identify the actual canonical filled parent cut with
+   \`OrderStage.canonicalFilledCut_fullSystemGirthGT\`;
+   complete the selected labelled T embedding (all parts,
+   orders and wagon relations) in addition to the candidate
+   monochromatic edge statement.
+5. Obtain an **exact-head local Lean build** and axiom
+   audit, and a full TeX compile; until then no
+   verification marks or PR merges.
+
+This is a **correctness repair** to the EHN application
+interface, not a new hypothesis of the mathematical theorem.
+It avoids the invalid shortcut "all closed copies are ordered"
+and does not reintroduce any requirement that
+\`F_p ≃ W\`.
