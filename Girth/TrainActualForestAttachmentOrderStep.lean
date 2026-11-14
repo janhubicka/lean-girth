@@ -1,4 +1,5 @@
 import Girth.TrainSelectedPictureStageAssembly
+import Girth.TrainActualSelectedBaseCoverage
 import Girth.TrainActualBottomForestFromFiniteMixed
 import Girth.TrainForestStageToOrderStage
 import Girth.TrainActualSelectedOutputGirth
@@ -84,8 +85,7 @@ selected family. No lower witness full girth or replacement of
 the selected B-label index is assumed. -/
 theorem ForestTailStage.activeAttachment_bottom_full_of_finiteMixed
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (a b : Embedding A (stage.system.toRelStructure.induce S))
     (hTwoSource : ¬ SameCopy a b)
     (hSelectedImages : Function.Injective
@@ -93,6 +93,10 @@ theorem ForestTailStage.activeAttachment_bottom_full_of_finiteMixed
     (hLocalMixed : FiniteMixedForestThrough
       (RelationalMixedSupportTest A RF) q) :
     (ActualBottom).FullSystemGirthGT q := by
+  have hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
+      AStrong A D (copyCarrier b) :=
+    ActiveAttachmentBounds.all_base_strong_of_covered
+      stage hA e active E f U bounds hBaseCovered
   have hStrong : ∀ r : Selected,
       AStrong A D (copyCarrier r.1.base) :=
     fun r => bounds.baseStrong r.1 r.2
@@ -157,8 +161,7 @@ forest produces its bottom bound. The finite Ramsey arrow at this
 profile uses exactly the already constructed selected transition. -/
 theorem ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed
     (hOldBottom : (OldBottom).FullSystemGirthGT q)
-    (hAllBaseStrong : ∀ b : Embedding B D, b ∈ family →
-      AStrong A D (copyCarrier b))
+    (hBaseCovered : stage.CoversBase)
     (a b : Embedding A (stage.system.toRelStructure.induce S))
     (hTwoSource : ¬ SameCopy a b)
     (hSelectedImages : Function.Injective
@@ -174,7 +177,7 @@ theorem ForestTailStage.activeAttachment_orderPictureStep_of_finiteMixed
   have hBottomActual : (ActualBottom).FullSystemGirthGT q :=
     stage.activeAttachment_bottom_full_of_finiteMixed
       hA hBaseLinear e hRigid active E f U bounds
-      hOldBottom hAllBaseStrong a b hTwoSource
+      hOldBottom hBaseCovered a b hTwoSource
       hSelectedImages hLocalMixed
   exact stage.activeAttachment_orderPictureStep_of_actualBottom
     hA hBaseLinear e hRigid active E f U bounds
