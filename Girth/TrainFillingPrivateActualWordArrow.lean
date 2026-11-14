@@ -39,6 +39,23 @@ variable {L : RelLanguage.{u}}
 variable {C V P X UA : Type v}
 variable (U : C → PrivateWagonInput V P X)
 
+/-- The genuine contracted M-support cannot be empty when there
+is a choice and a first wagon. It then contains an actual A-copy:
+the complete first-wagon carrier lies in its full support set.
+No independent nonempty A-embedding premise is needed in this case. -/
+theorem sourceA_nonempty_of_contractedSupport
+    (A : RelStructure L UA)
+    (M : RelStructure L (Vertex U))
+    (hSupport : supportCopies A M = Set.range (contractedCarrier U))
+    (hCP : Nonempty (C × P)) :
+    Nonempty (Embedding A M) := by
+  obtain ⟨cp⟩ := hCP
+  have h : contractedCarrier U cp ∈ supportCopies A M := by
+    rw [hSupport]
+    exact ⟨cp, rfl⟩
+  obtain ⟨a, _ha⟩ := h
+  exact ⟨a⟩
+
 /-- For a genuine selected lower OrderStage, the selected A-copy
 arrow on complete local-template colour words yields an injection
 of ALL contracted first-wagon edges with a common full word.
