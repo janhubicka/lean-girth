@@ -48,6 +48,28 @@ theorem ParentwiseRealization.originalTaggedEdge_mem_target
   exact ⟨selectedTaggedOriginalEdge S c e,
     selectedTaggedOriginalEdge_mem_target S c e, rfl⟩
 
+/-- The literal original T edge map into the filled ambient H
+is injective for every selected pair (i,c). Its source
+injectivity comes from each local first-wagon A-support map
+and the choice tag; its target injectivity is the ACTUAL
+parentwise physical-edge embedding, not a separate assumption. -/
+theorem ParentwiseRealization.originalTaggedEdge_injective
+    (R : ParentwiseRealization (U S) parent D)
+    (i : I) (c : C) :
+    Function.Injective
+      (fun e : (S c).OriginalEdge =>
+        R.edge i (selectedTaggedOriginalEdge S c e)) := by
+  intro e f h
+  exact selectedTaggedOriginalEdge_injective S c
+    ((R.edge i).injective h)
+
+/-- The selected target vertex map is exactly j_i ∘ τ_c,
+and is injective for every choice c and selected old parent i. -/
+def ParentwiseRealization.originalTaggedVertexEmbedding
+    (R : ParentwiseRealization (U S) parent D)
+    (i : I) (c : C) : V ↪ GV :=
+  (R.vertex i).comp (originalTargetVertexEmbedding (U S) c)
+
 /-- The physical edge of the original T under the chosen
 label (i,c) has precisely the carrier obtained by first
 tagging original vertices with c, then applying the SAME
