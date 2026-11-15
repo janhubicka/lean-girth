@@ -26,7 +26,7 @@ lake build Girth.TrainTrack3JointGeometryParameters Girth.TrainTrack3StageJointG
 
 tmp="$(mktemp)"
 trap 'rm -f "$tmp"' EXIT
-echo 'Elaborating #check and #print axioms for all five Track 3 declarations ...'
+echo 'Elaborating #check and #print axioms for all six Track 3 declarations ...'
 lake env lean CheckTrack3JointGeometryParameters.lean | tee "$tmp"
 python3 scripts/check_axioms.py "$tmp" CheckTrack3JointGeometryParameters.lean
 
