@@ -266,5 +266,75 @@ noncomputable def ForestTailStage.activeAttachment_of_mixed_bounds :
       hStrong hTwo (t.get j)).mp
         ⟨hGeometry.1, bounds.tailSupreme j hj⟩
 
+/-- Each literal standard copy is a strong selected train
+transition into the MIXED-core next stage. Only the original
+selected family and exact physical parent restriction are used.
+The change of local core-coverage field does not affect this map. -/
+noncomputable def ForestTailStage.activeAttachment_mixed_transition
+    (i : I) :
+    TransitionEmbedding stage
+      (stage.activeAttachment_of_mixed_bounds
+        hA hBaseLinear e hRigid active E f U bounds) where
+  toPartite := StructuralRamsey.Partite.Attachment.copyEmbedding
+    stage.system S E f i
+  map_selected := activeAttachment_standard_selected
+    stage.system S E f B D family stage.selected i
+  train_iff := fun μ a b => activeAttachment_standard_train_iff
+    A hA stage.system S E f stage.train U Shared
+    bounds.interior μ i a b
+
+/-- The usual local homogeneous standard choice gives an actual
+selected Ramsey PictureStep for the weaker mixed-core attachment.
+The global output mixedCoverage is already certified by the
+genuine lower-stage nested selected-gluing argument, and no
+core IrreduciblesExtendTo A assumption appears. -/
+theorem ForestTailStage.activeAttachment_mixed_pictureStep
+    (κ : Type w)
+    (hLocal : ∀ χ :
+      StructuralRamsey.Partite.ProjectedEmbedding
+        A E e.toFunctionEmbedding → κ,
+      ∃ i : I,
+        ∀ a b : StructuralRamsey.Partite.ProjectedEmbedding
+          A stage.system e.toFunctionEmbedding,
+        χ ((activeInduceProjected A a
+          (projected_mem_activeCarrier A stage.system
+            e.toFunctionEmbedding a)).comp (f i)) =
+        χ ((activeInduceProjected A b
+          (projected_mem_activeCarrier A stage.system
+            e.toFunctionEmbedding b)).comp (f i))) :
+    PictureStep stage
+      (stage.activeAttachment_of_mixed_bounds
+        hA hBaseLinear e hRigid active E f U bounds)
+      e.toFunctionEmbedding κ := by
+  intro χ
+  obtain ⟨i, _, _, hi⟩ := activeAttachment_selected_train_selection
+    A hA B D stage.system family stage.selected
+    e.toFunctionEmbedding active E f stage.train U
+    bounds.interior κ hLocal χ
+  exact ⟨stage.activeAttachment_mixed_transition
+    hA hBaseLinear e hRigid active E f U bounds i, hi⟩
+
+/-- A PHYSICAL selected local F_t family can be fed through the
+ordinary embedding-colouring interface: this selected mixed-core
+picture step has exactly the same Ramsey-arrow premise as the
+previous checked strong-core constructor, hence uses the same
+ordered physical-edge conversion. -/
+theorem ForestTailStage.activeAttachment_mixed_pictureStep_of_familyArrow
+    (κ : Type w) [Nonempty κ]
+    (hArrow : ∀ χ : Embedding A E.toRelStructure → κ,
+      ∃ i : I,
+        ∀ a b : Embedding A
+          (stage.system.induce S).toRelStructure,
+          χ ((f i).toEmbedding.comp a) =
+            χ ((f i).toEmbedding.comp b)) :
+    PictureStep stage
+      (stage.activeAttachment_of_mixed_bounds
+        hA hBaseLinear e hRigid active E f U bounds)
+      e.toFunctionEmbedding κ :=
+  stage.activeAttachment_mixed_pictureStep
+    hA hBaseLinear e hRigid active E f U bounds κ
+    (activeAttachment_localSelection_of_familyArrow
+      A stage.system e.toFunctionEmbedding E f κ hArrow)
+
 end MixedAssembly
 end StructuralRamsey.Girth.TrainRecursiveWitness
