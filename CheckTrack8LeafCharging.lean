@@ -130,3 +130,6 @@ all printed axioms before promoting a validation mark.
 #print axioms StructuralRamsey.Girth.min_laterNeighbor_specs
 #print axioms StructuralRamsey.Girth.min_laterNeighbor_le
 #print axioms StructuralRamsey.Girth.laterNeighbor_mem_parentBag
+
+#check StructuralRamsey.Girth.mem_laterNeighbors_iff
+#print axioms StructuralRamsey.Girth.mem_laterNeighbors_iff
