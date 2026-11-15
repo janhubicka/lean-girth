@@ -164,14 +164,20 @@ theorem monotoneSelectedUnion_coordinate_mono_reblocked
     exact monotoneSelectedUnion_colourCompatibility
       A B R oldCarrier local include hInclude hCovered
       hClass oldColour unionColour templateColour hOld hSelected
-  letI : LinearOrder X := colourBlockOrder templateColour
+  -- Construct each new-order certificate WHILE the old X-order
+  -- is still the active instance for hOldMono. Only afterwards
+  -- expose the new order in the conclusion.
+  have hNewMono (c : Choice) (p : P) :
+      letI : LinearOrder X := colourBlockOrder templateColour
+      StrictMono ((U c).coordinate p) := by
+    exact strictMono_into_colourBlockOrder
+      (fun z : {x : V // x ∈ oldCarrier p} => oldColour z.1)
+      templateColour ((U c).coordinate p)
+      (fun z => (hColours c p z).symm)
+      (hOldMono c p)
+      (fun x y hDifferent hxy =>
+        hOldBlocks x.1 y.1 hDifferent hxy)
   intro c p
-  exact strictMono_into_colourBlockOrder
-    (fun z : {x : V // x ∈ oldCarrier p} => oldColour z.1)
-    templateColour ((U c).coordinate p)
-    (fun z => (hColours c p z).symm)
-    (hOldMono c p)
-    (fun x y hDifferent hxy =>
-      hOldBlocks x.1 y.1 hDifferent hxy)
+  exact hNewMono c p
 
 end StructuralRamsey.Girth.SummandPrivateTemplate
