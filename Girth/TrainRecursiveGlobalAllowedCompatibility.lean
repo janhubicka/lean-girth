@@ -29,8 +29,8 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 
 open StructuralRamsey.RelStructure
 
-universe u v
-variable {L : RelLanguage.{u}} {VB W Q Y : Type v}
+universe u v w
+variable {L : RelLanguage.{u}} {VB W Y : Type v} {Q : Type w}
 
 /-- The original selected-family pullback condition and a genuine
 coverage of the allowed base vertices imply that every permitted D-point
