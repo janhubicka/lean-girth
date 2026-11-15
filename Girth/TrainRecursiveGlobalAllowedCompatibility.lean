@@ -184,6 +184,58 @@ theorem adjacentParameters_of_canonicalCoarseAllowed
     (fun ν => part ⁻¹' (predD ⁻¹' permitted ν))
   exact hParam
 
+/-- The output's ACTUAL coarse unary predicate need not be the
+coarse predicate of its part: Partite.System stores an arbitrary
+part map subject to transversality, not a relational homomorphism.
+To pass from the base predicate to the actual output predicate one
+must establish this compatibility (or its restriction to contacts).
+
+With that premise, the canonical coarse allowed sets give the
+actual original-vertex train parameters, not merely parameters for
+the artificial predicate obtained by composing part and predD. -/
+theorem adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility
+    {Edge : Type v} {m : ℕ} (T : EdgeTrainLevels Edge m)
+    (edge : Edge → Set Y) (part : Y → W)
+    (predD : W → Q) (predOut : Y → Q)
+    (permitted : Fin (m + 1) → Set Q)
+    (hColour : ∀ y : Y, predOut y = predD (part y))
+    (hParam : T.AdjacentParameters edge
+      (fun ν => part ⁻¹' canonicalCoarseAllowed predD permitted ν)) :
+    T.AdjacentParameters edge
+      (fun ν => predOut ⁻¹' permitted ν) := by
+  have hEq :
+      (fun ν : Fin (m + 1) =>
+        (predD ∘ part) ⁻¹' permitted ν) =
+      (fun ν : Fin (m + 1) =>
+        predOut ⁻¹' permitted ν) := by
+    funext ν
+    ext y
+    change predD (part y) ∈ permitted ν ↔ predOut y ∈ permitted ν
+    rw [hColour y]
+  rw [← hEq]
+  exact adjacentParameters_of_canonicalCoarseAllowed
+    T edge part predD permitted hParam
+
+/-- It can suffice to prove colour/part compatibility only on
+vertices that actually appear as cut contacts. There is no need to
+identify the unary colours of irrelevant isolated output points. -/
+theorem usedContact_originalPredicate_of_colourCompatibility
+    {m : ℕ} (contact : Fin (m + 1) → Set Y)
+    (part : Y → W) (predD : W → Q) (predOut : Y → Q)
+    (permitted : Fin (m + 1) → Set Q)
+    (hContactCoarse : ∀ ν : Fin (m + 1),
+      contact ν ⊆ (predD ∘ part) ⁻¹' permitted ν)
+    (hContactColour : ∀ (ν : Fin (m + 1)) (y : Y),
+      y ∈ contact ν → predOut y = predD (part y)) :
+    ∀ ν : Fin (m + 1),
+      contact ν ⊆ predOut ⁻¹' permitted ν := by
+  intro ν y hy
+  have hPermitted : predD (part y) ∈ permitted ν :=
+    hContactCoarse ν hy
+  change predOut y ∈ permitted ν
+  rw [hContactColour ν y hy]
+  exact hPermitted
+
 /-- A weaker sufficient condition than coverage of *every* allowed
 D-base point: it is enough that the actually USED contact vertices
 of the output have base parts in prescribed B-images.
