@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveGlobalAllowedCompatibility
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.allowedBase_covered_of_familyPullbacks
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.allowedBase_coarsePredicate_of_coverage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.allowedVertices_coarsePredicate_of_globalBaseBound
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.localPullback_does_not_imply_globalCover
