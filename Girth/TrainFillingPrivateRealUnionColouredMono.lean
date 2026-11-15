@@ -112,6 +112,7 @@ theorem colouredFirstWagonUnion_allACopies_strictMono
     (hProfileBlocks : ∀ i j : Fin k,
       i < j → profile i ≠ profile j → profile i < profile j)
     (E : Set (Set V)) (colour : V → I)
+    (oldCarrier : P → Set V)
     (hOldBlocks : ∀ x y : V,
       colour x ≠ colour y →
       x < y → colour x < colour y)
@@ -119,15 +120,13 @@ theorem colouredFirstWagonUnion_allACopies_strictMono
       colour x < colour y → x < y) :
     let D := colouredOrderedEdgeTarget k E colour
     let W := firstWagonDisjointUnion
-      (fun p : P => Set.univ) (fun p => D.induce Set.univ)
-    letI : LinearOrder (FirstWagonUnionVertex
-        (fun _ : P => (Set.univ : Set V))) :=
-      firstWagonUnionOrder (fun _ : P => (Set.univ : Set V)) colour
+      oldCarrier (fun p => D.induce (oldCarrier p))
+    letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
+      firstWagonUnionOrder oldCarrier colour
     ∀ a : Embedding (colouredOrderedEdgeSource (v := v) k profile) W,
       StrictMono a := by
   intro a
   let D := colouredOrderedEdgeTarget k E colour
-  let oldCarrier : P → Set V := fun _ => Set.univ
   let local : (p : P) → RelStructure
       (colouredOrderedEdgeLanguage I k)
         {x : V // x ∈ oldCarrier p} :=
