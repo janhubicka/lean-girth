@@ -38,7 +38,7 @@ theorem colouredFirstWagonACopy_preservesColour
     (k : ℕ) (profile : Fin k → I)
     (E : Set (Set V)) (colour : V → I) (S : Set V)
     (a : Embedding
-      (colouredOrderedEdgeSource (v := v) k profile)
+      (colouredOrderedEdgeSource.{u,v} k profile)
       ((colouredOrderedEdgeTarget k E colour).induce S))
     (x : ULift.{v} (Fin k)) :
     colour (a x).1 = profile x.down := by
@@ -68,7 +68,7 @@ theorem colouredFirstWagonACopy_strictMono
       colour x < colour y → x < y)
     (S : Set V)
     (a : Embedding
-      (colouredOrderedEdgeSource (v := v) k profile)
+      (colouredOrderedEdgeSource.{u,v} k profile)
       ((colouredOrderedEdgeTarget k E colour).induce S)) :
     StrictMono a := by
   intro x y hxy
@@ -80,7 +80,7 @@ theorem colouredFirstWagonACopy_strictMono
       E colour S a y
   by_cases hSame : profile x.down = profile y.down
   · have hSource :
-        (colouredOrderedEdgeSource (v := v) k profile).rel
+        (colouredOrderedEdgeSource.{u,v} k profile).rel
           (.inr ()) ![x, y] := by
       change profile x.down = profile y.down ∧
         x.down < y.down
@@ -123,7 +123,7 @@ theorem colouredFirstWagonUnion_allACopies_strictMono
       oldCarrier (fun p => D.induce (oldCarrier p))
     letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
       firstWagonUnionOrder oldCarrier colour
-    ∀ a : Embedding (colouredOrderedEdgeSource (v := v) k profile) W,
+    ∀ a : Embedding (colouredOrderedEdgeSource.{u,v} k profile) W,
       StrictMono a := by
   intro a
   let D := colouredOrderedEdgeTarget k E colour
@@ -134,13 +134,13 @@ theorem colouredFirstWagonUnion_allACopies_strictMono
   let hPositive := colouredOrderedEdgeLanguage_positive_arity k hk
   let hSpan := colouredOrderedEdgeSource_hasSpanningRelation k profile
   have hLocalMono : ∀ p : P, ∀ b :
-      Embedding (colouredOrderedEdgeSource (v := v) k profile)
+      Embedding (colouredOrderedEdgeSource.{u,v} k profile)
         (local p), StrictMono b := by
     intro p b
     exact colouredFirstWagonACopy_strictMono k profile
       hProfileBlocks E colour hOldColourToOrder (oldCarrier p) b
   exact firstWagonDisjointUnion_allACopies_strictMono
-    (colouredOrderedEdgeSource (v := v) k profile)
+    (colouredOrderedEdgeSource.{u,v} k profile)
       oldCarrier local hPositive hSpan
       colour hOldBlocks hLocalMono
 
