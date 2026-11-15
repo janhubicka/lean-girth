@@ -176,3 +176,4 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.indexedPhysicalArrow_of_partiteFamilyArrow_for_orderedA
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_Ft_localData_and_physicalArrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sameVector_localBundle_with_positive
