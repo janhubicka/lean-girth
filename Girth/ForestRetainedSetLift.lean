@@ -129,4 +129,77 @@ theorem forestOfCopies_lift_without_singleton_retained_set
   exact ForestOfCopies.restrict_to_retained_finset
     all kept hAll hKeepSub hOmitted
 
+
+/-- Complete finite-SET formulation including the EMPTY outer family.
+
+The manuscript allows an empty forest of outer copies. In that case
+there is no selected member and the retained image is empty. For
+nonempty outer families the chosen join tree and its edge requests
+enter the existing retained-set lifting theorem. No extra local
+edge-coverage hypothesis is introduced. -/
+theorem forestOfCopies_lift_retained_set_including_empty_outer
+    {K : Q → Type v}
+    [Fintype Q]
+    [∀ q : Q, Fintype (K q)]
+    [∀ q : Q, Nonempty (K q)]
+    {P : Q → HypergraphPiece W}
+    (hOuterAllowed : PairwiseAllowed P)
+    {F : (q : Q) → K q → HypergraphPiece W}
+    (hLocal : ∀ q : Q, ForestOfCopies (F q))
+    (hContain :
+      ∀ q (k : K q), (F q k).carrier ⊆ (P q).carrier)
+    (hOuterPlan :
+      IsEmpty Q ∨
+        ∃ JOuter : JoinTree P,
+          ∀ ⦃q r : Q⦄ (hadj : JOuter.tree.Adj q r),
+            ¬((P q).carrier ∩ (P r).carrier).Subsingleton →
+            ∃ k : K q,
+              F q k = HypergraphPiece.oneEdge
+                ((P q).carrier ∩ (P r).carrier))
+    (H : Set (Set W))
+    (hLinear : LinearEdgeSet H)
+    (hLarge : ∀ e : Set W, e ∈ H → ¬ e.Subsingleton)
+    (hOuterEdges :
+      ∀ q : Q, (P q).edges ⊆ H)
+    (hLocalEdges :
+      ∀ q : Q, ∀ k : K q, (F q k).edges ⊆ H)
+    (hLocalNonempty :
+      ∀ q : Q, ∀ k : K q, (F q k).edges.Nonempty)
+    (kept : Finset (HypergraphPiece W))
+    (hKeepSub :
+      kept ⊆ Finset.univ.image
+        (fun z : Sigma K => F z.1 z.2))
+    (hOmitted :
+      ∀ T : HypergraphPiece W,
+        T ∈ Finset.univ.image
+          (fun z : Sigma K => F z.1 z.2) →
+        T ∉ kept → T.IsOneEdge) :
+    ForestOfCopies
+      (fun T : {T : HypergraphPiece W // T ∈ kept} => T.1) := by
+  classical
+  by_cases hQ : Nonempty Q
+  · letI : Nonempty Q := hQ
+    rcases hOuterPlan with hEmpty | ⟨JOuter, hEdgeRequest⟩
+    · exact (not_isEmpty_of_nonempty Q hEmpty).elim
+    · exact forestOfCopies_lift_without_singleton_retained_set
+        hOuterAllowed JOuter hLocal hContain hEdgeRequest
+        H hLinear hLarge hOuterEdges hLocalEdges hLocalNonempty
+        kept hKeepSub hOmitted
+  · letI : IsEmpty Q := ⟨fun q => hQ ⟨q⟩⟩
+    letI : IsEmpty (Sigma K) := ⟨fun z => isEmptyElim z.1⟩
+    haveI : IsEmpty
+        {T : HypergraphPiece W // T ∈ kept} := by
+      constructor
+      intro T
+      have hIn : T.1 ∈ Finset.univ.image
+          (fun z : Sigma K => F z.1 z.2) :=
+        hKeepSub T.2
+      obtain ⟨z, _, _⟩ := Finset.mem_image.mp hIn
+      exact isEmptyElim z
+    constructor
+    · intro x
+      exact isEmptyElim x
+    · left
+      infer_instance
+
 end StructuralRamsey.Girth
