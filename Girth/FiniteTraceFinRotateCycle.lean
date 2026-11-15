@@ -28,7 +28,7 @@ theorem finRotate_no_fixed_of_four_le
     ∀ i : Fin k, finRotate k i ≠ i := by
   intro i heq
   have hSupport : (finRotate k).support = Finset.univ :=
-    Equiv.Perm.support_finRotate_of_le (by omega : 2 ≤ k)
+    support_finRotate_of_le (by omega : 2 ≤ k)
   have hi : i ∈ (finRotate k).support := by
     rw [hSupport]
     exact Finset.mem_univ i
