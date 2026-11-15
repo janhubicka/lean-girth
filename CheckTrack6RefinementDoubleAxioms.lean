@@ -1,6 +1,7 @@
 import Girth.TrainRecursivePhysicalFineGirthDouble
 import Girth.TrainRecursiveRefinementAllRetainedCuts
 import Girth.TrainRecursiveRefinementCompleteCutVector
+import Girth.TrainRecursiveRefinementSelectedTransport
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -54,3 +55,5 @@ This is *not* a substitute for checking the selected lower witness.
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedFineCutVector
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_heightOne_twice
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_heightOne_twice
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_map_rel_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_selected_rel_iff
