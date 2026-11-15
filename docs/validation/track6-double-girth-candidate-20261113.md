@@ -142,3 +142,42 @@ the central checker, counted **22 theorem declarations and 22 fully
 qualified #print axioms requests**, and found no active source
 `axiom`, `sorry` or `admit` declarations. This is **not** a Lean
 elaboration/axiom certificate; all new statements are still candidates.
+
+### 15 November: selected-map transport and exact static audit
+
+New module `Girth/TrainRecursiveRefinementSelectedTransport.lean` proves
+two **conditional** statements:
+
+- `EdgeTrainLevels.forgetFirstCuts_map_rel_iff`: a specified edge map
+  preserving **and reflecting** all fine train relations preserves
+  and reflects every coarsened relation using the literal retained index.
+- `EdgeTrainLevels.forgetFirstCuts_selected_rel_iff`: the **same**
+  indexed family of injective physical-edge maps retains these
+  equivalences, with no quotient of selected-copy labels or change
+  in the underlying maps.
+
+These discharge the *train-relation* component of the manuscript's
+"same selected embeddings after forgetting" claim. They do **not**
+create the lower selected family, prove its Ramsey arrow, or
+construct its strong induced hypergraph embeddings. Those are
+separate checked or conditional modules in Tracks 3/7.
+
+The central `CheckTrack6RefinementDoubleAxioms.lean` now imports
+**seven** candidate source modules and requests **24** fully qualified
+axiom outputs. A namespace-aware static scan of the preceding
+22 declarations found exact one-to-one name correspondence and
+no active proof placeholders. Repeat that scan for the two added
+transport declarations; neither a static scan nor source inspection
+is a kernel build. **All new Track 6 declarations remain unverified.**
+
+The complete narrow build sequence now includes:
+
+```sh
+LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSelectedTransport
+LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
+```
+
+The selected transport build should be run after the other six
+new candidate modules; it is independent of their doubled-girth
+proofs. The root axiom checker requires all imports' `.olean`
+objects. No online or expensive CI run has been initiated.
