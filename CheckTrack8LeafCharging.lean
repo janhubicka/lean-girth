@@ -15,6 +15,7 @@ import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceEliminationBags
 import Girth.FiniteTraceEliminationParent
 import Girth.FiniteTraceEliminationOccurrence
+import Girth.FiniteTracePEOCount
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -149,3 +150,17 @@ all printed axioms before promoting a validation mark.
 #check StructuralRamsey.Girth.eliminationParentGraph_unique_greater_neighbour
 #print axioms StructuralRamsey.Girth.eliminationParentGraph_greater_is_parent
 #print axioms StructuralRamsey.Girth.eliminationParentGraph_unique_greater_neighbour
+
+#check StructuralRamsey.Girth.maximalTrace_subset_Z
+#check StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#check StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#check StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+
+#print axioms StructuralRamsey.Girth.maximalTrace_subset_Z
+#print axioms StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#print axioms StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
