@@ -145,6 +145,17 @@ theorem actualFirstWagonQuotient_privateEHN
   have hPositive : 0 < k := by omega
   letI : Nonempty (ULift.{v} (Fin k)) :=
     ⟨ULift.up (⟨0, hPositive⟩ : Fin k)⟩
+  -- The genuine first-wagon ownership proof needs TWO distinct
+  -- vertices. The theorem has k>=2, which we use explicitly
+  -- instead of assuming an inferred Nontrivial instance.
+  have hTwoVertices : Nontrivial (ULift.{v} (Fin k)) := by
+    refine ⟨⟨ULift.up (⟨0, by omega⟩ : Fin k),
+      ULift.up (⟨1, by omega⟩ : Fin k), ?_⟩⟩
+    intro heq
+    have h01 : (0 : ℕ) = 1 :=
+      congrArg (fun z : ULift.{v} (Fin k) => z.down.val) heq
+    omega
+  letI : Nontrivial (ULift.{v} (Fin k)) := hTwoVertices
   have hOwnerCarrier : ∀ e : OldEdge,
       e.1 ⊆ oldCarrier (owner e) := by
     intro e
