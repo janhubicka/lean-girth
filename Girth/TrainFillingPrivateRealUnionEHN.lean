@@ -64,7 +64,6 @@ No assumption that every future EHN X-copy is increasing. -/
 theorem realFirstWagonDisjointUnion_monotoneEHN
     {κ : Type w}
     (A : RelStructure L UA)
-    (hAirr : A.Irreducible)
     (oldCarrier : P → Set V)
     (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
     (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
@@ -95,7 +94,7 @@ theorem realFirstWagonDisjointUnion_monotoneEHN
       A oldCarrier local hPositive hSpan
       oldColour hOldBlocks hLocalMono
   exact monotoneClosedTargetRamseyFamily_of_monotone_embeddings
-    A B hAirr hLinear hMonotone κ
+    A B (irreducible_of_spanningRelation A hSpan) hLinear hMonotone κ
 
 /-- EHN supplies all actual DIFFERENT first-wagon private
 extensions from one selected W-copy, with increasing
@@ -107,7 +106,6 @@ the genuine original F_p structures and their vertex orders. -/
 theorem realFirstWagonDisjointUnion_privateEHN
     {κ : Type w}
     (A : RelStructure L UA)
-    (hAirr : A.Irreducible)
     (oldCarrier : P → Set V)
     (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
     (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
@@ -166,7 +164,8 @@ theorem realFirstWagonDisjointUnion_privateEHN
     fun p => firstWagonSummandEmbedding_strictMono
       oldCarrier local hPositive oldColour hOldBlocks p
   exact SummandPrivateTemplate.exists_colouredRamsey_monotoneUnequalSummands
-    A B hAirr hLinear hMono hAB oldCarrier local
+    A B (irreducible_of_spanningRelation A hSpan)
+      hLinear hMono hAB oldCarrier local
       include hInclStrong hInclMono hLocalCovered
 
 end StructuralRamsey.Girth
