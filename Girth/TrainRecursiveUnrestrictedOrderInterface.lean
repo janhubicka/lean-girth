@@ -32,6 +32,7 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 open StructuralRamsey.RelStructure
 
 universe u v w
+variable {UA VB : Type v}
 
 /-- An unrestricted selected order-Ramsey assertion at a given vector,
 for every finite ordered edge type, arbitrary finite ordered target
