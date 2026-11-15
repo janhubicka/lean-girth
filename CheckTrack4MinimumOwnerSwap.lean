@@ -234,3 +234,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PictureStep.ofStrong
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.DesignatedArrow.ofStrong
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.OrderStage.ofStrong_cutGirth
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.CanonicalOn
