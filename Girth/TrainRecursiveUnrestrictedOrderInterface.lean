@@ -249,6 +249,42 @@ theorem UniformSelectedUnrestrictedOrderAllInputs.finPower
   exact h A₀ (Fin (r ^ n)) B ht targetTrain allowed
     hSupportNonempty hSupportCovers hGirth hParameters hTargetCuts
 
+/-- The literal cutoff-two colour palette of *words* of length n is
+already a finite nonempty type. Unlike a cardinality-only r^n encoding,
+this specialization keeps the actual complete edge-colour function:
+the only extra choice in the filling proof is a finite enumeration of
+the old edges of X. No numeric coding or power equivalence is needed. -/
+theorem UniformSelectedUnrestrictedOrderAllInputs.finColourWords
+    (L : RelLanguage.{u}) (t : List ℕ)
+    (h : UniformSelectedUnrestrictedOrderAllInputs.{u, v} L t)
+    (A₀ : RelStructure L UA)
+    [LinearOrder UA] [Finite UA] [Nonempty UA]
+    (B : RelStructure L.withOrder VB) [Finite VB]
+    (ht : Admissible t)
+    (targetTrain : EdgeTrainLevels
+      (OldACarrierEdge A₀.ordered B) t.length)
+    (allowed : Fin (t.length + 1) → Set VB)
+    (hSupportNonempty : Nonempty
+      (OldACarrierEdge A₀.ordered B))
+    (hSupportCovers : ∀ x : VB,
+      ∃ a : OldACarrierEdge A₀.ordered B, x ∈ a.1)
+    (hGirth : GirthGT
+      (supportCopies A₀.ordered B) (t.headD 0))
+    (hParameters : targetTrain.AdjacentParameters
+      (fun e => e.1) allowed)
+    (hTargetCuts : ∀ j : Fin t.length, 0 < j.val →
+      LabelledGirthGT
+        (targetTrain.wagonClassCarrier (fun e => e.1) j.castSucc)
+        (t.get j))
+    (r n : ℕ) (hr : 0 < r) :
+    UnrestrictedSelectedOrderWitness A₀.ordered B t targetTrain
+      allowed (Fin n → Fin r) := by
+  classical
+  letI : Nonempty (Fin n → Fin r) :=
+    ⟨fun _ => ⟨0, hr⟩⟩
+  exact h A₀ (Fin n → Fin r) B ht targetTrain allowed
+    hSupportNonempty hSupportCovers hGirth hParameters hTargetCuts
+
 /-- Correct mixed operator contract: the q>2 partite forest step is
 already proved, but SAME-VECTOR forest-to-order must produce an
 UNRESTRICTED order witness before cutoff two can consume it.
