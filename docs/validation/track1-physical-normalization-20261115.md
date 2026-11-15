@@ -65,11 +65,10 @@ The proof uses only factorization into the induced B image.
    k-edge relation and construct the induced ordered lifted selected B
    images on the union of their actual carriers.
 
-The redundant modules `Track1OrderedPhysicalOwners`,
-`Track1EHNIndexedSelected`, `Track1OrderedFamilyActualMixedLF2`
-and `Track1OrderedActualSelectedIntersections` are removed in this
-branch. The new normalized versions **replace** them, rather than
-coexisting as unused proof attempts.
+The compiled `Track1OrderedPhysicalOwners` lemma is **retained** as a
+useful ordered special case. Only the redundant unnormalized subtype
+index and older local-forest/intersection adapters are removed. The
+new physical-normalized versions provide additional generality.
 
 ## Exact validation boundary
 
