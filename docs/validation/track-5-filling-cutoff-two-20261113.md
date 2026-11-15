@@ -1,737 +1,323 @@
-# Numbered validation Track 5 — proof audit through 15 November 2026
+# Track 5 — current cutoff-two validation map (15 November 2026)
 
-**Scope:** canonical filling; direct cutoff-two construction from the
-individual first wagons; exact labelled Ramsey arrow; preservation of
-all proper-cut full system-girth bounds. Numbered issue #1056, programme
-#1060. This is **not** the legacy lettered Track C.
+**Scope:** `paper/13-filling.tex` and `paper/16-cutoff-two.tex`;
+numbered [issue #1056](https://github.com/janhubicka/lean-girth/issues/1056).
+This is the girth-5 programme's **numbered Track 5**, not a
+legacy lettered track.
 
-**Frozen source used for comparison:** girth/main at
-`8c9cfa6eb6d817a08f3009fe048fc0be07426ece`, digest
-`45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-New manuscript edits are in **draft** girth PR #450;
-candidate formalization is in **draft** lean-girth PR #1063, based on
-lean-girth/main `98e40142f95cf818f498ed21faf9302a50fe7832`.
-Both PRs remain UNMERGED and no new Lean validation marks are warranted.
+**Source branches:** [Lean draft PR #1063](https://github.com/janhubicka/lean-girth/pull/1063)
+(`validation/5-filling-cutoff-two`) and
+[manuscript draft PR #450](https://github.com/janhubicka/girth/pull/450)
+(`revision/track5-private-summands-20261113`).
+Source base: girth `8c9cfa6e`, lean-girth `98e40142`.
+Both PRs intentionally remain **draft and unmerged**.
 
-## Current integration snapshot — 15 November
+> **Verification boundary.** The new Track 5 declarations below are
+> source-level *candidates*. No new Lean module was compiled on its exact
+> head, and no `#print axioms` output has been inspected. Earlier checked
+> imports do NOT certify new applications. No green marks, no paid CI,
+> and no full TeX build are claimed.
 
-**Draft-only, not compiled.** The actual disjoint-union Ramsey
-target `W` is now specified as the dependent tagged union of the
-original first wagons. Its relational constructor handles unequal
-wagon sizes and exposes the necessary positive-arity assumption
-(the generic language permits nullary relations).
+## Mathematical chain
 
-The source proof candidates now derive the EHN input conditions
-from the original T rather than postulating them:
+Given the original height-\(1+m\) train \(T\), denote its **actual**
+first-wagon edge quotient by \(P=E(T)/{\sim_1}\), and the wagon
+carriers by \(F_p\). The old tail bound \(>h_1\ge2\) gives *labelled*
+first-wagon carrier linearity; ordinary linearity of the individual
+old edges **does not** imply this condition.
 
-- `HasSpanningRelation A` holds for the actual k-edge
-  relation; it immediately implies A irreducible and ensures
-  each A-copy of W lies inside one summand.
-- A-linearity of W follows from A-linearity of original T,
-  using genuine induced first wagons and a support-edge
-  decomposition; each component inclusion is A-strong.
-- The one global W-order sorts by predicate colour, wagon
-  tag, then old vertex order. Every local A-embedding is
-  increasing because unary predicates and within-colour
-  order relations preserve the fixed colour profile;
-  consequently the **whole W** satisfies the monotonicity
-  premise of ordered EHN.
-- Original wagon-owner coverage implies local A-coverage
-  and W-coverage. First-wagon carrier linearity excludes
-  extra induced A-copies with the wrong original owner.
-- `TrainFillingPrivateRealUnionEHN` and
-  `TrainFillingPrivateRealColouredEHN` now produce
-  the entire unequal-summand ordered private-choice
-  family without separate hAirr/hBlin/hIncludeStrong/
-  hIncludeMono/hLocalCovered hypotheses on W.
+1. **The first EHN target is \(W=\coprod_{p\in P}F_p\).**
+   First wagons may have different cardinalities and structure types.
+   Their disjoint union uses tagged vertices, but each selected
+   \(W\hookrightarrow X\) is ONE copy; its restrictions \(s_p\) are
+   not independently selected.
 
-The colour predicate-index type and the vertex type
-were separated into their correct Lean universes, and
-the invalid universe syntax `colouredOrderedEdgeSource (v := v)`
-was replaced with `colouredOrderedEdgeSource.{u,v}`.
-A redundant bare EHN existence wrapper was deleted.
-These are **source-level repairs**, not compiler results.
+2. **Private contraction.** The selected \(s_p\) identifies original
+   \(F_p\) vertices with their \(X\)-coordinates. Other coordinates
+   are private to that first wagon, yielding one edge \(f_{s,p}\)
+   with full coordinate set \(V(X)\).
+   Build \(M_s\) on those edges, then build the disjoint
+   choice union \(M=\coprod_s M_s\). Only the top wagon is shared.
 
-**Unfinished dependencies** remain the exact old
-`EdgeTrainLevels` owner/quotient carrier adapter,
-Track 1's covered/marked (`S=A_1`) selected EHN
-witness, the actual `RR_h` selected OrderStage,
-the all-cut same-physical-target realization, and a
-local Lean/axiom + TeX build. Do not promote any
-verification mark or merge drafts on this evidence alone.
+3. **One shorter Ramsey selection.** Apply \(\mathsf{RR}_{\mathbf h}\)
+   to this *actual ordered/partite* \(M\), colouring each old edge
+   by its **entire** function \(E(X)\to r\).
+   The selected old parent is a genuine \(j:M\hookrightarrow N\).
 
-## What the actual proof needs
+4. **Canonical full filling.** Use \(H=N[X]\) without deleting
+   any ambient edges. Let \(\tau_s:V(T)\to V(M)\)
+   include old vertices into the *tagged* \(s\)-component.
+   For an original \(e\in F_p\), the correct physical formula is
+   \[
+     \iota_{j[\bar f_{s,p}]}[s_p(e)]
+        =j[\alpha_s[\beta_{s,p}[s_p(e)]]]
+        =j[\tau_s(e)].
+   \]
+   The old incorrect expression `j[e]` was ill-typed.
 
-Write `W = ⨆ₚ Fₚ` for the disjoint union of the first wagons of the
-original train T. The first EHN arrow chooses one `s : W ↪ X`.
-For every p use `sₚ = s ∘ uₚ : Fₚ ↪ X`; **do not** identify each
-`Fₚ` with all of W, or choose unrelated embeddings for the
-different first wagons. The component `Mₛ` contains one contracted
-first-wagon edge `fₛₚ` with the complete X-coordinate set. M is the
-vertex-disjoint union of the `Mₛ`, with all proper train relations
-componentwise and only the universal top shared.
+5. **Labelled targets and cuts.** Keep the genuine selected
+   pair \((j,s)\), preserving the original edge/vertex
+   images and every train relation. Different choices in one
+   selected parent are disjoint; DIFFERENT old parents may overlap.
+   At the bottom distinct original edges remain distinct;
+   positive levels shift by one, and the universal top is shared.
 
-After applying the shorter `RR_h` with full X-edge colour words,
-each selected old parent `j : M ↪ N` gives a complete filling
-`j[X] : M[X] ↪ N[X]`. The designated targets are the **labelled
-pairs (j,s)**. Their sibling choices under the same j are disjoint;
-different old parents j may overlap. **Never delete** unselected
-ambient N or N[X] edges.
+6. **Both arrows.** All old edges of \(j(M)\) have one common
+   complete colour word \(\rho\). Apply the first EHN arrow to
+   that SAME \(\rho\), choosing ONE \(s(W)\).
+   Every original edge in its \((j,s)\)-labelled copy has the
+   same \(\chi\)-colour. Retain one representative per image if
+   duplicate designated target labels occur.
 
-The exact physical colouring calculation is:
-`χ(ι_{j[bar fₛₚ]}[sₚ(e)]) = χ_{j[bar fₛₚ]}(sₚ(e)) = ρ(sₚ(e)) = c`, where the selected edge carrier is `j[τₛ(e)]`
-for every original target edge e, with ONE old parent j, ONE selected
-W-copy s and the SAME complete word ρ across every first wagon.
-The final conclusion must be about the actual designated family,
-not merely an arbitrary monochromatic edge subset.
+7. **Full system girth.** The shorter \(\mathsf{RR}_{\mathbf h}\)
+   yields an actual `OrderStage`, with all-cut system girth
+   including its old equality cut. First apply canonical filling
+   to that FULL ambient system, then the checked
+   global designated-subcopy scattering theorem to the selected
+   \((j,s)\) targets. Do not assume the desired output girth.
 
-## Reused existing Lean (do not re-prove)
+## Reused older modules
 
-- `TrainFillingTemplateConstruction`: canonical physical edge
-  equivalence, unique old cover and generated-edge linearity.
-- `TrainFillingPrivateExtension`: exact private-vertex intersections,
-  original target containment and local scattering geometry.
-- `TrainFillingIndexedActualMPhysicalTrain`: actual contracted
-  M-support-to-physical-edge equivalence and faithful train cuts,
-  **conditional on the specific support equality**.
-- `TrainFillingIndexedSelectedPhysicalMap`: full physical
-  heterogeneous G0-to-H edge embedding and range, no pruning.
-- `TrainFillingIndexedMonotoneCarrierBridge`: finite uniqueness
-  of increasing coordinate placements, yielding all filled-edge
-  carrier equalities from full old carrier equality.
+The repository already contains generic proofs which should **not**
+be duplicated in the final cutoff-two assembly:
+
+- `TrainFillingPrivateExtension`: old/private geometry and
+  component-local coverage/strongness conditions.
+- `TrainFillingTemplateConstruction` and
+  `TrainFillingSelectedEdgeRange`: canonical full-X edge
+  equivalence, old covers and full edge-image ranges.
+- `TrainFillingIndexedMonotoneCarrierBridge`: unique
+  increasing placements from complete first-wagon carriers.
+- `TrainFillingIndexedContractedTrainGirth` and
+  `TrainFillingIndexedPrivateParentParameters`: dependent
+  tagged/private girth and allowed-part transfers.
 - `TrainRecursiveWitnessPass` and
-  `TrainFillingSelectedStageTrainReflection`: actual selected
-  shorter-stage M-copies, their physical old A-edge maps and
-  preservation **and reflection** at every train cut.
-- `TrainFillingOrderStageCanonicalAllCutGirth`: for the actual
-  **OrderStage**, all proper old cuts have full system-girth
-  bounds, INCLUDING the old equality cut. Use its canonical
-  filling theorem, not the weaker bare ForestTailStage tail bounds.
-- `TrainFillingIndexedParentwiseRealization`,
-  `TrainFillingIndexedFaithfulParentwise` and
-  `TrainDesignatedSubcopyGirth`: global scattering preserving
-  ALL ambient edges, no cross-parent disjointness assumption.
-- `TrainFillingIndexedSelectedColourWord`: literal two-arrow
-  filled edge-colour identity; used with the true selected b below.
-
-Prior Lean verification of these older modules is **not** a
-certificate for any candidate added in this PR.
-
-## New *candidate*, uncompiled bridges in PR #1063
-
-1. **Unequal first wagons:** `PrivateSummand`,
-   `PrivateSelectedUnion`, `PrivateSelectedColour`,
-   `PrivateSelectedFamily` and `PrivateSelectedIndexedArrow`.
-   The older all-closure `PrivateEHNArrow` candidate was deleted
-   because it did not retain the EHN selection order; the valid
-   route goes through `PrivateMonotoneEHN`, `PrivateMonotoneSummands`
-   and `PrivateMonotoneExistence`. These construct private embeddings of
-   different types `Fₚ` from ONE selected `s(W)`, derive
-   A-strongness by composition, supply complete common X support,
-   and derive the exact local `selectedCommonEdges` Ramsey arrow
-   from the genuine EHN closed-target arrow. The real assumptions
-   `A ↪ W` nonempty and local vertex coverage remain visible.
-
-2. **Genuine lower selected parent:** `PrivateStageSelectedPhysical`,
-   `PrivateSelectedStageFilling`, `PrivateSelectedOldRange` and
-   `PrivateActualOrderParent`. They construct βⱼ from the selected
-   `OrderStage` copy **j itself**, rather than postulating a new
-   injection. The full old-edge image is exactly the ambient A-support
-   edges contained in j(M), and all proper-cut relations are
-   preserved/reflected through that SAME βⱼ.
-
-3. **Actual filling and scattering:** `PrivateCanonicalParentwise`,
-   `PrivateCanonicalCutBridge`,
-   `PrivateActualOrderRealization` and
-   `PrivateActualOrderStrictMono`. These construct the actual
-   parentwise vertex/edge maps, full copy-edge range and quotient
-   wagon maps for **all** selected j, then identify the resulting
-   incidence data with the canonical inherited cut. The primary
-   interface uses exact *edge carrier images*, not arbitrary
-   separately assumed output wagon maps or pointwise coordinates.
-   The new strictMono theorem derives the carrier images from full
-   first-wagon carriers plus source, selected-copy and canonical
-   placement order compatibility. The new
-   `canonicalFilledSelected_targetFullSystemGirthGT_of_inherited_carrier`
-   transfers the old full bound to the same target family without
-   assuming output girth.
-
-4. **The true labelled arrow:** `PrivateActualWordArrow` first
-   pulls a full old N-edge colour word back to actual A-embeddings,
-   then returns the genuine selected j (not just an abstract β).
-   Its source A-copy is derived from a nonempty index
-   `C × P`; it is not an unrelated default-colour assumption.
-   `PrivateActualIndexedArrow`,
-   `PrivateParentwiseColour` and
-   `PrivateActualLabelledArrow` combine that selected j with
-   the ONE EHN s to obtain monochromaticity on the *actual*
-   `designatedFamily.target.copyEdges (j,s)`.
-
-5. **Exact-head check gate:** `Girth/CheckTrack5Private.lean`
-   contains targeted `#check` and `#print axioms` probes. It
-   **has not been executed** on the new branch. No new theorem
-   has been kernel checked, nor have all elaborated hypotheses
-   been audited.
-
-Unused pointwise-placement wrappers, an unindexed Ramsey-arrow
-projection and a standalone restored-wagon wrapper were removed
-from the draft to reduce duplicated interfaces. Later claims
-must use the stronger parent-indexed and carrier-only declarations.
-
-## Adversarial issues and corrected source
-
-**Important falsifier: old edge linearity does NOT imply first-wagon
-carrier linearity.** The graph with edges
-`ab, ac, bd, cd` is linear, but first wagons
-`F₀={ab,ac}` and `F₁={bd,cd}` share both b and c.
-Private contraction would therefore have two old common vertices,
-contradicting linearity. The actual cutoff-two assumption
-`girth(W₁(T)) > h₁ ≥ 2` forbids this labelled two-cycle.
-The manuscript preliminary lemma now *states* the required first
-wagon carrier linearity and the application *derives* it. It
-also explicitly requires ≥2 vertices in each template X-edge
-for uniqueness of the old cover (automatic for the coloured
-edge type under discussion).
-
-The common-edge arrow was fixed after discovering an incorrect
-attempt to treat a transported `CommonTemplateEdge` as a member
-of the original local selected-edge subtype. The proof now uses
-the actual local selected element first and transports it
-through `choiceTemplateEquiv`.
-
-The manuscript had a literal `\\nFor` inside the canonical
-filling statement; that TeX command was corrected to a real
-newline. The disjoint union M now explicitly tags every
-vertex by s, including old target vertices.
-
-## Executed bounded regression (NOT a general formal proof)
-
-Local `/mnt/data/track5_private_smoke.py` ran successfully:
-- Two unequal Fₚ: three versus four original vertices.
-- Disjoint-union W: seven vertices and five original edges.
-- Two selected X-copies: fourteen template vertices, ten template
-  edges, four contracted first-wagon edges, forty filled edges.
-- Two selected old parent copies whose images SHARE one vertex;
-  the FULL ambient N has eight old edges and its filling has
-  **80 physically distinct edges**, retaining all unselected edges.
-- All four labelled `(parent,choice)` target edge families retain
-  their original edges, are strongly induced and satisfy the
-  appropriate complete colour-word calculation. Sibling choices
-  remain disjoint, while cross-parent overlap is allowed.
-- The four-edge first-wagon-carrier counterexample is reproduced.
-
-This is a finite sanity check, NOT an EHN theorem, Ramsey arrow
-for arbitrary colourings, Lean verification or proof of general
-full system girth.
-
-## What actually remains to close `lem:tailraw`
-
-1. Instantiate the **ordered, partite**, actual colour-block
-   relational M of the selected unequal-summand family.
-   Discharge all `hColour`, `hCoordinate`, `hXBlocks`,
-   `hSupport`, old-carrier linearity and target order hypotheses
-   of the existing actual M-support and ordered-carrier lemmas.
-2. Supply the genuine shorter `RR_h` witness as the required
-   *selected* `OrderStage` with its `DesignatedArrow` and
-   `allCutGirth`. The abstract formal OrderStage alone does
-   not assert global `StrictMono` for every selected embedding;
-   establish that from the actual block-ordered colour language,
-   or choose the correct ordered presentation instead of assuming it.
-3. Identify the ONE canonical full support filling N[X] and its
-   inherited train with the concrete `OrderStage` input at each
-   old cut. Apply `OrderStage.canonicalFilledCut_fullSystemGirthGT`
-   and the carrier-only parentwise/scattering lemmas, **not** a
-   new or circular output-girth assumption.
-4. Identify each selected `(j,s)` target with an actual copy of
-   the ORIGINAL T, preserving every part, order and train relation.
-   The candidate labelled monochromaticity lemma establishes
-   only the edge-colour part until this is done.
-5. Perform a local *exact-head* Lean build, then inspect
-   `#print axioms`, hidden universes and every proof hypothesis.
-   Build the full TeX to certify all source changes. This container
-   has no Lean/lake/elan binary, its git process cannot resolve
-   github.com, and the 2026-11-08 prebuilt Lean/mathlib bundles are
-   not mounted. We have **not run** a kernel check or paid GitHub
-   Actions. The PRs must stay **draft and unmerged**.
-
-**No new validation mark is justified.** This is an adversarial
-source audit and an explicit, testable integration plan.
-
-
-## 14 November further adversarial repair: keep ordered EHN witnesses
-
-**New precise flaw in the previous local EHN adapter:** the existing
-`closedTargetRamseyFamily_of_monotone_embeddings` proves its Ramsey
-arrow by first taking an **ordered** EHN target embedding, then
-forgets the auxiliary linear-order relation when it returns a
-`ClosedTargetRamseyFamily`. The final exported type quantifies
-over closure embeddings with no strict monotonicity certificate.
-Therefore indexing the private choices by **all** such embeddings
-does *not* by itself prove the `hCoordinate` hypotheses needed
-by `actualIndexedContractedM_support_eq`.
-
-Candidate repair, still uncompiled:
-
-- `TrainFillingPrivateMonotoneEHN.lean` retains the genuine
-  increasing EHN-selected embedding as part of a stronger
-  `MonotoneClosedTargetRamseyFamily` statement. It follows
-  the already checked ordered EHN proof without adding a
-  Ramsey-theoretic assumption; the ordinary result is obtained
-  by forgetting the certificate.
-- `TrainFillingPrivateMonotoneSummands.lean` indexes choices
-  only by the genuine closed embeddings **with** a
-  `StrictMono` certificate, not every closure embedding.
-  It derives monotonicity of all individual
-  `s_p = s ∘ u_p` coordinates from the increasing component
-  inclusions and derives the one-common-colour EHN local arrow
-  on this restricted index family.
-- `TrainFillingPrivateMonotoneExistence.lean` combines the
-  ordered EHN theorem and these unequal-summand constructions
-  into a single existence statement with a common full X-edge
-  family, increasing local coordinates and the actual indexed
-  local Ramsey arrow.
-- `TrainFillingPrivateColourBlockOrder.lean` constructs the
-  **colour-first, old-order-second** total order by
-  `LinearOrder.lift'` through `I ×ₗ X`. It proves
-  the missing `hXBlocks` property and proves that
-  a colour-preserving increasing W→X embedding remains
-  increasing after colour-block sorting, either just X
-  when W already has blocks, or BOTH W and X. This
-  does **not** assert that an arbitrary functional EHN
-  closure embedding preserves the colours: that must
-  be derived from the concrete unary predicates when
-  instantiating the ordered relational target.
-
-**Separate uncovered-vertex issue:** `ElementaryCAClass A R`
-means A-linear reduct plus canonical binary closure c_A;
-it does NOT assert that every vertex of the produced EHN X
-lies in an A-copy. The paper uses a **covered** witness X,
-so the formal interface must either produce this genuinely
-or explicitly trim X after the EHN selection.
-
-`TrainFillingPrivateCoveredEHN.lean` now proves:
-  (1) the union of all A-support edge carriers has no uncovered
-  vertices by definition, and each original edge is contained;
-  (2) if each original F_p is A-covered and the component
-  inclusions cover W, then W is A-covered; and
-  (3) every chosen W→X image survives entirely in the
-  A-supported vertex reduct, with no loss of an original edge.
-The **full induced-structure retyping and Ramsey-arrow transfer**
-to the covered vertex type is **still open**. No coverage of the
-original C is assumed.
-
-**Parent strongness:** a new candidate
-`TrainFillingPrivateActualParentStrong.lean` derives
-`actualOrderParent_filledEdges_eq_contained`: the full
-filled-edge image of a genuine selected lower M-parent is
-EXACTLY the set of ambient H-edges contained in its
-selected vertex carrier. It uses the already checked
-`UniformFillingData.selectedFilledEdgeEmbedding_range_eq_contained`,
-the actual selected old support range, old
-`OrderStage.strong`, and the two-vertex template condition.
-No output girth or arbitrary output strongness appears.
-
-All new declarations have been added to
-`Girth/CheckTrack5Private.lean` with appropriate
-`#check`/`#print axioms` probes. These probes have
-**not** been executed in Lean. Source-level delimiter/import
-checks are not kernel verification.
-
-### Current outstanding gates, not assumptions
-
-1. Produce the **actual relational disjoint union** W with
-   selected increasing component inclusions, full A-coverage
-   and the correct unary predicates/within-colour orders.
-2. Retype the EHN-selected family to the **covered** X
-   support (preserving the arrow), then derive the actual
-   vertex colour function from the unary relations. Sort
-   the X order by colour blocks, preserving selected monotonicity.
-3. Instantiate the checked real coloured-order M support
-   theorem and the genuine shorter `RR_h` OrderStage with
-   the exact same X, selected choice family, support and
-   global partite order.
-4. Identify the actual canonical filled parent cut with
-   `OrderStage.canonicalFilledCut_fullSystemGirthGT`;
-   complete the selected labelled T embedding (all parts,
-   orders and wagon relations) in addition to the candidate
-   monochromatic edge statement.
-5. Obtain an **exact-head local Lean build** and axiom
-   audit, and a full TeX compile; until then no
-   verification marks or PR merges.
-
-This is a **correctness repair** to the EHN application
-interface, not a new hypothesis of the mathematical theorem.
-It avoids the invalid shortcut "all closed copies are ordered"
-and does not reintroduce any requirement that
-`F_p ≃ W`.
-
-
-### Upstream Track 1 dependency checked against newer main (14 November)
-
-The manuscript has advanced beyond the original frozen source:
-[girth PR #454](https://github.com/janhubicka/girth/pull/454),
-[#455](https://github.com/janhubicka/girth/pull/455), and
-[#456](https://github.com/janhubicka/girth/pull/456)
-have been merged on main. The Track 5 draft still bases its
-two edited inputs on the pinned 41-page source and is kept
-separate, currently mergeable but UNMERGED. Those Track 1
-merges do **not** constitute a new Lean certificate.
-
-In the currently merged `paper/04-coloured-edges.tex`,
-`lem:markededgesplit` has an explicit necessary hypothesis:
-
-> A vertex of the coloured target B in a predicate outside the
-> chosen allowed set S is incident with at most ONE edge of B.
-
-For the cutoff-two application B=W (the tagged disjoint union
-of first wagons), this condition is **derived**, not assumed:
-inside each F_p, the train parameter A_1 allows two original
-edges to meet only in A_1 predicates, and no edges cross the
-disjoint summands W. A vertex of W in a predicate outside A_1
-therefore lies in at most one edge. The Track 5 manuscript
-now says explicitly why `lem:unrestricted` applies with
-S=A_1. If this marking condition were omitted, the claimed
-first parameter of X would not follow just from an arbitrary
-A-linear functional EHN output.
-
-The newer Track 1 manuscript obtains the entire **covered,
-ordered, parameter-restricted** X from:
-1. an unmarked functional EHN witness with an actual
-   increasing selected family;
-2. the owner-splitting construction that retains only selected
-   target edges/vertices and splits vertices in forbidden
-   predicates; and
-3. the colour extension argument preserving the arrow and
-   labelled chosen copies.
-
-Track 1 issue [#1052](https://github.com/janhubicka/lean-girth/issues/1052)
-still reports its full ordered selected-family/owner-splitting
-Lean proof as OPEN. Therefore our new Track 5 modules
-`PrivateMonotoneEHN`, `PrivateColourBlockOrder` and
-`PrivateCoveredEHN` should be understood as **reusable
-preparation**, not an independent replacement for the entire
-`lem:unrestricted` witness with its `A_1` parameter and
-all selected incidence properties.
-
-**Coordination boundary:** Do not duplicate or diverge from the
-Track 1 owner-splitting argument on this branch. Once its
-exact selected-order/marked-splitting bridge is kernel-checked,
-use it to supply the missing covered X and the permissible
-EHN choices in the actual Track 5 shortened M.
-
-
-## 14 November, 20:00+ — corrected tagged source T and full target bijection
-
-**Mathematical correctness fix (manuscript PR #450):** In the
-disjoint-union shortened M, the expression j[e] from the previous
-colour calculation was ill-typed: e is an original T-edge, whereas
-j has domain V(M), whose vertices carry a **choice tag** s.
-Define the literal summand injection
-`α_s : M_s → M`, its original-vertex inclusion
-`ε_s : V(T) → V(M_s)`, and the vertex map
-`τ_s = α_s ∘ ε_s : V(T) → V(M)`. Let
-`bar f_{s,p} = α_s[f_{s,p}]`. Then the genuinely
-selected filled-edge identity is
-
-\[
-  \iota_{j[\bar f_{s,p}]}[s_p(e)]
-     = j[\alpha_s[\beta_{s,p}[s_p(e)]]]
-     = j[\tau_s(e)].
-\]
-
-This identifies the SAME old selected parent j and ONE EHN-selected
-s on every original first-wagon edge, including those sharing
-original T-vertices across different F_p. Only the vertices of
-M_s are tag-copied; τ_s is a **vertex map**, not an attempted
-train embedding of height m+1 into shorter height m.
-
-The new preliminary private-extension proof now spells out the
-correct *original train relation* calculation, for e∈F_p
-and e'∈F_q:
-`e ~_{ν+1}^T e'  iff  f_p ~_ν^{M_s} f_q
-     iff β_p[s_p(e)] ~_{ν+1}^{M_s[X]} β_q[s_q(e')]`.
-The original bottom equality is protected by edge injectivity;
-the restored top is universal. At any proper inherited cut
-the tagged source parent (s,quotient(p)) is transported by
-the actual shorter-stage selected M-copy.
-
-### New candidate Lean source (not kernel checked)
-
-- `TrainFillingPrivateOriginalTarget` defines the genuine
-  first-wagon source edge index `Σ p, supportCopies(A,F_p)`
-  for unequal wagon types, gives its selected-template map,
-  **injectivity**, exact physical **carrier image**, and the
-  exact selected target edge-set **surjectivity**:
-  `range originalSelectedEdge = targetEdges`.
-- `TrainFillingPrivateChoiceTaggedTarget` defines
-  `τ_s(v) = ⟨s, Sum.inl v⟩`, proves its injectivity,
-  exact range identity with `targetCarrier` and disjointness
-  between distinct EHN choice tags.
-- `TrainFillingPrivateChoiceTaggedEdges` builds every
-  actual heterogeneous selected physical edge with the s
-  and p labels, proves its actual carrier is `τ_s[e]`,
-  injectivity and **exact equality** between its range and
-  the entire designated `targetEdges U s`.
-- `TrainFillingPrivateOriginalImageInH` applies the SAME
-  selected parent i to those chosen original edges, derives
-  the actual physical edge carrier equality
-  `edgeCarrier(R.edge i (tagged e)) = (j_i ∘ τ_s)[e]`,
-  preserves vertex/edge injectivity, and proves
-  `range(original T edge map) = R.targetEdges(i,s)`,
-  not just subset containment.
-- `TrainFillingPrivateOriginalTrainInH` computes all actual
-  proper-wagon parent images, reflects their equality precisely
-  to original first-wagon train relations, and separates
-  distinct EHN choices within the SAME parent.
-- `TrainFillingPrivateOriginalColoursOrders` derives
-  exact unary colours of τ_s(v) and the original within-part
-  order from the actual colour-first insertion order and the
-  genuine selected `Embedding(M,N)`; no independently
-  postulated target predicate or monotonicity field.
-- `TrainFillingPrivateColourCompatibility` proves
-  the actual hColour input of coloured contracted M follows
-  from the original F_p→W inclusion and SAME selected
-  W→X unary-colour embeddings.
-- `TrainFillingPrivateReblockedContractedM` derives
-  increasing X coordinates and the predicate-block property
-  after reordering X by colour, using old-colour compatibility
-  and original block-ordered V; these were previously
-  independent hCoordinate/hXBlocks premises.
-- `TrainFillingPrivateReblockedEnumeration` removes the
-  last arbitrary increasing-enumeration premise using the
-  existing Mathlib `Fintype.orderIsoFinOfCardEq`;
-  no edge is lost or altered by changing the X order.
-- `TrainFillingPrivateCanonicalTargetStrong` applies
-  the checked `ComponentDecomposition.target_strong_of_parent_strong`
-  theorem to the complete unchanged canonical H: two target
-  vertices in an ambient H-edge give two vertices of its old
-  cover, which the old selected parent strongness captures.
-- `TrainFillingPrivateActualParentStrong` now exports
-  `actualOrderParent_oldStrong` separately and reuses it.
-  `TrainFillingPrivateActualLabelledStrong` applies that
-  genuine shorter `OrderStage` strongness and the checked
-  global scattering theorem to the same selected pair (j,s).
-  No output target strongness or output girth is assumed.
-
-**Bounded regression actually executed:** Extended
-`/mnt/data/track5_private_smoke.py` and ran it successfully.
-It now checks the corrected τ_s edge-image formula,
-bottom edge injectivity, original first-positive wagon
-preservation/reflection, shared untagged universal top,
-unary colour-compatibility, increasing EHN selected W-copies
-before/after colour-block sorting, monotonically inserted
-first-wagon coordinates, and increasing X enumeration.
-Original unequal 3/4-vertex wagons, two choices, overlapping
-selected N-parents and all 80 ambient filled occurrences remain
-in the tests. These are *finite sanity checks*, not Lean proofs
-or an arbitrary-colouring Ramsey theorem.
-
-**Source audit:** The ten recent candidate Lean files have
-balanced braces, properly paired namespaces and `/-...\-/`
-comment delimiters, and no `sorry`, `admit`, or new
-`axiom` declarations. The source audit caught and repaired
-one truncated comment and a forward theorem reference in
-`TrainFillingPrivateChoiceTaggedEdges`. The extended
-`Girth/CheckTrack5Private.lean` contains the new
-`#check`/`#print axioms` probes. **They have NOT been run
-in Lean.**
-
-**Current exact remaining obligations:** (i) instantiate the
-actual Track 1 covered, owner-split, order-preserving EHN
-choice family from checked evidence (its independent validation
-is still open); (ii) discharge source W's concrete first-wagon
-coloured/order structure and actual original T-edge index
-identification; (iii) instantiate the actual shorter `RR_h`
-selected `OrderStage` on that full heterogeneous coloured M;
-(iv) combine its all-cut full system-girth with the SAME
-canonical H and selected parentwise family, including old
-equality zero; (v) build the **exact-head local Lean kernel
-and axiom checks** and a manual full manuscript PDF.
-Until then PRs #1063 and #450 remain draft/unmerged and
-`lem:tailraw` remains `leanopen`.
-
-
-## 15 November continuation — actual first-wagon W fully specified at source level
-
-This section supersedes the earlier statement that the dependent
-disjoint union W and its EHN source hypotheses still had to be
-constructed.
-
-### Concrete new bridge modules (ALL UNCOMPILED CANDIDATES)
-
-- `TrainFillingPrivateRealDisjointUnion`: W has actual vertex type
-  `Σ p:P, {v:V // v∈oldCarrier p}` and relations supported
-  within ONE summand. Positive arity, essential because the generic
-  `RelLanguage` allows nullary symbols, gives induced
-  `F_p→W` inclusions. A spanning A-relation forces each
-  A-copy inside one summand and proves its inclusion A-strong.
-  It also directly proves A.irreducible from the spanning
-  relation, eliminating the artificial EHN hAirr premise.
-- `TrainFillingPrivateRealUnionOrder`: predicate-colour-first,
-  then original first-wagon owner, then old vertex order gives
-  one global order on actual W, with increasing component
-  inclusions. It also derives **all** A→W embedding
-  monotonicity from each local A-embedding's monotonicity,
-  using the spanning-edge factorization.
-- `TrainFillingPrivateRealUnionColouredMono`: for the actual
-  k-vertex coloured one-edge source, unary predicates and
-  within-colour binary order force every local A-copy to
-  be increasing. The source profile and target global
-  orders must list predicate blocks in the common order.
-  The final theorem derives hmono for the ACTUAL different
-  F_p carriers, not artificial full-vertex summands.
-- `TrainFillingPrivateRealUnionLinear`: exact decomposition
-  of full A-support of W into the tagged local A-support
-  edges. Consequently A-linearity of W follows from
-  old T linearity by `aLinear_induce`; different tagged
-  summands have no common vertices.
-- `TrainFillingPrivateRealUnionColoured`: the concrete
-  coloured k-edge language has positive arities for
-  k≥2 and its full edge tuple spans A. Specializes
-  automatic induced/A-strong component inclusions and
-  inherited A-linearity to the actual E_a language.
-- `TrainFillingPrivateFirstWagonStrong`: first-wagon
-  carrier linearity (girth of W_1(T)>2) and the
-  original edge-owner map imply each F_p is
-  A-strong in original T and its induced relational
-  F_p contains **no extra edge owned by another wagon**.
-- `TrainFillingPrivateRealUnionLocalCoverage`: a vertex of
-  a first wagon lies in one of its actual owned support
-  edges by the definition of its carrier. The A-copy
-  of that edge factors through its induced F_p.
-  This proves local and W support coverage without
-  assumptions on the later EHN output.
-- `TrainFillingPrivateRealUnionEHN`: combines the above
-  into the TRUE ordered EHN input of W: hBlin,
-  hmono, hIncludeStrong, hIncludeMono, hAB and
-  A irreducibility are derived. The private-family
-  EHN witness only receives actual local first-wagon
-  data, their linearity/monotonicity/coverage and
-  a nonempty W vertex.
-- `TrainFillingPrivateRealColouredEHN`: specializes the
-  complete real-W EHN existence/unequal-summand local
-  monochromaticity arrow to the actual coloured
-  k-edge source and old first-wagon owner map.
-  Its irreducibility premise was eliminated because
-  the full k-edge tuple spans A.
-- `TrainFillingPrivateColourBlockOrder`: the predicates'
-  colour-index type now lives in a separate Lean universe
-  from the vertex type; likewise for the concrete
-  real-W order and generic EHN theorem. This
-  explicitly repairs an unnecessarily strong universe
-  equality in the original candidate declarations.
-
-**The English proof was corrected accordingly** in
-`paper/16-cutoff-two.tex` (draft girth PR #450):
-first deduce linearity of the labelled first-wagon carrier
-family from its >2 girth, then deduce each F_p is an
-induced first wagon in T, then define W as the
-linear covered disjoint union. The required marked-vertex
-condition outside A_1 and the retained increasing
-EHN selected copies remain explicit.
-
-**Executable check:** `python /mnt/data/track5_private_smoke.py`
-again passed the unequal 3/4 first-wagon model,
-the selected j∘τ_s image and monochromaticity,
-the two overlapping old parents and all 80
-ambient filled occurrences. This is bounded
-regression evidence, not theorem verification.
-
-### Still genuinely open
-
-1. The **exact** original `EdgeTrainLevels` first-wagon
-   owner/quotient carrier structure must be instantiated
-   in the `owner`, `hOwnerCarrier`,
-   `hWagonCover`, `hWagonLinear` parameters
-   of these source lemmas. The mathematical equations
-   are straightforward but an actual Lean integration
-   to the original T structure is still needed.
-2. The upstream Track 1 owner-split **covered,
-   S=A_1-restricted, ordered** selected EHN
-   output must be proved and wired to X. A raw
-   `ElementaryCAClass` output does NOT imply
-   support coverage or the forbidden-predicate
-   intersection condition.
-3. Construct the genuine coloured `actualIndexedContractedM`
-   from those same selected W→X choices and obtain
-   its real RR_h selected OrderStage with its
-   all-cut full-system-girth and colour-word arrow.
-4. Compose ONE physical selected T map across
-   all restored proper cuts and all original
-   predicates/orders, and reuse the checked
-   canonical filling/scattering system-girth theorem.
-5. **Run Lean locally on the exact branch**, inspect
-   every elaborated hypothesis and `#print axioms`
-   probe, and compile the full TeX. No new
-   kernel result, green mark, or paid CI is claimed.
-   The container still has no Lean/lake/elan and
-   cannot resolve github.com for local cloning.
-
-The new files are isolated to draft PR #1063;
-the manuscript changes remain draft PR #450.
-
-
-### Focused W diagnostic and last source repairs (15 November)
-
-Executed the new standalone finite regression
-`/mnt/data/track5_real_W_audit.py` on a
-genuine nontrivially marked coloured target:
-one first wagon has 3 vertices and edges `ab,ad`;
-the other has 4 vertices and edges `cd,cf,ch`.
-The centres `a,c` have predicate colour 0 and the
-leaves have predicate colour 1. Hence **A_1={0}**
-is a proper allowed subset and every forbidden
-colour-1 vertex belongs to at most one edge
-*within its first wagon*, as required by the
-current Track 1 splitting lemma.
-The original carriers meet at precisely vertex d;
-the real tagged W has 7 vertices and 5 actual
-coloured A-edges.
-
-All assertions passed: one real disjoint-union W;
-correct original edge owners; exact support coverage;
-linearity; increasing A-copies in the colour-first
-W order; and the nontrivial marked-vertex condition.
-
-Four negative controls also passed:
-(a) old graph-edge linearity without first-wagon
-carrier linearity;
-(b) an induced F_p containing an edge actually
-owned by another wagon;
-(c) an invalid A_1 subset excluding a colour in
-which two first-wagon edges meet; and
-(d) a nullary relation, showing why the positive
-relation-arity hypothesis is essential for the
-generic relational disjoint-union inclusions.
-
-An initial illustrative test fixture failed the
-marked-condition assertion because it incorrectly
-declared A_1={0} for edges meeting in colour 1.
-The fixture was corrected to the valid star-wagon
-construction above. This is **evidence that the
-hypothesis matters**, not evidence for dropping it.
-
-The current branch additionally proves, as an
-uncompiled Lean candidate,
-`firstWagonUnion_supportEdge_has_correct_original_owner`,
-combining the exact W support decomposition with
-the induced-F_p owner lemma, to exclude extra
-W-support edges with the wrong original owner.
-
-A static source audit checked the 11 recent W/EHN
-modules and the gate for balanced braces,
-matched namespaces/comments, no top-level
-`sorry`/`admit`/`axiom`, removal of the
-invalid universe-argument syntax, and deletion
-of an unused bare EHN existence wrapper.
-This is **not** Lean elaboration or an axioms audit.
-
-The local runtime has `pdflatex` but not a
-working local clone of the full manuscript, and
-does not have `lean`, `lake`, `elan`, or
-network access to clone them. No fresh full-paper
-PDF or exact-head Lean build was produced.
-The existing check gate remains
-`lake env lean Girth/CheckTrack5Private.lean`
-when the complete Lean toolchain/dependencies are
-available. Leave both draft PRs unmerged.
+  `TrainFillingSelectedStageTrainReflection`: genuine selected
+  shorter-stage parent and all-cut train reflection.
+- `TrainFillingOrderStageCanonicalAllCutGirth`: the OLD
+  all-cut bound, including old equality.
+- `TrainFillingIndexedFaithfulParentwise`,
+  `TrainDesignatedSubcopyGirth` and
+  `TrainDesignatedSubcopyStrong`: exact global scattering,
+  target strongness and girth, with full ambient edges.
+- `TrainFillingIndexedSelectedColourWord`: literal physical
+  two-arrow monochromaticity transport.
+
+These are reusable interfaces, **not** a blanket verification
+claim for the new Track 5 constructors.
+
+## New candidate proof modules, grouped by purpose
+
+### A. Original \(T\), first wagons, and the EHN source \(W\)
+
+- `PrivateActualWagonOwner` and
+  `PrivateActualFirstWagonSource`: first-wagon owner is its true
+  `EdgeTrainLevels.wagonSetoid 1` class; wagon carrier is the
+  union of complete owned edges; original labelled girth \(>h_1\)
+  gives carrier linearity, not merely ordinary edge linearity.
+- `PrivateFirstWagonStrong` and
+  `PrivateActualSourceEdgeEquiv`: an induced first wagon cannot
+  acquire a foreign edge, and
+  \[
+       E(T)\cong\coprod_p E(F_p)
+  \]
+  as **physical support-edge labels**. The first-wagon
+  owner map is constructed from the original quotient, not assumed.
+- `PrivateRealDisjointUnion`, `PrivateRealUnionOrder`,
+  `PrivateRealUnionLinear` and `PrivateRealUnionColoured`:
+  actual dependent tagged \(W\), induced and \(A\)-strong
+  component inclusions, \(A\)-linearity, coverage, and a
+  colour-first global order. A spanning \(A\)-relation gives
+  irreducibility and puts each \(A\)-copy into one summand.
+  Positive relation arities are explicit because the generic
+  relational language permits nullary symbols.
+- `PrivateRealUnionColouredMono`,
+  `PrivateRealUnionLocalCoverage`,
+  `PrivateRealUnionEHN`, `PrivateRealColouredEHN`,
+  `PrivateActualWagonEHN`: derive the concrete ordered
+  EHN input directly from original \(T\), including the
+  genuine first-wagon girth, ownership and nonempty support.
+  There is NO requirement \(F_p\simeq W\).
+
+### B. Ordered EHN selections and the actual shortened \(M\)
+
+- `PrivateSummand`, `PrivateSelectedUnion`,
+  `PrivateSelectedFamily`, `PrivateSelectedColour`,
+  `PrivateSelectedIndexedArrow`: construct individual
+  heterogeneous private inputs from ONE selected \(W\)-copy and
+  derive the SAME local selected-edge colour for all \(p\).
+- `PrivateMonotoneEHN`, `PrivateMonotoneSummands`,
+  `PrivateMonotoneExistence`: retain genuinely **increasing**
+  EHN selected embeddings. The ordinary `ClosedTargetRamseyFamily`
+  forgets their order, so using all closure embeddings as
+  choices would be incorrect.
+- `PrivateColourBlockOrder` and
+  `PrivateColourCompatibility`: sort \(X\) into predicate
+  blocks without changing the selected original EHN-choice
+  index set. The lemma
+  `monotoneSelectedUnion_coordinate_mono_reblocked` explicitly
+  transports its *old-order* monotonicity certificates.
+  Correct universe parameters are retained.
+- `PrivateReblockedContractedM` and
+  `PrivateReblockedEnumeration`: derive the actual
+  coloured `M` support and the required increasing
+  finite enumeration from unary colours and the chosen orders.
+- `PrivateCoveredEHN`: original \(W\) copies survive
+  restriction to the A-supported vertices of \(X\);
+  the **full ordered/marked Ramsey arrow after restriction
+  is not yet proved here**, and belongs to Track 1.
+
+### C. Genuine quotient-tail train and its parameters
+
+- `PrivateActualTailQuotient`: the shortened edge train
+  is `T.tailQuotient` on old first-wagon quotient labels.
+  At shortened level \(\nu\), equality/reflection is
+  exactly old relation \(\nu+1\).
+- `PrivateTailWagonEquiv`: a true quotient-of-quotient
+  equivalence of ALL wagon labels at each shifted cut,
+  with exact vertex carriers, commuting parent maps,
+  bidirectional **labelled** girth transfer and
+  allowed-part intersection transfer.
+- `PrivateActualTailParameters`: the existing
+  `PrivateWagonInput.expandedWagonClass_parentBound`
+  transfers those source parameters through the actual
+  private vertices; no independently assumed shortened
+  parameter bound.
+- `PrivateActualChoiceTrain`: inside a single EHN choice,
+  the contracted train is exactly the old shifted
+  original train; different choices are separate at all
+  proper cuts, and the top is one global wagon.
+
+### D. Selected \(M\)-copy, actual filled \(H\), and target \(T\)
+
+- `PrivateStageSelectedPhysical`,
+  `PrivateSelectedStageFilling`,
+  `PrivateSelectedOldRange`,
+  `PrivateActualOrderParent`: from the **actual**
+  selected `OrderStage` copy \(j\), construct the
+  complete original first-wagon edge map into the full
+  \(N\)-support and reflect all shortened train levels.
+- `PrivateCanonicalParentwise`,
+  `PrivateActualOrderRealization`,
+  `PrivateActualOrderStrictMono`,
+  `PrivateCanonicalCutBridge`: construct the real
+  selected parentwise maps using **exact edge carriers**;
+  compare the same complete \(H\) cut with
+  `inheritedCutData`. The checked all-cut girth theorem
+  can then feed global scattering.
+- `PrivateActualWordArrow`,
+  `PrivateActualIndexedArrow`,
+  `PrivateActualLabelledArrow`,
+  `PrivateParentwiseColour`: preserve the SAME selected
+  old \(j\) and EHN \(s\) through the full colour-word arrow
+  to the labelled designated target edge family.
+- `PrivateOriginalTarget`,
+  `PrivateChoiceTaggedTarget`,
+  `PrivateChoiceTaggedEdges`,
+  `PrivateOriginalImageInH`,
+  `PrivateOriginalTrainInH`,
+  `PrivateOriginalColoursOrders`,
+  `PrivateActualSingleMapAllCuts`: literal \(\tau_s\),
+  original source-edge bijection, exact vertex/edge
+  image, unary predicates, within-colour orders and
+  one SAME physical edge map through all shifted levels.
+- `PrivateActualParentStrong`,
+  `PrivateCanonicalTargetStrong`,
+  `PrivateActualLabelledStrong`: derive the selected
+  parent's and target's strongness from old
+  `OrderStage.strong`, exact complete edge range,
+  and checked component-scattering strongness.
+
+## Concrete adversarial findings
+
+**False shortcut #1:** old physical edges being linear does NOT
+imply first-wagon carriers linear. Graph edges
+\(\{ab,ac,bd,cd\}\) can be partitioned into wagons
+\(\{ab,ac\}\) and \(\{bd,cd\}\), whose carriers share
+both \(b,c\). The actual labelled first-tail girth \(>2\)
+excludes this configuration.
+
+**False shortcut #2:** induced \(F_p\) may contain a
+foreign-owned A-edge unless first-wagon carrier linearity
+is used. Graph edges \(ab,ac\) in wagon zero and \(bc\)
+in wagon one exhibit this failure.
+
+**False shortcut #3:** an all-closure EHN selected-family
+interface does not certify order preservation.
+Keep the actual increasing selected family, and retain
+its index TYPE while reblocking the \(X\)-order.
+
+**False shortcut #4:** `ElementaryCAClass` alone
+does not imply that every \(X\)-vertex is A-covered.
+Use the Track 1 owner-splitting/marked restriction
+to obtain the full **covered, \(S=A_1\)** ordered
+Ramsey witness; mere removal of isolated X vertices
+needs an actual Ramsey-arrow transfer proof.
+
+**Typed target correction:** \(j[e]\) was not
+well-defined for an untagged original T-edge.
+The correct carrier is \(j[\tau_s(e)]\), and target
+labels are actual pairs \((j,s)\).
+
+The manuscript draft has been revised accordingly,
+including the explicit original-vs-quotient
+wagon relation calculation in the preparation lemma.
+
+## Finite checks actually executed (not Lean proofs)
+
+- `track5_private_smoke.py`: unequal 3/4-vertex first
+  wagons, 14 template vertices, 40 filled occurrences;
+  two overlapping selected old parents, 80 full
+  ambient filled occurrences, exact selected edge
+  carriers and complete colour words.
+- `track5_quotient_tail_regression.py`: **576** random
+  nested trains, all original/shortened quotient
+  classes, carriers, parent squares and shifted
+  allowed-part intersections; labelled girth up to
+  4; actual choice-component relations, sibling
+  separation and shared top.
+- That regression also checked **4,218** carrier-linear
+  random original edge-owner graphs: induced local
+  A-support edges equal their genuinely owned edges.
+  A counterexample with a foreign induced edge passed
+  as a negative control.
+- `track5_real_W_audit.py` (earlier check): genuine
+  7-vertex unequal disjoint union with \(A_1=\{0\}\),
+  5 marked coloured edges and negative controls for
+  invalid marked predicates and nullary relations.
+
+No arbitrary-colouring Ramsey theorem follows from
+these bounded tests. They validate *examples and
+indexing*, not the Lean proofs.
+
+## Exact outstanding obligations
+
+1. **Upstream Track 1:** supply the checked owner-split,
+   **covered, \(S=A_1\)-restricted, increasing selected**
+   EHN Ramsey family. [Issue #1052](https://github.com/janhubicka/lean-girth/issues/1052)
+   still marks this full bridge open.
+2. Instantiate the original partite train \(T\)
+   in its concrete coloured relational presentation
+   and connect the actual quotient-tail \(M\)
+   and its marked parameters to the lower
+   \(\mathsf{RR}_{\mathbf h}\) stage.
+3. Obtain an actual **selected `OrderStage`**
+   with its `DesignatedArrow` and `allCutGirth`
+   from the shorter induction hypothesis.
+4. Combine the same physical selected target map
+   with its parts, predicates and orders and the
+   checked **full** canonical H system-girth/scattering
+   proof for every cut, including old equality.
+5. **Kernel verification:** build each module on its exact
+   branch head, then run
+   `lake env lean Girth/CheckTrack5Private.lean`,
+   inspect `#print axioms` and every elaborated hypothesis,
+   and compile the full TeX manually.
+   The active environment has no `lean`, `lake`
+   or `elan` binary and no mounted mathlib build.
+   GitHub Actions/TeX CI were not used as a gate.
+
+**Status: Track 5 remains OPEN.** The complete candidate
+chain is isolated on draft PR #1063; manuscript changes
+remain on draft PR #450. No new validation markers
+were promoted, and no merge was performed.
