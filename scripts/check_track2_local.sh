@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Numbered Track 2: three INDEPENDENT local Lean + strict axiom gates.
-# Run: scripts/check_track2_local.sh [all|active|increment|join]
+# Run: bash scripts/check_track2_local.sh [all|active|increment|join]
 # No dependency updates, network access, or GitHub Actions are started here.
 set -euo pipefail
 
