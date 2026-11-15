@@ -366,7 +366,7 @@ one fails, then the full integration check only if all three pass.
 Each gate must both elaborate and report only `propext`,
 `Classical.choice`, and `Quot.sound`; the strict checker also
 requires **every expected theorem** to appear in the output.
-It neither updates dependencies nor invokes GitHub Actions.
+It does not explicitly update dependencies or invoke GitHub Actions. Restore the pinned local cache first: Lake itself may attempt to fetch missing packages.
 
 ```bash
 bash scripts/check_track2_local.sh active
@@ -398,3 +398,36 @@ check must run against an exact local checkout before promoting
 any validation marker. The existing conditional forest-completion
 components remain separate from the still-unconstructed local
 witnesses in other tracks.
+
+
+## Exact hypothesis audit — source candidates versus the manuscript
+
+This table is **statement correspondence**, not a kernel certificate.
+
+| Candidate input | Source in the revised English proof | Audit result |
+|---|---|---|
+| `PairwiseAllowed P` | The outer family is a forest, and enlarging each (Q) to (P_Q) preserves exact pairwise intersections; whole-edge intersections remain supported edges | Follows from the set-up; no new assumption |
+| `IsEmpty Q ∨ ∃ JOuter, hEdgeRequest` | Empty outer family is trivial. Otherwise choose the stated outer join tree, requesting (e^+) only for separators of size at least two | Exact after the empty-family wrapper; no singleton connector |
+| `hLocal`, `hContain` | Each (mathcal N_Q ∪ mathcal R_Q ∪ mathcal X_Q) is a forest inside (P_Q) | Exact local completion hypothesis |
+| `hLinear`, `hLarge` | The common ambient hypergraph (K) is linear and every edge has at least two vertices | Choose the Lean edge family (H=E(K)) |
+| `hOuterEdges`, `hLocalEdges` | The outer and local pieces are subhypergraphs of (K) | Directly inherited |
+| `hLocalNonempty` | All selected and locally added members contain an edge; every requested (e^+) is also edge-nonempty | Explicitly stated; needed to delete duplicate labels |
+| `hKeepSub`, `hOmitted` | Retain precisely (mathcal N∪⋃_Qmathcal X_Q); every other member of the full local union is a one-edge request | Follows by classification, including when a request is selected or added |
+| `hOldLinear` and base `hBaseStrong` in active girth | The picture is (A)-linear and its designated base projections are (A)-strong by construction | Standing picture invariants |
+| `u≠w` in active girth | The theorem is applied in the (|A|≥2) case; it excludes one-vertex edges | Existing case distinction, not a new global premise |
+| `hCoreGirth`, `hLocalStrong`, local ((m-1))-forest in direct increment | The actual local witness has girth (>m), strongly induced gluing images, and the previous mixed forest property | Genuine local witness obligations, not furnished by Track 2 alone |
+| `hRigid` in direct increment | The processed (A)-copy is rigid in the ordered setting | Derivable from the ordered hypothesis |
+| Output support girth (>2) | Deduce old linearity from two-member forests, core linearity from core girth, then output linearity by the checked attachment theorem | No circular premise in `ForestDirectIncrementLinearity` |
+
+The main mathematical interfaces are therefore *represented* by
+conditional Lean theorems, rather than being hidden in shorthand.
+The direct local Ramsey witness and full manuscript induction remain
+external construction obligations. **Do not interpret the table as
+evidence that the new Lean proofs compile.**
+
+The new local gate is split into disjoint import subgraphs:
+active girth (14 source declarations), direct increment (3), and
+general lifting (17). Their new-module dependency graphs have
+no cross-imports. In this environment the local runner passed
+a Bash syntax check and correctly reported missing Lake with
+exit code 2; no Lean elaboration or strict axiom run took place.
