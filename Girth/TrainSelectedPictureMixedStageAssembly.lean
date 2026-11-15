@@ -113,6 +113,47 @@ structure ActiveAttachmentMixedBounds
       (activeCarrier_all_standard_copies_meet_core
         A stage.system e.toFunctionEmbedding active I) j.castSucc).SupremeCycleBound (t.get j)
 
+/-- Every original attachment-bounds certificate satisfies the
+weaker sufficient mixed-core attachment specification. This
+backward-compatible direction follows from the two checked
+support-extension lemmas and the checked strong-core selected
+mixed coverage theorem. Hence the new constructor GENERALIZES the
+old one; for q>=3, no existing proof interface needs weakening. -/
+theorem ActiveAttachmentMixedBounds.of_original
+    (stage : ForestTailStage A B D family t targetTrain allowed)
+    (hA : A.Irreducible) (e : Embedding A D)
+    (active : StructuralRamsey.Partite.ProjectedEmbedding
+      A stage.system e.toFunctionEmbedding)
+    (E : StructuralRamsey.Partite.System L P Y)
+    (f : I → StructuralRamsey.Partite.Embedding
+      (stage.system.induce
+        (activeCarrier A stage.system e.toFunctionEmbedding)) E)
+    (U : EdgeTrainLevels (OldACarrierEdge A E.toRelStructure) t.length)
+    (bounds : ActiveAttachmentBounds stage hA e active E f U) :
+    ActiveAttachmentMixedBounds stage hA e active E f U where
+  corePartite := bounds.corePartite
+  coreSupportNonempty :=
+    supportNonempty_of_irreduciblesExtendTo
+      A E.toRelStructure bounds.coreCoverage
+  coreSupportCovers :=
+    supportCovers_of_irreduciblesExtendTo
+      A E.toRelStructure bounds.coreCoverage
+  coreMixedCoverage :=
+    selectedBorACoversIrreducibles_partiteAttachment
+      A B D stage.system family stage.selected
+      (activeCarrier A stage.system e.toFunctionEmbedding)
+      E f stage.mixedCoverage bounds.coreCoverage
+  baseStrong := bounds.baseStrong
+  targetTwo := bounds.targetTwo
+  interior := bounds.interior
+  bottomTwo := bounds.bottomTwo
+  localForest := bounds.localForest
+  coreGirth := bounds.coreGirth
+  cutoffTwo := bounds.cutoffTwo
+  coreParameters := bounds.coreParameters
+  interiorFull := bounds.interiorFull
+  tailSupreme := bounds.tailSupreme
+
 section MixedAssembly
 
 variable (stage : ForestTailStage A B D family t targetTrain allowed)
