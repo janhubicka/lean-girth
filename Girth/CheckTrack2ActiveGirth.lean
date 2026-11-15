@@ -39,3 +39,8 @@ on the basis of this gate file's existence.
 #print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
 #print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
+
+#check StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
+#print axioms StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
