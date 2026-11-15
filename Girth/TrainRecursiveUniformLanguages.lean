@@ -82,6 +82,7 @@ theorem UniformSelectedPartiteForestEveryColouredArity.atColourWord
     (h : UniformSelectedPartiteForestEveryColouredArity.{u, v} t)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
     (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA) :
+    letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
     UniformSelectedPartiteForest A₀ t (Fin n → Fin r) := by
   letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
   exact h I k hk A₀ (Fin n → Fin r)
