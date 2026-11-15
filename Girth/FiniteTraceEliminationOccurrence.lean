@@ -123,4 +123,44 @@ theorem eliminationParentGraph_bag_occurrences_preconnected
   intro v w
   exact (reachAll v).trans (reachAll w).symm
 
+/-- A larger neighbour in the elimination-parent graph must be
+the uniquely chosen least later neighbour, never a reverse parent
+edge.  The two nonempty proofs are propositionally equal. -/
+theorem eliminationParentGraph_greater_is_parent
+    [Fintype V] [LinearOrder V]
+    (G : SimpleGraph V) {v w : V}
+    (hAdj : (eliminationParentGraph G).Adj v w)
+    (hvw : v < w) :
+    ∃ hN : (laterNeighbors G v).Nonempty,
+      w = (laterNeighbors G v).min' hN := by
+  rcases hAdj with ⟨hN, hw⟩ | ⟨hN, hv⟩
+  · exact ⟨hN, hw⟩
+  · have hwv : w < v := by
+      calc
+        w < (laterNeighbors G w).min' hN :=
+          (min_laterNeighbor_specs G w hN).1
+        _ = v := hv.symm
+    exact (lt_asymm hvw hwv).elim
+
+/-- Every vertex has at most one STRICTLY LARGER neighbour in
+the elimination-parent graph.  This is the key finite-forest
+acyclicity condition: a cycle's least vertex would have two. -/
+theorem eliminationParentGraph_unique_greater_neighbour
+    [Fintype V] [LinearOrder V]
+    (G : SimpleGraph V) {v w u : V}
+    (hw : (eliminationParentGraph G).Adj v w)
+    (hu : (eliminationParentGraph G).Adj v u)
+    (hvw : v < w) (hvu : v < u) :
+    w = u := by
+  obtain ⟨hwN, hwp⟩ :=
+    eliminationParentGraph_greater_is_parent G hw hvw
+  obtain ⟨huN, hup⟩ :=
+    eliminationParentGraph_greater_is_parent G hu hvu
+  calc
+    w = (laterNeighbors G v).min' hwN := hwp
+    _ = (laterNeighbors G v).min' huN := by
+      rw [Subsingleton.elim hwN huN]
+    _ = u := hup.symm
+
+
 end StructuralRamsey.Girth
