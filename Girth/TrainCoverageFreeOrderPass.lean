@@ -86,6 +86,22 @@ theorem PictureStep.coversBase
   obtain ⟨f, _⟩ := hStep constant
   exact f.coversBase hBase
 
+/-- The old picture's selected base-copy strongness extends to
+every prescribed base B-copy by selected-lift coverage. This is
+a transport fact and does not require mixed irreducible coverage
+of any picture vertex. -/
+theorem ForestStage.allBaseStrong_of_selected
+    (S : ForestStage A B D family (q :: tail) targetTrain allowed)
+    (hCovered : S.CoversBase)
+    (hSelectedStrong : ∀ copy : DesignatedCopy B D S.system family,
+      copy ∈ S.selected → AStrong A D (copyCarrier copy.base)) :
+    ∀ b : Embedding B D, b ∈ family →
+      AStrong A D (copyCarrier b) := by
+  intro b hb
+  obtain ⟨copy, hSelected, hBase⟩ := hCovered b hb
+  rw [← hBase]
+  exact hSelectedStrong copy hSelected
+
 /-- The SAME vector forest-to-order finite pass with no coverage
 axiom beyond the actual selected B-base lifts. The local operator
 must genuinely preserve bottom system girth and be a real selected
