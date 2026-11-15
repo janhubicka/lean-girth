@@ -33,7 +33,7 @@ Bounded Python diagnostic (not Lean): 142,416 set-partition words through length
 
 ## 14 November continuation (new conditional endpoints)
 
-- `TrainRecursiveRefinementDoubleGirth.lean` now treats the **bottom equality cut** separately with the existing noninjectivity lemma. Its displayed argument does not *use* the record's bottom child-girth field. The record still contains that field; hence this is **not** a theorem with a genuinely weakened input structure, and it must not be advertised as such.
+- A former proof variant handled the **bottom equality cut** separately via noninjectivity. That variant was subsequently simplified away: the current doubled-girth induction uses the existing `R.childGirth` field uniformly at every inserted cut, just as the older certified g+1 induction does. The record already contained this field; no extra assumption was introduced. The separate `TrainRecursiveRefinementSinglePartAcyclic.lean` candidate records the direct bottom acyclicity argument independently.
 - Added `FirstWagonRefinement.actualSupport_girthGT_of_first_universal_twice` for true A-support with an explicitly universal first wagon.
 - Added `Girth/TrainRecursivePhysicalFineGirthDouble.lean`, with two conditional endpoints: `selectedPicture_actualSupport_girthGain_twice_of_fineSystemCuts` derives true physical A-support girth `> min(2*g+1,h)` from the same named fine bottom/positive system bounds, genuine parent parameters, and retained actual first full-system cutoff `h`; `selectedPicture_actualSupport_girthGain_twice_of_firstUniversal` gives the empty-tail `>2*g+1` under explicit first-universality. Neither constructs the selected lower witness or output stage.
 - Extended the manuscript-branch finite test: besides all sharp `2g+2` examples for `2<=g<=20`, it now checks **every** smaller retained-tail cutoff `g+1 <= h <= 2g` for `2<=g<=16`, building an `h+1`-cycle of singleton first wagons with valid part assignments. All local Python tests passed.
@@ -276,3 +276,28 @@ This removes a dead-end duplicate, not an obligation or assumption.
 The next mandatory gate is still compilation of the seven modules
 and checking the full transitive axiom output against the exact head.
 No validation mark is promoted and no CI run is requested.
+
+### 15 November: simplify the doubled-girth descent
+
+The first-wagon `false_of_short_labelledCycle_in_firstWagon_twice`
+candidate previously had a 21-line special branch for `k=0`
+proving the bottom case via `child_not_injective`. This branch
+is **unnecessary for this theorem's existing input record**,
+which supplies the full local `R.childGirth` certificate at
+every inserted cut (including zero).
+
+The current proof therefore has the identical one-step structure
+to the old `false_of_short_labelledCycle_in_firstWagon` proof:
+take `R.childGirth step p`, apply
+`child_constant_of_singleton_intersections_twice`, and descend.
+The only new substantive obligation is the doubled one-step lemma,
+not a second proof of the bottom case. This removes approximately
+21 fragile tactic lines and lowers expected elaboration risk.
+
+The English manuscript legitimately handles the bottom directly
+by single-part physical-edge acyclicity; this is separately
+expressed in `TrainRecursiveRefinementSinglePartAcyclic.lean`.
+No existing `FirstWagonRefinement` field or hypothesis is
+weakened or strengthened by this cleanup. The exact-head Lean
+build and transitive axiom audit remain pending; no new theorem
+is kernel-certified by source-level refactoring.
