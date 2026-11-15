@@ -18,6 +18,56 @@ Both PRs intentionally remain **draft and unmerged**.
 > imports do NOT certify new applications. No green marks, no paid CI,
 > and no full TeX build are claimed.
 
+## Critical correction — TWO edge types in the filled OrderStage
+
+A new adversarial audit detected that
+`TrainFillingOrderStageCanonicalAllCutGirth.lean` proves its
+`OrderStage.canonicalFilledCut_fullSystemGirthGT` statement
+using the **same source coloured edge type A** for both
+old selected edges of N and local inserted edges of X.
+This is NOT the actual cutoff-two situation:
+
+- The shorter `RR_h` old edge type `A_old` has the entire
+  ordered coloured vertex set `V(X)` as its vertex set.
+- The inserted hypergraph X carries edges of the original,
+  typically SMALLER `A_small = E_a` edge type.
+
+These can have different cardinalities AND different
+relational languages. No `A_old → X` embedding is
+required or generally available. The previously listed
+one-type OrderStage theorem is **not** a direct
+certificate for cutoff two.
+
+New candidate `Girth/TrainFillingPrivateTwoTypeOrderGirth.lean`
+proves an explicit **two-relational-language** generalization:
+construct `H := UniformFillingData.ofSupportCopies A_small X
+  (supportCopies A_old N) place ...`, then apply the
+ALREADY CHECKED generic
+`H.toTrainFilling.inheritedCutData_fullSystemGirthGT_of_fibreLinearity`
+with:
+
+1. the actual shorter `OrderStage.allCutGirth j` of
+   the *old* large-edge type;
+2. `S.aLinear` to make all old N-support edges linear;
+3. `A_small`-linearity to make local X-fibres linear; and
+4. full X-coverage by its *small* A-support edges.
+
+The result is full inherited system girth for each old cut
+(including equality zero), with the actual selected old
+parent/copy-edge family, **without** identifying the two
+edge types or assuming output girth.
+This candidate is uncompiled: its new
+`#check`/`#print axioms` gate has not been executed.
+
+**Remaining integrator:** show the SAME actual canonical H
+is used in the selected `(j,s)` parentwise realization
+and identify its old edge-support equivalence/train
+with `S.train`. `PrivateCanonicalCutBridge` already
+transports a generic inherited H-bound once that
+identification is supplied. The old one-type theorem
+can still be reused in its own applications, but
+must not be cited as closing this two-type proof.
+
 ## Mathematical chain
 
 Given the original height-\(1+m\) train \(T\), denote its **actual**
@@ -94,8 +144,10 @@ be duplicated in the final cutoff-two assembly:
 - `TrainRecursiveWitnessPass` and
   `TrainFillingSelectedStageTrainReflection`: genuine selected
   shorter-stage parent and all-cut train reflection.
-- `TrainFillingOrderStageCanonicalAllCutGirth`: the OLD
-  all-cut bound, including old equality.
+- `TrainFillingOrderStageCanonicalAllCutGirth`: one-type
+  old all-cut filling transfer (not directly the large/small cutoff-two instance).
+- `TrainFillingPrivateTwoTypeOrderGirth`: **new uncompiled** two-type
+  adapter to the checked generic `inheritedCutData_fullSystemGirthGT_of_fibreLinearity`.
 - `TrainFillingIndexedFaithfulParentwise`,
   `TrainDesignatedSubcopyGirth` and
   `TrainDesignatedSubcopyStrong`: exact global scattering,
