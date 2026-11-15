@@ -365,3 +365,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailWagonClassEquiv_parent
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_parentIntersectionBound
 #print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedActualTail_parentBound
+
+-- Keep original EHN choice subtype while proving monotonicity in reblocked X order.
+#check StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_coordinate_mono_reblocked
+#print axioms StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_coordinate_mono_reblocked
