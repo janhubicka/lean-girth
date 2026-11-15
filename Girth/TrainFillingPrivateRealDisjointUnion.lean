@@ -107,6 +107,22 @@ def HasSpanningRelation
   ∃ (sym : L.Symbol) (tuple : Fin (L.arity sym) → UA),
     A.rel sym tuple ∧ Function.Surjective tuple
 
+/-- One relation tuple covering all A-vertices makes A
+irreducible: every two distinct vertices occur together in
+that same genuine relational tuple. This discharges the
+standard irreducibility premise of functional EHN for the
+actual coloured ONE-EDGE structure, rather than taking
+irreducibility as an unexplained extra input. -/
+theorem irreducible_of_spanningRelation
+    {UA : Type v} (A : RelStructure L UA)
+    (hSpan : HasSpanningRelation A) :
+    A.Irreducible := by
+  intro x y _hxy
+  obtain ⟨sym, tuple, hRel, hSurj⟩ := hSpan
+  obtain ⟨i, hi⟩ := hSurj x
+  obtain ⟨j, hj⟩ := hSurj y
+  exact ⟨sym, tuple, i, j, hRel, hi, hj⟩
+
 /-- In a disjoint union, the image of a spanning A-relation
 cannot cross different summands. Thus each A-copy is contained
 in exactly one first-wagon component if it is nonempty.
