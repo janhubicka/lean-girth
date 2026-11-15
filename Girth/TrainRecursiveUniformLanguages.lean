@@ -37,7 +37,7 @@ All finite ordered coloured-edge types and palettes are quantified over
 BEFORE the rank recursion. There is no fixed k in the inductive type. -/
 def UniformSelectedPartiteForestEveryColouredArity
     (t : List ℕ) : Prop :=
-  ∀ (I : Type u) [Finite I] [LinearOrder I] (k : ℕ)
+  ∀ (I : Type u) [Finite I] [LinearOrder I] (k : ℕ) (hk : 2 ≤ k)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
     (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA)
     (κ : Type) [Fintype κ] [Nonempty κ],
@@ -53,22 +53,22 @@ theorem uniformSelectedPartiteForestEveryColouredArity_largerCutoff
         (List.replicate d (q - 1) ++ tail)) :
     UniformSelectedPartiteForestEveryColouredArity.{u, v}
       (q :: tail) := by
-  intro I _ _ k UA _ _ _ A₀ κ _ _
+  intro I _ _ k hk UA _ _ _ A₀ κ _ _
   exact uniformSelectedPartiteForest_largerCutoff A₀
-    q tail hq κ (fun d hd => hLower d hd I k A₀ κ)
+    q tail hq κ (fun d hd => hLower d hd I k hk A₀ κ)
 
 /-- A concrete k-ary coloured ordered edge type is covered directly
-for ANY k. In cutoff two, k is the number of VERTICES of the EHN
+for ANY k≥2. In cutoff two, k is the number of VERTICES of the EHN
 witness X, NOT the number of its original smaller hyperedges. -/
 theorem UniformSelectedPartiteForestEveryColouredArity.atArity
     (I : Type u) [Finite I] [LinearOrder I]
-    (k : ℕ) (t : List ℕ)
+    (k : ℕ) (hk : 2 ≤ k) (t : List ℕ)
     (h : UniformSelectedPartiteForestEveryColouredArity.{u, v} t)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
     (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA)
     (κ : Type) [Fintype κ] [Nonempty κ] :
     UniformSelectedPartiteForest A₀ t κ :=
-  h I k A₀ κ
+  h I k hk A₀ κ
 
 /-- In the cutoff-two construction the new hyperedge arity k and the
 length n of an original-edge colour word are INDEPENDENT parameters:
@@ -78,13 +78,13 @@ finite function palette at the NEW coloured edge arity without an
 extra palette-amplification or language-transfer assumption. -/
 theorem UniformSelectedPartiteForestEveryColouredArity.atColourWord
     (I : Type u) [Finite I] [LinearOrder I]
-    (k n r : ℕ) (hr : 0 < r) (t : List ℕ)
+    (k n r : ℕ) (hk : 2 ≤ k) (hr : 0 < r) (t : List ℕ)
     (h : UniformSelectedPartiteForestEveryColouredArity.{u, v} t)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
     (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA) :
     UniformSelectedPartiteForest A₀ t (Fin n → Fin r) := by
   letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
-  exact h I k A₀ (Fin n → Fin r)
+  exact h I k hk A₀ (Fin n → Fin r)
 
 /-- The entire q>2 operator field is supplied in the exact coloured
 edge arity-uniform assertion. The OTHER fields explicitly demand:
