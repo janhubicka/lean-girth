@@ -32,6 +32,7 @@ import Girth.TrainCoverageFreeComparison
 import Girth.TrainCoverageFreeInitialFinitePass
 import Girth.TrainCoverageFreeTrueActiveGirth
 import Girth.TrainCoverageFreeFtEligiblePass
+import Girth.TrainCoverageFreeExactLocalTrain
 import Girth.TrainCoverageFreeStrongFinitePass
 import Girth.TrainCoverageFreeNontrivialFtStep
 import Girth.TrainCoverageFreeBoundsFromMixed
@@ -270,3 +271,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ActiveWagonGirth
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.activeWagonGirth_of_ready
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyStrongTrain_of_Ft_eligible_steps
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.originalSharedTrain_iff_of_selectedFt_embeddings
