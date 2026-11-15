@@ -65,8 +65,7 @@ theorem initialStrongTrainRamsey_of_nontrivialFtOperator
         (targetTrain.wagonClassCarrier
           (fun edge => edge.1) j.castSucc)
         ((q :: tail).get j))
-    (profiles : List (UA ↪ P)) (κ : Type w) [Nonempty κ]
-    (hProfiles : ∀ α : UA ↪ P, α ∈ profiles)
+    (κ : Type w) [Nonempty κ]
     (hBaseArrow :
       ∀ χ : Embedding A₀.ordered D → κ,
         ∃ b : Embedding B D, b ∈ family ∧
@@ -108,6 +107,12 @@ theorem initialStrongTrainRamsey_of_nontrivialFtOperator
     B D family q tail ht targetTrain allowed
     hSupportNonempty hSupportCovers
     hTargetParameters hCutoff hTargetCut
+  classical
+  letI : Fintype (UA ↪ P) := Fintype.ofFinite (UA ↪ P)
+  let profiles : List (UA ↪ P) := Finset.univ.toList
+  have hProfiles : ∀ α : UA ↪ P, α ∈ profiles := by
+    intro α
+    exact Finset.mem_toList.mpr (Finset.mem_univ α)
   exact start.1.toForestStage.ramseyStrongTrain_of_Ft_eligible_steps
     A₀ profiles κ start.2 hProfiles hBaseArrow localFt
 
