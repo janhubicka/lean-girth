@@ -93,6 +93,15 @@ def check_graph(G, order):
     for v, p in parent.items():
         assert (bags[v] & ~(1 << v)) & ~bags[p] == 0
 
+    # Direct Track 8 counting argument: a maximal clique is exactly
+    # the elimination bag at its FIRST vertex. No clique tree needed.
+    minima = []
+    for C in maximal_cliques(G):
+        first = min(vertices(C), key=order.index)
+        assert bags[first] == C
+        minima.append(first)
+    assert len(minima) == len(set(minima))
+
     adj = {v: set() for v in bags}
     for v, p in parent.items():
         adj[v].add(p)
