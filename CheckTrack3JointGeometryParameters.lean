@@ -1,4 +1,4 @@
-import Girth.TrainTrack3JointGeometryParameters
+import Girth.TrainTrack3StageJointGeometryParameters
 
 /-!
 Numbered Track 3: strict checker for the source-only geometry + parameter
@@ -16,3 +16,6 @@ No new output system-girth assumption is introduced.
 
 #check @StructuralRamsey.Girth.track3_height_one_geometry_and_parameters
 #print axioms StructuralRamsey.Girth.track3_height_one_geometry_and_parameters
+
+#check @StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_joint_geometry_and_parameters_of_two_le_height
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_joint_geometry_and_parameters_of_two_le_height
