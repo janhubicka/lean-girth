@@ -16,9 +16,7 @@ on the basis of this gate file's existence.
 #check StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
 #check StructuralRamsey.Girth.forestOfCopies_sum_of_subsingleton_overlap
 #check StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
-#check StructuralRamsey.Girth.forestOfCopies_sum_of_smallOrEdge_overlap
 #check StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
-#check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_then_delete
 #check StructuralRamsey.Girth.ForestOfCopies.finiteImage_of_duplicate_oneEdge
 #check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_on_distinct_image
 #check StructuralRamsey.Girth.isOneEdge_of_linear_carrier_subset_edge
@@ -34,9 +32,7 @@ on the basis of this gate file's existence.
 #print axioms StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
 #print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_subsingleton_overlap
 #print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
-#print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_smallOrEdge_overlap
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
-#print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_then_delete
 #print axioms StructuralRamsey.Girth.ForestOfCopies.finiteImage_of_duplicate_oneEdge
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_on_distinct_image
 #print axioms StructuralRamsey.Girth.isOneEdge_of_linear_carrier_subset_edge
