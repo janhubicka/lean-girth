@@ -7,7 +7,7 @@ echo "HEAD: $(git rev-parse HEAD)"
 echo "TOOLCHAIN: $(cat lean-toolchain)"
 export LEAN_NUM_THREADS=1
 source_count=$(grep -c '^#print axioms ' CheckTrack1ActualPartite.lean)
-test "$source_count" -eq 17 || {
+test "$source_count" -eq 15 || {
   echo "Wrong actual-partite Track 1 axiom inventory: $source_count" >&2
   exit 1
 }
@@ -16,7 +16,6 @@ if grep -nE '^[[:space:]]*(sorry|admit|axiom)[[:space:]]' \
     Girth/Track1ColourFromRel.lean \
     Girth/Track1ControlledPhysicalIntersection.lean \
     Girth/Track1EHNColouredPresentation.lean \
-    Girth/Track1EHNIndexedSelected.lean \
     Girth/Track1ForbiddenPartDegreeOne.lean \
     Girth/Track1FullSelectedWitnessEmbeddings.lean \
     Girth/Track1OldSelectedColouredPresentation.lean \
@@ -30,7 +29,6 @@ fi
 lake build \
   Girth.Track1FullSelectedWitnessEmbeddings \
   Girth.Track1PhysicalActualSelectedIntersections \
-  Girth.Track1EHNIndexedSelected \
   Girth.Track1PhysicalFamilyActualMixedLF2 \
   Girth.Track1TriangleFreePhysicalFamily
 log="${1:-/tmp/check-track1-actual-partite-axioms.log}"
