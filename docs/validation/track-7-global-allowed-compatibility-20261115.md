@@ -98,6 +98,9 @@ actual glued geometry than full selected-family coverage of D.
   resulting bound through an arbitrary picture's part map
 - `usedContact_coarsePredicate_of_localPullback`: only the genuine output
   contact vertices need coverage, provided their D-parts are allowed
+- `adjacentParameters_of_canonicalCoarseAllowed`: the genuine
+  `EdgeTrainLevels.AdjacentParameters` predicate transfers unchanged
+  from canonical D-parts to the composed original coarse predicate map
 - `canonicalCoarseAllowed_pullback`,
   `canonicalCoarseAllowed_familyPullback`, and
   `canonicalCoarseAllowed_output`: choosing the permitted D-parts by
@@ -123,5 +126,5 @@ or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules contain eight exact axiom probes, with no `sorry`/`admit`/new axiom. They have
+The new modules contain nine exact axiom probes, with no `sorry`/`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
