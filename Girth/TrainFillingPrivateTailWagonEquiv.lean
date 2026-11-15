@@ -113,4 +113,50 @@ theorem EdgeTrainLevels.tailWagonClassEquiv_surjective
     Function.Surjective (T.tailWagonClassEquiv ν) :=
   (T.tailWagonClassEquiv ν).surjective
 
+
+/-- LABELLED wagon girth of the genuine shortened train at
+level nu is EQUIVALENT to labelled girth of the ORIGINAL
+train at level nu+1. This is an exact transport through
+a bijection of wagon labels with literally equal carriers;
+it is not a claim about unlabelled sets of wagon vertices.
+
+In particular the paper's original tail girth bounds
+shift one place with NO loss of girth, and no extra
+assumption on the shortened quotient train is needed. -/
+theorem EdgeTrainLevels.tailQuotient_labelledCutGirth_iff
+    {m : ℕ} {V : Type v}
+    (T : EdgeTrainLevels E (m + 1))
+    (edges : E → Set V)
+    (ν : Fin (m + 1)) (g : ℕ) :
+    LabelledGirthGT
+      ((T.tailQuotient).wagonClassCarrier
+        (T.wagonClassCarrier edges
+          (EdgeTrainLevels.firstWagonLevel m)) ν) g ↔
+    LabelledGirthGT
+      (T.wagonClassCarrier edges ν.succ) g := by
+  let eqv := T.tailWagonClassEquiv ν
+  let old := T.wagonClassCarrier edges ν.succ
+  let reduced := (T.tailQuotient).wagonClassCarrier
+    (T.wagonClassCarrier edges
+      (EdgeTrainLevels.firstWagonLevel m)) ν
+  have hExact : ∀ q, reduced q = old (eqv q) :=
+    T.tailWagonClassEquiv_carrier edges ν
+  have hOldToNew : ∀ q, old q ⊆ reduced (eqv.symm q) := by
+    intro q
+    have h := hExact (eqv.symm q)
+    rw [eqv.apply_symm_apply] at h
+    rw [h]
+  have hNewToOld : ∀ q, reduced q ⊆ old (eqv q) := by
+    intro q
+    rw [hExact]
+  constructor
+  · intro hShort
+    exact labelledGirthGT_of_injective_shrinking
+      reduced old eqv.symm eqv.symm.injective
+      hOldToNew g hShort
+  · intro hOriginal
+    exact labelledGirthGT_of_injective_shrinking
+      old reduced eqv eqv.injective
+      hNewToOld g hOriginal
+
 end StructuralRamsey.Girth
