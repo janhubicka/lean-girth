@@ -1,5 +1,6 @@
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
+import Girth.FiniteTraceSimplicialCriterion
 
 /-!
 # Focused Track 8 kernel gate — direct PEO-counting route
@@ -42,3 +43,18 @@ manuscript validation markers without actual compilation AND executed
 #print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_PEO
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+
+#check StructuralRamsey.Girth.IsSimplicialWithin
+#check StructuralRamsey.Girth.IsSimplicialWithin.mono
+#check StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#check StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#check StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#check StructuralRamsey.Girth.exists_simplicialOutside_clique
+#check StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+
+#print axioms StructuralRamsey.Girth.IsSimplicialWithin.mono
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#print axioms StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#print axioms StructuralRamsey.Girth.exists_simplicialOutside_clique
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
