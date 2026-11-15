@@ -176,8 +176,9 @@ theorem actualOrderStage_canonicalTwoTypeTargetGirth
           hSupport hLinear D family allowed S =>
           {e : H.OldEdge | e.1 ⊆ copyCarrier i.1.embedding})
         j.castSucc).FullSystemGirthGT (t.get j) := by
-    exact S.canonicalFilledCut_fullSystemGirthGT_twoTypes
-      Aold M D family Asmall R place hRange hCovers hSmallLinear j
+    exact TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT_twoTypes
+      Aold M D family S Asmall R place hRange
+      hCovers hSmallLinear j
   have hActualOldGirth :
       (H.toTrainFilling.inheritedCutData oldTrain
         (fun i : ActualOrderParent U Aold M T hm
