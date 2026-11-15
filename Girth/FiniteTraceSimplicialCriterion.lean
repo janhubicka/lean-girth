@@ -50,7 +50,7 @@ theorem isSimplicialWithin_iff_clique
   · intro h x hx y hy hxy
     exact h x hx.1 y hy.1 hxy hx.2 hy.2
   · intro h x hx y hy hxy hvx hvy
-    exact h ⟨hx, hvx⟩ ⟨hy, hvy⟩ hxy
+    exact h x ⟨hx, hvx⟩ y ⟨hy, hvy⟩ hxy
 
 /-- The PEO condition is just simpliciality of each vertex
 within its own suffix. -/
