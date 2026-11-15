@@ -199,4 +199,74 @@ theorem EdgeTrainLevels.tailQuotient_rel_mk_iff
     T.rel ν.succ a b :=
   T.tailRelation_mk_iff ν a b
 
+
+/-- The complete original vertex carrier of a shortened
+wagon at new level nu equals LITERALLY the complete carrier
+of its corresponding original wagon at old level nu+1.
+
+Left: start with true first-wagon classes; collect their
+complete original edge carriers across the new tail relation.
+Right: collect the original old physical edge carriers
+directly across old relation nu+1. No vertex is lost or
+introduced by contracting first-wagon labels.
+
+This is the key preparation identity for shifting ALL
+proper horizontal cut girth and train parameter bounds. -/
+theorem EdgeTrainLevels.tailQuotient_wagonCarrier_eq
+    {m : ℕ} {V : Type v}
+    (T : EdgeTrainLevels E (m + 1))
+    (edges : E → Set V)
+    (ν : Fin (m + 1)) (a : E) :
+    (T.tailQuotient).wagonCarrier
+      (T.wagonClassCarrier edges
+        (EdgeTrainLevels.firstWagonLevel m))
+      ν (Quotient.mk
+        (T.wagonSetoid (EdgeTrainLevels.firstWagonLevel m)) a)
+    = T.wagonCarrier edges ν.succ a := by
+  ext x
+  constructor
+  · rintro ⟨q, hTail, hx⟩
+    induction q using Quotient.inductionOn with
+    | h b =>
+      have hAB : T.rel ν.succ a b :=
+        (T.tailQuotient_rel_mk_iff ν a b).mp hTail
+      change x ∈
+        T.wagonCarrier edges (EdgeTrainLevels.firstWagonLevel m) b
+        at hx
+      obtain ⟨f, hBF, hfx⟩ := hx
+      have hBF' : T.rel ν.succ b f :=
+        T.firstWagon_rel_of_shift ν hBF
+      exact ⟨f,
+        (T.equivalent ν.succ).trans hAB hBF', hfx⟩
+  · rintro ⟨b, hAB, hx⟩
+    refine ⟨Quotient.mk
+        (T.wagonSetoid (EdgeTrainLevels.firstWagonLevel m)) b,
+      ?_, ?_⟩
+    · exact (T.tailQuotient_rel_mk_iff ν a b).mpr hAB
+    · change x ∈
+        T.wagonCarrier edges (EdgeTrainLevels.firstWagonLevel m) b
+      exact ⟨b,
+        (T.equivalent (EdgeTrainLevels.firstWagonLevel m)).refl b,
+        hx⟩
+
+/-- The same carrier identity on the actual QUOTIENT wagon
+label types, not just on chosen edge representatives.
+This preserves repeated wagon labels rather than
+silently collapsing them by equality of vertex sets. -/
+theorem EdgeTrainLevels.tailQuotient_wagonClassCarrier_mk
+    {m : ℕ} {V : Type v}
+    (T : EdgeTrainLevels E (m + 1))
+    (edges : E → Set V)
+    (ν : Fin (m + 1)) (a : E) :
+    (T.tailQuotient).wagonClassCarrier
+      (T.wagonClassCarrier edges
+        (EdgeTrainLevels.firstWagonLevel m))
+      ν (Quotient.mk ((T.tailQuotient).wagonSetoid ν)
+        (Quotient.mk
+          (T.wagonSetoid (EdgeTrainLevels.firstWagonLevel m)) a))
+    =
+    T.wagonClassCarrier edges ν.succ
+      (Quotient.mk (T.wagonSetoid ν.succ) a) :=
+  T.tailQuotient_wagonCarrier_eq edges ν a
+
 end StructuralRamsey.Girth
