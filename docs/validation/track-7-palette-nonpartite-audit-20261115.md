@@ -75,6 +75,19 @@ not require an A-coordinate map on the INPUT B. The existing one-edge
 proof in merged PR #1072 directly gives the complementary one-copy
 specialisation `unrestrictedOrder_oneEdge_case`.
 
+**Coarse-predicate parameter transport:** the unrestricted order
+predicate records allowed sets as subsets of the vertices of B.
+For an original coarse unary predicate map `colour_B : V(B) → I`
+and a permitted index set `S ⊆ I`, choose the B-vertex set
+`colour_B^{-1}(S)`. If the resulting picture has part map
+`part : V(H) → V(B)`, then its permitted vertices are exactly
+`part^{-1}(colour_B^{-1}(S)) =
+(colour_B ∘ part)^{-1}(S)`. Thus a picture partite over the WHOLE
+target B can still preserve the original coarse predicate
+intersection restrictions after forgetting its auxiliary B-parts.
+The actual cutoff-two application must verify that its shorter
+target carries these prescribed allowed sets at every cut.
+
 The corrected conditional operator is
 `uniformSelectedUnrestrictedOperators`: its `largerCutoff` field
 comes from the already verified universal partite `q>2` step, whereas
