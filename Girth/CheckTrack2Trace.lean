@@ -88,3 +88,6 @@ import Girth.ForestCopySetCompletion
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
 #print axioms StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
+
+#check StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
