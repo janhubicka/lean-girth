@@ -2,7 +2,7 @@ import Girth.Track1FullSelectedOrderedLifts
 import Girth.Track1FullSelectedSupportPieces
 import Girth.Track1ActualSelectedOwnerColourArrow
 import Girth.Track1OwnerSplitFinite
-import Girth.Track1PhysicalSelectedRepresentatives
+import Girth.Track1OrderedPhysicalOwners
 import Girth.Track1SelectedCarrierEmbedding
 
 /-!
@@ -29,6 +29,6 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.actualSelectedOwnerCopy
 #print axioms StructuralRamsey.Girth.actualSelectedOwner_oldColourArrow
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.finite_ownerVertex
-#print axioms StructuralRamsey.Girth.track1_physicalRepresentative_distinct
-#print axioms StructuralRamsey.Girth.track1_physicalRepresentative_supportPieces_injective
+#print axioms StructuralRamsey.Girth.orderedB_selectedCarriers_injective
+#print axioms StructuralRamsey.Girth.orderedB_selectedSupportPieces_injective
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.actualSelectedEmbeddingOnCarrier
