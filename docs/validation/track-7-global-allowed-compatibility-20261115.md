@@ -48,6 +48,43 @@ collision: the latter prohibits a *global fine X-part map* on the
 shorter train; the present issue is about a **too-weak allowed-set
 condition on a larger Ramsey base**.
 
+## A simpler alternative: choose canonical coarse-permitted parts
+
+In the manuscript's coloured-edge setting, the permitted vertices at
+each cut are **unions of unary colour classes**, not arbitrary sets of
+individual B-vertex coordinates. Suppose
+`predB : V(B) → I` and `predD : V(D) → I` are the genuine coarse colour
+maps and every prescribed embedding b:B→D preserves these maps.
+
+For the original permitted predicate-index set `P[ν] ⊆ I`, CHOOSE
+
+    allowedD[ν] = predD^{-1}(P[ν]).
+
+This choice immediately gives **global** coarse compatibility for
+every D-point, including those outside all selected B-copies. Moreover,
+
+    b^{-1}(allowedD[ν]) = predB^{-1}(P[ν]).
+
+Thus it satisfies the selected family pullback requirement whenever
+`allowedB[ν]` contains the original permitted B-colour classes
+(and with equality when `allowedB[ν]=predB^{-1}(P[ν])`).
+
+In this canonical choice, **no permitted-point selected-family
+coverage is needed**. This is potentially the preferable method for
+the genuine coarse-coloured Ramsey output. However it is only useful
+if the actual construction of the selected `OrderStage` permits
+choosing its allowedD parameters in this canonical form. That existence
+step has NOT been proved here. For a stage whose allowedD was already
+fixed arbitrarily, the original coverage argument remains one possible
+sufficient condition.
+
+There is also a weaker intermediate alternative to covering all
+allowed D-points: it suffices to cover the **actual output contact
+vertices** at each train cut. The lemma
+`usedContact_coarsePredicate_of_localPullback` formalizes precisely
+this restricted obligation. It may be easier to establish from the
+actual glued geometry than full selected-family coverage of D.
+
 ## Lean interfaces
 
 `Girth/TrainRecursiveGlobalAllowedCompatibility.lean` contains:
@@ -59,7 +96,7 @@ condition on a larger Ramsey base**.
   originally permitted coarse predicate
 - `allowedVertices_coarsePredicate_of_globalBaseBound`: pull back the
   resulting bound through an arbitrary picture's part map
-- `localPullback_does_not_imply_globalCover`: the finite
+- `usedContact_coarsePredicate_of_localPullback`: only the genuine output\n  contact vertices need coverage, provided their D-parts are allowed\n- `canonicalCoarseAllowed_pullback`,\n  `canonicalCoarseAllowed_familyPullback`, and\n  `canonicalCoarseAllowed_output`: choosing the permitted D-parts by\n  original coarse unary colour immediately controls all D-points and\n  restricts correctly to each selected B-image, without any coverage\n- `localPullback_does_not_imply_globalCover`: the finite
   Unit→Bool counterexample above
 
 These lemmas are **conditional preparation**, not the existence of the
@@ -72,11 +109,12 @@ must transport it into the shorter-train output.
 
 This PR does NOT change the unrestricted predicate in live draft #1073,
 its compiler errors, or any manuscript validation mark. Before
-promoting an unrestricted order theorem, ensure that the selected
-family covers every **permitted base point** (or impose an equivalent
-direct global coarse-predicate compatibility condition) and verify
+promoting an unrestricted order theorem, either **construct the stage**
+with canonical coarse-predicate allowedD, or ensure the selected
+family covers every permitted base point / genuine used contact vertex,
+or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules have no `sorry`/`admit`/new axiom. They have
+The new modules contain eight exact axiom probes, with no `sorry`/\`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
