@@ -180,6 +180,7 @@ checks=(
   CheckTrainRecursiveUniformLowerRank
   CheckTrainRecursiveUniformAllColours
   CheckTrainRecursiveUniformAllInputs
+  CheckTrainRecursiveCutoffTwoPartObstruction
   CheckTrainRecursiveOneEdgeDichotomy
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
