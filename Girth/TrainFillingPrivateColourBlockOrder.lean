@@ -23,13 +23,13 @@ until compiled on the exact repository head.
 
 namespace StructuralRamsey.Girth
 
-universe v
+universe u v
 
 /-- First sort by the predicate colour, then by the pre-existing
 order within that colour. The key is injective even if distinct
 vertices have the same colour. -/
 noncomputable def colourBlockOrder
-    {I X : Type v} [LinearOrder I] [LinearOrder X]
+    {I : Type u} {X : Type v} [LinearOrder I] [LinearOrder X]
     (colour : X → I) : LinearOrder X :=
   LinearOrder.lift'
     (fun x : X => (toLex (colour x, x) : I ×ₗ X))
@@ -40,7 +40,7 @@ noncomputable def colourBlockOrder
 /-- The new order lists different predicate colours in the
 prescribed increasing colour order. -/
 theorem colourBlockOrder_of_colour_lt
-    {I X : Type v} [LinearOrder I] [LinearOrder X]
+    {I : Type u} {X : Type v} [LinearOrder I] [LinearOrder X]
     (colour : X → I) {x y : X}
     (hxy : colour x < colour y) :
     @LT.lt X (colourBlockOrder colour).toLT x y := by
@@ -50,7 +50,7 @@ theorem colourBlockOrder_of_colour_lt
 
 /-- Equal-colour vertices retain their original relative order. -/
 theorem colourBlockOrder_of_same_colour
-    {I X : Type v} [LinearOrder I] [LinearOrder X]
+    {I : Type u} {X : Type v} [LinearOrder I] [LinearOrder X]
     (colour : X → I) {x y : X}
     (hColour : colour x = colour y) (hxy : x < y) :
     @LT.lt X (colourBlockOrder colour).toLT x y := by
@@ -63,7 +63,7 @@ theorem colourBlockOrder_of_same_colour
 must have increasing predicate colours (the hXBlocks condition
 of the genuine coloured heterogeneous M support theorem). -/
 theorem colourBlockOrder_blocks
-    {I X : Type v} [LinearOrder I] [LinearOrder X]
+    {I : Type u} {X : Type v} [LinearOrder I] [LinearOrder X]
     (colour : X → I) (x y : X)
     (hDifferent : colour x ≠ colour y)
     (hxy : @LT.lt X (colourBlockOrder colour).toLT x y) :
@@ -81,7 +81,7 @@ order already consists of the same consecutive colour blocks.
 The source order stays unchanged. The target order after the
 local letI is the explicitly constructed colourBlockOrder. -/
 theorem strictMono_into_colourBlockOrder
-    {I W X : Type v}
+    {I : Type u} {W X : Type v}
     [LinearOrder I] [LinearOrder W] [LinearOrder X]
     (colourW : W → I) (colourX : X → I)
     (f : W → X)
@@ -112,7 +112,7 @@ without asking that the old source order had any block property.
 This permits the disjoint union W and EHN template X to be put
 in compatible coloured block orders using the same witness. -/
 theorem strictMono_between_colourBlockOrders
-    {I W X : Type v}
+    {I : Type u} {W X : Type v}
     [LinearOrder I] [LinearOrder W] [LinearOrder X]
     (colourW : W → I) (colourX : X → I) (f : W → X)
     (hPreserve : ∀ x : W, colourX (f x) = colourW x)
