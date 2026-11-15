@@ -32,7 +32,7 @@ namespace StructuralRamsey.Girth
 universe u v
 
 variable {L : RelLanguage.{u}}
-variable {P V I : Type v}
+variable {P V : Type v} {I : Type u}
 variable [LinearOrder P] [LinearOrder V] [LinearOrder I]
 
 /-- The actual unary colour of a vertex of the tagged union.
