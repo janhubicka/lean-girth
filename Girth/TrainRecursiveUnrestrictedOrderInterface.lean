@@ -219,7 +219,7 @@ theorem UniformSelectedUnrestrictedOrderAllInputs.finPower
     UnrestrictedSelectedOrderWitness A₀.ordered B t targetTrain
       allowed (Fin (r ^ n)) := by
   letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
-  exact h A₀ (Fin (r ^ n)) (VB := VB) B ht targetTrain allowed
+  exact h A₀ (Fin (r ^ n)) B ht targetTrain allowed
     hSupportNonempty hSupportCovers hGirth hParameters hTargetCuts
 
 /-- Correct mixed operator contract: the q>2 partite forest step is
