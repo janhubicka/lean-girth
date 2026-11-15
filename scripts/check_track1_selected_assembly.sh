@@ -13,7 +13,8 @@ lake build \
   Girth.Track1FullSelectedSupportPieces \
   Girth.Track1ActualSelectedOwnerColourArrow \
   Girth.Track1OwnerSplitFinite \
-  Girth.Track1OrderedPhysicalOwners
+  Girth.Track1OrderedPhysicalOwners \
+  Girth.Track1SelectedCarrierEmbedding
 lake env lean CheckTrack1SelectedAssembly.lean > "$log" 2>&1
 cat "$log"
 python3 scripts/check_axioms.py "$log" CheckTrack1SelectedAssembly.lean
