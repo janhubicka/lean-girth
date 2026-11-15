@@ -28,6 +28,7 @@ import Girth.TrainIndexedPartitePhysicalArrow
 import Girth.TrainRealSelectedFtLocalBundle
 import Girth.TrainRealSelectedFtSameVectorTrain
 import Girth.TrainRealSelectedFtHighCutCompleteInputs
+import Girth.TrainAStrongIrreducibleReflection
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -182,3 +183,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.sameVectorSelected_oldSharedTrain_iff
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderedTrueActive_sameVectorFt_complete_highCut
+
+#print axioms StructuralRamsey.Girth.irreducible_two_point_extension_reflect_of_aStrong
+#print axioms StructuralRamsey.Girth.no_aStrong_covered_extension_of_irreducible_obstruction
