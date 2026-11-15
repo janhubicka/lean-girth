@@ -30,6 +30,7 @@ import Girth.TrainFillingPrivateActualWagonEHN
 import Girth.TrainFillingPrivateActualTailQuotient
 import Girth.TrainFillingPrivateTailWagonEquiv
 import Girth.TrainFillingPrivateActualTailParameters
+import Girth.TrainFillingPrivateTwoTypeOrderGirth
 import Girth.TrainFillingPrivateActualSourceEdgeEquiv
 import Girth.TrainFillingPrivateActualChoiceTrain
 import Girth.TrainFillingPrivateRealColouredEHN
@@ -384,3 +385,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.firstWagonEdgeToOriginal_injective
 #print axioms StructuralRamsey.Girth.originalFirstWagonEdgeEquiv
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualSourceEdgeEquiv
+
+-- Genuine cutoff-two girth: old ordered edge type differs from small E_a template type.
+#check StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT_twoTypes
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.canonicalFilledCut_fullSystemGirthGT_twoTypes
