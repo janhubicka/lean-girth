@@ -102,4 +102,53 @@ theorem originalFirstWagonInducedACopy_owner
       ⟨hInside ⟨v, rfl⟩, hOwnerCarrier e ⟨v, rfl⟩⟩
   exact huv (b.injective hPair)
 
+
+/-- Every actual A-support edge of the dependent W disjoint
+union comes from one induced F_p and has the SAME genuine
+source first-wagon owner p after forgetting the tag.
+
+This composes the exact W support decomposition with the
+previous ownership lemma. It is the missing guard against
+accidentally selecting extra edges in an induced local
+structure not owned by its declared first wagon. -/
+theorem firstWagonUnion_supportEdge_has_correct_original_owner
+    [Nontrivial UA]
+    (A : RelStructure L UA) (D : RelStructure L V)
+    (oldCarrier : P → Set V)
+    (owner : {e : Set V // e ∈ supportCopies A D} → P)
+    (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
+    (hSpan : HasSpanningRelation A)
+    (hOwnerCarrier : ∀ e, e.1 ⊆ oldCarrier (owner e))
+    (hWagonLinear : ∀ p q : P, p ≠ q →
+      (oldCarrier p ∩ oldCarrier q).Subsingleton)
+    (e : Set (FirstWagonUnionVertex oldCarrier))
+    (he : e ∈ supportCopies A
+      (firstWagonDisjointUnion oldCarrier
+        (fun p => D.induce (oldCarrier p)))) :
+    ∃ (p : P)
+      (a : Embedding A (D.induce (oldCarrier p))),
+      owner (⟨copyCarrier
+          ((RelStructure.inclusion D (oldCarrier p)).comp a),
+          ⟨(RelStructure.inclusion D (oldCarrier p)).comp a, rfl⟩⟩ :
+        {e : Set V // e ∈ supportCopies A D}) = p ∧
+      e = (firstWagonSummandEmbedding oldCarrier
+            (fun q => D.induce (oldCarrier q))
+            hPositive p).toFunctionEmbedding '' copyCarrier a := by
+  obtain ⟨p, f, hf, heq⟩ :=
+    (firstWagonDisjointUnion_supportCopies_iff A
+      oldCarrier (fun q => D.induce (oldCarrier q))
+      hPositive hSpan e).mp he
+  obtain ⟨a, ha⟩ := hf
+  refine ⟨p, a, ?_, ?_⟩
+  · exact originalFirstWagonInducedACopy_owner
+      A D oldCarrier owner hOwnerCarrier hWagonLinear p a
+  · calc
+      e = (firstWagonSummandEmbedding oldCarrier
+            (fun q => D.induce (oldCarrier q))
+            hPositive p).toFunctionEmbedding '' f := heq
+      _ = (firstWagonSummandEmbedding oldCarrier
+            (fun q => D.induce (oldCarrier q))
+            hPositive p).toFunctionEmbedding '' copyCarrier a :=
+          congrArg _ ha
+
 end StructuralRamsey.Girth
