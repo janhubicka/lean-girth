@@ -1,4 +1,5 @@
 import Girth.TrainFillingPrivateMonotoneSummands
+import Girth.TrainFillingPrivateColourBlockOrder
 
 set_option Elab.async false
 
@@ -99,5 +100,78 @@ theorem monotoneSelectedUnion_colourCompatibility
       (fun c : MonotoneClosedChoice A B R => targetEmbeddingRel c.1)
       (fun c => targetEmbedding_range_aStrong hClass.2 c.1)
       oldColour unionColour templateColour hOld hSelected
+
+
+/-- Keep the EHN-selected choice type built with the ORIGINAL
+auxiliary X order, but prove that every chosen first-wagon
+coordinate remains increasing after X is re-ordered by its
+unary predicate colours. The selected choice INDEX set
+is not redefined using the new LinearOrder instance.
+
+This resolves a subtle dependent-type issue: a subtype
+MonotoneClosedChoice constructed AFTER changing the X
+order would in general be a different subtype. The real
+Ramsey arrow selected a member of the ORIGINAL one.
+The proof uses original strict monotonicity, genuine
+colour preservation, and the already chosen block order
+on the original T vertices. -/
+theorem monotoneSelectedUnion_coordinate_mono_reblocked
+    {L : RelLanguage.{u}}
+    {UA W X V P : Type v} {I : Type w}
+    [LinearOrder I] [LinearOrder V]
+    [LinearOrder W] [LinearOrder X]
+    (A : RelStructure L UA)
+    (B : RelStructure L W)
+    (R : StructuralRamsey.Structure (closureLanguage L) X)
+    (oldCarrier : P → Set V)
+    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
+    (include : (p : P) → Embedding (local p) B)
+    (hInclude : ∀ p, AStrong A B (copyCarrier (include p)))
+    (hIncludeMono : ∀ p, StrictMono (include p))
+    (hCovered : ∀ p (x : {x : V // x ∈ oldCarrier p}),
+      ∃ a : Embedding A (local p), x ∈ copyCarrier a)
+    (hClass : ElementaryCAClass A R)
+    (oldColour : V → I) (unionColour : W → I)
+    (templateColour : X → I)
+    (hOld : ∀ p (z : {x : V // x ∈ oldCarrier p}),
+      oldColour z.1 = unionColour (include p z))
+    (hSelected : ∀ (c : MonotoneClosedChoice A B R) (x : W),
+      unionColour x = templateColour (targetEmbeddingRel c.1 x))
+    (hOldBlocks : ∀ x y : V,
+      oldColour x ≠ oldColour y →
+      x < y → oldColour x < oldColour y) :
+    let Choice := MonotoneClosedChoice A B R
+    let U : Choice → PrivateWagonInput V P X :=
+      monotoneSelectedUnionPrivateChoices A B R
+        oldCarrier local include hInclude hCovered hClass
+    letI : LinearOrder X := colourBlockOrder templateColour
+    ∀ c : Choice, ∀ p : P,
+      StrictMono ((U c).coordinate p) := by
+  let Choice := MonotoneClosedChoice A B R
+  let U : Choice → PrivateWagonInput V P X :=
+    monotoneSelectedUnionPrivateChoices A B R
+      oldCarrier local include hInclude hCovered hClass
+  have hOldMono : ∀ c : Choice, ∀ p : P,
+      StrictMono ((U c).coordinate p) := by
+    intro c p
+    exact monotoneSelectedUnion_coordinate_strictMono
+      A B R oldCarrier local include hInclude hIncludeMono
+        hCovered hClass c p
+  have hColours : ∀ c : Choice, ∀ p : P,
+      ∀ z : {x : V // x ∈ oldCarrier p},
+        oldColour z.1 =
+          templateColour ((U c).coordinate p z) := by
+    exact monotoneSelectedUnion_colourCompatibility
+      A B R oldCarrier local include hInclude hCovered
+      hClass oldColour unionColour templateColour hOld hSelected
+  letI : LinearOrder X := colourBlockOrder templateColour
+  intro c p
+  exact strictMono_into_colourBlockOrder
+    (fun z : {x : V // x ∈ oldCarrier p} => oldColour z.1)
+    templateColour ((U c).coordinate p)
+    (fun z => (hColours c p z).symm)
+    (hOldMono c p)
+    (fun x y hDifferent hxy =>
+      hOldBlocks x.1 y.1 hDifferent hxy)
 
 end StructuralRamsey.Girth.SummandPrivateTemplate
