@@ -60,9 +60,11 @@ theorem linearEdgeSet_of_twoEdgeForestCompletion
   obtain ⟨kF, hkF⟩ :=
     hWitness.2.1 (Sum.inr PUnit.unit)
   have hE : family kE = HypergraphPiece.oneEdge e := by
-    simpa only [selected] using hkE
+    change family kE = HypergraphPiece.oneEdge e at hkE
+    exact hkE
   have hF : family kF = HypergraphPiece.oneEdge f := by
-    simpa only [selected] using hkF
+    change family kF = HypergraphPiece.oneEdge f at hkF
+    exact hkF
   have hDifferent : kE ≠ kF := by
     intro hSame
     apply hef
