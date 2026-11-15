@@ -23,6 +23,15 @@ girth-from-mixed-forest theorem, and the new universal-top
 order-two full-system lemma. In particular, q=2 does not require
 incorrectly promoting bottom local forests to bottom system girth.
 
+IMPORTANT q=2 GATE: coreCoverage is NOT derived from F_2 mixed
+forests or ordinary A-partiteness. In general it can conflict with
+A-strong selected copies containing a mixed irreducible triangle,
+as shown in docs/validation/track-4-q2-core-coverage-obstruction-20261115.md.
+The universal-top cutoffTwo argument does not imply coreCoverage.
+Consequently this constructor is conditional on the supplied
+hCoreCoverage at q=2 and is NOT a proof of the unconditional
+q=2 F_t -> R_t base step.
+
 The remaining fields of ActiveAttachmentBounds are genuine
 partite-geometry, selected-base, exact interior-train, full
 positive-cut, and tail-supreme data. These must be produced by the
