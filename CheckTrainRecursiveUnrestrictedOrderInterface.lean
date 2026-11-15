@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveUnrestrictedOrderInterface
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderAllInputs
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.unrestrictedOrder_oneEdge_case
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedUnrestrictedOperators
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForest_of_correctOrderOperators
