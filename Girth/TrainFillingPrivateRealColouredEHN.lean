@@ -62,8 +62,6 @@ theorem realColouredFirstWagon_privateEHN
       x < y → oldColour x < oldColour y)
     (hOldColourToOrder : ∀ x y : V,
       oldColour x < oldColour y → x < y)
-    (hAirr :
-      (colouredOrderedEdgeSource (v := v) k profile).Irreducible)
     (hDlinear :
       ALinear (colouredOrderedEdgeSource (v := v) k profile)
         (colouredOrderedEdgeTarget k E oldColour))
@@ -130,7 +128,7 @@ theorem realColouredFirstWagon_privateEHN
     originalFirstWagonLocalCoverage A D oldCarrier
       owner hOwnerCarrier hWagonCover
   exact realFirstWagonDisjointUnion_privateEHN
-    A hAirr oldCarrier local hPositive hSpan
+    A oldCarrier local hPositive hSpan
     oldColour hOldBlocks hLocalLinear hLocalMono
     hLocalCovered hNonempty
 
