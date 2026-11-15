@@ -5,8 +5,8 @@ Status: **source-level candidate, not kernel-verified** (updated 14 November 202
 ## Exact sources and separation of branches
 
 - Frozen circulation reference: `janhubicka/girth/main@8c9cfa6eb6d817a08f3009fe048fc0be07426ece`, reachable-source digest `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-- Unmerged current paper edits: [`edit/track2-current-proof-20261114`](https://github.com/janhubicka/girth/tree/edit/track2-current-proof-20261114), based on `girth/main@61b5a511ceb7bf4bb483ccdcf564306af23b7dc6`; this preserves the independently rewritten cutoff-three proof. The frozen reference is not modified.
-- Unmerged Lean candidate: [`validation/2-forest-trace-rebased-20261114`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-rebased-20261114), based on `lean-girth/main@b0b3c49a7d2b47150f146df588b5868be9d6cce3`. The previous `98e40142` source candidate is preserved on its historical branch; this branch contains its checked-for-overlap source files and newer interface adapters.
+- Unmerged current paper edits: [`edit/track2-current-proof-20261115`](https://github.com/janhubicka/girth/tree/edit/track2-current-proof-20261115), rebased on `girth/main@ca43c0b2abf42f4e49823d02f3106cec9378ec0d` (15 November 2026); this preserves the independently rewritten cutoff-three proof. The frozen reference is not modified.
+- Unmerged Lean candidate: [`validation/2-forest-trace-20261115`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-20261115), rebased on `lean-girth/main@733d3c80e2d86feb5d2721fa85300088297e00a7` (15 November 2026). The previous `98e40142` source candidate is preserved on its historical branch; this branch contains its checked-for-overlap source files and newer interface adapters.
 - No paid GitHub Actions checks launched. This checkout did **not** run Lean; local compiler/mathlib binaries are unavailable. The exact candidate `#print axioms` commands are in `Girth/CheckTrack2Trace.lean`, but have not been executed.
 
 ## Exact theorem chain
@@ -431,3 +431,24 @@ general lifting (17). Their new-module dependency graphs have
 no cross-imports. In this environment the local runner passed
 a Bash syntax check and correctly reported missing Lake with
 exit code 2; no Lean elaboration or strict axiom run took place.
+
+## 15 November — clean nonconflicting rebase and four-owner stress test
+
+Both Track 2 working branches were transplanted onto their current main baselines
+after checking that other tracks touched none of the Track 2 files.
+New branches: `validation/2-forest-trace-20261115` (base `733d3c80`)
+and `edit/track2-current-proof-20261115` (base `ca43c0b2`).
+No unverified Track 2 code was merged.
+
+The paper regression `check_four_owner_join_lift.py` uses four outer owners
+with support-edge, singleton, and support-edge separators. Deterministic
+seed `20261115` generated **45,000** choices of local completions.
+For each, the labelled union, distinct physical member image and four
+permitted one-edge-request deletion patterns were tested (180,000 deletion
+checks); no failures occurred. Of these tests, 6,901 lacked a singleton
+connector at the first middle owner and 7,003 at the second middle owner.
+These are bounded Python tests, not Lean validation.
+
+The kernel obstacle remains: no `lean`/`lake` binaries, no pinned Mathlib
+cache, and failed direct GitHub DNS resolution. The 34 source-level
+candidate declarations remain **unverified**.
