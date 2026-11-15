@@ -1,7 +1,7 @@
 import Girth.Track1FullSelectedWitnessEmbeddings
-import Girth.Track1OrderedActualSelectedIntersections
+import Girth.Track1PhysicalActualSelectedIntersections
 import Girth.Track1EHNIndexedSelected
-import Girth.Track1OrderedFamilyActualMixedLF2
+import Girth.Track1PhysicalFamilyActualMixedLF2
 
 /-!
 # Numbered Track 1: actual selected-coloured EHN and mixed-LF2 adapters
@@ -23,11 +23,13 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.track1_forbiddenDegreeOne_of_allowedIntersections
 #print axioms StructuralRamsey.Girth.track1_selectedForbiddenDegreeOne
 #print axioms StructuralRamsey.Girth.track1_actualSelectedLiftPairwiseAllowed
-#print axioms StructuralRamsey.Girth.track1_orderedActualSelectedLiftPairwiseAllowed
+#print axioms StructuralRamsey.Girth.track1_physicalActualSelectedLiftPairwiseAllowed
 #print axioms StructuralRamsey.Girth.track1_oldSelectedColouredOrderedEmbedding
 #print axioms StructuralRamsey.Girth.oldColourOfRel_on_selected
 #print axioms StructuralRamsey.Girth.track1_oldSelectedEHNColouredEmbedding
 #print axioms StructuralRamsey.Girth.track1_exists_actualSelectedColouredLifts
 #print axioms StructuralRamsey.Girth.track1_selectedEmbedding_injective
 #print axioms StructuralRamsey.Girth.track1_selectedIndexedProperties
-#print axioms StructuralRamsey.Girth.track1_orderedSelectedFamily_actualMixedLF2
+#print axioms StructuralRamsey.Girth.track1_physicalSelectedFamily_actualMixedLF2
+#print axioms StructuralRamsey.Girth.track1_physicalRepresentative_supportPieces_injective
+#print axioms StructuralRamsey.Girth.track1_physicalRepresentative_arrow
