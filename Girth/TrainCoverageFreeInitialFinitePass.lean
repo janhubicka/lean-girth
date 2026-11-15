@@ -1,5 +1,5 @@
 import Girth.TrainCoverageFreeInitialStage
-import Girth.TrainCoverageFreeStrongFinitePass
+import Girth.TrainCoverageFreeFtEligiblePass
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -80,6 +80,7 @@ theorem initialStrongTrainRamsey_of_nontrivialFtOperator
       (∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
         A₀.ordered T.system e.toFunctionEmbedding,
         copyCarrier a.val ≠ copyCarrier b.val) →
+      T.ActiveWagonGirth A₀ e →
       ∃ O : OrderStage A₀.ordered B D family
           (q :: tail) targetTrain allowed,
         PictureStep T O.toForestStage
@@ -107,7 +108,7 @@ theorem initialStrongTrainRamsey_of_nontrivialFtOperator
     B D family q tail ht targetTrain allowed
     hSupportNonempty hSupportCovers
     hTargetParameters hCutoff hTargetCut
-  exact start.1.toForestStage.ramseyStrongTrain_of_nontrivialFtSteps
+  exact start.1.toForestStage.ramseyStrongTrain_of_Ft_eligible_steps
     A₀ profiles κ start.2 hProfiles hBaseArrow localFt
 
 end StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree
