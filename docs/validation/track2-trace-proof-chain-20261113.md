@@ -448,7 +448,7 @@ connector at the first middle owner and 7,003 at the second middle owner.
 These are bounded Python tests, not Lean validation.
 
 The kernel obstacle remains: no `lean`/`lake` binaries, no pinned Mathlib
-cache, and failed direct GitHub DNS resolution. The 32 source-level
+cache, and failed direct GitHub DNS resolution. The 35 current source-level
 candidate declarations remain **unverified**.
 ## 15 November — remove unused join-tree side lemmas
 
@@ -460,7 +460,7 @@ The previous source is preserved on the historical Track 2 branch.
 The proof-critical binary gluing, recursive lift, duplicate elimination,
 and retained-set endpoint remain unchanged.
 
-The gate is now **32 candidate theorem declarations**:
+The current gate covers **35 candidate theorem declarations**:
 active girth 16, direct increment 3, general join-tree lifting 16.
 The reduction removes code that could otherwise block Lean elaboration
 without contributing to any final theorem. No fresh kernel check has run.
