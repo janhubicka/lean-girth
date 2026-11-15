@@ -119,4 +119,47 @@ theorem EdgeTrainLevels.actualWagon_EHN_source
       μ hGirth
   · exact T.inducedWagon_Acovered A D μ
 
+
+/-- Any genuine labelled cut bound >g, where g>=2,
+already excludes the two-cycles needed for carrier
+linearity. This is the exact weakening from the
+original h_1-bound in the paper to the two-cycle
+condition in the disjoint-union EHN preparation. -/
+theorem labelledGirthGT_two_of_bound
+    (carrier : I → Set V) (g : ℕ)
+    (hg : 2 ≤ g) (hGirth : LabelledGirthGT carrier g) :
+    LabelledGirthGT carrier 2 := by
+  rintro ⟨c, hc⟩
+  exact hGirth ⟨c, hc.trans hg⟩
+
+/-- The intended ORIGINAL first-wagon source lemma
+under the paper's actual >h_1 bound, not a newly
+postulated >2-bound on some generated output.
+
+At cutoff two specialize μ to the first-wagon
+level 1, and g to h_1 >= 2. -/
+theorem EdgeTrainLevels.actualWagon_EHN_source_of_bound
+    {L : RelLanguage.{u}} {UA : Type v}
+    (A : RelStructure L UA) (D : RelStructure L V)
+    {m : ℕ}
+    (T : EdgeTrainLevels
+      {e : Set V // e ∈ supportCopies A D} m)
+    (μ : Fin (m + 1))
+    (g : ℕ) (hg : 2 ≤ g)
+    (hGirth : LabelledGirthGT
+      (T.wagonClassCarrier
+        (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ) g) :
+    let carrier := T.wagonClassCarrier
+      (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ
+    (∀ p q : Quotient (T.wagonSetoid μ),
+      p ≠ q → (carrier p ∩ carrier q).Subsingleton) ∧
+    (∀ p (x : {v : V // v ∈ carrier p}),
+      ∃ a : Embedding A (D.induce (carrier p)),
+        x ∈ copyCarrier a) := by
+  exact T.actualWagon_EHN_source A D μ
+    (labelledGirthGT_two_of_bound
+      (T.wagonClassCarrier
+        (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ)
+      g hg hGirth)
+
 end StructuralRamsey.Girth
