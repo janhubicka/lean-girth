@@ -63,23 +63,23 @@ theorem realColouredFirstWagon_privateEHN
     (hOldColourToOrder : ∀ x y : V,
       oldColour x < oldColour y → x < y)
     (hDlinear :
-      ALinear (colouredOrderedEdgeSource (v := v) k profile)
+      ALinear (colouredOrderedEdgeSource.{u,v} k profile)
         (colouredOrderedEdgeTarget k E oldColour))
     (oldCarrier : P → Set V)
     (owner : {e : Set V //
         e ∈ supportCopies
-          (colouredOrderedEdgeSource (v := v) k profile)
+          (colouredOrderedEdgeSource.{u,v} k profile)
           (colouredOrderedEdgeTarget k E oldColour)} → P)
     (hOwnerCarrier : ∀ e, e.1 ⊆ oldCarrier (owner e))
     (hWagonCover : ∀ p (x : {x : V // x ∈ oldCarrier p}),
       ∃ e : {e : Set V //
           e ∈ supportCopies
-            (colouredOrderedEdgeSource (v := v) k profile)
+            (colouredOrderedEdgeSource.{u,v} k profile)
             (colouredOrderedEdgeTarget k E oldColour)},
         owner e = p ∧ x.1 ∈ e.1)
     (hNonempty : Nonempty (FirstWagonUnionVertex oldCarrier))
     [Fintype κ] [Nonempty κ] :
-    let A := colouredOrderedEdgeSource (v := v) k profile
+    let A := colouredOrderedEdgeSource.{u,v} k profile
     let D := colouredOrderedEdgeTarget k E oldColour
     let B := firstWagonDisjointUnion oldCarrier
       (fun p => D.induce (oldCarrier p))
@@ -104,7 +104,7 @@ theorem realColouredFirstWagon_privateEHN
                  e ∈ selectedCommonEdges U
                    (supportCopies A (closureRelReduct R))
                    hTemplate c p → ρ e = colour) := by
-  let A := colouredOrderedEdgeSource (v := v) k profile
+  let A := colouredOrderedEdgeSource.{u,v} k profile
   let D := colouredOrderedEdgeTarget k E oldColour
   let local : (p : P) → RelStructure
       (colouredOrderedEdgeLanguage I k)
