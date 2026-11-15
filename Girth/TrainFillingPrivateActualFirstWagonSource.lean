@@ -162,4 +162,27 @@ theorem EdgeTrainLevels.actualWagon_EHN_source_of_bound
         (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ)
       g hg hGirth)
 
+
+/-- The wagon label quotient of a finite physical
+edge train admits a chosen total order, obtained
+from an arbitrary finite enumeration. This is
+ONLY an auxiliary order between distinct first
+wagons; the original T predicates and within-part
+orders remain unchanged.
+
+The direct-cutoff-two EHN source W needs a
+LinearOrder on its first-wagon label type P;
+it does not require a new canonical order
+intrinsic to the train hierarchy. -/
+noncomputable def EdgeTrainLevels.wagonQuotientLinearOrder
+    {E : Type v} [Finite E]
+    {m : ℕ} (T : EdgeTrainLevels E m)
+    (μ : Fin (m + 1)) :
+    LinearOrder (Quotient (T.wagonSetoid μ)) := by
+  letI : Fintype (Quotient (T.wagonSetoid μ)) :=
+    Fintype.ofFinite (Quotient (T.wagonSetoid μ))
+  exact LinearOrder.lift'
+    (Fintype.equivFin (Quotient (T.wagonSetoid μ)))
+    (Fintype.equivFin (Quotient (T.wagonSetoid μ))).injective
+
 end StructuralRamsey.Girth
