@@ -236,6 +236,64 @@ theorem usedContact_originalPredicate_of_colourCompatibility
   rw [hContactColour ν y hy]
   exact hPermitted
 
+/-- In the ACTUAL forest/order stage the projection is not merely
+transversal: system.IsPartiteOver D makes it a relational
+homomorphism-embedding. For a genuine unary colour partition, this
+already forces the output colour of a vertex to equal the colour of
+its base part. No additional colour-preservation oracle is needed.
+
+The hypotheses hSourceColour and hTargetColour exactly express that
+the chosen unary symbols determine the actual coarse colours of
+the source and base structures. They are standard for the manuscript's
+coloured-ordered one-edge presentations but must be linked to those
+presentations at the final application. -/
+theorem actualColour_eq_baseColour_of_isPartiteOver
+    (S : StructuralRamsey.Partite.System L W Y)
+    (D : RelStructure L W) (hPartite : S.IsPartiteOver D)
+    (predOut : Y → Q) (predD : W → Q)
+    (sym : Q → L.Symbol)
+    (hSourceColour : ∀ y : Y,
+      S.rel (sym (predOut y)) (fun _ => y))
+    (hTargetColour : ∀ (w : W) (c : Q),
+      D.rel (sym c) (fun _ => w) → predD w = c) :
+    ∀ y : Y, predOut y = predD (S.part y) := by
+  intro y
+  have hRel : D.rel (sym (predOut y))
+      (fun _ => S.part y) :=
+    hPartite.1 (sym (predOut y)) (fun _ => y)
+      (hSourceColour y)
+  exact (hTargetColour (S.part y) (predOut y) hRel).symm
+
+/-- Consequence for the GENUINE train AdjacentParameters predicate:
+the existing isPartiteOver projection, unary colour predicates and
+canonical base permitted parts together provide original coarse
+intersection parameters, including on ambient non-selected edges.
+Only construction of the selected stage WITH those canonical
+allowed parts remains an existence obligation. -/
+theorem adjacentParameters_from_actualPartiteCoarseColour
+    {Edge : Type v} {m : ℕ}
+    (S : StructuralRamsey.Partite.System L W Y)
+    (D : RelStructure L W) (hPartite : S.IsPartiteOver D)
+    (T : EdgeTrainLevels Edge m) (edge : Edge → Set Y)
+    (predOut : Y → Q) (predD : W → Q)
+    (sym : Q → L.Symbol)
+    (hSourceColour : ∀ y : Y,
+      S.rel (sym (predOut y)) (fun _ => y))
+    (hTargetColour : ∀ (w : W) (c : Q),
+      D.rel (sym c) (fun _ => w) → predD w = c)
+    (permitted : Fin (m + 1) → Set Q)
+    (hParameters : T.AdjacentParameters edge
+      (fun ν => S.part ⁻¹'
+        canonicalCoarseAllowed predD permitted ν)) :
+    T.AdjacentParameters edge
+      (fun ν => predOut ⁻¹' permitted ν) := by
+  have hColour : ∀ y : Y,
+      predOut y = predD (S.part y) :=
+    actualColour_eq_baseColour_of_isPartiteOver
+      S D hPartite predOut predD sym hSourceColour hTargetColour
+  exact adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility
+    T edge S.part predD predOut permitted hColour hParameters
+
 /-- A weaker sufficient condition than coverage of *every* allowed
 D-base point: it is enough that the actually USED contact vertices
 of the output have base parts in prescribed B-images.
