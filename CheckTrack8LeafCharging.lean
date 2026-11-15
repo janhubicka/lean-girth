@@ -8,6 +8,10 @@ import Girth.ForestTraceMissingFaces
 import Girth.ForestTraceLocalCompletion
 import Girth.FiniteTraceConformalLocal
 import Girth.FiniteTraceSimplicial
+import Girth.ForestTraceCyclicPairs
+import Girth.ForestTraceLocalChordless
+import Girth.FiniteTraceChordlessPattern
+import Girth.FiniteTraceSuccessorCycle
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -98,3 +102,14 @@ all printed axioms before promoting a validation mark.
 
 #print axioms StructuralRamsey.Girth.JoinTree.private_leaf_occurs_only
 #print axioms StructuralRamsey.Girth.tracePairGraph_private_leaf_simplicial
+
+#check StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#check StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#check StructuralRamsey.Girth.CrossPairNonedge
+#check StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#check StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+
+#print axioms StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#print axioms StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
