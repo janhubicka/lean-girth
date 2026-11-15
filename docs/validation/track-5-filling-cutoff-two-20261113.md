@@ -502,3 +502,123 @@ equality zero; (v) build the **exact-head local Lean kernel
 and axiom checks** and a manual full manuscript PDF.
 Until then PRs #1063 and #450 remain draft/unmerged and
 \`lem:tailraw\` remains \`leanopen\`.
+
+
+## 15 November continuation — actual first-wagon W fully specified at source level
+
+This section supersedes the earlier statement that the dependent
+disjoint union W and its EHN source hypotheses still had to be
+constructed.
+
+### Concrete new bridge modules (ALL UNCOMPILED CANDIDATES)
+
+- \`TrainFillingPrivateRealDisjointUnion\`: W has actual vertex type
+  \`Σ p:P, {v:V // v∈oldCarrier p}\` and relations supported
+  within ONE summand. Positive arity, essential because the generic
+  \`RelLanguage\` allows nullary symbols, gives induced
+  \`F_p→W\` inclusions. A spanning A-relation forces each
+  A-copy inside one summand and proves its inclusion A-strong.
+  It also directly proves A.irreducible from the spanning
+  relation, eliminating the artificial EHN hAirr premise.
+- \`TrainFillingPrivateRealUnionOrder\`: predicate-colour-first,
+  then original first-wagon owner, then old vertex order gives
+  one global order on actual W, with increasing component
+  inclusions. It also derives **all** A→W embedding
+  monotonicity from each local A-embedding's monotonicity,
+  using the spanning-edge factorization.
+- \`TrainFillingPrivateRealUnionColouredMono\`: for the actual
+  k-vertex coloured one-edge source, unary predicates and
+  within-colour binary order force every local A-copy to
+  be increasing. The source profile and target global
+  orders must list predicate blocks in the common order.
+  The final theorem derives hmono for the ACTUAL different
+  F_p carriers, not artificial full-vertex summands.
+- \`TrainFillingPrivateRealUnionLinear\`: exact decomposition
+  of full A-support of W into the tagged local A-support
+  edges. Consequently A-linearity of W follows from
+  old T linearity by \`aLinear_induce\`; different tagged
+  summands have no common vertices.
+- \`TrainFillingPrivateRealUnionColoured\`: the concrete
+  coloured k-edge language has positive arities for
+  k≥2 and its full edge tuple spans A. Specializes
+  automatic induced/A-strong component inclusions and
+  inherited A-linearity to the actual E_a language.
+- \`TrainFillingPrivateFirstWagonStrong\`: first-wagon
+  carrier linearity (girth of W_1(T)>2) and the
+  original edge-owner map imply each F_p is
+  A-strong in original T and its induced relational
+  F_p contains **no extra edge owned by another wagon**.
+- \`TrainFillingPrivateRealUnionLocalCoverage\`: a vertex of
+  a first wagon lies in one of its actual owned support
+  edges by the definition of its carrier. The A-copy
+  of that edge factors through its induced F_p.
+  This proves local and W support coverage without
+  assumptions on the later EHN output.
+- \`TrainFillingPrivateRealUnionEHN\`: combines the above
+  into the TRUE ordered EHN input of W: hBlin,
+  hmono, hIncludeStrong, hIncludeMono, hAB and
+  A irreducibility are derived. The private-family
+  EHN witness only receives actual local first-wagon
+  data, their linearity/monotonicity/coverage and
+  a nonempty W vertex.
+- \`TrainFillingPrivateRealColouredEHN\`: specializes the
+  complete real-W EHN existence/unequal-summand local
+  monochromaticity arrow to the actual coloured
+  k-edge source and old first-wagon owner map.
+  Its irreducibility premise was eliminated because
+  the full k-edge tuple spans A.
+- \`TrainFillingPrivateColourBlockOrder\`: the predicates'
+  colour-index type now lives in a separate Lean universe
+  from the vertex type; likewise for the concrete
+  real-W order and generic EHN theorem. This
+  explicitly repairs an unnecessarily strong universe
+  equality in the original candidate declarations.
+
+**The English proof was corrected accordingly** in
+\`paper/16-cutoff-two.tex\` (draft girth PR #450):
+first deduce linearity of the labelled first-wagon carrier
+family from its >2 girth, then deduce each F_p is an
+induced first wagon in T, then define W as the
+linear covered disjoint union. The required marked-vertex
+condition outside A_1 and the retained increasing
+EHN selected copies remain explicit.
+
+**Executable check:** \`python /mnt/data/track5_private_smoke.py\`
+again passed the unequal 3/4 first-wagon model,
+the selected j∘τ_s image and monochromaticity,
+the two overlapping old parents and all 80
+ambient filled occurrences. This is bounded
+regression evidence, not theorem verification.
+
+### Still genuinely open
+
+1. The **exact** original \`EdgeTrainLevels\` first-wagon
+   owner/quotient carrier structure must be instantiated
+   in the \`owner\`, \`hOwnerCarrier\`,
+   \`hWagonCover\`, \`hWagonLinear\` parameters
+   of these source lemmas. The mathematical equations
+   are straightforward but an actual Lean integration
+   to the original T structure is still needed.
+2. The upstream Track 1 owner-split **covered,
+   S=A_1-restricted, ordered** selected EHN
+   output must be proved and wired to X. A raw
+   \`ElementaryCAClass\` output does NOT imply
+   support coverage or the forbidden-predicate
+   intersection condition.
+3. Construct the genuine coloured \`actualIndexedContractedM\`
+   from those same selected W→X choices and obtain
+   its real RR_h selected OrderStage with its
+   all-cut full-system-girth and colour-word arrow.
+4. Compose ONE physical selected T map across
+   all restored proper cuts and all original
+   predicates/orders, and reuse the checked
+   canonical filling/scattering system-girth theorem.
+5. **Run Lean locally on the exact branch**, inspect
+   every elaborated hypothesis and \`#print axioms\`
+   probe, and compile the full TeX. No new
+   kernel result, green mark, or paid CI is claimed.
+   The container still has no Lean/lake/elan and
+   cannot resolve github.com for local cloning.
+
+The new files are isolated to draft PR #1063;
+the manuscript changes remain draft PR #450.
