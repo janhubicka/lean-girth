@@ -669,3 +669,69 @@ regression evidence, not theorem verification.
 
 The new files are isolated to draft PR #1063;
 the manuscript changes remain draft PR #450.
+
+
+### Focused W diagnostic and last source repairs (15 November)
+
+Executed the new standalone finite regression
+`/mnt/data/track5_real_W_audit.py` on a
+genuine nontrivially marked coloured target:
+one first wagon has 3 vertices and edges `ab,ad`;
+the other has 4 vertices and edges `cd,cf,ch`.
+The centres `a,c` have predicate colour 0 and the
+leaves have predicate colour 1. Hence **A_1={0}**
+is a proper allowed subset and every forbidden
+colour-1 vertex belongs to at most one edge
+*within its first wagon*, as required by the
+current Track 1 splitting lemma.
+The original carriers meet at precisely vertex d;
+the real tagged W has 7 vertices and 5 actual
+coloured A-edges.
+
+All assertions passed: one real disjoint-union W;
+correct original edge owners; exact support coverage;
+linearity; increasing A-copies in the colour-first
+W order; and the nontrivial marked-vertex condition.
+
+Four negative controls also passed:
+(a) old graph-edge linearity without first-wagon
+carrier linearity;
+(b) an induced F_p containing an edge actually
+owned by another wagon;
+(c) an invalid A_1 subset excluding a colour in
+which two first-wagon edges meet; and
+(d) a nullary relation, showing why the positive
+relation-arity hypothesis is essential for the
+generic relational disjoint-union inclusions.
+
+An initial illustrative test fixture failed the
+marked-condition assertion because it incorrectly
+declared A_1={0} for edges meeting in colour 1.
+The fixture was corrected to the valid star-wagon
+construction above. This is **evidence that the
+hypothesis matters**, not evidence for dropping it.
+
+The current branch additionally proves, as an
+uncompiled Lean candidate,
+`firstWagonUnion_supportEdge_has_correct_original_owner`,
+combining the exact W support decomposition with
+the induced-F_p owner lemma, to exclude extra
+W-support edges with the wrong original owner.
+
+A static source audit checked the 11 recent W/EHN
+modules and the gate for balanced braces,
+matched namespaces/comments, no top-level
+`sorry`/`admit`/`axiom`, removal of the
+invalid universe-argument syntax, and deletion
+of an unused bare EHN existence wrapper.
+This is **not** Lean elaboration or an axioms audit.
+
+The local runtime has `pdflatex` but not a
+working local clone of the full manuscript, and
+does not have `lean`, `lake`, `elan`, or
+network access to clone them. No fresh full-paper
+PDF or exact-head Lean build was produced.
+The existing check gate remains
+`lake env lean Girth/CheckTrack5Private.lean`
+when the complete Lean toolchain/dependencies are
+available. Leave both draft PRs unmerged.
