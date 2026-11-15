@@ -8,8 +8,8 @@ set_option Elab.async false
 /-!
 # Track 6 independent strict axiom inspection entrypoint
 
-EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all four
-candidate Track 6 modules. The statements below deliberately name
+EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all six
+candidate Track 6 proof modules. The statements below deliberately name
 the actual elaborated theorem constants, not source comments or
 historical validation markers. A successful run must inspect the
 printed axiom sets and reject any sorryAx/unapproved axiom.
