@@ -27,12 +27,16 @@ Thus the lower induction predicate must quantify over both the finite
 `TrainRecursiveUniformAllInputs` provide this strengthening of the
 ALREADY CHECKED `q>2` partite step. They contain no new existence oracle.
 
-The latest historical #1071 CI head `1c7eea4f` failed in
-`UniformSelectedPartiteOrderAllColours.finPower` because Lean tried
-to infer an arbitrary `Finite ?m` while the implicit target/base
-carriers were still metavariables. The clean branch introduces those
-carriers explicitly before specialising the order hypothesis.
-This is a **proof candidate pending compilation**, not a passed repair.
+Historical #1071 attempted an additional *partite-order* palette
+specialisation and failed to elaborate its implicit target/base
+`Finite` instances. That endpoint is **not used** by the correct
+unrestricted cutoff-two recursion. The clean branch therefore removes
+the partite-order wrappers and their auxiliary `Operators` records
+entirely, retaining just
+`UniformSelectedPartiteForestAllColours_largerCutoff` and
+`UniformSelectedPartiteForestAllInputs_largerCutoff`.
+The necessary unrestricted-order palette specialisations are stated
+separately in `TrainRecursiveUnrestrictedOrderInterface`.
 
 ## Why type/palette uniform PARTITE order is not RR_tail
 
@@ -152,3 +156,26 @@ of B→D embeddings, with allowed-set pullback compatibility, and produces
 an actual selected OrderStage over D. The one-copy identity-base theorem
 remains a valid special case. Exact-head Lean and axiom checks of these
 new declarations are required; static audit alone is not certification.
+
+## Critical-path cleanup after the nonpartite RR repair
+
+The fixed-input PartiteOrder operators were a historical exploratory
+path, not an input to the correct `Operators` record. They were
+removed from the new branch along with their failing palette
+specialisation and six redundant axiom probes. The only new FOREST
+claims needed here are uniformity over finite colour types and finite
+ordered edge types for the already checked q>2 transition. The unique
+unrestricted `forestToOrder` field must return the existential-base
+`UnrestrictedSelectedOrderWitness`; it is still an explicit unproved
+hypothesis. Consequently no mathematical strength is lost by deleting
+the partite-order wrappers.
+
+The unrestricted-order interface also exposes the literal colour-word
+palette `Fin n → Fin r`. This avoids a separate numeric coding
+`Fin (r^n)` in the actual cutoff-two application: after choosing
+an enumeration of the finite edges of X, the colour of a shorter-train
+edge is directly a function recording all original edge colours.
+
+All of these changes are proof-candidate/source-only work on this PR.
+Neither the unrestricted order assertion nor cutoff-two realization has
+been Lean-certified or promoted in the manuscript.
