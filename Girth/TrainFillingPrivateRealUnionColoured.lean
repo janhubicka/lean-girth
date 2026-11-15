@@ -62,7 +62,7 @@ spanning relation required by the generic W union theorem. -/
 theorem colouredOrderedEdgeSource_hasSpanningRelation
     {I : Type u} (k : ℕ) (sourceColour : Fin k → I) :
     HasSpanningRelation
-      (colouredOrderedEdgeSource (v := v) k sourceColour) := by
+      (colouredOrderedEdgeSource.{u,v} k sourceColour) := by
   refine ⟨.inl (.inl ()), (fun i : Fin k => ULift.up i), ?_, ?_⟩
   · change Function.Injective (fun i : Fin k => ULift.up i)
     intro i j h
@@ -83,13 +83,13 @@ theorem colouredFirstWagonSummand_aStrong
       RelStructure (colouredOrderedEdgeLanguage I k)
         {x : V // x ∈ oldCarrier p})
     (p : P) :
-    AStrong (colouredOrderedEdgeSource (v := v) k sourceColour)
+    AStrong (colouredOrderedEdgeSource.{u,v} k sourceColour)
       (firstWagonDisjointUnion oldCarrier local)
       (copyCarrier
         (firstWagonSummandEmbedding oldCarrier local
           (colouredOrderedEdgeLanguage_positive_arity k hk) p)) :=
   firstWagonSummandEmbedding_aStrong
-    (colouredOrderedEdgeSource (v := v) k sourceColour)
+    (colouredOrderedEdgeSource.{u,v} k sourceColour)
       oldCarrier local
       (colouredOrderedEdgeLanguage_positive_arity k hk)
       (colouredOrderedEdgeSource_hasSpanningRelation k sourceColour) p
@@ -107,13 +107,13 @@ theorem colouredFirstWagonUnion_induced_aLinear
     (k : ℕ) (hk : 2 ≤ k)
     (sourceColour : Fin k → I)
     (D : RelStructure (colouredOrderedEdgeLanguage I k) V)
-    (hD : ALinear (colouredOrderedEdgeSource (v := v) k sourceColour) D)
+    (hD : ALinear (colouredOrderedEdgeSource.{u,v} k sourceColour) D)
     (oldCarrier : P → Set V) :
-    ALinear (colouredOrderedEdgeSource (v := v) k sourceColour)
+    ALinear (colouredOrderedEdgeSource.{u,v} k sourceColour)
       (firstWagonDisjointUnion oldCarrier
         (fun p => D.induce (oldCarrier p))) :=
   firstWagonDisjointUnion_induced_aLinear
-    (colouredOrderedEdgeSource (v := v) k sourceColour)
+    (colouredOrderedEdgeSource.{u,v} k sourceColour)
       D hD oldCarrier
       (colouredOrderedEdgeLanguage_positive_arity k hk)
       (colouredOrderedEdgeSource_hasSpanningRelation k sourceColour)
