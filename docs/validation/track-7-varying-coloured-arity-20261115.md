@@ -43,7 +43,7 @@ at a different edge size without a separate language-transfer
 theorem. No such theorem has been established.
 
 The new `UniformSelectedPartiteForestEveryColouredArity` quantifies
-over every finite ordered colour-index type I, every k, every
+over every finite ordered colour-index type I, every genuine arity k≥2, every
 finite ordered A-structure in `colouredOrderedEdgeLanguage I k`,
 and every finite nonempty palette, BEFORE the cutoff-vector
 well-founded induction.
