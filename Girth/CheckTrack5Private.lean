@@ -14,6 +14,7 @@ import Girth.TrainFillingPrivateActualParentStrong
 import Girth.TrainFillingPrivateOriginalImageInH
 import Girth.TrainFillingPrivateOriginalTrainInH
 import Girth.TrainFillingPrivateAllCutCoherence
+import Girth.TrainFillingPrivateCanonicalAllCuts
 import Girth.TrainFillingPrivateReblockedEnumeration
 import Girth.TrainFillingPrivateOriginalColoursOrders
 import Girth.TrainFillingPrivateRealUnionOrder
@@ -308,3 +309,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 #check StructuralRamsey.Girth.actualFirstWagonQuotient_privateEHN
 #print axioms StructuralRamsey.Girth.actualFirstWagonQuotient_privateEHN
+
+-- Same canonical physical edge map across all proper cuts.
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.canonicalOriginalEdge_allProperCuts_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.canonicalOriginalEdge_injective
