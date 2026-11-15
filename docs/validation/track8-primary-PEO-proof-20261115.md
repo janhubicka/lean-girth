@@ -44,3 +44,20 @@ An equivalent local checker was executed independently and reproduced all counts
 ## Current remaining gate
 
 An induced chordless cycle must be converted to the exact cyclic-pair/successor certificate used by the new direct obstruction. The standard finite chordal-to-PEO theorem must then be proved from a simplicial-vertex argument. The latter is supported by the written strong Dirac induction and bounded diagnostics, but it is **not a Lean-certified theorem**. No clique-tree construction is needed. No validation marker has been promoted.
+
+
+## 15 November afternoon — exact end-to-end verification route
+
+The retained proof stack is 17 Girth modules with 44 source theorem declarations. The static source review found no explicitly written sorry/admit/axiom/unsafe/opaque, no missing local import, and balanced delimiters; it does NOT establish Lean elaboration. The current revision provides:
+
+- Girth/FiniteTraceSimplicialCriterion.lean: precise simplicial-in-an-induced-subgraph condition, PEO equivalence and the elementary clique-separator Dirac induction sublemmas.
+- Girth/FiniteTracePEORank.lean: construct an actual LinearOrder from an injective numerical elimination ranking using Mathlib LinearOrder.lift'. The remaining PEO task is obtaining such a ranking from Dirac's simplicial witness.
+- Girth/FiniteTraceFinRotateCycle.lean: specialize the chordless-cycle obstruction to finite cyclic indices using Mathlib finRotate, with fixed-point-freeness derived from the pinned support_finRotate_of_le theorem. The outstanding adapter is the graph-specific CrossPairNonedge data for a standard induced graph cycle.
+- docs/validation/track8-dirac-separator-proof-20261115.md: a complete English minimal-clique-separator induction establishing the strong Dirac theorem, with explicit path/cycle formalization subgoals and an adversarial counterexample to the tempting longest-induced-path shortcut.
+- checks/track8_dirac_separator_bounded.py: exhaustive strong-Dirac separator diagnostic on all simple graphs up to six vertices; all 18,153 noncomplete chordal six-vertex graphs pass.
+- checks/track8_peo_count_bounded.py: direct earliest-vertex PEO counting checker (the optional parent-forest construction no longer appears in the source).
+- checks/run_track8_primary_local.sh: reproducible local Lake build of the actual primary modules, followed by CheckTrack8Primary.lean and CheckTrack8AllDependencies.lean. It deliberately fails if Lake is unavailable. The full gate requests #check and #print axioms on all 44 retained source theorems.
+
+The older optional uncompiled clique-tree construction, private-leaf charging, its expansive check file and old diagnostic have been deleted from the PR. This reduces review and compilation scope while preserving the source history through prior commits.
+
+**No Lean build or executed #print axioms has succeeded in this runtime; no theorem is being promoted to verified.** Current manuscript PR #470 adds review-only open markers to thm:main, cor:hyperlocal and cor:partialforest, in addition to the existing open small-trace and small-relational marks. The normal circulation PDF text is unchanged.
