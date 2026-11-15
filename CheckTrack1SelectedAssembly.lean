@@ -18,6 +18,9 @@ Staged independently of PR #1069's running kernel CI.
 
 set_option autoImplicit false
 
+#print axioms StructuralRamsey.Girth.selectedSupportEdges
+#print axioms StructuralRamsey.Girth.selectedSupportOwnerSystem
+#print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selectedLiftSupportPiece
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.exists_commonOrder_fullSelectedLifts
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selectedLiftSupport_allowed
 #print axioms StructuralRamsey.Girth.ColouredOwnerSelectedCopy.selectedLiftSupport_pairwiseAllowed
