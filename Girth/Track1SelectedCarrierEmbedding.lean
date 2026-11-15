@@ -30,6 +30,14 @@ variable {V I W Choice : Type v}
 
 namespace ColouredEdgeOwnerSplit
 
+/-- Exactly the union of the lifted *selected* B-copy carriers.
+The choice index is independent of the old unary predicate type. -/
+def selectedLiftCarrierFor
+    (H : ColouredEdgeOwnerSplit V I)
+    (selected : Choice → ColouredOwnerSelectedCopy (W := W) H) :
+    Set H.Vertex :=
+  {z | ∃ c : Choice, z ∈ Set.range (selected c).lift}
+
 /-- The owner-split selected B image, now as a full relational embedding
 into the ACTUAL vertex carrier: the union of selected lifted B-copies. -/
 noncomputable def actualSelectedEmbeddingOnCarrier
@@ -50,7 +58,7 @@ noncomputable def actualSelectedEmbeddingOnCarrier
       (colouredOrderedEdgeTarget k (selected c).sourceEdges sourceColour)
       ((@colouredOrderedEdgeTarget I H.Vertex k
         H.splitPhysicalEdges H.newPredicate o).induce
-        (H.selectedLiftCarrier selected)) := by
+        (H.selectedLiftCarrierFor selected)) := by
   classical
   letI : LinearOrder H.Vertex := o
   letI : Preorder H.Vertex := o.toPreorder
