@@ -58,8 +58,9 @@ theorem maximalTraceVertices_nonempty
 pair graph, each distinct maximal original trace is equal to
 ONE elimination bag.  No join tree of maximal cliques is needed. -/
 theorem maximalTrace_eq_eliminationBag
-    [Finite W] [LinearOrder Z]
+    [Finite W]
     (F : ι → Set W) (Z : Set W)
+    [LinearOrder Z]
     (hConformal : TraceConformal F Z)
     (hPEO : IsPerfectEliminationOrder (tracePairGraph F Z))
     (T : maximalNonemptyTraceSets F Z) :
@@ -107,8 +108,9 @@ theorem maximalTrace_eq_eliminationBag
 a vertex whose elimination bag equals the trace.  Equivalently,
 the injection sends a maximal clique to its earliest vertex. -/
 theorem maximalTrace_card_le_of_PEO
-    [Fintype W] [LinearOrder Z]
+    [Fintype W]
     (F : ι → Set W) (Z : Set W)
+    [LinearOrder Z]
     (hConformal : TraceConformal F Z)
     (hPEO : IsPerfectEliminationOrder (tracePairGraph F Z)) :
     Nat.card (maximalNonemptyTraceSets F Z) ≤ Nat.card Z := by
@@ -158,8 +160,9 @@ theorem maximalTrace_card_le_of_PEO
 empty Z and duplicate cover labels.  No maximal-clique join-tree
 hypothesis appears anywhere in this theorem. -/
 theorem smallTrace_selection_of_PEO
-    [Fintype W] [Finite ι] [LinearOrder Z]
+    [Fintype W] [Finite ι]
     (F : ι → Set W) (Z : Set W)
+    [LinearOrder Z]
     (hConformal : TraceConformal F Z)
     (hPEO : IsPerfectEliminationOrder (tracePairGraph F Z)) :
     ∃ selected : Set ι,
@@ -186,8 +189,9 @@ the entire sharp small-trace conclusion follows directly.
 The only unresolved graph-theoretic input is existence of a
 perfect elimination order from chordality. -/
 theorem smallTrace_selection_of_local_completions_and_PEO
-    [Fintype W] [Fintype ι] [LinearOrder Z]
+    [Fintype W] [Fintype ι]
     (F : ι → Set W) (Z : Set W) (q : ℕ)
+    [LinearOrder Z]
     (hCover : ∀ x : W, x ∈ Z → ∃ i : ι, x ∈ F i)
     (hLocal : HasInternalJoinTreeCompletions F q)
     (hBudget : Z.ncard ≤ q)
