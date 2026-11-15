@@ -114,6 +114,30 @@ theorem EdgeTrainLevels.tailWagonClassEquiv_surjective
   (T.tailWagonClassEquiv ν).surjective
 
 
+/-- Parent maps commute EXACTLY with the true shorter-to-old
+wagon equivalences, at every pair of new cuts nu ≤ mu.
+The old parent level is shifted to nu+1 ≤ mu+1.
+No independently specified shortened parent map is needed.
+
+This is the prepared diagram behind the shifted original
+train parameters of the private first-wagon contraction. -/
+theorem EdgeTrainLevels.tailWagonClassEquiv_parent
+    {m : ℕ} (T : EdgeTrainLevels E (m + 1))
+    (ν μ : Fin (m + 1)) (hνμ : ν ≤ μ)
+    (q : Quotient ((T.tailQuotient).wagonSetoid ν)) :
+    T.wagonParent ν.succ μ.succ
+        (by
+          change ν.val + 1 ≤ μ.val + 1
+          omega)
+        (T.tailWagonClassEquiv ν q) =
+      T.tailWagonClassEquiv μ
+        ((T.tailQuotient).wagonParent ν μ hνμ q) := by
+  induction q using Quotient.inductionOn with
+  | h p =>
+    induction p using Quotient.inductionOn with
+    | h a =>
+      rfl
+
 /-- LABELLED wagon girth of the genuine shortened train at
 level nu is EQUIVALENT to labelled girth of the ORIGINAL
 train at level nu+1. This is an exact transport through
