@@ -13,8 +13,9 @@
 | `Track1FullSelectedSupportPieces` | Construct the actual lifted B-support pieces and derive their allowed pairwise intersections from the checked `lifted_pair_intersection_subsingleton` and `lifted_intersection_eq_splitEdge`, including correct membership of a shared whole edge in both pieces. |
 | `Track1OwnerSplitFinite` | Deduce finiteness of the owner-token vertices from finite old EHN vertex type, without adding an independent finiteness premise. |
 | `Track1OrderedPhysicalOwners` | In the globally ordered source case, distinct indexed embeddings have distinct full physical B-support pieces; reuse the existing `ordered_embedding_eq_of_sameCopy` rather than choosing duplicate-support representatives. |
+| `Track1SelectedCarrierEmbedding` | Factor each genuine full induced coloured ordered selected B embedding through the induced restriction on `selectedLiftCarrier`, using the actual shared-bottom owner tokens. This proves the selected-copy component of the covered-vertex output without asserting unproved ambient edge coverage. |
 
-There is a dedicated `CheckTrack1SelectedAssembly.lean` file (10 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
+There is a dedicated `CheckTrack1SelectedAssembly.lean` file (11 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
 
 ## Remaining exact interfaces — not assumed proved
 
