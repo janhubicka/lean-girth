@@ -93,4 +93,27 @@ theorem clique_contained_in_some_laterNeighborBag
   exact ⟨v, hv,
     clique_subset_laterNeighborBag_of_least G K hClique v hv hLeast⟩
 
+/-- Under a perfect elimination order, every nonempty maximal
+graph clique is exactly the elimination bag at its least vertex.
+Thus the elimination bags contain ALL maximal cliques (and may
+also contain redundant nonmaximal or duplicate bags). -/
+theorem maximalClique_eq_laterNeighborBag
+    [LinearOrder V]
+    (G : SimpleGraph V)
+    (hPEO : IsPerfectEliminationOrder G)
+    (K : Finset V) (hK : K.Nonempty)
+    (hClique : G.IsClique (K : Set V))
+    (hMax :
+      ∀ L : Set V, (K : Set V) ⊆ L →
+        G.IsClique L → L ⊆ (K : Set V)) :
+    ∃ v : V, v ∈ K ∧
+      (K : Set V) = laterNeighborBag G v := by
+  obtain ⟨v, hv, hSub⟩ :=
+    clique_contained_in_some_laterNeighborBag G K hK hClique
+  have hBack : laterNeighborBag G v ⊆ (K : Set V) :=
+    hMax (laterNeighborBag G v) hSub
+      (laterNeighborBag_isClique G hPEO v)
+  exact ⟨v, hv, Set.Subset.antisymm hSub hBack⟩
+
+
 end StructuralRamsey.Girth
