@@ -133,3 +133,6 @@ all printed axioms before promoting a validation mark.
 
 #check StructuralRamsey.Girth.mem_laterNeighbors_iff
 #print axioms StructuralRamsey.Girth.mem_laterNeighbors_iff
+
+#check StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#print axioms StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
