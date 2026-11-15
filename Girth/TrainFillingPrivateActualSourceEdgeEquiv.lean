@@ -1,5 +1,6 @@
 import Girth.TrainFillingPrivateFirstWagonStrong
 import Girth.TrainFillingPrivateRealUnionLinear
+import Girth.TrainFillingPrivateActualFirstWagonSource
 
 set_option Elab.async false
 
@@ -211,5 +212,45 @@ noncomputable def originalFirstWagonEdgeEquiv
       A D oldCarrier owner hOwnerCarrier hWagonLinear,
      firstWagonEdgeToOriginal_surjective
       A D oldCarrier owner hOwnerCarrier⟩
+
+
+/-- The genuine ORIGINAL train's μ-wagon quotient and
+labelled girth >g≥2 construct the old physical edge
+bijection automatically. Its source is the true dependent
+family of induced first-wagon support edges and its
+target is the FULL original physical A-support type.
+
+There is no separately invented edge owner, and all
+distinct quotient wagon labels are retained. At cutoff
+two use μ=1 and g=h₁. -/
+noncomputable def EdgeTrainLevels.actualSourceEdgeEquiv
+    [Nontrivial UA]
+    (A : RelStructure L UA)
+    (D : RelStructure L V)
+    {m : ℕ}
+    (T : EdgeTrainLevels
+      {e : Set V // e ∈ supportCopies A D} m)
+    (μ : Fin (m + 1))
+    (g : ℕ) (hg : 2 ≤ g)
+    (hGirth : LabelledGirthGT
+      (T.wagonClassCarrier
+        (fun e : {e : Set V // e ∈ supportCopies A D} => e.1)
+        μ) g) :
+    OriginalFirstWagonEdges A D
+      (T.wagonClassCarrier
+        (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ)
+    ≃ {e : Set V // e ∈ supportCopies A D} := by
+  let edgeCarrier :
+      {e : Set V // e ∈ supportCopies A D} → Set V :=
+    fun e => e.1
+  let carrier := T.wagonClassCarrier edgeCarrier μ
+  let owner := T.wagonClassOwner μ
+  have hLinear :
+      ∀ p q : Quotient (T.wagonSetoid μ), p ≠ q →
+        (carrier p ∩ carrier q).Subsingleton :=
+    (T.actualWagon_EHN_source_of_bound A D μ g hg hGirth).1
+  exact originalFirstWagonEdgeEquiv A D carrier owner
+    (fun e => T.edge_subset_ownerWagonCarrier edgeCarrier μ e)
+    hLinear
 
 end StructuralRamsey.Girth
