@@ -25,6 +25,7 @@ import Girth.TrainForestStageCoveredNontrivialPass
 import Girth.TrainForestStageTrueActiveSameVectorGirth
 import Girth.TrainForestStageFtEligibleFinitePass
 import Girth.TrainIndexedPartitePhysicalArrow
+import Girth.TrainRealSelectedFtLocalBundle
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -173,3 +174,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.activeGluingWitness_distinct_images_of_supportPiece_injective
 #print axioms StructuralRamsey.Girth.indexedPhysicalArrow_of_partiteFamilyArrow_for_rigidA
 #print axioms StructuralRamsey.Girth.indexedPhysicalArrow_of_partiteFamilyArrow_for_orderedA
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_Ft_localData_and_physicalArrow
