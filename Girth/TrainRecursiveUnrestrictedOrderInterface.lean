@@ -101,6 +101,33 @@ theorem no_identityBase_designatedArrow_of_distinct_A_values
   rw [hColour₁, hColour₂] at hEq
   cases hEq
 
+/-- The obstruction is automatic for every genuinely nontrivial
+target: two physical A-copies cannot be given an identity-only selected
+Ramsey witness, even with just two colours. -/
+theorem no_identityBase_designatedArrow_of_two_copies
+    {L : RelLanguage.{u}}
+    (A : RelStructure L UA) (B : RelStructure L VB)
+    {t : List ℕ}
+    {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
+    {allowed : Fin (t.length + 1) → Set VB}
+    (S : ForestTailStage A B B {Embedding.id B} t targetTrain allowed)
+    (hTwo : ∃ a b : Embedding A B, ¬ SameCopy a b) :
+    ¬ DesignatedArrow S Bool := by
+  obtain ⟨a, b, hNotSame⟩ := hTwo
+  have hDifferent : ∃ u : UA, a u ≠ b u := by
+    by_contra hNo
+    apply hNotSame
+    have hEq : a = b := by
+      apply Embedding.ext
+      intro u
+      by_contra hu
+      exact hNo ⟨u, hu⟩
+    subst b
+    rfl
+  obtain ⟨u, hu⟩ := hDifferent
+  exact no_identityBase_designatedArrow_of_distinct_A_values
+    S a b u hu
+
 /-- Arbitrary finite target B: unlike the invalid identity-base proposal,
 the conclusion allows a sufficiently large finite base D and a real
 prescribed family of B-embeddings. No global A-part map on B is required. -/
