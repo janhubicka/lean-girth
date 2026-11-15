@@ -489,3 +489,15 @@ The two declarations are added to the **active** and full axiom
 gates. This is source-level strengthening; until Lean elaboration
 and `#print axioms` pass it must not be reflected by a green
 validation mark or by weakening the manuscript's frozen hypotheses.
+
+**Sharpness of the cutoff.** The assumption `2 <= m` is essential
+for deriving linearity from completion. For `m = 1`, let the
+ambient edge family contain `{0,1,2}` and `{0,1,3}`.
+Every requested singleton one-edge family is already a forest
+(so the completion property through one holds with no extra
+designated members), but the two edges share two vertices and
+the ambient family is not linear. A finite four-vertex sanity
+check inspected all 55 pairs of distinct support edges of size
+at least two: 28 pairs obstruct linearity and therefore cannot
+survive together in a two-member forest completion.
+That check is not a Lean certificate.
