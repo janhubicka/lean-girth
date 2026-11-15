@@ -59,14 +59,32 @@ edge types or assuming output girth.
 This candidate is uncompiled: its new
 `#check`/`#print axioms` gate has not been executed.
 
-**Remaining integrator:** show the SAME actual canonical H
-is used in the selected `(j,s)` parentwise realization
-and identify its old edge-support equivalence/train
-with `S.train`. `PrivateCanonicalCutBridge` already
-transports a generic inherited H-bound once that
-identification is supplied. The old one-type theorem
-can still be reused in its own applications, but
-must not be cited as closing this two-type proof.
+Two further **uncompiled candidate** modules now make
+that same-H identification explicit:
+
+- `Girth/TrainFillingPrivateCanonicalTwoTypeOldTrain.lean`
+  proves the canonical H old-edge equivalence is
+  the identity and the transported selected old
+  train is exactly `S.train`.
+- `Girth/TrainFillingPrivateActualTwoTypeTargetGirth.lean`
+  composes that identity with the two-type OrderStage
+  bound, the actual selected parent and old edge range,
+  ordered carrier uniqueness, and generic global
+  scattering. It aims to derive the FULL labelled
+  `(j,s)` target system girth without asking for
+  output girth.
+
+`Girth/CheckTrack5TwoTypeGirth.lean` is an isolated
+kernel/axiom gate importing ONLY the foundational
+two-type theorem and checked dependencies. Its
+commands have NOT been executed.
+
+**Remaining validation:** actual `RR_h`/EHN integration,
+kernel compilation of each new lemma (especially
+the same-H identity and combined scattering statement),
+and a manual full-paper TeX build. The old one-type
+theorem is still useful in its own setting but must
+not be cited as closing this two-type proof.
 
 ## Mathematical chain
 
