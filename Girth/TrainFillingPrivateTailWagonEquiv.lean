@@ -183,4 +183,55 @@ theorem EdgeTrainLevels.tailQuotient_labelledCutGirth_iff
       old reduced eqv eqv.injective
       hNewToOld g hOriginal
 
+
+/-- Every old allowed-vertex parent/child intersection
+bound at levels nu+1 ≤ mu+1 is inherited by the
+genuinely shortened quotient train at levels nu ≤ mu.
+
+This uses only the true wagon-label equivalences,
+their exact carriers and the commuting parent square.
+It is the geometric source of the SHIFTED TRAIN
+PARAMETERS (A_2,...,A_{m+1}) of the manuscript,
+not an independently postulated new parameter
+condition on the shortened train M. -/
+theorem EdgeTrainLevels.tailQuotient_parentIntersectionBound
+    {m : ℕ} {V : Type v}
+    (T : EdgeTrainLevels E (m + 1))
+    (edges : E → Set V)
+    (ν μ : Fin (m + 1)) (hνμ : ν ≤ μ)
+    (allowed : Set V)
+    (hOld : TrainParentIntersectionBound
+      (T.wagonClassCarrier edges ν.succ)
+      (T.wagonParent ν.succ μ.succ
+        (by
+          change ν.val + 1 ≤ μ.val + 1
+          omega)) allowed) :
+    TrainParentIntersectionBound
+      ((T.tailQuotient).wagonClassCarrier
+        (T.wagonClassCarrier edges
+          (EdgeTrainLevels.firstWagonLevel m)) ν)
+      ((T.tailQuotient).wagonParent ν μ hνμ)
+      allowed := by
+  let oldChild := T.wagonClassCarrier edges ν.succ
+  let newChild := (T.tailQuotient).wagonClassCarrier
+    (T.wagonClassCarrier edges
+      (EdgeTrainLevels.firstWagonLevel m)) ν
+  let oldParent := T.wagonParent ν.succ μ.succ
+    (by
+      change ν.val + 1 ≤ μ.val + 1
+      omega)
+  let newParent := (T.tailQuotient).wagonParent ν μ hνμ
+  let child := (T.tailWagonClassEquiv ν).toEmbedding
+  let parent := T.tailWagonClassEquiv μ
+  have hCommute : ∀ q, oldParent (child q) =
+      parent (newParent q) := by
+    intro q
+    exact T.tailWagonClassEquiv_parent ν μ hνμ q
+  have hCarrier : ∀ q, newChild q ⊆ oldChild (child q) := by
+    intro q
+    rw [T.tailWagonClassEquiv_carrier edges ν q]
+  exact trainParentIntersectionBound_restrict
+    oldChild oldParent newChild newParent allowed hOld
+    child parent hCommute hCarrier
+
 end StructuralRamsey.Girth
