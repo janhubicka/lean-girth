@@ -12,6 +12,8 @@ import Girth.ForestTraceCyclicPairs
 import Girth.ForestTraceLocalChordless
 import Girth.FiniteTraceChordlessPattern
 import Girth.FiniteTraceSuccessorCycle
+import Girth.FiniteTraceEliminationBags
+import Girth.FiniteTraceEliminationParent
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -113,3 +115,18 @@ all printed axioms before promoting a validation mark.
 #print axioms StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
 #print axioms StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
 #print axioms StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+
+#check StructuralRamsey.Girth.IsPerfectEliminationOrder
+#check StructuralRamsey.Girth.laterNeighborBag_isClique
+#check StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#check StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#check StructuralRamsey.Girth.min_laterNeighbor_specs
+#check StructuralRamsey.Girth.min_laterNeighbor_le
+#check StructuralRamsey.Girth.laterNeighbor_mem_parentBag
+
+#print axioms StructuralRamsey.Girth.laterNeighborBag_isClique
+#print axioms StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#print axioms StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#print axioms StructuralRamsey.Girth.min_laterNeighbor_specs
+#print axioms StructuralRamsey.Girth.min_laterNeighbor_le
+#print axioms StructuralRamsey.Girth.laterNeighbor_mem_parentBag
