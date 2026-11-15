@@ -85,6 +85,34 @@ vertices** at each train cut. The lemma
 this restricted obligation. It may be easier to establish from the
 actual glued geometry than full selected-family coverage of D.
 
+## Actual unary colours versus auxiliary part coordinates
+
+The definition of `Partite.System L P V` in the pinned
+`partite-construction/PartiteConstruction/Partite/Basic.lean`
+has a part map `V→P` and a **transversality** condition on relation
+tuples. It does NOT, merely by the definition of partiteness, impose
+that the unary colour of an output vertex y equals the coarse
+colour of its part `part(y)`.
+
+Thus the canonical allowedD construction controls the **composed**
+predicate `predD ∘ part` automatically, but transferring to the
+**actual output unary predicate** `predOut` needs an additional
+compatibility certificate
+
+    ∀ y, predOut(y) = predD(part(y))
+
+(or the same equation only for actual contact vertices at the
+relevant cuts). In an initial labelled picture this may follow from
+its component construction and colour-preserving embeddings; the
+recursive attachment must preserve that invariant. It is NOT a
+consequence of an arbitrary System's transversal field alone.
+
+The conditional new statements
+`adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
+and `usedContact_originalPredicate_of_colourCompatibility`
+make this final step explicit. Neither constructs the needed colour
+compatibility for the real attached picture.
+
 ## Lean interfaces
 
 `Girth/TrainRecursiveGlobalAllowedCompatibility.lean` contains:
@@ -98,6 +126,10 @@ actual glued geometry than full selected-family coverage of D.
   resulting bound through an arbitrary picture's part map
 - `usedContact_coarsePredicate_of_localPullback`: only the genuine output
   contact vertices need coverage, provided their D-parts are allowed
+- `adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
+  and `usedContact_originalPredicate_of_colourCompatibility`: explicitly
+  require the actual output unary-colour map to agree with the colour
+  of its base part, globally or on actual contacts
 - `adjacentParameters_of_canonicalCoarseAllowed`: the genuine
   `EdgeTrainLevels.AdjacentParameters` predicate transfers unchanged
   from canonical D-parts to the composed original coarse predicate map
@@ -126,5 +158,5 @@ or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules contain nine exact axiom probes, with no `sorry`/`admit`/new axiom. They have
+The new modules contain eleven exact axiom probes, with no `sorry`/`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
