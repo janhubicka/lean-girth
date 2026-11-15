@@ -71,6 +71,62 @@ theorem ForestOfCopies.restrict_to_retained_finset
   change ForestOfCopies (fun P : R => P.1) at hResult
   exact hResult
 
+/-- Keep exactly the selected members and the locally added designated
+members of a forest on its DISTINCT physical image.
+
+The input labelled family may contain repeated request edges, and
+a request edge may itself be selected or designated. The only
+discarded members are pieces which belong to neither target set;
+the classification hypothesis guarantees that these are one-edge.
+This avoids arbitrary-subfamily heredity. -/
+theorem ForestOfCopies.restrict_image_to_selected_added
+    {I : Type v} [Fintype I]
+    (F : I → HypergraphPiece W)
+    (hForest :
+      ForestOfCopies
+        (fun T : {T : HypergraphPiece W //
+          T ∈ Finset.univ.image F} => T.1))
+    (selected added : Finset (HypergraphPiece W))
+    (hSelected :
+      ∀ T : HypergraphPiece W, T ∈ selected →
+        ∃ i : I, F i = T)
+    (hAdded :
+      ∀ T : HypergraphPiece W, T ∈ added →
+        ∃ i : I, F i = T)
+    (hClassify :
+      ∀ i : I,
+        F i ∈ selected ∨ F i ∈ added ∨ (F i).IsOneEdge) :
+    ForestOfCopies
+      (fun T : {T : HypergraphPiece W //
+        T ∈ selected ∪ added} => T.1) := by
+  classical
+  let all : Finset (HypergraphPiece W) := Finset.univ.image F
+  let kept : Finset (HypergraphPiece W) := selected ∪ added
+  have hKeepSub : kept ⊆ all := by
+    intro T hT
+    rcases Finset.mem_union.mp hT with hSel | hAdd
+    · obtain ⟨i, hi⟩ := hSelected T hSel
+      exact Finset.mem_image.mpr ⟨i, Finset.mem_univ i, hi⟩
+    · obtain ⟨i, hi⟩ := hAdded T hAdd
+      exact Finset.mem_image.mpr ⟨i, Finset.mem_univ i, hi⟩
+  have hOmitted :
+      ∀ T : HypergraphPiece W, T ∈ all →
+        T ∉ kept → T.IsOneEdge := by
+    intro T hIn hNot
+    obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hIn
+    rcases hClassify i with hSel | hAdd | hOne
+    · exfalso
+      apply hNot
+      apply Finset.mem_union_left
+      simpa [hi] using hSel
+    · exfalso
+      apply hNot
+      apply Finset.mem_union_right
+      simpa [hi] using hAdd
+    · simpa [hi] using hOne
+  exact ForestOfCopies.restrict_to_retained_finset
+    all kept hForest hKeepSub hOmitted
+
 /-- Fully retained finite-set version of the general join-tree
 lift, with no request on singleton separators. The hypotheses
 are exactly: local completed forests with nonempty edge
