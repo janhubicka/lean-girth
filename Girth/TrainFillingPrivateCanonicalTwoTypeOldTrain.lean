@@ -57,25 +57,25 @@ subtype is precisely Equiv.refl: no edge occurrence or
 train label is changed in either direction. -/
 theorem canonicalTwoTypeOldEdgeEquiv_eq_refl
     (Aold : RelStructure Lold Uold)
-    (N : RelStructure Lold N)
+    (Nrel : RelStructure Lold N)
     (Asmall : RelStructure Lsmall Usmall)
     [Nontrivial Usmall]
     (R : RelStructure Lsmall X)
-    (place : OldACarrierEdge Aold N → (X ↪ N))
+    (place : OldACarrierEdge Aold Nrel → (X ↪ N))
     (hRange : ∀ e, Set.range (place e) = e.1)
-    (hOldLinear : ∀ e f : OldACarrierEdge Aold N,
+    (hOldLinear : ∀ e f : OldACarrierEdge Aold Nrel,
       e ≠ f → (e.1 ∩ f.1).Subsingleton)
     (hCovers : ∀ x : X, ∃ a : Embedding Asmall R,
       x ∈ copyCarrier a) :
     let H : UniformFillingData N X :=
       UniformFillingData.ofSupportCopies Asmall R
-        (supportCopies Aold N) place hRange hOldLinear hCovers
+        (supportCopies Aold Nrel) place hRange hOldLinear hCovers
     IndexedPrivateChoice.actualFilledOldEdgeEquiv
-        (X := X) Aold N H (by rfl) =
-      Equiv.refl (OldACarrierEdge Aold N) := by
+        (X := X) Aold Nrel H (by rfl) =
+      Equiv.refl (OldACarrierEdge Aold Nrel) := by
   let H : UniformFillingData N X :=
     UniformFillingData.ofSupportCopies Asmall R
-      (supportCopies Aold N) place hRange hOldLinear hCovers
+      (supportCopies Aold Nrel) place hRange hOldLinear hCovers
   apply Equiv.ext
   intro e
   apply Subtype.ext
