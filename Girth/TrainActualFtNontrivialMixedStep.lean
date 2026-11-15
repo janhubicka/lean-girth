@@ -160,7 +160,7 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft_mixedCore
   have hInteriorTwo :
       ∀ μ : Fin ((q :: tail).length + 1),
         0 < μ.val → μ.val < (q :: tail).length →
-        (activeGluingWitnessOrderOneData A stage
+        (activeGluingWitnessOrderOneData A stage.system
           e.toFunctionEmbedding E.toRelStructure RF U μ)
           .FullSystemGirthGT 2 := by
     intro μ hPos hLt
