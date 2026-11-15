@@ -23,6 +23,7 @@ import Girth.TrainFillingPrivateFirstWagonStrong
 import Girth.TrainFillingPrivateRealUnionColouredMono
 import Girth.TrainFillingPrivateRealUnionEHN
 import Girth.TrainFillingPrivateRealUnionLocalCoverage
+import Girth.TrainFillingPrivateActualFirstWagonSource
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
@@ -283,3 +284,23 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 #check StructuralRamsey.Girth.firstWagonUnion_supportEdge_has_correct_original_owner
 #print axioms StructuralRamsey.Girth.firstWagonUnion_supportEdge_has_correct_original_owner
+
+#check StructuralRamsey.Girth.EdgeTrainLevels.wagonClassOwner
+#check StructuralRamsey.Girth.EdgeTrainLevels.edge_subset_ownerWagonCarrier
+#check StructuralRamsey.Girth.EdgeTrainLevels.ownerEdge_covers_wagonVertex
+#check StructuralRamsey.Girth.EdgeTrainLevels.inducedWagon_Acovered
+#check StructuralRamsey.Girth.EdgeTrainLevels.wagonUnion_nonempty
+#check StructuralRamsey.Girth.EdgeTrainLevels.actualSupportWagonUnion_nonempty
+#check StructuralRamsey.Girth.pairwiseSubsingleton_of_labelledGirthGT_two
+#check StructuralRamsey.Girth.EdgeTrainLevels.wagonClassCarrier_linear_of_labelledGirthGT_two
+#check StructuralRamsey.Girth.EdgeTrainLevels.actualWagon_EHN_source
+#check StructuralRamsey.Girth.labelledGirthGT_two_of_bound
+#check StructuralRamsey.Girth.EdgeTrainLevels.actualWagon_EHN_source_of_bound
+#check StructuralRamsey.Girth.EdgeTrainLevels.wagonQuotientLinearOrder
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.edge_subset_ownerWagonCarrier
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.ownerEdge_covers_wagonVertex
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.inducedWagon_Acovered
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualSupportWagonUnion_nonempty
+#print axioms StructuralRamsey.Girth.pairwiseSubsingleton_of_labelledGirthGT_two
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualWagon_EHN_source_of_bound
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonQuotientLinearOrder
