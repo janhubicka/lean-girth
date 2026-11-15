@@ -73,4 +73,56 @@ theorem isPerfectEliminationOrder_iff_simplicialSuffix
     exact hSuffix v x (le_of_lt hvx) y (le_of_lt hvy)
       hxy hvxAdj hvyAdj
 
+/-- A clique vertex set makes every vertex simplicial within it. -/
+theorem isSimplicialWithin_of_clique
+    (G : SimpleGraph V) (S : Set V) (v : V)
+    (hClique : G.IsClique S) :
+    IsSimplicialWithin G S v := by
+  intro x hx y hy hxy _ _
+  exact hClique x hx y hy hxy
+
+/-- If S is a clique and T strictly contains S, then either
+T itself is a clique, or two nonadjacent simplicial vertices
+of T force one simplicial vertex to lie outside S.
+
+This is the small combinatorial step that makes the strong
+two-nonadjacent-vertices version of Dirac's theorem induct. -/
+theorem exists_simplicialOutside_clique
+    (G : SimpleGraph V) (S T : Set V)
+    (hSClique : G.IsClique S)
+    (hOutside : (T \ S).Nonempty)
+    (hDichotomy :
+      G.IsClique T ∨
+      ∃ u : V, u ∈ T ∧
+        ∃ v : V, v ∈ T ∧ u ≠ v ∧
+          ¬ G.Adj u v ∧
+          IsSimplicialWithin G T u ∧
+          IsSimplicialWithin G T v) :
+    ∃ v : V, v ∈ T \ S ∧
+      IsSimplicialWithin G T v := by
+  rcases hDichotomy with hClique | hTwo
+  · obtain ⟨v, hv⟩ := hOutside
+    exact ⟨v, hv, isSimplicialWithin_of_clique G T v hClique⟩
+  · obtain ⟨u, hu, v, hv, huv, hNotAdj, huSimp, hvSimp⟩ := hTwo
+    by_cases huS : u ∈ S
+    · have hvNotS : v ∉ S := by
+        intro hvS
+        exact hNotAdj (hSClique u huS v hvS huv)
+      exact ⟨v, ⟨hv, hvNotS⟩, hvSimp⟩
+    · exact ⟨u, ⟨hu, huS⟩, huSimp⟩
+
+/-- If every neighbour of v in G belongs to an induced
+vertex set T, then being simplicial in G[T] implies that
+v is simplicial in the full graph.  This is precisely the
+component-to-ambient transfer used in the separator induction. -/
+theorem isSimplicialWithin_univ_of_neighbors_subset
+    (G : SimpleGraph V) (T : Set V) (v : V)
+    (hNeighbours : ∀ x : V, G.Adj v x → x ∈ T)
+    (hSimp : IsSimplicialWithin G T v) :
+    IsSimplicialWithin G Set.univ v := by
+  intro x _ y _ hxy hvx hvy
+  exact hSimp x (hNeighbours x hvx) y (hNeighbours y hvy)
+    hxy hvx hvy
+
+
 end StructuralRamsey.Girth
