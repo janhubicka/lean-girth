@@ -72,9 +72,9 @@ theorem track1_rightCopy_reflect_left
   change Set.range (iL.comp aL) = Set.range (iR.comp aR)
   apply Set.Subset.antisymm
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, (hMap x).symm⟩
+    exact ⟨x, (hMap x).symm⟩___TMP
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, hMap x⟩
+    exact ⟨x, (hMap x).symm⟩
 
 /-- The corresponding reflection from the left side into the right. -/
 theorem track1_leftCopy_reflect_right
@@ -132,9 +132,9 @@ theorem track1_leftCopy_reflect_right
   change Set.range (iR.comp aR) = Set.range (iL.comp aL)
   apply Set.Subset.antisymm
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, (hMap x).symm⟩
+    exact ⟨x, (hMap x).symm⟩___TMP
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, hMap x⟩
+    exact ⟨x, (hMap x).symm⟩
 
 /-- The complete A-support of the free amalgam retains
 girth greater than three under the two constituent bounds,
