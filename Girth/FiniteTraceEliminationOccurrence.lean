@@ -38,7 +38,9 @@ noncomputable def eliminationParentGraph
       v = (laterNeighbors G w).min' h)
   symm := by
     intro v w h
-    exact h.swap
+    rcases h with h | h
+    · exact Or.inr h
+    · exact Or.inl h
   loopless := by
     intro v h
     rcases h with ⟨hN, hv⟩ | ⟨hN, hv⟩
