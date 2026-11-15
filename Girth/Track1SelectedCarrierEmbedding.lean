@@ -30,8 +30,8 @@ variable {V I W Choice : Type v}
 
 namespace ColouredEdgeOwnerSplit
 
-/-- The union of lifted selected B-copy carriers for an arbitrary
-selected-family index, independent of the predicate index type. -/
+/-- Exactly the union of the lifted *selected* B-copy carriers.
+The choice index is independent of the old unary predicate type. -/
 def selectedLiftCarrierFor
     (H : ColouredEdgeOwnerSplit V I)
     (selected : Choice → ColouredOwnerSelectedCopy (W := W) H) :
