@@ -47,7 +47,7 @@ theorem splitPhysicalEdges_girthGT
   have hNextNe (i : Fin c.length) : i ≠ cyclicSucc i := by
     intro h
     have hval := congrArg Fin.val h
-    have hn : 1 < c.length := by omega
+    have hn : 1 < c.length := lt_of_lt_of_le (by decide) c.hlength
     have hmod : (i.val + 1) % c.length ≠ i.val := by
       by_cases hi : i.val + 1 < c.length
       · rw [Nat.mod_eq_of_lt hi]
