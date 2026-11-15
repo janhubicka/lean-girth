@@ -107,6 +107,26 @@ its component construction and colour-preserving embeddings; the
 recursive attachment must preserve that invariant. It is NOT a
 consequence of an arbitrary System's transversal field alone.
 
+**Stronger invariant in actual stages.** The same pinned library defines
+`System.IsPartiteOver D` in
+`PartiteConstruction/Partite/Induced.lean` as a *relational
+homomorphism-embedding* of the projection into D. The checked
+`ForestTailStage` structure explicitly includes
+`isPartite : system.IsPartiteOver D`, which is stronger than
+bare transversality. If the coloured-edge unary predicate symbols
+describe a genuine partition of both the output vertices and D,
+this homomorphism maps each vertex's actual unary colour to its
+D-part colour. Therefore the required colour compatibility is
+**derivable**, rather than another independent oracle. The new
+conditional lemma `actualColour_eq_baseColour_of_isPartiteOver`
+expresses exactly this deduction; its companion
+`adjacentParameters_from_actualPartiteCoarseColour` then transfers
+actual train `AdjacentParameters` directly. Applying these to the
+specific coloured-edge presentation still needs the explicit unary
+predicate partition certificates (not proved in this preparation
+module), and existence of a stage WITH canonical allowedD remains
+the main construction obligation.
+
 The conditional new statements
 `adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
 and `usedContact_originalPredicate_of_colourCompatibility`
@@ -126,6 +146,10 @@ compatibility for the real attached picture.
   resulting bound through an arbitrary picture's part map
 - `usedContact_coarsePredicate_of_localPullback`: only the genuine output
   contact vertices need coverage, provided their D-parts are allowed
+- `actualColour_eq_baseColour_of_isPartiteOver` and
+  `adjacentParameters_from_actualPartiteCoarseColour`: use the
+  genuine stage's stronger homomorphism-embedding projection and
+  unary-colour partition relations to discharge colour compatibility
 - `adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
   and `usedContact_originalPredicate_of_colourCompatibility`: explicitly
   require the actual output unary-colour map to agree with the colour
@@ -158,5 +182,5 @@ or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules contain eleven exact axiom probes, with no `sorry`/`admit`/new axiom. They have
+The new modules contain thirteen exact axiom probes, with no `sorry`/`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
