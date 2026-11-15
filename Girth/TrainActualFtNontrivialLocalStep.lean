@@ -171,8 +171,8 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
               S E.toRelStructure RF i p)
             (sharedOldACarrierCoreEmbedding A stage.system.toRelStructure
               S E.toRelStructure RF i r))
-    (hSelectedImages : Function.Injective
-      (fun i : I => copyCarrier (RF i)))
+    (hSelectedSupports : Function.Injective
+      (fun i : I => bSupportPiece A (RF i)))
     (hForest : FiniteMixedForestThrough
       (RelationalMixedSupportTest A RF) q)
     (hCoreParameters : U.AdjacentParameters
@@ -233,6 +233,11 @@ theorem ForestTailStage.orderPictureStep_of_nontrivial_Ft
     exact (hOutPositive j hj).2
   have hLocalTwo : 2 ≤ (q :: tail).headD 0 := by
     simpa using hCutoff (⟨0, by simp⟩ : Fin (q :: tail).length)
+  have hSelectedImages : Function.Injective
+      (fun i : I => copyCarrier (RF i)) :=
+    activeGluingWitness_distinct_images_of_supportPiece_injective
+      A stage.system e.toFunctionEmbedding E.toRelStructure RF
+      hSelectedSupports
   have hBounds : ActiveAttachmentBounds stage hA e active E f U :=
     ActiveAttachmentBounds.of_sameVector_finiteMixed
       stage hA e active E f U
