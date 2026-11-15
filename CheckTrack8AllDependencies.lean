@@ -1,13 +1,11 @@
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceSimplicialCriterion
+import Girth.FiniteTracePEORank
 
-/-!
-# All Track 8 source dependency declarations: exact-head axiom gate.
-No check has executed until compiled using the pinned toolchain.
-Start with CheckTrack8Primary.lean; use this to inspect every
-transitive source theorem of the primary and Dirac preparation.
--/
+/-! Track 8 exact-head full dependency axiom gate.
+Run only with the repository-pinned Lean toolchain; no certification
+is claimed from creating this file alone. -/
 
 #check StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
 #check StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
@@ -31,6 +29,7 @@ transitive source theorem of the primary and Dirac preparation.
 #check StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
 #check StructuralRamsey.Girth.smallTrace_selection_of_PEO
 #check StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#check StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
 #check StructuralRamsey.Girth.traceVertices_isClique
 #check StructuralRamsey.Girth.maximalTrace_isMaximalClique
 #check StructuralRamsey.Girth.maximalClique_has_maximalTrace
@@ -75,6 +74,7 @@ transitive source theorem of the primary and Dirac preparation.
 #print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_PEO
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
 #print axioms StructuralRamsey.Girth.traceVertices_isClique
 #print axioms StructuralRamsey.Girth.maximalTrace_isMaximalClique
 #print axioms StructuralRamsey.Girth.maximalClique_has_maximalTrace
