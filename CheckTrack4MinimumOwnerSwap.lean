@@ -30,6 +30,7 @@ import Girth.TrainRealSelectedFtHighCutCompleteInputs
 import Girth.TrainAStrongIrreducibleReflection
 import Girth.TrainCoverageFreeComparison
 import Girth.TrainCoverageFreeInitialFinitePass
+import Girth.TrainCoverageFreeTrueActiveGirth
 import Girth.TrainCoverageFreeStrongFinitePass
 import Girth.TrainCoverageFreeNontrivialFtStep
 import Girth.TrainCoverageFreeBoundsFromMixed
@@ -261,3 +262,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyStrongTrain_of_nontrivialFtSteps
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.initialOrderStageReady_of_targetCuts
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.initialStrongTrainRamsey_of_nontrivialFtOperator
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.trueActive_cutGirth_of_fullSystem
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.trueActive_sameVectorCutGirth
