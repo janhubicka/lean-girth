@@ -212,7 +212,7 @@ end FirstWagonRefinement
 section Actual
 open StructuralRamsey.RelStructure
 
-variable {L : RelLanguage.{u}} {UA X P : Type v}
+variable {L : RelLanguage.{u}} {UA X : Type v}
 
 /-- The doubled local girth bound for the complete physical A-support
 inside a single original first wagon.  This is independent of the
