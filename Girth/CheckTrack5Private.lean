@@ -280,3 +280,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #check StructuralRamsey.Girth.realColouredFirstWagon_privateEHN
 #print axioms StructuralRamsey.Girth.irreducible_of_spanningRelation
 #print axioms StructuralRamsey.Girth.realColouredFirstWagon_privateEHN
+
+#check StructuralRamsey.Girth.firstWagonUnion_supportEdge_has_correct_original_owner
+#print axioms StructuralRamsey.Girth.firstWagonUnion_supportEdge_has_correct_original_owner
