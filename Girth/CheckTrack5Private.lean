@@ -24,6 +24,7 @@ import Girth.TrainFillingPrivateRealUnionColouredMono
 import Girth.TrainFillingPrivateRealUnionEHN
 import Girth.TrainFillingPrivateRealUnionLocalCoverage
 import Girth.TrainFillingPrivateActualFirstWagonSource
+import Girth.TrainFillingPrivateActualWagonEHN
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
@@ -304,3 +305,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.pairwiseSubsingleton_of_labelledGirthGT_two
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualWagon_EHN_source_of_bound
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.wagonQuotientLinearOrder
+
+#check StructuralRamsey.Girth.actualFirstWagonQuotient_privateEHN
+#print axioms StructuralRamsey.Girth.actualFirstWagonQuotient_privateEHN
