@@ -26,6 +26,7 @@ import Girth.TrainFillingPrivateRealUnionEHN
 import Girth.TrainFillingPrivateRealUnionLocalCoverage
 import Girth.TrainFillingPrivateActualFirstWagonSource
 import Girth.TrainFillingPrivateActualWagonEHN
+import Girth.TrainFillingPrivateActualTailQuotient
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
@@ -319,3 +320,15 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_injective
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_bottom_iff
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_allPositiveCuts_iff
+
+#check StructuralRamsey.Girth.EdgeTrainLevels.firstWagonLevel
+#check StructuralRamsey.Girth.EdgeTrainLevels.FirstWagon
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailRelation
+#check StructuralRamsey.Girth.EdgeTrainLevels.firstWagon_rel_of_shift
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailRelation_mk_iff
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_rel_mk_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstWagon_rel_of_shift
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailRelation_mk_iff
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_rel_mk_iff
