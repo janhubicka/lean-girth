@@ -31,6 +31,38 @@ open StructuralRamsey.RelStructure
 
 universe u v
 
+/-- A COMPLETE A-support piece is determined by its vertex carrier:
+it contains precisely all ambient A-copies wholly carried by those
+vertices. In particular a support-piece injective selected family
+has injective vertex images; this matches the genuine checked lower
+ForestTailStage input, rather than asking for a second injectivity
+certificate. -/
+theorem bSupportPiece_eq_of_same_carrier
+    {L : RelLanguage.{u}} {UA VB W : Type v}
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {R : RelStructure L W}
+    (f g : RelStructure.Embedding B R)
+    (hCarrier : copyCarrier f = copyCarrier g) :
+    bSupportPiece A f = bSupportPiece A g := by
+  have hEdges :
+      (bSupportPiece A f).edges = (bSupportPiece A g).edges := by
+    ext edge
+    change
+      (∃ a : RelStructure.Embedding A R,
+        copyCarrier a = edge ∧ copyCarrier a ⊆ copyCarrier f) ↔
+      (∃ a : RelStructure.Embedding A R,
+        copyCarrier a = edge ∧ copyCarrier a ⊆ copyCarrier g)
+    rw [hCarrier]
+  have hCarriers :
+      (bSupportPiece A f).carrier = (bSupportPiece A g).carrier :=
+    hCarrier
+  cases hf : bSupportPiece A f
+  cases hg : bSupportPiece A g
+  dsimp at hCarriers hEdges
+  cases hCarriers
+  cases hEdges
+  rfl
+
 section ActualWitnessMixedForestBridge
 
 variable {L : RelLanguage.{u}} {UA P X Y I : Type v}
@@ -145,6 +177,18 @@ theorem activeGluingWitness_supportPiece_injective_of_distinct_images
   intro i j heq
   apply hImages
   exact congrArg HypergraphPiece.carrier heq
+
+/-- The checked lower stage's selected physical injectivity
+already supplies distinct vertex images: two identical carriers
+have identical COMPLETE supports. No image-choice axiom
+or independent enumeration is required. -/
+theorem activeGluingWitness_distinct_images_of_supportPiece_injective
+    (hSupports : Function.Injective
+      (fun i : I => bSupportPiece A (f i))) :
+    Function.Injective (fun i : I => copyCarrier (f i)) := by
+  intro i j hCarriers
+  apply hSupports
+  exact bSupportPiece_eq_of_same_carrier A (f i) (f j) hCarriers
 
 /-- Faithfully pass from the finite SET-based mixed-forest theorem
 to the TRUE bottom gluing-witness indexed family at the SAME cutoff q.
