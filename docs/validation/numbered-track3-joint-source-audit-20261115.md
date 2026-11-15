@@ -54,6 +54,7 @@ No output system-girth, no asserted existence of the lower witness, no pruning o
 3. `track3_joint_geometry_and_parameters`: height at least two, complete actual output geometry and all parameters from one source witness.
 4. `track3_height_one_geometry_and_parameters`: height one, explicit old/core A-linearity and strong gluing images, no interior girth coordinate.
 5. `TrainRecursiveWitness.ForestTailStage.activeAttachment_joint_geometry_and_parameters_of_two_le_height`: takes the old geometry and parameters from a *real* `ForestTailStage`, retaining all witness hypotheses.
+6. `TrainRecursiveWitness.ForestTailStage.activeAttachment_joint_geometry_and_parameters_of_height_one`: on a real length-one stage, obtains old A-linearity and old adjacent parameters from `stage.aLinear` and `stage.parameters`; the core's A-linearity, full gluing-image strongness and core parameters remain explicit because no interior source girth coordinate exists.
 
 The exact underlying `Partite.System.induce`, `Partite.Attachment.Vertex`, and `Partite.Attachment.attach.toRelStructure` definitions were inspected at the **pinned** dependency `partite-construction@d2394f65861528f27d68c4a42042285dafef301d`. The two `rfl` adapters are justified at the source level, but must still be elaborated.
 
@@ -65,4 +66,4 @@ The exact underlying `Partite.System.induce`, `Partite.Attachment.Vertex`, and `
 - [ ] **Independent prose audit:** ensure the compressed two-arc cycle argument under `lem:outlinear` is covered by the longer historical three-/four-label proof and neither silently assumes output girth.
 - [ ] **Manuscript compile:** full TeX build of the merged main, not just source delimiter checks.
 
-The runtime inspected for this audit has no `lean`, `lake`, `elan`, or restored matching Mathlib artifacts. No workflow was dispatched and no successful new exact-head run exists here. **All five new declarations remain candidate, not kernel-verified.**
+The runtime inspected for this audit has no `lean`, `lake`, `elan`, or restored matching Mathlib artifacts. No workflow was dispatched and no successful new exact-head run exists here. **All six new declarations remain candidate, not kernel-verified.**
