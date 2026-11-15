@@ -70,6 +70,22 @@ theorem UniformSelectedPartiteForestEveryColouredArity.atArity
     UniformSelectedPartiteForest A₀ t κ :=
   h I k A₀ κ
 
+/-- In the cutoff-two construction the new hyperedge arity k and the
+length n of an original-edge colour word are INDEPENDENT parameters:
+k = |V(X)| while n = |E(X)|. An r-colour word is a function
+Fin n → Fin r. The universal assertion specializes to this literal
+finite function palette at the NEW coloured edge arity without an
+extra palette-amplification or language-transfer assumption. -/
+theorem UniformSelectedPartiteForestEveryColouredArity.atColourWord
+    (I : Type u) [Finite I] [LinearOrder I]
+    (k n r : ℕ) (hr : 0 < r) (t : List ℕ)
+    (h : UniformSelectedPartiteForestEveryColouredArity.{u, v} t)
+    {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
+    (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA) :
+    UniformSelectedPartiteForest A₀ t (Fin n → Fin r) := by
+  letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
+  exact h I k A₀ (Fin n → Fin r)
+
 /-- The entire q>2 operator field is supplied in the exact coloured
 edge arity-uniform assertion. The OTHER fields explicitly demand:
 the base [2], a forest-to-UNRESTRICTED-order assertion at the same
