@@ -56,3 +56,12 @@ An exhaustive local Python enumeration confirmed:
 The check is a finite combinatorial audit, NOT a Lean kernel proof.
 
 **No CI, no merge, no marker promotions.** The q=2 active-core-coverage gate must remain open until an actual repaired constructor/argument is formalized and kernel checked.
+
+
+## Strong-copy no-go: adding ambient A-copies cannot repair this
+
+The obstruction is stronger than failure of one abstract implication. Suppose an E has total IrreduciblesExtendTo A E and the problematic R above embeds into E as an A-strong induced copy b. Total core coverage would give a physical A=K4 copy in E containing the mixed irreducible triangle b({a,b,c}). Its intersection with b(R) contains at least two distinct vertices. A-strongness of b forces the entire K4 carrier inside b(R). Since b is induced, this factors back to an A=K4 embedding inside R containing {a,b,c}, contradicting the explicit enumeration. Hence **no such A-strong completion E exists** for this target, even if E is allowed to add arbitrarily many vertices and physical A-edges.
+
+The general mathematical statement is independent of graphs: for any A-strong induced embedding b:B→C, if C has total irreducible A-extension, then every irreducible induced subset of B containing at least two distinct vertices already lies inside an A-copy of B. This is developed as a source-only Lean candidate in Girth/TrainAStrongIrreducibleReflection.lean, with theorems irreducible_two_point_extension_reflect_of_aStrong and no_aStrong_covered_extension_of_irreducible_obstruction. It is NOT yet Lean-compiled.
+
+**Consequence for q=2 repair**: one cannot repair the F_2 witness by merely adding outside A-copy completions while keeping its selected target copies A-strong. Either bypass/relax the generic ActiveAttachmentBounds.coreCoverage field at q=2 (prove the exact weaker selected A-or-B mixed coverage actually required), or design a separate base-case construction with different treatment of selected copy images. Do not silently require an impossible extra strong completion from F_2.
