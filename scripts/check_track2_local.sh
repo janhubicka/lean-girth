@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Numbered Track 2: exact-head, strict-axiom LOCAL validation gate.
-# This uses the repository's pinned toolchain and existing axiom parser.
-# It does NOT update dependencies, start Actions, or claim success before Lean runs.
+# Numbered Track 2: three INDEPENDENT local Lean + strict axiom gates.
+# Run: scripts/check_track2_local.sh [all|active|increment|join]
+# No dependency updates, network access, or GitHub Actions are started here.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
@@ -9,46 +9,77 @@ cd "$ROOT"
 export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-1}"
 
 if ! command -v lake >/dev/null 2>&1; then
-  echo "Track 2 requires the pinned Lean/Lake installation; 'lake' was not found." >&2
+  echo "Track 2 requires locally installed Lean/Lake ('lake' missing)." >&2
   exit 2
 fi
-
 if ! command -v python3 >/dev/null 2>&1; then
-  echo "Track 2 requires Python 3 for the repository's strict axiom checker." >&2
+  echo "Track 2 requires Python 3 to run scripts/check_axioms.py." >&2
   exit 2
 fi
 
-echo "Track 2 exact checkout: $(git rev-parse HEAD)"
+mode="${1:-all}"
+case "$mode" in
+  all|active|increment|join) ;;
+  *) echo "Usage: $0 [all|active|increment|join]" >&2; exit 2 ;;
+esac
+if [[ $# -gt 1 ]]; then
+  echo "Usage: $0 [all|active|increment|join]" >&2
+  exit 2
+fi
+
+echo "Track 2 checkout: $(git rev-parse HEAD)"
 echo "Pinned toolchain: $(cat lean-toolchain)"
-echo "Building independent modules in dependency order."
-modules=(
-  Girth.ForestSeparatorCrossAllowed
-  Girth.ForestBinarySeparatorLift
-  Girth.ForestGeneralJoinLift
-  Girth.ForestDuplicateLabelNormalization
-  Girth.ForestDuplicateLabelGeometry
-  Girth.ForestRetainedSetLift
-  Girth.ForestTraceAcyclic
-  Girth.ForestActiveTraceGirth
-  Girth.ForestCompletionTraceBridge
-  Girth.ForestActiveTraceBoundary
-  Girth.ForestOldActiveGirth
-  Girth.ForestFiniteSetCompletion
-  Girth.ForestCopySetCompletion
-  Girth.ForestOldActiveSetGirth
-  Girth.ForestTwoMemberLinearity
-  Girth.ForestDirectIncrementLinearity
-  Girth.CheckTrack2Trace
-)
-for module in "${modules[@]}"; do
-  echo "== lake build $module =="
-  lake build "$module"
-done
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "WARNING: worktree is dirty; record the exact local changes in any certificate." >&2
+fi
 
-LOG="$(mktemp "${TMPDIR:-/tmp}/track2-axioms.XXXXXXXX.log")"
-trap 'rm -f "$LOG"' EXIT
+failures=0
+passes=0
+run_gate() {
+  local label="$1" module="$2" file="$3"
+  local log
+  echo "=== Track 2: $label (lake build $module) ==="
+  if ! lake build "$module"; then
+    echo "FAILED: building $module" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  log="$(mktemp "${TMPDIR:-/tmp}/track2-axioms.XXXXXXXX.log")"
+  if ! lake env lean "$file" > "$log" 2>&1; then
+    cat "$log"
+    rm -f "$log"
+    echo "FAILED: elaborating $file" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  cat "$log"
+  if python3 scripts/check_axioms.py "$log" "$file"; then
+    passes=$((passes + 1))
+    echo "PASSED: $label"
+  else
+    failures=$((failures + 1))
+    echo "FAILED: strict axiom audit of $file" >&2
+  fi
+  rm -f "$log"
+}
 
-lake env lean Girth/CheckTrack2Trace.lean | tee "$LOG"
-python3 scripts/check_axioms.py "$LOG" Girth/CheckTrack2Trace.lean
+if [[ "$mode" == all || "$mode" == active ]]; then
+  run_gate active Girth.CheckTrack2ActiveGirth Girth/CheckTrack2ActiveGirth.lean
+fi
+if [[ "$mode" == all || "$mode" == increment ]]; then
+  run_gate increment Girth.CheckTrack2DirectIncrement Girth/CheckTrack2DirectIncrement.lean
+fi
+if [[ "$mode" == all || "$mode" == join ]]; then
+  run_gate join Girth.CheckTrack2JoinLift Girth/CheckTrack2JoinLift.lean
+fi
 
-echo "Track 2 kernel gate passed for $(git rev-parse HEAD)."
+# The older 34-declaration gate remains the full integration check.
+if [[ "$mode" == all && "$failures" -eq 0 ]]; then
+  run_gate integrated Girth.CheckTrack2Trace Girth/CheckTrack2Trace.lean
+fi
+
+echo "Track 2: $passes focused/full gate(s) passed, $failures failed."
+if [[ "$failures" -ne 0 ]]; then
+  exit 1
+fi
+echo "Kernel/axiom checks passed for checkout $(git rev-parse HEAD)."
