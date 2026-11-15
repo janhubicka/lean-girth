@@ -301,3 +301,23 @@ No existing `FirstWagonRefinement` field or hypothesis is
 weakened or strengthened by this cleanup. The exact-head Lean
 build and transitive axiom audit remain pending; no new theorem
 is kernel-certified by source-level refactoring.
+
+### Independent proof-skeleton comparison after cleanup
+
+I compared `false_of_short_labelledCycle_in_firstWagon_twice`
+against the original `false_of_short_labelledCycle_in_firstWagon`
+from checked mainline `TrainRecursiveRefinementGirthGain.lean`.
+After only replacing the larger length bound `2*g+1` by
+`g+1` and the new one-step lemma name by the old one, the
+**complete theorem source, including all tactics, is identical**.
+The same normalization also matches the labelled and ordinary
+local first-wagon wrappers and the actual A-support local wrapper.
+
+This is stronger than an informal outline comparison: it isolates
+the mathematically new obligation to
+`LabelledBergeCycle.child_constant_of_singleton_intersections_twice`
+and its two-preimage cardinality lemma. The global retained-cut
+step still depends on the established actual labelled first-cut
+certificate, and the true lower selected witness remains an
+independent obligation. Source equality is **not** an exact-head
+Lean compilation or proof of the new one-step lemma.
