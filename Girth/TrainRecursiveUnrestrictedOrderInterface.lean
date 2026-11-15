@@ -95,6 +95,41 @@ theorem unrestrictedOrder_oneEdge_case
     A₀ B t ht targetTrain allowed
     hSupportNonempty hSupportCovers κ hNoTwo
 
+/-- Specialize the genuinely UNRESTRICTED shorter-train order assertion
+to the new finite edge type and the r^n-colour palette required by
+canonical cutoff-two filling. The target B is arbitrary: no fine
+part map B → A is introduced or assumed. -/
+theorem UniformSelectedUnrestrictedOrderAllInputs.finPower
+    (L : RelLanguage.{u}) (t : List ℕ)
+    (h : UniformSelectedUnrestrictedOrderAllInputs.{u, v} L t)
+    (A₀ : RelStructure L UA)
+    [LinearOrder UA] [Finite UA] [Nonempty UA]
+    (B : RelStructure L.withOrder VB) [Finite VB]
+    (ht : Admissible t)
+    (targetTrain : EdgeTrainLevels
+      (OldACarrierEdge A₀.ordered B) t.length)
+    (allowed : Fin (t.length + 1) → Set VB)
+    (hSupportNonempty : Nonempty
+      (OldACarrierEdge A₀.ordered B))
+    (hSupportCovers : ∀ x : VB,
+      ∃ a : OldACarrierEdge A₀.ordered B, x ∈ a.1)
+    (hGirth : GirthGT
+      (supportCopies A₀.ordered B) (t.headD 0))
+    (hParameters : targetTrain.AdjacentParameters
+      (fun e => e.1) allowed)
+    (hTargetCuts : ∀ j : Fin t.length, 0 < j.val →
+      LabelledGirthGT
+        (targetTrain.wagonClassCarrier (fun e => e.1) j.castSucc)
+        (t.get j))
+    (r n : ℕ) (hr : 0 < r) :
+    letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
+    ∃ S : OrderStage A₀.ordered B B
+        {Embedding.id B} t targetTrain allowed,
+      DesignatedArrow S.toForestTailStage (Fin (r ^ n)) := by
+  letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
+  exact h A₀ (Fin (r ^ n)) (VB := VB) B ht targetTrain allowed
+    hSupportNonempty hSupportCovers hGirth hParameters hTargetCuts
+
 /-- Correct mixed operator contract: the q>2 partite forest step is
 already proved, but SAME-VECTOR forest-to-order must produce an
 UNRESTRICTED order witness before cutoff two can consume it.
