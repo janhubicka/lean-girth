@@ -29,6 +29,8 @@ import Girth.TrainFillingPrivateActualFirstWagonSource
 import Girth.TrainFillingPrivateActualWagonEHN
 import Girth.TrainFillingPrivateActualTailQuotient
 import Girth.TrainFillingPrivateTailWagonEquiv
+import Girth.TrainFillingPrivateActualTailParameters
+import Girth.TrainFillingPrivateActualChoiceTrain
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
@@ -349,3 +351,17 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 
 -- Genuine selected shorter OrderStage, no independent old-train faithfulness.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderStageOriginalEdge_allProperCuts_iff
+
+-- Exact original-first-wagon quotient instantiated into heterogeneous M.
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualFirstWagonLabel
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedChoiceTrain_rel_original_iff
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedChoiceTrain_rel_false_of_choice_ne
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedChoiceTrain_top_shared
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailWagonClassEquiv_parent
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_parentIntersectionBound
+#check StructuralRamsey.Girth.PrivateWagonInput.expandedActualTail_parentBound
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedChoiceTrain_rel_original_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualContractedChoiceTrain_rel_false_of_choice_ne
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailWagonClassEquiv_parent
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_parentIntersectionBound
+#print axioms StructuralRamsey.Girth.PrivateWagonInput.expandedActualTail_parentBound
