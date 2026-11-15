@@ -108,4 +108,96 @@ theorem ForestTailStage.coarsenedSelected_Ft_localData_and_physicalArrow
   exact ⟨hPartite, hCoverage, hInjective, hForest,
     hTrain, hParams, hPhysical⟩
 
+/-- In the genuine TRUE active source situation, the same selected
+lower ForestTailStage supplies not just the seven local F_t data and
+PHYSICAL arrow, but also the EXACT FullSystemGirthGT cutoff at every
+positive local coordinate. This is precisely the remaining
+positive-witness input in the current same-vector one-step theorem;
+no output source system-girth or independent local bound is assumed.
+
+The Target used by the checked selected bundle is the exact
+A-partite presentation of the induced active source. Changing its
+part function does not change its relational A-embeddings. -/
+theorem ForestTailStage.trueActive_sameVector_localBundle_with_positive
+    {L : RelLanguage.{u}} {UA P X V : Type v}
+    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
+    (Old : StructuralRamsey.Partite.System L.withOrder P X)
+    (α : UA ↪ P)
+    (Large : StructuralRamsey.Partite.System L.withOrder UA V)
+    {family : Set (Embedding
+      (Old.toRelStructure.induce
+        (activeCarrier A₀.ordered Old α))
+      Large.toRelStructure)}
+    {t : List ℕ}
+    {targetTrain : EdgeTrainLevels
+      (OldACarrierEdge A₀.ordered
+        (Old.toRelStructure.induce
+          (activeCarrier A₀.ordered Old α))) t.length}
+    (fineAllowed : Fin (t.length + 1) → Set UA)
+    (S : ForestTailStage A₀.ordered
+      (Old.toRelStructure.induce (activeCarrier A₀.ordered Old α))
+      Large.toRelStructure family t targetTrain
+      (fun ν => Large.part ⁻¹' fineAllowed ν))
+    (hPartite : (actualActiveSubsystemPartite
+      A₀.ordered Old α).IsPartiteOver A₀.ordered)
+    (hLarge : Large.IsPartiteOver A₀.ordered)
+    (hCoverage : IrreduciblesExtendTo A₀.ordered
+      (Old.toRelStructure.induce (activeCarrier A₀.ordered Old α)))
+    (hFamilyParts : ∀ b, b ∈ family →
+      ∀ x : activeCarrier A₀.ordered Old α,
+        Large.part (b x) =
+          activeSourcePart A₀.ordered Old α x)
+    (q : ℕ) (hq : q ≤ t.headD 0)
+    (κ : Type w) [Nonempty κ]
+    (hArrow : DesignatedArrow S κ) :
+    let Target := actualActiveSubsystemPartite A₀.ordered Old α
+    let E := S.system.coarsenVia Large S.isPartite
+    let J := {b : DesignatedCopy
+      (Old.toRelStructure.induce (activeCarrier A₀.ordered Old α))
+      Large.toRelStructure S.system family // b ∈ S.selected}
+    let f : J → StructuralRamsey.Partite.Embedding Target E :=
+      fun i => selectedPartiteGluingFamily_of_largeBase
+        Target Large S.system S.isPartite family hFamilyParts
+        S.selected i
+    (E.IsPartiteOver A₀.ordered ∧
+      IrreduciblesExtendTo A₀.ordered E.toRelStructure ∧
+      Function.Injective (fun i : J =>
+        bSupportPiece A₀.ordered ((f i).toEmbedding)) ∧
+      FiniteMixedForestThrough
+        (RelationalMixedSupportTest A₀.ordered
+          (fun i : J => (f i).toEmbedding)) q ∧
+      (∀ (ν : Fin (t.length + 1)) (i : J)
+        (a b : Embedding A₀.ordered Target.toRelStructure),
+        S.train.rel ν
+          (actualEdge ((f i).toEmbedding.comp a))
+          (actualEdge ((f i).toEmbedding.comp b)) ↔
+        targetTrain.rel ν (actualEdge a) (actualEdge b)) ∧
+      S.train.AdjacentParameters (fun edge => edge.1)
+        (fun ν => E.part ⁻¹' fineAllowed ν) ∧
+      (∀ χ : OldACarrierEdge A₀.ordered E.toRelStructure → κ,
+        ∃ i : J, ∀ a b : Embedding A₀.ordered Target.toRelStructure,
+          χ (actualEdge ((f i).toEmbedding.comp a)) =
+            χ (actualEdge ((f i).toEmbedding.comp b)))) ∧
+      (∀ j : Fin t.length, 0 < j.val →
+        (activeGluingWitnessOrderOneData A₀.ordered Old α
+          E.toRelStructure (fun i : J => (f i).toEmbedding)
+          S.train j.castSucc).FullSystemGirthGT (t.get j)) := by
+  let Target := actualActiveSubsystemPartite A₀.ordered Old α
+  let E := S.system.coarsenVia Large S.isPartite
+  let J := {b : DesignatedCopy
+    (Old.toRelStructure.induce (activeCarrier A₀.ordered Old α))
+    Large.toRelStructure S.system family // b ∈ S.selected}
+  let f : J → StructuralRamsey.Partite.Embedding Target E :=
+    fun i => selectedPartiteGluingFamily_of_largeBase
+      Target Large S.system S.isPartite family hFamilyParts
+      S.selected i
+  have hBundle :=
+    S.coarsenedSelected_Ft_localData_and_physicalArrow
+      A₀ Target Large family fineAllowed
+      hPartite hLarge hCoverage hFamilyParts q hq κ hArrow
+  refine ⟨hBundle, ?_⟩
+  intro j hj
+  exact S.coarsenedSelected_fullSystem_at_positive
+    A₀.ordered Old α Large hFamilyParts j hj
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
