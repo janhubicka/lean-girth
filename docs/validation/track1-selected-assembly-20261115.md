@@ -12,7 +12,7 @@
 | `Track1FullSelectedOrderedLifts` | Use the checked `exists_projectionFirstLinearOrder` and `ownerSplit_lifted_colouredOrderedEmbedding` to get **one common linear order and complete induced coloured ordered embeddings** of every selected target, including global `(x,⊥)` tags for isolated marked vertices. |
 | `Track1FullSelectedSupportPieces` | Construct the actual lifted B-support pieces and derive their allowed pairwise intersections from the checked `lifted_pair_intersection_subsingleton` and `lifted_intersection_eq_splitEdge`, including correct membership of a shared whole edge in both pieces. |
 | `Track1OwnerSplitFinite` | Deduce finiteness of the owner-token vertices from finite old EHN vertex type, without adding an independent finiteness premise. |
-| `Track1PhysicalSelectedRepresentatives` | Index genuinely selected B images by their actual carrier sets, choose one full original embedding per carrier, and prove both physical support-piece injectivity and preservation of the selected Ramsey arrow. This avoids an unavailable order-uniqueness helper and works even for non-rigid B. |
+| `Track1PhysicalSelectedRepresentatives` | Index genuinely selected B images by their actual carrier sets, choose one full original embedding per carrier, and prove both physical support-piece injectivity and preservation of the selected Ramsey arrow. The older ordered-copy uniqueness lemma compiled successfully, but this normalization works even for non-rigid B and does not need that hypothesis. |
 | `Track1SelectedCarrierEmbedding` | Factor each genuine full induced coloured ordered selected B embedding through the induced restriction on `selectedLiftCarrier`, using the actual shared-bottom owner tokens. This proves the selected-copy component of the covered-vertex output without asserting unproved ambient edge coverage. |
 
 There is a dedicated `CheckTrack1SelectedAssembly.lean` file (11 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
@@ -36,9 +36,9 @@ This source has **not** been compiled or axiom-checked. The known-good results r
 
 ## Adversarial cleanup (15 November)
 
-The earlier staged `Track1OrderedPhysicalOwners` used the unavailable
-`ordered_embedding_eq_of_sameCopy` helper. The **actual carrier
-representative** construction is safer, strictly more general, and
+The earlier staged `Track1OrderedPhysicalOwners` and its ordered
+uniqueness helper DID compile in run #43719455914. The **actual carrier
+representative** construction is more general, and
 preserves the Ramsey arrow by factoring A-copies into either full
 B embedding sharing that carrier. It also provides the exact
 `hCopies` required by the checked mixed-LF2 transport.
