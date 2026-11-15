@@ -52,8 +52,30 @@ def has_join_tree(bags):
     return total == target
 
 
+def cycle_adjacent(n, x, y):
+    return x != y and ((x + 1) % n == y or (y + 1) % n == x)
+
+
+def cross_pair_nonedge(n, e, f):
+    endpoints = {e, (e + 1) % n, f, (f + 1) % n}
+    return any(
+        not cycle_adjacent(n, x, y)
+        for x in endpoints for y in endpoints if x != y
+    )
+
+
 def audit(n):
     assert n >= 4
+    # Exactly the CrossPairNonedge hypothesis in the Lean adapter.
+    assert all(
+        cross_pair_nonedge(n, e, f)
+        for e in range(n) for f in range(n) if e != f
+    )
+    # Every cycle vertex belongs to two distinct required edges.
+    assert all(
+        sum(x in {e, (e + 1) % n} for e in range(n)) == 2
+        for x in range(n)
+    )
     pairs = [(1 << i) | (1 << ((i + 1) % n)) for i in range(n)]
     singles = [1 << i for i in range(n)]
     checked = completions = 0
@@ -73,5 +95,9 @@ def audit(n):
 
 
 if __name__ == "__main__":
+    # The length-three case is deliberately EXCLUDED: a triangle
+    # has a single containing clique bag, and CrossPairNonedge fails.
+    assert not cross_pair_nonedge(3, 0, 1)
+    assert has_join_tree([(1 << 3) - 1])
     for k in range(4, 10):
         audit(k)
