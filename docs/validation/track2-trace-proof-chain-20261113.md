@@ -517,3 +517,31 @@ and applies only the independent Track 2 output-linearity preface
 and its unverified mark to the direct increment.
 No obsolete TODO/\leanopen marker was re-added over Track 1's certificate.
 The old Track 2 manuscript branch remains as historical source.
+
+## 15 November — adversarial dependency on irreducible coverage
+
+The generation part of manuscript `lem:puresubsystem` currently uses
+the **strong** picture invariant: every irreducible substructure
+is inside a designated B-copy. The active-girth argument
+developed in Track 2 does NOT use this irreducible-cover premise.
+
+The main Lean library already contains
+`ForestMixedIrreducibleCoverage.DesignatedBorACoversIrreducibles`
+and `ForestMixedActiveGenerated.activeSubsystem_aGenerated_of_mixedCoverage`.
+They establish a weaker but more robust B-or-A coverage route
+for a local picture that is not pruned to designated B-copies.
+
+The manuscript's `prop:certpres` invokes
+`cor:structforestres(ii)` to assert that EVERY local A-copy
+in the new core belongs to a selected gluing copy. Under
+that explicitly stated stronger local output, the original
+designated-only irreducible-cover proof applies. But if
+the recursive local witness is available only in the
+nonpruned A-generated form, that coverage step is not automatic.
+Use the checked mixed-cover bridge rather than silently
+assuming A-edges belong to selected gluing B-copies.
+
+**Boundary:** This is a dependency on the *actual local witness*
+from other validation tracks, not a new hypothesis in the
+Track 2 trace-girth or forest-lifting lemmas.
+No black/frozen proof text was changed on this basis.
