@@ -263,14 +263,12 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #check StructuralRamsey.Girth.colouredFirstWagonUnion_allACopies_strictMono
 #check StructuralRamsey.Girth.firstWagonDisjointUnion_allACopies_strictMono
 #check StructuralRamsey.Girth.firstWagonDisjointUnion_hasACopy
-#check StructuralRamsey.Girth.realFirstWagonDisjointUnion_monotoneEHN
 #check StructuralRamsey.Girth.realFirstWagonDisjointUnion_privateEHN
 #print axioms StructuralRamsey.Girth.colouredFirstWagonACopy_preservesColour
 #print axioms StructuralRamsey.Girth.colouredFirstWagonACopy_strictMono
 #print axioms StructuralRamsey.Girth.colouredFirstWagonUnion_allACopies_strictMono
 #print axioms StructuralRamsey.Girth.firstWagonDisjointUnion_allACopies_strictMono
 #print axioms StructuralRamsey.Girth.firstWagonDisjointUnion_hasACopy
-#print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_monotoneEHN
 #print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_privateEHN
 
 #check StructuralRamsey.Girth.originalFirstWagonLocalCoverage
