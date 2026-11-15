@@ -240,3 +240,16 @@ with matching source-level axiom commands. The two new statements
 are mathematical preliminaries useful independently of the
 `2g+1` strengthening and do not change the recursive `q-1`
 forest requirement.
+
+### 15 November afternoon: concrete source-interface repairs (post-inventory)
+
+An independent container execution of the already-uploaded `check_track6_min_degree_20261115.py` has **passed** again, including exhaustive canonical cyclic words (142,416 length-2..10 partitions), the actual switching-only incidence graph, 3-uniform sharp examples for (g=2..20), all retained-tail cap examples for (g=2..16, g+1\le h_1\le2g), and the labelled-carrier/physical-path counterexamples. This is Python regression evidence only.
+
+Two specific Lean source defects/risks were repaired on this branch:
+
+1. In `TrainRecursiveRefinementDoubleGirth.lean`, the actual-support section redeclared `P` even though `P` was already a variable in the enclosing namespace. It now introduces only `UA` and `X`, retaining the original global `P` as in the older `TrainRecursiveRefinementGirthGain.lean`.
+2. In `TrainRecursiveRefinementDoubleCount.lean`, the use of `Fintype.card_prod` now explicitly imports `Mathlib.Data.Fintype.Prod`. Inspection of pinned Mathlib revision `5bd58ac291422a21f412ae354c91e7d172255a2c` located `Fintype.card_prod` in that module; `Fintype.card_bool`, `Fintype.card_fin` and `Fintype.card_le_of_injective` are available in `Mathlib.Data.Fintype.Card`.
+
+After these edits, a fresh namespace-aware static source scan of **eight** candidate Lean proof modules and `CheckTrack6RefinementDoubleAxioms.lean` found **26 unique theorem declarations matched exactly by 26 fully qualified axiom-print requests**, with no extra/undefined names, unbalanced source namespaces, or explicit `sorry`/`admit`/`axiom` declarations. **This is not Lean elaboration.** Neither type error nor theorem correctness can be certified until the pinned toolchain builds the exact branch head and the strict checker accepts all transitive axioms.
+
+No workflow was dispatched, no mainline merge was made, and no manuscript `\\leanopen` marker was promoted. The original conditional (g+1) recursion and exact retained-index transport remain unaffected.
