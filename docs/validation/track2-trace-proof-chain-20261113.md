@@ -5,7 +5,7 @@ Status: **source-level candidate, not kernel-verified** (updated 14 November 202
 ## Exact sources and separation of branches
 
 - Frozen circulation reference: `janhubicka/girth/main@8c9cfa6eb6d817a08f3009fe048fc0be07426ece`, reachable-source digest `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-- Unmerged current paper edits: [`edit/track2-current-proof-20261115`](https://github.com/janhubicka/girth/tree/edit/track2-current-proof-20261115), rebased on `girth/main@ca43c0b2abf42f4e49823d02f3106cec9378ec0d` (15 November 2026); this preserves the independently rewritten cutoff-three proof. The frozen reference is not modified.
+- Unmerged current paper edits: [`edit/track2-reconciled-20261115`](https://github.com/janhubicka/girth/tree/edit/track2-reconciled-20261115), rebased on `girth/main@ca43c0b2abf42f4e49823d02f3106cec9378ec0d` (15 November 2026); this preserves the independently rewritten cutoff-three proof. The frozen reference is not modified.
 - Unmerged Lean candidate: [`validation/2-forest-trace-20261115`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-20261115), rebased on `lean-girth/main@733d3c80e2d86feb5d2721fa85300088297e00a7` (15 November 2026). The previous `98e40142` source candidate is preserved on its historical branch; this branch contains its checked-for-overlap source files and newer interface adapters.
 - No paid GitHub Actions checks launched. This checkout did **not** run Lean; local compiler/mathlib binaries are unavailable. The exact candidate `#print axioms` commands are in `Girth/CheckTrack2Trace.lean`, but have not been executed.
 
@@ -349,7 +349,7 @@ the nonempty case.
 
 **Independent kernel gates.** The full
 `Girth/CheckTrack2Trace.lean` still prints axioms for all
-**32** source-level candidate theorems. The inventory is
+**35** source-level candidate theorems. The inventory is
 partitioned without omissions or overlaps into:
 
 - `Girth/CheckTrack2ActiveGirth.lean` — **14** declarations.
@@ -424,8 +424,8 @@ external construction obligations. **Do not interpret the table as
 evidence that the new Lean proofs compile.**
 
 The new local gate is split into disjoint import subgraphs:
-active girth (14 source declarations), direct increment (3), and
-general lifting (15). Their new-module dependency graphs have
+active girth (16 source declarations), direct increment (3), and
+general lifting (16). Their new-module dependency graphs have
 no cross-imports. In this environment the local runner passed
 a Bash syntax check and correctly reported missing Lake with
 exit code 2; no Lean elaboration or strict axiom run took place.
@@ -435,7 +435,7 @@ exit code 2; no Lean elaboration or strict axiom run took place.
 Both Track 2 working branches were transplanted onto their current main baselines
 after checking that other tracks touched none of the Track 2 files.
 New branches: `validation/2-forest-trace-20261115` (base `733d3c80`)
-and `edit/track2-current-proof-20261115` (base `ca43c0b2`).
+and `edit/track2-reconciled-20261115` (base `ca43c0b2`).
 No unverified Track 2 code was merged.
 
 The paper regression `check_four_owner_join_lift.py` uses four outer owners
@@ -461,7 +461,7 @@ The proof-critical binary gluing, recursive lift, duplicate elimination,
 and retained-set endpoint remain unchanged.
 
 The gate is now **32 candidate theorem declarations**:
-active girth 14, direct increment 3, general join-tree lifting 15.
+active girth 16, direct increment 3, general join-tree lifting 16.
 The reduction removes code that could otherwise block Lean elaboration
 without contributing to any final theorem. No fresh kernel check has run.
 ## 15 November — forest extension itself implies old A-linearity
@@ -501,3 +501,19 @@ check inspected all 55 pairs of distinct support edges of size
 at least two: 28 pairs obstruct linearity and therefore cannot
 survive together in a two-member forest completion.
 That check is not a Lean certificate.
+
+
+## 15 November — source-level reconciliation after Track 1 verification
+
+The latest manuscript main gained a **verified Track 1** theorem
+`Track1CutoffThreeReuse.track1_three_boundaries_forest_of_core`
+in `paper/07-forest-increment.tex`. The earlier Track 2 branch
+still carried its obsolete open annotation at that point.
+The reconciled manuscript branch
+`edit/track2-reconciled-20261115` starts from current
+`girth/main@e789e881b10ded74d279a77ab0223c1f01ceff82`,
+**preserves that verified annotation and all Track 1 proof content**,
+and applies only the independent Track 2 output-linearity preface
+and its unverified mark to the direct increment.
+No obsolete TODO/\leanopen marker was re-added over Track 1's certificate.
+The old Track 2 manuscript branch remains as historical source.
