@@ -332,3 +332,8 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailRelation_mk_iff
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_rel_mk_iff
+
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_wagonCarrier_eq
+#check StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_wagonClassCarrier_mk
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_wagonClassCarrier_mk
