@@ -12,8 +12,10 @@ The shorter train in the manuscript is of a NEW coloured edge type X
 X-partite: different X coordinates on two first-wagon edges can be
 identified at an original common vertex.
 
-Hence UniformSelectedPartiteOrderAllInputs, despite its correct type
-and palette quantifiers, is insufficient as the RR_tail input.
+Hence type- and palette-uniform PARTITE order assertions do not
+supply the unrestricted RR_tail input. The critical path retains
+only the genuine universal PARTITE FOREST q>2 theorem and defines
+the independent unrestricted selected-order assertion below.
 
 The order assertion below quantifies over an ARBITRARY finite ordered
 target train B without any B.IsPartiteOver A premise. Its output
