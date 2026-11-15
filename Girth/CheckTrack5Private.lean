@@ -20,6 +20,8 @@ import Girth.TrainFillingPrivateRealUnionOrder
 import Girth.TrainFillingPrivateRealUnionColoured
 import Girth.TrainFillingPrivateRealUnionLinear
 import Girth.TrainFillingPrivateFirstWagonStrong
+import Girth.TrainFillingPrivateRealUnionColouredMono
+import Girth.TrainFillingPrivateRealUnionEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
 import Girth.TrainFillingPrivateParentwiseColour
@@ -253,3 +255,18 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 -- Fixed-target proper-cut coherence, source candidate pending exact-head elaboration.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_allProperCuts_iff
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_fixedMap_injective
+
+#check StructuralRamsey.Girth.colouredFirstWagonACopy_preservesColour
+#check StructuralRamsey.Girth.colouredFirstWagonACopy_strictMono
+#check StructuralRamsey.Girth.colouredFirstWagonUnion_allACopies_strictMono
+#check StructuralRamsey.Girth.firstWagonDisjointUnion_allACopies_strictMono
+#check StructuralRamsey.Girth.firstWagonDisjointUnion_hasACopy
+#check StructuralRamsey.Girth.realFirstWagonDisjointUnion_monotoneEHN
+#check StructuralRamsey.Girth.realFirstWagonDisjointUnion_privateEHN
+#print axioms StructuralRamsey.Girth.colouredFirstWagonACopy_preservesColour
+#print axioms StructuralRamsey.Girth.colouredFirstWagonACopy_strictMono
+#print axioms StructuralRamsey.Girth.colouredFirstWagonUnion_allACopies_strictMono
+#print axioms StructuralRamsey.Girth.firstWagonDisjointUnion_allACopies_strictMono
+#print axioms StructuralRamsey.Girth.firstWagonDisjointUnion_hasACopy
+#print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_monotoneEHN
+#print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_privateEHN
