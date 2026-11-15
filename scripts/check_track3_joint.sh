@@ -22,11 +22,11 @@ export LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-1}"
 echo "Toolchain pin: $(cat lean-toolchain)"
 echo "Repository HEAD: $(git rev-parse HEAD 2>/dev/null || echo unavailable)"
 echo 'Building exact Track 3 joint theorem and dependencies ...'
-lake build Girth.TrainTrack3JointGeometryParameters
+lake build Girth.TrainTrack3JointGeometryParameters Girth.TrainTrack3StageJointGeometryParameters
 
 tmp="$(mktemp)"
 trap 'rm -f "$tmp"' EXIT
-echo 'Elaborating #check and #print axioms for all four Track 3 declarations ...'
+echo 'Elaborating #check and #print axioms for all five Track 3 declarations ...'
 lake env lean CheckTrack3JointGeometryParameters.lean | tee "$tmp"
 python3 scripts/check_axioms.py "$tmp" CheckTrack3JointGeometryParameters.lean
 
