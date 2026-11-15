@@ -1,5 +1,5 @@
 import Girth.TrainColouredEdgeOwnerSplit
-import Mathlib.Data.Fintype.Powerset
+import Mathlib.Tactic
 
 /-!
 # Numbered Track 1: finite selected-edge owner token universe
