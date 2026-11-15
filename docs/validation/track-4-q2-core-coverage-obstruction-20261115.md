@@ -65,3 +65,19 @@ The obstruction is stronger than failure of one abstract implication. Suppose an
 The general mathematical statement is independent of graphs: for any A-strong induced embedding b:B→C, if C has total irreducible A-extension, then every irreducible induced subset of B containing at least two distinct vertices already lies inside an A-copy of B. This is developed as a source-only Lean candidate in Girth/TrainAStrongIrreducibleReflection.lean, with theorems irreducible_two_point_extension_reflect_of_aStrong and no_aStrong_covered_extension_of_irreducible_obstruction. It is NOT yet Lean-compiled.
 
 **Consequence for q=2 repair**: one cannot repair the F_2 witness by merely adding outside A-copy completions while keeping its selected target copies A-strong. Either bypass/relax the generic ActiveAttachmentBounds.coreCoverage field at q=2 (prove the exact weaker selected A-or-B mixed coverage actually required), or design a separate base-case construction with different treatment of selected copy images. Do not silently require an impossible extra strong completion from F_2.
+
+
+## Essential distinction: F_2 assertion versus selected ForestTailStage
+
+The actual circulation definition of F_t (paper/10-cycle-conditions.tex, def:principles) promises only: (i) a physical-edge Ramsey family, (ii) bounded mixed support forests, (iii) original part/intersection parameters and positive proper-cut full system bounds, with one selected embedding per image. It EXPLICITLY does not require selected copies to cover all vertices, and it does NOT state that every irreducible lies in a selected local-target copy or an ambient A-copy.
+
+The new TrainSelectedMixedCoreAttachment and TrainActualSelectedMixedCoreAttachment theorems are mathematical CONDITIONAL interfaces from a genuine selected lower ForestTailStage: that stronger stage has the extra mixedCoverage field, which supplies precisely the selected active-target-or-A local core alternative. The new ActiveAttachmentMixedBounds and actual mixed-core OrderStage picture-step constructor use that field.
+
+**But one must not substitute an arbitrary F_2 witness for that selected lower ForestTailStage.** The stated F_2 forest/arrow/parameter conditions do not imply the stage's mixedCoverage. In particular, a finite F_2 witness may be enlarged by a disjoint A-support component containing an irreducible piece assembled from several A-copies, with no additional selected local-target copy covering it. Such a component does not disturb an existing selected Ramsey family; at cutoff two pairwise A-support intersections may remain singleton (as in the K4 triple example), so the mixed two-forest property survives. Thus mixedCoverage cannot be silently inferred from F_2.
+
+**Recommended proof fork:**
+1. For a recursive lower construction that really produces a selected ForestTailStage, reuse the nested mixed core and mixed attachment constructor, even at q=2.
+2. For the STANDALONE circulation implication F_t=>R_t from an arbitrary F_t witness, investigate a WEAKER forest-to-order intermediate stage that omits mixedCoverage (R_t does not request it); preserve the actual strong selected copies, complete support, full train restrictions, forests, system girth and parameter fields. Reuse finite picture combinatorics after factoring them away from the overstrong stage invariant, or prove a separate q=2 base operator with hypotheses F_2 really supplies.
+3. Do NOT claim the current mixed-core stage wrappers close unconditional F_2=>R_2. They close a conditional selected-stage interface.
+
+No marker changes or kernel certificate.
