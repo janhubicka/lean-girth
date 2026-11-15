@@ -464,3 +464,28 @@ The gate is now **32 candidate theorem declarations**:
 active girth 14, direct increment 3, general join-tree lifting 15.
 The reduction removes code that could otherwise block Lean elaboration
 without contributing to any final theorem. No fresh kernel check has run.
+## 15 November — forest extension itself implies old A-linearity
+
+The old active-girth lemma in the paper assumes A-linearity separately.
+For cutoff `m >= 2` it also follows from the very forest-extension
+invariant already used in the girth argument. Choose two distinct
+ambient A-support edges `e,f`. The completion predicate for these
+two one-edge pieces retains both in the same forest; their member
+intersection must be subsingleton or a shared support edge.
+One-edge ownership makes the latter imply `e=f`, a contradiction.
+Thus all different A-support edges meet in at most one vertex.
+
+Candidate `Girth/ForestCompletionTwoEdgeLinearity.lean` contains
+`linearEdgeSet_of_twoEdgeForestCompletion` using an index type
+`PUnit ⊕ PUnit` at the **ambient universe** (avoids `Fin 2`
+universe ambiguity). The stronger endpoint
+`oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear`
+was added to `ForestOldActiveSetGirth.lean`. It deduces old ambient
+`ALinear` from the copy-set completion predicate, then reuses
+the original old-active girth proof and its designated boundary
+classification. It requires the correct `2 <= m` cutoff explicitly.
+
+The two declarations are added to the **active** and full axiom
+gates. This is source-level strengthening; until Lean elaboration
+and `#print axioms` pass it must not be reflected by a green
+validation mark or by weakening the manuscript's frozen hypotheses.
