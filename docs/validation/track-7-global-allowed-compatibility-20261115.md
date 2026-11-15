@@ -1,0 +1,82 @@
+# Track 7: global parameter compatibility in the unrestricted order witness
+
+**15 November 2026 · independent source audit · no kernel check.**
+
+The existential-base unrestricted order predicate in draft #1073 has
+two good features absent from its earlier form: the output base D may be
+larger than the input target B, and the input train B need not have a fine
+A-partition. These are necessary for cutoff-two filling.
+
+There is a further distinction between local *B-copy* compatibility and
+global *ambient output* compatibility.
+
+## Verified mathematical issue (elementary set theory)
+
+The current proposed output data include the pullback requirement
+
+    ∀ b ∈ family, ∀ ν, b ⁻¹' allowedD[ν] ⊆ allowedB[ν].
+
+By itself it controls only **points of D lying in the images of the
+prescribed B-copies**. It imposes no restriction on `allowedD[ν]` at
+points outside those images. Such points may still be used by ambient
+A-edges of the output stage and hence by actual wagon intersections.
+
+For example take `B=Unit`, `D=Bool`, one B-map sending the unique
+point to `false`, `allowedB=∅` and `allowedD={true}`.
+The prescribed pullback requirement is true, while the nonempty
+allowed D-point is outside the prescribed image. So per-family
+pullbacks **do not imply** global coarse parameter bounds.
+
+A sufficient additional condition is permitted-point base coverage:
+
+    ∀ ν y, y ∈ allowedD[ν] →
+       ∃ b ∈ family, ∃ x : B, b(x) = y.
+
+Then the pullback property implies
+
+    ∀ ν y, y ∈ allowedD[ν] →
+       ∃ b ∈ family, ∃ x ∈ allowedB[ν], b(x) = y.
+
+If the prescribed B-embeddings preserve the original coarse predicates,
+and `allowedB[ν]` consists of permitted coarse-predicate vertices,
+then **every** point of `allowedD[ν]` has a permitted coarse
+predicate. Pulling this back through the new D-partite witness's
+`part : Vertex → D` gives the original ambient intersection bound.
+
+This is formally distinct from the previously detected X-coordinate
+collision: the latter prohibits a *global fine X-part map* on the
+shorter train; the present issue is about a **too-weak allowed-set
+condition on a larger Ramsey base**.
+
+## Lean interfaces
+
+`Girth/TrainRecursiveGlobalAllowedCompatibility.lean` contains:
+
+- `allowedBase_covered_of_familyPullbacks`: permitted D-base
+  coverage + the existing local pullbacks → globally permitted image
+- `allowedBase_coarsePredicate_of_coverage`: compatibility of
+  unary coarse predicates → every allowed D-base vertex has an
+  originally permitted coarse predicate
+- `allowedVertices_coarsePredicate_of_globalBaseBound`: pull back the
+  resulting bound through an arbitrary picture's part map
+- `localPullback_does_not_imply_globalCover`: the finite
+  Unit→Bool counterexample above
+
+These lemmas are **conditional preparation**, not the existence of the
+needed covering base. In the actual EHN-first part of the cutoff-two
+proof, one expects a vertex-covered selected Ramsey base; Track 1
+must supply the correct ordered/strong/covered version and Track 5
+must transport it into the shorter-train output.
+
+## Current validation boundary
+
+This PR does NOT change the unrestricted predicate in live draft #1073,
+its compiler errors, or any manuscript validation mark. Before
+promoting an unrestricted order theorem, ensure that the selected
+family covers every **permitted base point** (or impose an equivalent
+direct global coarse-predicate compatibility condition) and verify
+the output's ambient wagon parameters, not merely those internal
+to selected designated copies.
+
+The new modules have no `sorry`/`admit`/new axiom. They have
+NOT yet passed an exact-head Lean compile or `#print axioms` check.
