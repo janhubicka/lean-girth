@@ -99,6 +99,72 @@ theorem allowedVertices_coarsePredicate_of_globalBaseBound
   intro y hy
   exact hAllowed hy
 
+/-- The canonical choice of allowed D-parts determined only by the
+ORIGINAL coarse unary predicates. This is independent of the selected
+B-family and controls ALL ambient D-vertices, including those not in
+any designated B-image. -/
+def canonicalCoarseAllowed
+    (predD : W → Q) {m : ℕ}
+    (permitted : Fin (m + 1) → Set Q) :
+    Fin (m + 1) → Set W :=
+  fun ν => predD ⁻¹' permitted ν
+
+/-- For a coarse-predicate-preserving B-embedding, canonical allowed
+D-parts restrict to precisely the original coarse permitted B-parts.
+No selected-family coverage of D is needed because D's allowed sets
+have been CHOSEN globally, rather than specified arbitrarily. -/
+theorem canonicalCoarseAllowed_pullback
+    (B : RelStructure L VB) (D : RelStructure L W)
+    (b : Embedding B D)
+    (predB : VB → Q) (predD : W → Q)
+    (hPred : ∀ x : VB, predD (b x) = predB x)
+    {m : ℕ} (permitted : Fin (m + 1) → Set Q) :
+    ∀ ν : Fin (m + 1),
+      b ⁻¹' canonicalCoarseAllowed predD permitted ν =
+        predB ⁻¹' permitted ν := by
+  intro ν
+  ext x
+  change predD (b x) ∈ permitted ν ↔ predB x ∈ permitted ν
+  rw [hPred x]
+
+/-- If original allowed B-parts contain every point with a permitted
+coarse predicate, canonical allowed D-parts satisfy the earlier
+selected-family pullback hypothesis, without ambient coverage. -/
+theorem canonicalCoarseAllowed_familyPullback
+    (B : RelStructure L VB) (D : RelStructure L W)
+    (family : Set (Embedding B D))
+    (predB : VB → Q) (predD : W → Q)
+    {m : ℕ}
+    (permitted : Fin (m + 1) → Set Q)
+    (allowedB : Fin (m + 1) → Set VB)
+    (hPred : ∀ b : Embedding B D, b ∈ family →
+      ∀ x : VB, predD (b x) = predB x)
+    (hAllowed : ∀ ν : Fin (m + 1),
+      predB ⁻¹' permitted ν ⊆ allowedB ν) :
+    ∀ b : Embedding B D, b ∈ family →
+      ∀ ν : Fin (m + 1),
+        b ⁻¹' canonicalCoarseAllowed predD permitted ν ⊆
+          allowedB ν := by
+  intro b hb ν x hx
+  have hCoarse : predB x ∈ permitted ν := by
+    change predD (b x) ∈ permitted ν at hx
+    rw [hPred b hb x] at hx
+    exact hx
+  exact hAllowed ν hCoarse
+
+/-- The output part map composes with the coarse predicate map.
+This is a DEFINITONAL global identity, requiring no selected-family
+or base-coverage argument at all, provided the canonical allowedD
+sets are used in the constructed witness. -/
+theorem canonicalCoarseAllowed_output
+    (part : Y → W) (predD : W → Q)
+    {m : ℕ} (permitted : Fin (m + 1) → Set Q) :
+    ∀ ν : Fin (m + 1),
+      part ⁻¹' canonicalCoarseAllowed predD permitted ν =
+        (predD ∘ part) ⁻¹' permitted ν := by
+  intro ν
+  rfl
+
 /-- A weaker sufficient condition than coverage of *every* allowed
 D-base point: it is enough that the actually USED contact vertices
 of the output have base parts in prescribed B-images.
