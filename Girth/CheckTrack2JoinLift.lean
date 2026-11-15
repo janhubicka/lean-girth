@@ -41,3 +41,6 @@ on the basis of this gate file's existence.
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_to_retained_finset
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_retained_set
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_retained_set_including_empty_outer
+
+#check StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
