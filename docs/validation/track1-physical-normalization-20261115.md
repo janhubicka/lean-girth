@@ -8,9 +8,11 @@ kernel-checked Track 1 foundation on `main`.
 ## Remove a dead end: embedding labels are not physical copies
 
 An arbitrary set of selected embeddings of a target B can contain two
-different embeddings with the same image carrier. The old draft
-`Track1OrderedPhysicalOwners` relied on an order-uniqueness lemma that
-was not identified in the checked API and tied the geometry to ordered B.
+different embedding labels with the same image carrier unless a
+suitable rigidity theorem applies. The previous ordered lemma
+`Track1OrderedPhysicalOwners` **did compile** in Lean run #43719455914;
+its order-uniqueness helper is available. The construction here
+instead works without any rigidity assumption.
 
 Use **physical carriers** instead:
 
