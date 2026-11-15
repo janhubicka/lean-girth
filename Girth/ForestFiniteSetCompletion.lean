@@ -68,8 +68,9 @@ theorem FinsetForestCompletionProperty.toIndexed
     exact hImage.trans hCard
   obtain ⟨K, finite, completed, hForest, hContains, hOnly⟩ :=
     h s hTestS hBoundS
+  refine ⟨K, finite, ?_⟩
   letI : Fintype K := finite
-  refine ⟨K, finite, completed, hForest, ?_, ?_⟩
+  refine ⟨completed, hForest, ?_, ?_⟩
   · intro n
     apply hContains
     exact Finset.mem_image.mpr ⟨n, Finset.mem_univ n, rfl⟩
