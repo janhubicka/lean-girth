@@ -11,8 +11,10 @@
 | `Track1ActualSelectedOwnerColourArrow` | Compose the selected EHN embedding arrow with the physical-edge constructor. Deduce the EXACT old edge-colouring arrow required by the checked `ColouredEdgeOwnerSplit.selectedColourTransfer`. |
 | `Track1FullSelectedOrderedLifts` | Use the checked `exists_projectionFirstLinearOrder` and `ownerSplit_lifted_colouredOrderedEmbedding` to get **one common linear order and complete induced coloured ordered embeddings** of every selected target, including global `(x,⊥)` tags for isolated marked vertices. |
 | `Track1FullSelectedSupportPieces` | Construct the actual lifted B-support pieces and derive their allowed pairwise intersections from the checked `lifted_pair_intersection_subsingleton` and `lifted_intersection_eq_splitEdge`, including correct membership of a shared whole edge in both pieces. |
+| `Track1OwnerSplitFinite` | Deduce finiteness of the owner-token vertices from finite old EHN vertex type, without adding an independent finiteness premise. |
+| `Track1OrderedPhysicalOwners` | In the globally ordered source case, distinct indexed embeddings have distinct full physical B-support pieces; reuse the existing `ordered_embedding_eq_of_sameCopy` rather than choosing duplicate-support representatives. |
 
-There is a dedicated `CheckTrack1SelectedAssembly.lean` file (7 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
+There is a dedicated `CheckTrack1SelectedAssembly.lean` file (10 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
 
 ## Remaining exact interfaces — not assumed proved
 
