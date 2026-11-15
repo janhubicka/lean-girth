@@ -58,44 +58,6 @@ theorem firstWagonDisjointUnion_hasACopy
   obtain ⟨a, _hx⟩ := hLocalCovered p x
   exact ⟨(firstWagonSummandEmbedding oldCarrier local hPositive p).comp a⟩
 
-/-- The GENUINE tagged W has exactly the ordered EHN
-preconditions, from the original local first-wagon data.
-No assumption that every future EHN X-copy is increasing. -/
-theorem realFirstWagonDisjointUnion_monotoneEHN
-    {κ : Type w}
-    (A : RelStructure L UA)
-    (oldCarrier : P → Set V)
-    (local : (p : P) → RelStructure L {x : V // x ∈ oldCarrier p})
-    (hPositive : ∀ sym : L.Symbol, 0 < L.arity sym)
-    (hSpan : HasSpanningRelation A)
-    (oldColour : V → I)
-    (hOldBlocks : ∀ x y : V,
-      oldColour x ≠ oldColour y →
-      x < y → oldColour x < oldColour y)
-    (hLocalLinear : ∀ p, ALinear A (local p))
-    (hLocalMono : ∀ p, ∀ a : Embedding A (local p),
-      StrictMono a)
-    [Fintype κ] [Nonempty κ] :
-    let B := firstWagonDisjointUnion oldCarrier local
-    letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
-      firstWagonUnionOrder oldCarrier oldColour
-    ∃ (X : Type v) (_ : Finite X) (o : LinearOrder X)
-      (R : StructuralRamsey.Structure (closureLanguage L) X),
-      ElementaryCAClass A R ∧
-      MonotoneClosedTargetRamseyFamily A B o R κ := by
-  let B := firstWagonDisjointUnion oldCarrier local
-  letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
-    firstWagonUnionOrder oldCarrier oldColour
-  have hLinear : ALinear A B :=
-    firstWagonDisjointUnion_aLinear A oldCarrier local
-      hPositive hSpan hLocalLinear
-  have hMonotone : ∀ a : Embedding A B, StrictMono a :=
-    firstWagonDisjointUnion_allACopies_strictMono
-      A oldCarrier local hPositive hSpan
-      oldColour hOldBlocks hLocalMono
-  exact monotoneClosedTargetRamseyFamily_of_monotone_embeddings
-    A B (irreducible_of_spanningRelation A hSpan) hLinear hMonotone κ
-
 /-- EHN supplies all actual DIFFERENT first-wagon private
 extensions from one selected W-copy, with increasing
 coordinate maps and one common selected-edge colour.
