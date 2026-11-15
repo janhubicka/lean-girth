@@ -96,14 +96,21 @@ actual glued geometry than full selected-family coverage of D.
   originally permitted coarse predicate
 - `allowedVertices_coarsePredicate_of_globalBaseBound`: pull back the
   resulting bound through an arbitrary picture's part map
-- `usedContact_coarsePredicate_of_localPullback`: only the genuine output\n  contact vertices need coverage, provided their D-parts are allowed\n- `canonicalCoarseAllowed_pullback`,\n  `canonicalCoarseAllowed_familyPullback`, and\n  `canonicalCoarseAllowed_output`: choosing the permitted D-parts by\n  original coarse unary colour immediately controls all D-points and\n  restricts correctly to each selected B-image, without any coverage\n- `localPullback_does_not_imply_globalCover`: the finite
+- `usedContact_coarsePredicate_of_localPullback`: only the genuine output
+  contact vertices need coverage, provided their D-parts are allowed
+- `canonicalCoarseAllowed_pullback`,
+  `canonicalCoarseAllowed_familyPullback`, and
+  `canonicalCoarseAllowed_output`: choosing the permitted D-parts by
+  original coarse unary colour immediately controls all D-points and
+  restricts correctly to each selected B-image, without any coverage
+- `localPullback_does_not_imply_globalCover`: the finite
   Unit→Bool counterexample above
 
-These lemmas are **conditional preparation**, not the existence of the
-needed covering base. In the actual EHN-first part of the cutoff-two
-proof, one expects a vertex-covered selected Ramsey base; Track 1
-must supply the correct ordered/strong/covered version and Track 5
-must transport it into the shorter-train output.
+These lemmas are **conditional preparation**, not an existence theorem
+for a selected order stage. The preferred option is to choose canonical
+coarse-predicate allowedD in the actual Ramsey construction. If that
+choice is unavailable, one may prove coverage of allowed D-points or
+only of the genuine output contacts; neither is proved here.
 
 ## Current validation boundary
 
@@ -116,5 +123,5 @@ or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules contain eight exact axiom probes, with no `sorry`/\`admit`/new axiom. They have
+The new modules contain eight exact axiom probes, with no `sorry`/`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
