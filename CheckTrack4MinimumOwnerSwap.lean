@@ -24,6 +24,7 @@ import Girth.TrainActualFtNontrivialLocalStep
 import Girth.TrainForestStageCoveredNontrivialPass
 import Girth.TrainForestStageTrueActiveSameVectorGirth
 import Girth.TrainForestStageFtEligibleFinitePass
+import Girth.TrainIndexedPartitePhysicalArrow
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -168,3 +169,7 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_of_Ft_eligible_steps
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.ramseyOrderPass_strong_train_of_covered
+#print axioms StructuralRamsey.Girth.bSupportPiece_eq_of_same_carrier
+#print axioms StructuralRamsey.Girth.activeGluingWitness_distinct_images_of_supportPiece_injective
+#print axioms StructuralRamsey.Girth.indexedPhysicalArrow_of_partiteFamilyArrow_for_rigidA
+#print axioms StructuralRamsey.Girth.indexedPhysicalArrow_of_partiteFamilyArrow_for_orderedA
