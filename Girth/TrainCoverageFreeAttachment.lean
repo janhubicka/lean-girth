@@ -1,6 +1,6 @@
 import Girth.TrainCoverageFreeFinitePass
 import Girth.TrainCoverageFreeBottomIncrement
-import Girth.TrainSelectedPictureMixedStageAssembly
+import Girth.TrainSelectedPictureStageAssembly
 import Mathlib.Tactic
 
 set_option autoImplicit false
