@@ -216,3 +216,27 @@ strict axiom checker are on the Lean branch, still **uncompiled**;
 the source-level inventory is 24 declarations and 24 distinct
 fully qualified `#print axioms` queries. No manuscript
 validation marker has been promoted, and mainline was not modified.
+
+### 15 November: explicit single-part acyclicity certificate
+
+Added `Girth/TrainRecursiveRefinementSinglePartAcyclic.lean`,
+**independent of the new doubled-girth lemmas**. The two theorems
+`labelledGirthGT_of_singlePartEdgeIntersections` and
+`girthGT_of_singlePartEdgeIntersections` prove arbitrary finite
+Berge girth under the true transversality condition and a
+subsingleton permitted-part set for intersections of distinct
+physical edges. The proof reuses the pre-existing
+`LabelledBergeCycle.child_not_injective_of_singleton_intersections`
+with each edge as its own child: a purported physical cycle has
+injective edge labels, contradiction. This gives the *base case*
+of the manuscript's single-part intersection observation without
+introducing cyclic runs, HJ inputs or an artificial bottom-girth
+assumption. The theorem is a **source-level candidate**, pending
+Lean elaboration and strict `#print axioms`.
+
+The central `CheckTrack6RefinementDoubleAxioms.lean` now covers
+**eight** candidate source modules and **26** theorem constants,
+with matching source-level axiom commands. The two new statements
+are mathematical preliminaries useful independently of the
+`2g+1` strengthening and do not change the recursive `q-1`
+forest requirement.
