@@ -124,4 +124,50 @@ theorem EdgeTrainLevels.inducedWagon_Acovered
   exact originalFirstWagonLocalCoverage
     A D oldCarrier owner hOwnerCarrier hWagonCover
 
+
+/-- A real nonempty old physical edge family, whose edges
+all contain a vertex, gives a real vertex in the tagged
+disjoint union of quotient wagon carriers at EVERY cut.
+This is exactly the hNonempty input of the EHN W
+selected-copy construction, not an arbitrary new point. -/
+theorem EdgeTrainLevels.wagonUnion_nonempty
+    {m : ℕ} (T : EdgeTrainLevels E m)
+    (edges : E → Set V) (μ : Fin (m + 1))
+    (hEdges : Nonempty E)
+    (hEveryEdge : ∀ e : E, (edges e).Nonempty) :
+    Nonempty (FirstWagonUnionVertex
+      (T.wagonClassCarrier edges μ)) := by
+  obtain ⟨e⟩ := hEdges
+  obtain ⟨x, hx⟩ := hEveryEdge e
+  exact ⟨⟨T.wagonClassOwner μ e,
+    ⟨x, T.edge_subset_ownerWagonCarrier edges μ e hx⟩⟩⟩
+
+/-- Every genuine old A-support edge contains a vertex when
+its source coloured one-edge type A is nonempty. Hence a
+nonempty old physical A-support family makes the actual
+tagged W nonempty without a new EHN-stage hypothesis. -/
+theorem EdgeTrainLevels.actualSupportWagonUnion_nonempty
+    {L : RelLanguage.{u}} {UA : Type v}
+    [Nonempty UA]
+    (A : RelStructure L UA) (D : RelStructure L V)
+    {m : ℕ}
+    (T : EdgeTrainLevels
+      {e : Set V // e ∈ supportCopies A D} m)
+    (μ : Fin (m + 1))
+    (hEdges :
+      Nonempty {e : Set V // e ∈ supportCopies A D}) :
+    Nonempty (FirstWagonUnionVertex
+      (T.wagonClassCarrier
+        (fun e : {e : Set V // e ∈ supportCopies A D} => e.1)
+          μ)) := by
+  apply T.wagonUnion_nonempty
+    (fun e : {e : Set V // e ∈ supportCopies A D} => e.1)
+    μ hEdges
+  intro e
+  obtain ⟨a, ha⟩ := e.2
+  obtain ⟨u⟩ := (inferInstance : Nonempty UA)
+  refine ⟨a u, ?_⟩
+  rw [ha]
+  exact ⟨u, rfl⟩
+
 end StructuralRamsey.Girth
