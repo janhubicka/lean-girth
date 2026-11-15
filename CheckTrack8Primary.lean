@@ -2,6 +2,7 @@ import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTraceFinRotateCycle
+import Girth.FiniteTracePEORank
 
 /-!
 # Focused Track 8 kernel gate — direct PEO-counting route
@@ -64,3 +65,7 @@ manuscript validation markers without actual compilation AND executed
 #check StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
 #print axioms StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
 #print axioms StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
+
+#check StructuralRamsey.Girth.IsPerfectEliminationRanking
+#check StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
