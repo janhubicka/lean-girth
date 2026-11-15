@@ -1,0 +1,94 @@
+import Girth.FiniteTracePEOCount
+import Girth.FiniteTraceSuccessorCycle
+import Girth.FiniteTraceSimplicialCriterion
+
+/-!
+# Track 8 exhaustive axiom gate — source only until run
+Run with the exact pinned Lean/Mathlib toolchain. Not a certificate
+until all checks execute on this exact head. For the initial build
+use the smaller CheckTrack8Primary.lean.
+-/
+
+#check StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#check StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
+#check StructuralRamsey.Girth.traceConformal_of_local_completion
+#check StructuralRamsey.Girth.coversNonemptyTraces_empty
+#check StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#check StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+#check StructuralRamsey.Girth.laterNeighborBag_isClique
+#check StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#check StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#check StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#check StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#check StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#check StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#check StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#check StructuralRamsey.Girth.maximalTrace_subset_Z
+#check StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#check StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#check StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#check StructuralRamsey.Girth.traceVertices_isClique
+#check StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#check StructuralRamsey.Girth.maximalClique_has_maximalTrace
+#check StructuralRamsey.Girth.traceConformal_of_joinTree
+#check StructuralRamsey.Girth.IsSimplicialWithin.mono
+#check StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#check StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#check StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#check StructuralRamsey.Girth.exists_simplicialOutside_clique
+#check StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+#check StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+#check StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+#check StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#check StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#check StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+#check StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#check StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
+#check StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#check StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#check StructuralRamsey.Girth.JoinTree.traceCarrier
+#check StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#print axioms StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
+#print axioms StructuralRamsey.Girth.traceConformal_of_local_completion
+#print axioms StructuralRamsey.Girth.coversNonemptyTraces_empty
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+#print axioms StructuralRamsey.Girth.laterNeighborBag_isClique
+#print axioms StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#print axioms StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#print axioms StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#print axioms StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#print axioms StructuralRamsey.Girth.maximalTrace_subset_Z
+#print axioms StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#print axioms StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#print axioms StructuralRamsey.Girth.traceVertices_isClique
+#print axioms StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#print axioms StructuralRamsey.Girth.maximalClique_has_maximalTrace
+#print axioms StructuralRamsey.Girth.traceConformal_of_joinTree
+#print axioms StructuralRamsey.Girth.IsSimplicialWithin.mono
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#print axioms StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#print axioms StructuralRamsey.Girth.exists_simplicialOutside_clique
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+#print axioms StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+#print axioms StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#print axioms StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+#print axioms StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
+#print axioms StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#print axioms StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#print axioms StructuralRamsey.Girth.JoinTree.traceCarrier
+#print axioms StructuralRamsey.Girth.setBagPiece_traceCarrier
