@@ -51,7 +51,7 @@ theorem EdgeTrainLevels.forgetFirstCuts_selected_rel_iff
     {m d : ℕ}
     (S : EdgeTrainLevels E (m + d))
     (T : EdgeTrainLevels F (m + d))
-    (hm : 0 < m) (selected : I → E ↪ F)
+    (hm : 0 < m) (selected : I → (E ↪ F))
     (hFine : ∀ i : I, ∀ ν : Fin (m + d + 1), ∀ a b : E,
       S.rel ν a b ↔
         T.rel ν (selected i a) (selected i b)) :
