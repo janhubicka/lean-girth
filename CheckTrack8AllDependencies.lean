@@ -1,12 +1,12 @@
 import Girth.FiniteTracePEOCount
-import Girth.FiniteTraceSuccessorCycle
+import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceSimplicialCriterion
 
 /-!
-# Track 8 exhaustive axiom gate — source only until run
-Run with the exact pinned Lean/Mathlib toolchain. Not a certificate
-until all checks execute on this exact head. For the initial build
-use the smaller CheckTrack8Primary.lean.
+# All Track 8 source dependency declarations: exact-head axiom gate.
+No check has executed until compiled using the pinned toolchain.
+Start with CheckTrack8Primary.lean; use this to inspect every
+transitive source theorem of the primary and Dirac preparation.
 -/
 
 #check StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
@@ -19,6 +19,8 @@ use the smaller CheckTrack8Primary.lean.
 #check StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
 #check StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
 #check StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#check StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#check StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
 #check StructuralRamsey.Girth.exists_maximal_nonempty_trace
 #check StructuralRamsey.Girth.maximalTraceRepresentative_spec
 #check StructuralRamsey.Girth.maximalTraceRepresentative_injective
@@ -61,6 +63,8 @@ use the smaller CheckTrack8Primary.lean.
 #print axioms StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
 #print axioms StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
 #print axioms StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#print axioms StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
 #print axioms StructuralRamsey.Girth.exists_maximal_nonempty_trace
 #print axioms StructuralRamsey.Girth.maximalTraceRepresentative_spec
 #print axioms StructuralRamsey.Girth.maximalTraceRepresentative_injective
