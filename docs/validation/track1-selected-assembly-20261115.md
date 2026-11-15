@@ -12,10 +12,10 @@
 | `Track1FullSelectedOrderedLifts` | Use the checked `exists_projectionFirstLinearOrder` and `ownerSplit_lifted_colouredOrderedEmbedding` to get **one common linear order and complete induced coloured ordered embeddings** of every selected target, including global `(x,⊥)` tags for isolated marked vertices. |
 | `Track1FullSelectedSupportPieces` | Construct the actual lifted B-support pieces and derive their allowed pairwise intersections from the checked `lifted_pair_intersection_subsingleton` and `lifted_intersection_eq_splitEdge`, including correct membership of a shared whole edge in both pieces. |
 | `Track1OwnerSplitFinite` | Deduce finiteness of the owner-token vertices from finite old EHN vertex type, without adding an independent finiteness premise. |
-| `Track1PhysicalSelectedRepresentatives` | Index genuinely selected B images by their actual carrier sets, choose one full original embedding per carrier, and prove both physical support-piece injectivity and preservation of the selected Ramsey arrow. The older ordered-copy uniqueness lemma compiled successfully, but this normalization works even for non-rigid B and does not need that hypothesis. |
+| `Track1OrderedPhysicalOwners` | The valid ordered-source special case proves that distinct full ordered B embeddings with the same image carrier coincide. It compiled successfully in Lean run #43719455914. The next continuation branch additionally develops the more general physical-carrier representative construction. |
 | `Track1SelectedCarrierEmbedding` | Factor each genuine full induced coloured ordered selected B embedding through the induced restriction on `selectedLiftCarrier`, using the actual shared-bottom owner tokens. This proves the selected-copy component of the covered-vertex output without asserting unproved ambient edge coverage. |
 
-There is a dedicated `CheckTrack1SelectedAssembly.lean` file (11 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
+There is a dedicated `CheckTrack1SelectedAssembly.lean` file (14 strict axiom probes) and `scripts/check_track1_selected_assembly.sh` (focused Lake compilation followed by the repository's existing `scripts/check_axioms.py`).
 
 ## Remaining exact interfaces — not assumed proved
 
@@ -32,17 +32,17 @@ git switch validation/1-ordered-copy-packaging-20261115
 bash scripts/check_track1_selected_assembly.sh
 ```
 
-This source has **not** been compiled or axiom-checked. The known-good results remain the previously checked generic owner-splitting and mixed-forest components. A green staged check would certify only its seven conditional theorem closures, NOT `lem:unrestricted`, `lem:threepicture` or `prop:forestthree` end-to-end.
+This source has **not** been compiled or axiom-checked. The known-good results remain the previously checked generic owner-splitting and mixed-forest components. A green staged check would certify only its fourteen requested conditional declarations, NOT `lem:unrestricted`, `lem:threepicture` or `prop:forestthree` end-to-end.
 
 ## Adversarial cleanup (15 November)
 
-The earlier staged `Track1OrderedPhysicalOwners` and its ordered
-uniqueness helper DID compile in run #43719455914. The **actual carrier
-representative** construction is more general, and
+The `Track1OrderedPhysicalOwners` lemma is valid and compiled in run
+#43719455914. The **actual carrier representative** construction is
+additional generality, and
 preserves the Ramsey arrow by factoring A-copies into either full
 B embedding sharing that carrier. It also provides the exact
 `hCopies` required by the checked mixed-LF2 transport.
 The old module is deleted on the *continuation branch* (not PR #1074,
 whose exact-head compiler job is still pending). The combined
-`CheckTrack1ActualPartite.lean` has 16 strict axiom probes.
+`CheckTrack1ActualPartite.lean` has 15 strict axiom probes.
 All these new propositions are still uncompiled, not certificates.
