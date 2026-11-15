@@ -181,3 +181,38 @@ The selected transport build should be run after the other six
 new candidate modules; it is independent of their doubled-girth
 proofs. The root axiom checker requires all imports' `.olean`
 objects. No online or expensive CI run has been initiated.
+
+### 15 November adversarial simplification of the English argument
+
+The one-step observation in the manuscript branch now has a shorter
+**minimum-degree incidence-graph proof**. If the child word is not
+constant, every used child label has at least two edge occurrences,
+hence at most `floor(n/2) <= g` labels for `n <= 2g+1`.
+
+Use the bipartite graph whose nodes are these **literal** child labels
+and the actual distinct connectors at switches between adjacent
+labels. Every switch connector meets two different child carriers,
+so its graph degree is at least two. Every occurring child has a
+maximal cyclic run with **two distinct switching connectors**, so
+every child node also has degree at least two. The graph is finite,
+nonempty and has minimum degree at least two, hence a simple cycle.
+That cycle is a labelled Berge cycle using at most `g` child
+labels, contradicting the complete labelled child-cut girth `>g`.
+No compressed walk or no-immediate-reversal explanation is needed
+in the English manuscript. The Lean candidate can reuse the
+previously checked compressed-incidence machinery; exact exposition
+need not coincide with a formal proof's implementation details.
+
+A new Python diagnostic constructs this **switching-only graph**
+for all 383 canonical nonconstant/no-singleton-run words among the
+142,416 set partitions of cyclic lengths 2 through 10; it checks
+degree >=2 on BOTH node sorts and verifies a cycle in every case.
+The full checker also repeats the explicit 3-uniform sharp and global
+counterexamples and literal labelled-wagon regressions. The full
+local Python suite passed on 15 November.
+
+The current same-selected-edge-map transport module and the central
+strict axiom checker are on the Lean branch, still **uncompiled**;
+the source-level inventory is 24 declarations and 24 distinct
+fully qualified `#print axioms` queries. No manuscript
+validation marker has been promoted, and mainline was not modified.
