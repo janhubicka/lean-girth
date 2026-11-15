@@ -1,7 +1,8 @@
 import Girth.TrainCoverageFreeForestOrderStep
 import Girth.TrainCoverageFreeBoundsFromMixed
 import Girth.TrainRecursiveNontrivialFibre
-import Girth.TrainActualFtNontrivialLocalStep
+import Girth.TrainActualOneLevelGirthIntrinsic
+import Girth.TrainSharedSupportInteriorCompatibility
 import Mathlib.Tactic
 
 set_option autoImplicit false
