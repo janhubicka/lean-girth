@@ -52,7 +52,6 @@ doubling theorem and interfaces already supplied by the old formalization.
 |---|---|---|
 | `TrainRecursiveRefinementDoubleStep.lean` | `BergeCycle.child_constant_of_singleton_intersections_twice` | Direct physical-cycle counterpart of the labelled (2g+1) one-step lemma. |
 | `TrainRecursiveRefinementDoubleGirth.lean` | `FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice` | Actual irreducible A-support, LOCAL first wagon; no retained global first-cut assumption. |
-| `TrainRecursiveRefinementAllRetainedCuts.lean` | `allRetainedLabelledCutGirth`, `allRetainedLabelledCutGirth_mono` | Independent of doubling; aggregates existing exact quotient-index transfer at **every** old positive level. Requires actual old cut certificates. |
 | `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_sharedFineCutVector` | Combines the **existing** global inserted-cut theorem with each separately retained old positive cutoff. The head/tail pointwise comparisons are explicit arithmetic inputs; it does not assume a new global fine-girth conclusion. |
 | `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_inducedFineCutVector` | Transports the preceding whole vector from shared physical A-support to the true induced active relational A-support via the existing injective source map. |
 
@@ -95,7 +94,6 @@ LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleCount
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
-LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementAllRetainedCuts
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
 LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
 ```
@@ -253,3 +251,28 @@ Two specific Lean source defects/risks were repaired on this branch:
 After these edits, a fresh namespace-aware static source scan of **eight** candidate Lean proof modules and `CheckTrack6RefinementDoubleAxioms.lean` found **26 unique theorem declarations matched exactly by 26 fully qualified axiom-print requests**, with no extra/undefined names, unbalanced source namespaces, or explicit `sorry`/`admit`/`axiom` declarations. **This is not Lean elaboration.** Neither type error nor theorem correctness can be certified until the pinned toolchain builds the exact branch head and the strict checker accepts all transitive axioms.
 
 No workflow was dispatched, no mainline merge was made, and no manuscript `\\leanopen` marker was promoted. The original conditional (g+1) recursion and exact retained-index transport remain unaffected.
+
+### 15 November, late cleanup: remove redundant retained-cut wrappers
+
+The experimental `Girth/TrainRecursiveRefinementAllRetainedCuts.lean`
+contained only pointwise wrappers around the already existing
+`FirstWagonRefinement.labelledGirthGT_at_retained` and
+`labelledGirthGT_at_retained_mono` from the checked mainline
+`Girth/TrainRecursiveRefinementRetainedCutGirth.lean`. These wrappers
+had no clients among the new proof modules. The experimental file
+has therefore been **deleted** and its two root axiom-print commands,
+import, and build instruction removed. The existing exact
+retained-cut transport and `trueActive_sharedRetainedTailCutGirth`
+remain unchanged. `TrainRecursiveRefinementCompleteCutVector.lean`
+uses the latter directly.
+
+**Latest inventory (supersedes the historical 22/26 counts above):**
+seven candidate proof modules, **24 candidate theorem declarations**,
+and **24 matching central #print axioms commands**. The old source
+inventory counts in the dated chronological notes remain historical;
+they do not describe the present branch head.
+
+This removes a dead-end duplicate, not an obligation or assumption.
+The next mandatory gate is still compilation of the seven modules
+and checking the full transitive axiom output against the exact head.
+No validation mark is promoted and no CI run is requested.
