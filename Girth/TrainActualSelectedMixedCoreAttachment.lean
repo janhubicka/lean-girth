@@ -113,4 +113,83 @@ theorem ForestTailStage.actualAttachment_selectedMixedCoverage_of_localFt
   exact selectedBorACoversIrreducibles_partiteAttachment_of_mixedCore
     A B D C family selected S (E.relabel α) f hOld hLocal
 
+/-- The genuine selected local F_t stage supplies ALL THREE
+replacement core fields required by ActiveAttachmentMixedBounds:
+a real nonempty A-support, coverage of every core vertex by one
+physical A-edge, and original selected B-or-A mixed irreducible
+coverage after the actual P-part relabelling and free attachment.
+
+These are literal inherited ForestTailStage fields, not separate
+q=2 core-coverage or target-support assumptions. -/
+theorem ForestTailStage.actualAttachment_mixedCore_three_fields
+    {L : RelLanguage.{u}} {UA VB P X V : Type v}
+    (A : RelStructure L UA)
+    (B : RelStructure L VB) (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (Embedding B D))
+    (selected : Set (DesignatedCopy B D C family))
+    (α : UA ↪ P)
+    (Large : StructuralRamsey.Partite.System L UA V)
+    {lowerFamily : Set (Embedding
+      (C.toRelStructure.induce (activeCarrier A C α))
+      Large.toRelStructure)}
+    {t : List ℕ}
+    {targetTrain : EdgeTrainLevels
+      (OldACarrierEdge A
+        (C.toRelStructure.induce (activeCarrier A C α))) t.length}
+    (fineAllowed : Fin (t.length + 1) → Set UA)
+    (lower : ForestTailStage A
+      (C.toRelStructure.induce (activeCarrier A C α))
+      Large.toRelStructure lowerFamily t targetTrain
+      (fun ν => Large.part ⁻¹' fineAllowed ν))
+    (hFamilyParts : ∀ b, b ∈ lowerFamily →
+      ∀ x : activeCarrier A C α,
+        Large.part (b x) =
+          (actualActiveSubsystemPartite A C α).part x)
+    (hOld : SelectedBorACoversIrreducibles
+      A B D C family selected) :
+    let S := activeCarrier A C α
+    let Target := actualActiveSubsystemPartite A C α
+    let E := lower.system.coarsenVia Large lower.isPartite
+    let I := {b : DesignatedCopy Target.toRelStructure
+      Large.toRelStructure lower.system lowerFamily //
+        b ∈ lower.selected}
+    let fSelected : I → StructuralRamsey.Partite.Embedding Target E :=
+      fun i => selectedPartiteGluingFamily_of_largeBase
+        Target Large lower.system lower.isPartite lowerFamily
+        hFamilyParts lower.selected i
+    let f : I → StructuralRamsey.Partite.Embedding
+      (C.induce S) (E.relabel α) :=
+      fun i => activePartiteToRelabelledCore
+        A C α E (fSelected i)
+    Nonempty (OldACarrierEdge A (E.relabel α).toRelStructure) ∧
+    (∀ y : lower.Vertex,
+      ∃ edge : OldACarrierEdge A (E.relabel α).toRelStructure,
+        y ∈ edge.1) ∧
+    SelectedBorACoversIrreducibles A B D
+      (StructuralRamsey.Partite.Attachment.attach C S
+        (E.relabel α) f)
+      family (transportedSelectedCopies
+        B D C family selected S (E.relabel α) f) := by
+  let S := activeCarrier A C α
+  let Target := actualActiveSubsystemPartite A C α
+  let E := lower.system.coarsenVia Large lower.isPartite
+  let I := {b : DesignatedCopy Target.toRelStructure
+    Large.toRelStructure lower.system lowerFamily //
+      b ∈ lower.selected}
+  let fSelected : I → StructuralRamsey.Partite.Embedding Target E :=
+    fun i => selectedPartiteGluingFamily_of_largeBase
+      Target Large lower.system lower.isPartite lowerFamily
+      hFamilyParts lower.selected i
+  let f : I → StructuralRamsey.Partite.Embedding
+      (C.induce S) (E.relabel α) :=
+    fun i => activePartiteToRelabelledCore
+      A C α E (fSelected i)
+  refine ⟨?_, ?_, ?_⟩
+  · exact lower.supportNonempty
+  · exact lower.supportCovers
+  · exact lower.actualAttachment_selectedMixedCoverage_of_localFt
+      A B D C family selected α Large fineAllowed
+      hFamilyParts hOld
+
 end StructuralRamsey.Girth.TrainRecursiveWitness
