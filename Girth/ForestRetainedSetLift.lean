@@ -117,12 +117,14 @@ theorem ForestOfCopies.restrict_image_to_selected_added
     rcases hClassify i with hSel | hAdd | hOne
     · exfalso
       apply hNot
-      apply Finset.mem_union_left
-      simpa [hi] using hSel
+      apply Finset.mem_union.mpr
+      left
+      simpa only [hi] using hSel
     · exfalso
       apply hNot
-      apply Finset.mem_union_right
-      simpa [hi] using hAdd
+      apply Finset.mem_union.mpr
+      right
+      simpa only [hi] using hAdd
     · simpa [hi] using hOne
   exact ForestOfCopies.restrict_to_retained_finset
     all kept hForest hKeepSub hOmitted
