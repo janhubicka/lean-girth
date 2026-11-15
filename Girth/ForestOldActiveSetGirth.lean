@@ -1,6 +1,7 @@
 import Girth.ForestOldActiveGirth
 import Girth.ForestFiniteSetCompletion
 import Girth.ForestCopySetCompletion
+import Girth.ForestCompletionTwoEdgeLinearity
 
 /-!
 # A finite-set interface for old active girth
@@ -130,5 +131,66 @@ theorem oldActiveInduced_girthGT_of_actualCopySets
   exact oldActiveInduced_girthGT_of_designatedCompletion
     A u w huw B D C family e
     hOldLinear hBaseStrong m hSupportCompletion
+
+/-- For cutoff at least two, the active-subsystem girth conclusion
+follows from the actual finite-copy-set completion invariant and
+A-strongness of designated base projections WITHOUT separately
+assuming old A-linearity.
+
+Indeed every ambient A-edge is a tested one-edge member.
+Completing a pair of distinct such members forces their
+intersection to be subsingleton: added designated B-members
+cannot make the two selected edge members pairwise allowed if
+they intersect in two vertices. Hence old A-linearity follows
+from the same completion invariant already used for active girth. -/
+theorem oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
+    (A : RelStructure L UA)
+    (u w : UA) (huw : u ≠ w)
+    (B : RelStructure L VB)
+    (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (family : Set (RelStructure.Embedding B D))
+    (e : RelStructure.Embedding A D)
+    (hBaseStrong :
+      ∀ q : DesignatedCopy B D C family,
+        AStrong A D (copyCarrier q.base))
+    (m : ℕ) (hm : 2 ≤ m)
+    (hCopySetCompletion :
+      FinsetLabelForestCompletionProperty
+        (pictureABLabelSupport A B D C family)
+        (fun _ => True)
+        (designatedPictureASupport A B D C family) m) :
+    GirthGT
+      (supportCopies A
+        (C.induce
+          (activeCarrier A C e.toFunctionEmbedding)).toRelStructure) m := by
+  classical
+  have hComplete :
+      ForestCompletionProperty
+        (testedPictureABSupport A B D C family)
+        (designatedPictureASupport A B D C family) m := by
+    apply hCopySetCompletion.toSupportIndexed
+    intro T hT
+    obtain ⟨label, hLabel⟩ :=
+      (testedPictureABSupport_iff_label A B D C family T).mp hT
+    exact ⟨label, trivial, hLabel⟩
+  have hLinear :
+      LinearEdgeSet (supportCopies A C.toRelStructure) :=
+    linearEdgeSet_of_twoEdgeForestCompletion
+      (supportCopies A C.toRelStructure)
+      (testedPictureABSupport A B D C family)
+      (designatedPictureASupport A B D C family)
+      m hm hComplete
+      (by
+        intro z hz
+        obtain ⟨a, ha⟩ := hz
+        left
+        exact ⟨a, congrArg HypergraphPiece.oneEdge ha⟩)
+  have hOldLinear : ALinear A C.toRelStructure := by
+    intro a b hDifferent
+    exact hLinear ⟨a, rfl⟩ ⟨b, rfl⟩ hDifferent
+  exact oldActiveInduced_girthGT_of_designatedCompletion
+    A u w huw B D C family e hOldLinear hBaseStrong
+    m hComplete
 
 end StructuralRamsey.Girth
