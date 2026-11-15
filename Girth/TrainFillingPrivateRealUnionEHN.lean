@@ -39,7 +39,7 @@ open StructuralRamsey.Girth.IndexedPrivateChoice
 universe u v w
 
 variable {L : RelLanguage.{u}}
-variable {UA V P I : Type v}
+variable {UA V P : Type v} {I : Type u}
 variable [LinearOrder UA] [LinearOrder V] [LinearOrder P]
 variable [LinearOrder I] [Finite UA] [Finite V] [Finite P]
 
