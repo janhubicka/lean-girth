@@ -52,3 +52,24 @@ Status: **UNCOMPILED mathematical Lean source candidate**. This note describes t
 - TrainForestStageTrueActiveSameVectorGirth.lean: bottom FullSystemGirthGT q plus the retained old positive tail bounds imply the exact labelled wagon-girth vector q::tail in the honest induced active train. This applies F_t using inherited WAGON girth, never a false full-system-girth assertion about the active subsystem.
 - TrainForestStageFtEligibleFinitePass.lean: the full conditional finite selected Ramsey pass only asks for a local F_t operator on nontrivial active fibres satisfying the exact inherited labelled wagon girth at the SAME vector; all other readiness, identity-fibre, strong-train extraction and coordinate bookkeeping is composed from existing libraries.
 - The full unconditional mathematical F_t=>R_t assertion STILL requires showing that F_t's actual witness has the stated partite / irreducible-coverage / selected-image / exact positive-cut / physical-arrow fields and that those local outputs are valid for every profile. These are not kernel certified.
+
+
+## 15 November: selected F_t witness is already an indexed physical local witness
+
+The existing checked modules TrainRecursiveSelectedWitnessConsequences.lean, TrainRecursiveCoarsenedSelectedIndexedBundle.lean and TrainRecursiveActualCoarsenedFullSystem.lean already derive the actual selected local F_t data from one genuinely selected lower ForestTailStage, conditional on the correct true-active source and part-preserving large base:
+
+- E is A-partite and has irreducible-to-A coverage.
+- Its genuine selected gluing labels have injective COMPLETE A-support pieces (the stage's selectedPhysicalInjective field), and its finite mixed support forest is valid through the requested q.
+- All cut train relations on selected images are reflected, core adjacent parameters are retained and the indexed selected partite Ramsey arrow is available.
+- At every positive local cut, the selected gluing witness inherits the exact original FullSystemGirthGT threshold from the REAL lower ForestTailStage.tailGirth, not a new lower oracle.
+
+**New short adapters**:
+- bSupportPiece_eq_of_same_carrier and activeGluingWitness_distinct_images_of_supportPiece_injective show that injective COMPLETE support pieces imply injective vertex images: equal carriers force equal full edge sets. Conversely, image injectivity implies support-piece injectivity by reading the piece carrier. The new nontrivial local step now accepts selected SUPPORT injectivity directly, matching the checked lower-stage output.
+- TrainIndexedPartitePhysicalArrow.lean: the checked selected INDEXED partite A-arrow yields a PHYSICAL A-edge arrow, because every relational A-copy in an A-partite source is partite when finite ordered A is rigid. No new selected index, extra colours or arbitrary embedding-arrow hypothesis.
+- TrainRealSelectedFtLocalBundle.lean: the checked indexed lower bundle plus that physical-arrow adapter yields all seven local geometry/forest/train/parameter/physical-arrow fields; its trueActive_sameVector_localBundle_with_positive theorem also includes the exact positive-cut FullSystemGirthGT bounds from coarsenedSelected_fullSystem_at_positive. This reduces the previously separate local witness assumptions to the genuine EXISTENCE of a selected F_t ForestTailStage and its exact true-active/coarsening presentation.
+
+**Last compatibility work** (no false completion claim):
+1. Identify the genuine lower target train with the old stage's exact twice-restricted active train, and convert the checked selected train relation to the full shared-edge interior compatibility interface. Preserve the literal physical support labels and old/core wagon embeddings.
+2. Check the actual A-part relabelling of the lower partite witness into the P-partite attachment, including all allowed-part parameters and the indexed selected physical arrow (rather than an unindexed abstract arrow).
+3. Verify the true-active target has irreducible-to-A coverage at q=2 as well as q>2, and supply the finite F_t stage and its selected DesignatedArrow for every ordered nontrivial fibre.
+4. Run the exact-head Lean kernel checker before promoting any manuscript validation markers. No compatible offline toolchain/dependency bundle is mounted; no new CI run was started.
