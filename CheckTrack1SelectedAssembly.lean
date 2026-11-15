@@ -3,6 +3,7 @@ import Girth.Track1FullSelectedSupportPieces
 import Girth.Track1ActualSelectedOwnerColourArrow
 import Girth.Track1OwnerSplitFinite
 import Girth.Track1OrderedPhysicalOwners
+import Girth.Track1SelectedCarrierEmbedding
 
 /-!
 # Staged Track 1 selected witness integration checks
@@ -27,3 +28,4 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.finite_ownerVertex
 #print axioms StructuralRamsey.Girth.orderedB_selectedCarriers_injective
 #print axioms StructuralRamsey.Girth.orderedB_selectedSupportPieces_injective
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.actualSelectedEmbeddingOnCarrier
