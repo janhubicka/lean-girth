@@ -15,6 +15,7 @@ import Girth.TrainFillingPrivateOriginalImageInH
 import Girth.TrainFillingPrivateOriginalTrainInH
 import Girth.TrainFillingPrivateActualSingleMapAllCuts
 import Girth.TrainFillingPrivateCanonicalAllCuts
+import Girth.TrainFillingPrivateActualOrderAllCuts
 import Girth.TrainFillingPrivateReblockedEnumeration
 import Girth.TrainFillingPrivateOriginalColoursOrders
 import Girth.TrainFillingPrivateRealUnionOrder
@@ -345,3 +346,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailWagonClassEquiv
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailWagonClassEquiv_carrier
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.tailQuotient_labelledCutGirth_iff
+
+-- Genuine selected shorter OrderStage, no independent old-train faithfulness.
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderStageOriginalEdge_allProperCuts_iff
