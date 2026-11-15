@@ -1,7 +1,7 @@
 # Track 8 — minimal proof path after direct PEO counting
 Date: 15 November 2026
 
-**Status:** source-level proof decomposition, NOT a fresh Lean kernel certificate. Manuscript draft PR: https://github.com/janhubicka/girth/pull/467. Lean draft PR: https://github.com/janhubicka/lean-girth/pull/1068. Track issue: #1059.
+**Status:** source-level proof decomposition, NOT a fresh Lean kernel certificate. Manuscript PR #467 has **merged**: https://github.com/janhubicka/girth/pull/467. Lean draft PR: https://github.com/janhubicka/lean-girth/pull/1068. Track issue: #1059.
 
 ## The new direct route
 
@@ -21,23 +21,26 @@ These declarations reuse Girth/FiniteTraceEliminationBags.maximalClique_eq_later
 
 ## Obsolete path is no longer a gate
 
-The former maximal-clique join tree, parent forest, deletion of nonmaximal/duplicate bags and private leaf charging are NOT necessary for the counting proof. The old conditional join-tree counting segment was removed from FiniteTraceMaximal.lean (142 lines removed), leaving original-index maximalization and representative selection. Optional historical proof sources remain available but are not imported by the focused primary gate.
+The former maximal-clique join tree, parent forest, deletion of nonmaximal/duplicate bags and private leaf charging are NOT necessary for the counting proof. The old conditional join-tree counting segment was removed from FiniteTraceMaximal.lean (142 lines removed), leaving original-index maximalization and representative selection. The superseded optional modules (leaf charging, elimination-parent forest/occurrence and private-leaf simpliciality), the old sprawling check gate, the optional old diagnostics and the 2026-11-14 exploration ledger were **deleted from this draft PR**. Their earlier versions remain accessible through Git history. This cleanup removes hundreds of lines of uncompiled dead-end work. The primary import stack retains only source files actually used by the direct argument.
 
-The remaining graph-theoretic requirement is finite chordal graph => perfect elimination ordering. The pinned Mathlib source has no ready-made theorem for this project. It may be proved via Dirac's simplicial-vertex theorem and finite induction, but it must not be inserted as an unapproved axiom.
+The remaining graph-theoretic requirement is finite chordal graph => perfect elimination ordering. The pinned Mathlib source has no ready-made theorem for this project. A concrete clique-minimal-separator / two-nonadjacent-simplicial-vertices proof is in docs/validation/track8-dirac-separator-proof-20261115.md; the elementary Lean lemmas are in Girth/FiniteTraceSimplicialCriterion.lean. The full Dirac theorem and finite PEO construction remain unformalized and must not be inserted as axioms.
 
 ## Independent exhaustive check
 
-The reproducible check in checks/track8_peo_cliquetree_bounded.py enumerates every simple graph on up to 6 labelled vertices. Among 6-vertex graphs:
+The reproducible, trimmed check in checks/track8_peo_count_bounded.py enumerates every simple graph on up to 6 labelled vertices. Among 6-vertex graphs:
 - 18,154 are chordal (greedy elimination succeeds), 14,614 are nonchordal;
-- for EVERY maximal clique K of each chordal graph, the elimination bag at K's earliest vertex equals K, and these earliest vertices are pairwise distinct;
-- optionally it also verifies parent-forest running intersections, arbitrary links of component roots and deletion of contained/duplicate bags. 4,852 chordal 6-vertex graphs have disconnected parent forests.
-
+- for EVERY maximal clique K, the elimination bag at K's earliest vertex is exactly K; these vertices are pairwise distinct.
+- the separate checks/track8_dirac_separator_bounded.py tests the exact strong-Dirac clique-separator induction on all 18,153 noncomplete chordal six-vertex graphs, with zero failures.
 An equivalent local checker was executed independently and reproduced all counts. This finite diagnostic is NOT a proof.
 
 ## Verification and remaining dependencies
 
 - The existing Mathlib maximality API was corrected to Set.Finite.exists_maximalFor (pinned Mathlib), which gives reverse inclusion, not equality. Nat.card and explicit finite subtype instances are used.
-- CheckTrack8Primary.lean deliberately imports only the primary route, avoiding optional uncompiled geometric modules.
+- CheckTrack8Primary.lean deliberately imports only the primary route and the elementary simplicial criterion. CheckTrack8AllDependencies.lean lists every theorem in its transitive new source modules with both #check and #print axioms for later exact-head verification. Neither file has been executed.
 - No local Lean/lake/elan executable or Mathlib cache exists in this container. Public GitHub DNS resolution fails locally. No kernel elaboration or executed #print axioms has occurred.
 - A standalone pdflatex draft-mode syntax check of the 9-line manuscript replacement succeeded, exit 0. This is NOT a full-paper build.
 - Manuscript labels lem:smalltraces and cor:smallrelational remain open. The latter also depends on genuine outer forest-extension witnesses from numbered Tracks 2 and 7 and the induced relational adapter.
+
+## Current remaining gate
+
+An induced chordless cycle must be converted to the exact cyclic-pair/successor certificate used by the new direct obstruction. The standard finite chordal-to-PEO theorem must then be proved from a simplicial-vertex argument. The latter is supported by the written strong Dirac induction and bounded diagnostics, but it is **not a Lean-certified theorem**. No clique-tree construction is needed. No validation marker has been promoted.
