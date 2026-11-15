@@ -30,6 +30,7 @@ import Girth.TrainFillingPrivateActualWagonEHN
 import Girth.TrainFillingPrivateActualTailQuotient
 import Girth.TrainFillingPrivateTailWagonEquiv
 import Girth.TrainFillingPrivateActualTailParameters
+import Girth.TrainFillingPrivateActualSourceEdgeEquiv
 import Girth.TrainFillingPrivateActualChoiceTrain
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
@@ -369,3 +370,17 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 -- Keep original EHN choice subtype while proving monotonicity in reblocked X order.
 #check StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_coordinate_mono_reblocked
 #print axioms StructuralRamsey.Girth.SummandPrivateTemplate.monotoneSelectedUnion_coordinate_mono_reblocked
+
+-- True original source edge labels equal owner-tagged induced first-wagon edges.
+#check StructuralRamsey.Girth.OriginalFirstWagonEdges
+#check StructuralRamsey.Girth.firstWagonEdgeToOriginal
+#check StructuralRamsey.Girth.firstWagonEdgeToOriginal_owner
+#check StructuralRamsey.Girth.firstWagonEdgeToOriginal_surjective
+#check StructuralRamsey.Girth.firstWagonEdgeToOriginal_injective
+#check StructuralRamsey.Girth.originalFirstWagonEdgeEquiv
+#check StructuralRamsey.Girth.EdgeTrainLevels.actualSourceEdgeEquiv
+#print axioms StructuralRamsey.Girth.firstWagonEdgeToOriginal_owner
+#print axioms StructuralRamsey.Girth.firstWagonEdgeToOriginal_surjective
+#print axioms StructuralRamsey.Girth.firstWagonEdgeToOriginal_injective
+#print axioms StructuralRamsey.Girth.originalFirstWagonEdgeEquiv
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualSourceEdgeEquiv
