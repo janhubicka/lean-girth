@@ -13,7 +13,7 @@ lake build \
   Girth.Track1FullSelectedSupportPieces \
   Girth.Track1ActualSelectedOwnerColourArrow \
   Girth.Track1OwnerSplitFinite \
-  Girth.Track1PhysicalSelectedRepresentatives \
+  Girth.Track1OrderedPhysicalOwners \
   Girth.Track1SelectedCarrierEmbedding
 lake env lean CheckTrack1SelectedAssembly.lean > "$log" 2>&1
 cat "$log"
