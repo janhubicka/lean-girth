@@ -13,9 +13,11 @@ output wagon linearity and the order-one bridges needed for adjacent allowed
 part parameters. This packages existing proved implications; no output girth,
 new source oracle or designated-copy coverage assumption is used.
 
-This new wrapper is an UNCOMPILED candidate until checked with the pinned
-local toolchain and the strict axiom gate. Existing imported theorems were
-previously kernel-verified. Printed manuscript target: girth/main@8c9cfa6e.
+This wrapper is an UNCOMPILED candidate until checked with the pinned
+local toolchain and the strict axiom gate. Its imported source components
+were historically kernel-verified (PRs #694 and #670), but historical
+compilation is not a certificate for this joint application. The manuscript
+is the post-merge Track 3 circulation draft in janhubicka/girth.
 -/
 
 namespace StructuralRamsey.Girth
