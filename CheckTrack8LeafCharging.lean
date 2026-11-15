@@ -14,6 +14,7 @@ import Girth.FiniteTraceChordlessPattern
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceEliminationBags
 import Girth.FiniteTraceEliminationParent
+import Girth.FiniteTraceEliminationOccurrence
 
 /-!
 Track 8 exact-head Lean gate for the leaf-private charging component.
@@ -136,3 +137,10 @@ all printed axioms before promoting a validation mark.
 
 #check StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
 #print axioms StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+
+#check StructuralRamsey.Girth.eliminationParentGraph
+#check StructuralRamsey.Girth.eliminationParentGraph_parent_adj
+#check StructuralRamsey.Girth.eliminationParentGraph_bag_occurrences_preconnected
+
+#print axioms StructuralRamsey.Girth.eliminationParentGraph_parent_adj
+#print axioms StructuralRamsey.Girth.eliminationParentGraph_bag_occurrences_preconnected
