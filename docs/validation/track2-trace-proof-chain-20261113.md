@@ -233,8 +233,7 @@ than only its edge-covered structural specialization.
 
 - `Girth/ForestBinarySeparatorLift.lean` contains
   `forestOfCopies_sum_of_subsingleton_overlap`,
-  `forestOfCopies_sum_of_common_edge`, and the unified
-  `forestOfCopies_sum_of_smallOrEdge_overlap`.
+  and `forestOfCopies_sum_of_common_edge`.
   They use the existing checked `forestOfCopies_sumBridge`
   theorem. For singleton or empty total cross overlap, one
   chooses connector nodes only if the shared vertex actually
@@ -255,11 +254,10 @@ than only its edge-covered structural specialization.
   Otherwise use precisely the two retained one-edge
   requests. This is a direct recursion on
   `Fintype.card Q`.
-- The same file gives
-  `forestOfCopies_lift_without_singleton_then_delete`,
-  applying the existing short-auxiliary deletion theorem
-  to remove **only** unselected one-edge requests after
-  the whole labelled union has been assembled.
+- `ForestRetainedSetLift` later applies the existing
+  short-auxiliary deletion theorem to remove **only**
+  omitted one-edge requests after assembling and normalizing
+  the whole family.
 
 **Set-valued continuation (added afterward):** The labelled
 lift is composed with `ForestDuplicateLabelNormalization`,
@@ -351,12 +349,12 @@ the nonempty case.
 
 **Independent kernel gates.** The full
 `Girth/CheckTrack2Trace.lean` still prints axioms for all
-**34** source-level candidate theorems. The inventory is
+**32** source-level candidate theorems. The inventory is
 partitioned without omissions or overlaps into:
 
 - `Girth/CheckTrack2ActiveGirth.lean` — **14** declarations.
 - `Girth/CheckTrack2DirectIncrement.lean` — **3** declarations.
-- `Girth/CheckTrack2JoinLift.lean` — **17** declarations.
+- `Girth/CheckTrack2JoinLift.lean` — **15** declarations.
 
 A focused local runner, `scripts/check_track2_local.sh`,
 uses the already tracked `scripts/check_axioms.py` and
@@ -391,7 +389,7 @@ certificates.
 
 **Current blocker.** This container does not have Lean, Lake,
 Mathlib objects, or DNS access to download their pinned
-artifacts. Hence none of the 34 new theorem declarations has
+artifacts. Hence none of the 32 new theorem declarations has
 been elaborated, and none of its `#print axioms` results has
 actually been inspected. The three gates and full integration
 check must run against an exact local checkout before promoting
@@ -427,7 +425,7 @@ evidence that the new Lean proofs compile.**
 
 The new local gate is split into disjoint import subgraphs:
 active girth (14 source declarations), direct increment (3), and
-general lifting (17). Their new-module dependency graphs have
+general lifting (15). Their new-module dependency graphs have
 no cross-imports. In this environment the local runner passed
 a Bash syntax check and correctly reported missing Lake with
 exit code 2; no Lean elaboration or strict axiom run took place.
@@ -450,5 +448,19 @@ connector at the first middle owner and 7,003 at the second middle owner.
 These are bounded Python tests, not Lean validation.
 
 The kernel obstacle remains: no `lean`/`lake` binaries, no pinned Mathlib
-cache, and failed direct GitHub DNS resolution. The 34 source-level
+cache, and failed direct GitHub DNS resolution. The 32 source-level
 candidate declarations remain **unverified**.
+## 15 November — remove unused join-tree side lemmas
+
+Two wrapper declarations were not on any path from the general lift to
+its retained-set conclusion: `forestOfCopies_sum_of_smallOrEdge_overlap`
+and `forestOfCopies_lift_without_singleton_then_delete`. Both were removed
+from the active validation branch and from its full/focused axiom gates.
+The previous source is preserved on the historical Track 2 branch.
+The proof-critical binary gluing, recursive lift, duplicate elimination,
+and retained-set endpoint remain unchanged.
+
+The gate is now **32 candidate theorem declarations**:
+active girth 14, direct increment 3, general join-tree lifting 15.
+The reduction removes code that could otherwise block Lean elaboration
+without contributing to any final theorem. No fresh kernel check has run.
