@@ -104,6 +104,14 @@ theorem actualFirstWagonQuotient_privateEHN
       (fun p => D.induce (oldCarrier p))
     letI : LinearOrder (FirstWagonUnionVertex oldCarrier) :=
       firstWagonUnionOrder oldCarrier oldColour
+    (∀ p q : P, p ≠ q →
+      (oldCarrier p ∩ oldCarrier q).Subsingleton) ∧
+    (∀ p : P, ∀ a : Embedding A (D.induce (oldCarrier p)),
+      T.wagonClassOwner μ
+        (⟨copyCarrier
+            ((RelStructure.inclusion D (oldCarrier p)).comp a),
+           ⟨(RelStructure.inclusion D (oldCarrier p)).comp a, rfl⟩⟩ :
+          {e : Set V // e ∈ supportCopies A D}) = p) ∧
     ∃ (X : Type v) (_ : Finite X) (o : LinearOrder X)
       (R : StructuralRamsey.Structure
         (closureLanguage (colouredOrderedEdgeLanguage I k)) X),
@@ -148,8 +156,21 @@ theorem actualFirstWagonQuotient_privateEHN
     exact T.ownerEdge_covers_wagonVertex oldEdges μ p x.1 x.2
   have hNonemptyW : Nonempty (FirstWagonUnionVertex oldCarrier) :=
     T.actualSupportWagonUnion_nonempty A D μ hNonemptySupport
-  exact realColouredFirstWagon_privateEHN k hk profile
-    hProfileBlocks E oldColour hOldBlocks hOldColourToOrder
-    hOldLinear oldCarrier owner hOwnerCarrier hCover hNonemptyW
+  have hWagonTwo :
+      LabelledGirthGT (T.wagonClassCarrier oldEdges μ) 2 :=
+    labelledGirthGT_two_of_bound
+      (T.wagonClassCarrier oldEdges μ) g hg hWagonGirth
+  have hWagonLinear :
+      ∀ p q : P, p ≠ q →
+        (oldCarrier p ∩ oldCarrier q).Subsingleton :=
+    T.wagonClassCarrier_linear_of_labelledGirthGT_two
+      oldEdges μ hWagonTwo
+  refine ⟨hWagonLinear, ?_, ?_⟩
+  · intro p a
+    exact originalFirstWagonInducedACopy_owner A D
+      oldCarrier owner hOwnerCarrier hWagonLinear p a
+  · exact realColouredFirstWagon_privateEHN k hk profile
+      hProfileBlocks E oldColour hOldBlocks hOldColourToOrder
+      hOldLinear oldCarrier owner hOwnerCarrier hCover hNonemptyW
 
 end StructuralRamsey.Girth
