@@ -26,6 +26,8 @@ import Girth.TrainForestStageTrueActiveSameVectorGirth
 import Girth.TrainForestStageFtEligibleFinitePass
 import Girth.TrainIndexedPartitePhysicalArrow
 import Girth.TrainRealSelectedFtLocalBundle
+import Girth.TrainRealSelectedFtSameVectorTrain
+import Girth.TrainRealSelectedFtHighCutCompleteInputs
 import Girth.TrainBottomForestShortOnlySupreme
 
 
@@ -177,3 +179,6 @@ import Girth.TrainBottomForestShortOnlySupreme
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coarsenedSelected_Ft_localData_and_physicalArrow
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sameVector_localBundle_with_positive
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.sameVectorSelected_oldSharedTrain_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderedTrueActive_sameVectorFt_complete_highCut
