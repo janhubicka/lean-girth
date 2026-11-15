@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Numbered Track 2: three INDEPENDENT local Lean + strict axiom gates.
 # Run: bash scripts/check_track2_local.sh [all|active|increment|join]
-# No dependency updates, network access, or GitHub Actions are started here.
+# No explicit dependency update or GitHub Actions job is started.
+# Restore the pinned local cache first: Lake may fetch missing packages.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
