@@ -1,6 +1,7 @@
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceSimplicialCriterion
+import Girth.FiniteTraceFinRotateCycle
 
 /-!
 # Focused Track 8 kernel gate — direct PEO-counting route
@@ -58,3 +59,8 @@ manuscript validation markers without actual compilation AND executed
 #print axioms StructuralRamsey.Girth.isSimplicialWithin_of_clique
 #print axioms StructuralRamsey.Girth.exists_simplicialOutside_clique
 #print axioms StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+
+#check StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#check StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
+#print axioms StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
