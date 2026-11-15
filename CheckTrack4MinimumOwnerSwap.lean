@@ -29,6 +29,7 @@ import Girth.TrainRealSelectedFtLocalBundle
 import Girth.TrainRealSelectedFtSameVectorTrain
 import Girth.TrainRealSelectedFtHighCutCompleteInputs
 import Girth.TrainAStrongIrreducibleReflection
+import Girth.TrainCoverageFreeComparison
 import Girth.TrainSelectedPictureMixedStageAssembly
 import Girth.TrainActualSelectedMixedCoreAttachment
 import Girth.TrainActualMixedBoundsFromFiniteForest
@@ -206,3 +207,30 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_mixed_bottom_full_of_finiteMixed
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.activeAttachment_mixed_orderPictureStep_of_physicalFt
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.orderPictureStep_of_nontrivial_Ft_mixedCore
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.OrderStage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.OrderStage.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.withMixedCoverage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.withBottom
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.TransitionEmbedding.id
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.TransitionEmbedding.comp
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PictureStep.pictureProperty
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.finitePass
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.allProjections
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.DesignatedArrow.arrow
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.DesignatedArrow.strongTrain
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.designatedArrow_of_canonicalOn
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyPass
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.BottomReady
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.CoversBase
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.Ready
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.TransitionEmbedding.coversBase
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PictureStep.coversBase
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyOrderPass_of_ready_steps
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyStrongTrain_of_ready_steps
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.TransitionEmbedding.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PictureStep.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.DesignatedArrow.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.OrderStage.ofStrong_cutGirth
