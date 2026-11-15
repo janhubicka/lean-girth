@@ -14,10 +14,12 @@ selected support pieces by taking the finite image; this yields the
 same old-active-girth conclusion from a finite-set completion
 hypothesis.
 
-Caution: this is the exact support-piece set-to-index adapter.
-The separate relational-copy-to-complete-A-support identification
-still needs to be checked against the manuscript's copy convention.
-No fresh Lean compilation is claimed.
+This file also defines the complete-support map on the genuine
+sum of A-copy and designated B-copy labels, and gives a
+source-level equality between its image and the tested support
+predicate. The final cutoff-m>=2 endpoint derives ambient
+A-linearity directly from two-edge forest completion.
+None of these new proofs has yet been Lean-compiled or axiom-audited.
 -/
 
 namespace StructuralRamsey.Girth
