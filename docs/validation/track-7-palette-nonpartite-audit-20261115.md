@@ -69,11 +69,30 @@ finite ordered trains `B` of a finite ordered edge type `A`, their
 actual labelled train relation and girth/parameter certificates, and
 all finite palettes. There is **no `B.IsPartiteOver A` premise**.
 
-Its output uses an actual `OrderStage A B B {id}`:
-a partite picture **over the whole target B** is legitimate, and does
-not require an A-coordinate map on the INPUT B. The existing one-edge
-proof in merged PR #1072 directly gives the complementary one-copy
-specialisation `unrestrictedOrder_oneEdge_case`.
+**Second, independent obstruction: the base cannot be fixed to B
+with the singleton identity family except in the one-copy case.**
+If B contains embeddings a₁,a₂:A→B with a₁(u)≠a₂(u), colour each A-copy
+e in any B-partite output picture by its projected B-part at u (or use
+the Boolean test `part(e(u))=a₁(u)`). Every designated B-copy whose
+base embedding is the identity then has different colours on
+its a₁ and a₂ subcopies. No identity-base `DesignatedArrow` can exist.
+The new `no_identityBase_designatedArrow_of_distinct_A_values`
+formalizes this obstruction independently of girth assumptions.
+
+Accordingly the *repaired* output is
+`UnrestrictedSelectedOrderWitness A B t targetTrain allowed κ`:
+it existentially chooses a finite, potentially larger Ramsey base D,
+an actual family of B-embeddings into D, appropriate permitted sets on
+D whose pullback inside every prescribed B-copy is contained in the
+original permitted set, and an actual `OrderStage A B D family` with
+`DesignatedArrow`. The INPUT B need not be A-partite, and the selected
+B-copies are not forced to project to the identity in B.
+
+The verified one-copy theorem #1072 still produces the canonical
+identity-base `OrderStage` in that genuinely special case. The new
+`unrestrictedOrder_oneEdge_case_general` injects it into the stronger
+existential-base output. None of this constructs the missing general
+unrestricted forest-to-order transfer.
 
 **Coarse-predicate parameter transport:** the unrestricted order
 predicate records allowed sets as subsets of the vertices of B.
@@ -117,3 +136,19 @@ nonpartite interface declarations. The current agent container has no
 Lean/lake/cache, so **this branch is uncompiled**; no source-only audit,
 historical green run, or older manuscript validation mark substitutes
 for that evidence.
+
+## 15 November adversarial correction: nontrivial target base
+
+The original draft #1073 unrestricted statement was **false**: it
+quantified over arbitrary B but fixed its base to B and its family to
+{identity}. A nontrivial B has two A-embeddings with different vertex
+images at some u; the induced colour by the B-part at u is not
+constant on any identity-projected designated copy. This is independent
+of the earlier obstruction involving collisions between X-coordinate
+charts in the cutoff-two construction.
+
+The corrected output permits an existential finite base D and a family
+of B→D embeddings, with allowed-set pullback compatibility, and produces
+an actual selected OrderStage over D. The one-copy identity-base theorem
+remains a valid special case. Exact-head Lean and axiom checks of these
+new declarations are required; static audit alone is not certification.
