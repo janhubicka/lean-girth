@@ -22,6 +22,7 @@ import Girth.TrainFillingPrivateRealUnionLinear
 import Girth.TrainFillingPrivateFirstWagonStrong
 import Girth.TrainFillingPrivateRealUnionColouredMono
 import Girth.TrainFillingPrivateRealUnionEHN
+import Girth.TrainFillingPrivateRealUnionLocalCoverage
 import Girth.TrainFillingPrivateActualLabelledStrong
 import Girth.TrainFillingPrivateActualIndexedArrow
 import Girth.TrainFillingPrivateParentwiseColour
@@ -270,3 +271,8 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.firstWagonDisjointUnion_hasACopy
 #print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_monotoneEHN
 #print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_privateEHN
+
+#check StructuralRamsey.Girth.originalFirstWagonLocalCoverage
+#check StructuralRamsey.Girth.realFirstWagonDisjointUnion_covered_of_owner
+#print axioms StructuralRamsey.Girth.originalFirstWagonLocalCoverage
+#print axioms StructuralRamsey.Girth.realFirstWagonDisjointUnion_covered_of_owner
