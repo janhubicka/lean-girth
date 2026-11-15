@@ -35,6 +35,14 @@ At q=2 the universal-top theorem supplies the extra FullSystemGirthGT
 FullSystemGirthGT q. No lower-rank recursive witness or output-girth
 oracle is postulated.
 
+CRITICAL q=2 LIMIT: the hCoreCoverage input in this generic
+ActiveAttachmentBounds constructor is not a consequence of the same-q
+mixed forest. It may be incompatible with A-strong selected target
+copies, even if the universal-top cutoffTwo field is satisfied.
+For q>=3 the actual old active A-coverage theorem can supply it;
+for q=2 use a separate weaker constructor/base step. See the
+K4-partite finite obstruction in the Track 4 validation note.
+
 The remaining global obligation is that F_t supplies these concrete
 partite local inputs for EVERY ordered profile and that its arrows
 can be chosen compatibly with the finite refinability Ready invariant.
