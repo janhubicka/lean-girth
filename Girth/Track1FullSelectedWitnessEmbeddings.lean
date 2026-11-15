@@ -58,7 +58,7 @@ theorem track1_exists_actualSelectedColouredLifts
           (colouredOrderedEdgeTarget k (supportCopies A B) sourceColour)
           ((@colouredOrderedEdgeTarget I H.Vertex k
             H.splitPhysicalEdges H.newPredicate o).induce
-              (H.selectedLiftCarrier selected)),
+              (H.selectedLiftCarrierFor selected)),
           ∀ w : VB, (e w).1 = (selected c).lift w := by
   classical
   dsimp
