@@ -144,3 +144,8 @@ all printed axioms before promoting a validation mark.
 
 #print axioms StructuralRamsey.Girth.eliminationParentGraph_parent_adj
 #print axioms StructuralRamsey.Girth.eliminationParentGraph_bag_occurrences_preconnected
+
+#check StructuralRamsey.Girth.eliminationParentGraph_greater_is_parent
+#check StructuralRamsey.Girth.eliminationParentGraph_unique_greater_neighbour
+#print axioms StructuralRamsey.Girth.eliminationParentGraph_greater_is_parent
+#print axioms StructuralRamsey.Girth.eliminationParentGraph_unique_greater_neighbour
