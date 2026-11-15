@@ -165,6 +165,25 @@ theorem canonicalCoarseAllowed_output
   intro ν
   rfl
 
+/-- The actual train parameter predicate also transports directly:
+taking canonical coarse allowed sets at the D-level leaves the
+adjacent-sibling intersection condition unchanged when the output
+picture's part map is composed with the coarse predicate map.
+
+This is the precise train-level boundary needed by the nonpartite
+forest-to-order step, not merely an equality of preimage sets. -/
+theorem adjacentParameters_of_canonicalCoarseAllowed
+    {Edge : Type v} {m : ℕ} (T : EdgeTrainLevels Edge m)
+    (edge : Edge → Set Y) (part : Y → W) (predD : W → Q)
+    (permitted : Fin (m + 1) → Set Q)
+    (hParam : T.AdjacentParameters edge
+      (fun ν => part ⁻¹' canonicalCoarseAllowed predD permitted ν)) :
+    T.AdjacentParameters edge
+      (fun ν => (predD ∘ part) ⁻¹' permitted ν) := by
+  change T.AdjacentParameters edge
+    (fun ν => part ⁻¹' (predD ⁻¹' permitted ν))
+  exact hParam
+
 /-- A weaker sufficient condition than coverage of *every* allowed
 D-base point: it is enough that the actually USED contact vertices
 of the output have base parts in prescribed B-images.
