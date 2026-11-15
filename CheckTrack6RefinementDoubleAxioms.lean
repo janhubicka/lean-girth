@@ -9,7 +9,7 @@ set_option Elab.async false
 /-!
 # Track 6 independent strict axiom inspection entrypoint
 
-EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all six
+EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all seven
 candidate Track 6 proof modules. The statements below deliberately name
 the actual elaborated theorem constants, not source comments or
 historical validation markers. A successful run must inspect the
@@ -24,6 +24,7 @@ precompiled .olean modules, not unbuilt source files:
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementAllRetainedCuts
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
+  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSelectedTransport
 Then execute from the repository root:
   LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
 This is *not* a substitute for checking the selected lower witness.
