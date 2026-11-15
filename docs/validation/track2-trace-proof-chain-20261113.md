@@ -334,3 +334,67 @@ Lean-compiled. No `sorry` or `admit` tokens were found in
 the new modules during static inspection. A successful
 exact-head build and axiom inspection is a hard prerequisite
 to promoting `\leanopen` or calling Track 2 validated.
+
+
+## 15 November — empty outer family, independent Lean gates, and three-owner test
+
+**Exact statement repair.** The manuscript's lifting lemma permits
+an empty outer family; the first recursive candidate required
+`Nonempty Q`, because it takes a `JoinTree P` as data.
+`ForestRetainedSetLift.forestOfCopies_lift_retained_set_including_empty_outer`
+now separates the empty case from the nonempty chosen-tree case.
+The empty case proves the retained family has no labels and is
+therefore an empty forest. The manuscript proof now states this
+base case explicitly. The wrapper does not posit a join tree on
+an empty outer set and retains exactly the former hypotheses in
+the nonempty case.
+
+**Independent kernel gates.** The full
+`Girth/CheckTrack2Trace.lean` still prints axioms for all
+**34** source-level candidate theorems. The inventory is
+partitioned without omissions or overlaps into:
+
+- `Girth/CheckTrack2ActiveGirth.lean` — **14** declarations.
+- `Girth/CheckTrack2DirectIncrement.lean` — **3** declarations.
+- `Girth/CheckTrack2JoinLift.lean` — **17** declarations.
+
+A focused local runner, `scripts/check_track2_local.sh`,
+uses the already tracked `scripts/check_axioms.py` and
+accepts `active`, `increment`, `join`, or `all`.
+In `all` mode it runs the independent gates even if an earlier
+one fails, then the full integration check only if all three pass.
+Each gate must both elaborate and report only `propext`,
+`Classical.choice`, and `Quot.sound`; the strict checker also
+requires **every expected theorem** to appear in the output.
+It neither updates dependencies nor invokes GitHub Actions.
+
+```bash
+scripts/check_track2_local.sh active
+scripts/check_track2_local.sh increment
+scripts/check_track2_local.sh join
+scripts/check_track2_local.sh all
+```
+
+**Adversarial finite regression.** The manuscript branch now
+contains `validation/numbered-tracks/check_three_owner_join_lift.py`.
+It exhausts 37 valid local forests at each of the first two
+owners and one at the third, for **1,369** three-owner
+configurations. One outer link is a full support edge; the next
+is a singleton. In **185** configurations the middle local
+family does not contain the singleton connector. The test checks
+foresthood before and after normalization to distinct pieces
+and deletion of the omitted one-edge request. It also checks
+the empty family and an explicit counterexample to deletion
+of a multi-edge designated member. All assertions passed in
+the current container. These are **finite checks**, not Lean
+certificates.
+
+**Current blocker.** This container does not have Lean, Lake,
+Mathlib objects, or DNS access to download their pinned
+artifacts. Hence none of the 34 new theorem declarations has
+been elaborated, and none of its `#print axioms` results has
+actually been inspected. The three gates and full integration
+check must run against an exact local checkout before promoting
+any validation marker. The existing conditional forest-completion
+components remain separate from the still-unconstructed local
+witnesses in other tracks.
