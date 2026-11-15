@@ -77,3 +77,22 @@ The existing checked modules TrainRecursiveSelectedWitnessConsequences.lean, Tra
 ## Critical 15 Nov q=2 core-coverage gate
 
 See [track-4-q2-core-coverage-obstruction-20261115.md](./track-4-q2-core-coverage-obstruction-20261115.md). The q>=3 active-source extension theorem uses support girth >3 and cannot be invoked when head cutoff q=2. An explicit K4-partite, A-generated graph with physical support girth >2 has a mixed irreducible K3 not contained in any K4 copy. Thus `ActiveAttachmentBounds.coreCoverage` is not a consequence of the same-q=2 mixed forest, A-linearity and partiteness alone. The new universal-top FullSystemGirthGT 2 proof only supplies the *different* `cutoffTwo` field; it does not solve `coreCoverage`. In the q=2 finite conversion either construct a weaker q=2 attachment preserving the required mixed A-or-B output coverage, or use a separate base-case picture-step. Do NOT declare unconditional F_2=>R_2 complete from current modules. No status marks were changed.
+
+
+## Updated standalone F_t=>R_t architecture (15 November)
+
+**Do not conflate a selected recursive lower ForestTailStage with an arbitrary F_t witness.** The former has mixedCoverage; the latter does not. The q=2 K4-triangle obstruction shows that assuming the extra coverage is mathematically unsound.
+
+The standalone workaround is now a concrete SOURCE-LEVEL Lean draft, not merely a proposed type:
+- CoverageFree.ForestStage and CoverageFree.OrderStage drop exactly the mixedCoverage field; all other source stage data remain unchanged. A direct field comparison against the checked original structure found no other changed fields.
+- TrainCoverageFreeFinitePass.lean ports the checked finite selected Ramsey pass EXACTLY (token-identical after renaming ForestTailStage -> ForestStage). Its selected transition, strong designated B-arrow and all train reflection remain unchanged.
+- TrainCoverageFreeBottomIncrement.lean ports the checked actual forest increment EXACTLY by the same renaming, since the proof never used mixedCoverage. The source comparison confirmed identity.
+- TrainCoverageFreeAttachment.lean constructs the complete new physical stage, selected transition and Ramsey PictureStep with NO mixedCoverage field and only physical A-support of the local core.
+- TrainCoverageFreeBoundsFromMixed.lean derives q-1 forests, ordinary q-core girth and q=2 universal-top cutoffTwo from the SAME q mixed forest, with no false bottom local system-girth shortcut.
+- TrainCoverageFreeForestOrderStep.lean and TrainCoverageFreePositiveTransfer.lean reuse the original B-labelled bottom and positive-girth preservation to construct the next coverage-free OrderStage and selected physical-arrow PictureStep.
+- TrainCoverageFreeNontrivialFtStep.lean combines the actual nontrivial old projected fibre and the honest local F_t core/arrow/parameters into this next OrderStage; subsingleton fibres use identity.
+- TrainCoverageFreePhysicalFibre.lean and TrainCoverageFreeStrongFinitePass.lean port the checked ordered fibre dispatcher and finite Ramsey pass: under a genuine local F_t operator on nontrivial fibres, the final output has an A-strong selected monochromatic B-copy with ALL original target train relations reflected.
+
+Full detailed proof map: [track-4-coverage-free-forest-to-order-20261115.md](./track-4-coverage-free-forest-to-order-20261115.md).
+
+**Remaining for a complete standalone theorem:** formally instantiate the local selected F_t witness on the TRUE induced active train after A-part relabelling, justify the local P-partite structure/core support, exact all-cut wagon/train reflection, part parameters and ordered physical edge-arrow. The actual F_t existence assertion itself is not yet a Lean theorem on these exact typed inputs. Kernel compilation and an independent axiom audit have not been run. Do NOT mark prop:globalize validated.
