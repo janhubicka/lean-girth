@@ -1,0 +1,120 @@
+import Girth.TrainRecursiveWitnessPass
+
+set_option autoImplicit false
+set_option Elab.async false
+
+/-!
+# Global allowed-part compatibility for a nonpartite Ramsey base
+
+A general ordered shorter train need not be partite over the vertices
+of its coloured edge type. Its Ramsey picture can instead use a larger
+base D, with a prescribed B-family in D.
+
+For such a picture the local condition
+  b ⁻¹' allowedD ν ⊆ allowedB ν   (for all prescribed b)
+is NOT sufficient by itself to show that every vertex in allowedD ν
+has an originally permitted coarse predicate: allowedD ν may include
+points of D outside all the prescribed base copies.
+
+A natural sufficient hypothesis is coverage of permitted base vertices
+by the designated B-family. Together with the local pullback constraints
+it gives a global bound, which can then be pulled back through the
+actual part map of any larger D-partite picture.
+
+All statements concern actual labelled base points. No designated
+copies are identified by carriers, and no ambient vertex is removed.
+-/
+
+namespace StructuralRamsey.Girth.TrainRecursiveWitness
+
+open StructuralRamsey.RelStructure
+
+universe u v
+variable {L : RelLanguage.{u}} {VB W Q Y : Type v}
+
+/-- The original selected-family pullback condition and a genuine
+coverage of the allowed base vertices imply that every permitted D-point
+is the image of a permitted B-point in a prescribed B-copy. This is
+exactly the extra global information needed when forgetting auxiliary
+D-parts and returning to the original coarse unary predicates. -/
+theorem allowedBase_covered_of_familyPullbacks
+    (B : RelStructure L VB) (D : RelStructure L W)
+    (family : Set (Embedding B D)) {m : ℕ}
+    (allowedB : Fin (m + 1) → Set VB)
+    (allowedD : Fin (m + 1) → Set W)
+    (hCover : ∀ (ν : Fin (m + 1)) (y : W), y ∈ allowedD ν →
+      ∃ b : Embedding B D, b ∈ family ∧
+        ∃ x : VB, b x = y)
+    (hPull : ∀ b : Embedding B D, b ∈ family →
+      ∀ ν : Fin (m + 1), b ⁻¹' allowedD ν ⊆ allowedB ν) :
+    ∀ (ν : Fin (m + 1)) (y : W), y ∈ allowedD ν →
+      ∃ b : Embedding B D, b ∈ family ∧
+        ∃ x : VB, x ∈ allowedB ν ∧ b x = y := by
+  intro ν y hy
+  obtain ⟨b, hb, x, hxy⟩ := hCover ν y hy
+  refine ⟨b, hb, x, ?_, hxy⟩
+  apply hPull b hb ν
+  change b x ∈ allowedD ν
+  rw [hxy]
+  exact hy
+
+/-- Every permitted base point has an original allowed COARSE predicate,
+provided prescribed base embeddings respect those predicates.
+This is the precise transport needed from an auxiliary D-part map to
+the original (possibly non-fine-partite) coloured edge structure. -/
+theorem allowedBase_coarsePredicate_of_coverage
+    (B : RelStructure L VB) (D : RelStructure L W)
+    (family : Set (Embedding B D)) {m : ℕ}
+    (allowedB : Fin (m + 1) → Set VB)
+    (allowedD : Fin (m + 1) → Set W)
+    (predB : VB → Q) (predD : W → Q)
+    (permitted : Fin (m + 1) → Set Q)
+    (hPred : ∀ b : Embedding B D, b ∈ family →
+      ∀ x : VB, predD (b x) = predB x)
+    (hAllowed : ∀ ν : Fin (m + 1),
+      allowedB ν ⊆ predB ⁻¹' permitted ν)
+    (hCover : ∀ (ν : Fin (m + 1)) (y : W), y ∈ allowedD ν →
+      ∃ b : Embedding B D, b ∈ family ∧
+        ∃ x : VB, b x = y)
+    (hPull : ∀ b : Embedding B D, b ∈ family →
+      ∀ ν : Fin (m + 1), b ⁻¹' allowedD ν ⊆ allowedB ν) :
+    ∀ ν : Fin (m + 1), allowedD ν ⊆ predD ⁻¹' permitted ν := by
+  intro ν y hy
+  obtain ⟨b, hb, x, hx, hxy⟩ :=
+    allowedBase_covered_of_familyPullbacks B D family
+      allowedB allowedD hCover hPull ν y hy
+  change predD y ∈ permitted ν
+  rw [← hxy, hPred b hb x]
+  exact hAllowed ν hx
+
+/-- If a D-partite picture has part map into D, its allowed-vertex
+parameters are contained in the original coarse-predicate parameters
+whenever D's permitted part set is globally compatible. There is no
+assumption that the target train is A-partite. -/
+theorem allowedVertices_coarsePredicate_of_globalBaseBound
+    (part : Y → W) (predD : W → Q)
+    (allowedD : Set W) (permitted : Set Q)
+    (hAllowed : allowedD ⊆ predD ⁻¹' permitted) :
+    part ⁻¹' allowedD ⊆ (predD ∘ part) ⁻¹' permitted := by
+  intro y hy
+  exact hAllowed hy
+
+/-- The local pullback condition ALONE cannot control the ambient base:
+a chosen family may miss a permitted D-point. The displayed witness has
+an empty allowed B-set but a nonempty allowed D-set disjoint from its
+only prescribed B-image. -/
+theorem localPullback_does_not_imply_globalCover :
+    ∃ (f : Unit → Bool) (allowedB : Set Unit)
+        (allowedD : Set Bool),
+      (∀ x : Unit, f x ∈ allowedD → x ∈ allowedB) ∧
+      (∃ y : Bool, y ∈ allowedD ∧
+        ∀ x : Unit, y ≠ f x) := by
+  refine ⟨(fun _ : Unit => false), ∅, {true}, ?_, true, ?_, ?_⟩
+  · intro x hx
+    have hFalse : (false : Bool) ∈ ({true} : Set Bool) := hx
+    simp at hFalse
+  · simp
+  · intro x
+    simp
+
+end StructuralRamsey.Girth.TrainRecursiveWitness
