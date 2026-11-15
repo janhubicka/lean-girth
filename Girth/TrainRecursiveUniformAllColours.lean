@@ -69,7 +69,14 @@ theorem UniformSelectedPartiteOrderAllColours.finPower
   -- Introduce the implicit finite target/base types before applying h:
   -- otherwise Lean attempts to synthesize `Finite ?m` prematurely.
   intro VB V hVB hV
-  exact (h (Fin (r ^ n))) (VB := VB) (V := V)
+    Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts
+    targetTrain fineAllowed hSupportNonempty hSupportCovers
+    hGirth hParameters hTargetCuts hPartiteArrow
+  exact (h (Fin (r ^ n))) Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts targetTrain
+    fineAllowed hSupportNonempty hSupportCovers hGirth
+    hParameters hTargetCuts hPartiteArrow
 
 /-- The *real* larger-cutoff proof from the previous module preserves
 universal quantification over palettes. The only induction calls are
