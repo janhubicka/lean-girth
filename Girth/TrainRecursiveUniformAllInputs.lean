@@ -63,8 +63,15 @@ theorem UniformSelectedPartiteOrderAllInputs.finPower
     UniformSelectedPartiteOrder A₀ t (Fin (r ^ n)) := by
   letI : Nonempty (Fin (r ^ n)) := ⟨⟨0, pow_pos hr n⟩⟩
   intro VB V hVB hV
+    Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts
+    targetTrain fineAllowed hSupportNonempty hSupportCovers
+    hGirth hParameters hTargetCuts hPartiteArrow
   exact (UniformSelectedPartiteOrderAllColours.finPower
-    A₀ t (h A₀) r n hr) (VB := VB) (V := V)
+    A₀ t (h A₀) r n hr) Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts targetTrain
+    fineAllowed hSupportNonempty hSupportCovers hGirth
+    hParameters hTargetCuts hPartiteArrow
 
 /-- The new q>2 rank step is pointwise in the current edge structure
 and palette. Hence the already constructed selected lower HJ witness
