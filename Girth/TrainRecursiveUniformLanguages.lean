@@ -10,107 +10,110 @@ set_option Elab.async false
 The manuscript's cutoff-two operation changes the coloured edge type:
 the new single hyperedge has the WHOLE vertex set of the EHN witness X.
 The concrete relational presentation colouredOrderedEdgeLanguage I k
-uses a k-ary relation for edges. Its language changes when the number
-of vertices of X differs from the old coloured-edge size.
+uses a k-ary relation for edges, so its language changes when the
+number of vertices of X differs from the old coloured-edge size.
 
-The prior universal input wrappers quantify over all ordered source
-A-structures and all finite palettes, but keep a FIXED RelLanguage L.
-For the present k-ary language presentation, this is insufficient to
-apply the shorter-train order theorem at a different edge size unless
-one also proves a change-of-language transfer.
+The earlier universal input wrappers quantify over all ordered source
+A-structures and all finite palettes, but keep a FIXED language L.
+For this k-ary edge presentation the shorter-train step needs an
+additional quantifier over k, not an unexplained change-of-language
+transfer. The number and ordering of coarse unary predicate names I
+may be held fixed in one application, but we quantify over all finite
+ordered I before recursing as well.
 
-This module lifts the already-verified nontrivial q>2 partite forest
-transition uniformly across EVERY finite-arity coloured-edge language.
-No additional combinatorial lemma, new output existence hypothesis,
-current-rank witness or unproved change-of-language transfer is used.
-
-It does not prove base two, cutoff two, or the same-vector unrestricted
-forest-to-order theorem. These remain explicit operators.
+This module lifts the verified nontrivial q>2 partite forest transition
+pointwise over all k and all finite ordered unary-predicate index sets.
+It does NOT require base-two, cutoff-two or same-vector order conversion,
+and does not assert a theorem for arbitrary non-coloured relational
+languages beyond what the manuscript needs.
 -/
 
 namespace StructuralRamsey.Girth.TrainRecursiveWitness
 
 universe u v
 
-/-- Uniform selected forest assertion over every language L,
-every finite ordered edge type A for that language and every finite
-nonempty palette. The quantification over L takes place BEFORE the
-rank recursion, unlike the fixed-L all-input assertion. -/
-def UniformSelectedPartiteForestEveryLanguage
+/-- Universal forest assertion for every finite coloured one-edge ARITY.
+All finite ordered coloured-edge types and palettes are quantified over
+BEFORE the rank recursion. There is no fixed k in the inductive type. -/
+def UniformSelectedPartiteForestEveryColouredArity
     (t : List ℕ) : Prop :=
-  ∀ (L : RelLanguage.{u})
+  ∀ (I : Type u) [Finite I] [LinearOrder I] (k : ℕ)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
-    (A₀ : RelStructure L UA)
+    (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA)
     (κ : Type) [Fintype κ] [Nonempty κ],
       UniformSelectedPartiteForest A₀ t κ
 
-/-- The already checked q>2 construction is pointwise in language,
-edge structure and palette. Thus it fills the positive-depth rank
-replacement for the language-uniform assertion without new geometry.
-This is the actual universal quantifier order required for changing
-the edge arity at a cutoff-two shortening. -/
-theorem uniformSelectedPartiteForestEveryLanguage_largerCutoff
+/-- The checked q>2 construction is pointwise in the language, source
+edge type and palette. Its strict smaller-rank step therefore remains
+valid when the language can vary with the coloured edge arity k. -/
+theorem uniformSelectedPartiteForestEveryColouredArity_largerCutoff
     (q : ℕ) (tail : List ℕ) (hq : 2 < q)
     (hLower : ∀ d : ℕ, 0 < d →
-      UniformSelectedPartiteForestEveryLanguage.{u, v}
+      UniformSelectedPartiteForestEveryColouredArity.{u, v}
         (List.replicate d (q - 1) ++ tail)) :
-    UniformSelectedPartiteForestEveryLanguage.{u, v} (q :: tail) := by
-  intro L UA _ _ _ A₀ κ _ _
+    UniformSelectedPartiteForestEveryColouredArity.{u, v}
+      (q :: tail) := by
+  intro I _ _ k UA _ _ _ A₀ κ _ _
   exact uniformSelectedPartiteForest_largerCutoff A₀
-    q tail hq κ (fun d hd => hLower d hd L A₀ κ)
+    q tail hq κ (fun d hd => hLower d hd I k A₀ κ)
 
-/-- A concrete arity-k presentation is legitimately covered by the
-language-uniform assertion, for any k, not just the old edge arity.
-In the cutoff-two case one may take k = |V(X)|. -/
-theorem UniformSelectedPartiteForestEveryLanguage.atColouredArity
-    (I : Type u) (k : ℕ) (t : List ℕ)
-    (h : UniformSelectedPartiteForestEveryLanguage.{u, v} t)
+/-- A concrete k-ary coloured ordered edge type is covered directly
+for ANY k. In cutoff two, k is the number of VERTICES of the EHN
+witness X, NOT the number of its original smaller hyperedges. -/
+theorem UniformSelectedPartiteForestEveryColouredArity.atArity
+    (I : Type u) [Finite I] [LinearOrder I]
+    (k : ℕ) (t : List ℕ)
+    (h : UniformSelectedPartiteForestEveryColouredArity.{u, v} t)
     {UA : Type v} [LinearOrder UA] [Finite UA] [Nonempty UA]
     (A₀ : RelStructure (colouredOrderedEdgeLanguage I k) UA)
     (κ : Type) [Fintype κ] [Nonempty κ] :
     UniformSelectedPartiteForest A₀ t κ :=
-  h (colouredOrderedEdgeLanguage I k) A₀ κ
+  h I k A₀ κ
 
-/-- The q>2 field is completely supplied for the LANGUAGE-UNIFORM
-assertion. The other three operators are explicit mathematical inputs:
-the actual [2] stage, same-vector transfer to an unrestricted order
-assertion, and genuine cutoff-two filling at the shortened rank.
-The auxiliary order predicate is deliberately left abstract, because
-a fixed-L PARTITE order predicate is not unrestricted RR_tail. -/
-def uniformEveryLanguageOperators
+/-- The entire q>2 operator field is supplied in the exact coloured
+edge arity-uniform assertion. The OTHER fields explicitly demand:
+the base [2], a forest-to-UNRESTRICTED-order assertion at the same
+vector, and cutoff-two filling on a shorter train whose arity
+may differ from that of the input. An arbitrary OrderWitness predicate
+is used here, rather than incorrectly substituting partite RR. -/
+def uniformEveryColouredArityOperators
     (OrderWitness : List ℕ → Prop)
-    (baseTwo : UniformSelectedPartiteForestEveryLanguage.{u, v} [2])
+    (baseTwo :
+      UniformSelectedPartiteForestEveryColouredArity.{u, v} [2])
     (forestToOrder : ∀ t, Admissible t →
-      UniformSelectedPartiteForestEveryLanguage.{u, v} t →
+      UniformSelectedPartiteForestEveryColouredArity.{u, v} t →
       OrderWitness t)
     (cutoffTwo : ∀ tail, Admissible tail →
       OrderWitness tail →
-      UniformSelectedPartiteForestEveryLanguage.{u, v} (2 :: tail)) :
-    Operators (UniformSelectedPartiteForestEveryLanguage.{u, v})
+      UniformSelectedPartiteForestEveryColouredArity.{u, v}
+        (2 :: tail)) :
+    Operators (UniformSelectedPartiteForestEveryColouredArity.{u, v})
       OrderWitness where
   baseTwo := baseTwo
   forestToOrder := forestToOrder
   cutoffTwo := cutoffTwo
   largerCutoff := by
     intro q tail _ hq hLower
-    exact uniformSelectedPartiteForestEveryLanguage_largerCutoff
+    exact uniformSelectedPartiteForestEveryColouredArity_largerCutoff
       q tail hq hLower
 
-/-- Conditional full-rank forest conclusion with changed-language
-recursion supported. The three unproved base/order/cutoff operators
-are exposed in the theorem, not silently discharged. -/
-theorem uniformEveryLanguageForest_of_remainingOperators
+/-- Conditional rank assembly with correctly varying coloured edge
+arity, holding neither a fixed language nor a fixed colour palette.
+All three remaining operator fields are visible in the statement. -/
+theorem uniformEveryColouredArityForest_of_remainingOperators
     (OrderWitness : List ℕ → Prop)
-    (baseTwo : UniformSelectedPartiteForestEveryLanguage.{u, v} [2])
+    (baseTwo :
+      UniformSelectedPartiteForestEveryColouredArity.{u, v} [2])
     (forestToOrder : ∀ t, Admissible t →
-      UniformSelectedPartiteForestEveryLanguage.{u, v} t →
+      UniformSelectedPartiteForestEveryColouredArity.{u, v} t →
       OrderWitness t)
     (cutoffTwo : ∀ tail, Admissible tail →
       OrderWitness tail →
-      UniformSelectedPartiteForestEveryLanguage.{u, v} (2 :: tail))
+      UniformSelectedPartiteForestEveryColouredArity.{u, v}
+        (2 :: tail))
     (t : List ℕ) (ht : Admissible t) :
-    UniformSelectedPartiteForestEveryLanguage.{u, v} t :=
-  (uniformEveryLanguageOperators OrderWitness
+    UniformSelectedPartiteForestEveryColouredArity.{u, v} t :=
+  (uniformEveryColouredArityOperators OrderWitness
     baseTwo forestToOrder cutoffTwo).assemble t ht
 
 end StructuralRamsey.Girth.TrainRecursiveWitness
