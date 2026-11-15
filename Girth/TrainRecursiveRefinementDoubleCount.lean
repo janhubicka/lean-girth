@@ -1,4 +1,5 @@
 import Mathlib.Data.Fintype.Card
+import Mathlib.Data.Fintype.Prod
 import Mathlib.Tactic
 
 set_option autoImplicit false
