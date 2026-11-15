@@ -1,6 +1,5 @@
 import Girth.Track1FullSelectedWitnessEmbeddings
 import Girth.Track1PhysicalActualSelectedIntersections
-import Girth.Track1EHNIndexedSelected
 import Girth.Track1PhysicalFamilyActualMixedLF2
 import Girth.Track1TriangleFreePhysicalFamily
 
@@ -29,8 +28,6 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.oldColourOfRel_on_selected
 #print axioms StructuralRamsey.Girth.track1_oldSelectedEHNColouredEmbedding
 #print axioms StructuralRamsey.Girth.track1_exists_actualSelectedColouredLifts
-#print axioms StructuralRamsey.Girth.track1_selectedEmbedding_injective
-#print axioms StructuralRamsey.Girth.track1_selectedIndexedProperties
 #print axioms StructuralRamsey.Girth.track1_physicalSelectedFamily_actualMixedLF2
 #print axioms StructuralRamsey.Girth.track1_physicalRepresentative_supportPieces_injective
 #print axioms StructuralRamsey.Girth.track1_physicalRepresentative_arrow
