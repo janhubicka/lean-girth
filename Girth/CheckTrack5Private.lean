@@ -13,7 +13,7 @@ import Girth.TrainFillingPrivateCoveredEHN
 import Girth.TrainFillingPrivateActualParentStrong
 import Girth.TrainFillingPrivateOriginalImageInH
 import Girth.TrainFillingPrivateOriginalTrainInH
-import Girth.TrainFillingPrivateAllCutCoherence
+import Girth.TrainFillingPrivateActualSingleMapAllCuts
 import Girth.TrainFillingPrivateCanonicalAllCuts
 import Girth.TrainFillingPrivateReblockedEnumeration
 import Girth.TrainFillingPrivateOriginalColoursOrders
@@ -258,8 +258,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.originalFirstWagonInducedACopy_owner
 
 -- Fixed-target proper-cut coherence, source candidate pending exact-head elaboration.
-#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_allProperCuts_iff
-#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOriginalEdge_fixedMap_injective
 
 #check StructuralRamsey.Girth.colouredFirstWagonACopy_preservesColour
 #check StructuralRamsey.Girth.colouredFirstWagonACopy_strictMono
@@ -313,3 +311,11 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 -- Same canonical physical edge map across all proper cuts.
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.canonicalOriginalEdge_allProperCuts_iff
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.canonicalOriginalEdge_injective
+
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_injective
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_bottom_iff
+#check StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_allPositiveCuts_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_injective
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_bottom_iff
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOriginalEdgeInH_allPositiveCuts_iff
