@@ -11,7 +11,9 @@ log="${1:-/tmp/track1-selected-assembly-axioms.log}"
 lake build \
   Girth.Track1FullSelectedOrderedLifts \
   Girth.Track1FullSelectedSupportPieces \
-  Girth.Track1ActualSelectedOwnerColourArrow
+  Girth.Track1ActualSelectedOwnerColourArrow \
+  Girth.Track1OwnerSplitFinite \
+  Girth.Track1OrderedPhysicalOwners
 lake env lean CheckTrack1SelectedAssembly.lean > "$log" 2>&1
 cat "$log"
 python3 scripts/check_axioms.py "$log" CheckTrack1SelectedAssembly.lean
