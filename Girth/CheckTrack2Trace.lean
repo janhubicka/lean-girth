@@ -84,3 +84,6 @@ import Girth.ForestCopySetCompletion
 #check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_retained_set
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_to_retained_finset
 #print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_retained_set
+
+#check StructuralRamsey.Girth.forestOfCopies_lift_retained_set_including_empty_outer
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_retained_set_including_empty_outer
