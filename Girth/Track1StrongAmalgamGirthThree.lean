@@ -72,7 +72,7 @@ theorem track1_rightCopy_reflect_left
   change Set.range (iL.comp aL) = Set.range (iR.comp aR)
   apply Set.Subset.antisymm
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, (hMap x).symm⟩___TMP
+    exact ⟨x, hMap x⟩
   · rintro z ⟨x, rfl⟩
     exact ⟨x, (hMap x).symm⟩
 
@@ -132,7 +132,7 @@ theorem track1_leftCopy_reflect_right
   change Set.range (iR.comp aR) = Set.range (iL.comp aL)
   apply Set.Subset.antisymm
   · rintro z ⟨x, rfl⟩
-    exact ⟨x, (hMap x).symm⟩___TMP
+    exact ⟨x, hMap x⟩
   · rintro z ⟨x, rfl⟩
     exact ⟨x, (hMap x).symm⟩
 
