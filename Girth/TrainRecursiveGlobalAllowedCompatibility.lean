@@ -99,6 +99,51 @@ theorem allowedVertices_coarsePredicate_of_globalBaseBound
   intro y hy
   exact hAllowed hy
 
+/-- A weaker sufficient condition than coverage of *every* allowed
+D-base point: it is enough that the actually USED contact vertices
+of the output have base parts in prescribed B-images.
+
+The parameter information hContact is exactly the form supplied by
+an output train's adjacent-parameter restriction at one cut. The extra
+coverage input is only on genuine contacts, not on unrelated D-points
+which happen to lie in allowedD. This distinction can simplify the
+unrestricted forest-to-order transfer when selected-family coverage of
+the ENTIRE Ramsey base is unavailable. -/
+theorem usedContact_coarsePredicate_of_localPullback
+    (B : RelStructure L VB) (D : RelStructure L W)
+    (family : Set (Embedding B D)) {m : ℕ}
+    (part : Y → W)
+    (contact : Fin (m + 1) → Set Y)
+    (allowedB : Fin (m + 1) → Set VB)
+    (allowedD : Fin (m + 1) → Set W)
+    (predB : VB → Q) (predD : W → Q)
+    (permitted : Fin (m + 1) → Set Q)
+    (hContact : ∀ ν : Fin (m + 1),
+      contact ν ⊆ part ⁻¹' allowedD ν)
+    (hContactCovered : ∀ (ν : Fin (m + 1)) (y : Y),
+      y ∈ contact ν →
+        ∃ b : Embedding B D, b ∈ family ∧
+          ∃ x : VB, b x = part y)
+    (hPull : ∀ b : Embedding B D, b ∈ family →
+      ∀ ν : Fin (m + 1), b ⁻¹' allowedD ν ⊆ allowedB ν)
+    (hPred : ∀ b : Embedding B D, b ∈ family →
+      ∀ x : VB, predD (b x) = predB x)
+    (hAllowed : ∀ ν : Fin (m + 1),
+      allowedB ν ⊆ predB ⁻¹' permitted ν) :
+    ∀ ν : Fin (m + 1),
+      contact ν ⊆ (predD ∘ part) ⁻¹' permitted ν := by
+  intro ν y hy
+  have hPermittedBase : part y ∈ allowedD ν := hContact ν hy
+  obtain ⟨b, hb, x, hx⟩ := hContactCovered ν y hy
+  have hAllowedSource : x ∈ allowedB ν := by
+    apply hPull b hb ν
+    change b x ∈ allowedD ν
+    rw [hx]
+    exact hPermittedBase
+  change predD (part y) ∈ permitted ν
+  rw [← hx, hPred b hb x]
+  exact hAllowed ν hAllowedSource
+
 /-- The local pullback condition ALONE cannot control the ambient base:
 a chosen family may miss a permitted D-point. The displayed witness has
 an empty allowed B-set but a nonempty allowed D-set disjoint from its
