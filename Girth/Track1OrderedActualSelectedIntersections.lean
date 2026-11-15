@@ -1,21 +1,22 @@
 import Girth.Track1ActualSelectedLiftPairwiseAllowed
-import Girth.Track1OrderedPhysicalOwners
+import Girth.Track1PhysicalSelectedRepresentatives
+import Girth.Track1ForbiddenPartDegreeOne
 
 /-!
-# Track 1: ordered EHN selected copies have actual allowed lifted intersections
+# Track 1: pairwise allowed intersections of real selected B-supports
 
-An injectively indexed family of genuine finite ordered B embeddings
-automatically has distinct IMAGE carriers.  The source B
-allowed-predicate edge-intersection property gives forbidden degree
-one, and actual selected B predicate preservation transports it.
+Index selected B images by physical image carriers and choose a GENUINE
+EHN-selected representative for each carrier. This avoids assuming
+that the original selected embedding labels were physically injective
+or citing any order-specific equality theorem.
 
-Consequently the checked owner-splitting construction produces a
-family of full B-support pieces with pairwise AllowedIntersection.
-No output intersection hypothesis or choice of physical representatives
-is needed. The remaining old colour/order presentation adapter is
-stated separately.
+The source B restricted-intersection condition supplies forbidden
+degree one. The original EHN controlled carrier intersections give
+the exact SAME physical A-edge in both selected B support pieces,
+using Track1ControlledPhysicalIntersection.
 
-STAGED DRAFT: not kernel-compiled yet.
+No output allowed-intersection assumption is made.
+DRAFT: exact-head Lean compilation and axiom audit pending.
 -/
 
 namespace StructuralRamsey.Girth
@@ -24,53 +25,71 @@ open StructuralRamsey.RelStructure
 
 universe u v
 variable {L : RelLanguage.{u}}
-variable {UA VB V I Choice : Type v}
+variable {UA VB V I : Type v}
 
-/-- The entire actual lifted *ordered* selected B-support family
-inherits allowed pairwise intersections, using only the standard
-old selected-family and source-incidence hypotheses. -/
-theorem track1_orderedActualSelectedLiftPairwiseAllowed
-    (A : RelStructure L.withOrder UA)
-    (B₀ : RelStructure L VB)
-    (D : RelStructure L.withOrder V)
-    [LinearOrder VB] [Finite VB]
-    (family : Choice → Embedding B₀.ordered D)
-    (hFamily : Function.Injective family)
+/-- Genuine, physically distinct selected B copies have allowed
+intersections after splitting forbidden incidences. All owner
+uniqueness and physical distinctness follow from the input source
+and representative construction, rather than extra output axioms. -/
+theorem track1_physicalActualSelectedLiftPairwiseAllowed
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {C : RelStructure L V}
+    (family : Set (Embedding B C))
     (sourceColour : VB → I)
     (predicate : V → I) (allowed : Set I)
     (hRestricted : ∀ e f : Set VB,
-      e ∈ supportCopies A B₀.ordered →
-      f ∈ supportCopies A B₀.ordered → e ≠ f →
+      e ∈ supportCopies A B → f ∈ supportCopies A B → e ≠ f →
       ∀ w : VB, w ∈ e → w ∈ f → sourceColour w ∈ allowed)
-    (hPredicate : ∀ c : Choice, ∀ w : VB,
-      predicate (family c w) = sourceColour w)
-    (hControlled : ∀ i j : Choice,
-      ¬ SameCopy (family i) (family j) →
-      (copyCarrier (family i) ∩ copyCarrier (family j)).Subsingleton ∨
-        ∃ a : Embedding A D,
-          copyCarrier (family i) ∩ copyCarrier (family j) =
-            copyCarrier a) :
+    (hPredicate : ∀ b : Embedding B C, b ∈ family →
+      ∀ w : VB, predicate (b w) = sourceColour w)
+    (hControlled : ∀ b c : Embedding B C,
+      b ∈ family → c ∈ family → ¬ SameCopy b c →
+        (copyCarrier b ∩ copyCarrier c).Subsingleton ∨
+          ∃ a : Embedding A C,
+            copyCarrier b ∩ copyCarrier c = copyCarrier a) :
+    let f : Track1PhysicalBCarrier family → Embedding B C :=
+      track1_physicalRepresentative family
     PairwiseAllowed
-      (fun c : Choice =>
-        (actualSelectedOwnerCopy A family predicate allowed c
-          (track1_selectedForbiddenDegreeOne A family
-            sourceColour predicate allowed hRestricted hPredicate c)).selectedLiftSupportPiece) := by
+      (fun q : Track1PhysicalBCarrier family =>
+        (actualSelectedOwnerCopy A f predicate allowed q
+          (track1_selectedForbiddenDegreeOne A f
+            sourceColour predicate allowed hRestricted
+            (fun i w => hPredicate (f i)
+              (track1_physicalRepresentative_spec family i).1 w) q)
+        ).selectedLiftSupportPiece) := by
   classical
-  have hDifferent : ∀ ⦃i j : Choice⦄, i ≠ j →
-      ¬ SameCopy (family i) (family j) := by
-    intro i j hij hsame
-    exact hij ((orderedB_selectedCarriers_injective
-      B₀ D family hFamily) hsame)
+  dsimp
+  let f : Track1PhysicalBCarrier family → Embedding B C :=
+    track1_physicalRepresentative family
+  have hPred : ∀ q : Track1PhysicalBCarrier family, ∀ w : VB,
+      predicate (f q w) = sourceColour w := by
+    intro q w
+    exact hPredicate (f q)
+      (track1_physicalRepresentative_spec family q).1 w
   have hForbid :
-      ∀ c : Choice, ∀ (w : VB)
-        (e f : {e : Set VB // e ∈ supportCopies A B₀.ordered}),
-        predicate (family c w) ∉ allowed →
-        w ∈ e.1 → w ∈ f.1 → e = f :=
-    track1_selectedForbiddenDegreeOne A family
-      sourceColour predicate allowed hRestricted hPredicate
+      ∀ q : Track1PhysicalBCarrier family, ∀ (w : VB)
+        (e g : {e : Set VB // e ∈ supportCopies A B}),
+        predicate (f q w) ∉ allowed →
+        w ∈ e.1 → w ∈ g.1 → e = g :=
+    track1_selectedForbiddenDegreeOne A f
+      sourceColour predicate allowed hRestricted hPred
+  have hDifferent : ∀ ⦃i j : Track1PhysicalBCarrier family⦄,
+      i ≠ j → ¬ SameCopy (f i) (f j) := by
+    intro i j hij
+    exact track1_physicalRepresentative_distinct family hij
+  have hControlledF :
+      ∀ i j : Track1PhysicalBCarrier family,
+        ¬ SameCopy (f i) (f j) →
+        (copyCarrier (f i) ∩ copyCarrier (f j)).Subsingleton ∨
+          ∃ a : Embedding A C,
+            copyCarrier (f i) ∩ copyCarrier (f j) = copyCarrier a := by
+    intro i j hNe
+    exact hControlled (f i) (f j)
+      (track1_physicalRepresentative_spec family i).1
+      (track1_physicalRepresentative_spec family j).1 hNe
   exact track1_actualSelectedLiftPairwiseAllowed
-    A family predicate allowed hForbid hDifferent hControlled
+    A f predicate allowed hForbid hDifferent hControlledF
 
-#print axioms StructuralRamsey.Girth.track1_orderedActualSelectedLiftPairwiseAllowed
+#print axioms StructuralRamsey.Girth.track1_physicalActualSelectedLiftPairwiseAllowed
 
 end StructuralRamsey.Girth
