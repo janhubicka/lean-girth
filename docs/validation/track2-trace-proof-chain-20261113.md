@@ -369,10 +369,10 @@ requires **every expected theorem** to appear in the output.
 It neither updates dependencies nor invokes GitHub Actions.
 
 ```bash
-scripts/check_track2_local.sh active
-scripts/check_track2_local.sh increment
-scripts/check_track2_local.sh join
-scripts/check_track2_local.sh all
+bash scripts/check_track2_local.sh active
+bash scripts/check_track2_local.sh increment
+bash scripts/check_track2_local.sh join
+bash scripts/check_track2_local.sh all
 ```
 
 **Adversarial finite regression.** The manuscript branch now
