@@ -1,5 +1,4 @@
 import Girth.TrainRecursivePhysicalFineGirthDouble
-import Girth.TrainRecursiveRefinementAllRetainedCuts
 import Girth.TrainRecursiveRefinementCompleteCutVector
 import Girth.TrainRecursiveRefinementSelectedTransport
 import Girth.TrainRecursiveRefinementSinglePartAcyclic
@@ -10,7 +9,7 @@ set_option Elab.async false
 /-!
 # Track 6 independent strict axiom inspection entrypoint
 
-EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all eight
+EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all seven
 candidate Track 6 proof modules. The statements below deliberately name
 the actual elaborated theorem constants, not source comments or
 historical validation markers. A successful run must inspect the
@@ -23,7 +22,6 @@ precompiled .olean modules, not unbuilt source files:
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
-  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementAllRetainedCuts
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSelectedTransport
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSinglePartAcyclic
@@ -52,8 +50,6 @@ This is *not* a substitute for checking the selected lower witness.
 
 #print axioms StructuralRamsey.Girth.BergeCycle.child_constant_of_singleton_intersections_twice
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice
-#print axioms StructuralRamsey.Girth.FirstWagonRefinement.allRetainedLabelledCutGirth
-#print axioms StructuralRamsey.Girth.FirstWagonRefinement.allRetainedLabelledCutGirth_mono
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_sharedFineCutVector
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.trueActive_inducedFineCutVector
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_heightOne_twice
