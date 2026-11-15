@@ -83,8 +83,9 @@ theorem FinsetLabelForestCompletionProperty.toSupportIndexed
     exact hImage.trans hCard
   obtain ⟨K, finite, completed, hForest, hContains, hOnly⟩ :=
     hSet s hEligible hBudget
+  refine ⟨K, finite, ?_⟩
   letI : Fintype K := finite
-  refine ⟨K, finite, completed, hForest, ?_, ?_⟩
+  refine ⟨completed, hForest, ?_, ?_⟩
   · intro n
     obtain ⟨k, hk⟩ := hContains (picked n)
       (Finset.mem_image.mpr ⟨n, Finset.mem_univ n, rfl⟩)
@@ -131,8 +132,9 @@ theorem FinsetForestCompletionProperty.toLabelFinset
     exact hImage.trans hCard
   obtain ⟨K, finite, completed, hForest, hContains, hOnly⟩ :=
     hSet supportSet hSupportTest hSupportCard
+  refine ⟨K, finite, ?_⟩
   letI : Fintype K := finite
-  refine ⟨K, finite, completed, hForest, ?_, ?_⟩
+  refine ⟨completed, hForest, ?_, ?_⟩
   · intro a ha
     exact hContains (support a)
       (Finset.mem_image.mpr ⟨a, ha, rfl⟩)
