@@ -96,8 +96,10 @@ theorem irreducible_two_point_extension_reflect_of_aStrong
   obtain ⟨u, hu⟩ := hACover ⟨b z.1, hzRange⟩
   refine ⟨u, ?_⟩
   apply b.injective
-  rw [← hEq]
-  exact hu
+  calc
+    b z.1 = aC u := hu
+    _ = b (aB u) :=
+      congrArg (fun g : RelStructure.Embedding A C => g u) hEq
 
 /-- If a 2+ vertex irreducible in B has NO A-extension, no A-strong
 induced embedding B -> C can land in a C with total irreducible
