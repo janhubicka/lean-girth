@@ -112,3 +112,25 @@ The other graph-theoretic gate remains finite chordal graph => PEO
 via the documented strong Dirac minimal-separator induction.
 Final structural extraction still needs the actual Tracks 2/7
 forest-extension witnesses.
+
+
+### Critical inducedness qualification (16 November)
+
+An ordinary graph embedding or the library result
+SimpleGraph.cycleGraph_isContained_iff does NOT witness
+nonchordality: K4 contains cycleGraph 4 as a subgraph, but
+has both diagonals and is chordal. The Track 8 cycle adapter
+MUST require adjacency REFLECTION, e.g. an isomorphism
+from cycleGraph k onto the subgraph induced on the chosen
+cycle vertices, not just preservation of edges.
+
+In this exact representation, k>=4 implies that the
+induced cycle graph is CliqueFree 3, and the consecutive
+unordered edges form a pairwise-distinct family. Only
+THEN may one invoke no_bounded_fin_cycle_of_triangleFree.
+The K4 negative control is included in
+checks/track8_cycle_triangle_certificates.py.
+
+Do not identify graph cycle/ordinary graph embeddings with
+induced chordless cycles in English proofs, Lean statements,
+or validation marks.
