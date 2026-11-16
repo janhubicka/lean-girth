@@ -30,8 +30,8 @@ STAGED DRAFT; the following code has not been kernel-checked.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W V I Choice : Type v}
+universe v w
+variable {V I Choice : Type v} {W : Type w}
 
 /-- Any family of at most two pieces is a forest as soon as
 each pair of distinct members has an allowed intersection.
