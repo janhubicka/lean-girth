@@ -12,7 +12,13 @@ The previously implemented finite pass was conditional on a supplied
 local OrderStage/PictureStep operator, which is considerably stronger
 than the English statement of F_t unless that operator is constructed.
 
-Here the ONLY per-fibre existence premise is a RAW A-partite F_t
+Here the ONLY per-fibre existence premise is a typed A-partite F_t
+witness; HOWEVER its current RawPartiteFtWitness type still includes
+full ordered IsPartiteOver, which is not entailed by abstract F_t at
+q=2. This theorem is only a conditional reduction, not yet the
+faithful F_t=>R_t implication.
+
+The desired weaker premise is a RAW A-partite F_t
 witness, with its selected train embeddings, mixed SET forests,
 positive full-system bounds, parameters and physical-edge arrow.
 Train-labelled girth is derived from the genuine old picture and
