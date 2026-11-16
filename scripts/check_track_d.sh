@@ -179,6 +179,7 @@ checks=(
   CheckTrainRecursiveActualLowerRefiningStep
   CheckTrainRecursiveUniformLowerRank
   CheckTrainRecursiveGlobalAllowedCompatibility
+  CheckTrainRecursiveAllowedMonotone
   CheckTrainRecursiveOneEdgeDichotomy
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
