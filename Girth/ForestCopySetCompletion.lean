@@ -1,4 +1,4 @@
-import Girth.ForestFiniteSetCompletion
+import Girth.ForestCompletionProperty
 
 /-!
 # Finite sets of selected copies versus support-piece completions
@@ -99,50 +99,6 @@ theorem FinsetLabelForestCompletionProperty.toSupportIndexed
         completed k = support a := hk
         _ = support (picked n) := congrArg support hn.symm
         _ = selected n := hPickedSupport n
-    · exact Or.inr hDesignated
-
-/-- Conversely, completing finite SETS of support pieces already
-completes finite sets of original copy labels, with no injectivity
-assumption on the support map. Image cardinality never increases.
-This isolates the precise step between the two set-based
-formulations of the manuscript's forest-extension property. -/
-theorem FinsetForestCompletionProperty.toLabelFinset
-    {tested designated : HypergraphPiece W → Prop}
-    {m : ℕ}
-    (hSet : FinsetForestCompletionProperty tested designated m)
-    (support : Label → HypergraphPiece W)
-    (eligible : Label → Prop)
-    (hTest : ∀ a : Label, eligible a → tested (support a)) :
-    FinsetLabelForestCompletionProperty support eligible designated m := by
-  classical
-  intro selected hEligible hCard
-  let supportSet : Finset (HypergraphPiece W) :=
-    selected.image support
-  have hSupportTest :
-      ∀ P : HypergraphPiece W, P ∈ supportSet → tested P := by
-    intro P hP
-    obtain ⟨a, ha, hEq⟩ := Finset.mem_image.mp hP
-    rw [← hEq]
-    exact hTest a (hEligible a ha)
-  have hSupportCard : supportSet.card ≤ m := by
-    have hImage :
-        supportSet.card ≤ selected.card := by
-      simpa only [supportSet] using
-        (Finset.card_image_le (s := selected) (f := support))
-    exact hImage.trans hCard
-  obtain ⟨K, finite, completed, hForest, hContains, hOnly⟩ :=
-    hSet supportSet hSupportTest hSupportCard
-  refine ⟨K, finite, ?_⟩
-  letI : Fintype K := finite
-  refine ⟨completed, hForest, ?_, ?_⟩
-  · intro a ha
-    exact hContains (support a)
-      (Finset.mem_image.mpr ⟨a, ha, rfl⟩)
-  · intro k
-    rcases hOnly k with hSelected | hDesignated
-    · left
-      obtain ⟨a, ha, hEq⟩ := Finset.mem_image.mp hSelected
-      exact ⟨a, ha, hEq.symm⟩
     · exact Or.inr hDesignated
 
 end StructuralRamsey.Girth
