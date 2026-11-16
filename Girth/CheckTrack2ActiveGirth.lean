@@ -18,12 +18,8 @@ on the basis of this gate file's existence.
 #check StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
 #check StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
-#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
-#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
 #check StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
-#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
 #check StructuralRamsey.Girth.testedPictureABSupport_iff_label
-#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 
 #print axioms StructuralRamsey.Girth.girthGT_union_of_forest_edge_traces
 #print axioms StructuralRamsey.Girth.girthGT_selected_of_forest_edge_traces
@@ -33,12 +29,8 @@ on the basis of this gate file's existence.
 #print axioms StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
 #print axioms StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
-#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
-#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
 #print axioms StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
-#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
 #print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
-#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 
 #check StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
