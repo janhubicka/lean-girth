@@ -4,7 +4,7 @@ import Girth.TrainFillingPrivateActualFirstWagonSource
 set_option Elab.async false
 
 /-!
-# Apply ordered EHN directly to the original labelled first-wagon quotient
+# RAW EHN preparation on the original labelled first-wagon quotient
 
 The actual input of cutoff two is the ORIGINAL train T, on
 the complete coloured A-support edge type of D.
@@ -23,7 +23,8 @@ so its auxiliary order is CONSTRUCTED, not an external input.
 Nonemptiness of W follows from an actual old A-edge.
 
 Consequently the concrete realColouredFirstWagon_privateEHN
-existence theorem can be invoked directly on the old train,
+existence theorem can be invoked on the original train's RAW
+relational first-wagon coproduct,
 with no arbitrary wagon-owner function, foreign first-wagon
 coverage, separate first-wagon carrier linearity, or invented
 choice of a first-wagon label order.
