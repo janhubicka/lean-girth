@@ -78,6 +78,31 @@ This additional arity issue is separate from:
 Any complete nonpartite RR assertion used at cutoff-two must
 address all three and the actual changing k.
 
+## Integration with current mainline (16 November)
+
+The earlier branch was based on the 15 November mainline and
+had a checker-script conflict after the latest Track 1 integration.
+A two-parent merge commit `424ddc7787680b1a89de288babad2a22e9ffaeb3`
+now retains the latest merged mainline tree and adds only these four
+new artifacts plus one `CheckTrainRecursiveUniformLanguages`
+registration. The PR diff was independently checked: five files
+only, with no duplicate or replaced existing source files.
+
+The actual theorem specialization `atColourWord` now introduces its
+nonempty finite function palette **both at theorem statement
+elaboration and inside the proof**. Without the first binder the
+declared `UniformSelectedPartiteForest` type cannot be elaborated.
+
+The finite colour palette `Fin n → Fin r` needs `r>0` but does
+not require `n>0`. The coloured edge arity requires `k≥2`.
+A genuine source-edge-type specialization to the canonical
+`colouredOrderedEdgeSource k sourceColour` is a possible future
+refinement: the present proposition still quantifies over *all*
+finite ordered structures in `colouredOrderedEdgeLanguage I k`,
+so the full base-two operator is stronger than the final
+one-edge-source application. This does not affect the validity of
+the conditional q>2 pointwise transition.
+
 ## Exact verification boundary
 
 This branch changes no existing verified proof or manuscript marker.
