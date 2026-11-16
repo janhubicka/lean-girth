@@ -194,4 +194,46 @@ theorem crossPairNonedge_of_triangleFreeOn
     G a b hEdges hFree e f z hz
 
 
+/-- A triangle-free induced subgraph on the required vertices
+implies the explicit elementwise triangle exclusion used above.
+No triangle-free condition is imposed outside these vertices. -/
+theorem triangleFreeOn_of_induced_cliqueFree
+    (G : SimpleGraph W) (C : Set W)
+    (hFree : (G.induce C).CliqueFree 3) :
+    TriangleFreeOn G C := by
+  classical
+  intro x y z hx hy hz hTriangle
+  let u : C := ⟨x, hx⟩
+  let v : C := ⟨y, hy⟩
+  let w : C := ⟨z, hz⟩
+  have hTriangleInduced :
+      (G.induce C).Adj u v ∧
+      (G.induce C).Adj u w ∧
+      (G.induce C).Adj v w := hTriangle
+  have hClique :
+      (G.induce C).IsNClique 3 ({u, v, w} : Finset C) :=
+    ((G.induce C).is3Clique_triple_iff).mpr hTriangleInduced
+  exact hFree _ hClique
+
+/-- This is the recommended interface for the final graph-cycle
+adapter: the induced graph on the cycle's required endpoints is
+triangle-free, and the consecutive edges are distinct as
+unordered pairs. From these two inputs the previous cross-pair
+certificate follows automatically. -/
+theorem crossPairNonedge_of_induced_cliqueFree
+    (G : SimpleGraph W) (a b : E → W)
+    (hEdges : ∀ e : E, G.Adj (a e) (b e))
+    (hDistinct :
+      ∀ e f : E, e ≠ f →
+        ({a e, b e} : Finset W) ≠ {a f, b f})
+    (hFree :
+      (G.induce (pairPatternVertices a b)).CliqueFree 3)
+    (e f : E) (hef : e ≠ f) :
+    CrossPairNonedge G a b e f :=
+  crossPairNonedge_of_triangleFreeOn
+    G a b hEdges hDistinct
+    (triangleFreeOn_of_induced_cliqueFree
+      G (pairPatternVertices a b) hFree) e f hef
+
+
 end StructuralRamsey.Girth
