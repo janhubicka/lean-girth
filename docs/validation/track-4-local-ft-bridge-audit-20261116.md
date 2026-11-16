@@ -36,3 +36,18 @@ Then the prepared nontrivial step plus the identity step for 0/1 physical fibres
 ### Minimal next kernel sequence
 
 First compile the *existing* pinned dependencies and `TrainCoverageFreeNontrivialFtStep.lean`. Next implement and compile the witness relabelling/support/selected-family bridge (separate module, avoiding a new “localFt” oracle); then `TrainCoverageFreeInitialFinitePass.lean`, `CheckTrack4MinimumOwnerSwap.lean`, and inspect every `#print axioms` result at the exact new head.
+
+## Continuation 16 November: direct local bridge and ordered-partiteness no-go
+
+The first audit's large-base coarsening route can be useful when a **recursive** selected ForestStage is actually constructed. It is **not** the logical starting point for an arbitrary \`F_t\` witness, which has no selected base projection. A separate **direct** route now exists in:
+
+- \`TrainCoverageFreeDirectPartiteFtStep.lean\`: translates actual A-partite local maps, labelled physical restrictions, fine parameters, positive bounds and physical arrow to the nontrivial coverage-free picture step;
+- \`TrainCoverageFreeRawFtWitness.lean\`: packages the local witness data and derives the picture step from it;
+- \`TrainCoverageFreeRawFtFinitePass.lean\`: feeds a raw-witness chooser into the already constructed finite pass;
+- \`TrainCoverageFreeSelectedLowerBundle.lean\` / \`TrainCoverageFreeSelectedLowerPositive.lean\`: the optional large-base selected-stage route, using fields that really do not depend on mixedCoverage.
+
+**NEW ADVERSARIAL BLOCKER, stronger than the earlier generic q2 graph caveat:** the direct raw-witness structure currently has \`core.IsPartiteOver A0.ordered\`. This is not a consequence of the q=2 ordered coloured-edge type. The explicit 6-vertex 3-uniform construction with three ordered edges and an induced irreducible order triangle but no corresponding physical hyperedge proves the mismatch. See [the dedicated order-reduct audit](./track-4-q2-ordered-partiteness-obstruction-20261116.md). The **unordered edge reduct** has the desired partite projection, so this does not refute the circulation manuscript's auxiliary-order proof.
+
+**Required repair before closing \`prop:globalize\`:** make the local physical attachment and forest-stage geometry run on the unordered edge reduct with fine-part projections, keeping the within-part orders auxiliary; use the existing order-extension observation at the end. Do not postulate ordered IsPartiteOver for arbitrary q2 witnesses, and do not claim that the five new source files prove the abstract F_t premise. 
+
+\`CheckTrack4MinimumOwnerSwap.lean\` now imports these five files and registers 198 total axiom checks (8 new), **none run**. PR #1064 and manuscript PR #448 remain DRAFT; all implicated validation markers remain OPEN.
