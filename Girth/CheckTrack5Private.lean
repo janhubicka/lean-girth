@@ -34,6 +34,7 @@ import Girth.TrainFillingPrivateTwoTypeOrderGirth
 import Girth.TrainFillingPrivateCanonicalTwoTypeOldTrain
 import Girth.TrainFillingPrivateActualTwoTypeTargetGirth
 import Girth.TrainFillingPrivateActualSourceEdgeEquiv
+import Girth.TrainFillingPrivateActualSourceOwnerTransport
 import Girth.TrainFillingPrivateActualChoiceTrain
 import Girth.TrainFillingPrivateRealColouredEHN
 import Girth.TrainFillingPrivateActualLabelledStrong
@@ -401,3 +402,7 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 #print axioms StructuralRamsey.Girth.canonicalTwoTypeOldEdgeEquiv_eq_refl
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualSelectedFilledOldTrain_eq_stage_for_canonicalH
 #print axioms StructuralRamsey.Girth.IndexedPrivateChoice.actualOrderStage_canonicalTwoTypeTargetGirth
+
+-- Owner-faithful original physical-edge equivalence, source-only gate.
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualSourceEdgeEquiv_symm_owner
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.actualSourceEdgeEquiv_tail_rel
