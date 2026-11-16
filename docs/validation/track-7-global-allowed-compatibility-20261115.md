@@ -1,0 +1,241 @@
+# Track 7: global parameter compatibility in the unrestricted order witness
+
+**15 November 2026 · independent source audit · no kernel check.**
+
+The existential-base unrestricted order predicate in draft #1073 has
+two good features absent from its earlier form: the output base D may be
+larger than the input target B, and the input train B need not have a fine
+A-partition. These are necessary for cutoff-two filling.
+
+There is a further distinction between local *B-copy* compatibility and
+global *ambient output* compatibility.
+
+## Verified mathematical issue (elementary set theory)
+
+The current proposed output data include the pullback requirement
+
+    ∀ b ∈ family, ∀ ν, b ⁻¹' allowedD[ν] ⊆ allowedB[ν].
+
+By itself it controls only **points of D lying in the images of the
+prescribed B-copies**. It imposes no restriction on `allowedD[ν]` at
+points outside those images. Such points may still be used by ambient
+A-edges of the output stage and hence by actual wagon intersections.
+
+For example take `B=Unit`, `D=Bool`, one B-map sending the unique
+point to `false`, `allowedB=∅` and `allowedD={true}`.
+The prescribed pullback requirement is true, while the nonempty
+allowed D-point is outside the prescribed image. So per-family
+pullbacks **do not imply** global coarse parameter bounds.
+
+A sufficient additional condition is permitted-point base coverage:
+
+    ∀ ν y, y ∈ allowedD[ν] →
+       ∃ b ∈ family, ∃ x : B, b(x) = y.
+
+Then the pullback property implies
+
+    ∀ ν y, y ∈ allowedD[ν] →
+       ∃ b ∈ family, ∃ x ∈ allowedB[ν], b(x) = y.
+
+If the prescribed B-embeddings preserve the original coarse predicates,
+and `allowedB[ν]` consists of permitted coarse-predicate vertices,
+then **every** point of `allowedD[ν]` has a permitted coarse
+predicate. Pulling this back through the new D-partite witness's
+`part : Vertex → D` gives the original ambient intersection bound.
+
+This is formally distinct from the previously detected X-coordinate
+collision: the latter prohibits a *global fine X-part map* on the
+shorter train; the present issue is about a **too-weak allowed-set
+condition on a larger Ramsey base**.
+
+## A simpler alternative: choose canonical coarse-permitted parts
+
+In the manuscript's coloured-edge setting, the permitted vertices at
+each cut are **unions of unary colour classes**, not arbitrary sets of
+individual B-vertex coordinates. Suppose
+`predB : V(B) → I` and `predD : V(D) → I` are the genuine coarse colour
+maps and every prescribed embedding b:B→D preserves these maps.
+
+For the original permitted predicate-index set `P[ν] ⊆ I`, CHOOSE
+
+    allowedD[ν] = predD^{-1}(P[ν]).
+
+This choice immediately gives **global** coarse compatibility for
+every D-point, including those outside all selected B-copies. Moreover,
+
+    b^{-1}(allowedD[ν]) = predB^{-1}(P[ν]).
+
+Thus it satisfies the selected family pullback requirement whenever
+`allowedB[ν]` contains the original permitted B-colour classes
+(and with equality when `allowedB[ν]=predB^{-1}(P[ν])`).
+
+In this canonical choice, **no permitted-point selected-family
+coverage is needed**. This is potentially the preferable method for
+the genuine coarse-coloured Ramsey output. However it is only useful
+if the actual construction of the selected `OrderStage` permits
+choosing its allowedD parameters in this canonical form. That existence
+step has NOT been proved here. For a stage whose allowedD was already
+fixed arbitrarily, the original coverage argument remains one possible
+sufficient condition.
+
+There is also a weaker intermediate alternative to covering all
+allowed D-points: it suffices to cover the **actual output contact
+vertices** at each train cut. The lemma
+`usedContact_coarsePredicate_of_localPullback` formalizes precisely
+this restricted obligation. It may be easier to establish from the
+actual glued geometry than full selected-family coverage of D.
+
+## Actual unary colours versus auxiliary part coordinates
+
+The definition of `Partite.System L P V` in the pinned
+`partite-construction/PartiteConstruction/Partite/Basic.lean`
+has a part map `V→P` and a **transversality** condition on relation
+tuples. It does NOT, merely by the definition of partiteness, impose
+that the unary colour of an output vertex y equals the coarse
+colour of its part `part(y)`.
+
+Thus the canonical allowedD construction controls the **composed**
+predicate `predD ∘ part` automatically, but transferring to the
+**actual output unary predicate** `predOut` needs an additional
+compatibility certificate
+
+    ∀ y, predOut(y) = predD(part(y))
+
+(or the same equation only for actual contact vertices at the
+relevant cuts). In an initial labelled picture this may follow from
+its component construction and colour-preserving embeddings; the
+recursive attachment must preserve that invariant. It is NOT a
+consequence of an arbitrary System's transversal field alone.
+
+**Stronger invariant in actual stages.** The same pinned library defines
+`System.IsPartiteOver D` in
+`PartiteConstruction/Partite/Induced.lean` as a *relational
+homomorphism-embedding* of the projection into D. The checked
+`ForestTailStage` structure explicitly includes
+`isPartite : system.IsPartiteOver D`, which is stronger than
+bare transversality. If the coloured-edge unary predicate symbols
+describe a genuine partition of both the output vertices and D,
+this homomorphism maps each vertex's actual unary colour to its
+D-part colour. Therefore the required colour compatibility is
+**derivable**, rather than another independent oracle. The new
+conditional lemma `actualColour_eq_baseColour_of_isPartiteOver`
+expresses exactly this deduction; its companion
+`adjacentParameters_from_actualPartiteCoarseColour` then transfers
+actual train `AdjacentParameters` directly. Applying these to the
+specific coloured-edge presentation still needs the explicit unary
+predicate partition certificates (not proved in this preparation
+module), and existence of a stage WITH canonical allowedD remains
+the main construction obligation.
+
+The conditional new statements
+`adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
+and `usedContact_originalPredicate_of_colourCompatibility`
+make this final step explicit. Neither constructs the needed colour
+compatibility for the real attached picture.
+
+## Lean interfaces
+
+`Girth/TrainRecursiveGlobalAllowedCompatibility.lean` contains:
+
+- `allowedBase_covered_of_familyPullbacks`: permitted D-base
+  coverage + the existing local pullbacks → globally permitted image
+- `allowedBase_coarsePredicate_of_coverage`: compatibility of
+  unary coarse predicates → every allowed D-base vertex has an
+  originally permitted coarse predicate
+- `allowedVertices_coarsePredicate_of_globalBaseBound`: pull back the
+  resulting bound through an arbitrary picture's part map
+- `usedContact_coarsePredicate_of_localPullback`: only the genuine output
+  contact vertices need coverage, provided their D-parts are allowed
+- `actualColour_eq_baseColour_of_isPartiteOver` and
+  `adjacentParameters_from_actualPartiteCoarseColour`: use the
+  genuine stage's stronger homomorphism-embedding projection and
+  unary-colour partition relations to discharge colour compatibility
+- `adjacentParameters_of_canonicalCoarseAllowed_and_colourCompatibility`
+  and `usedContact_originalPredicate_of_colourCompatibility`: explicitly
+  require the actual output unary-colour map to agree with the colour
+  of its base part, globally or on actual contacts
+- `adjacentParameters_of_canonicalCoarseAllowed`: the genuine
+  `EdgeTrainLevels.AdjacentParameters` predicate transfers unchanged
+  from canonical D-parts to the composed original coarse predicate map
+- `canonicalCoarseAllowed_pullback`,
+  `canonicalCoarseAllowed_familyPullback`, and
+  `canonicalCoarseAllowed_output`: choosing the permitted D-parts by
+  original coarse unary colour immediately controls all D-points and
+  restricts correctly to each selected B-image, without any coverage
+- `localPullback_does_not_imply_globalCover`: the finite
+  Unit→Bool counterexample above
+
+These lemmas are **conditional preparation**, not an existence theorem
+for a selected order stage. The preferred option is to choose canonical
+coarse-predicate allowedD in the actual Ramsey construction. If that
+choice is unavailable, one may prove coverage of allowed D-points or
+only of the genuine output contacts; neither is proved here.
+
+## Retyping the SAME selected stage with canonical allowed sets
+
+A further simplification follows from the actual stage's field
+dependency: `ForestTailStage.allowed` appears in the physical stage
+only through its `train.AdjacentParameters` certificate. Every other
+field (actual ambient edges and vertex carrier, selected B-labels,
+physical injectivity, mixed bottom forest, positive system bounds,
+target train restriction and A-strongness) is independent of the
+allowed-part set. Moreover, the selected `DesignatedArrow` itself
+depends only on the unchanged system and selected family.
+
+Thus if a genuinely constructed stage `S` has old allowedD and one
+proves
+
+    ∀ ν, oldAllowedD[ν] ⊆ coarseColourD⁻¹(Pν),
+
+there is no need to reconstruct the Ramsey stage with the canonical
+allowed sets. One can simply widen the parameter sets:
+
+    S' = S.widenAllowed (coarseColourD⁻¹ ∘ P).
+
+The new `Girth/TrainRecursiveAllowedMonotone.lean` uses the simple
+monotonicity of `EdgeTrainLevels.AdjacentParameters`, then
+reconstructs `ForestTailStage` and `OrderStage` with IDENTICAL
+physical system, train and selected labels. The existing selected
+arrow is definitionally the same. A final conditional theorem
+`OrderStage.withCanonicalCoarseAllowed` packages this retyping.
+
+This does **not** derive the required containment
+`oldAllowedD ⊆ canonicalCoarseAllowed` from the existing pullback
+condition alone; the Unit→Bool counterexample still applies.
+That containment can come from a direct coarse-colour invariant,
+or from proven coverage of permitted D-points/used contacts.
+
+The extra five `#print axioms` declarations are in
+`CheckTrainRecursiveAllowedMonotone.lean`. No exact-head Lean build
+of this new module has been completed.
+
+## Exact-main integration, 16 November
+
+The branch was integrated onto updated `lean-girth/main` by an explicit
+two-parent commit `e0c865432bd890dbbcb97511de2a71d726b39f3a`,
+keeping the entire contemporary mainline tree. The independently
+checked diff is precisely **seven files**: two new Lean source modules,
+two root axiom checkers, this audit note, one focused local script and
+two additional checker registrations in `scripts/check_track_d.sh`.
+No established module is replaced and no current manuscript theorem
+marker is changed.
+
+The new parameter-widening construction is an *existing-witness*
+transformation. It does not produce an `OrderStage` or a selected
+Ramsey arrow if none existed to begin with. The main open rank
+operators are still the real unrestricted forest-to-order step,
+base-two and cutoff-two filling.
+
+## Current validation boundary
+
+This PR does NOT change the unrestricted predicate in live draft #1073,
+its compiler errors, or any manuscript validation mark. Before
+promoting an unrestricted order theorem, either **construct the stage**
+with canonical coarse-predicate allowedD, or ensure the selected
+family covers every permitted base point / genuine used contact vertex,
+or prove another direct global coarse-predicate compatibility. Verify
+the output's ambient wagon parameters, not merely those internal
+to selected designated copies.
+
+The preparation modules contain eighteen exact axiom probes, with no `sorry`/`admit`/new axiom. They have
+NOT yet passed an exact-head Lean compile or `#print axioms` check.

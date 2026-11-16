@@ -182,6 +182,8 @@ checks=(
   CheckTrainRecursiveUniformAllInputs
   CheckTrainRecursiveCutoffTwoPartObstruction
   CheckTrainRecursiveUnrestrictedOrderInterface
+  CheckTrainRecursiveGlobalAllowedCompatibility
+  CheckTrainRecursiveAllowedMonotone
   CheckTrainRecursiveOneEdgeDichotomy
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
