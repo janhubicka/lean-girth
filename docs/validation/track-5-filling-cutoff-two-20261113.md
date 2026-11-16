@@ -1,4 +1,4 @@
-# Track 5 — current cutoff-two validation map (15 November 2026)
+# Track 5 — current cutoff-two validation map (16 November 2026)
 
 **Scope:** `paper/13-filling.tex` and `paper/16-cutoff-two.tex`;
 numbered [issue #1056](https://github.com/janhubicka/lean-girth/issues/1056).
@@ -17,6 +17,67 @@ Both PRs intentionally remain **draft and unmerged**.
 > head, and no `#print axioms` output has been inspected. Earlier checked
 > imports do NOT certify new applications. No green marks, no paid CI,
 > and no full TeX build are claimed.
+
+## Critical correction — raw versus COMPLETED ordered W
+
+The direct EHN source of the manuscript is the **ordered disjoint
+union** of the first wagons. The existing
+`PrivateRealDisjointUnion` and
+`PrivateRealColouredEHN` candidate files construct a RAW
+relational coproduct: every relation tuple, INCLUDING the binary
+within-colour order relation, belongs to one summand.
+A separately declared auxiliary `LinearOrder` on that vertex
+type **does not insert the missing binary relational pairs**.
+
+If distinct first wagons contain vertices of the same predicate
+colour, raw W cannot embed inducedly into a fully ordered coloured
+hypergraph X: any two images have a comparison in X in one direction
+which is absent from raw W in BOTH directions. This is a REAL
+interface obstruction, not an open proof of an obviously
+automatic equivalence.
+
+**Executed finite counterexample** (16 November):
+`/mnt/data/track5_order_completion_obstruction.py`
+has two disjoint 2-edge wagons with four same-colour vertices.
+Exactly **0/24** bijections from raw W into a fully ordered
+coloured X are induced order embeddings; after completing W's
+binary within-colour order, there is **1/24**.
+Different-colour summands yield no cross-colour obstruction.
+This is a finite counterexample to an invalid shortcut, not
+a counterexample to the Ramsey theorem.
+
+**Corrected manuscript PR #450:** form W with the componentwise
+**hyperedge** relation but add comparisons between all
+same-colour vertices according to a global order extending
+each summand's order. Every coloured edge remains inside a
+summand because its full k-ary edge relation was not changed.
+The EHN-to-coloured-X completion is part of Track 1's
+`lem:unrestricted`, not a trivial consequence of a raw
+`ElementaryCAClass` reduct.
+
+**New candidate source**:
+- `PrivateRawOrderObstruction` records absence of
+  cross-summand order and the no-induced-embedding obstruction;
+- `PrivateCompletedOrderedW` defines the correct
+  completed relational W, preserves componentwise edge
+  membership and supplies the completed order relation;
+- `CheckTrack5RawOrderObstruction` isolates their
+  `#check` / `#print axioms` gates.
+
+**Not yet proved in Lean:** each F_p remains a full induced
+relational substructure of the completed W; completed-W
+A-linearity/coverage/monotonicity; replacement of RAW-W in the
+ordered EHN selected-family arrow; and the marked, covered
+X output. The RAW-EHN lemmas remain preparatory, **not a
+proof of the completed ordered first Ramsey input**.
+Do not promote their associated validation markers.
+
+The earlier offline Lean setup guide was found in the
+Library. It pins the same `v4.35.0-rc3` compiler, but the
+old successful Ubuntu bundle from 8 November currently
+exposes **zero available workflow artifacts**. The
+container has no installed compiler/mathlib workspace.
+No exact-head kernel/axiom check could be run in this turn.
 
 ## Critical correction — TWO edge types in the filled OrderStage
 
@@ -195,19 +256,21 @@ claim for the new Track 5 constructors.
   owner map is constructed from the original quotient, not assumed.
 - `PrivateRealDisjointUnion`, `PrivateRealUnionOrder`,
   `PrivateRealUnionLinear` and `PrivateRealUnionColoured`:
-  actual dependent tagged \(W\), induced and \(A\)-strong
-  component inclusions, \(A\)-linearity, coverage, and a
-  colour-first global order. A spanning \(A\)-relation gives
-  irreducibility and puts each \(A\)-copy into one summand.
-  Positive relation arities are explicit because the generic
-  relational language permits nullary symbols.
+  the RAW dependent tagged coproduct and a SEPARATE
+  auxiliary colour-first order. These are useful
+  free-amalgamation preparations, but the binary within-colour
+  relations of raw W do not compare different summands.
+  `PrivateCompletedOrderedW` now defines the intended
+  relational order completion. Its exact EHN interface
+  and induced summand properties are OPEN.
 - `PrivateRealUnionColouredMono`,
   `PrivateRealUnionLocalCoverage`,
   `PrivateRealUnionEHN`, `PrivateRealColouredEHN`,
-  `PrivateActualWagonEHN`: derive the concrete ordered
-  EHN input directly from original \(T\), including the
-  genuine first-wagon girth, ownership and nonempty support.
-  There is NO requirement \(F_p\simeq W\).
+  `PrivateActualWagonEHN`: derive the ordered EHN
+  source geometry for the RAW relational W from original
+  \(T\). This is **not yet** the completed ordered
+  W needed by `lem:unrestricted`. There is no
+  requirement \(F_p\simeq W\).
 
 ### B. Ordered EHN selections and the actual shortened \(M\)
 
@@ -362,23 +425,28 @@ indexing*, not the Lean proofs.
 
 ## Exact outstanding obligations
 
-1. **Upstream Track 1:** supply the checked owner-split,
+1. **Ordered W completion:** establish genuine induced F_p
+   inclusions, unchanged small A-edge support,
+   A-linearity and the ordered-EHN arrow for the
+   COMPLETED relational W. Do not substitute the
+   RAW coproduct plus an auxiliary LinearOrder.
+2. **Upstream Track 1:** supply the checked owner-split,
    **covered, \(S=A_1\)-restricted, increasing selected**
    EHN Ramsey family. [Issue #1052](https://github.com/janhubicka/lean-girth/issues/1052)
    still marks this full bridge open.
-2. Instantiate the original partite train \(T\)
+3. Instantiate the original partite train \(T\)
    in its concrete coloured relational presentation
    and connect the actual quotient-tail \(M\)
    and its marked parameters to the lower
    \(\mathsf{RR}_{\mathbf h}\) stage.
-3. Obtain an actual **selected `OrderStage`**
+4. Obtain an actual **selected `OrderStage`**
    with its `DesignatedArrow` and `allCutGirth`
    from the shorter induction hypothesis.
-4. Combine the same physical selected target map
+5. Combine the same physical selected target map
    with its parts, predicates and orders and the
    checked **full** canonical H system-girth/scattering
    proof for every cut, including old equality.
-5. **Kernel verification:** build each module on its exact
+6. **Kernel verification:** build each module on its exact
    branch head, then run
    `lake env lean Girth/CheckTrack5Private.lean`,
    inspect `#print axioms` and every elaborated hypothesis,
