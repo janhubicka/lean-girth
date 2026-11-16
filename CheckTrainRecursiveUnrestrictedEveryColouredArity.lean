@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveUnrestrictedEveryColouredArity
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderEveryColouredArity
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderEveryColouredArity.atArity
