@@ -18,12 +18,11 @@ from the relational partite projection. Until that is formalized,
 this structure is a STRONGER CONDITIONAL interface, not a faithful
 formalization of F_t.
 
-This was originally designed to package the output
-on a nontrivial TRUE active induced train. It requests ONLY:
-a finite ordered A-partite local train; its one-per-image selected
-strong train maps; the mixed finite SET forest, labelled train
-reflection, adjacent fine parameters, positive FULL system bounds
-and the PHYSICAL edge-colouring arrow. The support properties
+The remaining fields package the other expected local data:
+a finite train, one-per-image selected embeddings, the mixed finite
+SET forest, exact train reflection, fine-part parameters, positive
+FULL system bounds and the PHYSICAL edge-colouring arrow.
+They do not repair the additional ordered IsPartiteOver premise. The support properties
 belong to the definition of a train.
 
 The record does NOT include mixedCoverage, an old-picture girth
