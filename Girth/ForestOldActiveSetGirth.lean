@@ -1,5 +1,4 @@
 import Girth.ForestOldActiveGirth
-import Girth.ForestFiniteSetCompletion
 import Girth.ForestCopySetCompletion
 import Girth.ForestCompletionTwoEdgeLinearity
 
@@ -68,71 +67,6 @@ theorem testedPictureABSupport_iff_label
         exact Or.inl ⟨a, hl.symm⟩
     | inr q =>
         exact Or.inr ⟨q, hl.symm⟩
-
-theorem oldActiveInduced_girthGT_of_supportFinsetCompletion
-    (A : RelStructure L UA)
-    (u w : UA) (huw : u ≠ w)
-    (B : RelStructure L VB)
-    (D : RelStructure L P)
-    (C : StructuralRamsey.Partite.System L P X)
-    (family : Set (RelStructure.Embedding B D))
-    (e : RelStructure.Embedding A D)
-    (hOldLinear : ALinear A C.toRelStructure)
-    (hBaseStrong :
-      ∀ q : DesignatedCopy B D C family,
-        AStrong A D (copyCarrier q.base))
-    (m : ℕ)
-    (hComplete :
-      FinsetForestCompletionProperty
-        (testedPictureABSupport A B D C family)
-        (designatedPictureASupport A B D C family) m) :
-    GirthGT
-      (supportCopies A
-        (C.induce
-          (activeCarrier A C e.toFunctionEmbedding)).toRelStructure) m := by
-  exact oldActiveInduced_girthGT_of_designatedCompletion
-    A u w huw B D C family e
-    hOldLinear hBaseStrong m hComplete.toIndexed
-
-/-- The active-subsystem girth consequence of the manuscript's
-forest-extension invariant stated on finite SETS of actual A- or
-designated B-copy labels. No artificial injection from copies to
-support pieces is assumed. The support forest is exactly the one
-specified in the mixed A/B manuscript definitions. -/
-theorem oldActiveInduced_girthGT_of_actualCopySets
-    (A : RelStructure L UA)
-    (u w : UA) (huw : u ≠ w)
-    (B : RelStructure L VB)
-    (D : RelStructure L P)
-    (C : StructuralRamsey.Partite.System L P X)
-    (family : Set (RelStructure.Embedding B D))
-    (e : RelStructure.Embedding A D)
-    (hOldLinear : ALinear A C.toRelStructure)
-    (hBaseStrong :
-      ∀ q : DesignatedCopy B D C family,
-        AStrong A D (copyCarrier q.base))
-    (m : ℕ)
-    (hCopySetCompletion :
-      FinsetLabelForestCompletionProperty
-        (pictureABLabelSupport A B D C family)
-        (fun _ => True)
-        (designatedPictureASupport A B D C family) m) :
-    GirthGT
-      (supportCopies A
-        (C.induce
-          (activeCarrier A C e.toFunctionEmbedding)).toRelStructure) m := by
-  have hSupportCompletion :
-      ForestCompletionProperty
-        (testedPictureABSupport A B D C family)
-        (designatedPictureASupport A B D C family) m := by
-    apply hCopySetCompletion.toSupportIndexed
-    intro P hTest
-    obtain ⟨label, hLabel⟩ :=
-      (testedPictureABSupport_iff_label A B D C family P).mp hTest
-    exact ⟨label, True.intro, hLabel⟩
-  exact oldActiveInduced_girthGT_of_designatedCompletion
-    A u w huw B D C family e
-    hOldLinear hBaseStrong m hSupportCompletion
 
 /-- For cutoff at least two, the active-subsystem girth conclusion
 follows from the actual finite-copy-set completion invariant and
