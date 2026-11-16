@@ -1,5 +1,5 @@
 import Girth.ForestOldActiveSetGirth
-import Girth.ForestDirectIncrementLinearity
+import Girth.ForestRecursiveOutputGirth
 import Girth.ForestRetainedSetLift
 import Girth.ForestCopySetCompletion
 
@@ -39,13 +39,7 @@ import Girth.ForestCopySetCompletion
 #print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 
-#check StructuralRamsey.Girth.actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
-#print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_mixedForest_of_strongLinearStep
 
-#check StructuralRamsey.Girth.linearEdgeSet_of_finiteMixedForestThrough_oneEdges
-#check StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
-#print axioms StructuralRamsey.Girth.linearEdgeSet_of_finiteMixedForestThrough_oneEdges
-#print axioms StructuralRamsey.Girth.aLinear_of_finiteMixedForestThrough_oneEdges
 
 #check StructuralRamsey.Girth.allowedIntersection_oneEdge_self
 #check StructuralRamsey.Girth.ownEdge_of_allowed_oneEdge_large
@@ -91,3 +85,14 @@ import Girth.ForestCopySetCompletion
 
 #check StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
 #print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
+
+
+/-! Reused, existing proof of the complete noncircular direct increment. -/
+#check StructuralRamsey.Girth.girthGT_of_finiteMixedForestThrough
+#check StructuralRamsey.Girth.aStrong_of_finiteMixedForestThrough
+#check StructuralRamsey.Girth.actualActiveAttachment_girthGT_two_of_mixedOld
+#check StructuralRamsey.Girth.actualPartiteDesignatedAB_forest_and_girth_of_localGeometry
+#print axioms StructuralRamsey.Girth.girthGT_of_finiteMixedForestThrough
+#print axioms StructuralRamsey.Girth.aStrong_of_finiteMixedForestThrough
+#print axioms StructuralRamsey.Girth.actualActiveAttachment_girthGT_two_of_mixedOld
+#print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_forest_and_girth_of_localGeometry
