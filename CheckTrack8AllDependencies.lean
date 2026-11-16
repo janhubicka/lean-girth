@@ -116,3 +116,15 @@ is claimed from creating this file alone. -/
 #print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
 #print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
 #print axioms StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
+
+#check StructuralRamsey.Girth.IsInducedFinCycle
+#check StructuralRamsey.Girth.IsInducedFinCycle.adj_iff
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.adj_iff
+#check StructuralRamsey.Girth.pairPatternVertices_rotate_eq_range
+#print axioms StructuralRamsey.Girth.pairPatternVertices_rotate_eq_range
+#check StructuralRamsey.Girth.IsInducedFinCycle.image_cliqueFree_three
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.image_cliqueFree_three
+#check StructuralRamsey.Girth.IsInducedFinCycle.image_distinct_edges
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.image_distinct_edges
+#check StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
+#print axioms StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
