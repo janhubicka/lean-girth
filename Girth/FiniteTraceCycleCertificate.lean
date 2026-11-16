@@ -1,5 +1,6 @@
 import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceTriangleCycle
+import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 
 /-!
 # A smaller induced-cycle certificate for Track 8
@@ -24,6 +25,27 @@ namespace StructuralRamsey.Girth
 
 universe v
 variable {W ι : Type v}
+
+/-- An INDUCED cycle witness, unlike a bare graph embedding
+of cycleGraph k.  The adjacency equivalence explicitly reflects
+nonedges, ruling out false witnesses such as a 4-cycle in K4. -/
+def IsInducedFinCycle
+    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z) : Prop :=
+  Function.Injective v ∧
+    ∀ i j : Fin k,
+      G.Adj (v i) (v j) ↔
+        (SimpleGraph.cycleGraph k).Adj i j
+
+/-- An induced-cycle witness has the exact two-sided adjacency
+reflection required to transport the cycle graph's absence of
+chords, as well as its distinctness of vertices. -/
+theorem IsInducedFinCycle.adj_iff
+    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    (h : IsInducedFinCycle G k v)
+    (i j : Fin k) :
+    G.Adj (v i) (v j) ↔
+      (SimpleGraph.cycleGraph k).Adj i j :=
+  h.2 i j
 
 /-- The bounded-original-cover cyclic obstruction, with its
 nonadjacent cross-pair certificate derived rather than supplied. -/
