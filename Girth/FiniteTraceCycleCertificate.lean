@@ -1,6 +1,5 @@
 import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceTriangleCycle
-import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 
 /-!
 # A smaller induced-cycle certificate for Track 8
