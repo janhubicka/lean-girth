@@ -18,6 +18,59 @@ The following source blobs on current Lean main were **independently compared by
 
 Exact-head historical successful workflow runs: `40983362500`, `40983360921` (PR #694), and `40831595601` (PR #670). They prove kernel elaboration of their historical targets, **not** of this PR. The direct `#print axioms` gate for generated actual support and core/standard restrictions was merged as PR #1065; its on-main source is `CheckTrack3ActualSupportAndRestrictions.lean` blob `9d63875834dd55ba46cb79dce7661a0f1105ebbd`.
 
+## Additional previously certified *complete stage assembly* (recovered 16 November)
+
+There is a **stronger conditional assembly** already proved in `Girth/TrainSelectedPictureStageAssembly.lean`:
+`TrainRecursiveWitness.ForestTailStage.activeAttachment_of_local_bounds`.
+Its exact **source blob** on current Lean main is
+`77b8a905e08dd0041ac7f581e6ba58180300b7a1`, equal to the blob
+at successful exact-head commit `f1fc69fc0dbff9c82b08c9663234aa319d34230a`
+(30 October 2026). Its checker
+`CheckTrainSelectedPictureStageAssembly.lean`, blob
+`7da4f466fb62f7e42a2f3506663818ced6277380`, is likewise
+identical at this checked head.
+
+Historical workflows:
+- [full Lean run 41140949604](https://github.com/janhubicka/lean-girth/actions/runs/41140949604):
+  exact head `f1fc69fc...`, completed **success**;
+  the job's steps explicitly include both
+  **“Build every project module from this checkout”** and
+  **“Check every theorem audit exactly once”**, both successful.
+- [wagon-geometry run 41140949492](https://github.com/janhubicka/lean-girth/actions/runs/41140949492):
+  same exact head, completed **success**.
+
+Its `ActiveAttachmentBounds` record requires substantially **more**
+input than the standalone Track 3 interface: besides actual source
+compatibility and local `interiorFull : FullSystemGirthGT 2` and
+`coreParameters`, it includes finite local support/forest data,
+strong designated target geometry, a two-target-edge condition,
+ordinary core girth/extra cutoff-two data, and
+`tailSupreme` giving the **output** selected-cycle supremacy
+needed for the positive tail. This is a *premise* supplied by the
+other track; it is **not** inferred from output geometry.
+
+Inside the checked assembly's actual stage constructor:
+
+- `parameters :=` directly applies
+  `activeAttached_actualASupport_allAdjacentParameters_of_intrinsic`
+  to `stage.parameters`, `bounds.coreParameters`,
+  `bounds.interior`, and an order-one consequence of
+  `bounds.interiorFull` (lines 233–241 of the checked module).
+- `tailGirth :=` directly derives
+  `attachedSelectedPicture_linear_and_strong_of_intrinsic`
+  from the real `stage.tailGirth` and
+  `bounds.interiorFull`, then combines it with the **separate**
+  `bounds.tailSupreme` (lines 242–250).
+
+**Implication for this PR:** the manuscript's actual complete
+stage assembly is already conditionally kernel-verified.
+The six new Track 3 declarations are *not* needed to certify
+that existing stronger conditional assembly; they instead isolate
+the weaker, **supremacy-independent** geometry/parameters interface
+for potential reuse in other proof variants. They remain
+uncompiled, and their benefit must not be described as filling
+a gap in the historically certified stage assembly.
+
 ## Audited proof dependency diagram
 
 ```
