@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveCanonicalColouredForest
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedCanonicalColouredForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedCanonicalColouredForest_largerCutoff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedCanonicalColouredForest.atOneEdge
