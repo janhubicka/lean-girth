@@ -71,6 +71,38 @@ for potential reuse in other proof variants. They remain
 uncompiled, and their benefit must not be described as filling
 a gap in the historically certified stage assembly.
 
+## Why the independent wrapper still matters at cutoff two
+
+The historically verified `ActiveAttachmentBounds` stage assembly
+assumes `coreCoverage : IrreduciblesExtendTo A E.toRelStructure`,
+while the six candidate Track 3 geometry/parameter wrappers **do not**.
+This matters at the cutoff `q=2`, where ordinary Berge girth `>2`
+and even local order-two supreme-cycle bounds alone do not force
+every irreducible Gaifman clique of a **3-uniform** core to be
+contained in a single actual A-edge. The exact six-vertex,
+three-edge countermodel and exhaustive 126-cycle check are recorded
+in manuscript [draft PR #473](https://github.com/janhubicka/girth/pull/473)
+and `checks/check_track3_core_irreducible_coverage.py`.
+This is not a counterexample to any stated Ramsey arrow.
+
+For the q>2 branch, **separate existing certified formalizations**
+`TrainRecursiveNontrivialActiveCoverage.lean` and
+`TrainRecursiveOrderedNontrivialSelectedInputs.lean` prove and
+transport the needed strong local coverage from the true active
+target, using old bottom girth at least four. Their current source
+blobs match full successful Lean workflow
+[42528917772](https://github.com/janhubicka/lean-girth/actions/runs/42528917772)
+at commit `568de15dc83fc7602e1326f81dd30c83c0bf08c0`.
+
+**Consequences:** the new independent joint theorem can isolate
+geometry and parameters in the weaker source hypotheses even
+where the full stage assembly's mixed-coverage obligation is not
+yet discharged. The actual cutoff-two witness still needs a
+source-specific coverage argument or a modified stage invariant;
+this is separate from compiling the new joint theorem. Do not
+conflate `ActiveAttachmentBounds.coreCoverage` with mere
+vertex coverage or incorrectly mark the q>2 branch as missing it.
+
 ## Audited proof dependency diagram
 
 ```
