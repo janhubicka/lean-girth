@@ -80,7 +80,13 @@ pair lay in some *ambient* 3-edge, even though every such edge used an
 extra vertex outside `{a,b,c}`. At the pinned dependency,
 `RelStructure.Irreducible (H.induce S)` requires the witness relation
 tuple **inside S**. The induced 3-uniform structure on that triple has
-no edge, and is not irreducible. The alleged failure of
+no edge, and is not irreducible. In fact, an independent local
+enumeration of all 64 subsets of the six-vertex *pure hypergraph*
+found exactly 10 irreducible induced subsets (empty set, six
+singletons and the three literal edges), **all contained in an
+actual A-edge**. The toy example actually satisfies the intended
+pure-hypergraph irreducible-extension property, contrary to the
+withdrawn claim. The alleged failure of
 `IrreduciblesExtendTo A H` was never established.
 The regression and manuscript TODO from that obsolete PR were
 removed, and the related Track 3 issue comments marked retracted.
