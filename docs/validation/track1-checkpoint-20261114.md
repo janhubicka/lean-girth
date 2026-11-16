@@ -1,115 +1,63 @@
-# Numbered Track 1 — checkpoint after adversarial simplification (14 November 2026)
+# Numbered Track 1 — certified kernels and remaining proof (15 November 2026)
 
-**Manuscript main:** [girth@c66172b7](https://github.com/janhubicka/girth/commit/c66172b7f1283fdb378dd69de432876b1d6eb679).
-The revised manuscript has been merged; TeX compilation remains manual.
-**Lean working branch:** `validation/1-three-boundary-kernel-20261114`,
-**not merged**, new modules uncompiled.
+Supersedes the provisional 14 November status. A **kernel certificate for an
+individual lemma** is not a certificate of the complete local-forest theorem.
 
-## Statement-by-statement audit
+## Exact-head Lean certificate
 
-| Manuscript item | Existing checked library | What is new / still open |
-|---|---|---|
-| `lem:closedamalgam` | `ElementaryClosureAmalgam.aLinear_of_freeAmalgam`, strong-side lemmas | `Track1StrongOverlapGirthThree`, `Track1FreeAmalgamSupport`, `Track1StrongAmalgamGirthThree`: direct girth>3 closure; source candidate only |
-| `obs:functionalinput` | `FunctionalEHNClass.ElementaryCAClass_freeAmalgamationClass` | `Track1TriangleFreeEHNClass` adds the restricted class and positive girth; source candidate only |
-| `lem:basedclosure` | `TargetClosure.targetClosed_classify_nonempty`; `ClosureEmbeddingGeometry` | **No new target-closure language needed.** Optional canonical `c_M` and arbitrary `d` both removed from the preferred manuscript proof |
-| `thm:AlinearRamsey` | `ALinearRamsey.closedTargetRamseyFamily_of_monotone_embeddings`; full closure embedding properties | `Track1TriangleFreeSelectedFamily`: same ordered EHN construction in the girth>3 class with explicit fresh-order-preserving selected family; source candidate only |
-| `lem:unrestricted` | `TrainColouredEdgeOwnerSplit`, `SelectedLift`, `SelectedStrong`, `WholeEdgeIntersection`, `InducedUniformLift`, `ProjectionOrder`, `ExactColourTransfer` | `OwnerSplitGirth`, `OwnerSplitCoverage`, `OwnerSplitOrderArrow`, `OwnerSelectedFromEmbedding`, and `Track1SelectedOldStrong` (derive owner-split hOldStrong from actual A-strong selected B copy), plus final selected-family restriction/arrow; source candidates and final packaging pending |
-| `lem:threeboundaries` | `ForestDistinctOwnersGirthOnly.selectedForest_of_distinctOwners_girthOnly` | Specialization `Track1CutoffThreeReuse` only; the redundant bespoke three-node proof has been **deleted** |
-| `lem:threepicture` | `ForestActualDesignatedTrueActiveIncrement.actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull`; `TrainRecursiveBaseRamsey.mixedForestThrough_two_of_strong_controlledFamily`; `ForestActualRecursiveSupport.actualRecursiveMixedLocalForest` | `Track1SelectedMixedLF2` composes the two checked LF2 bridges; still requires distinct selected support representatives and true-active attachment data. The actual picture endpoint remains conditional |
-| `prop:forestthree` | Existing partite geometry/fusion component lemmas | Finish selected local Ramsey witness, full backward fusion, order coarsening and isolated target vertices |
+- Foundational [lean-girth PR #1069](https://github.com/janhubicka/lean-girth/pull/1069):
+  kernel-tested at `f24cb19d364d31e54867f037e93f51695ca6aaab`, then
+  **merged** as `733d3c80e2d86feb5d2721fa85300088297e00a7`.
+- [Lean run #43689961389](https://github.com/janhubicka/lean-girth/actions/runs/43689961389)
+  **SUCCESS** on 15 November: full project-module compilation, all registered
+  theorem-axiom checks, and the finite boundary regressions.
+- In particular, `CheckTrack1.lean` printed **18 axiom sets**.
+  The repository's strict `scripts/check_axioms.py` accepted only
+  `propext`, `Classical.choice` and `Quot.sound`, with no `sorryAx`.
+- Manuscript simplifications merged in girth PR #454, source checker in
+  #455, finite strong-amalgam regression in #456, global bottom-tag
+  correction in #457 and matching finite regression in #458.
+  The author compiles TeX manually.
 
-## Build readiness and exact validation gate
+## Statement-by-statement validation status
 
-- `CheckTrack1.lean` imports **all** surviving candidate modules through
-  seven roots and prints eighteen key theorem axiom sets. The new files are not
-  imported by the repository's default `Girth.lean`: a normal
-  `lake build Girth` does **not** validate them.
-- `scripts/check_track1.sh` first builds those seven dependency roots
-  with `LEAN_NUM_THREADS=1`, and *then* elaborates
-  `CheckTrack1.lean` and rejects any printed `sorryAx`.
-  A syntax-only shell check of the script passed.
-- The current container has **no installed Lean/Lake**, no matching
-  dependency checkout, no direct GitHub DNS. The old offline transfer
-  artifact listing for run `42512209025` is empty (expired), so
-  a local exact-head build was not possible in this session.
-  **Do not treat the presence of `#print axioms` as its execution.**
-- Source-only import audit: all 12 candidate files before pruning had
-  resolved local `Girth.*` imports; after pruning, remaining candidates
-  use only existing local imports and no literal `sorry`/`admit`
-  declarations. Lean elaboration is still unknown.
+| Paper item | Existing Lean evidence | Remaining proof obligation |
+| --- | --- | --- |
+| `lem:closedamalgam` | One-step A-linearity and both strong-side conclusions in `ElementaryClosureAmalgam`; newly verified `Track1StrongAmalgamGirthThree.track1_girthGT_three_freeAmalgam_of_aStrong` | Finite successive attachment follows by straightforward iteration; no separately named iterated Lean theorem |
+| `obs:functionalinput` | Existing `ElementaryCAClass_freeAmalgamationClass` and now verified `Track1TriangleFreeEHNClass.ElementaryCAThreeClass_freeAmalgamationClass` for canonical pair closure | The paper additionally claims arbitrary extra partial functions of fixed arity: that *general language adapter* is not established by this module |
+| `lem:basedclosure` | Checked `TargetClosure.targetClosed_classify_nonempty` and `ClosureEmbeddingGeometry.targetEmbeddings_controlledIntersection` | No new target-closure language needed |
+| `thm:AlinearRamsey` | Verified `Track1TriangleFreeSelectedFamily.track1_selectedOrderedRamseyFamily_triangleFree`, retaining the genuine fresh-order-respecting selected family, strong images, controlled intersections, its Ramsey arrow and girth >3 | Translate the chosen family to the exact coloured ordered one-edge presentation for its application |
+| `lem:markededgesplit` and `lem:unrestricted` | Existing checked owner-splitting suite; new checked `Track1OwnerSplitGirth`, `Track1OwnerSplitCoverage`, `Track1OwnerSplitOrderArrow`, `Track1OwnerSelectedFromEmbedding`, `Track1SelectedOldStrong` | Assemble actual positive selected edges, one global order, full induced coloured B lifts, precise shared-edge intersections, covered vertex carrier and selected arrow. Draft PR #1074 is not certified yet |
+| `lem:threeboundaries` | Verified `Track1CutoffThreeReuse.track1_three_boundaries_forest_of_core`, specializing the checked generic distinct-owner girth result | Supply exact small/whole-edge boundaries from an actual picture |
+| `lem:threepicture` | Verified conditional `actualPartiteDesignatedAB_selectedForest_of_trueActiveOldFull` and `Track1SelectedMixedLF2.track1_actualMixedLF2_of_strong_controlled` | Actual selected physical owners, true-active maps, core girth, ambient linearity, and nontrivial target support needed to instantiate at m=3 |
+| `prop:forestthree` | Above kernels and general partite component library | Actual intermediate picture assembly, backwards Ramsey fusion, part order and original isolated target vertex restoration; full statement NOT kernel-certified |
 
-On a machine with the matching dependencies already installed:
+## Bounded diagnostics — not proof certificates
 
-```bash
-git switch validation/1-three-boundary-kernel-20261114
-bash scripts/check_track1.sh
-```
+408,749 small strong free amalgams, 309,549 selected shared-bottom
+splitting families, and 74,230 three-boundary configurations passed
+their bounded tests. Mathematical proofs do not follow from enumeration.
 
-The printed Git HEAD and precise Lean compiler version must be recorded.
-For any failed theorem, fix the earliest source error, rebuild the
-same focused roots and inspect the actual checker output. Do not
-promote manuscript validation marks before successful exact-head
-compilation, audit of the printed axioms, and proof of the remaining
-full selected-witness and fusion endpoints.
+## Unmerged work
 
-## Independent finite regression reruns
+- [Draft PR #1074](https://github.com/janhubicka/lean-girth/pull/1074):
+  `validation/1-ordered-copy-packaging-20261115`, a conditional
+  selected-owner assembly with `CheckTrack1SelectedAssembly.lean`.
+  **Compiler/axiom verification remains pending**.
+- `validation/1-actual-partite-interface-20261115`: continuation
+  candidates for actual common A-edge membership in both selected
+  B sources, source forbidden-degree-one, colour recovery from the
+  witness's full unary relations, EHN family subtype indexing, the
+  true old coloured-ordered selected presentation, and mixed-LF2.
+  These remain **uncompiled**.
 
-The locally executed distinct-source `A`-strong free-amalgamation
-script reproduced all **408,749** cases with zero counterexamples and
-byte-for-byte equal parsed JSON results. A second local rerun of the
-owner-splitting test reproduced **285,200** exhaustive one/two-copy
-cases plus **24,349** seeded three-copy cases, also with zero failures.
-The separate small three-boundary report records **74,230** cases.
-These are bounded support diagnostics, **not** EHN or Lean proofs.
+## Next verifiable steps
 
-## Adversarial corrections made in this continuation
-
-- Removed duplicate uncompiled `ThreeBoundaryKernel` code that
-  depended on unsupported bespoke star-graph helper names;
-  reused the established generic forest theorem instead.
-- Removed obsolete uncompiled unary-owner `d` bridge and the duplicate
-  unrestricted selected-family candidate. The selected route uses
-  owner splitting and a single triangle-free EHN selected-family file.
-- Fixed the direction of the cyclic-successor equality in
-  `Track1OwnerSplitGirth` to match the nonfixed-point goal.
-- Corrected the focused checker to compile its imported modules
-  before trying `lake env lean CheckTrack1.lean`.
-
-**No Lean module or PR was merged, no green validation marker promoted,
-and no GitHub Actions build was launched.**
-
-## CI attempt (14 November, current)
-
-Draft [Lean PR #1069](https://github.com/janhubicka/lean-girth/pull/1069)
-requests an exact-head compiler run on this branch. GitHub's full Lean
-workflow is separate from the broken manuscript TeX Action.
-CI status must be checked at the *current* PR head SHA: a previous
-queued run on an older SHA is not evidence for newer edits.
-The new `Girth/Track1SelectedOldStrong.lean` bridge supplies the
-old physical-edge support-reflection hypothesis directly from
-an actual A-strong selected B-embedding, provided the retained
-edges really are A-copies. This remains an uncompiled candidate.
-
-## Continued validation after merging the global-bottom version
-
-The manuscript's marked-isolated vertices now use one global tag
-`(x,⊥)` (merged PR #457), matching the checked
-`ColouredOwnerSelectedCopy.lift`. A reproducible finite regression
-of precisely that variant was merged in girth PR #458;
-**309,549** bounded cases passed, including marked isolated sources.
-The previous private-tag finite tests should not be mistaken for a
-test of the merged shared-bottom representation.
-
-New candidate `Girth/Track1SelectedOldStrong.lean` proves that the
-owner-splitting library's old-edge strongness input follows from
-a genuine A-strong selected B-image and the fact that retained edges
-are actual A-support copies; a second theorem composes this with
-the existing checked selected-strongness result.
-New candidate `Girth/Track1SelectedMixedLF2.lean` composes the
-existing checked mixed-pair forest theorem with its actual-owner
-transport, without pruning any ambient A-edge.
-These files have focused `#print axioms` probes but **have not
-yet been compiled**. Their remaining hypotheses must be supplied
-from the exact selected EHN family and the actual picture attachment.
-Draft Lean PR #1069 is the ongoing compiler gate, not a certificate
-until its exact-head runs are verified.
+1. Check exact-head CI and strict axioms for #1074, then repair any
+   actual compiler errors before merging.
+2. Compile the next-step actual-partite adapters behind their own
+   focused checker.
+3. Supply true-active selected maps and the backward finite Ramsey
+   fusion; instantiate the checked conditional picture increment at m=3.
+4. Promote remaining manuscript markers only on genuine end-to-end
+   certificates. The external EHN theorem remains an explicit input.
