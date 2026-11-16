@@ -41,10 +41,6 @@ local notation "Active" =>
   activeCarrier A Old α
 local notation "Target" =>
   Old.toRelStructure.induce Active
-local notation "OldTrain" =>
-  (fun (train : EdgeTrainLevels
-    (OldACarrierEdge A Old.toRelStructure) 0) => train)
-
 section ExactLower
 
 variable {family : Set (Embedding Target Large.toRelStructure)}
