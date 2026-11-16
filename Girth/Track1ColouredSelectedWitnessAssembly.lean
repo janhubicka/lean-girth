@@ -5,6 +5,7 @@ import Girth.Track1ActualSelectedOwnerColourArrow
 import Girth.Track1ActualSelectedBStrong
 import Girth.Track1OwnerSplitGirth
 import Girth.SupportGirthEmbeddingEquiv
+import Girth.ForestActualRecursiveSupport
 
 /-!
 # Track 1: combine the actual selected coloured Ramsey witness interfaces
@@ -15,7 +16,9 @@ union of its selected vertex carriers.
 
 All its conclusions are derived: full induced ordered B embeddings,
 physical edge coverage, girth >3, pairwise permitted intersections,
-and the actual r-edge Ramsey arrow. In particular no edge-coveredness
+and the actual r-edge Ramsey arrow. The girth parameter is arbitrary:
+using g=2 gives ordinary linearity; g=3 gives triangle-free support.
+In particular no edge-coveredness
 of the original untrimmed EHN witness is postulated.
 
 The selected EHN family must still supply its real arrow,
@@ -54,15 +57,16 @@ theorem track1_selectedColouredWitness_from_EHN_family
     (hMono : ∀ c : Choice, StrictMono (family c))
     (hStrong : ∀ c : Choice,
       AStrong A C (copyCarrier (family c)))
-    (hDifferent : ∀ ⦃i j : Choice⦄, i ≠ j →
-      ¬ SameCopy (family i) (family j))
+    (hSupportInj : Function.Injective
+      (fun c : Choice => bSupportPiece A (family c)))
     (hControlled : ∀ i j : Choice,
       ¬ SameCopy (family i) (family j) →
       (copyCarrier (family i) ∩ copyCarrier (family j)).Subsingleton ∨
         ∃ a : Embedding A C,
           copyCarrier (family i) ∩ copyCarrier (family j) =
             copyCarrier a)
-    (hAmbientGirth : GirthGT (supportCopies A C) 3)
+    (g : ℕ)
+    (hAmbientGirth : GirthGT (supportCopies A C) g)
     {κ : Type w} [Nonempty κ]
     (hArrow : ∀ χ : Embedding A C → κ,
       ∃ c : Choice, ∀ a b : Embedding A B,
@@ -82,7 +86,7 @@ theorem track1_selectedColouredWitness_from_EHN_family
           ∀ x : VB, (e x).1 = (selected c).lift x) ∧
       (∀ e : Set H.Vertex, e ∈ H.splitPhysicalEdges →
         e ⊆ H.selectedLiftCarrierFor selected) ∧
-      GirthGT H.splitPhysicalEdges 3 ∧
+      GirthGT H.splitPhysicalEdges g ∧
       PairwiseAllowed (fun c : Choice =>
         (selected c).selectedLiftSupportPiece) ∧
       (∀ c : Choice, ∀ f : H.OldEdge, ∀ z w : H.Vertex,
@@ -119,10 +123,16 @@ theorem track1_selectedColouredWitness_from_EHN_family
   have hOldSub : H.edges ⊆ supportCopies A C := by
     rintro e ⟨c, a, rfl⟩
     exact ⟨(family c).comp a, rfl⟩
-  have hOldGirth : GirthGT H.edges 3 :=
+  have hOldGirth : GirthGT H.edges g :=
     girthGT_of_subset hOldSub hAmbientGirth
-  have hGirth : GirthGT H.splitPhysicalEdges 3 :=
-    H.splitPhysicalEdges_girthGT 3 hOldGirth
+  have hGirth : GirthGT H.splitPhysicalEdges g :=
+    H.splitPhysicalEdges_girthGT g hOldGirth
+  have hDifferent : ∀ ⦃i j : Choice⦄, i ≠ j →
+      ¬ SameCopy (family i) (family j) := by
+    intro i j hij hSame
+    apply hij
+    apply hSupportInj
+    exact bSupportPiece_eq_of_sameCopy A (family i) (family j) hSame
   have hPair : PairwiseAllowed
       (fun c : Choice => (selected c).selectedLiftSupportPiece) :=
     track1_actualSelectedLiftPairwiseAllowed
