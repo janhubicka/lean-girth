@@ -209,6 +209,23 @@ The extra five `#print axioms` declarations are in
 `CheckTrainRecursiveAllowedMonotone.lean`. No exact-head Lean build
 of this new module has been completed.
 
+## Exact-main integration, 16 November
+
+The branch was integrated onto updated `lean-girth/main` by an explicit
+two-parent commit `e0c865432bd890dbbcb97511de2a71d726b39f3a`,
+keeping the entire contemporary mainline tree. The independently
+checked diff is precisely **seven files**: two new Lean source modules,
+two root axiom checkers, this audit note, one focused local script and
+two additional checker registrations in `scripts/check_track_d.sh`.
+No established module is replaced and no current manuscript theorem
+marker is changed.
+
+The new parameter-widening construction is an *existing-witness*
+transformation. It does not produce an `OrderStage` or a selected
+Ramsey arrow if none existed to begin with. The main open rank
+operators are still the real unrestricted forest-to-order step,
+base-two and cutoff-two filling.
+
 ## Current validation boundary
 
 This PR does NOT change the unrestricted predicate in live draft #1073,
