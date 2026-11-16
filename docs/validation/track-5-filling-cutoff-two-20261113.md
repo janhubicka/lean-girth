@@ -168,10 +168,16 @@ old edges **does not** imply this condition.
    Build \(M_s\) on those edges, then build the disjoint
    choice union \(M=\coprod_s M_s\). Only the top wagon is shared.
 
-3. **One shorter Ramsey selection.** Apply \(\mathsf{RR}_{\mathbf h}\)
-   to this *actual ordered/partite* \(M\), colouring each old edge
-   by its **entire** function \(E(X)\to r\).
-   The selected old parent is a genuine \(j:M\hookrightarrow N\).
+3. **One shorter Ramsey selection.** Apply the
+   **unrestricted ordered** \(\mathsf{RR}_{\mathbf h}\) to \(M\),
+   colouring each old edge by its **entire**
+   function \(E(X)\to r\). Although every edge has
+   coloured type \(V(X)\), \(M\) need **not** be partite
+   over individual \(X\)-positions: shared old vertices can
+   occupy different positions in different first wagons.
+   Their unary predicate colours agree, which is enough
+   for the ordered assertion. The selected old parent
+   is a genuine \(j:M\hookrightarrow N\).
 
 4. **Canonical full filling.** Use \(H=N[X]\) without deleting
    any ambient edges. Let \(\tau_s:V(T)\to V(M)\)
@@ -438,7 +444,10 @@ indexing*, not the Lean proofs.
    in its concrete coloured relational presentation
    and connect the actual quotient-tail \(M\)
    and its marked parameters to the lower
-   \(\mathsf{RR}_{\mathbf h}\) stage.
+   **unrestricted ordered** \(\mathsf{RR}_{\mathbf h}\)
+   stage. Do NOT impose an \(X\)-position-partite
+   presentation on \(M\); only its unary-coloured
+   edge type is fixed.
 4. Obtain an actual **selected `OrderStage`**
    with its `DesignatedArrow` and `allCutGirth`
    from the shorter induction hypothesis.
