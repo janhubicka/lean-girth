@@ -3,22 +3,23 @@ import Girth.ForestCopySetCompletion
 import Girth.ForestCompletionTwoEdgeLinearity
 
 /-!
-# A finite-set interface for old active girth
+# Actual finite-copy-set completion implies old active girth
 
-The manuscript's forest-extension property is stated for finite
-sets of selected A- and B-copy supports. The previous theorem uses
-the indexed `ForestCompletionProperty` formalization. The generic
-adapter `FinsetForestCompletionProperty.toIndexed` handles repeated
-selected support pieces by taking the finite image; this yields the
-same old-active-girth conclusion from a finite-set completion
-hypothesis.
+The manuscript tests finite SETS of genuine A- and designated
+B-copies. Map each such copy to its complete A-support piece.
+The map need not be injective. A finite labelled completion of
+these actual copies gives the existing indexed
+`ForestCompletionProperty`, using the finite image of chosen
+copy labels and without arbitrary subforest heredity.
 
-This file also defines the complete-support map on the genuine
-sum of A-copy and designated B-copy labels, and gives a
-source-level equality between its image and the tested support
-predicate. The final cutoff-m>=2 endpoint derives ambient
-A-linearity directly from two-edge forest completion.
-None of these new proofs has yet been Lean-compiled or axiom-audited.
+The final theorem needs only this direction of transport. For
+m >= 2, the very same completion invariant already forces
+ambient A-linearity by completing each pair of different
+one-edge A-supports. We thus derive the old active subsystem's
+girth without assuming that linearity separately.
+
+This is a source-level proof candidate. Do not treat it as
+Lean-verified before exact-head compilation and axiom auditing.
 -/
 
 namespace StructuralRamsey.Girth
