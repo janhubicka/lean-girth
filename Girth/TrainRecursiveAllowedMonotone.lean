@@ -26,7 +26,7 @@ namespace StructuralRamsey.Girth.TrainRecursiveWitness
 open StructuralRamsey.RelStructure
 
 universe u v w
-variable {L : RelLanguage.{u}} {UA VB P : Type v}
+variable {L : RelLanguage.{u}} {UA VB P : Type v} {Q : Type w}
 
 /-- Increasing the permitted sibling-intersection sets cannot invalidate
 an actual adjacent-parameter bound. The train and physical edge map are
