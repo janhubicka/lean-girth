@@ -134,3 +134,63 @@ checks/track8_cycle_triangle_certificates.py.
 Do not identify graph cycle/ordinary graph embeddings with
 induced chordless cycles in English proofs, Lean statements,
 or validation marks.
+
+
+## 16 November deeper bridge: induced-cycle transport is now source-drafted
+
+Girth/FiniteTraceCycleCertificate.lean now defines
+IsInducedFinCycle explicitly using vertex-map injectivity and the
+TWO-SIDED adjacency equivalence with the pinned Mathlib cycleGraph.
+This rules out the unsound use of a plain graph embedding; K4
+contains an ordinary 4-cycle but no induced 4-cycle.
+
+Further Lean source proofs transport:
+
+- pairPatternVertices_rotate_eq_range: the union of consecutive
+  endpoint pairs is exactly the range of the vertex map;
+- IsInducedFinCycle.image_cliqueFree_three: triangle-freeness of
+  cycleGraph k transfers to the induced graph on the image;
+- IsInducedFinCycle.image_distinct_edges: distinct unordered
+  cycle edges remain distinct under the injective vertex map,
+  using pinned Finset.image_injective;
+- no_bounded_induced_fin_cycle_of_standard_cycle_facts: these
+  transport steps combine with internal original-index join-tree
+  completion to contradict an induced cycle.
+
+**Precisely three standard finite cycleGraph facts remain inputs:**
+(1) each i is adjacent to finRotate k i;
+(2) the unordered pairs {i,finRotate k i} are pairwise distinct;
+(3) cycleGraph k is CliqueFree 3, for k >= 4.
+The graph-independent triangle-free to cross-pair derivation is
+already source-drafted in FiniteTraceTriangleCycle.lean.
+These three claims must be proved from pinned cycleGraph/finRotate
+and kernel-checked, not accepted as additional axioms.
+
+**Actual compile blocker repaired:** several new declarations
+accidentally used Z as an undeclared graph-vertex TYPE, while
+other declarations bound Z as a tested SET. These declarations
+now explicitly bind a vertex type U and reserve Z for
+Z : Set W. This is a source-level type repair, not a claim of
+successful Lean elaboration.
+
+**Adversarial negative controls and diagnostics:**
+- For every cycle length k from 4 through 100 the independent
+  diagnostic verified the three elementary properties and the
+  induced cross-nonedge conclusions.
+- k=3 is correctly excluded: the cycle is a triangle.
+- K4 includes cycleGraph 4 as a non-induced subgraph; two
+  diagonals and triangles make the proposed induced-cycle
+  certificate fail. It MUST be rejected in the Lean adapter.
+- Reproducible script:
+  python3 checks/track8_cycle_triangle_certificates.py.
+
+CheckTrack8Primary.lean and CheckTrack8AllDependencies.lean request
+type/axiom checks for the new source theorems. The local build
+script checks/run_track8_primary_local.sh was corrected to build
+the newly imported triangle/cycle certificate modules before
+launching the check files. There is still NO Lean/lake executable
+in the current container and no fresh exact-head kernel report.
+
+No manuscript validation marker has been promoted. The outer
+structural and induced-relational results still require the
+genuine forest-extension output from numbered Tracks 2 and 7.
