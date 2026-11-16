@@ -2,6 +2,7 @@ import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTraceFinRotateCycle
+import Girth.FiniteTraceTriangleCycle
 import Girth.FiniteTracePEORank
 
 /-!
@@ -69,3 +70,13 @@ manuscript validation markers without actual compilation AND executed
 #check StructuralRamsey.Girth.IsPerfectEliminationRanking
 #check StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
 #print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
+
+#check StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#check StructuralRamsey.Girth.distinct_two_pairs_have_third
+#check StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#check StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#print axioms StructuralRamsey.Girth.distinct_two_pairs_have_third
+#print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
