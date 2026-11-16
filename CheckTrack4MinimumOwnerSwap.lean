@@ -35,6 +35,11 @@ import Girth.TrainCoverageFreeFtEligiblePass
 import Girth.TrainCoverageFreeExactLocalTrain
 import Girth.TrainCoverageFreeStrongFinitePass
 import Girth.TrainCoverageFreeNontrivialFtStep
+import Girth.TrainCoverageFreeSelectedLowerBundle
+import Girth.TrainCoverageFreeSelectedLowerPositive
+import Girth.TrainCoverageFreeDirectPartiteFtStep
+import Girth.TrainCoverageFreeRawFtWitness
+import Girth.TrainCoverageFreeRawFtFinitePass
 import Girth.TrainCoverageFreeBoundsFromMixed
 import Girth.TrainCoverageFreeForestOrderStep
 import Girth.TrainSelectedPictureMixedStageAssembly
@@ -273,3 +278,13 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.ramseyStrongTrain_of_Ft_eligible_steps
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.originalSharedTrain_iff_of_selectedFt_embeddings
+
+-- New raw F_t bridge; source-only until exact-head Lean/axiom run.
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.selectedEmbeddings_mixedForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.coarsenedSelected_Ft_noCoverage_bundle
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.sameVector_selected_oldSharedTrain_iff
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.sameVector_selected_fullSystem_at_positive
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.ForestStage.orderPictureStep_of_rawPartiteFt
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.RawPartiteFtWitness
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.RawPartiteFtWitness.toPictureStep
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.initialStrongTrainRamsey_of_rawFtWitnesses
