@@ -31,7 +31,8 @@ variable {W ι : Type v}
 of cycleGraph k.  The adjacency equivalence explicitly reflects
 nonedges, ruling out false witnesses such as a 4-cycle in K4. -/
 def IsInducedFinCycle
-    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z) : Prop :=
+    {U : Type v} (G : SimpleGraph U) (k : ℕ)
+    (v : Fin k → U) : Prop :=
   Function.Injective v ∧
     ∀ i j : Fin k,
       G.Adj (v i) (v j) ↔
@@ -41,7 +42,8 @@ def IsInducedFinCycle
 reflection required to transport the cycle graph's absence of
 chords, as well as its distinctness of vertices. -/
 theorem IsInducedFinCycle.adj_iff
-    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    {U : Type v} (G : SimpleGraph U) (k : ℕ)
+    (v : Fin k → U)
     (h : IsInducedFinCycle G k v)
     (i j : Fin k) :
     G.Adj (v i) (v j) ↔
@@ -79,7 +81,7 @@ theorem no_bounded_fin_cycle_of_triangleFree
 /-- The union of the vertices of the successive indexed pairs
 is precisely the range of the cyclic vertex map. -/
 theorem pairPatternVertices_rotate_eq_range
-    (k : ℕ) (v : Fin k → Z) :
+    {U : Type v} (k : ℕ) (v : Fin k → U) :
     pairPatternVertices v (fun i => v (finRotate k i)) =
       Set.range v := by
   ext x
@@ -95,7 +97,8 @@ triangles from the standard finite cycle graph to the graph
 induced on its image. Adjacency reflection, not just
 edge-preservation, is essential here. -/
 theorem IsInducedFinCycle.image_cliqueFree_three
-    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    {U : Type v} (G : SimpleGraph U) (k : ℕ)
+    (v : Fin k → U)
     (h : IsInducedFinCycle G k v)
     (hFree : (SimpleGraph.cycleGraph k).CliqueFree 3) :
     (G.induce (Set.range v)).CliqueFree 3 := by
@@ -128,14 +131,15 @@ theorem IsInducedFinCycle.image_cliqueFree_three
 /-- Injectivity of the vertex map preserves the distinction
 between different unordered consecutive pairs. -/
 theorem IsInducedFinCycle.image_distinct_edges
-    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    {U : Type v} (G : SimpleGraph U) (k : ℕ)
+    (v : Fin k → U)
     (h : IsInducedFinCycle G k v)
     (hIndices :
       ∀ i j : Fin k, i ≠ j →
         ({i, finRotate k i} : Finset (Fin k)) ≠
           {j, finRotate k j}) :
     ∀ i j : Fin k, i ≠ j →
-      ({v i, v (finRotate k i)} : Finset Z) ≠
+      ({v i, v (finRotate k i)} : Finset U) ≠
         {v j, v (finRotate k j)} := by
   classical
   intro i j hij hImageEq
