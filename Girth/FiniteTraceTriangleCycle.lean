@@ -78,4 +78,71 @@ theorem no_bounded_trianglefree_pair_pattern
     G a b e f hef (hThird e f hef)
     (hNoTriangle e f hef)
 
+/-- Two distinct unordered pairs, each with distinct endpoints,
+have an endpoint of the second pair missing from the first.
+This is the only edge-injectivity fact needed in the
+triangle-free version of the induced-cycle adapter. -/
+theorem distinct_two_pairs_have_third
+    (a b : E → W)
+    (hNoLoop : ∀ e : E, a e ≠ b e)
+    (hDistinct :
+      ∀ e f : E, e ≠ f →
+        ({a e, b e} : Finset W) ≠ {a f, b f})
+    (e f : E) (hef : e ≠ f) :
+    ∃ z : W,
+      (z = a f ∨ z = b f) ∧ z ≠ a e ∧ z ≠ b e := by
+  classical
+  by_cases ha : a f = a e ∨ a f = b e
+  · by_cases hb : b f = a e ∨ b f = b e
+    · have hSubset :
+          ({a f, b f} : Finset W) ⊆
+            ({a e, b e} : Finset W) := by
+        intro z hz
+        simp only [Finset.mem_insert, Finset.mem_singleton] at hz ⊢
+        rcases hz with hz | hz
+        · simpa only [hz] using ha
+        · simpa only [hz] using hb
+      have heCard : ({a e, b e} : Finset W).card = 2 :=
+        Finset.card_pair (hNoLoop e)
+      have hfCard : ({a f, b f} : Finset W).card = 2 :=
+        Finset.card_pair (hNoLoop f)
+      have hEq :
+          ({a f, b f} : Finset W) =
+            ({a e, b e} : Finset W) :=
+        Finset.eq_of_subset_of_card_le hSubset (by omega)
+      exact ((hDistinct e f hef) hEq.symm).elim
+    · refine ⟨b f, Or.inr rfl, ?_, ?_⟩
+      · intro h
+        exact hb (Or.inl h)
+      · intro h
+        exact hb (Or.inr h)
+  · refine ⟨a f, Or.inl rfl, ?_, ?_⟩
+    · intro h
+      exact ha (Or.inl h)
+    · intro h
+      exact ha (Or.inr h)
+
+/-- An abstract triangle-free system of cyclic pairs has all
+the pairwise cross-nonedge certificates needed by the original
+leaf-deletion chordality argument. The remaining induced-cycle
+adapter only needs the elementary source edge-injectivity and
+absence of triangles among cycle vertices. -/
+theorem crossPairNonedge_of_distinct_edges_and_trianglefree
+    (G : SimpleGraph W) (a b : E → W)
+    (hNoLoop : ∀ e : E, a e ≠ b e)
+    (hDistinct :
+      ∀ e f : E, e ≠ f →
+        ({a e, b e} : Finset W) ≠ {a f, b f})
+    (hNoTriangle :
+      ∀ e f : E, e ≠ f →
+        ∀ z : W,
+          (z = a f ∨ z = b f) →
+          z ≠ a e → z ≠ b e →
+            ¬ (G.Adj (a e) z ∧ G.Adj (b e) z))
+    (e f : E) (hef : e ≠ f) :
+    CrossPairNonedge G a b e f :=
+  crossPairNonedge_of_noTriangle G a b e f hef
+    (distinct_two_pairs_have_third a b hNoLoop hDistinct e f hef)
+    (hNoTriangle e f hef)
+
 end StructuralRamsey.Girth
