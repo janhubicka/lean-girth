@@ -171,6 +171,44 @@ coarse-predicate allowedD in the actual Ramsey construction. If that
 choice is unavailable, one may prove coverage of allowed D-points or
 only of the genuine output contacts; neither is proved here.
 
+## Retyping the SAME selected stage with canonical allowed sets
+
+A further simplification follows from the actual stage's field
+dependency: `ForestTailStage.allowed` appears in the physical stage
+only through its `train.AdjacentParameters` certificate. Every other
+field (actual ambient edges and vertex carrier, selected B-labels,
+physical injectivity, mixed bottom forest, positive system bounds,
+target train restriction and A-strongness) is independent of the
+allowed-part set. Moreover, the selected `DesignatedArrow` itself
+depends only on the unchanged system and selected family.
+
+Thus if a genuinely constructed stage `S` has old allowedD and one
+proves
+
+    ∀ ν, oldAllowedD[ν] ⊆ coarseColourD⁻¹(Pν),
+
+there is no need to reconstruct the Ramsey stage with the canonical
+allowed sets. One can simply widen the parameter sets:
+
+    S' = S.widenAllowed (coarseColourD⁻¹ ∘ P).
+
+The new `Girth/TrainRecursiveAllowedMonotone.lean` uses the simple
+monotonicity of `EdgeTrainLevels.AdjacentParameters`, then
+reconstructs `ForestTailStage` and `OrderStage` with IDENTICAL
+physical system, train and selected labels. The existing selected
+arrow is definitionally the same. A final conditional theorem
+`OrderStage.withCanonicalCoarseAllowed` packages this retyping.
+
+This does **not** derive the required containment
+`oldAllowedD ⊆ canonicalCoarseAllowed` from the existing pullback
+condition alone; the Unit→Bool counterexample still applies.
+That containment can come from a direct coarse-colour invariant,
+or from proven coverage of permitted D-points/used contacts.
+
+The extra five `#print axioms` declarations are in
+`CheckTrainRecursiveAllowedMonotone.lean`. No exact-head Lean build
+of this new module has been completed.
+
 ## Current validation boundary
 
 This PR does NOT change the unrestricted predicate in live draft #1073,
@@ -182,5 +220,5 @@ or prove another direct global coarse-predicate compatibility. Verify
 the output's ambient wagon parameters, not merely those internal
 to selected designated copies.
 
-The new modules contain thirteen exact axiom probes, with no `sorry`/`admit`/new axiom. They have
+The preparation modules contain eighteen exact axiom probes, with no `sorry`/`admit`/new axiom. They have
 NOT yet passed an exact-head Lean compile or `#print axioms` check.
