@@ -123,7 +123,9 @@ theorem RawPartiteFtWitness.toPictureStep
         e.toFunctionEmbedding κ := by
   letI : Finite W.Vertex := W.finiteVertex
   letI : Finite W.Index := W.finiteIndex
-  obtain ⟨active, _, _⟩ := hPair
+  classical
+  let active : StructuralRamsey.Partite.ProjectedEmbedding
+      A stage.system e.toFunctionEmbedding := Classical.choose hPair
   exact stage.orderPictureStep_of_rawPartiteFt A₀ hBaseLinear
     e active W.core W.selected W.train
     hReady.1 hReady.2 hSelectedStrong hTargetTwo hCutoff
