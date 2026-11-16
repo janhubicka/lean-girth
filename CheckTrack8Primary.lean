@@ -2,7 +2,7 @@ import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTraceFinRotateCycle
-import Girth.FiniteTraceTriangleCycle
+import Girth.FiniteTraceCycleCertificate
 import Girth.FiniteTracePEORank
 
 /-!
@@ -80,3 +80,19 @@ manuscript validation markers without actual compilation AND executed
 #print axioms StructuralRamsey.Girth.distinct_two_pairs_have_third
 #print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
 #print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+
+#check StructuralRamsey.Girth.distinct_two_pairs_have_third
+#check StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#check StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#check StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#check StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#check StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#check StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
+
+#print axioms StructuralRamsey.Girth.distinct_two_pairs_have_third
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#print axioms StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
