@@ -1,3 +1,4 @@
+import Girth.TrainFillingPrivateCompletedWCopyLocality
 import Girth.TrainFillingPrivateCanonicalParentwise
 import Girth.TrainFillingPrivateSelectedOldRange
 import Girth.TrainFillingPrivateCanonicalCutBridge
@@ -411,3 +412,6 @@ unelaborated imports. External EHN/classical axioms remain explicit.
 -- Exact selected EHN summand source-edge identification (uncompiled candidate).
 #print axioms StructuralRamsey.Girth.selectedUnionActualSourceEdgeEquiv
 #print axioms StructuralRamsey.Girth.selectedUnionActualSourceEdgeEquiv_symm_owner
+
+-- Completed W retains component locality for every actual small A-copy.
+#print axioms StructuralRamsey.Girth.completedFirstWagon_ACopy_in_one_summand
