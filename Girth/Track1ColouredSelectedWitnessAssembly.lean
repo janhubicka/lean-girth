@@ -1,0 +1,133 @@
+import Girth.Track1FullSelectedWitnessEmbeddings
+import Girth.Track1ActualSelectedCoverage
+import Girth.Track1ActualSelectedLiftPairwiseAllowed
+import Girth.Track1ActualSelectedOwnerColourArrow
+import Girth.Track1OwnerSplitGirth
+import Girth.SupportGirthEmbeddingEquiv
+
+/-!
+# Track 1: combine the actual selected coloured Ramsey witness interfaces
+
+This theorem assembles the genuine old selected B-family into ONE
+owner-split hypergraph, with ONE common linear order and the exact
+union of its selected vertex carriers.
+
+All its conclusions are derived: full induced ordered B embeddings,
+physical edge coverage, girth >3, pairwise permitted intersections,
+and the actual r-edge Ramsey arrow. In particular no edge-coveredness
+of the original untrimmed EHN witness is postulated.
+
+The selected EHN family must still supply its real arrow,
+A-support girth, pairwise controlled B intersections, source
+marked-degree-one (derived separately from the source restriction)
+and monotonicity in the fresh EHN order.
+
+This is a new integration candidate, not yet a kernel certificate.
+-/
+
+namespace StructuralRamsey.Girth
+
+open StructuralRamsey.RelStructure
+
+universe u v w
+variable {L : RelLanguage.{u}}
+variable {UA VB V I Choice : Type v}
+
+/-- All geometric and Ramsey assertions of the actual selected
+owner-split coloured-edge witness on the exact USED vertex carrier.
+The theorem is conditional only on the old genuine EHN selected
+family, its source colour restrictions, and old support girth. -/
+theorem track1_selectedColouredWitness_from_EHN_family
+    (A : RelStructure L UA)
+    {B : RelStructure L VB} {C : RelStructure L V}
+    [LinearOrder VB] [LinearOrder V] [Finite V]
+    (family : Choice → Embedding B C)
+    (k : ℕ)
+    (sourceColour : VB → I) (predicate : V → I)
+    (allowed : Set I)
+    (hRestricted : ∀ e f : Set VB,
+      e ∈ supportCopies A B → f ∈ supportCopies A B → e ≠ f →
+      ∀ x : VB, x ∈ e → x ∈ f → sourceColour x ∈ allowed)
+    (hPredicate : ∀ c : Choice, ∀ x : VB,
+      predicate (family c x) = sourceColour x)
+    (hMono : ∀ c : Choice, StrictMono (family c))
+    (hDifferent : ∀ ⦃i j : Choice⦄, i ≠ j →
+      ¬ SameCopy (family i) (family j))
+    (hControlled : ∀ i j : Choice,
+      ¬ SameCopy (family i) (family j) →
+      (copyCarrier (family i) ∩ copyCarrier (family j)).Subsingleton ∨
+        ∃ a : Embedding A C,
+          copyCarrier (family i) ∩ copyCarrier (family j) =
+            copyCarrier a)
+    (hAmbientGirth : GirthGT (supportCopies A C) 3)
+    {κ : Type w} [Nonempty κ]
+    (hArrow : ∀ χ : Embedding A C → κ,
+      ∃ c : Choice, ∀ a b : Embedding A B,
+        χ ((family c).comp a) = χ ((family c).comp b)) :
+    let H := selectedSupportOwnerSystem A family predicate allowed
+    let selected : Choice → ColouredOwnerSelectedCopy (W := VB) H :=
+      fun c => actualSelectedOwnerCopy A family predicate allowed c
+        (track1_selectedForbiddenDegreeOne A family
+          sourceColour predicate allowed hRestricted hPredicate c)
+    ∃ o : LinearOrder H.Vertex,
+      (∀ c : Choice,
+        ∃ e : Embedding
+          (colouredOrderedEdgeTarget k (supportCopies A B) sourceColour)
+          ((@colouredOrderedEdgeTarget I H.Vertex k
+              H.splitPhysicalEdges H.newPredicate o).induce
+              (H.selectedLiftCarrierFor selected)),
+          ∀ x : VB, (e x).1 = (selected c).lift x) ∧
+      (∀ e : Set H.Vertex, e ∈ H.splitPhysicalEdges →
+        e ⊆ H.selectedLiftCarrierFor selected) ∧
+      GirthGT H.splitPhysicalEdges 3 ∧
+      PairwiseAllowed (fun c : Choice =>
+        (selected c).selectedLiftSupportPiece) ∧
+      (∀ χ : H.SplitPhysicalEdge → κ,
+        ∃ c : Choice,
+          ∀ a b : (selected c).SourceEdge,
+            χ (H.physicalSplitEdge ((selected c).physicalEdge a)) =
+            χ (H.physicalSplitEdge ((selected c).physicalEdge b))) := by
+  classical
+  dsimp
+  let H := selectedSupportOwnerSystem A family predicate allowed
+  let selected : Choice → ColouredOwnerSelectedCopy (W := VB) H :=
+    fun c => actualSelectedOwnerCopy A family predicate allowed c
+      (track1_selectedForbiddenDegreeOne A family
+        sourceColour predicate allowed hRestricted hPredicate c)
+  have hForbid : ∀ c : Choice, ∀ (x : VB)
+      (e f : {e : Set VB // e ∈ supportCopies A B}),
+      predicate (family c x) ∉ allowed →
+      x ∈ e.1 → x ∈ f.1 → e = f :=
+    track1_selectedForbiddenDegreeOne A family sourceColour
+      predicate allowed hRestricted hPredicate
+  obtain ⟨o, hLifts⟩ :=
+    track1_exists_actualSelectedColouredLifts A family
+      k sourceColour predicate allowed hRestricted hPredicate hMono
+  have hCovered : ∀ e : Set H.Vertex,
+      e ∈ H.splitPhysicalEdges →
+        e ⊆ H.selectedLiftCarrierFor selected :=
+    track1_actualSelectedSplitEdges_covered A family predicate allowed hForbid
+  have hOldSub : H.edges ⊆ supportCopies A C := by
+    rintro e ⟨c, a, rfl⟩
+    exact ⟨(family c).comp a, rfl⟩
+  have hOldGirth : GirthGT H.edges 3 :=
+    girthGT_of_subset hOldSub hAmbientGirth
+  have hGirth : GirthGT H.splitPhysicalEdges 3 :=
+    H.splitPhysicalEdges_girthGT 3 hOldGirth
+  have hPair : PairwiseAllowed
+      (fun c : Choice => (selected c).selectedLiftSupportPiece) :=
+    track1_actualSelectedLiftPairwiseAllowed
+      A family predicate allowed hForbid hDifferent hControlled
+  have hOldArrow : ∀ χ : H.OldEdge → κ,
+      ∃ c : Choice, ∀ a b : (selected c).SourceEdge,
+        χ ((selected c).physicalEdge a) =
+          χ ((selected c).physicalEdge b) :=
+    track1_actualSelectedOwner_oldColourArrow
+      A family predicate allowed hArrow hForbid
+  refine ⟨o, hLifts, hCovered, hGirth, hPair, ?_⟩
+  intro χ
+  exact H.selectedColourTransfer selected hOldArrow χ
+
+#print axioms StructuralRamsey.Girth.track1_selectedColouredWitness_from_EHN_family
+
+end StructuralRamsey.Girth
