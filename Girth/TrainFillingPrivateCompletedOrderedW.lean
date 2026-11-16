@@ -109,6 +109,44 @@ theorem completedFirstWagon_edge_in_one_summand
   obtain ⟨x, _hx, hEq⟩ := hMem
   exact ⟨x, hEq.symm⟩
 
+/-- Every genuine k-edge of one induced first wagon
+remains an ACTUAL k-edge in the ordered completed W.
+The global order completion does not delete local
+hyperedges. Combined with
+completedFirstWagon_edge_in_one_summand, this gives
+the full componentwise hyperedge membership principle.
+
+The incidence conclusion uses the genuine edge relation,
+not merely an equivalence of carrier cardinalities. -/
+theorem completedFirstWagon_edge_of_local
+    [LinearOrder I] [LinearOrder V] [LinearOrder P]
+    (k : ℕ)
+    (oldEdges : Set (Set V)) (oldColour : V → I)
+    (oldCarrier : P → Set V)
+    (p : P)
+    (t : Fin k → {v : V // v ∈ oldCarrier p})
+    (hInj : Function.Injective t)
+    (hEdge : Set.range (fun i : Fin k => (t i).1) ∈ oldEdges) :
+    (completedFirstWagonColouredUnion k oldEdges
+      oldColour oldCarrier).rel (.inl (.inl ()))
+        (fun i => (⟨p, t i⟩ : FirstWagonUnionVertex oldCarrier)) := by
+  change
+    Function.Injective
+      (fun i : Fin k =>
+        (⟨p, t i⟩ : FirstWagonUnionVertex oldCarrier)) ∧
+    Set.range (fun i : Fin k =>
+      (⟨p, t i⟩ : FirstWagonUnionVertex oldCarrier))
+        ∈ taggedFirstWagonEdges oldCarrier oldEdges
+  constructor
+  · intro i j hij
+    have hVal : (t i).1 = (t j).1 :=
+      congrArg
+        (fun z : FirstWagonUnionVertex oldCarrier => z.2.1) hij
+    exact hInj (Subtype.ext hVal)
+  · refine ⟨p, Set.range t, ?_, ?_⟩
+    · simpa only [Set.image_range, Function.comp_def] using hEdge
+    · simp only [Set.image_range, Function.comp_def]
+
 /-- Unlike the raw disjoint union, W's binary order relation
 really compares same-colour vertices in different first
 wagons whenever the chosen global order compares them. -/
