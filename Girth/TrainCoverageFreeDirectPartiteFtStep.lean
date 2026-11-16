@@ -17,8 +17,8 @@ recursive lower stages, but such a stage is not an additional
 premise of the ABSTRACT F_t assertion.
 
 Given raw F_t data PLUS the strong ordered-partiteness premise on the
-true induced active target, relabel
-the part map along the processed base A-copy, use the genuine
+local witness, relabel its part map along the processed base A-copy.
+Use the genuine
 selected train-embedding law for exact original shared-edge
 relations, and reuse the SAME-vector forest-to-order attachment.
 
