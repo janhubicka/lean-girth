@@ -61,3 +61,54 @@ The retained proof stack is 17 Girth modules with 44 source theorem declarations
 The older optional uncompiled clique-tree construction, private-leaf charging, its expansive check file and old diagnostic have been deleted from the PR. This reduces review and compilation scope while preserving the source history through prior commits.
 
 **No Lean build or executed #print axioms has succeeded in this runtime; no theorem is being promoted to verified.** Current manuscript PR #470 adds review-only open markers to thm:main, cor:hyperlocal and cor:partialforest, in addition to the existing open small-trace and small-relational marks. The normal circulation PDF text is unchanged.
+
+
+## 16 November — replace per-edge nonedge cases by a triangle-free certificate
+
+A further simplification of the remaining cycle adapter is now present
+in Girth/FiniteTraceTriangleCycle.lean and
+Girth/FiniteTraceCycleCertificate.lean.
+
+For a cyclic pair family (a,b) indexed by E, it is unnecessary
+to explicitly choose a nonadjacent pair among the endpoints for
+each pair of distinct required edges. It suffices to establish:
+
+1. The unordered two-element edge sets are pairwise distinct.
+   Since each required edge has two distinct endpoints, the second
+   edge has an endpoint z absent from the first.
+2. The graph INDUCED on the cycle vertices is triangle-free
+   (the Mathlib predicate SimpleGraph.CliqueFree 3).
+   The ambient trace graph need not be triangle-free.
+
+If both endpoints of the first edge were adjacent to z, the
+three vertices would form a triangle. Thus at least one of
+those two pairs is a nonedge, giving precisely the original
+CrossPairNonedge certificate. The source now factors this
+through distinct_two_pairs_have_third,
+triangleFreeOn_of_induced_cliqueFree,
+crossPairNonedge_of_induced_cliqueFree, and the direct
+no_bounded_fin_cycle_of_triangleFree wrapper.
+
+**Pinned Mathlib API discovery:** SimpleGraph.cycleGraph k is already
+defined in Mathlib/Combinatorics/SimpleGraph/CycleGraph.lean, with
+cycleGraph_adj' and cycleGraph_neighborSet at the pinned revision.
+Likewise finRotate and support_finRotate_of_le are already available.
+The remaining induced-cycle bridge should use a copy of
+cycleGraph k for k >= 4 and prove ONLY edge-set injectivity and
+CliqueFree 3 of the induced cycle graph, avoiding another ad hoc
+modular successor implementation.
+
+The elementary finite certificate was independently checked for every
+k=4,...,100: all consecutive edges were distinct, no triangle
+occurred, and every two different edges had the required cross
+nonedge. The three-cycle is intentionally excluded:
+cycleGraph_three_eq_top shows the triangle negative control.
+Reproduce with python3 checks/track8_cycle_triangle_certificates.py.
+
+**Status:** New source lemmas have no explicit sorry/admit/axiom
+but have NOT been Lean-compiled. Neither the full small-trace theorem
+nor the structural consequences have a new validation certificate.
+The other graph-theoretic gate remains finite chordal graph => PEO
+via the documented strong Dirac minimal-separator induction.
+Final structural extraction still needs the actual Tracks 2/7
+forest-extension witnesses.
