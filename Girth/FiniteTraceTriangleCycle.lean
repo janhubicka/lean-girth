@@ -58,8 +58,7 @@ theorem crossPairNonedge_of_noTriangle
 the simpler endpoint-distinctness and triangle-exclusion data.
 These are the properties supplied by an induced simple cycle
 of length at least four. -/
-theorem no_bounded_trianglefree_pair_pattern
-    [Fintype W] [Fintype E] [Nonempty E]
+theorem crossPairNonedge_for_all_of_noTriangle
     (G : SimpleGraph W) (a b : E → W)
     (hThird :
       ∀ e f : E, e ≠ f →
