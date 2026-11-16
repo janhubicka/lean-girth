@@ -1,4 +1,5 @@
 import Girth.Track1ColouredSelectedWitnessAssembly
+import Girth.Track1SplitSelectedMixedLF2
 
 /-!
 # Exact-head Track 1 selected coloured-witness assembly
@@ -17,4 +18,9 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.track1_actualSelectedOldEdge_covered
 #print axioms StructuralRamsey.Girth.track1_actualSelectedSplitEdges_covered
 #print axioms StructuralRamsey.Girth.track1_actualSelectedBStrong_from_old
+#print axioms StructuralRamsey.Girth.track1_forestOfCopies_two_of_pairwise
+#print axioms StructuralRamsey.Girth.track1_localForestThrough_two_of_pairwise
+#print axioms StructuralRamsey.Girth.track1_selectedLift_vs_splitEdge_allowed
+#print axioms StructuralRamsey.Girth.track1_selectedSplitMixed_pairwiseAllowed
+#print axioms StructuralRamsey.Girth.track1_actualSplitSelected_mixedLF2
 #print axioms StructuralRamsey.Girth.track1_selectedColouredWitness_from_EHN_family
