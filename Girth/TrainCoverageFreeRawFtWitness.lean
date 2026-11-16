@@ -7,7 +7,18 @@ set_option Elab.async false
 /-!
 # Raw standalone forest-witness interface, not a picture-step oracle
 
-This packages the actual output of the circulation forest assertion
+This packages a candidate local output of the circulation forest assertion
+with one EXTRA property: IsPartiteOver for the full order-expanded
+language. That is not automatic from F_t at q=2. The actual raw
+F_t output only has the prescribed coloured-edge type on the
+unordered reduct plus auxiliary part orders.
+
+The intended weaker replacement will separate those auxiliary orders
+from the relational partite projection. Until that is formalized,
+this structure is a STRONGER CONDITIONAL interface, not a faithful
+formalization of F_t.
+
+This was originally designed to package the output
 on a nontrivial TRUE active induced train. It requests ONLY:
 a finite ordered A-partite local train; its one-per-image selected
 strong train maps; the mixed finite SET forest, labelled train
