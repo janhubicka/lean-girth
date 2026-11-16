@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveUniformAllInputs
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedPartiteForestAllInputs
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForestAllInputs_largerCutoff

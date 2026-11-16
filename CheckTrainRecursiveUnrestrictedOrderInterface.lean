@@ -1,0 +1,14 @@
+import Girth.TrainRecursiveUnrestrictedOrderInterface
+
+-- The identity base cannot yield a two-colour arrow on distinct A-subcopies.
+-- The genuine unrestricted conclusion chooses a larger finite Ramsey base.
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UnrestrictedSelectedOrderWitness
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.no_identityBase_designatedArrow_of_distinct_A_values
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.no_identityBase_designatedArrow_of_two_copies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.unrestrictedOrder_oneEdge_case_general
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderAllInputs
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.unrestrictedOrder_oneEdge_case
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderAllInputs.finPower
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedUnrestrictedOrderAllInputs.finColourWords
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedUnrestrictedOperators
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForest_of_correctOrderOperators

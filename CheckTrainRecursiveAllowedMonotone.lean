@@ -1,0 +1,7 @@
+import Girth.TrainRecursiveAllowedMonotone
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.EdgeTrainLevels.adjacentParameters_monoAllowed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.widenAllowed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.widenAllowed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.DesignatedArrow.widenAllowed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.OrderStage.withCanonicalCoarseAllowed
