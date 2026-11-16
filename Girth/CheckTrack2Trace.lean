@@ -1,7 +1,6 @@
 import Girth.ForestOldActiveSetGirth
 import Girth.ForestRecursiveOutputGirth
 import Girth.ForestRetainedSetLift
-import Girth.ForestCopySetCompletion
 
 /-! Exact Track 2 trace-lemma axiom gate. Not yet executed locally. -/
 
@@ -25,19 +24,11 @@ import Girth.ForestCopySetCompletion
 #print axioms StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
 #print axioms StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
-#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
-#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
-#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
-#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
 
 #check StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
-#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
-#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
 #check StructuralRamsey.Girth.testedPictureABSupport_iff_label
-#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 #print axioms StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
 #print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
-#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
 
 
 
