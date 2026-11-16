@@ -85,7 +85,21 @@ theorem UniformSelectedPartiteForestEveryColouredArity.atColourWord
     letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
     UniformSelectedPartiteForest A₀ t (Fin n → Fin r) := by
   letI : Nonempty (Fin n → Fin r) := ⟨fun _ => ⟨0, hr⟩⟩
-  exact h I k hk A₀ (Fin n → Fin r)
+  -- The universal forest predicate has two implicit finite carriers
+  -- (target and larger base). Introduce both before invoking the
+  -- language/arity-uniform hypothesis, avoiding a stuck Finite ?m.
+  intro VB V hFiniteVB hFiniteV
+    Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts
+    targetTrain fineAllowed hSupportNonempty hSupportCovers
+    hGirth hParameters hTargetCuts hPartiteArrow
+  letI : Finite VB := hFiniteVB
+  letI : Finite V := hFiniteV
+  exact (h I k hk A₀ (Fin n → Fin r))
+    Target Large family ht hTargetPartite hTargetLinear hTargetTwo
+    hLargePartite hLargeLinear hFamilyStrong hFamilyParts
+    targetTrain fineAllowed hSupportNonempty hSupportCovers
+    hGirth hParameters hTargetCuts hPartiteArrow
 
 /-- The entire q>2 operator field is supplied in the exact coloured
 edge arity-uniform assertion. The OTHER fields explicitly demand:
