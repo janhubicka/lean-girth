@@ -1,5 +1,5 @@
 import Girth.FiniteTracePEOCount
-import Girth.FiniteTraceFinRotateCycle
+import Girth.FiniteTraceCycleCertificate
 import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTracePEORank
 
@@ -96,3 +96,23 @@ is claimed from creating this file alone. -/
 #print axioms StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
 #print axioms StructuralRamsey.Girth.JoinTree.traceCarrier
 #print axioms StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#check StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#check StructuralRamsey.Girth.no_bounded_trianglefree_pair_pattern
+#check StructuralRamsey.Girth.distinct_two_pairs_have_third
+#check StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#check StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#check StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#check StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#check StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#check StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
+
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#print axioms StructuralRamsey.Girth.no_bounded_trianglefree_pair_pattern
+#print axioms StructuralRamsey.Girth.distinct_two_pairs_have_third
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#print axioms StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
