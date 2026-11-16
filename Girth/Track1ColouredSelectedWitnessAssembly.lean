@@ -6,6 +6,7 @@ import Girth.Track1ActualSelectedBStrong
 import Girth.Track1OwnerSplitGirth
 import Girth.SupportGirthEmbeddingEquiv
 import Girth.ForestActualRecursiveSupport
+import Girth.Track1SplitSelectedMixedLF2
 
 /-!
 # Track 1: combine the actual selected coloured Ramsey witness interfaces
@@ -15,7 +16,8 @@ owner-split hypergraph, with ONE common linear order and the exact
 union of its selected vertex carriers.
 
 All its conclusions are derived: full induced ordered B embeddings,
-physical edge coverage, girth >3, pairwise permitted intersections,
+physical edge coverage, arbitrary girth >=2, pairwise permitted intersections,
+ACTUAL mixed LF2 for split selected B-pieces and all split edges,
 and the actual r-edge Ramsey arrow. The girth parameter is arbitrary:
 using g=2 gives ordinary linearity; g=3 gives triangle-free support.
 In particular no edge-coveredness
@@ -65,7 +67,7 @@ theorem track1_selectedColouredWitness_from_EHN_family
         ∃ a : Embedding A C,
           copyCarrier (family i) ∩ copyCarrier (family j) =
             copyCarrier a)
-    (g : ℕ)
+    (g : ℕ) (hg : 2 ≤ g)
     (hAmbientGirth : GirthGT (supportCopies A C) g)
     {κ : Type w} [Nonempty κ]
     (hArrow : ∀ χ : Embedding A C → κ,
@@ -95,6 +97,10 @@ theorem track1_selectedColouredWitness_from_EHN_family
         w ∈ Set.range (selected c).lift →
         ∃ a : (selected c).SourceEdge,
           (selected c).physicalEdge a = f) ∧
+      LocalForestThrough
+        (mixedOwnerSmall
+          (fun c : Choice => (selected c).selectedLiftSupportPiece)
+          (fun f : H.OldEdge => H.splitEdge f)) 2 ∧
       (∀ χ : H.SplitPhysicalEdge → κ,
         ∃ c : Choice,
           ∀ a b : (selected c).SourceEdge,
@@ -146,13 +152,20 @@ theorem track1_selectedColouredWitness_from_EHN_family
           (selected c).physicalEdge a = f :=
     track1_actualSelectedBStrong_from_old
       A family predicate allowed hForbid hStrong
+  have hMixedLF2 : LocalForestThrough
+      (mixedOwnerSmall
+        (fun c : Choice => (selected c).selectedLiftSupportPiece)
+        (fun f : H.OldEdge => H.splitEdge f)) 2 :=
+    track1_actualSplitSelected_mixedLF2 H selected
+      hPair hStrongNew (girthGT_mono hGirth hg)
   have hOldArrow : ∀ χ : H.OldEdge → κ,
       ∃ c : Choice, ∀ a b : (selected c).SourceEdge,
         χ ((selected c).physicalEdge a) =
           χ ((selected c).physicalEdge b) :=
     track1_actualSelectedOwner_oldColourArrow
       A family predicate allowed hArrow hForbid
-  refine ⟨o, hLifts, hCovered, hGirth, hPair, hStrongNew, ?_⟩
+  refine ⟨o, hLifts, hCovered, hGirth, hPair, hStrongNew,
+    hMixedLF2, ?_⟩
   intro χ
   exact H.selectedColourTransfer selected hOldArrow χ
 
