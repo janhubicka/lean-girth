@@ -1,6 +1,7 @@
 import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceTriangleCycle
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+import Mathlib.Data.Finset.Image
 
 /-!
 # A smaller induced-cycle certificate for Track 8
@@ -74,5 +75,120 @@ theorem no_bounded_fin_cycle_of_triangleFree
     (tracePairGraph F Z)
     v (fun e => v (finRotate k e))
     hEdges hDistinct hTriangleFree i j hij
+
+/-- The union of the vertices of the successive indexed pairs
+is precisely the range of the cyclic vertex map. -/
+theorem pairPatternVertices_rotate_eq_range
+    (k : ℕ) (v : Fin k → Z) :
+    pairPatternVertices v (fun i => v (finRotate k i)) =
+      Set.range v := by
+  ext x
+  constructor
+  · rintro ⟨i, h | h⟩
+    · exact ⟨i, h.symm⟩
+    · exact ⟨finRotate k i, h.symm⟩
+  · rintro ⟨i, hi⟩
+    exact ⟨i, Or.inl hi.symm⟩
+
+/-- An induced-cycle embedding transfers the absence of
+triangles from the standard finite cycle graph to the graph
+induced on its image. Adjacency reflection, not just
+edge-preservation, is essential here. -/
+theorem IsInducedFinCycle.image_cliqueFree_three
+    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    (h : IsInducedFinCycle G k v)
+    (hFree : (SimpleGraph.cycleGraph k).CliqueFree 3) :
+    (G.induce (Set.range v)).CliqueFree 3 := by
+  classical
+  intro S hClique
+  obtain ⟨x, y, z, hxy, hxz, hyz, _⟩ :=
+    ((G.induce (Set.range v)).is3Clique_iff).mp hClique
+  obtain ⟨i, hi⟩ := x.2
+  obtain ⟨j, hj⟩ := y.2
+  obtain ⟨l, hl⟩ := z.2
+  have hij : (SimpleGraph.cycleGraph k).Adj i j := by
+    apply (h.2 i j).mp
+    change G.Adj (v i) (v j)
+    simpa only [hi, hj] using hxy
+  have hil : (SimpleGraph.cycleGraph k).Adj i l := by
+    apply (h.2 i l).mp
+    change G.Adj (v i) (v l)
+    simpa only [hi, hl] using hxz
+  have hjl : (SimpleGraph.cycleGraph k).Adj j l := by
+    apply (h.2 j l).mp
+    change G.Adj (v j) (v l)
+    simpa only [hj, hl] using hyz
+  have hTriangle :
+      (SimpleGraph.cycleGraph k).IsNClique 3
+        ({i, j, l} : Finset (Fin k)) :=
+    ((SimpleGraph.cycleGraph k).is3Clique_triple_iff).mpr
+      ⟨hij, hil, hjl⟩
+  exact hFree _ hTriangle
+
+/-- Injectivity of the vertex map preserves the distinction
+between different unordered consecutive pairs. -/
+theorem IsInducedFinCycle.image_distinct_edges
+    (G : SimpleGraph Z) (k : ℕ) (v : Fin k → Z)
+    (h : IsInducedFinCycle G k v)
+    (hIndices :
+      ∀ i j : Fin k, i ≠ j →
+        ({i, finRotate k i} : Finset (Fin k)) ≠
+          {j, finRotate k j}) :
+    ∀ i j : Fin k, i ≠ j →
+      ({v i, v (finRotate k i)} : Finset Z) ≠
+        {v j, v (finRotate k j)} := by
+  classical
+  intro i j hij hImageEq
+  have hImageSets :
+      ({i, finRotate k i} : Finset (Fin k)).image v =
+        ({j, finRotate k j} : Finset (Fin k)).image v := by
+    simpa only [Finset.image_insert, Finset.image_singleton]
+      using hImageEq
+  exact hIndices i j hij
+    ((Finset.image_injective h.1) hImageSets)
+
+/-- Precise induced-cycle obstruction conditional ONLY on three
+standard properties of the pinned Mathlib cycleGraph:
+successor edges, distinct unordered successor edges, and absence
+of triangles at length >=4. None is assumed for the ambient graph.
+Ordinary graph embeddings lacking adjacency reflection are rejected. -/
+theorem no_bounded_induced_fin_cycle_of_standard_cycle_facts
+    [Fintype ι]
+    (F : ι → Set W) (Z : Set W) (q k : ℕ)
+    (hLocal : HasInternalJoinTreeCompletions F q)
+    (hk : 4 ≤ k) (hBudget : k ≤ q)
+    (v : Fin k → Z)
+    (hInduced :
+      IsInducedFinCycle (tracePairGraph F Z) k v)
+    (hCycleEdges :
+      ∀ i : Fin k,
+        (SimpleGraph.cycleGraph k).Adj i (finRotate k i))
+    (hCycleDistinct :
+      ∀ i j : Fin k, i ≠ j →
+        ({i, finRotate k i} : Finset (Fin k)) ≠
+          {j, finRotate k j})
+    (hCycleTriangleFree :
+      (SimpleGraph.cycleGraph k).CliqueFree 3) :
+    False := by
+  have hEdges :
+      ∀ i : Fin k,
+        (tracePairGraph F Z).Adj (v i)
+          (v (finRotate k i)) := by
+    intro i
+    exact (hInduced.2 i (finRotate k i)).mpr
+      (hCycleEdges i)
+  have hDistinct :=
+    hInduced.image_distinct_edges
+      (tracePairGraph F Z) k v hCycleDistinct
+  have hFree :
+      ((tracePairGraph F Z).induce
+        (pairPatternVertices v
+          (fun i => v (finRotate k i)))).CliqueFree 3 := by
+    rw [pairPatternVertices_rotate_eq_range]
+    exact hInduced.image_cliqueFree_three
+      (tracePairGraph F Z) k v hCycleTriangleFree
+  exact no_bounded_fin_cycle_of_triangleFree
+    F Z q k hLocal hk hBudget v hEdges hDistinct hFree
+
 
 end StructuralRamsey.Girth
