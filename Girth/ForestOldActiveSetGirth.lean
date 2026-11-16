@@ -12,8 +12,14 @@ these actual copies gives the existing indexed
 `ForestCompletionProperty`, using the finite image of chosen
 copy labels and without arbitrary subforest heredity.
 
-The final theorem needs only this direction of transport. For
-m >= 2, the very same completion invariant already forces
+The final theorem needs only this direction of transport.
+IMPORTANT CORRESPONDENCE TODO: its hypothesis is formulated for
+Finset-labelled A/B embeddings. The translation of the manuscript's
+finite SET of actual physical copies into that labelled predicate
+must still be checked in the concrete picture. It is not proved
+by this generic adapter.
+
+For m >= 2, the same completion invariant already forces
 ambient A-linearity by completing each pair of different
 one-edge A-supports. We thus derive the old active subsystem's
 girth without assuming that linearity separately.
