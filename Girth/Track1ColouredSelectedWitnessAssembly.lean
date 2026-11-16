@@ -2,6 +2,7 @@ import Girth.Track1FullSelectedWitnessEmbeddings
 import Girth.Track1ActualSelectedCoverage
 import Girth.Track1ActualSelectedLiftPairwiseAllowed
 import Girth.Track1ActualSelectedOwnerColourArrow
+import Girth.Track1ActualSelectedBStrong
 import Girth.Track1OwnerSplitGirth
 import Girth.SupportGirthEmbeddingEquiv
 
@@ -51,6 +52,8 @@ theorem track1_selectedColouredWitness_from_EHN_family
     (hPredicate : ∀ c : Choice, ∀ x : VB,
       predicate (family c x) = sourceColour x)
     (hMono : ∀ c : Choice, StrictMono (family c))
+    (hStrong : ∀ c : Choice,
+      AStrong A C (copyCarrier (family c)))
     (hDifferent : ∀ ⦃i j : Choice⦄, i ≠ j →
       ¬ SameCopy (family i) (family j))
     (hControlled : ∀ i j : Choice,
@@ -82,6 +85,12 @@ theorem track1_selectedColouredWitness_from_EHN_family
       GirthGT H.splitPhysicalEdges 3 ∧
       PairwiseAllowed (fun c : Choice =>
         (selected c).selectedLiftSupportPiece) ∧
+      (∀ c : Choice, ∀ f : H.OldEdge, ∀ z w : H.Vertex,
+        z ≠ w → z ∈ H.splitEdge f → w ∈ H.splitEdge f →
+        z ∈ Set.range (selected c).lift →
+        w ∈ Set.range (selected c).lift →
+        ∃ a : (selected c).SourceEdge,
+          (selected c).physicalEdge a = f) ∧
       (∀ χ : H.SplitPhysicalEdge → κ,
         ∃ c : Choice,
           ∀ a b : (selected c).SourceEdge,
@@ -118,13 +127,22 @@ theorem track1_selectedColouredWitness_from_EHN_family
       (fun c : Choice => (selected c).selectedLiftSupportPiece) :=
     track1_actualSelectedLiftPairwiseAllowed
       A family predicate allowed hForbid hDifferent hControlled
+  have hStrongNew :
+      ∀ c : Choice, ∀ f : H.OldEdge, ∀ z w : H.Vertex,
+        z ≠ w → z ∈ H.splitEdge f → w ∈ H.splitEdge f →
+        z ∈ Set.range (selected c).lift →
+        w ∈ Set.range (selected c).lift →
+        ∃ a : (selected c).SourceEdge,
+          (selected c).physicalEdge a = f :=
+    track1_actualSelectedBStrong_from_old
+      A family predicate allowed hForbid hStrong
   have hOldArrow : ∀ χ : H.OldEdge → κ,
       ∃ c : Choice, ∀ a b : (selected c).SourceEdge,
         χ ((selected c).physicalEdge a) =
           χ ((selected c).physicalEdge b) :=
     track1_actualSelectedOwner_oldColourArrow
       A family predicate allowed hArrow hForbid
-  refine ⟨o, hLifts, hCovered, hGirth, hPair, ?_⟩
+  refine ⟨o, hLifts, hCovered, hGirth, hPair, hStrongNew, ?_⟩
   intro χ
   exact H.selectedColourTransfer selected hOldArrow χ
 
