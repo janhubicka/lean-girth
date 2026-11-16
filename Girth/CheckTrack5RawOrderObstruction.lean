@@ -23,3 +23,6 @@ This gate is NOT a certificate until run on exact-head Lean.
 #check StructuralRamsey.Girth.completedFirstWagon_cross_order
 #print axioms StructuralRamsey.Girth.completedFirstWagon_edge_in_one_summand
 #print axioms StructuralRamsey.Girth.completedFirstWagon_cross_order
+
+#check StructuralRamsey.Girth.completedFirstWagon_edge_of_local
+#print axioms StructuralRamsey.Girth.completedFirstWagon_edge_of_local
