@@ -183,6 +183,8 @@ checks=(
   CheckTrainRecursiveCutoffTwoPartObstruction
   CheckTrainRecursiveUnrestrictedOrderInterface
   CheckTrainRecursiveUnrestrictedEveryColouredArity
+  CheckTrainRecursiveGlobalAllowedCompatibility
+  CheckTrainRecursiveAllowedMonotone
   CheckTrainRecursiveOneEdgeDichotomy
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
