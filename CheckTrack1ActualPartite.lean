@@ -2,6 +2,7 @@ import Girth.Track1FullSelectedWitnessEmbeddings
 import Girth.Track1PhysicalActualSelectedIntersections
 import Girth.Track1PhysicalFamilyActualMixedLF2
 import Girth.Track1TriangleFreePhysicalFamily
+import Girth.Track1ActualSelectedCoverage
 
 /-!
 # Numbered Track 1: actual selected-coloured EHN and mixed-LF2 adapters
@@ -32,3 +33,6 @@ set_option autoImplicit false
 #print axioms StructuralRamsey.Girth.track1_physicalRepresentative_supportPieces_injective
 #print axioms StructuralRamsey.Girth.track1_physicalRepresentative_arrow
 #print axioms StructuralRamsey.Girth.track1_triangleFreeRamsey_physicalSelectedFamily
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.selectedLiftCarrierFor_covers_splitEdge
+#print axioms StructuralRamsey.Girth.track1_actualSelectedOldEdge_covered
+#print axioms StructuralRamsey.Girth.track1_actualSelectedSplitEdges_covered
