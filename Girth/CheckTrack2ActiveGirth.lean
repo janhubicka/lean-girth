@@ -1,0 +1,46 @@
+import Girth.ForestOldActiveSetGirth
+
+/-!
+# Track 2 focused local axiom gate: Active-subsystem girth
+
+Part of the 34-declaration numbered Track 2 candidate inventory.
+A source-level declaration is NOT kernel-verified until this file is
+actually compiled with the pinned Lean/mathlib toolchain and the strict
+axiom output is parsed successfully. Do not promote validation markers
+on the basis of this gate file's existence.
+-/
+
+#check StructuralRamsey.Girth.girthGT_union_of_forest_edge_traces
+#check StructuralRamsey.Girth.girthGT_selected_of_forest_edge_traces
+#check StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
+#check StructuralRamsey.Girth.girthGT_of_bounded_smallOrWhole_forest_completions
+#check StructuralRamsey.Girth.girthGT_of_forestCompletion_designated_traces
+#check StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
+#check StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
+#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
+#check StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
+#check StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
+#check StructuralRamsey.Girth.testedPictureABSupport_iff_label
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
+
+#print axioms StructuralRamsey.Girth.girthGT_union_of_forest_edge_traces
+#print axioms StructuralRamsey.Girth.girthGT_selected_of_forest_edge_traces
+#print axioms StructuralRamsey.Girth.girthGT_of_bounded_trace_forest_completions
+#print axioms StructuralRamsey.Girth.girthGT_of_bounded_smallOrWhole_forest_completions
+#print axioms StructuralRamsey.Girth.girthGT_of_forestCompletion_designated_traces
+#print axioms StructuralRamsey.Girth.projectedBCopy_smallOrWhole_activeBoundary
+#print axioms StructuralRamsey.Girth.oldActiveSupport_girthGT_of_designatedCompletion
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_designatedCompletion
+#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toIndexed
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_supportFinsetCompletion
+#print axioms StructuralRamsey.Girth.FinsetLabelForestCompletionProperty.toSupportIndexed
+#print axioms StructuralRamsey.Girth.FinsetForestCompletionProperty.toLabelFinset
+#print axioms StructuralRamsey.Girth.testedPictureABSupport_iff_label
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets
+
+#check StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
+#print axioms StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
