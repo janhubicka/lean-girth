@@ -108,16 +108,16 @@ theorem IsInducedFinCycle.image_cliqueFree_three
   obtain ⟨l, hl⟩ := z.2
   have hij : (SimpleGraph.cycleGraph k).Adj i j := by
     apply (h.2 i j).mp
-    change G.Adj (v i) (v j)
-    simpa only [hi, hj] using hxy
+    have hxyG : G.Adj x.1 y.1 := hxy
+    simpa only [hi, hj] using hxyG
   have hil : (SimpleGraph.cycleGraph k).Adj i l := by
     apply (h.2 i l).mp
-    change G.Adj (v i) (v l)
-    simpa only [hi, hl] using hxz
+    have hxzG : G.Adj x.1 z.1 := hxz
+    simpa only [hi, hl] using hxzG
   have hjl : (SimpleGraph.cycleGraph k).Adj j l := by
     apply (h.2 j l).mp
-    change G.Adj (v j) (v l)
-    simpa only [hj, hl] using hyz
+    have hyzG : G.Adj y.1 z.1 := hyz
+    simpa only [hj, hl] using hyzG
   have hTriangle :
       (SimpleGraph.cycleGraph k).IsNClique 3
         ({i, j, l} : Finset (Fin k)) :=
@@ -178,15 +178,15 @@ theorem no_bounded_induced_fin_cycle_of_standard_cycle_facts
     exact (hInduced.2 i (finRotate k i)).mpr
       (hCycleEdges i)
   have hDistinct :=
-    hInduced.image_distinct_edges
-      (tracePairGraph F Z) k v hCycleDistinct
+    IsInducedFinCycle.image_distinct_edges
+      (tracePairGraph F Z) k v hInduced hCycleDistinct
   have hFree :
       ((tracePairGraph F Z).induce
         (pairPatternVertices v
           (fun i => v (finRotate k i)))).CliqueFree 3 := by
     rw [pairPatternVertices_rotate_eq_range]
-    exact hInduced.image_cliqueFree_three
-      (tracePairGraph F Z) k v hCycleTriangleFree
+    exact IsInducedFinCycle.image_cliqueFree_three
+      (tracePairGraph F Z) k v hInduced hCycleTriangleFree
   exact no_bounded_fin_cycle_of_triangleFree
     F Z q k hLocal hk hBudget v hEdges hDistinct hFree
 
