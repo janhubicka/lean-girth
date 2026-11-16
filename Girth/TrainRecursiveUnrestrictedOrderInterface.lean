@@ -36,19 +36,13 @@ open StructuralRamsey.RelStructure
 universe u v w
 variable {UA VB : Type v}
 
-/-- An unrestricted selected order-Ramsey assertion at a given vector,
-for every finite ordered edge type, arbitrary finite ordered target
-and finite nonempty palette. No global A-part map on the target B is
-present in the input.
-
-The output is a finite, potentially larger base D with genuine prescribed
-B-embeddings and an actual selected OrderStage. Fixing the base to B
-with only its identity embedding is impossible for a multi-copy target:
-a two-colouring by projected B-coordinate prevents homogeneity. -/
-/-- Genuine unrestricted selected order output: the Ramsey base D and its
-prescribed B-embedding family are CHOSEN, not fixed to the identity copy.
-Each output allowed-part set restricts inside every prescribed B-image to
-the corresponding original allowed set. -/
+/-- Genuine unrestricted selected order output: for an arbitrary
+finite ordered target B, choose a finite, potentially larger Ramsey
+base D and a prescribed family of B-embeddings. No A-partition on the
+input B is assumed. The selected OrderStage has a literal designated
+arrow; compatible allowed sets pull back within prescribed B-copies.
+Fixing D=B with only its identity embedding is impossible for
+a multi-copy target, by the two-colour obstruction below. -/
 def UnrestrictedSelectedOrderWitness
     {L : RelLanguage.{u}}
     (A : RelStructure L UA) (B : RelStructure L VB)
@@ -128,7 +122,7 @@ theorem no_identityBase_designatedArrow_of_two_copies
     rfl
   obtain ⟨u, hu⟩ := hDifferent
   exact no_identityBase_designatedArrow_of_distinct_A_values
-    S a b u hu
+    A B S a b u hu
 
 /-- Arbitrary finite target B: unlike the invalid identity-base proposal,
 the conclusion allows a sufficiently large finite base D and a real
@@ -184,10 +178,6 @@ theorem unrestrictedOrder_oneEdge_case
     A₀ B t ht targetTrain allowed
     hSupportNonempty hSupportCovers κ hNoTwo
 
-/-- Specialize the genuinely UNRESTRICTED shorter-train order assertion
-to the new finite edge type and the r^n-colour palette required by
-canonical cutoff-two filling. The target B is arbitrary: no fine
-part map B → A is introduced or assumed. -/
 /-- A genuine one-copy order witness inhabits the existential-base
 unrestricted interface by choosing D=B, the singleton identity family,
 and unchanged allowed-part sets. -/
