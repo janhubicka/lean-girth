@@ -134,9 +134,10 @@ local notation "Train" =>
 local notation "Selected" =>
   transportedSelectedCopies B D stage.system family stage.selected S E f
 
-/-- The actual next ForestStage with genuine mixed core coverage,
-including the q=2 case where the original coreCoverage field could
-be impossible. All outputs use the ORIGINAL selected B labels, full
+/-- The actual next coverage-free ForestStage, retaining nonempty
+physical A-support and vertex coverage but NOT asserting mixed
+irreducible coverage (which need not hold for arbitrary F_t witnesses
+at q=2). All outputs use the ORIGINAL selected B labels, full
 physical edge family, exact train restriction and unchanged parts. -/
 noncomputable def ForestStage.activeAttachment_of_bounds :
     ForestStage A B D family t targetTrain allowed := by
