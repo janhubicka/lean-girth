@@ -5,9 +5,15 @@ import Girth.TrainFillingPrivateRealUnionLocalCoverage
 set_option Elab.async false
 
 /-!
-# Ordered EHN directly on the genuine coloured original first wagons
+# RAW relational first-wagon union: preparatory EHN, NOT completed ordered W
 
-This is the concrete coloured direct-cutoff-two EHN input:
+This constructs an auxiliary-order EHN family for the RAW relational
+coproduct. The completed ordered W of the manuscript additionally
+contains within-colour binary comparisons ACROSS distinct summands.
+Consequently this theorem is PREPARATION, not yet the actual
+coloured-ordered EHN input for direct cutoff two.
+
+This is a preparatory coloured EHN input:
 A is the actual k-vertex ONE-EDGE structure, D is the
 original ordered coloured support structure, and W is the
 DEPENDENT DISJOINT UNION of its true first-wagon induced
