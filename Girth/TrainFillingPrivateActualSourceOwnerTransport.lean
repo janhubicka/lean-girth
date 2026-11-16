@@ -41,7 +41,7 @@ theorem EdgeTrainLevels.actualSourceEdgeEquiv_symm_owner
       (T.wagonClassCarrier
         (fun e : {e : Set V // e ∈ supportCopies A D} => e.1) μ) g)
     (e : {e : Set V // e ∈ supportCopies A D}) :
-    (T.actualSourceEdgeEquiv A D μ g hg hGirth).symm e |>.1 =
+    ((T.actualSourceEdgeEquiv A D μ g hg hGirth).symm e).1 =
       T.wagonClassOwner μ e := by
   let carrier :=
     T.wagonClassCarrier
