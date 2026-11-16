@@ -52,8 +52,6 @@ doubling theorem and interfaces already supplied by the old formalization.
 |---|---|---|
 | `TrainRecursiveRefinementDoubleStep.lean` | `BergeCycle.child_constant_of_singleton_intersections_twice` | Direct physical-cycle counterpart of the labelled (2g+1) one-step lemma. |
 | `TrainRecursiveRefinementDoubleGirth.lean` | `FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice` | Actual irreducible A-support, LOCAL first wagon; no retained global first-cut assumption. |
-| `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_sharedFineCutVector` | Combines the **existing** global inserted-cut theorem with each separately retained old positive cutoff. The head/tail pointwise comparisons are explicit arithmetic inputs; it does not assume a new global fine-girth conclusion. |
-| `TrainRecursiveRefinementCompleteCutVector.lean` | `ForestTailStage.trueActive_inducedFineCutVector` | Transports the preceding whole vector from shared physical A-support to the true induced active relational A-support via the existing injective source map. |
 
 ### Existing formal components reused
 
@@ -94,7 +92,6 @@ LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleCount
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
-LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementCompleteCutVector
 LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
 ```
 
@@ -321,3 +318,37 @@ step still depends on the established actual labelled first-cut
 certificate, and the true lower selected witness remains an
 independent obligation. Source equality is **not** an exact-head
 Lean compilation or proof of the new one-step lemma.
+
+### 16 November: remove another duplicate after checking existing mainline
+
+The candidate `Girth/TrainRecursiveRefinementCompleteCutVector.lean`
+had only two wrappers (`trueActive_sharedFineCutVector` and
+`trueActive_inducedFineCutVector`) deriving global girth at every
+inserted and retained fine cut from the real old forest-tail stage.
+These were useful for identifying the required hypotheses, but
+the **existing mainline theorem**
+`ForestTailStage.trueActive_inducedAllLowerCutGirth` in
+`Girth/TrainRecursiveTrueActiveLowerCutoffVector.lean` already proves
+the *exact required lower recursive cutoff vector* on the genuine
+induced active A-support. It specifically covers the replacement
+`replicate (R.extraCuts + 1) (q-1) ++ tail`, not a weakened
+head-only cutoff. Mainline additionally provides
+`trueActive_sharedInsertedCutGirth` and
+`trueActive_sharedRetainedTailCutGirth` separately for the shared
+support.
+
+**Action:** deleted the redundant experimental
+`TrainRecursiveRefinementCompleteCutVector.lean` and removed
+its import, two `#print axioms` checks and build target from
+`CheckTrack6RefinementDoubleAxioms.lean`. This does not remove any
+mathematical conclusion needed by Track 6 or the recursive lower call.
+
+**Updated current inventory:** six candidate proof modules,
+**22 candidate theorem declarations** and **22** central axiom
+checks; all historical 24- or 26-theorem inventory statements
+above record earlier, superseded branch states.
+The old existing mainline theorem is unchanged, as are all
+actual selected-copy labels and original tail values.
+
+No exact-head Lean build has yet been performed; no manuscript
+validation mark or mainline merge is claimed.
