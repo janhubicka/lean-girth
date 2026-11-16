@@ -145,4 +145,53 @@ theorem crossPairNonedge_of_distinct_edges_and_trianglefree
     (distinct_two_pairs_have_third a b hNoLoop hDistinct e f hef)
     (hNoTriangle e f hef)
 
+/-- Triangle exclusion on a specified vertex set.  The full
+trace pair graph may have triangles outside the induced cycle. -/
+def TriangleFreeOn
+    (G : SimpleGraph W) (C : Set W) : Prop :=
+  ∀ x y z : W, x ∈ C → y ∈ C → z ∈ C →
+    ¬ (G.Adj x y ∧ G.Adj x z ∧ G.Adj y z)
+
+/-- The vertices occurring in a system of required pairs. -/
+def pairPatternVertices (a b : E → W) : Set W :=
+  {z | ∃ e : E, z = a e ∨ z = b e}
+
+/-- Triangle-freeness only on the required pair endpoints gives
+the no-triangle condition needed by the cross-pair obstruction.
+No global triangle-free hypothesis is imposed on the ambient graph. -/
+theorem noTriangleAtPair_of_triangleFreeOn
+    (G : SimpleGraph W) (a b : E → W)
+    (hEdges : ∀ e : E, G.Adj (a e) (b e))
+    (hFree : TriangleFreeOn G (pairPatternVertices a b))
+    (e f : E) (z : W)
+    (hz : z = a f ∨ z = b f) :
+    ¬ (G.Adj (a e) z ∧ G.Adj (b e) z) := by
+  intro h
+  apply hFree (a e) (b e) z
+    ⟨e, Or.inl rfl⟩
+    ⟨e, Or.inr rfl⟩
+    ⟨f, hz⟩
+  exact ⟨hEdges e, h.1, h.2⟩
+
+/-- A streamlined replacement for the explicit CrossPairNonedge
+certificate: distinct loopless required edges in a triangle-free
+induced graph always have the necessary nonadjacent cross pair. -/
+theorem crossPairNonedge_of_triangleFreeOn
+    (G : SimpleGraph W) (a b : E → W)
+    (hEdges : ∀ e : E, G.Adj (a e) (b e))
+    (hDistinct :
+      ∀ e f : E, e ≠ f →
+        ({a e, b e} : Finset W) ≠ {a f, b f})
+    (hFree : TriangleFreeOn G (pairPatternVertices a b))
+    (e f : E) (hef : e ≠ f) :
+    CrossPairNonedge G a b e f := by
+  have hNoLoop (d : E) : a d ≠ b d := (hEdges d).ne
+  apply crossPairNonedge_of_noTriangle
+    G a b e f hef
+    (distinct_two_pairs_have_third a b hNoLoop hDistinct e f hef)
+  intro z hz _ _
+  exact noTriangleAtPair_of_triangleFreeOn
+    G a b hEdges hFree e f z hz
+
+
 end StructuralRamsey.Girth
