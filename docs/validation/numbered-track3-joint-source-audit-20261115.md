@@ -71,37 +71,39 @@ for potential reuse in other proof variants. They remain
 uncompiled, and their benefit must not be described as filling
 a gap in the historically certified stage assembly.
 
-## Why the independent wrapper still matters at cutoff two
+## Correction: induced irreducibility is not ambient Gaifman adjacency
 
-The historically verified `ActiveAttachmentBounds` stage assembly
-assumes `coreCoverage : IrreduciblesExtendTo A E.toRelStructure`,
-while the six candidate Track 3 geometry/parameter wrappers **do not**.
-This matters at the cutoff `q=2`, where ordinary Berge girth `>2`
-and even local order-two supreme-cycle bounds alone do not force
-every irreducible Gaifman clique of a **3-uniform** core to be
-contained in a single actual A-edge. The exact six-vertex,
-three-edge countermodel and exhaustive 126-cycle check are recorded
-in manuscript [draft PR #473](https://github.com/janhubicka/girth/pull/473)
-and `checks/check_track3_core_irreducible_coverage.py`.
-This is not a counterexample to any stated Ramsey arrow.
+**16 November 2026 retraction.** An attempted finite counterexample
+in [closed, unmerged manuscript PR #473](https://github.com/janhubicka/girth/pull/473)
+was **incorrect**: it treated `{a,b,c}` as irreducible because each
+pair lay in some *ambient* 3-edge, even though every such edge used an
+extra vertex outside `{a,b,c}`. At the pinned dependency,
+`RelStructure.Irreducible (H.induce S)` requires the witness relation
+tuple **inside S**. The induced 3-uniform structure on that triple has
+no edge, and is not irreducible. The alleged failure of
+`IrreduciblesExtendTo A H` was never established.
+The regression and manuscript TODO from that obsolete PR were
+removed, and the related Track 3 issue comments marked retracted.
+**Do not use the 126-cycle toy test as evidence of a coverage gap.**
 
-For the q>2 branch, **separate existing certified formalizations**
+The historically verified `ActiveAttachmentBounds.coreCoverage`
+remains an explicit premise of the complete stage assembly, and the
+new six-declaration geometry/parameters wrapper does not use it;
+this is a real *interface difference*, but there is currently **no
+validated counterexample proving that the premise is unavailable**
+from the actual local witness. Auditing it requires the exact
+relational language, all induced relations (including any order
+symbols), and the true selected lower witness. Do not infer either
+an obstruction or automatic discharge from an ambient Gaifman
+picture.
+
+The q>2 formal coverage route is independently established in
 `TrainRecursiveNontrivialActiveCoverage.lean` and
-`TrainRecursiveOrderedNontrivialSelectedInputs.lean` prove and
-transport the needed strong local coverage from the true active
-target, using old bottom girth at least four. Their current source
-blobs match full successful Lean workflow
-[42528917772](https://github.com/janhubicka/lean-girth/actions/runs/42528917772)
-at commit `568de15dc83fc7602e1326f81dd30c83c0bf08c0`.
-
-**Consequences:** the new independent joint theorem can isolate
-geometry and parameters in the weaker source hypotheses even
-where the full stage assembly's mixed-coverage obligation is not
-yet discharged. The actual cutoff-two witness still needs a
-source-specific coverage argument or a modified stage invariant;
-this is separate from compiling the new joint theorem. Do not
-conflate `ActiveAttachmentBounds.coreCoverage` with mere
-vertex coverage or incorrectly mark the q>2 branch as missing it.
+`TrainRecursiveOrderedNontrivialSelectedInputs.lean`, with
+historical successful full workflow
+[42528917772](https://github.com/janhubicka/lean-girth/actions/runs/42528917772).
+The q=2 case remains a source-interface check, **not** a proved gap
+on the basis of the withdrawn example.
 
 ## Audited proof dependency diagram
 
