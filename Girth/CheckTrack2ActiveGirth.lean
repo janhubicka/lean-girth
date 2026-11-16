@@ -3,7 +3,7 @@ import Girth.ForestOldActiveSetGirth
 /-!
 # Track 2 focused local axiom gate: Active-subsystem girth
 
-Part of the 34-declaration numbered Track 2 candidate inventory.
+Part of the 32-declaration Track 2 audit: 28 new candidates and 4 reused existing theorems.
 A source-level declaration is NOT kernel-verified until this file is
 actually compiled with the pinned Lean/mathlib toolchain and the strict
 axiom output is parsed successfully. Do not promote validation markers
