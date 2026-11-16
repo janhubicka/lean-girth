@@ -69,7 +69,7 @@ def ForestTailStage.widenAllowed
   train := S.train
   targetRestriction := S.targetRestriction
   parameters := by
-    apply S.train.adjacentParameters_monoAllowed
+    apply EdgeTrainLevels.adjacentParameters_monoAllowed S.train
       (fun edge => edge.1)
       (fun ν => S.system.part ⁻¹' oldAllowed ν)
       (fun ν => S.system.part ⁻¹' newAllowed ν)
