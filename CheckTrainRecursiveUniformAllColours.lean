@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveUniformAllColours
+
+#check StructuralRamsey.Girth.TrainRecursiveWitness.UniformSelectedPartiteForestAllColours
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForestAllColours_largerCutoff

@@ -178,6 +178,10 @@ checks=(
   CheckTrainRecursiveActualAttachedPositive
   CheckTrainRecursiveActualLowerRefiningStep
   CheckTrainRecursiveUniformLowerRank
+  CheckTrainRecursiveUniformAllColours
+  CheckTrainRecursiveUniformAllInputs
+  CheckTrainRecursiveCutoffTwoPartObstruction
+  CheckTrainRecursiveUnrestrictedOrderInterface
   CheckTrainRecursiveOneEdgeDichotomy
   CheckTrainRecursiveCanonicalFineAllowedHeight
   CheckTrainRecursiveSelectedFineTrainHeight
