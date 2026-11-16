@@ -52,34 +52,25 @@ theorem girthGT_of_bounded_trace_forest_completions
     GirthGT H m := by
   classical
   rintro ⟨c, hc⟩
-  -- The forest-completion interface indexes families in Type v.
-  -- A raw Fin c.length is Type 0, so use the actual finite edge set
-  -- as a subtype of Set W : Type v. This also deduplicates physical edges.
-  let N : Type v := {e : Set W // e ∈ Set.range c.edge}
-  letI : Fintype N := (Set.finite_range c.edge).fintype
-  let edge : N → Set W := Subtype.val
-  have hEdgeInj : Function.Injective edge := Subtype.val_injective
-  have hSurj :
-      Function.Surjective
-        (fun i : Fin c.length =>
-          (⟨c.edge i, ⟨i, rfl⟩⟩ : N)) := by
-    rintro ⟨e, he⟩
-    obtain ⟨i, hi⟩ := he
-    refine ⟨i, ?_⟩
-    exact Subtype.ext hi
+  -- As in the existing finite-mixed-forest girth theorem, lift the
+  -- cycle's already INJECTIVE Fin-indexing into the ambient universe.
+  -- There is no need to quotient or count a separate image subtype.
+  let N : Type v := ULift.{v} (Fin c.length)
+  let edge : N → Set W := fun i => c.edge i.down
+  have hEdgeInj : Function.Injective edge := by
+    intro x y h
+    cases x with
+    | up i =>
+      cases y with
+      | up j =>
+        change c.edge i = c.edge j at h
+        have hij : i = j := c.edge_injective h
+        cases hij
+        rfl
   have hCard : Fintype.card N ≤ m := by
-    have hle : Fintype.card N ≤ Fintype.card (Fin c.length) :=
-      Fintype.card_le_of_surjective
-        (fun i : Fin c.length =>
-          (⟨c.edge i, ⟨i, rfl⟩⟩ : N)) hSurj
-    calc
-      Fintype.card N ≤ Fintype.card (Fin c.length) := hle
-      _ = c.length := by simp
-      _ ≤ m := hc
+    simpa only [N, Fintype.card_ulift, Fintype.card_fin] using hc
   have hEdges : ∀ n : N, edge n ∈ H := by
-    rintro ⟨e, ⟨i, hi⟩⟩
-    change e ∈ H
-    rw [← hi]
+    rintro ⟨i⟩
     exact c.edge_mem i
   obtain ⟨J, finite, F, hForest, hTrace, hEdgeTrace⟩ :=
     hComplete N edge hEdgeInj hEdges hCard
@@ -90,8 +81,8 @@ theorem girthGT_of_bounded_trace_forest_completions
   have hRangeTrace :
       ∀ e : Set W, e ∈ Set.range c.edge →
         ∃ j : J, (F j).carrier ∩ S = e := by
-    intro e he
-    exact hEdgeTrace ⟨e, he⟩
+    rintro e ⟨i, rfl⟩
+    exact hEdgeTrace ⟨i⟩
   have hRangeGirth : GirthGT (Set.range c.edge) m :=
     girthGT_selected_of_forest_edge_traces
       F hForest S H hLinear hEdgeBig hTrace
