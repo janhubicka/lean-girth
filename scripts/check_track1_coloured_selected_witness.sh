@@ -5,10 +5,11 @@ cd "$(dirname "$0")/.."
 export LEAN_NUM_THREADS=1
 echo "HEAD: $(git rev-parse HEAD)"
 echo "Lean toolchain: $(cat lean-toolchain)"
-test "$(grep -c '^#print axioms ' CheckTrack1ColouredSelectedWitness.lean)" -eq 5
+test "$(grep -c '^#print axioms ' CheckTrack1ColouredSelectedWitness.lean)" -eq 10
 if grep -nE '^[[:space:]]*(sorry|admit|axiom)[[:space:]]' \
   Girth/Track1ActualSelectedCoverage.lean \
   Girth/Track1ActualSelectedBStrong.lean \
+  Girth/Track1SplitSelectedMixedLF2.lean \
   Girth/Track1ColouredSelectedWitnessAssembly.lean; then
   echo "ERROR: explicit placeholder in selected-witness source" >&2
   exit 1
