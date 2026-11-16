@@ -39,8 +39,22 @@ def check(k):
 
 
 if __name__ == "__main__":
-    # Triangle negative control. These properties must NOT hold at k=3.
+    # Triangle negative control: the induced three-cycle is K3.
     assert all(cycle_adj(3, a, b) for a, b in combinations(range(3), 2))
+
+    # INDUCEDNESS negative control: K4 contains the four edges of C4,
+    # but also contains diagonals (0,2) and (1,3), so it is chordal.
+    # An ordinary graph embedding of cycleGraph 4 into K4 is NOT
+    # an induced cycle and cannot be used by the Track 8 obstruction.
+    K4_adj = lambda x, y: x != y
+    assert all(
+        K4_adj(i, (i + 1) % 4) for i in range(4)
+    )
+    assert K4_adj(0, 2) and K4_adj(1, 3)
+    assert any(
+        K4_adj(a, b) and K4_adj(a, c) and K4_adj(b, c)
+        for a, b, c in combinations(range(4), 3)
+    )
     for k in range(4, 101):
         check(k)
     print("PASS: 97 cycle lengths (4..100), edge distinctness, "
