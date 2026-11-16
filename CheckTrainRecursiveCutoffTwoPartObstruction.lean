@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveCutoffTwoPartObstruction
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.no_global_X_part_of_colliding_canonical_edges
