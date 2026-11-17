@@ -18,6 +18,8 @@ LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake build \
   Girth.FiniteTraceFinRotateCycle \
   Girth.FiniteTraceTriangleCycle \
   Girth.FiniteTraceCycleCertificate \
+  Girth.FiniteTraceCycleGraphFacts \
+  Girth.FiniteTraceChordalEndpoint \
   Girth.FiniteTraceSimplicialCriterion \
   Girth.FiniteTracePEORank \
   2>&1 | tee "$log_dir/build.log"
