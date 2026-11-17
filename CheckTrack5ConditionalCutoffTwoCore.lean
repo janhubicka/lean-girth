@@ -1,0 +1,7 @@
+import Girth.TrainFillingConditionalCutoffTwoCore
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.cutoffTwoFirstCarrier
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.cutoffTwoChoices
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.cutoffTwoShortSource
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoContraction.train
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.exists_fineCutoffTwoCore_of_unrestrictedOrder

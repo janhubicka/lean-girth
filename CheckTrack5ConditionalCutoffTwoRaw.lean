@@ -1,0 +1,4 @@
+import Girth.TrainFillingConditionalCutoffTwoRaw
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.cutoffTwoTailSymbols
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.cutoffTwoRawData_of_unrestrictedOrder
