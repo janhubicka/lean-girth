@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Numbered Track 2: three INDEPENDENT local Lean + strict axiom gates.
-# Run: bash scripts/check_track2_local.sh [all|active|increment|join]
+# Numbered Track 2: local Lean and strict axiom gates.
+# Run: bash scripts/check_track2_local.sh [all|active|increment|join|physical]
 # No explicit dependency update or GitHub Actions job is started.
 # Restore the pinned local cache first: Lake may fetch missing packages.
 set -euo pipefail
@@ -20,11 +20,11 @@ fi
 
 mode="${1:-all}"
 case "$mode" in
-  all|active|increment|join) ;;
-  *) echo "Usage: $0 [all|active|increment|join]" >&2; exit 2 ;;
+  all|active|increment|join|physical) ;;
+  *) echo "Usage: $0 [all|active|increment|join|physical]" >&2; exit 2 ;;
 esac
 if [[ $# -gt 1 ]]; then
-  echo "Usage: $0 [all|active|increment|join]" >&2
+  echo "Usage: $0 [all|active|increment|join|physical]" >&2
   exit 2
 fi
 
@@ -73,8 +73,11 @@ fi
 if [[ "$mode" == all || "$mode" == join ]]; then
   run_gate join Girth.CheckTrack2JoinLift Girth/CheckTrack2JoinLift.lean
 fi
+if [[ "$mode" == all || "$mode" == physical ]]; then
+  run_gate physical Girth.CheckTrack2PhysicalAttachment Girth/CheckTrack2PhysicalAttachment.lean
+fi
 
-# The older 34-declaration gate remains the full integration check.
+# Retain the integrated check for the active-girth, join, and increment gates.
 if [[ "$mode" == all && "$failures" -eq 0 ]]; then
   run_gate integrated Girth.CheckTrack2Trace Girth/CheckTrack2Trace.lean
 fi

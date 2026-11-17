@@ -1,0 +1,7 @@
+import Girth.ForestPhysicalAttachmentCompletion
+
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_compl_of_contained
+#print axioms StructuralRamsey.Girth.ForestOfCopies.finiteImage
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.toPhysicalCopySet
+#print axioms StructuralRamsey.Girth.pictureABPhysicalForestExtension_iff
+#print axioms StructuralRamsey.Girth.physicalCopySetForestExtension_actualAttachment

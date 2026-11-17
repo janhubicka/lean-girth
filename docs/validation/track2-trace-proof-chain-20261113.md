@@ -1,9 +1,31 @@
 # Numbered Track 2 — current proof chain and validation ledger
 
-**Status (17 November 2026): source-level candidates, NOT kernel-verified.**
+**Status (17 November 2026): local kernel and strict axiom checks passed.**
 Scope: the circulation part of the girth manuscript, excluding the appendix.
-The historical exploratory branches and prior validation notes remain in Git history;
-this file records only the currently retained argument.
+
+## Local validation of the exact attachment
+
+The original 37 declarations passed their strict local checks. Five additional
+declarations in `Girth/CheckTrack2PhysicalAttachment.lean` passed with Lean
+`4.35.0-rc3`, allowing only `propext`, `Classical.choice`, and `Quot.sound`.
+
+- `ForestOfCopies.finiteImage` keeps one occurrence of each distinct piece.
+  The representative, which has the same carrier, serves as a hub when
+  deleting a repeated occurrence.
+- `pictureABPhysicalForestExtension_iff` identifies the finite physical-copy
+  assertion with the indexed support-piece assertion. The reverse implication
+  retains every original requested copy and chooses a genuine designated copy
+  for each additional support piece. Distinct copy keys with equal supports
+  are represented once in the join tree.
+- `physicalCopySetForestExtension_actualAttachment` applies the indexed
+  assembly to the actual free attachment. Every requested physical member is
+  retained and every added physical member is a transported designated copy.
+  Its inputs are the old completion and irreducible coverage, local
+  irreducible coverage by gluing copies, the nonempty covered source support,
+  the strong support maps and local forests, and output support linearity.
+  Construction of the Ramsey witness and the outer pass are separate tasks.
+
+The commands and source-level history below describe the earlier preparation.
 
 ## Working branches and provenance
 
@@ -58,12 +80,9 @@ The runner builds the requested module, elaborates its exact `#check` and
 `Classical.choice`, `Quot.sound`). The full check runs only
 after the three independent gates pass.
 
-**Checks actually available here:** static source audits (balanced simple
-delimiters, no explicit `sorry`/`admit` in the 14 new modules, no missing
-or duplicated axiom probes). The container has no `lean`, `lake`,
-`elan`, pinned Mathlib build cache or outbound GitHub DNS. Therefore
-**none of the 33 new theorem bodies has been compiled or axiom-audited**.
-Do not promote any new `\leanverified` marker or merge the candidate.
+Before the pinned toolchain was restored, only static source audits were
+available. The local Lean and strict axiom results above supersede that
+checkpoint.
 
 ## Bounded diagnostics, not theorem certificates
 
@@ -123,9 +142,8 @@ cases where one underlying structure could be counted in both sorts,
 a separate identification (or the theorem's trivial-case split)
 is needed. **Do not silently count that object twice.**
 
-All five new theorem declarations have unexecuted strict axiom probes.
-The source remains uncompiled; this is a repair of a mathematical
-interface, not yet a Lean certificate.
+This physical-to-indexed adapter is included in the original 37-declaration
+local audit.
 
 
 **Why the A/B carrier tags are faithful in the nontrivial case.**
