@@ -1,0 +1,4 @@
+import Girth.TrainAdjacentParameters
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.heightOne
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.adjacentParameters_heightOne_iff

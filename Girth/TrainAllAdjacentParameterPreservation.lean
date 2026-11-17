@@ -1,3 +1,4 @@
+import Girth.TrainAdjacentParameters
 import Girth.TrainFullSystemGirthParameter
 import Girth.TrainUniversalTopOrderOne
 
@@ -27,22 +28,6 @@ open StructuralRamsey.RelStructure
 
 universe u v
 variable {L : RelLanguage.{u}} {UA P Old Core I : Type v}
-variable {E W : Type v}
-
-/-- Correct adjacent-cut formulation of the train's allowed
-sibling-intersection parameters. The parameter at parent cut
-nu applies to children at cut mu where nu = mu + 1. -/
-def EdgeTrainLevels.AdjacentParameters
-    {m : ℕ} (T : EdgeTrainLevels E m)
-    (edgeCarrier : E → Set W)
-    (allowed : Fin (m + 1) → Set W) : Prop :=
-  ∀ (μ ν : Fin (m + 1)) (hμν : μ ≤ ν),
-    ν.val = μ.val + 1 →
-      TrainParentIntersectionBound
-        (T.wagonClassCarrier edgeCarrier μ)
-        (T.wagonParent μ ν hμν)
-        (allowed ν)
-
 /-- All original allowed-part sibling-intersection bounds survive
 a genuine active relational picture step, under the old/core
 parameters and full witness system girth at interior parent cuts.
