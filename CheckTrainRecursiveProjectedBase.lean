@@ -1,0 +1,8 @@
+import Girth.TrainRecursiveOrderRamseyBase
+import Girth.TrainRecursiveCutoffTwoSpanningEdge
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.allowedByPredicates_pullback
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.exists_orderRamseyBase_of_extendsOrder
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.no_arrow_of_cyclic_edge_embeddings
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.all_core_edges_lifted_of_spanningTuple
+#print axioms StructuralRamsey.Girth.cutoffTwoProjectedPartiteLocalRamsey
