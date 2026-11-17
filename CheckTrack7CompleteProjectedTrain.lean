@@ -1,0 +1,4 @@
+import Girth.TrainFillingProjectedCutoffTwo
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.cutoffTwoLocalFillingFromShorterOrder_constructed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectedForestAndOrder_allAdmissible
