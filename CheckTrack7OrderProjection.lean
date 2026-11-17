@@ -1,0 +1,7 @@
+import Girth.TrainFinePartiteOrderProjection
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.ProjectsOrder
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectsOrder_of_isPartiteOver
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectsOrder_activeFine
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectsOrder_relabelFine
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectsOrder_attachment
