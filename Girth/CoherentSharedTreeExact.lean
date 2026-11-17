@@ -154,7 +154,7 @@ theorem isTree_of_two_induced_trees_free_union
 /-- Full coherent join-tree amalgamation with a parameterized policy
 of allowed full intersections. Remaining new-A-copy and closure
 conditions are not consequences of the join-tree conclusion. -/
-theorem typedInterfaceForest_of_free_shared_subtree
+def typedInterfaceForest_of_free_shared_subtree
     [Finite Q]
     (F : Q → HypergraphPiece W)
     (compatible : HypergraphPiece W → HypergraphPiece W → Prop)
