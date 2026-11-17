@@ -1,0 +1,8 @@
+import Girth.TrainFillingOrderedSelectedTail
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedFilling_adjacentParameters
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedSelectedFilledEdge_rel_succ
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedSelectedTailRealization
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedSelectedTail_fullSystemGirthGT
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedSelectedTail_strong
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedSelectedTail_ramsey

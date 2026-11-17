@@ -1,0 +1,3 @@
+import Girth.TrainFillingSelectedBottomOverlap
+
+#print axioms StructuralRamsey.Girth.selectedPictureBottom_commonEdge_of_sharedPair
