@@ -1,0 +1,9 @@
+import Girth.TrainFillingSelectedActualHOldTrain
+
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.oldSupportEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.oldSupportEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualOldEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageOldEdge_eq_selectedPhysical
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualOldTrain
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedStageActualOldTrain_rel_iff

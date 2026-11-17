@@ -1,0 +1,6 @@
+import Girth.TrainFillingSelectedOldEqualityCut
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottomWagonEquiv
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_wagonClassCarrier
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.bottom_labelledCutGirth_of_physical
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.oldEqualityCut_labelledGirth
