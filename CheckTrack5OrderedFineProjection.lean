@@ -1,0 +1,6 @@
+import Girth.TrainFillingOrderedFineProjection
+
+#print axioms StructuralRamsey.Girth.orderedFillingPlacement_hasPart_iff
+#print axioms StructuralRamsey.Girth.shortenedHasPart_existsUnique
+#print axioms StructuralRamsey.Girth.shortenedHasPart_iff_part_eq
+#print axioms StructuralRamsey.Girth.orderedFillingPart_place

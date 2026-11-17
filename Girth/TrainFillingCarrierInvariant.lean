@@ -38,6 +38,12 @@ structure TrainFilling (V : Type v) where
 
 namespace TrainFilling
 
+/-- Actual old edges of the filling, identified by their carrier sets. -/
+abbrev OldEdge (F : TrainFilling V) := {f : Set V // f ∈ F.oldEdges}
+
+/-- Actual filled edges, identified by their carrier sets. -/
+abbrev NewEdge (F : TrainFilling V) := {e : Set V // e ∈ F.newEdges}
+
 variable (F : TrainFilling V)
 
 /-- The full vertex carrier of the wagon replacing an original edge. -/

@@ -1,0 +1,7 @@
+import Girth.TrainFillingOrderedSelectedArrow
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.ofOrderedSupportCopies
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrderedOldEdgeEmbedding
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrderedOldEdgeEmbedding_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrderedFilling_edgeCarrier
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrderedTargetEdges_ramsey
