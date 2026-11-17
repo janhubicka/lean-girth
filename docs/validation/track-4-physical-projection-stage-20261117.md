@@ -52,3 +52,43 @@ Static audits found no \`sorry\`/\`admit\`/\`axiom\` in these new modules, no un
 4. **Validation:** no matching Lean/lake/elan and pinned dependencies exist in the current container. Exact-head compilation, all printed axiom results, semantic adversarial audit and LaTeX build are still outstanding. Keep both PRs draft, and leave \`thm:preservation\`, \`cor:coordinate\`, \`prop:globalize\` OPEN.
 
 **Manuscript:** \`girth\` PR #448 now has \`lem:physicalprojection\`, including the free-attachment and separate order-compatibility proofs, before the local forest witness preparation lemma. This is a proof-organization simplification rather than a new assumption.
+
+
+## Second continuation — actual physical bottom and raw witness chain
+
+**Source as of 17 November, still UNCOMPILED.** The previously missing genuine physical attachment has now been ported, rather than assumed as a finished local PictureStep.
+
+### Exact dependency chain
+
+- \`ForestActualACopyTestedBoundaryWeak.lean\`: a genuine attached physical A-copy lies in the core or is a tested transported old A-copy with the true small/whole boundary. The only changed input is \`ProjectsACopies\` in place of \`IsPartiteOver\`.
+- \`ForestActualRecursiveIncrementWeak.lean\`: the original factored-canonical selected mixed forest proof, using the weak physical boundary theorem. All old selected B labels and all actual A-edge members are retained.
+- \`ForestRecursiveOutputGirthWeak.lean\`: the genuine selected bottom forest/ordinary output girth, replacing the two uses of strong partiteness with weak active A-strongness and weak mixed ownership.
+- \`TrainCoverageFreePhysicalBottomIncrement.lean\`: bottom selected B/A forest, ambient A-support girth and all selected B strongness on a \`PhysicalForestStage\`.
+- \`TrainSelectedPictureIntrinsicGeometryWeak.lean\` and \`TrainCoverageFreeWeakProjectionGirth.lean\`: all-level physical wagon strongness/linearity and positive original B-labelled full system-girth transfer without ordered strong partiteness.
+- \`TrainCoverageFreePhysicalAttachment.lean\`: a **genuine** next \`PhysicalForestStage\`, selected transitions, indexed picture step and \`ActiveAttachmentBounds\` requiring only core \`ProjectsACopies\`.
+- \`TrainCoverageFreePhysicalBoundsFromMixed.lean\`, \`TrainCoverageFreePhysicalForestOrderStep.lean\`, \`TrainCoverageFreePhysicalPositiveTransfer.lean\`, \`TrainCoverageFreePhysicalNontrivialFtStep.lean\`: same-q mixed forest plus q=2 universal-top certificate, literal positive full-system girth and actual selected OrderStage/PictureStep from explicit local forest data.
+- \`TrainCoverageFreePhysicalDirectPartiteFtStep.lean\`: a direct local F_t core uses **fineEdges** (\`∀ a : Embedding A H, ∀ x, H.part (a x) = x\`) to prove \`ProjectsACopies\` after relabelling; **no** \`H.IsPartiteOver A.ordered\` assumption.
+- \`TrainCoverageFreePhysicalRawFtWitness.lean\`, \`TrainCoverageFreePhysicalRawFtFinitePass.lean\`: the explicit raw forest witness record and conditional initial-to-final strong selected train Ramsey result. The local existence premise is the expected data of F_t, not a ready-made next-stage PictureStep.
+
+The original bottom forest, selected mixed forest and all-level intrinsic-geometry proof bodies were independently compared against the weak ports. After mechanically replacing the **identified partite-premise calls**, the bodies were text-identical in the checked comparisons. This supports faithful porting; it does **not** establish Lean elaboration.
+
+### Separate auxiliary order invariant
+
+\`TrainCoverageFreeACopyGeometry.lean\` now proves that forward \`PartiteOrderCompatible\` survives both fine-part relabelling and free attachment, independently of physical-copy projection. \`TrainCoverageFreePhysicalAttachment.lean\` adds \`PhysicalForestStage.activeAttachment_orderCompatible\`; given actual old/core auxiliary compatibility, the genuine next physical stage retains it.
+
+**This does not say arbitrary F_t automatically supplies the local order-compatibility proof.** The current raw record models \`L.withOrder\` as a partite relational structure, while the English F_t treats within-part orders as auxiliary. A faithful order-reduct / auxiliary-order bridge, initial compatibility and final order completion remain obligations. \`PhysicalForestStage\` currently does not store a compatible-order certificate.
+
+### Static and kernel status
+
+- The source-level ports remove the problematic old \`stage.isPartite\` and \`bounds.corePartite\` uses from the **physical** bottom/positive/direct modules. The older alternative strong-stage modules remain unchanged for comparison.
+- Focused source scans found balanced delimiters, no literal proof holes (\`sorry\`, \`admit\`, or new \`axiom\`) and all declared \`Girth.*\` imports rooted in existing files; no exact-head Lean/lake build has been executed.
+- \`CheckTrack4MinimumOwnerSwap.lean\` now registers **262** \`#print axioms\` checks (the previous figure of 237 is historical), **none executed**.
+- No theorem is kernel-certified by these source changes. No validation marker has been promoted and no TeX/PDF build is claimed.
+
+### Remaining proof obligations
+
+1. Translate the manuscript's **abstract universal F_t** (coloured edge type, auxiliary fine-part orders, selected embeddings, mixed forest, positive full system bounds and indexed edge Ramsey arrow) into the concrete \`Physical.RawPartiteFtWitness\` existence statement without losing labels or adding order assumptions. This is mathematical type/representation work, not a missing local picture-step oracle.
+2. Maintain forward inter-part order compatibility and separate within-part orders through the actual finite pass, with a final linear extension that preserves the original ordered target and does not introduce spurious physical A-edges.
+3. Perform exact-head Lean elaboration/CI under the pinned dependencies and inspect all 262 axioms; then adversarially recheck the q=2 and original B-labelled length-two cases. The manuscript's \`lem:physicalprojection\`, \`lem:localforestwitness\`, \`thm:preservation\`, \`cor:coordinate\`, \`prop:globalize\` remain marked OPEN as appropriate.
+
+**Both manuscript PR #448 and Lean PR #1064 remain DRAFT; DO NOT MERGE.**
