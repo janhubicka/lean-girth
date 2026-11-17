@@ -1,5 +1,6 @@
 import Girth.ForestDuplicateLabelNormalization
 import Girth.ForestJoinLiftLinear
+import Girth.ForestCarrierCorner
 
 /-!
 # Duplicated owner labels are one-edge pieces in the linear ambient host
@@ -18,6 +19,8 @@ These are source-level candidate proofs awaiting Lean compilation.
 -/
 
 namespace StructuralRamsey.Girth
+
+open scoped Classical
 
 universe v
 variable {W Q : Type v}
@@ -127,7 +130,6 @@ theorem duplicatedLocalMember_isOneEdge_of_ambient_linear
         H hLinear hLarge (F q i) (hLocalEdges q i)
         (hLocalNonempty q i) e (hLocalEdges q i heF)
       rw [hCarEq]
-      exact Set.Subset.rfl
   · have hCrossCarrier :
         (F q i).carrier ⊆
           (P q).carrier ∩ (P r).carrier := by

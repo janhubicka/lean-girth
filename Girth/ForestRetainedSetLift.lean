@@ -16,6 +16,8 @@ Source-level candidate. It has not been Lean-compiled or axiom-audited.
 
 namespace StructuralRamsey.Girth
 
+open scoped Classical
+
 universe v
 variable {W Q : Type v}
 
@@ -38,6 +40,7 @@ theorem ForestOfCopies.restrict_to_retained_finset
   classical
   let I := {P : HypergraphPiece W // P ∈ all}
   let R := {P : HypergraphPiece W // P ∈ kept}
+  letI : Fintype I := Finset.fintypeCoeSort all
   let keep : Finset I :=
     Finset.univ.filter (fun P : I => P.1 ∈ kept)
   have hAux :

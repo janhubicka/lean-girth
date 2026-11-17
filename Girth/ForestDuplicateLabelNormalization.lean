@@ -27,6 +27,8 @@ namespace StructuralRamsey.Girth
 universe v
 variable {W I : Type v}
 
+open scoped Classical
+
 /-- A labelled forest descends to its set of DISTINCT physical
 pieces if every duplicated member is genuinely one-edge.
 
@@ -46,6 +48,7 @@ theorem ForestOfCopies.finiteImage_of_duplicate_oneEdge
         P ∈ Finset.univ.image F} => P.1) := by
   classical
   let K := {P : HypergraphPiece W // P ∈ Finset.univ.image F}
+  letI : Fintype K := Finset.fintypeCoeSort (Finset.univ.image F)
   let rep : K → I :=
     fun P => Classical.choose (Finset.mem_image.mp P.2)
   have hRep (P : K) : F (rep P) = P.1 := by
