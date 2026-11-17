@@ -2,7 +2,7 @@ import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
 import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTraceFinRotateCycle
-import Girth.FiniteTraceCycleCertificate
+import Girth.FiniteTraceCycleGraphFacts
 import Girth.FiniteTracePEORank
 
 /-!
@@ -108,3 +108,12 @@ manuscript validation markers without actual compilation AND executed
 #print axioms StructuralRamsey.Girth.IsInducedFinCycle.image_distinct_edges
 #check StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
 #print axioms StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
+
+#check StructuralRamsey.Girth.standardCycle_adj_finRotate
+#check StructuralRamsey.Girth.standardCycle_distinct_finRotate_edges
+#check StructuralRamsey.Girth.standardCycle_cliqueFree_three
+#check StructuralRamsey.Girth.no_bounded_induced_trace_cycle
+#print axioms StructuralRamsey.Girth.standardCycle_adj_finRotate
+#print axioms StructuralRamsey.Girth.standardCycle_distinct_finRotate_edges
+#print axioms StructuralRamsey.Girth.standardCycle_cliqueFree_three
+#print axioms StructuralRamsey.Girth.no_bounded_induced_trace_cycle
