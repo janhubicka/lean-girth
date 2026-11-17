@@ -1,0 +1,3 @@
+import Girth.TrainActualTwoCycleMixedCoreCut
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_two_cycle_mixed_cut_connector_realization
