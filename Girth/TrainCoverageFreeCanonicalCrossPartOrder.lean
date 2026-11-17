@@ -113,6 +113,47 @@ def physicalEdge_to_ordered
           z 0 < z 1
         simp only [hFine]
 
+
+/-- Forget only the canonical cross-part order, retaining the
+literal unordered physical A-embedding and its vertex image. -/
+def physicalEdge_to_unordered
+    {UA : Type v}
+    (A₀ : RelStructure L UA) [LinearOrder UA]
+    (H : System L UA X)
+    (a : RelStructure.Embedding A₀.ordered
+      H.crossPartOrder.toRelStructure) :
+    RelStructure.Embedding A₀ H.toRelStructure where
+  toFun := a.toFun
+  injective := a.injective
+  map_rel_iff := by
+    intro r z
+    exact a.map_rel_iff (.inl r) z
+
+/-- If every unordered A-copy has its prescribed fine colours,
+canonical cross-part ordering changes NO physical A-copy.
+The inverse literally forgets the new order relation. -/
+def physicalEdge_orderedEquiv
+    {UA : Type v}
+    (A₀ : RelStructure L UA) [LinearOrder UA]
+    (H : System L UA X)
+    (hFine : ∀ a : RelStructure.Embedding A₀ H.toRelStructure,
+      ∀ x : UA, H.part (a x) = x) :
+    RelStructure.Embedding A₀ H.toRelStructure ≃
+      RelStructure.Embedding A₀.ordered
+        H.crossPartOrder.toRelStructure where
+  toFun := fun a => physicalEdge_to_ordered A₀ H a (hFine a)
+  invFun := fun a => physicalEdge_to_unordered A₀ H a
+  left_inv := by
+    intro a
+    apply RelStructure.Embedding.ext
+    intro x
+    rfl
+  right_inv := by
+    intro a
+    apply RelStructure.Embedding.ext
+    intro x
+    rfl
+
 end StructuralRamsey.Partite
 
 namespace StructuralRamsey.Girth
@@ -134,5 +175,22 @@ theorem canonicalCrossPartOrder_relabel_compatible
     PartiteOrderCompatible ((H.crossPartOrder).relabel β) :=
   partiteOrderCompatible_of_fineRelabelling
     H.crossPartOrder β hβ H.crossPartOrder_forwardCompatible
+
+
+/-- The canonical cross-fine-part order does not create or remove
+any genuine physical A-support edge. This is stronger than just
+preserving selected embeddings and essential for the girth invariants. -/
+theorem supportCopies_canonicalCrossPartOrder_eq
+    (A₀ : RelStructure L UA) [LinearOrder UA]
+    (H : StructuralRamsey.Partite.System L UA Y)
+    (hFine : ∀ a : Embedding A₀ H.toRelStructure,
+      ∀ x : UA, H.part (a x) = x) :
+    supportCopies A₀.ordered (H.crossPartOrder).toRelStructure =
+      supportCopies A₀ H.toRelStructure := by
+  apply Set.Subset.antisymm
+  · rintro E ⟨a, rfl⟩
+    exact ⟨StructuralRamsey.Partite.physicalEdge_to_unordered A₀ H a, rfl⟩
+  · rintro E ⟨a, rfl⟩
+    exact ⟨StructuralRamsey.Partite.physicalEdge_to_ordered A₀ H a (hFine a), rfl⟩
 
 end StructuralRamsey.Girth
