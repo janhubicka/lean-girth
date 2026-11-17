@@ -304,4 +304,38 @@ theorem PhysicalForestStage.activeAttachment_pictureStep_of_familyArrow
 
 end MixedAssembly
 
+
+/-- The independent forward auxiliary order invariant is preserved by
+the *actual* weak physical attachment. This does not reinstate
+IsPartiteOver of the full order-expanded language. The fine-witness
+order condition remains an explicit, separately checked premise. -/
+theorem PhysicalForestStage.activeAttachment_orderCompatible
+    [LT P]
+    (stage : PhysicalForestStage A B D family t targetTrain allowed)
+    (hA : A.Irreducible) [Finite UA]
+    (hBaseLinear : ALinear A D) (e : Embedding A D)
+    (hRigid : ∀ a : Embedding A D, SameCopy a e → a = e)
+    (active : StructuralRamsey.Partite.ProjectedEmbedding
+      A stage.system e.toFunctionEmbedding)
+    (E : StructuralRamsey.Partite.System L P Y) [Finite Y] [Finite I]
+    (f : I → StructuralRamsey.Partite.Embedding
+      (stage.system.induce
+        (activeCarrier A stage.system e.toFunctionEmbedding)) E)
+    (U : EdgeTrainLevels
+      (OldACarrierEdge A E.toRelStructure) t.length)
+    (bounds : ActiveAttachmentBounds stage hA e active E f U)
+    (hOld : PartiteOrderCompatible stage.system)
+    (hLocal : PartiteOrderCompatible E) :
+    PartiteOrderCompatible
+      (stage.activeAttachment_of_bounds
+        hA hBaseLinear e hRigid active E f U bounds).system := by
+  change PartiteOrderCompatible
+    (StructuralRamsey.Partite.Attachment.attach
+      stage.system
+      (activeCarrier A stage.system e.toFunctionEmbedding) E f)
+  exact partiteOrderCompatible_attachment
+    stage.system
+    (activeCarrier A stage.system e.toFunctionEmbedding)
+    E f hOld hLocal
+
 end StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical
