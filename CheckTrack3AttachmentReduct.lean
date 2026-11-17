@@ -1,0 +1,4 @@
+import Girth.TrainTrack3AttachmentReduct
+
+#print axioms StructuralRamsey.Girth.track3_partiteInduce_toRelStructure_eq
+#print axioms StructuralRamsey.Girth.track3_partiteAttachment_toRelStructure_eq

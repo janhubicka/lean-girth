@@ -1,0 +1,3 @@
+import Girth.TrainRecursiveActiveIrreducibleCoverage
+
+#print axioms StructuralRamsey.Girth.activeSubsystem_irreduciblesExtendTo_of_selectedMixedCoverage
