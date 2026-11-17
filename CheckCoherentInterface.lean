@@ -1,4 +1,5 @@
-import Girth.CoherentSharedOccurrence
+import Girth.CoherentSharedTreeExact
+import Girth.CanonicalOccurrenceBirth
 import Girth.ClosedPortShortCycles
 import Girth.PortAttachmentUnique
 import Girth.SupportedPartialClosureEquiv
@@ -36,3 +37,16 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_triangle_of_closed_port
 #print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_square_of_closed_port
 #print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_pentagon_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.connected_of_embedded_local_trees
+#print axioms StructuralRamsey.Girth.CoherentPort.joinTree_of_coherent_shared_indices_and_card
+#print axioms StructuralRamsey.Girth.CoherentPort.isTree_of_two_induced_trees_and_edge_IE
+#print axioms StructuralRamsey.Girth.CoherentPort.ncard_internal_edges_eq_induced
+#print axioms StructuralRamsey.Girth.CoherentPort.edgeSet_internal_union_of_free_cover
+#print axioms StructuralRamsey.Girth.CoherentPort.edgeSet_induced_inclusion_exclusion
+#print axioms StructuralRamsey.Girth.CoherentPort.isTree_of_two_induced_trees_free_union
+#print axioms StructuralRamsey.Girth.CoherentPort.typedInterfaceForest_of_free_shared_subtree
+#print axioms StructuralRamsey.Girth.CoherentPort.ClosedGraphEmbedding.comp
+#print axioms StructuralRamsey.Girth.CoherentPort.ClosedGraphEmbedding.comp_apply
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrenceFirstBirth_appears
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrence_not_before_birth
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrence_after_birth
