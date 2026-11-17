@@ -30,8 +30,9 @@ default on vertices outside the union of genuinely coloured images. -/
 noncomputable def oldColourOfRel
     {k : ℕ}
     (D : RelStructure (colouredOrderedEdgeLanguage I k) V)
-    (default : I) (x : V) : I :=
-  if h : ∃ i : I, D.rel (.inl (.inr i)) (fun _ : Fin 1 => x) then
+    (default : I) (x : V) : I := by
+  classical
+  exact if h : ∃ i : I, D.rel (.inl (.inr i)) (fun _ : Fin 1 => x) then
     Classical.choose h
   else
     default
@@ -58,8 +59,7 @@ theorem oldColourOfRel_on_selected
       Classical.choose_spec h
     have hPull := (b.map_rel_iff
         (.inl (.inr (Classical.choose h)))
-        (fun _ : Fin 1 => w)).mp (by
-          simpa only [Function.comp_def] using hChosen)
+        (fun _ : Fin 1 => w)).mp hChosen
     change sourceColour w = Classical.choose h at hPull
     exact hPull.symm
   · have hOld :
@@ -71,8 +71,7 @@ theorem oldColourOfRel_on_selected
     have hTarget := (b.map_rel_iff
         (.inl (.inr (sourceColour w)))
         (fun _ : Fin 1 => w)).mpr hOld
-    apply (h ⟨sourceColour w, ?_⟩).elim
-    simpa only [Function.comp_def] using hTarget
+    exact (h ⟨sourceColour w, hTarget⟩).elim
 
 #print axioms StructuralRamsey.Girth.oldColourOfRel_on_selected
 
