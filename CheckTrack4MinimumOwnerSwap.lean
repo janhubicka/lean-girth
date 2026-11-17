@@ -397,3 +397,8 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Partite.Embedding.crossPartOrder
 #print axioms StructuralRamsey.Partite.physicalEdge_to_ordered
 #print axioms StructuralRamsey.Girth.canonicalCrossPartOrder_relabel_compatible
+
+-- Canonical order expansion must preserve the COMPLETE physical A-edge family.
+#print axioms StructuralRamsey.Partite.physicalEdge_to_unordered
+#print axioms StructuralRamsey.Partite.physicalEdge_orderedEquiv
+#print axioms StructuralRamsey.Girth.supportCopies_canonicalCrossPartOrder_eq
