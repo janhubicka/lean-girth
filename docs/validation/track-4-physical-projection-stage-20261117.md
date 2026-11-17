@@ -92,3 +92,19 @@ The original bottom forest, selected mixed forest and all-level intrinsic-geomet
 3. Perform exact-head Lean elaboration/CI under the pinned dependencies and inspect all 262 axioms; then adversarially recheck the q=2 and original B-labelled length-two cases. The manuscript's \`lem:physicalprojection\`, \`lem:localforestwitness\`, \`thm:preservation\`, \`cor:coordinate\`, \`prop:globalize\` remain marked OPEN as appropriate.
 
 **Both manuscript PR #448 and Lean PR #1064 remain DRAFT; DO NOT MERGE.**
+
+
+## Canonical cross-fine-part order — additional 17 Nov audit
+
+New source candidate: \`Girth/TrainCoverageFreeCanonicalCrossPartOrder.lean\`. On a **pure unordered** fine-partite system \`H : Partite.System L UA X\`, define the relational binary order by \`x ≺ y :↔ H.part x < H.part y\`. No two vertices in one fine part are compared. This is a bona fide \`Partite.System L.withOrder UA X\` (its order-transversality is immediate), but it is **not** \`IsPartiteOver A.ordered\` in general: the earlier q=2 order-irreducible obstruction remains legitimate.
+
+Source-level proofs now provide:
+
+1. Every partite embedding \`H → K\` induces an exact induced \`L.withOrder\` embedding \`H.crossPartOrder → K.crossPartOrder\`. **Both target and witness must be expanded**; expanding only the witness can introduce extra order relations and destroy reflection.
+2. Every unordered physical \`A₀\` copy whose fine parts equal its source coordinates lifts to an ordered \`A₀.ordered\` copy without changing any vertex.
+3. The inverse merely forgets canonical cross-part order. Under the **fineEdges** assumption (which must come from the coloured one-edge type), these maps are an equivalence of the complete old/new A-copy sets and the physical support families coincide EXACTLY; no girth-relevant A-edge is created or lost.
+4. The canonical expansion is forward-order compatible, and increasing relabelling along the processed base copy preserves that compatibility.
+
+**Remaining genuinely separate:** the proof must identify the paper's fine-part auxiliary-order train \`F_t\` with this canonical **joint source/witness expansion**, preserve the selected train and mixed-forest predicates under the physical support equivalence, and then globally extend the independent within-part orders without creating new copies. The existing \`Physical.RawPartiteFtWitness\` is still a typed conditional interface, not a formal construction from the abstract F_t quantifier.
+
+\`CheckTrack4MinimumOwnerSwap.lean\` now has **270** registered \`#print axioms\` declarations, **none executed**. Source-only/static observations are not Lean kernel verification. Do not merge the draft PR or promote the manuscript OPEN markers.
