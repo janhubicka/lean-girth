@@ -345,3 +345,5 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.activeWagonGirth_of_ready
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.ramseyStrongTrain_of_Ft_eligible_steps
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.initialStrongTrainRamsey_of_nontrivialFtOperator
+
+#print axioms StructuralRamsey.Girth.projectsACopies_and_orderCompatible_freeAttachment
