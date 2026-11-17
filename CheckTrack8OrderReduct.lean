@@ -1,0 +1,8 @@
+import Girth.FiniteTraceOrderReduct
+
+#print axioms StructuralRamsey.RelStructure.Embedding.orderReduct
+#print axioms StructuralRamsey.RelStructure.Iso.orderReduct
+#print axioms StructuralRamsey.RelStructure.IsFreeAmalgam.orderReduct
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.orderReduct
+#print axioms StructuralRamsey.Girth.smallInducedStructure_orderReduct
+#print axioms StructuralRamsey.Girth.smallInducedStructure_orderReduct_of_assembledPicture
