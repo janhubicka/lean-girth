@@ -30,7 +30,6 @@ the imported completed-W chain is validated yet.
 #check StructuralRamsey.Girth.completedFirstWagon_order_of_colour_lt
 #check StructuralRamsey.Girth.completedFirstWagonSummand_strictMono
 #check StructuralRamsey.Girth.completedFirstWagon_allACopies_strictMono
-#check StructuralRamsey.Girth.completedFirstWagon_orderedEHN
 #check StructuralRamsey.Girth.completedFirstWagon_privateEHN
 
 #print axioms StructuralRamsey.Girth.completedFirstWagonSummandEmbedding
@@ -40,7 +39,6 @@ the imported completed-W chain is validated yet.
 #print axioms StructuralRamsey.Girth.completedFirstWagon_aLinear
 #print axioms StructuralRamsey.Girth.completedFirstWagonSummand_strictMono
 #print axioms StructuralRamsey.Girth.completedFirstWagon_allACopies_strictMono
-#print axioms StructuralRamsey.Girth.completedFirstWagon_orderedEHN
 #print axioms StructuralRamsey.Girth.completedFirstWagon_privateEHN
 
 #check StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
