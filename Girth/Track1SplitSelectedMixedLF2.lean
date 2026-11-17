@@ -30,8 +30,8 @@ STAGED DRAFT; the following code has not been kernel-checked.
 
 namespace StructuralRamsey.Girth
 
-universe v w
-variable {V I Choice : Type v} {W : Type w}
+universe v
+variable {V I Choice W : Type v}
 
 /-- Any family of at most two pieces is a forest as soon as
 each pair of distinct members has an allowed intersection.
@@ -86,7 +86,7 @@ theorem track1_localForestThrough_two_of_pairwise
   apply track1_forestOfCopies_two_of_pairwise
     (fun j : J => F (idx j)) hCard
   intro i j hij
-  exact hPair (idx.injective hij)
+  exact hPair (fun h => hij (idx.injective h))
 
 /-- A genuine selected B-support piece meets an ambient physical edge
 in a singleton or the full edge, provided every split edge meeting

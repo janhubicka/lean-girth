@@ -108,16 +108,16 @@ noncomputable def track1_oldSelectedColouredOrderedEmbedding
                   (copyCarrier_comp_eq_image b aB).symm
             exact ⟨b.injective.comp hx, hEdge⟩
       | inr colour =>
-          change predicate (b (x 0)) = colour ↔
-            sourceColour (x 0) = colour
+          change predicate (b (x (0 : Fin 1))) = colour ↔
+            sourceColour (x (0 : Fin 1)) = colour
           rw [hPredicate]
   | inr _ =>
       change
-        (predicate (b (x 0)) = predicate (b (x 1)) ∧
-          b (x 0) < b (x 1)) ↔
-        (sourceColour (x 0) = sourceColour (x 1) ∧
-          x 0 < x 1)
-      rw [hPredicate (x 0), hPredicate (x 1)]
+        (predicate (b (x (0 : Fin 2))) = predicate (b (x (1 : Fin 2))) ∧
+          b (x (0 : Fin 2)) < b (x (1 : Fin 2))) ↔
+        (sourceColour (x (0 : Fin 2)) = sourceColour (x (1 : Fin 2)) ∧
+          x (0 : Fin 2) < x (1 : Fin 2))
+      rw [hPredicate (x (0 : Fin 2)), hPredicate (x (1 : Fin 2))]
       exact and_congr Iff.rfl hMono.lt_iff_lt
 
 #print axioms StructuralRamsey.Girth.track1_oldSelectedColouredOrderedEmbedding

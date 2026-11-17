@@ -162,7 +162,7 @@ theorem track1_selectedColouredWitness_from_EHN_family
       ∃ c : Choice, ∀ a b : (selected c).SourceEdge,
         χ ((selected c).physicalEdge a) =
           χ ((selected c).physicalEdge b) :=
-    track1_actualSelectedOwner_oldColourArrow
+    actualSelectedOwner_oldColourArrow
       A family predicate allowed hArrow hForbid
   refine ⟨o, hLifts, hCovered, hGirth, hPair, hStrongNew,
     hMixedLF2, ?_⟩

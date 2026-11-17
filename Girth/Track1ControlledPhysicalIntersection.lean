@@ -81,7 +81,6 @@ theorem track1_commonA_is_selectedSourceEdge_both
     ⟨copyCarrier a, ⟨i, ai, hai⟩⟩
   refine ⟨f, ?_, ?_, ?_⟩
   · rw [hInter]
-    exact Set.Subset.rfl
   · let e : {e : Set VB // e ∈ supportCopies A B} :=
       ⟨copyCarrier ai, ⟨ai, rfl⟩⟩
     refine ⟨e, ?_⟩

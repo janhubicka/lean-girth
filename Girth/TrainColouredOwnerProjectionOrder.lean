@@ -1,4 +1,5 @@
 import Girth.TrainColouredOwnerSelectedLift
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Order.Prod.Lex.Basic
 
 set_option Elab.async false
