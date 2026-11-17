@@ -3,6 +3,8 @@ import Mathlib.Data.Finset.Sym
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Tactic
 
+set_option maxHeartbeats 800000
+
 /-!
 # Exact common-subtree gluing: derive the edge count rather than assume it
 
@@ -35,14 +37,14 @@ variable {Q W : Type v}
 
 /-- The ambient edges internal to a subset have the same cardinality
 as the edge set of its induced graph. -/
-set_option maxHeartbeats 800000 in
 theorem ncard_internal_edges_eq_induced
     [Finite Q] (G : SimpleGraph Q) (S : Set Q) :
     (G.edgeSet ∩ S.sym2).ncard = (G.induce S).edgeSet.ncard := by
   classical
   letI : Fintype Q := Fintype.ofFinite Q
   letI : DecidableRel G.Adj := Classical.decRel _
-  letI : Fintype (G.edgeSet ∩ S.sym2) := Fintype.ofFinite _
+  letI : Fintype {e : Sym2 Q // e ∈ G.edgeSet ∩ S.sym2} :=
+    Fintype.ofFinite _
   have hFinset :
       (G.edgeSet ∩ S.sym2).toFinset =
         G.edgeFinset ∩ S.toFinset.sym2 := by
