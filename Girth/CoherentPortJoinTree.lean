@@ -54,7 +54,7 @@ theorem BridgeData.cross_occurrence
 /-- Gluing local join trees across an arbitrary (possibly multi-edge)
 interface whose vertices are represented in one connector on either side
 preserves the running-intersection property. -/
-theorem BridgeData.joinTree
+def BridgeData.joinTree
     [Fintype I] [Fintype J]
     {F : I → HypergraphPiece W} {G : J → HypergraphPiece W}
     {i₀ : I} {j₀ : J}
@@ -109,8 +109,8 @@ theorem no_single_port_of_split_shared_vertices
     (hy : ∃ i j, y ∈ (F i).carrier ∧ y ∈ (G j).carrier)
     (hSplit : ∀ i : I,
       ¬(x ∈ (F i).carrier ∧ y ∈ (F i).carrier)) :
-    ¬ ∃ i₀ j₀, BridgeData F G i₀ j₀ := by
-  rintro ⟨i₀, j₀, D⟩
+    ¬ ∃ i₀ j₀, Nonempty (BridgeData F G i₀ j₀) := by
+  rintro ⟨i₀, j₀, ⟨D⟩⟩
   have h := D.two_shared_vertices x y hx hy
   exact hSplit i₀ h.1
 
