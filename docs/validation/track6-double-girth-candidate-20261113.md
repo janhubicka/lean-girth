@@ -60,9 +60,13 @@ actual matching `#print axioms` checks in that green run:
   the ordered active nontrivial specialization.
 - `ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage`:
   from an actual lower selected `ForestTailStage` and `DesignatedArrow`,
-  derives all output `hFull`, `hTail`, physical injectivity,
-  parameters and indexed arrow, then constructs the real nontrivial
-  `q>2` picture step and preserves readiness on unprocessed profiles.
+  **plus the stated standing old-stage geometry** (A-linearity, the
+  strong designated base family, two distinct target A-copies, a
+  genuine nontrivial active fibre, a large partite base, part-preserving
+  family, and current first-refinement readiness), derives output
+  `hFull`, `hTail`, physical injectivity, parameters and indexed
+  arrow, then constructs the real nontrivial `q>2` picture step
+  and preserves readiness on unprocessed profiles.
 - `untouchedActiveFirstWagonRefinement_of_finiteMixed` and
   `untouchedSubcarriers_labelledGirth_of_finiteMixed`: the fresh
   level construction with actual support-piece injectivity.
