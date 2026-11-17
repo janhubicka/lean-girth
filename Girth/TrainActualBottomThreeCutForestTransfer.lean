@@ -1,6 +1,7 @@
 import Girth.TrainActualBottomForestReducedSupreme
-import Girth.TrainActualThreeCutOnePassSupreme
-import Girth.TrainActualWitnessBottomForestGeometry
+import Girth.TrainActualPositiveCutStandardTransfer
+import Girth.TrainActualReducedShortSingleton
+import Girth.TrainCyclicRunIndexReverseWindow
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -8,17 +9,11 @@ set_option Elab.async false
 /-!
 # The actual bottom THREE-OR-MORE-CUT transfer from a mixed forest witness
 
-The general three-cut physical source theorem already needs only one
-genuine globally supreme plan of the ACTUAL reduced witness BigCycle.
-It does NOT need full witness system girth after that plan is found.
-
-At the bottom, a local forest through q and the direct cut budget
-produce exactly such a plan (including the repeated-label details).
-Reuse the checked standard-contained physical one-pass transfer,
-recovering a supreme ORIGINAL selected B-copy of the source cycle.
-This closes the >=3-cuts branch conditionally on the real local
-forest witness and the usual old-picture geometric premises.
-It does not claim the two-cut/source length-two branch.
+A forest through the number of owner cuts gives a supreme plan in the
+reduced witness. At the bottom each wagon is one edge, so the plan
+only uses short replacements. Each short piece belongs to a singleton
+source run, and its two physical contacts lift to the source cycle.
+The resulting short replacements all lie in the chosen standard.
 -/
 
 namespace StructuralRamsey.Girth
@@ -55,8 +50,15 @@ variable (hRel : ∀ (ν : Fin (m + 1)) (j : I)
 local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "CoreEdge" => OldACarrierEdge A R
+local notation "ActualEdge" => OldACarrierEdge A
+  (RelStructure.Attachment.attach C.toRelStructure S R f)
+local notation "Std" => RelStructure.Attachment.copyEmbedding C.toRelStructure S R f
+local notation "Train" => generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared
+local notation "CoreActual" => (fun (b : CoreEdge) =>
+  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
+    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μBottom
 local notation "Out" => attachedSelectedPictureOrderOneData
@@ -69,10 +71,8 @@ local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
 
 include hRel
 
-/-- Genuine three-or-more-cut bottom transfer, using only local
-mixed forests in place of a full witness system-girth hypothesis.
-The source's selected-copy supreme label and all physical edges
-remain unchanged by the existing one-pass transfer. -/
+/-- Transfer the short reduced plan to an original selected-copy supreme
+plan for the source cycle with at least three geometric owner cuts. -/
 theorem attachedSelectedPicture_bottom_three_cut_supreme_of_localForest
     [Finite UA]
     (hStrong : ∀ b : RelStructure.Embedding B D, b ∈ family →
@@ -104,25 +104,88 @@ theorem attachedSelectedPicture_bottom_three_cut_supreme_of_localForest
       A hA B D C family selected e R f T U hShared hRel
       H q hLocal K owner hAllowed hCuts hBudget
       hAccept.2.1 hAccept.2.2
-  obtain ⟨target, hDesignated, pieces, hPlan, hProduces⟩ := hReduced
-  have hLabel : ∃ i : I, Z.label target = Sum.inl i := by
+  classical
+  obtain ⟨target, hDesignated, pieces, hPlan, _⟩ := hReduced
+  obtain ⟨i, hTarget⟩ : ∃ i : I, Z.label target = Sum.inl i := by
     cases h : Z.label target with
-    | inl i =>
-        exact ⟨i, h⟩
+    | inl i => exact ⟨i, rfl⟩
     | inr b =>
-        have hImpossible : False := by
-          have hCopy := hDesignated
-          rw [h] at hCopy
-          exact hCopy
-        exact False.elim hImpossible
-  obtain ⟨i, hTarget⟩ := hLabel
-  have hSupremeAt : Z.HasSupremeAt Wit target :=
-    ⟨hDesignated, pieces, hPlan, hProduces⟩
-  exact attachedSelectedPicture_three_cut_one_pass_supreme_of_old_bound
+        rw [h] at hDesignated
+        exact False.elim hDesignated
+  let run := cyclicOwnerRunIndex owner (by omega : 0 < cyclicOwnerChanges owner)
+  have hOwner (k : Fin n) : owner k = Z.label (run k) :=
+    cyclicOwnerRunIndex_owner_eq_cut owner (by omega) k
+  have hShortAt (k : Fin n) (hk : owner k ≠ Sum.inl i) :
+      ∃ a : ActualEdge,
+        (Out).Incident (.inr a) (K.connector (trainCyclicPred k)) ∧
+        (Out).Incident (.inr a) (K.connector k) ∧
+        a.1 ⊆ copyCarrier (Std i) := by
+    have hDifferent : Z.label (run k) ≠ Z.label target := by
+      rwa [← hOwner k, hTarget]
+    have hPiece := (hPlan (run k)).2 hDifferent
+    cases hKind : pieces (run k) with
+    | keep =>
+        rw [hKind] at hPiece
+        exact False.elim hPiece
+    | long a p b =>
+        have hLong : Z.LongValid Wit target (run k) a p b := by
+          simpa only [hKind] using hPiece
+        obtain ⟨_, _, _, _, _, _, hNe, ha, hb, _⟩ := hLong
+        exact (hNe (H.parent_injective (ha.trans hb.symm))).elim
+    | short b =>
+        have hShort : Z.ShortValid Wit target (run k) b := by
+          simpa only [hKind] using hPiece
+        have hForward :=
+          attachedSelectedPicture_reduced_short_forces_singleton_three_cuts
+            A hA B D C family selected e R f T U hShared hRel μBottom
+            K hAccept owner hAllowed hThree target (run k) b hShort
+        let pos := cyclicOwnerCutIndex owner (run k)
+        have hPrev : cyclicOwnerCutIndex owner (trainCyclicPred (run k)) =
+            trainCyclicPred pos := by
+          change _ = trainCyclicPred (cyclicOwnerCutIndex owner (run k))
+          rw [hForward, trainCyclicPred_cyclicSucc_of_two_le K.length_ge_two]
+        have hkPos : k = pos := cyclicOwnerRunIndex_singleton_fibre
+          owner K.length_ge_two hCuts (run k) pos k hPrev rfl rfl
+        obtain ⟨hIncLeft, hIncRight⟩ :=
+          attachedSelectedPicture_cut_short_piece_incident_lift
+            A hA B D C family selected e R f T U hShared hRel μBottom
+            K owner hAllowed hCuts target (run k) b hShort k
+            hkPos.symm (hPrev.trans (congrArg trainCyclicPred hkPos.symm))
+        exact ⟨CoreActual b, hIncLeft, hIncRight,
+          attachedSelectedPicture_cut_short_piece_carrier_in_standard
+            A hA B D C family selected e R f T U hShared hRel μBottom
+            K owner hAllowed hCuts target (run k) i hTarget b hShort⟩
+  let edge (k : Fin n) (hk : owner k ≠ Sum.inl i) := Classical.choose (hShortAt k hk)
+  let expanded (k : Fin n) : TrainSupremePiece ActualEdge
+      (Quotient ((Train).wagonSetoid μBottom)) :=
+    if hk : owner k = Sum.inl i then .keep else .short (edge k hk)
+  have hNoLong (k : Fin n) (a : ActualEdge)
+      (p : Quotient ((Train).wagonSetoid μBottom)) (b : ActualEdge) :
+      expanded k ≠ .long a p b := by
+    by_cases hk : owner k = Sum.inl i <;> simp [expanded, hk]
+  have hInc : K.LocalPieceIncidence Out expanded := by
+    intro k
+    by_cases hk : owner k = Sum.inl i
+    · simp only [expanded, dif_pos hk]
+    · have h := Classical.choose_spec (hShortAt k hk)
+      simpa only [expanded, dif_neg hk] using And.intro h.1 h.2.1
+  have hKeep (k : Fin n) (h : expanded k = .keep) : owner k = Sum.inl i := by
+    by_contra hk
+    simp [expanded, hk] at h
+  have hShort (k : Fin n) (a : ActualEdge) (h : expanded k = .short a) :
+      a.1 ⊆ copyCarrier (Std i) := by
+    by_cases hk : owner k = Sum.inl i
+    · simp [expanded, hk] at h
+    · have heq : edge k hk = a := by simpa [expanded, hk] using h
+      rw [← heq]
+      exact (Classical.choose_spec (hShortAt k hk)).2.2
+  exact attachedSelectedPicture_supreme_of_standard_replacement_of_three_le
     A hA B D C family selected e R f T U hShared hRel μBottom
-    hStrong hTwo hOldStrong hCoreStrong
-    K hAccept hOutputLinear hn hOrder owner hAllowed hThree
-    target i hTarget hSupremeAt hOldSupreme
+    hStrong hTwo hOldStrong hCoreStrong K hAccept hOutputLinear hn hOrder
+    owner hAllowed i expanded hInc
+    (fun k a b p h => (hNoLong k a p b h).elim)
+    (fun k a p b h => (hNoLong k a p b h).elim)
+    hKeep hShort (fun k a p b h => (hNoLong k a p b h).elim) hOldSupreme
 
 
 end BottomThreeCut

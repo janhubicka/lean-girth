@@ -67,7 +67,7 @@ local notation "Actual" => RelStructure.Attachment.attach C.toRelStructure S R f
 local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μBottom
 local notation "Out" => attachedSelectedPictureOrderOneData

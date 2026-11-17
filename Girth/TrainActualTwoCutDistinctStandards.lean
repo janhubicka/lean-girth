@@ -1,4 +1,5 @@
 import Girth.TrainActualPositiveCutTwoCutRankGate
+import Girth.TrainActualTwoCutShortSingletonOrientation
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -22,14 +23,6 @@ No appendix or manuscript modifications.
 -/
 
 namespace StructuralRamsey.Girth
-
-/-- Cyclic predecessor and successor coincide when the underlying
-finite index set has exactly two elements. -/
-theorem trainCyclicPred_eq_cyclicSucc_of_card_two
-    {n : ℕ} (hn : n = 2) (j : Fin n) :
-    trainCyclicPred j = cyclicSucc j := by
-  subst n
-  exact OrderOneData.finTwo_pred_eq_succ j
 
 open StructuralRamsey.RelStructure
 

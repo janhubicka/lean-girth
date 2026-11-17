@@ -54,7 +54,7 @@ local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μBottom
 local notation "Out" => attachedSelectedPictureOrderOneData
@@ -138,25 +138,26 @@ theorem attachedSelectedPicture_bottom_two_standard_supreme_of_localForest
     rw [hSucc0] at hDiff
     exact hDiff (by simpa [a, b] using hVal)
   have hAllowedPair : AllowedIntersection
-      (Wit.bottomForestPiece H (Z.label z0))
-      (Wit.bottomForestPiece H (Z.label z1)) :=
+      ((Wit).bottomForestPiece H (Z.label z0))
+      ((Wit).bottomForestPiece H (Z.label z1)) :=
     hForest.pairwiseAllowed hab
   have hNeConn : Z.connector z0 ≠ Z.connector z1 := by
     intro h
     have heq := Z.connector_injective h
     have hvals := congrArg Fin.val heq
-    exact (by omega : False)
-  have hInc00 : Wit.Incident (Z.label z0) (Z.connector z0) :=
+    change (0 : ℕ) = 1 at hvals
+    omega
+  have hInc00 : (Wit).Incident (Z.label z0) (Z.connector z0) :=
     Z.left_incident z0
-  have hInc01 : Wit.Incident (Z.label z0) (Z.connector z1) := by
+  have hInc01 : (Wit).Incident (Z.label z0) (Z.connector z1) := by
     have hh := Z.right_incident z1
     rw [hSucc1] at hh
     exact hh
-  have hInc10 : Wit.Incident (Z.label z1) (Z.connector z0) := by
+  have hInc10 : (Wit).Incident (Z.label z1) (Z.connector z0) := by
     have hh := Z.right_incident z0
     rw [hSucc0] at hh
     exact hh
-  have hInc11 : Wit.Incident (Z.label z1) (Z.connector z1) :=
+  have hInc11 : (Wit).Incident (Z.label z1) (Z.connector z1) :=
     Z.left_incident z1
   obtain ⟨edge, he0, he1, hEdge0, hEdge1⟩ :=
     H.common_short_edge Wit hAllowedPair hNeConn
@@ -183,12 +184,14 @@ theorem attachedSelectedPicture_bottom_two_standard_supreme_of_localForest
     rcases hk with hk0 | hk1
     · have heq : k = z0 := Fin.ext hk0
       subst k
-      rw [hPred0]
-      exact ⟨he1, hEdge1, hEdge0⟩
+      refine ⟨?_, ?_, hEdge0⟩
+      · simpa only [hPred0] using he1
+      · simpa only [hPred0] using hEdge1
     · have heq : k = z1 := Fin.ext hk1
       subst k
-      rw [hPred1]
-      exact ⟨he0, hEdge0, hEdge1⟩
+      refine ⟨?_, ?_, hEdge1⟩
+      · simpa only [hPred1] using he0
+      · simpa only [hPred1] using hEdge0
   exact attachedSelectedPicture_two_cut_symmetric_short_supreme
     A hA B D C family selected e R f T U hShared hRel μBottom
     hStrong hTwoCopies hOldStrong hCoreStrong

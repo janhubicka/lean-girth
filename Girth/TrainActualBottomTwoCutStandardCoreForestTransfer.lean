@@ -54,7 +54,7 @@ local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μBottom
 local notation "Out" => attachedSelectedPictureOrderOneData
@@ -114,11 +114,9 @@ theorem attachedSelectedPicture_bottom_two_cut_standard_core_forest_supreme
     have hkc : k ≠ cut := by
       intro heq
       subst k
-      have hFalse : False := by
-        have hDesignated : Wit.designated (Z.label cut) := hk
-        rw [hSource] at hDesignated
-        exact hDesignated
-      exact hFalse.elim
+      have hDesignated : (Wit).designated (Z.label cut) := hk
+      rw [hSource] at hDesignated
+      exact hDesignated
     have hPredNe : trainCyclicPred cut ≠ cut := by
       intro heq
       have hSucc := cyclicSucc_trainCyclicPred_of_two_le hCuts cut
