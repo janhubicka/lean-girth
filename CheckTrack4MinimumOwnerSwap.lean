@@ -384,3 +384,8 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.RawPartiteFtWitness
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.RawPartiteFtWitness.toPictureStep
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.initialStrongTrainRamsey_of_rawFtWitnesses
+
+-- Auxiliary orders are tracked separately from the physical A-copy projection.
+#print axioms StructuralRamsey.Girth.partiteOrderCompatible_of_fineRelabelling
+#print axioms StructuralRamsey.Girth.rawFineWitness_relabelling_geometry
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.activeAttachment_orderCompatible
