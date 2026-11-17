@@ -46,8 +46,10 @@ theorem no_cross_private_cycle_three :
     ∀ a b c : PortSide,
       PrivateBoth3 a b c →
       Steps3 a b c → PortTriples3 a b c → False := by
-  intro a b c
-  cases a <;> cases b <;> cases c <;> decide
+  intro a b c hCross hEdges hMidpoints
+  cases a <;> cases b <;> cases c <;>
+    simp_all [PrivateBoth3, Steps3, PortTriples3,
+      SideStepAllowed, NoHiddenPrivateMidpoint]
 
 private def PrivateBoth4 (a b c d : PortSide) : Prop :=
   (a = .left ∨ b = .left ∨ c = .left ∨ d = .left) ∧
@@ -68,8 +70,10 @@ theorem no_cross_private_cycle_four :
     ∀ a b c d : PortSide,
       PrivateBoth4 a b c d →
       Steps4 a b c d → PortTriples4 a b c d → False := by
-  intro a b c d
-  cases a <;> cases b <;> cases c <;> cases d <;> decide
+  intro a b c d hCross hEdges hMidpoints
+  cases a <;> cases b <;> cases c <;> cases d <;>
+    simp_all [PrivateBoth4, Steps4, PortTriples4,
+      SideStepAllowed, NoHiddenPrivateMidpoint]
 
 private def PrivateBoth5 (a b c d e : PortSide) : Prop :=
   (a = .left ∨ b = .left ∨ c = .left ∨ d = .left ∨ e = .left) ∧
@@ -92,8 +96,10 @@ theorem no_cross_private_cycle_five :
     ∀ a b c d e : PortSide,
       PrivateBoth5 a b c d e →
       Steps5 a b c d e → PortTriples5 a b c d e → False := by
-  intro a b c d e
-  cases a <;> cases b <;> cases c <;> cases d <;> cases e <;> decide
+  intro a b c d e hCross hEdges hMidpoints
+  cases a <;> cases b <;> cases c <;> cases d <;> cases e <;>
+    simp_all [PrivateBoth5, Steps5, PortTriples5,
+      SideStepAllowed, NoHiddenPrivateMidpoint]
 
 /-- The length-six cyclic side word LLSRRS is combinatorially allowed:
 this witnesses the sharpness of the <6 obstruction at the level of
@@ -111,7 +117,7 @@ theorem six_cycle_location_pattern_allowed :
     NoHiddenPrivateMidpoint .right .right .shared ∧
     NoHiddenPrivateMidpoint .right .shared .left ∧
     NoHiddenPrivateMidpoint .shared .left .left := by
-  decide
+  simp [SideStepAllowed, NoHiddenPrivateMidpoint]
 
 /-- Geometric impossibility of a triangle meeting both private sides.
 Distinctness is stated at the two-step distances, as needed by the
