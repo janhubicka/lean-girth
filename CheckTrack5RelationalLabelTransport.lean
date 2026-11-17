@@ -1,0 +1,6 @@
+import Girth.TrainFillingRelationalLabelTransport
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transportCarrierFamily_rel
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transportCarrierFamily_adjacentParameters
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.transportCarrierFamily_fullSystemGirthGT
+#print axioms StructuralRamsey.Girth.finiteMixedForestThrough_one

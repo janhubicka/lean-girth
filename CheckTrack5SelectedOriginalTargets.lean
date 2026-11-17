@@ -1,0 +1,7 @@
+import Girth.TrainFillingSelectedOriginalTargets
+
+#print axioms StructuralRamsey.Girth.privateChoiceOfLocalCopies
+#print axioms StructuralRamsey.Girth.privateChoice_originalEdge_relational
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.ParentwiseRealization.targetVertexEmbedding_range
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.parentwise_originalEdge_target
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.parentwise_targetEdge_original

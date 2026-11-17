@@ -1,0 +1,6 @@
+import Girth.TrainFillingFineRelationalCore
+
+#print axioms StructuralRamsey.Girth.supportCopies_fineFillingCore
+#print axioms StructuralRamsey.Girth.fineFillingCore_fine
+#print axioms StructuralRamsey.Girth.fineFillingCore_lift
+#print axioms StructuralRamsey.Girth.finePartite_supportedRelations

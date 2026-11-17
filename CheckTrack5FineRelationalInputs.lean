@@ -1,0 +1,5 @@
+import Girth.TrainFillingFineRelationalInputs
+
+#print axioms StructuralRamsey.Girth.UniformFillingData.generatedEdge_fineParts
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrdered_originalVertex_part
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.selectedOrdered_agree_targetOrder
