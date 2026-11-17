@@ -1,0 +1,6 @@
+import Girth.TrainFillingRawCutoffTwoData
+import Girth.TrainFillingMarkedLocalCopies
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoRawLocalData
+#print axioms StructuralRamsey.Girth.aStrong_comp_of_aStrong
+#print axioms StructuralRamsey.Girth.privateChoicesOfMarkedSummands
