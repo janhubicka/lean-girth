@@ -1,0 +1,9 @@
+import Girth.TrainPhysicalPartiteRefinedWitness
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedRestriction
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedParameters
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedCoarseTrain
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedMixedForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedFullAt
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedFull
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedRetainedFull
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.FinePartiteFtWitness.refinedCoreGirth

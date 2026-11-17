@@ -1,0 +1,4 @@
+import Girth.TrainCoverageFreePhysicalPositiveTransfer
+
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_projectedACopies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.actual_positive_full_of_Ft

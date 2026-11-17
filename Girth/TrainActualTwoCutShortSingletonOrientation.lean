@@ -1,4 +1,3 @@
-import Girth.TrainActualTwoCutDistinctStandards
 import Girth.TrainActualReducedShortSingleton
 import Mathlib.Tactic
 
@@ -31,6 +30,14 @@ replacement, or prove the long / order-one cases. Circulation only.
 namespace StructuralRamsey.Girth
 
 universe v
+
+/-- Cyclic predecessor and successor coincide when the underlying
+finite index set has exactly two elements. -/
+theorem trainCyclicPred_eq_cyclicSucc_of_card_two
+    {n : ℕ} (hn : n = 2) (j : Fin n) :
+    trainCyclicPred j = cyclicSucc j := by
+  subst n
+  exact OrderOneData.finTwo_pred_eq_succ j
 
 /-- The cyclic predecessor is an involution on a two-element type. -/
 theorem trainCyclicPred_pred_eq_self_of_card_two
