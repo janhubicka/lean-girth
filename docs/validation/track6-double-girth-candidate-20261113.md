@@ -1,354 +1,139 @@
-# Track 6 — doubling candidate and exact validation gate
+# Track 6 — current proof and validation map (17 November 2026)
 
-**Uncompiled. Do not promote any manuscript validation marker.** No paid Actions were requested.
+This file supersedes the chronological draft inventory previously stored here.
+Historical checks and unsuccessful variants are in the Git history and
+[issue #1057](https://github.com/janhubicka/lean-girth/issues/1057).
 
-Frozen manuscript baseline: `girth/main@8c9cfa6e`, source digest `45236791f392ca90546dd40f9e9de1d2be9e32bda82b2b26ebb7efc2b5b532ec`.
-Working English proof: `girth/revision/track6-refinement-proof-clarity-20261113@22c27a89` (different source digest).
-Lean branch base: `lean-girth/main@4d102cae`.
+## 1. Current branch scope
 
-## Exact theorem interfaces
+**Candidate branch:** `validation/6-double-count-candidate-20261113`.
+**Status:** four genuinely new Lean proof modules, **18 new theorem declarations**,
+all included in `CheckTrack6RefinementDoubleAxioms.lean`; **UNCOMPILED**.
+No new `sorry`, `admit` or explicit axiom declarations; this is a static
+source audit, not a certificate. Do not promote the stronger girth marks yet.
 
-- `TrainRecursiveRefinementDoubleCount.lean`: `card_double_le_of_two_preimages` — pure finite injection, no geometric inputs.
-- `TrainRecursiveRefinementDoubleStep.lean`: `child_has_second_occurrence_of_singleton_intersections` and `child_constant_of_singleton_intersections_twice` — requires transversality, singleton-part sibling intersections, complete labelled child girth >g.
-- `TrainRecursiveRefinementDoubleGirth.lean`: `girthGT_firstWagon_twice`, `girthGT_of_first_universal_twice`, `girthGT_of_retainedFirstCut_twice`, `actualSupport_girthGT_of_retainedFirstCut_twice` — iterated local descent, universal empty-tail case, retained-cut cap `min (2*g+1) h`, actual A-support specialization.
+| Candidate file | Actual new target |
+| --- | --- |
+| `Girth/TrainRecursiveRefinementDoubleCount.lean` | `card_double_le_of_two_preimages`: an injection `Bool × usedLabel ↪ Fin n` yields `2 * card usedLabel ≤ n` |
+| `Girth/TrainRecursiveRefinementDoubleStep.lean` | no used child label has a singleton occurrence; full one-step localization for cycles of length `≤2*g+1`, including physical `BergeCycle` |
+| `Girth/TrainRecursiveRefinementDoubleGirth.lean` | repeated one-step descent inside a first wagon; local `>2g+1`, universal-first/height-one case, and global `>min(2g+1,h₁)` with an **actual retained first labelled-cut** hypothesis |
+| `Girth/TrainRecursivePhysicalFineGirthDouble.lean` | conditional full physical A-support specializations from actual fine system certificates and first-cut information |
 
-## Local certification commands (NOT YET EXECUTED)
+The doubled-descent tactic proof is **textually identical** to the older
+mainline `g+1` descent after normalizing the numerical bound and
+the name of the one-step lemma. The new geometric and arithmetic
+content is concentrated in the first two files.
 
-```bash
-lake env lean Girth/TrainRecursiveRefinementDoubleCount.lean
-lake env lean Girth/TrainRecursiveRefinementDoubleStep.lean
-lake env lean Girth/TrainRecursiveRefinementDoubleGirth.lean
-```
+Two formerly proposed adapters have been **removed as redundant**:
+`TrainRecursiveRefinementAllRetainedCuts` and
+`TrainRecursiveRefinementCompleteCutVector`. Also removed the unused
+`TrainRecursiveRefinementSelectedTransport` and
+`TrainRecursiveRefinementSinglePartAcyclic` wrappers. Their needed
+results are available from the checked mainline sources below.
+No existing mainline theorems were altered.
 
-Each file prints endpoint axioms. Check output for `sorryAx`, unintended axioms, and elaborated assumptions. Do not treat presence of source-level proofs as kernel validation.
+## 2. What the checked mainline ALREADY proves
 
-## End-to-end limits
+At **`lean-girth/main@cd76b3ba6d43b7095a72dd53de972b754b36389e`**,
+[full Lean workflow #43950179891](https://github.com/janhubicka/lean-girth/actions/runs/43950179891)
+**succeeded**. The workflow builds every `Girth/*.lean` module and
+executes each `Check*.lean`, strictly allowing only `propext`,
+`Classical.choice`, `Quot.sound`. The named theorems below have
+actual matching `#print axioms` checks in that green run:
 
-Existing older `g+1` conditional adapter remains independent and sufficient for the recursion. The new doubling estimate must not replace the q-1 mixed-forest induction.
-Missing from this candidate: actual fine selected witness, original-tail full-system bounds, selected Ramsey arrow and strong embeddings, and fresh-cut output-tail preservation. These require Track 3/4 and Track 7 integration.
+- `LabelledBergeCycle.child_not_injective_of_singleton_intersections`
+  and `child_constant_of_singleton_intersections`: the existing
+  one-part / `g+1` localization result.
+- `FirstWagonRefinement.forget_train_eq`, retained parameter and
+  quotient maps, `labelledGirthGT_at_retained`: exact coarse train,
+  genuine wagon labels and original cutoff values.
+- `activeGluingWitness_retainedFullSystem_all_tail` and
+  `activeGluingWitness_retainedFull_exact`: preserve **full system
+  girth**, not just labelled edge girth, at each actual retained cutoff.
+- `ForestTailStage.trueActive_inducedAllLowerCutGirth`: the exact
+  replicated lower cutoff vector `replicate (R.extraCuts+1) (q-1) ++ tail`.
+- `ForestTailStage.coarsenedSelected_actualIndexedLocalInputBundle`:
+  **injectivity of actual selected support pieces**, mixed forests,
+  exact fine train restriction and parameters, and the
+  **indexed selected-copy Ramsey arrow** from a genuine lower stage.
+- `ForestTailStage.orderedTrueActiveSelected_indexedInputAndTwoCopies_of_nontrivial`:
+  the ordered active nontrivial specialization.
+- `ForestTailStage.refiningPictureStep_of_actualLowerSelectedStage`:
+  from an actual lower selected `ForestTailStage` and `DesignatedArrow`,
+  derives all output `hFull`, `hTail`, physical injectivity,
+  parameters and indexed arrow, then constructs the real nontrivial
+  `q>2` picture step and preserves readiness on unprocessed profiles.
+- `untouchedActiveFirstWagonRefinement_of_finiteMixed` and
+  `untouchedSubcarriers_labelledGirth_of_finiteMixed`: the fresh
+  level construction with actual support-piece injectivity.
+- `boundaryIncidenceGraph_isAcyclic_of_forest_part`: one-part
+  restriction of a genuine finite gluing forest is acyclic.
 
-Adversarial boundaries: classes may reappear nonadjacently; the local `2g+2` sharp example requires depth two; nonempty-tail global doubling is false for `g=2,h1=3` (four-cycle); parent-local child girth does not imply global retained first-cut girth.
+**Important distinction:** the conditional nontrivial `q>2`
+picture step is now already **kernel-checked** on main. The actual
+lower selected `ForestTailStage` and `DesignatedArrow` remain
+inputs and must be obtained by the **well-founded recursion
+(Track 7)**. This stage-existence obligation must not be turned
+into a current-rank oracle. The optional doubled-girth improvement
+is not required for that recursion, which uses the checked `g+1`
+consequence.
 
-Bounded Python diagnostic (not Lean): 142,416 set-partition words through length 10; all checks passed.
+## 3. Manuscript alignment
 
-## 14 November continuation (new conditional endpoints)
+The candidate English edits are on
+`janhubicka/girth/revision/track6-refinement-proof-clarity-20261113`
+(`paper/15-refinements.tex`, `paper/04-local-forests.tex`).
+The one-step `2g+1` proof uses a finite bipartite graph of **literal
+used child labels** and distinct connectors at label changes.
+Every used label occurs at least twice; with `n≤2g+1`, at most
+`g` distinct labels occur. If the child word were nonconstant,
+the switching graph would have minimum degree two and contain a
+labelled cycle of at most `g` labels, contrary to child-cut girth.
+The first-wagon descent follows the old checked `g+1` proof.
 
-- A former proof variant handled the **bottom equality cut** separately via noninjectivity. That variant was subsequently simplified away: the current doubled-girth induction uses the existing `R.childGirth` field uniformly at every inserted cut, just as the older certified g+1 induction does. The record already contained this field; no extra assumption was introduced. The separate `TrainRecursiveRefinementSinglePartAcyclic.lean` candidate records the direct bottom acyclicity argument independently.
-- Added `FirstWagonRefinement.actualSupport_girthGT_of_first_universal_twice` for true A-support with an explicitly universal first wagon.
-- Added `Girth/TrainRecursivePhysicalFineGirthDouble.lean`, with two conditional endpoints: `selectedPicture_actualSupport_girthGain_twice_of_fineSystemCuts` derives true physical A-support girth `> min(2*g+1,h)` from the same named fine bottom/positive system bounds, genuine parent parameters, and retained actual first full-system cutoff `h`; `selectedPicture_actualSupport_girthGain_twice_of_firstUniversal` gives the empty-tail `>2*g+1` under explicit first-universality. Neither constructs the selected lower witness or output stage.
-- Extended the manuscript-branch finite test: besides all sharp `2g+2` examples for `2<=g<=20`, it now checks **every** smaller retained-tail cutoff `g+1 <= h <= 2g` for `2<=g<=16`, building an `h+1`-cycle of singleton first wagons with valid part assignments. All local Python tests passed.
-- As of this audit, upstream `girth/main` has moved to `6e2048b7cbc6d16c27dfcdaf8e67924f5906f846` with unrelated changes; the manuscript branch has no overlapping changed paths but is intentionally not merged. `lean-girth/main` has moved to `b0b3c49a7d2b47150f146df588b5868be9d6cce3` with documentation and workflow changes.
-- An offline local Lean installation using the *historically verified* 8 Nov GitHub Actions artifacts was investigated. The original nine artifacts are no longer listed on workflow run `42512209025` (expired); the container has no installed Lean, Lake, or mathlib and cannot resolve GitHub. **No Lean elaboration or axiom audit occurred**. No replacement Actions runs were triggered.
-- Source-level inspection confirmed pinned Mathlib defines `finRotate : ∀ n, Equiv.Perm (Fin n)` and `Fintype.card_bool`, which are used by the candidate; this is API inspection, not a compilation result.
+For a nonempty tail, **do not** claim global `>2g+1` without
+additional retained first-cut information: the sharp general
+conclusion is `>min(2g+1,h₁)`. An actual 3-partite four-cycle
+with `g=2,h₁=3` refutes the unconditional assertion.
+Repeated nonadjacent labels and distinct labels with equal carriers
+must stay distinct in the incidence analysis.
 
-**Next exact-head gate:** compile `DoubleCount`, `DoubleStep`, `DoubleGirth`, `PhysicalFineGirthDouble` in order and run their printed axioms before changing any manuscript validation marker. Reuse all existing `g+1` certificates without waiting for the stronger estimate.
+`lem:revisioninc` now cites the **existing, checked conditional
+picture-step theorem** and records its actual lower-stage dependence.
+The abstract ordinary-train statement and the optional doubled-girth
+strengthening remain open as full Lean correspondences; the checked
+reusable ingredients have `\\leanpartial` annotations. There has
+been **no promotion** of the full lemma to verified status.
 
-## 14 November evening: complete cut vector and independent geometry
+## 4. Diagnostics and next genuine gate
 
-The newest Track 6 additions are intentionally split between the new
-doubling theorem and interfaces already supplied by the old formalization.
+The locally mounted bounded checker
+`/mnt/data/check_track6_min_degree_20261115.py` passed on
+17 November: 142,416 canonical partitions of cyclic lengths 2–10;
+switching-only incidence graphs; depth-two sharp
+`2g+2` examples (`2≤g≤20`); retained-tail witnesses
+(`2≤g≤16, g+1≤h₁≤2g`); equal-carrier label collisions;
+and an acyclic physical path with cyclic grouped wagon carriers.
+**This is finite regression evidence, not Lean verification.**
+The mounted script has not been verified byte-identical to the
+latest remote checker.
 
-| Module | New endpoint | Contract and provenance |
-|---|---|---|
-| `TrainRecursiveRefinementDoubleStep.lean` | `BergeCycle.child_constant_of_singleton_intersections_twice` | Direct physical-cycle counterpart of the labelled (2g+1) one-step lemma. |
-| `TrainRecursiveRefinementDoubleGirth.lean` | `FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice` | Actual irreducible A-support, LOCAL first wagon; no retained global first-cut assumption. |
-
-### Existing formal components reused
-
-- `TrainRecursiveParentChildCutGirth.lean`:
-  `EdgeTrainLevels.labelledCutGirth_of_parent_and_children`,
-  `FirstWagonRefinement.labelledCutGirth_inserted_of_retained`.
-  The latter descends from a **global retained parent cut** and all
-  actual parent-local child bounds; it is not a theorem that local
-  child bounds alone give global girth.
-- `TrainRecursiveTrueActiveRefinementCutGirth.lean`:
-  `ForestTailStage.trueActive_sharedInsertedCutGirth` and
-  `trueActive_inducedInsertedCutGirth`; the old stage supplies
-  the global first retained cut.
-- `TrainRecursiveTrueActiveRetainedTailCuts.lean`:
-  `trueActive_sharedRetainedTailCutGirth` and
-  `trueActive_inducedRetainedTailCutGirth`, retaining the
-  stronger individual old tail entries, not just the head.
-- `TrainRecursiveRefinementForget.lean` and
-  `TrainRecursiveRefinementParameters.lean`: exact relation,
-  wagon-class, parent, and parameter restoration.
-- `TrainRecursiveCoarsenedSelectedRestriction.lean` and
-  `TrainRecursiveCoarsenedSelectedFamilyArrow.lean`:
-  indexed selected embeddings/arrow remain separate genuine
-  lower-stage interfaces, not consequences of girth alone.
-
-The main conditional real-fine-support double-girth wrapper remains
-`selectedPicture_actualSupport_girthGain_twice_of_fineSystemCuts`.
-Both versions of the new complete-cut-vector theorem require a
-REAL `ForestTailStage` and a REAL `FirstWagonRefinement`;
-neither theorem creates them.
-
-**Exact-head check procedure after restoring the pinned toolchain and all dependencies:**
-
-The new imports need compiled `.olean` objects first. Use Lake's named-module build targets (and limit Lean workers under low memory), then execute the checker:
+The local container has **no `lean`, `lake` or `elan`**,
+and direct GitHub DNS does not resolve. Prior offline bundles expired.
+No new paid CI was started. To certify the optional strengthened
+proof at an exact branch head, use the repository's pinned Lean
+v4.35.0-rc3 and all pinned Lake dependencies, then:
 
 ```sh
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleCount
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
 LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
-LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
+LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean |
+  tee CheckTrack6RefinementDoubleAxioms.log
+python3 scripts/check_axioms.py CheckTrack6RefinementDoubleAxioms.log   CheckTrack6RefinementDoubleAxioms.lean
 ```
 
-Do not use an unpinned mathematical library or silently `lake update`.
-The root `lakefile.toml` pins the partite-construction and successor-tree
-dependencies and `lean-toolchain` pins Lean v4.35.0-rc3; respect their
-transitive dependencies when restoring caches.
-
-The central audit file now contains **22** source-level `#print axioms`
-queries. These have **not been executed**; there is no kernel certificate
-and the entire Track 6 remains open. The old (g+1) recursion path is
-independent of doubling and must remain so.
-
-### Adversarial finite diagnostics and source conflicts
-
-The manuscript-branch checker now additionally verifies that two
-distinct quotient-wagon labels with identical carriers form a genuine
-labelled Berge 2-cycle and that deduplicating them invalidly removes
-it. It also checks the ordinary acyclic four-edge path whose grouped
-wagon cut forms a labelled Berge 3-cycle. The local suite passed;
-these checks are bounded diagnostic evidence, not formal proofs.
-
-Current `girth/main` has moved since the frozen 41-page baseline,
-but none of `paper/04-local-forests.tex`,
-`paper/15-refinements.tex`, or `Makefile` is modified by those
-intervening commits. Do not overwrite concurrent updates to other
-paper sections. The Track 6 manuscript changes remain on their own
-branch; they have not been merged.
-
-### Height-one empty-tail specialization and axiom inventory
-
-The doubled-girth module now additionally provides
-`FirstWagonRefinement.girthGT_heightOne_twice` and
-`FirstWagonRefinement.actualSupport_girthGT_heightOne_twice`.
-For a true height-one train, `T.top` itself proves that its first
-positive relation is universal, so the empty-tail statement no longer
-needs an independently supplied universality hypothesis. This is an
-exactly stronger interface for the empty-tail branch, conditional only
-on the original first-wagon refinement and edge transversality.
-
-A fresh static source audit fetched **all six candidate modules** and
-the central checker, counted **22 theorem declarations and 22 fully
-qualified #print axioms requests**, and found no active source
-`axiom`, `sorry` or `admit` declarations. This is **not** a Lean
-elaboration/axiom certificate; all new statements are still candidates.
-
-### 15 November: selected-map transport and exact static audit
-
-New module `Girth/TrainRecursiveRefinementSelectedTransport.lean` proves
-two **conditional** statements:
-
-- `EdgeTrainLevels.forgetFirstCuts_map_rel_iff`: a specified edge map
-  preserving **and reflecting** all fine train relations preserves
-  and reflects every coarsened relation using the literal retained index.
-- `EdgeTrainLevels.forgetFirstCuts_selected_rel_iff`: the **same**
-  indexed family of injective physical-edge maps retains these
-  equivalences, with no quotient of selected-copy labels or change
-  in the underlying maps.
-
-These discharge the *train-relation* component of the manuscript's
-"same selected embeddings after forgetting" claim. They do **not**
-create the lower selected family, prove its Ramsey arrow, or
-construct its strong induced hypergraph embeddings. Those are
-separate checked or conditional modules in Tracks 3/7.
-
-The central `CheckTrack6RefinementDoubleAxioms.lean` now imports
-**seven** candidate source modules and requests **24** fully qualified
-axiom outputs. A namespace-aware static scan of the preceding
-22 declarations found exact one-to-one name correspondence and
-no active proof placeholders. Repeat that scan for the two added
-transport declarations; neither a static scan nor source inspection
-is a kernel build. **All new Track 6 declarations remain unverified.**
-
-The complete narrow build sequence now includes:
-
-```sh
-LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSelectedTransport
-LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
-```
-
-The selected transport build should be run after the other six
-new candidate modules; it is independent of their doubled-girth
-proofs. The root axiom checker requires all imports' `.olean`
-objects. No online or expensive CI run has been initiated.
-
-### 15 November adversarial simplification of the English argument
-
-The one-step observation in the manuscript branch now has a shorter
-**minimum-degree incidence-graph proof**. If the child word is not
-constant, every used child label has at least two edge occurrences,
-hence at most `floor(n/2) <= g` labels for `n <= 2g+1`.
-
-Use the bipartite graph whose nodes are these **literal** child labels
-and the actual distinct connectors at switches between adjacent
-labels. Every switch connector meets two different child carriers,
-so its graph degree is at least two. Every occurring child has a
-maximal cyclic run with **two distinct switching connectors**, so
-every child node also has degree at least two. The graph is finite,
-nonempty and has minimum degree at least two, hence a simple cycle.
-That cycle is a labelled Berge cycle using at most `g` child
-labels, contradicting the complete labelled child-cut girth `>g`.
-No compressed walk or no-immediate-reversal explanation is needed
-in the English manuscript. The Lean candidate can reuse the
-previously checked compressed-incidence machinery; exact exposition
-need not coincide with a formal proof's implementation details.
-
-A new Python diagnostic constructs this **switching-only graph**
-for all 383 canonical nonconstant/no-singleton-run words among the
-142,416 set partitions of cyclic lengths 2 through 10; it checks
-degree >=2 on BOTH node sorts and verifies a cycle in every case.
-The full checker also repeats the explicit 3-uniform sharp and global
-counterexamples and literal labelled-wagon regressions. The full
-local Python suite passed on 15 November.
-
-The current same-selected-edge-map transport module and the central
-strict axiom checker are on the Lean branch, still **uncompiled**;
-the source-level inventory is 24 declarations and 24 distinct
-fully qualified `#print axioms` queries. No manuscript
-validation marker has been promoted, and mainline was not modified.
-
-### 15 November: explicit single-part acyclicity certificate
-
-Added `Girth/TrainRecursiveRefinementSinglePartAcyclic.lean`,
-**independent of the new doubled-girth lemmas**. The two theorems
-`labelledGirthGT_of_singlePartEdgeIntersections` and
-`girthGT_of_singlePartEdgeIntersections` prove arbitrary finite
-Berge girth under the true transversality condition and a
-subsingleton permitted-part set for intersections of distinct
-physical edges. The proof reuses the pre-existing
-`LabelledBergeCycle.child_not_injective_of_singleton_intersections`
-with each edge as its own child: a purported physical cycle has
-injective edge labels, contradiction. This gives the *base case*
-of the manuscript's single-part intersection observation without
-introducing cyclic runs, HJ inputs or an artificial bottom-girth
-assumption. The theorem is a **source-level candidate**, pending
-Lean elaboration and strict `#print axioms`.
-
-The central `CheckTrack6RefinementDoubleAxioms.lean` now covers
-**eight** candidate source modules and **26** theorem constants,
-with matching source-level axiom commands. The two new statements
-are mathematical preliminaries useful independently of the
-`2g+1` strengthening and do not change the recursive `q-1`
-forest requirement.
-
-### 15 November afternoon: concrete source-interface repairs (post-inventory)
-
-An independent container execution of the already-uploaded `check_track6_min_degree_20261115.py` has **passed** again, including exhaustive canonical cyclic words (142,416 length-2..10 partitions), the actual switching-only incidence graph, 3-uniform sharp examples for (g=2..20), all retained-tail cap examples for (g=2..16, g+1\le h_1\le2g), and the labelled-carrier/physical-path counterexamples. This is Python regression evidence only.
-
-Two specific Lean source defects/risks were repaired on this branch:
-
-1. In `TrainRecursiveRefinementDoubleGirth.lean`, the actual-support section redeclared `P` even though `P` was already a variable in the enclosing namespace. It now introduces only `UA` and `X`, retaining the original global `P` as in the older `TrainRecursiveRefinementGirthGain.lean`.
-2. In `TrainRecursiveRefinementDoubleCount.lean`, the use of `Fintype.card_prod` now explicitly imports `Mathlib.Data.Fintype.Prod`. Inspection of pinned Mathlib revision `5bd58ac291422a21f412ae354c91e7d172255a2c` located `Fintype.card_prod` in that module; `Fintype.card_bool`, `Fintype.card_fin` and `Fintype.card_le_of_injective` are available in `Mathlib.Data.Fintype.Card`.
-
-After these edits, a fresh namespace-aware static source scan of **eight** candidate Lean proof modules and `CheckTrack6RefinementDoubleAxioms.lean` found **26 unique theorem declarations matched exactly by 26 fully qualified axiom-print requests**, with no extra/undefined names, unbalanced source namespaces, or explicit `sorry`/`admit`/`axiom` declarations. **This is not Lean elaboration.** Neither type error nor theorem correctness can be certified until the pinned toolchain builds the exact branch head and the strict checker accepts all transitive axioms.
-
-No workflow was dispatched, no mainline merge was made, and no manuscript `\\leanopen` marker was promoted. The original conditional (g+1) recursion and exact retained-index transport remain unaffected.
-
-### 15 November, late cleanup: remove redundant retained-cut wrappers
-
-The experimental `Girth/TrainRecursiveRefinementAllRetainedCuts.lean`
-contained only pointwise wrappers around the already existing
-`FirstWagonRefinement.labelledGirthGT_at_retained` and
-`labelledGirthGT_at_retained_mono` from the checked mainline
-`Girth/TrainRecursiveRefinementRetainedCutGirth.lean`. These wrappers
-had no clients among the new proof modules. The experimental file
-has therefore been **deleted** and its two root axiom-print commands,
-import, and build instruction removed. The existing exact
-retained-cut transport and `trueActive_sharedRetainedTailCutGirth`
-remain unchanged. `TrainRecursiveRefinementCompleteCutVector.lean`
-uses the latter directly.
-
-**Latest inventory (supersedes the historical 22/26 counts above):**
-seven candidate proof modules, **24 candidate theorem declarations**,
-and **24 matching central #print axioms commands**. The old source
-inventory counts in the dated chronological notes remain historical;
-they do not describe the present branch head.
-
-This removes a dead-end duplicate, not an obligation or assumption.
-The next mandatory gate is still compilation of the seven modules
-and checking the full transitive axiom output against the exact head.
-No validation mark is promoted and no CI run is requested.
-
-### 15 November: simplify the doubled-girth descent
-
-The first-wagon `false_of_short_labelledCycle_in_firstWagon_twice`
-candidate previously had a 21-line special branch for `k=0`
-proving the bottom case via `child_not_injective`. This branch
-is **unnecessary for this theorem's existing input record**,
-which supplies the full local `R.childGirth` certificate at
-every inserted cut (including zero).
-
-The current proof therefore has the identical one-step structure
-to the old `false_of_short_labelledCycle_in_firstWagon` proof:
-take `R.childGirth step p`, apply
-`child_constant_of_singleton_intersections_twice`, and descend.
-The only new substantive obligation is the doubled one-step lemma,
-not a second proof of the bottom case. This removes approximately
-21 fragile tactic lines and lowers expected elaboration risk.
-
-The English manuscript legitimately handles the bottom directly
-by single-part physical-edge acyclicity; this is separately
-expressed in `TrainRecursiveRefinementSinglePartAcyclic.lean`.
-No existing `FirstWagonRefinement` field or hypothesis is
-weakened or strengthened by this cleanup. The exact-head Lean
-build and transitive axiom audit remain pending; no new theorem
-is kernel-certified by source-level refactoring.
-
-### Independent proof-skeleton comparison after cleanup
-
-I compared `false_of_short_labelledCycle_in_firstWagon_twice`
-against the original `false_of_short_labelledCycle_in_firstWagon`
-from checked mainline `TrainRecursiveRefinementGirthGain.lean`.
-After only replacing the larger length bound `2*g+1` by
-`g+1` and the new one-step lemma name by the old one, the
-**complete theorem source, including all tactics, is identical**.
-The same normalization also matches the labelled and ordinary
-local first-wagon wrappers and the actual A-support local wrapper.
-
-This is stronger than an informal outline comparison: it isolates
-the mathematically new obligation to
-`LabelledBergeCycle.child_constant_of_singleton_intersections_twice`
-and its two-preimage cardinality lemma. The global retained-cut
-step still depends on the established actual labelled first-cut
-certificate, and the true lower selected witness remains an
-independent obligation. Source equality is **not** an exact-head
-Lean compilation or proof of the new one-step lemma.
-
-### 16 November: remove another duplicate after checking existing mainline
-
-The candidate `Girth/TrainRecursiveRefinementCompleteCutVector.lean`
-had only two wrappers (`trueActive_sharedFineCutVector` and
-`trueActive_inducedFineCutVector`) deriving global girth at every
-inserted and retained fine cut from the real old forest-tail stage.
-These were useful for identifying the required hypotheses, but
-the **existing mainline theorem**
-`ForestTailStage.trueActive_inducedAllLowerCutGirth` in
-`Girth/TrainRecursiveTrueActiveLowerCutoffVector.lean` already proves
-the *exact required lower recursive cutoff vector* on the genuine
-induced active A-support. It specifically covers the replacement
-`replicate (R.extraCuts + 1) (q-1) ++ tail`, not a weakened
-head-only cutoff. Mainline additionally provides
-`trueActive_sharedInsertedCutGirth` and
-`trueActive_sharedRetainedTailCutGirth` separately for the shared
-support.
-
-**Action:** deleted the redundant experimental
-`TrainRecursiveRefinementCompleteCutVector.lean` and removed
-its import, two `#print axioms` checks and build target from
-`CheckTrack6RefinementDoubleAxioms.lean`. This does not remove any
-mathematical conclusion needed by Track 6 or the recursive lower call.
-
-**Updated current inventory:** six candidate proof modules,
-**22 candidate theorem declarations** and **22** central axiom
-checks; all historical 24- or 26-theorem inventory statements
-above record earlier, superseded branch states.
-The old existing mainline theorem is unchanged, as are all
-actual selected-copy labels and original tail values.
-
-No exact-head Lean build has yet been performed; no manuscript
-validation mark or mainline merge is claimed.
+Only a successful exact-head build and strict transitive axiom check
+can certify the 18 stronger statements. The already-checked `g+1`
+recursion does not wait for them.
