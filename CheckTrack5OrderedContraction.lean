@@ -1,0 +1,6 @@
+import Girth.TrainFillingOrderedContraction
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoContraction.supportNonempty
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoContraction.supportCovers
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoContraction.ofLocalCopies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CutoffTwoContraction.ofLocalCopies_extendsOrder
