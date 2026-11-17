@@ -124,6 +124,23 @@ theorem projectsACopies_freeAttachment
       exact ⟨y, hy⟩
     exact projectsACopies_factor A D C W g hOld a hrange
 
+
+/-- One genuine projected A-copy determines its base A-embedding using
+the weak physical projection condition, without ordered
+IsPartiteOver or coverage of arbitrary irreducibles. -/
+theorem baseEmbedding_of_projectedACopy
+    (A : RelStructure L UA) (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (hProjected : ProjectsACopies A D C)
+    (α : UA ↪ P)
+    (a : StructuralRamsey.Partite.ProjectedEmbedding A C α) :
+    ∃ e : Embedding A D, e.toFunctionEmbedding = α := by
+  obtain ⟨e, he⟩ := hProjected a.val
+  refine ⟨e, ?_⟩
+  apply Function.Embedding.ext
+  intro x
+  exact (he x).trans (a.property x)
+
 /-- A-strongness of the actual active carrier needs only
 physical A-copy projection, base linearity, and rigidity. -/
 theorem activeCarrier_aStrong_of_projectedACopies
