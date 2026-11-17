@@ -1,4 +1,4 @@
-# Track 5 — current cutoff-two validation map (16 November 2026)
+# Track 5 — current cutoff-two validation map (17 November 2026)
 
 **Scope:** `paper/13-filling.tex` and `paper/16-cutoff-two.tex`;
 numbered [issue #1056](https://github.com/janhubicka/lean-girth/issues/1056).
@@ -64,13 +64,45 @@ The EHN-to-coloured-X completion is part of Track 1's
 - `CheckTrack5RawOrderObstruction` isolates their
   `#check` / `#print axioms` gates.
 
-**Not yet proved in Lean:** each F_p remains a full induced
-relational substructure of the completed W; completed-W
-A-linearity/coverage/monotonicity; replacement of RAW-W in the
-ordered EHN selected-family arrow; and the marked, covered
-X output. The RAW-EHN lemmas remain preparatory, **not a
-proof of the completed ordered first Ramsey input**.
-Do not promote their associated validation markers.
+**Now present as UNCOMPILED source candidates (17 November):**
+
+- `PrivateCompletedWSummand` proves induced first-wagon
+  inclusions across k-hyperedges, unary colours and all
+  within-colour comparisons of the completed W.
+- `PrivateCompletedWSupport` proves exact small A-support,
+  A-strong summand inclusions, coverage and A-linearity.
+- `PrivateCompletedWOrderedEHN` derives monotonicity of
+  every small-A copy in completed W. The order is the
+  genuine colour-block completion, not the RAW coproduct order.
+- `PrivateCompletedWPrivateEHN` and
+  `PrivateActualCompletedWEHN` instantiate the unequal
+  first-wagon EHN monochromatic arrow on COMPLETED W,
+  including directly from the genuine original T quotient.
+- `PrivateCompletedWMarked`,
+  `PrivateActualCompletedWMarked`,
+  `PrivateActualFirstParameter`, and
+  `PrivateActualCompletedWFirstParameter` derive the
+  allowed-A1 overlap and forbidden vertex degree-one
+  condition from T's actual bottom-to-first-wagon
+  `TrainParentIntersectionBound`.
+
+These are **uncompiled candidates** only. The isolated
+`Girth/CheckTrack5CompletedW.lean` gate has unexecuted
+`#check`/`#print axioms` probes, not a kernel certificate.
+
+Upstream merged [lean-girth PR #1079](https://github.com/janhubicka/lean-girth/pull/1079)
+has an exact-head kernel and axiom certificate for the
+generic ordered selected EHN family. Later actual
+coloured-witness integrations [#1078](https://github.com/janhubicka/lean-girth/pull/1078)
+and [#1080](https://github.com/janhubicka/lean-girth/pull/1080)
+are still drafts. Track 5's branch has not yet been
+rebased onto that upstream foundation.
+
+**Still open:** conversion of EHN output X to a covered,
+marked and genuinely ordered coloured-edge witness
+without losing the selected monotone W-embeddings
+or the Ramsey arrow. The RAW-W EHN wrappers are
+preparatory, not sufficient for the application.
 
 The earlier offline Lean setup guide was found in the
 Library. It pins the same `v4.35.0-rc3` compiler, but the
@@ -425,17 +457,26 @@ wagon relation calculation in the preparation lemma.
   5 marked coloured edges and negative controls for
   invalid marked predicates and nullary relations.
 
+- `track5_completed_W_marking_regression.py` (17 November):
+  1,897 valid random marked graph cases and 304
+  valid random linear 3-uniform hypergraph cases,
+  checking first-wagon ownership, completed-W
+  allowed intersections and forbidden vertex degree one.
+  Negative controls reject forbidden same-wagon overlaps
+  and non-linear first-wagon carriers.
+
 No arbitrary-colouring Ramsey theorem follows from
 these bounded tests. They validate *examples and
 indexing*, not the Lean proofs.
 
 ## Exact outstanding obligations
 
-1. **Ordered W completion:** establish genuine induced F_p
-   inclusions, unchanged small A-edge support,
-   A-linearity and the ordered-EHN arrow for the
-   COMPLETED relational W. Do not substitute the
-   RAW coproduct plus an auxiliary LinearOrder.
+1. **Kernel-check completed W**: compile
+   `Girth/CheckTrack5CompletedW.lean` to verify
+   induced first-wagon embeddings, exact A-support,
+   strongness/linearity, original A1 marking and
+   the genuine completed-W ordered EHN family.
+   These are currently source candidates, not proofs.
 2. **Upstream Track 1:** supply the checked owner-split,
    **covered, \(S=A_1\)-restricted, increasing selected**
    EHN Ramsey family. [Issue #1052](https://github.com/janhubicka/lean-girth/issues/1052)
