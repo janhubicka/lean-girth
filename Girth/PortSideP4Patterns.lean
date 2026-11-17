@@ -68,7 +68,8 @@ theorem only_three_cross_port_P4_types :
       NoHiddenPrivateMidpoint a b c →
       NoHiddenPrivateMidpoint b c d →
       IsCrossPortP4Birth a b c d := by
-  decide
+  intro a b c d
+  cases a <;> cases b <;> cases c <;> cases d <;> decide
 
 end CoherentPort
 end StructuralRamsey.Girth
