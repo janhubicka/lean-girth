@@ -27,7 +27,14 @@ inductive PortSide where
   | left
   | shared
   | right
-  deriving DecidableEq, Fintype, Repr
+  deriving DecidableEq, Repr
+
+/-- Avoid elaborator dependence on generated enumList coercions. -/
+instance : Fintype PortSide where
+  elems := {.left, .shared, .right}
+  complete := by
+    intro x
+    cases x <;> simp
 
 /-- Free gluing forbids an edge directly between opposite private sides. -/
 def SideStepAllowed : PortSide → PortSide → Prop
@@ -68,8 +75,10 @@ theorem only_three_cross_port_P4_types :
       NoHiddenPrivateMidpoint a b c →
       NoHiddenPrivateMidpoint b c d →
       IsCrossPortP4Birth a b c d := by
-  intro a b c d
-  cases a <;> cases b <;> cases c <;> cases d <;> decide
+  intro a b c d hCross hAB hBC hCD hM1 hM2
+  cases a <;> cases b <;> cases c <;> cases d <;>
+    simp_all [CrossesPrivateSides, SideStepAllowed,
+      NoHiddenPrivateMidpoint, IsCrossPortP4Birth]
 
 end CoherentPort
 end StructuralRamsey.Girth
