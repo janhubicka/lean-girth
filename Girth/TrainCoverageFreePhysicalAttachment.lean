@@ -134,7 +134,7 @@ variable (bounds : ActiveAttachmentBounds stage hA e active E f U)
 local notation "S" => activeCarrier A stage.system e.toFunctionEmbedding
 local notation "Attached" =>
   StructuralRamsey.Partite.Attachment.attach stage.system S E f
-local notation "RF" => fun i => (f i).toEmbedding
+local notation "RF" => (fun (i : I) => StructuralRamsey.Partite.Embedding.toEmbedding (f i))
 local notation "Shared" => activeCarrier_all_standard_copies_meet_core
   A stage.system e.toFunctionEmbedding active I
 local notation "Train" =>
@@ -151,7 +151,7 @@ physical edge family, exact train restriction and unchanged parts. -/
 noncomputable def PhysicalForestStage.activeAttachment_of_bounds :
     PhysicalForestStage A B D family t targetTrain allowed := by
   classical
-  have hActive : S.Nonempty := by
+  have hActive : (S).Nonempty := by
     have hSource : Nonempty UA := by
       by_contra hEmpty
       obtain ⟨a, b, hab⟩ := bounds.targetTwo
@@ -160,7 +160,7 @@ noncomputable def PhysicalForestStage.activeAttachment_of_bounds :
       exact congrArg copyCarrier hEq
     obtain ⟨u⟩ := hSource
     exact ⟨active.val u, active, u, rfl⟩
-  have hBottom := stage.activeAttachment_bottom_invariants_of_intrinsic
+  have hBottom := PhysicalForestStage.activeAttachment_bottom_invariants_of_intrinsic stage
     hA hBaseLinear e hRigid hActive E f bounds.baseStrong
     bounds.bottomTwo bounds.localForest bounds.coreGirth bounds.cutoffTwo
   let hStrong := fun q :
@@ -181,7 +181,7 @@ noncomputable def PhysicalForestStage.activeAttachment_of_bounds :
     projectsACopies := projectsACopies_freeAttachment
       A D stage.system S E f hA
       stage.projectsACopies bounds.coreProjectsACopies
-    aLinear := aLinear_of_girthGT_two A Attached.toRelStructure
+    aLinear := aLinear_of_girthGT_two A (Attached).toRelStructure
       (girthGT_mono hBottom.2.1 bounds.bottomTwo)
     supportNonempty := ?_
     supportCovers := activeAttachment_supportCovers
@@ -238,7 +238,7 @@ The change of local core-coverage field does not affect this map. -/
 noncomputable def PhysicalForestStage.activeAttachment_transition
     (i : I) :
     TransitionEmbedding stage
-      (stage.activeAttachment_of_bounds
+      (PhysicalForestStage.activeAttachment_of_bounds stage
         hA hBaseLinear e hRigid active E f U bounds) where
   toPartite := StructuralRamsey.Partite.Attachment.copyEmbedding
     stage.system S E f i
@@ -268,7 +268,7 @@ theorem PhysicalForestStage.activeAttachment_pictureStep
           (projected_mem_activeCarrier A stage.system
             e.toFunctionEmbedding b)).comp (f i))) :
     PictureStep stage
-      (stage.activeAttachment_of_bounds
+      (PhysicalForestStage.activeAttachment_of_bounds stage
         hA hBaseLinear e hRigid active E f U bounds)
       e.toFunctionEmbedding κ := by
   intro χ
@@ -276,7 +276,7 @@ theorem PhysicalForestStage.activeAttachment_pictureStep
     A hA B D stage.system family stage.selected
     e.toFunctionEmbedding active E f stage.train U
     bounds.interior κ hLocal χ
-  exact ⟨stage.activeAttachment_transition
+  exact ⟨PhysicalForestStage.activeAttachment_transition stage
     hA hBaseLinear e hRigid active E f U bounds i, hi⟩
 
 /-- A PHYSICAL selected local F_t family can be fed through the
@@ -293,10 +293,10 @@ theorem PhysicalForestStage.activeAttachment_pictureStep_of_familyArrow
           χ ((f i).toEmbedding.comp a) =
             χ ((f i).toEmbedding.comp b)) :
     PictureStep stage
-      (stage.activeAttachment_of_bounds
+      (PhysicalForestStage.activeAttachment_of_bounds stage
         hA hBaseLinear e hRigid active E f U bounds)
       e.toFunctionEmbedding κ :=
-  stage.activeAttachment_pictureStep
+  PhysicalForestStage.activeAttachment_pictureStep stage
     hA hBaseLinear e hRigid active E f U bounds κ
     (activeAttachment_localSelection_of_familyArrow
       A stage.system e.toFunctionEmbedding E f κ hArrow)
@@ -310,13 +310,17 @@ IsPartiteOver of the full order-expanded language. The fine-witness
 order condition remains an explicit, separately checked premise. -/
 theorem PhysicalForestStage.activeAttachment_orderCompatible
     [LT P]
+    {A : RelStructure L.withOrder UA} {B : RelStructure L.withOrder VB}
+    {D : RelStructure L.withOrder P} {family : Set (Embedding B D)} {t : List ℕ}
+    {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
+    {allowed : Fin (t.length + 1) → Set P}
     (stage : PhysicalForestStage A B D family t targetTrain allowed)
     (hA : A.Irreducible) [Finite UA]
     (hBaseLinear : ALinear A D) (e : Embedding A D)
     (hRigid : ∀ a : Embedding A D, SameCopy a e → a = e)
     (active : StructuralRamsey.Partite.ProjectedEmbedding
       A stage.system e.toFunctionEmbedding)
-    (E : StructuralRamsey.Partite.System L P Y) [Finite Y] [Finite I]
+    (E : StructuralRamsey.Partite.System L.withOrder P Y) [Finite Y] [Finite I]
     (f : I → StructuralRamsey.Partite.Embedding
       (stage.system.induce
         (activeCarrier A stage.system e.toFunctionEmbedding)) E)
@@ -326,7 +330,7 @@ theorem PhysicalForestStage.activeAttachment_orderCompatible
     (hOld : PartiteOrderCompatible stage.system)
     (hLocal : PartiteOrderCompatible E) :
     PartiteOrderCompatible
-      (stage.activeAttachment_of_bounds
+      (PhysicalForestStage.activeAttachment_of_bounds stage
         hA hBaseLinear e hRigid active E f U bounds).system := by
   change PartiteOrderCompatible
     (StructuralRamsey.Partite.Attachment.attach
