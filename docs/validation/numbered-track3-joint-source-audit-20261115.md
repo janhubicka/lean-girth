@@ -111,6 +111,45 @@ historical successful full workflow
 The q=2 case remains a source-interface check, **not** a proved gap
 on the basis of the withdrawn example.
 
+## New valid binary-graph K4 stress test (17 November)
+
+The earlier 3-uniform *ambient Gaifman* counterexample from
+[closed PR #473](https://github.com/janhubicka/girth/pull/473)
+**remains retracted**: its three overlap vertices did not induce an
+irreducible 3-uniform relational substructure. Do not reuse it.
+
+The distinct [new manuscript draft PR #474](https://github.com/janhubicka/girth/pull/474)
+uses **a binary graph language** and **A=K4**. Five actual K4
+copies in a four-partite graph have linear A-support and Berge
+girth 3>2. Three K4s meet cyclically at vertices a,b,c;
+the **induced** graph on {a,b,c} is literally K3 (hence irreducible
+under the pinned relational definition), but no actual K4 contains
+these three vertices. The other two K4s form a disjoint strongly
+induced designated two-edge forest Q.
+
+A deterministic local test `checks/check_track3_graph_k4_core_coverage.py`
+enumerates all actual 4-cliques and all acceptable source cycles
+of order<=2 at both pretrain cuts of a height-two source train.
+There are **194** accepted cycles at equality (80,42,72 by length)
+and **134** at its first nontrivial wagon cut (80,54,0);
+every one contains Q, and Q is supreme by identical short pieces.
+The selected Q supplies the trivial **r=1** arrow; the construction
+does not certify a Ramsey arrow for r>1.
+
+This is a correct **negative implication test** for
+`coreCoverage : IrreduciblesExtendTo A E` from elementary
+partiteness/linearity/order-two source conditions and a strong
+selected forest. It does **not** disprove the conditional
+`ActiveAttachmentBounds` assembly, nor show that an **actually
+constructed** cutoff-two local order witness lacks the property.
+That is still a *separate* interface obligation.
+
+The already kernel-checked q>2 true-active coverage route and the
+six new independent joint geometry/parameter proposals remain
+unaffected. The new wrappers **do not take `coreCoverage`**,
+which is a legitimate reason to keep their mathematics separate
+from the stronger complete-stage constructor.
+
 ## Audited proof dependency diagram
 
 ```
