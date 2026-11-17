@@ -1,0 +1,9 @@
+import Girth.FiniteTraceDirac
+
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_simplicial_subsets
+#print axioms StructuralRamsey.Girth.strongDirac_of_inducedCliqueSeparations
+#print axioms StructuralRamsey.Girth.exists_minimal_separatorIn
+#print axioms StructuralRamsey.Girth.MinimalFor.neighbour_in_separator_component
+#print axioms StructuralRamsey.Girth.exists_inducedPathThrough_componentIn
+#print axioms StructuralRamsey.Girth.minimal_separator_isClique_of_noLongInducedCycles
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_noLongInducedCycles
