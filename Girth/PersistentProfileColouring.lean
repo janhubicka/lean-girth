@@ -37,8 +37,8 @@ theorem exists_persistent_profile_colouring
   classical
   refine ⟨(fun c => if typeC c = typeB a₀ then true else false), ?_⟩
   intro b
-  rw [hNaturality b a₀, hNaturality b a₁]
-  simp [hDifferent.symm]
+  simpa only [hNaturality, if_pos rfl, if_neg hDifferent.symm,
+    ne_eq, Bool.true_ne_false]
 
 /-- The same obstruction expressed as failure of the elementary
 all-palette Ramsey arrow in its abstract embedding interface. -/
