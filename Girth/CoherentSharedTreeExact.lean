@@ -78,10 +78,10 @@ theorem edgeSet_internal_union_of_free_cover
     (G.edgeSet ∩ L.sym2) ∪ (G.edgeSet ∩ R.sym2) = G.edgeSet := by
   classical
   ext e
-  induction e using Sym2.inductionOn with
-  | _ x y =>
-    simp only [Set.mem_union, Set.mem_inter_iff, Set.mk_mem_sym2_iff]
-    constructor
+  induction e using Sym2.inductionOn
+  rename_i x y
+  simp only [Set.mem_union, Set.mem_inter_iff, Set.mk_mem_sym2_iff]
+  constructor
     · rintro (⟨hG, _⟩ | ⟨hG, _⟩) <;> exact hG
     · intro hG
       have hx : x ∈ L ∨ x ∈ R := by
