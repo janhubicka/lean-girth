@@ -73,7 +73,7 @@ theorem connected_of_embedded_local_trees
 invariant exposed independently of running intersection.
 The exact shared-subtree quotient should later *produce*
 the global graph and this numerical certificate. -/
-theorem joinTree_of_coherent_shared_indices_and_card
+def joinTree_of_coherent_shared_indices_and_card
     [Finite Q]
     (F : Q → HypergraphPiece W)
     (L R : Set Q)
@@ -96,7 +96,7 @@ theorem joinTree_of_coherent_shared_indices_and_card
 
 /-- A generic typed-interface forest from the exact same
 edge-count certificate and independently verified full overlaps. -/
-theorem typedInterfaceForest_of_coherent_shared_indices_and_card
+def typedInterfaceForest_of_coherent_shared_indices_and_card
     [Finite Q]
     (F : Q → HypergraphPiece W)
     (compatible : HypergraphPiece W → HypergraphPiece W → Prop)
