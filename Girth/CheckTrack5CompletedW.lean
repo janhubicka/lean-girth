@@ -1,4 +1,5 @@
 import Girth.TrainFillingPrivateActualCompletedWEHN
+import Girth.TrainFillingPrivateCompletedWMarked
 
 set_option Elab.async false
 
@@ -43,3 +44,9 @@ the imported completed-W chain is validated yet.
 
 #check StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
 #print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
+
+-- Track 1 owner-splitting source condition, transferred from genuine first wagons.
+#check StructuralRamsey.Girth.completedFirstWagon_support_inter_allowed
+#check StructuralRamsey.Girth.completedFirstWagon_forbidden_vertex_unique_edge
+#print axioms StructuralRamsey.Girth.completedFirstWagon_support_inter_allowed
+#print axioms StructuralRamsey.Girth.completedFirstWagon_forbidden_vertex_unique_edge
