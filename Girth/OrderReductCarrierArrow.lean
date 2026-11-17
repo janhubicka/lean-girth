@@ -20,6 +20,39 @@ private theorem copyCarrier_comp_image
   · rintro ⟨z, ⟨y, rfl⟩, rfl⟩
     exact ⟨y, rfl⟩
 
+/-- Lifting the target's unordered edge carriers transfers a Ramsey arrow
+while retaining the chosen family of target copies. -/
+theorem selectedArrow_orderReduct_carriers
+    {A : RelStructure L.withOrder U} {B : RelStructure L.withOrder V}
+    {C : RelStructure L.withOrder W} {κ : Type*}
+    {chosen : Embedding B C → Prop}
+    (hArrow : ∀ χ : Embedding A C → κ,
+      ∃ f : Embedding B C, chosen f ∧ ∀ g h : Embedding A B,
+        χ (f.comp g) = χ (f.comp h))
+    (hLift : supportCopies A.orderReduct B.orderReduct ⊆ supportCopies A B) :
+    ∀ χ : supportCopies A.orderReduct C.orderReduct → κ,
+      ∃ f : Embedding B C, chosen f ∧
+        ∀ g h : Embedding A.orderReduct B.orderReduct,
+          χ ⟨copyCarrier (f.orderReduct.comp g), ⟨f.orderReduct.comp g, rfl⟩⟩ =
+            χ ⟨copyCarrier (f.orderReduct.comp h), ⟨f.orderReduct.comp h, rfl⟩⟩ := by
+  intro χ
+  let colour (e : Embedding A C) : κ :=
+    χ ⟨copyCarrier e, ⟨e.orderReduct, rfl⟩⟩
+  obtain ⟨f, hChosen, hf⟩ := hArrow colour
+  refine ⟨f, hChosen, fun g h => ?_⟩
+  obtain ⟨g', hg⟩ := hLift (show copyCarrier g ∈ _ from ⟨g, rfl⟩)
+  obtain ⟨h', hh⟩ := hLift (show copyCarrier h ∈ _ from ⟨h, rfl⟩)
+  have compatible (k : Embedding A.orderReduct B.orderReduct)
+      (k' : Embedding A B) (hk : copyCarrier k = copyCarrier k') :
+      χ ⟨copyCarrier (f.orderReduct.comp k), ⟨f.orderReduct.comp k, rfl⟩⟩ =
+        colour (f.comp k') := by
+    apply congrArg χ
+    apply Subtype.ext
+    change copyCarrier (f.orderReduct.comp k) = copyCarrier (f.comp k')
+    rw [copyCarrier_comp_image, copyCarrier_comp_image, hk]
+    rfl
+  exact (compatible g g' hg).trans ((hf g' h').trans (compatible h h' hh).symm)
+
 /-- Every unordered A-carrier in the target must lift to an ordered A-copy
 on the same carrier. Colouring the ordered embeddings by their unordered
 carriers then gives a copy of the target whose unordered edges are
@@ -35,21 +68,13 @@ theorem arrow_orderReduct_carriers
           χ ⟨copyCarrier (f.comp g), ⟨f.comp g, rfl⟩⟩ =
             χ ⟨copyCarrier (f.comp h), ⟨f.comp h, rfl⟩⟩ := by
   intro χ
-  let colour (e : Embedding A C) : κ :=
-    χ ⟨copyCarrier e, ⟨e.orderReduct, rfl⟩⟩
-  obtain ⟨f, hf⟩ := hArrow colour
-  refine ⟨f.orderReduct, fun g h => ?_⟩
-  obtain ⟨g', hg⟩ := hLift (show copyCarrier g ∈ _ from ⟨g, rfl⟩)
-  obtain ⟨h', hh⟩ := hLift (show copyCarrier h ∈ _ from ⟨h, rfl⟩)
-  have compatible (k : Embedding A.orderReduct B.orderReduct)
-      (k' : Embedding A B) (hk : copyCarrier k = copyCarrier k') :
-      χ ⟨copyCarrier (f.orderReduct.comp k), ⟨f.orderReduct.comp k, rfl⟩⟩ =
-        colour (f.comp k') := by
-    apply congrArg χ
-    apply Subtype.ext
-    change copyCarrier (f.orderReduct.comp k) = copyCarrier (f.comp k')
-    rw [copyCarrier_comp_image, copyCarrier_comp_image, hk]
-    rfl
-  exact (compatible g g' hg).trans ((hf g' h').trans (compatible h h' hh).symm)
+  have hSelected (colour : Embedding A C → κ) :
+      ∃ f : Embedding B C, True ∧ ∀ g h : Embedding A B,
+        colour (f.comp g) = colour (f.comp h) := by
+    obtain ⟨f, hf⟩ := hArrow colour
+    exact ⟨f, trivial, hf⟩
+  obtain ⟨f, -, hf⟩ := selectedArrow_orderReduct_carriers
+    (A := A) (B := B) (C := C) (chosen := fun _ => True) hSelected hLift χ
+  exact ⟨f.orderReduct, hf⟩
 
 end StructuralRamsey.Girth
