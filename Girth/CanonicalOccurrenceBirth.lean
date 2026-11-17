@@ -1,5 +1,5 @@
 import Girth.CanonicalClosedOccurrences
-import Mathlib.Data.Finset.MinMax
+import Mathlib.Data.Finset.Max
 
 /-!
 # Canonical first-birth indices for complete closed-copy occurrences
