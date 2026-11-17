@@ -62,7 +62,7 @@ local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "OldEdge" => OldACarrierEdge A C.toRelStructure
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Actual" => RelStructure.Attachment.attach C.toRelStructure S R f
 local notation "Old" => selectedPictureOrderOneData
   A B D C family selected T μBottom
@@ -105,7 +105,7 @@ theorem attachedSelectedPicture_bottom_supreme_three_le_of_localForest
   obtain ⟨Z, hZAccept, hZOrder, _hNormalized, _hConnectors,
     owner, hAllowed, _hMinimal, hBudget, hPull⟩ :=
     attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
-      A hA B D C family selected e R f T U hShared hRel
+      A hA B D C family selected e R f T U hShared
       hPhysical (fun b => hStrong b.1.base b.1.base_mem)
       K hAccept hn hOrder
   have hZOrderBound : Z.twiceOrder ≤ 2 * q := by

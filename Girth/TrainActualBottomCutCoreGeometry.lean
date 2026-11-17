@@ -1,6 +1,5 @@
 import Girth.TrainActualBottomDesignatedBoundary
-import Girth.TrainActualCutConnectorLift
-import Girth.TrainCoreWagonEmbedding
+import Girth.TrainActualBottomOwnerCoreSeparation
 import Girth.TrainActualNormalizedMinimalOwners
 import Girth.TrainDirectCyclicCutBudget
 
@@ -10,15 +9,13 @@ set_option Elab.async false
 /-!
 # A genuine bottom geometric owner cut lies in the shared core
 
-The previously checked physical cut-connector lift gives an actual
-core vertex or core wagon. At the bottom equality cut, a core wagon
-contains exactly one physical edge. Any output edge with this parent
-is THAT core edge, whose carrier lies in the core.
+Distinct geometric owners meet only in the core. A cut vertex belongs
+to both adjacent labels. At the bottom a cut wagon likewise has one
+physical edge in both labels, by injectivity of the wagon parent.
 
 Both boundary orientations of an isolated segment are covered. This
 discharges the remaining physical cut input of the bottom
-no-mixed-singleton theorem without assuming output system girth,
-a reduced supreme label, or an unconstructed local witness.
+no-mixed-singleton theorem, using physical picture geometry.
 -/
 
 namespace StructuralRamsey.Girth
@@ -43,93 +40,20 @@ variable (U : EdgeTrainLevels (OldACarrierEdge A R) m)
 variable (hShared : ∀ _i : I, Nonempty
   (SharedOldACarrierEdge A C.toRelStructure
     (activeCarrier A C e.toFunctionEmbedding)))
-variable (hRel : ∀ (ν : Fin (m + 1)) (j : I)
-  (p q : SharedOldACarrierEdge A C.toRelStructure
-    (activeCarrier A C e.toFunctionEmbedding)),
-  T.rel ν p.1 q.1 ↔
-    U.rel ν (sharedOldACarrierCoreEmbedding A C.toRelStructure
-      (activeCarrier A C e.toFunctionEmbedding) R f j p)
-      (sharedOldACarrierCoreEmbedding A C.toRelStructure
-        (activeCarrier A C e.toFunctionEmbedding) R f j q))
 
 local notation "S" => activeCarrier A C e.toFunctionEmbedding
 local notation "Actual" => RelStructure.Attachment.attach C.toRelStructure S R f
 local notation "ActualEdge" => OldACarrierEdge A Actual
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
-local notation "Std" => RelStructure.Attachment.copyEmbedding C.toRelStructure S R f
 local notation "Core" => RelStructure.Attachment.coreEmbedding C.toRelStructure S R f
-local notation "CoreActual" => (fun (b : CoreEdge) =>
-  actualAPictureEdgeEquiv A hA C.toRelStructure S R f
-    (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
 local notation "Train" => generatedActualASupportTrain
   A hA C.toRelStructure S R f T U hShared
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μBottom
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μBottom
-local notation "CoreWagon" =>
-  generatedActualASupportTrain_coreWagonEmbedding
-    A hA C.toRelStructure S R f T U
-      (fun ν j p q h => (hRel ν j p q).mp h)
-      hShared μBottom
-
-/-- Any bottom output edge with the same wagon as one true core edge
-is that core edge, and is therefore wholly carried by the shared core.
-This uses bottom-parent injectivity, not an artificial edge restriction. -/
-theorem attachedSelectedPicture_bottom_sameCoreWagon_carrier
-    (H : (Out).BottomForestGeometry)
-    (b : CoreEdge) (a : ActualEdge)
-    (hParent : (Out).parent a = (Out).parent (CoreActual b)) :
-    a.1 ⊆ copyCarrier Core := by
-  have hEq : a = CoreActual b := H.parent_injective hParent
-  subst a
-  rw [actualAPictureEdgeEquiv_core_carrier
-    A hA C.toRelStructure S R f b]
-  change ((fun y : Y => Core y) '' b.1) ⊆ copyCarrier Core
-  rintro z ⟨y, hy, rfl⟩
-  exact ⟨y, rfl⟩
-
-include hRel
-
-/-- Classify the exact connector of a genuine geometric owner change:
-it is either an actual core vertex or the bottom wagon of an actual
-core edge. This retains the original output connector, not a shadow. -/
-theorem attachedSelectedPicture_bottom_cut_connector_core
-    {n : ℕ} (K : (Out).BigCycle n)
-    (owner : Fin n → I ⊕ CoreEdge)
-    (hAllowed : ∀ k, GeomAllowed (K.label k) (owner k))
-    (k : Fin n)
-    (hCut : owner k ≠ owner (cyclicSucc k)) :
-    (∃ y : Y, K.connector k = Sum.inl (Core y)) ∨
-      (∃ b : CoreEdge,
-        K.connector k = Sum.inr ((Out).parent (CoreActual b))) := by
-  obtain ⟨q, hMap⟩ :=
-    attachedSelectedPicture_geometric_cut_connector_lift
-      A hA B D C family selected e R f T U hShared hRel μBottom
-      K owner hAllowed k hCut
-  cases q with
-  | inl y =>
-      left
-      refine ⟨y, ?_⟩
-      simpa using hMap.symm
-  | inr w =>
-      induction w using Quotient.inductionOn with
-      | h b =>
-          right
-          refine ⟨b, ?_⟩
-          have hb :
-              (Out).parent (CoreActual b) =
-                CoreWagon (Quotient.mk (U.wagonSetoid μBottom) b) :=
-            (generatedActualASupportTrain_coreWagonEmbedding_mk
-              A hA C.toRelStructure S R f T U
-              (fun ν j p q h => (hRel ν j p q).mp h)
-              hShared μBottom b).symm
-          change Sum.inr (CoreWagon
-            (Quotient.mk (U.wagonSetoid μBottom) b)) = K.connector k at hMap
-          rw [← hb] at hMap
-          exact hMap.symm
 
 /-- At every genuine owner cut, its vertex belongs to the shared core;
 alternatively, the whole bottom wagon edge lies in the core. The two
@@ -148,23 +72,29 @@ theorem attachedSelectedPicture_bottom_cut_connector_core_geometry
       K.connector k = Sum.inr p →
       ∀ a : ActualEdge, (Out).parent a = p →
         a.1 ⊆ copyCarrier Core) := by
-  have hClass := attachedSelectedPicture_bottom_cut_connector_core
-    A hA B D C family selected e R f T U hShared hRel
-    K owner hAllowed k hCut
+  have hCore := attachedSelectedPicture_bottom_distinctOwners_intersection_core
+    A hA B D C family selected e R f T U hShared
+    (K.label k) (K.label (cyclicSucc k))
+    (owner k) (owner (cyclicSucc k))
+    (hAllowed k) (hAllowed (cyclicSucc k)) hCut
   constructor
   · intro x hx
-    rcases hClass with ⟨y, hy⟩ | ⟨b, hb⟩
-    · have heq : Core y = x := Sum.inl.inj (hy.symm.trans hx)
-      exact ⟨y, heq⟩
-    · cases (hb.symm.trans hx)
+    have hLeft := K.left_incident k
+    have hRight := K.right_incident k
+    rw [hx] at hLeft hRight
+    exact hCore ⟨hLeft, hRight⟩
   · intro p hp a ha
-    rcases hClass with ⟨y, hy⟩ | ⟨b, hb⟩
-    · cases (hy.symm.trans hp)
-    · have hbp : (Out).parent (CoreActual b) = p :=
-        Sum.inr.inj (hb.symm.trans hp)
-      exact attachedSelectedPicture_bottom_sameCoreWagon_carrier
-        A hA B D C family selected e R f T U hShared
-        H b a (ha.trans hbp.symm)
+    have hLeft := K.left_incident k
+    have hRight := K.right_incident k
+    rw [hp] at hLeft hRight
+    obtain ⟨l, hl, hParentLeft⟩ := hLeft
+    obtain ⟨r, hr, hParentRight⟩ := hRight
+    have hLeftEq : l = a := H.parent_injective (hParentLeft.trans ha.symm)
+    have hRightEq : r = a := H.parent_injective (hParentRight.trans ha.symm)
+    subst l
+    subst r
+    intro x hx
+    exact hCore ⟨H.edge_subset _ a hl hx, H.edge_subset _ a hr hx⟩
 
 /-- The two cut connectors surrounding any isolated mixed segment
 have their actual physical core geometry. No abstract reduction
@@ -199,11 +129,11 @@ theorem attachedSelectedPicture_bottom_mixed_singleton_cut_core
       using hLeftCut
   obtain ⟨hPrevVertex, hPrevWagon⟩ :=
     attachedSelectedPicture_bottom_cut_connector_core_geometry
-      A hA B D C family selected e R f T U hShared hRel
+      A hA B D C family selected e R f T U hShared
       H K owner hAllowed (trainCyclicPred k) hPrevCut
   obtain ⟨hHereVertex, hHereWagon⟩ :=
     attachedSelectedPicture_bottom_cut_connector_core_geometry
-      A hA B D C family selected e R f T U hShared hRel
+      A hA B D C family selected e R f T U hShared
       H K owner hAllowed k hRightCut
   obtain ⟨x, p, hKinds⟩ := hMixed
   rcases hKinds with ⟨hPrev, hHere⟩ | ⟨hPrev, hHere⟩
@@ -214,8 +144,7 @@ theorem attachedSelectedPicture_bottom_mixed_singleton_cut_core
 
 /-- Full actual mixed-singleton exclusion, with only the standard
 old/attached geometry: ordinary output A-linearity, strongly induced
-base B-projections, exact shared train restriction and genuine
-minimal geometric owner choice. No local forest/girth oracle appears. -/
+base B-projections and genuine minimal geometric owner choice. -/
 theorem attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
     [Nontrivial UA]
     (hLinear : ALinear A Actual)
@@ -241,7 +170,7 @@ theorem attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
     A hA B D C family selected e R f T U hShared hLinear
   have hCoreMixed :=
     attachedSelectedPicture_bottom_mixed_singleton_cut_core
-      A hA B D C family selected e R f T U hShared hRel
+      A hA B D C family selected e R f T U hShared
       H K owner hAllowed k hLeftCut hRightCut hMixed
   exact attachedSelectedPicture_bottom_no_mixed_singleton_of_base_strong
     A hA B D C family selected e R f T U hShared
@@ -288,13 +217,13 @@ theorem attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
   obtain ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
       ⟨owner, hAllowed, hMinimal⟩, hPull⟩ :=
     attachedSelectedPicture_exists_normalized_minimal_geometric_owners
-      A hA B D C family selected e R f T U hShared
+      A hA B D C family selected e R f T U hShared μBottom
       K hAccept hOutputLinear hn
   refine ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
     owner, hAllowed, hMinimal, ?_, hPull⟩
   intro k hLeft hRight hMixed
   exact attachedSelectedPicture_bottom_normalized_minimal_no_mixed_singleton
-    A hA B D C family selected e R f T U hShared hRel
+    A hA B D C family selected e R f T U hShared
     hPhysical hStrong Z hZNormal owner hAllowed hMinimal
     k hLeft hRight hMixed
 
@@ -328,7 +257,7 @@ theorem attachedSelectedPicture_bottom_exists_normalized_minimum_cut_budget
   obtain ⟨Z, hZAccept, hZOrder, hZNormal, hZConnectors,
     owner, hAllowed, hMinimal, hNoMixed, hPull⟩ :=
     attachedSelectedPicture_bottom_exists_normalized_minimum_no_mixed
-      A hA B D C family selected e R f T U hShared hRel
+      A hA B D C family selected e R f T U hShared
       hPhysical hStrong K hAccept hn
   have hKinds (k : Fin n)
       (hLeft : owner (trainCyclicPred k) ≠ owner k)

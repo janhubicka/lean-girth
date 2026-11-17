@@ -30,7 +30,7 @@ variable (f : I → RelStructure.Embedding
   (C.toRelStructure.induce (activeCarrier A C α)) R)
 variable {m : ℕ} (U : EdgeTrainLevels (OldACarrierEdge A R) m)
 
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Local" => activeGluingWitnessOrderOneData
   A C α R f U μBottom
 local notation "Shared" => sharedWitnessOrderOneData U μBottom
