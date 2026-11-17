@@ -59,8 +59,9 @@ def FirstWagonRefinement.ofFineTrain_of_singletonBottomAndPositiveSystemBounds
     apply labelledGirthGT_of_singleton_intersections _ C.part _
       (hSingleton ⟨0, Nat.zero_lt_succ d⟩)
     · intro a
-      rw [congrFun (T.bottom_wagonClassCarrier_eq (fun e => e.val)) a.val]
-      exact actualASupport_part_injOn A hA C _
+      exact (congrArg (Set.InjOn C.part)
+        (congrFun (T.bottom_wagonClassCarrier_eq (fun e => e.val)) a.val)).mpr
+        (actualASupport_part_injOn A hA C (T.bottomQuotientEdge a.val))
     · intro a b hab
       exact hParameters _ (fun h => hab (Subtype.ext h))
         (a.property.trans b.property.symm)

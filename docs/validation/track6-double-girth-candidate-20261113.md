@@ -6,15 +6,14 @@ Historical checks and unsuccessful variants are in the Git history and
 
 ## 1. Current branch scope
 
-**Candidate branch:** `validation/6-double-count-candidate-20261113`.
-**Status:** four Lean modules with 21 axiom checks in
-`CheckTrack6RefinementDoubleAxioms.lean`. The counting module and the
-five one-step declarations passed local Lean and the strict axiom audit.
-The one-step probe used the branch's proof bodies, the project's cyclic
-and labelled Berge definitions, and the compiled narrow
-`LabelledWagonCutProjection` module for the existing incidence lemmas.
-The full dependency-tree build and axiom audit are still required to
-certify the repeated descent and physical-support wrappers.
+**Local branch:** `local/track6-checked-20261117`, based on
+`validation/6-double-count-candidate-20261113` and main `99d26270`.
+**Status:** the original-import target and its 263-module project
+dependency closure passed local Lean v4.35.0-rc3 verification.
+`CheckTrack6RefinementDoubleAxioms.lean` passed the strict audit for
+all 21 declarations, using only `propext`, `Classical.choice`, and
+`Quot.sound`. This includes the constructor deriving bottom child
+girth and both actual full-system adapters.
 
 | Candidate file | Actual new target |
 | --- | --- |
@@ -106,12 +105,10 @@ with `g=2,h₁=3` refutes the unconditional assertion.
 Repeated nonadjacent labels and distinct labels with equal carriers
 must stay distinct in the incidence analysis.
 
-`lem:revisioninc` now cites the **existing, checked conditional
-picture-step theorem** and records its actual lower-stage dependence.
-The abstract ordinary-train statement and the optional doubled-girth
-strengthening remain open as full Lean correspondences; the checked
-reusable ingredients have `\\leanpartial` annotations. There has
-been **no promotion** of the full lemma to verified status.
+The English revision of `lem:revisioninc` cites the checked conditional
+picture step and records its lower-stage input. The local gate above
+certifies the doubled bounds in the corresponding labelled and actual
+A-support models, including the literal retained first cutoff.
 
 ## 4. Diagnostics and next genuine gate
 

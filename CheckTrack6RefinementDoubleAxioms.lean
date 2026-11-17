@@ -6,11 +6,9 @@ set_option Elab.async false
 /-!
 # Track 6 independent strict axiom inspection entrypoint
 
-EXACT-HEAD KERNEL CHECK IS PENDING. This file imports the four
-candidate modules specific to the doubled-girth strengthening. The statements below deliberately name
-the actual elaborated theorem constants, not source comments or
-historical validation markers. A successful run must inspect the
-printed axiom sets and reject any sorryAx/unapproved axiom.
+This file checks the four modules for the doubled girth bound.
+The strict parser checks every listed declaration and allows only
+`propext`, `Classical.choice`, and `Quot.sound`.
 
 Pinned toolchain: leanprover/lean4:v4.35.0-rc3.
 Build the imported modules first, in dependency order. Lake imports
