@@ -84,31 +84,26 @@ theorem ClosedTargetRamseyFamily.arrow
   obtain ⟨b, hb⟩ := h χ
   exact ⟨targetEmbeddingRel b, hb⟩
 
-/-- Functional EHN produces the stronger closed-target Ramsey family used in
-the manuscript.  The monotonicity hypothesis is exactly what lets every
-relational A-embedding into B lift through the fresh auxiliary order. -/
-theorem closedTargetRamseyFamily_of_monotone_embeddings
+/-- Apply functional EHN in a free amalgamation class containing the target
+closure expansion. The monotonicity hypothesis lifts each relational
+A-embedding into B through the auxiliary order. -/
+theorem closedTargetRamseyFamily_of_mem
     (A : RelStructure L U) (B : RelStructure L V)
     [LinearOrder U] [LinearOrder V]
     [Finite U] [Finite V]
-    (hAirr : A.Irreducible)
+    {K : StructuralRamsey.Structure.StructureClass.{u,v}
+      (L := closureLanguage L)}
+    (hK : StructuralRamsey.Structure.FreeAmalgamationClass K)
+    (hBmem : K (targetClosureExpansion A B))
     (hBlin : ALinear A B)
     (hmono : ∀ a : RelStructure.Embedding A B, StrictMono a)
     (κ : Type*) [Fintype κ] [Nonempty κ] :
     ∃ (W : Type v) (_ : Finite W) (o : LinearOrder W)
       (C : StructuralRamsey.Structure (closureLanguage L) W),
-      ElementaryCAClass A C ∧
-      ClosedTargetRamseyFamily A B C κ := by
+      K C ∧ ClosedTargetRamseyFamily A B C κ := by
   classical
-  let K : StructuralRamsey.Structure.StructureClass.{u,v}
-      (L := closureLanguage L) := ElementaryCAClass A
-  have hK :
-      StructuralRamsey.Structure.FreeAmalgamationClass K :=
-    ElementaryCAClass_freeAmalgamationClass A hAirr
   let Ahat := targetClosureExpansion A A
   let Bhat := targetClosureExpansion A B
-  have hBmem : K Bhat :=
-    targetClosure_mem_ElementaryCAClass hBlin
   obtain ⟨W, hW, o, C, hCmem, hRamsey⟩ :=
     hK.orderedRamsey_of_mem_target
       Ahat Bhat hBmem closureLanguage_positiveFuncArity κ
@@ -167,6 +162,23 @@ theorem closedTargetRamseyFamily_of_monotone_embeddings
     _ = χ ((targetEmbeddingRel b0).comp a₂) :=
       congrArg χ hcomp₂
 
+/-- The selected closed-target family in the canonical elementary-closure
+class used in the manuscript. -/
+theorem closedTargetRamseyFamily_of_monotone_embeddings
+    (A : RelStructure L U) (B : RelStructure L V)
+    [LinearOrder U] [LinearOrder V]
+    [Finite U] [Finite V]
+    (hAirr : A.Irreducible)
+    (hBlin : ALinear A B)
+    (hmono : ∀ a : RelStructure.Embedding A B, StrictMono a)
+    (κ : Type*) [Fintype κ] [Nonempty κ] :
+    ∃ (W : Type v) (_ : Finite W) (o : LinearOrder W)
+      (C : StructuralRamsey.Structure (closureLanguage L) W),
+      ElementaryCAClass A C ∧
+      ClosedTargetRamseyFamily A B C κ :=
+  closedTargetRamseyFamily_of_mem A B
+    (ElementaryCAClass_freeAmalgamationClass A hAirr)
+    (targetClosure_mem_ElementaryCAClass hBlin) hBlin hmono κ
 
 
 /-- Ordered specialization of the closed-target Ramsey family theorem.  The

@@ -1,0 +1,6 @@
+import Girth.TrainRecursiveCoveredClosureClass
+
+#print axioms StructuralRamsey.Girth.NonsingletonIrreduciblesExtendTo.with_support
+#print axioms StructuralRamsey.Girth.NonsingletonIrreduciblesExtendTo.of_strong_embedding
+#print axioms StructuralRamsey.Girth.nonsingletonIrreduciblesExtendTo_of_freeAmalgam
+#print axioms StructuralRamsey.Girth.CoveredElementaryCAClass_freeAmalgamationClass

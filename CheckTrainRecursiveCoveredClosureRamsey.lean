@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCoveredClosureRamsey
+
+#print axioms StructuralRamsey.Girth.closedTargetRamseyFamily_of_mem
+#print axioms StructuralRamsey.Girth.coveredClosedTargetRamseyFamily_of_monotone_embeddings

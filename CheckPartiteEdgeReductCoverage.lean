@@ -1,0 +1,4 @@
+import Girth.PartiteEdgeReductCoverage
+
+#print axioms StructuralRamsey.Partite.System.irreducible_eq_range_of_spanning_edge_tuples
+#print axioms StructuralRamsey.Partite.System.irreduciblesExtendTo_of_spanning_edge_tuples
