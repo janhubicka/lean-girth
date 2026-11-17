@@ -1,4 +1,4 @@
-import Girth.ForestOldActiveSetGirth
+import Girth.ForestPhysicalABCompletion
 
 /-!
 # Track 2 focused local axiom gate: Active-subsystem girth
@@ -36,3 +36,15 @@ on the basis of this gate file's existence.
 #check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
 #print axioms StructuralRamsey.Girth.linearEdgeSet_of_twoEdgeForestCompletion
 #print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_actualCopySets_without_oldLinear
+
+/-! Physical-copy-set correspondence: no embedding-label injectivity. -/
+#check StructuralRamsey.Girth.PhysicalCopySetForestExtension.toLabelFinset
+#check StructuralRamsey.Girth.pictureABLabelSupport_eq_physicalSupport
+#check StructuralRamsey.Girth.pictureABPhysicalKey_eligible
+#check StructuralRamsey.Girth.pictureABPhysicalDesignated_support
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_physicalCopySetExtension
+#print axioms StructuralRamsey.Girth.PhysicalCopySetForestExtension.toLabelFinset
+#print axioms StructuralRamsey.Girth.pictureABLabelSupport_eq_physicalSupport
+#print axioms StructuralRamsey.Girth.pictureABPhysicalKey_eligible
+#print axioms StructuralRamsey.Girth.pictureABPhysicalDesignated_support
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_physicalCopySetExtension
