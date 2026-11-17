@@ -1,6 +1,4 @@
 import Girth.TrainRecursivePhysicalFineGirthDouble
-import Girth.TrainRecursiveRefinementSelectedTransport
-import Girth.TrainRecursiveRefinementSinglePartAcyclic
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -8,8 +6,8 @@ set_option Elab.async false
 /-!
 # Track 6 independent strict axiom inspection entrypoint
 
-EXACT-HEAD KERNEL CHECK IS PENDING. This file imports all six
-candidate Track 6 proof modules. The statements below deliberately name
+EXACT-HEAD KERNEL CHECK IS PENDING. This file imports the four
+candidate modules specific to the doubled-girth strengthening. The statements below deliberately name
 the actual elaborated theorem constants, not source comments or
 historical validation markers. A successful run must inspect the
 printed axiom sets and reject any sorryAx/unapproved axiom.
@@ -21,8 +19,6 @@ precompiled .olean modules, not unbuilt source files:
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleStep
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementDoubleGirth
   LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursivePhysicalFineGirthDouble
-  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSelectedTransport
-  LEAN_NUM_THREADS=1 lake build +Girth.TrainRecursiveRefinementSinglePartAcyclic
 Then execute from the repository root:
   LEAN_NUM_THREADS=1 lake env lean CheckTrack6RefinementDoubleAxioms.lean
 This is *not* a substitute for checking the selected lower witness.
@@ -50,7 +46,3 @@ This is *not* a substitute for checking the selected lower witness.
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_firstWagon_twice
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.girthGT_heightOne_twice
 #print axioms StructuralRamsey.Girth.FirstWagonRefinement.actualSupport_girthGT_heightOne_twice
-#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_map_rel_iff
-#print axioms StructuralRamsey.Girth.EdgeTrainLevels.forgetFirstCuts_selected_rel_iff
-#print axioms StructuralRamsey.Girth.labelledGirthGT_of_singlePartEdgeIntersections
-#print axioms StructuralRamsey.Girth.girthGT_of_singlePartEdgeIntersections
