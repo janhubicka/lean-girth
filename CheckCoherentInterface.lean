@@ -1,0 +1,54 @@
+import Girth.FreePortClosureCriterion
+import Girth.CoherentSharedTreeExact
+import Girth.CanonicalOccurrenceBirth
+import Girth.ClosedPortShortCycles
+import Girth.PortAttachmentUnique
+import Girth.SupportedPartialClosureEquiv
+
+/-!
+# Focused axiom audit for the new coherent-port research modules
+
+This is intentionally separate from the circulation theorem's pinned
+certification. The project's full Lean workflow builds every Girth module
+and runs its standard strict #print axioms parser on every Check*.lean.
+No trusted extra axiom, sorry or placeholder is permitted.
+-/
+
+#print axioms StructuralRamsey.Girth.CoherentPort.BridgeData.cross_occurrence
+#print axioms StructuralRamsey.Girth.CoherentPort.BridgeData.joinTree
+#print axioms StructuralRamsey.Girth.CoherentPort.BridgeData.forestOfCopies
+#print axioms StructuralRamsey.Girth.CoherentPort.TypedInterfaceForest.sumPort
+#print axioms StructuralRamsey.Girth.CoherentPort.TypedInterfaceForest.toForestOfCopies
+#print axioms StructuralRamsey.Girth.CoherentPort.joinTree_of_coherent_shared_indices
+#print axioms StructuralRamsey.Girth.CoherentPort.typedInterfaceForest_of_coherent_shared_indices
+#print axioms StructuralRamsey.Girth.CoherentPort.old_left_midpoints_remain_inside_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.operationClosed_port_iff_sides
+#print axioms StructuralRamsey.Girth.CoherentPort.mixed_operation_output_mem_port
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_path3_singleton_port_shape
+#print axioms StructuralRamsey.Girth.CoherentPort.only_three_cross_port_P4_types
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_P4_birth_shape_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint_reversed
+#print axioms StructuralRamsey.Girth.CoherentPort.portNeighbours_subsingleton_of_midpointClosed
+#print axioms StructuralRamsey.Girth.CoherentPort.cross_private_midpoint_unique_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_three
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_four
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_five
+#print axioms StructuralRamsey.Girth.CoherentPort.six_cycle_location_pattern_allowed
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_triangle_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_square_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_pentagon_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.connected_of_embedded_local_trees
+#print axioms StructuralRamsey.Girth.CoherentPort.joinTree_of_coherent_shared_indices_and_card
+#print axioms StructuralRamsey.Girth.CoherentPort.isTree_of_two_induced_trees_and_edge_IE
+#print axioms StructuralRamsey.Girth.CoherentPort.ncard_internal_edges_eq_induced
+#print axioms StructuralRamsey.Girth.CoherentPort.edgeSet_internal_union_of_free_cover
+#print axioms StructuralRamsey.Girth.CoherentPort.edgeSet_induced_inclusion_exclusion
+#print axioms StructuralRamsey.Girth.CoherentPort.isTree_of_two_induced_trees_free_union
+#print axioms StructuralRamsey.Girth.CoherentPort.typedInterfaceForest_of_free_shared_subtree
+#print axioms StructuralRamsey.Girth.CoherentPort.ClosedGraphEmbedding.comp
+#print axioms StructuralRamsey.Girth.CoherentPort.ClosedGraphEmbedding.comp_apply
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrenceFirstBirth_appears
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrence_not_before_birth
+#print axioms StructuralRamsey.Girth.CoherentPort.occurrence_after_birth
+#print axioms StructuralRamsey.Girth.CoherentPort.midpointClosed_iff_sidewise_and_crossPort
