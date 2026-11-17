@@ -31,21 +31,21 @@ theorem connected_of_embedded_local_trees
     (L R : Set Q)
     (hCover : L ∪ R = Set.univ)
     (hShared : (L ∩ R).Nonempty)
-    (GL : SimpleGraph L) (GR : SimpleGraph R)
-    (hGL : GL.IsTree) (hGR : GR.IsTree)
+    (leftTree : SimpleGraph L) (rightTree : SimpleGraph R)
+    (hGL : leftTree.IsTree) (hGR : rightTree.IsTree)
     (G : SimpleGraph Q)
-    (hEdgesL : ∀ (i j : L), GL.Adj i j → G.Adj i.1 j.1)
-    (hEdgesR : ∀ (i j : R), GR.Adj i j → G.Adj i.1 j.1) :
+    (hEdgesL : ∀ (i j : L), leftTree.Adj i j → G.Adj i.1 j.1)
+    (hEdgesR : ∀ (i j : R), rightTree.Adj i j → G.Adj i.1 j.1) :
     G.Connected := by
   classical
   obtain ⟨k, hk⟩ := hShared
-  let toGlobalL : GL →g G := {
+  let toGlobalL : leftTree →g G := {
     toFun := fun i => i.1
     map_rel' := by
       intro i j hij
       exact hEdgesL i j hij
   }
-  let toGlobalR : GR →g G := {
+  let toGlobalR : rightTree →g G := {
     toFun := fun i => i.1
     map_rel' := by
       intro i j hij
