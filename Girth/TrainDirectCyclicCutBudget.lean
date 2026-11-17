@@ -1,5 +1,6 @@
 import Girth.TrainCyclicOwnerFinListBridge
 import Girth.TrainBigCycleOrderOneExtraction
+import Girth.TrainSingleShortReplacement
 import Mathlib.Tactic
 
 /-!
@@ -48,12 +49,12 @@ theorem twice_cyclicOwnerChanges_le_kindWeight
     by_cases hFirst : owner j = owner (cyclicSucc j)
     · by_cases hSecond :
         owner (cyclicSucc j) = owner (cyclicSucc (cyclicSucc j))
-      · simp [ownerCutStep, hFirst, hSecond]
-      · simpa [ownerCutStep, hFirst, hSecond] using
+      · simp only [ownerCutStep, ite_eq_left hFirst, ite_eq_left hSecond, Nat.zero_add, Nat.zero_le]
+      · simpa only [ownerCutStep, ite_eq_left hFirst, ite_eq_right hSecond, Nat.zero_add] using
           (twiceOccurrenceWeight_one_le (kind j) (kind (cyclicSucc j)))
     · by_cases hSecond :
         owner (cyclicSucc j) = owner (cyclicSucc (cyclicSucc j))
-      · simpa [ownerCutStep, hFirst, hSecond] using
+      · simpa only [ownerCutStep, ite_eq_right hFirst, ite_eq_left hSecond, Nat.add_zero] using
           (twiceOccurrenceWeight_one_le (kind j) (kind (cyclicSucc j)))
       · have hPrev : trainCyclicPred (cyclicSucc j) = j :=
           trainCyclicPred_cyclicSucc_of_two_le hn j
