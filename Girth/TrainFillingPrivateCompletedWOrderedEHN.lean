@@ -47,6 +47,33 @@ theorem completedFirstWagon_order_of_colour_lt
     firstWagonUnionOrderKey carrier colour y
   exact Prod.Lex.toLex_lt_toLex.mpr (Or.inl h)
 
+/-- Each induced F_p inclusion into COMPLETED W is strictly
+increasing for the chosen global colour-block order, provided
+the old V order already lists its predicate colour blocks in
+the same order. This extends the actual within-part order,
+and no new independent order certificate is assumed. -/
+theorem completedFirstWagonSummand_strictMono
+    (k : ℕ) (hk : 2 ≤ k)
+    (oldEdges : Set (Set V)) (colour : V → I)
+    (carrier : P → Set V)
+    (hOldBlocks : ∀ x y : V,
+      colour x ≠ colour y → x < y → colour x < colour y)
+    (p : P) :
+    letI : LinearOrder (FirstWagonUnionVertex carrier) :=
+      firstWagonUnionOrder carrier colour
+    StrictMono (completedFirstWagonSummandEmbedding
+      k hk oldEdges colour carrier p) := by
+  letI : LinearOrder (FirstWagonUnionVertex carrier) :=
+    firstWagonUnionOrder carrier colour
+  intro x y hxy
+  by_cases hSame : colour x.1 = colour y.1
+  · exact (completedFirstWagon_intraColour_order_iff
+      carrier colour p x y hSame).mpr hxy
+  · exact completedFirstWagon_order_of_colour_lt carrier colour
+      (⟨p, x⟩ : FirstWagonUnionVertex carrier)
+      (⟨p, y⟩ : FirstWagonUnionVertex carrier)
+      (hOldBlocks x.1 y.1 hSame hxy)
+
 /-- Every induced copy of the genuine coloured one-edge source
 in COMPLETED W is increasing for the same auxiliary order
 which supplies its full relational within-colour comparisons.
