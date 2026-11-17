@@ -58,7 +58,7 @@ theorem isTree_of_two_induced_trees_and_edge_IE
 The two tree structures on the same exact shared indices are the
 underlying induced graphs of G; the extra physical vertex occurrence
 condition provides global running intersection. -/
-theorem typedInterfaceForest_of_induced_trees_and_edge_IE
+def typedInterfaceForest_of_induced_trees_and_edge_IE
     [Finite Q]
     (F : Q → HypergraphPiece W)
     (compatible : HypergraphPiece W → HypergraphPiece W → Prop)
