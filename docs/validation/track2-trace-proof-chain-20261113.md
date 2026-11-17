@@ -1,14 +1,14 @@
 # Numbered Track 2 — current proof chain and validation ledger
 
-**Status (16 November 2026): source-level candidates, NOT kernel-verified.**
+**Status (17 November 2026): source-level candidates, NOT kernel-verified.**
 Scope: the circulation part of the girth manuscript, excluding the appendix.
 The historical exploratory branches and prior validation notes remain in Git history;
 this file records only the currently retained argument.
 
 ## Working branches and provenance
 
-- Lean: [`validation/2-forest-trace-20261116`](https://github.com/janhubicka/lean-girth/tree/validation/2-forest-trace-20261116), transplanted onto `lean-girth/main@aaad218765b9b44534bf64a7d6f174db126122db`.
-- Manuscript: [`edit/track2-reconciled-20261116`](https://github.com/janhubicka/girth/tree/edit/track2-reconciled-20261116), transplanted onto `girth/main@98c8a0ef712fb890ca36ffa4dbbc3e785db68756`. The paper's newer Track 1 validation annotations in `paper/07-forest-increment.tex` are preserved.
+- Lean: [`validation/2-physical-copy-girth-20261117`](https://github.com/janhubicka/lean-girth/tree/validation/2-physical-copy-girth-20261117), transplanted on 17 November onto `lean-girth/main@cd76b3ba6d43b7095a72dd53de972b754b36389e`.
+- Manuscript: [`edit/track2-physical-copy-20261117`](https://github.com/janhubicka/girth/tree/edit/track2-physical-copy-20261117), transplanted on 17 November onto `girth/main@5c8142c9e499dc3b1f734f6b7987a708eb0f3809`. The paper's newer Track 1 validation annotations in `paper/07-forest-increment.tex` are preserved.
 - The circulated historical reference `girth@8c9cfa6e` is separate from both active branches. No changes described here are merged into `main`.
 
 ## Mathematical proof and exact interfaces
