@@ -1,0 +1,11 @@
+import Girth.TrainColouredOwnerSplitClique
+import Girth.TrainFillingOrderedCanonicalPlacement
+import Girth.TrainFillingOrderedShortenedSupport
+
+#print axioms StructuralRamsey.Girth.ColouredEdgeOwnerSplit.clique_subset_splitEdge
+#print axioms StructuralRamsey.Girth.orderedFillingPlacement_range
+#print axioms StructuralRamsey.Girth.orderedFillingPlacement_comp
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedShortenedTarget_extendsOrder
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedShortenedEdgeEmbedding_apply
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedShortenedTarget_support_eq
+#print axioms StructuralRamsey.Girth.IndexedPrivateChoice.orderedShortenedTarget_supportCovers

@@ -1,5 +1,5 @@
 import Girth.TrainFillingIndexedContractedEnumeration
-import Girth.TrainFillingColouredOrderedEdgePresentation
+import Girth.TrainFillingIndexedColourOrder
 import Girth.TrainFillingRelationalSelectedSupport
 
 set_option Elab.async false
@@ -35,17 +35,6 @@ universe u v
 variable {C V P X : Type v}
 variable {I : Type u}
 variable (U : C → PrivateWagonInput V P X)
-
-/-- Coloured ordered M defined LITERALLY on the complete tagged G0
-vertex set, with precisely all whole first-wagon carriers as edges. -/
-def actualContractedColouredM
-    {k : ℕ}
-    (oldColour : V → I) (templateColour : X → I)
-    [LinearOrder (Vertex U)] :
-    RelStructure (colouredOrderedEdgeLanguage I k) (Vertex U) :=
-  colouredOrderedEdgeTarget k
-    (Set.range (contractedCarrier U))
-    (contractedVertexColour U oldColour templateColour)
 
 /-- Every G0 first-wagon carrier is a genuine induced coloured
 one-edge support of M, and conversely. The source one-edge structure
