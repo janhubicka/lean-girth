@@ -40,7 +40,7 @@ structure TypedInterfaceForest
 /-- Binary gluing of forests for ANY symmetric compatibility policy.
 The single-node port hypothesis gives the join tree; admissibility of
 cross pairs must be supplied separately. -/
-theorem TypedInterfaceForest.sumPort
+def TypedInterfaceForest.sumPort
     [Fintype I] [Fintype J]
     {compatible : HypergraphPiece W → HypergraphPiece W → Prop}
     (hSymm : ∀ (A B : HypergraphPiece W),
@@ -111,7 +111,7 @@ theorem permittedContact_symm
 Unlike ForestOfCopies this allows a contact consisting of several edges,
 provided the corresponding connector geometry and contact certificates
 really exist. -/
-theorem permittedContact_sumPort
+def permittedContact_sumPort
     [Fintype I] [Fintype J]
     (interfaces : Set (Set W))
     {F : I → HypergraphPiece W} {G : J → HypergraphPiece W}
