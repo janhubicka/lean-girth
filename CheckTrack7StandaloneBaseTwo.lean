@@ -1,0 +1,6 @@
+import Girth.TrainPhysicalPartiteForestBaseTwo
+
+#print axioms StructuralRamsey.Girth.ordinaryGirth_of_targetBottomLabelledCut
+#print axioms StructuralRamsey.Girth.cutoffTwoProjectedPartiteForestRamsey
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.finePartiteFtWitness_baseTwo_of_spanningTuple
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.finePartiteForestAssertion_baseTwo_of_spanningTuple
