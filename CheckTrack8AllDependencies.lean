@@ -1,3 +1,4 @@
+import Girth.FiniteTraceChordalEndpoint
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceCycleGraphFacts
 import Girth.FiniteTraceSimplicialCriterion
@@ -137,3 +138,11 @@ is claimed from creating this file alone. -/
 #print axioms StructuralRamsey.Girth.standardCycle_distinct_finRotate_edges
 #print axioms StructuralRamsey.Girth.standardCycle_cliqueFree_three
 #print axioms StructuralRamsey.Girth.no_bounded_induced_trace_cycle
+
+#check StructuralRamsey.Girth.tracePairGraph_noLongInducedCycles_of_local
+#print axioms StructuralRamsey.Girth.tracePairGraph_noLongInducedCycles_of_local
+
+#check StructuralRamsey.Girth.smallTrace_selection_of_local_and_chordalToPEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_and_chordalToPEO
+
+#check StructuralRamsey.Girth.NoLongInducedCycles
