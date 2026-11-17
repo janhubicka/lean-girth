@@ -1,0 +1,6 @@
+import Girth.TrainCoverageFreePhysicalRefinementReady
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.untouchedActiveEdgeEquiv_of_projectsACopies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.untouchedActiveFirstWagonRefinement_of_projectsACopies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.FirstRefinementReady.tail
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.activeAttachment_firstRefinementReady

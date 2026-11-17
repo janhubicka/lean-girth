@@ -1,3 +1,4 @@
 import Girth.TrainCoverageFreePhysicalFineRamseyBase
 
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.exists_finePartiteRamseyBase_of_spanningTuple
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.exists_projectingFinePartiteRamseyBase_of_spanningTuple

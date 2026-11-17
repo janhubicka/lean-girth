@@ -13,8 +13,9 @@ universe u v w
 variable {L : RelLanguage.{u}} {UA X : Type v}
 
 /-- Turn the projected cutoff-two forest into the actual height-one train
-witness using equality at the bottom and the universal relation at the top. -/
-theorem finePartiteFtWitness_baseTwo_of_spanningTuple
+witness using equality at the bottom and the universal relation at the top.
+The same witness preserves any projection of the target to the edge type. -/
+theorem finePartiteFtWitness_baseTwo_of_spanningTuple_withProjection
     (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
     (Target : StructuralRamsey.Partite.System L.withOrder UA X) [Finite X]
     (sourceTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered Target.toRelStructure) 1)
@@ -30,7 +31,9 @@ theorem finePartiteFtWitness_baseTwo_of_spanningTuple
     (hParameters : sourceTrain.AdjacentParameters (fun edge => edge.1)
       (fun ν => Target.part ⁻¹' allowed ν))
     (κ : Type w) [Fintype κ] [Nonempty κ] :
-    Nonempty (FinePartiteFtWitness A₀.ordered Target [2] sourceTrain allowed κ) := by
+    ∃ W : FinePartiteFtWitness A₀.ordered Target [2] sourceTrain allowed κ,
+      Target.toRelStructure.IsHomomorphism A₀.ordered Target.part →
+      W.core.toRelStructure.IsHomomorphism A₀.ordered W.core.part := by
   classical
   let A := A₀.ordered
   have hAllowed := (sourceTrain.adjacentParameters_heightOne_iff _ _).mp hParameters
@@ -39,8 +42,8 @@ theorem finePartiteFtWitness_baseTwo_of_spanningTuple
     have hDistinct : actualEdge a ≠ actualEdge b := fun h => hNe (congrArg Subtype.val h)
     exact hAllowed (actualEdge a) (actualEdge b) hDistinct hx
   obtain ⟨Y, hY, I, hI, Core, f, hCoreFine, _hCoreLinear, hCoreCover, _hEdgeCover,
-    hDistinctSupports, _hStrong, hForest, hCoreContacts, hArrow⟩ :=
-    cutoffTwoProjectedPartiteForestRamsey A₀ Target hSpan hFine hLinear hSupport
+    hDistinctSupports, _hStrong, hForest, hCoreContacts, hArrow, hProjection⟩ :=
+    cutoffTwoProjectedPartiteForestRamsey_withProjection A₀ Target hSpan hFine hLinear hSupport
       (allowed 1) hContacts κ
   let U := EdgeTrainLevels.heightOne (OldACarrierEdge A Core.toRelStructure)
   refine ⟨{
@@ -59,7 +62,7 @@ theorem finePartiteFtWitness_baseTwo_of_spanningTuple
     selectedTrain := ?_
     fineParameters := ?_
     positiveFull := ?_
-    physicalArrow := ?_ }⟩
+    physicalArrow := ?_ }, hProjection⟩
   · obtain ⟨i, _⟩ := hArrow (fun _ => Classical.choice (inferInstance : Nonempty κ))
     exact ⟨actualEdge ((f i).toEmbedding.comp active)⟩
   · intro y
@@ -100,6 +103,57 @@ theorem finePartiteFtWitness_baseTwo_of_spanningTuple
     omega
   · intro χ
     exact hArrow (fun a => χ (actualEdge a))
+
+/-- The height-one witness of the original standalone cutoff-two API. -/
+theorem finePartiteFtWitness_baseTwo_of_spanningTuple
+    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
+    (Target : StructuralRamsey.Partite.System L.withOrder UA X) [Finite X]
+    (sourceTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered Target.toRelStructure) 1)
+    (allowed : Fin 2 → Set UA)
+    (active : Embedding A₀.ordered Target.toRelStructure)
+    (hSpan : ∃ (R : L.Symbol) (z : Fin (L.arity R) → UA),
+      A₀.rel R z ∧ Function.Surjective z)
+    (hFine : ∀ a : Embedding A₀.ordered Target.toRelStructure, ∀ u : UA,
+      Target.part (a u) = u)
+    (hLinear : ALinear A₀.ordered Target.toRelStructure)
+    (hSupport : ∀ x : X, ∃ a : Embedding A₀.ordered Target.toRelStructure,
+      x ∈ copyCarrier a)
+    (hParameters : sourceTrain.AdjacentParameters (fun edge => edge.1)
+      (fun ν => Target.part ⁻¹' allowed ν))
+    (κ : Type w) [Fintype κ] [Nonempty κ] :
+    Nonempty (FinePartiteFtWitness A₀.ordered Target [2] sourceTrain allowed κ) := by
+  obtain ⟨W, _⟩ := finePartiteFtWitness_baseTwo_of_spanningTuple_withProjection
+    A₀ Target sourceTrain allowed active hSpan hFine hLinear hSupport hParameters κ
+  exact ⟨W⟩
+
+/-- A target whose parts project relation tuples to the edge type has a
+standalone cutoff-two witness whose parts give that same projection. -/
+theorem exists_projectingFinePartiteFtWitness_baseTwo_of_spanningTuple
+    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
+    (Target : StructuralRamsey.Partite.System L.withOrder UA X) [Finite X]
+    (sourceTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered Target.toRelStructure) 1)
+    (allowed : Fin 2 → Set UA)
+    (hTarget : Target.toRelStructure.IsHomomorphism A₀.ordered Target.part)
+    (hSpan : ∃ (R : L.Symbol) (z : Fin (L.arity R) → UA),
+      A₀.rel R z ∧ Function.Surjective z)
+    (hFine : ∀ a : Embedding A₀.ordered Target.toRelStructure, ∀ u : UA,
+      Target.part (a u) = u)
+    (hSupport : ∀ x : X, ∃ a : Embedding A₀.ordered Target.toRelStructure,
+      x ∈ copyCarrier a)
+    (hTwo : ∃ a b : Embedding A₀.ordered Target.toRelStructure, ¬ SameCopy a b)
+    (hParameters : sourceTrain.AdjacentParameters (fun edge => edge.1)
+      (fun ν => Target.part ⁻¹' allowed ν))
+    (hBottom : LabelledGirthGT (sourceTrain.wagonClassCarrier (fun edge => edge.1) 0) 2)
+    (κ : Type w) [Fintype κ] [Nonempty κ] :
+    ∃ W : FinePartiteFtWitness A₀.ordered Target [2] sourceTrain allowed κ,
+      W.core.toRelStructure.IsHomomorphism A₀.ordered W.core.part := by
+  obtain ⟨active, _, _⟩ := hTwo
+  have hGirth := ordinaryGirth_of_targetBottomLabelledCut A₀.ordered
+    Target.toRelStructure sourceTrain 2 hBottom
+  obtain ⟨W, hProjection⟩ := finePartiteFtWitness_baseTwo_of_spanningTuple_withProjection
+    A₀ Target sourceTrain allowed active hSpan hFine
+    (aLinear_of_girthGT_two A₀.ordered Target.toRelStructure hGirth) hSupport hParameters κ
+  exact ⟨W, hProjection hTarget⟩
 
 /-- The projected forest proves the standalone assertion at cutoff `[2]`
 when a relation tuple spans the ordered A-copy. -/

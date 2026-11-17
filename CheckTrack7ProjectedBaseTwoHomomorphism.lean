@@ -1,0 +1,7 @@
+import Girth.TrainPhysicalPartiteForestBaseTwo
+
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.system_isHomomorphism
+#print axioms StructuralRamsey.Girth.cutoffTwoProjectedPartiteForestRamsey_withProjection
+#print axioms StructuralRamsey.Girth.cutoffTwoProjectedPartiteForestRamsey
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.exists_projectingFinePartiteFtWitness_baseTwo_of_spanningTuple
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.finePartiteForestAssertion_baseTwo_of_spanningTuple

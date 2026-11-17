@@ -17,8 +17,9 @@ variable {L : RelLanguage.{u}} {U V : Type v}
 /-- The base-two forest witness uses the projections of the actual source
 edges. Its selected copies have distinct complete supports, and its mixed
 forest bound includes every ambient edge. The spanning relation ensures that
-each such ambient edge belongs to a selected lift. -/
-theorem cutoffTwoProjectedPartiteForestRamsey
+each such ambient edge belongs to a selected lift. If the target's parts
+project all relation tuples to the edge type, the same is true of the core. -/
+theorem cutoffTwoProjectedPartiteForestRamsey_withProjection
     (A₀ : RelStructure L U) [LinearOrder U] [Finite U]
     (Target : StructuralRamsey.Partite.System L.withOrder U V)
     [Finite V]
@@ -50,7 +51,9 @@ theorem cutoffTwoProjectedPartiteForestRamsey
         ∀ x ∈ copyCarrier a ∩ copyCarrier b, Core.part x ∈ allowed) ∧
       (∀ χ : Embedding A₀.ordered Core.toRelStructure → κ,
         ∃ i, ∀ a b : Embedding A₀.ordered Target.toRelStructure,
-          χ ((f i).toEmbedding.comp a) = χ ((f i).toEmbedding.comp b)) := by
+          χ ((f i).toEmbedding.comp a) = χ ((f i).toEmbedding.comp b)) ∧
+      (Target.toRelStructure.IsHomomorphism A₀.ordered Target.part →
+        Core.toRelStructure.IsHomomorphism A₀.ordered Core.part) := by
   classical
   let A := A₀.ordered
   let B := Target.toRelStructure
@@ -125,7 +128,7 @@ theorem cutoffTwoProjectedPartiteForestRamsey
   have hCoreStrong := C.selected_core_aStrong Target hPart hPartOnA hOwner hLifted hStrong
   refine ⟨C.Vertex, inferInstance, I, inferInstance, core, f, ?_, hCoreLinear, ?_,
     hLifted, C.lifted_support_injective Target hPart hDistinct, hCoreStrong, ?_, ?_,
-    C.core_selected_arrow Target hPart hPartOnA hOwner κ hOldArrow⟩
+    C.core_selected_arrow Target hPart hPartOnA hOwner κ hOldArrow, ?_⟩
   · intro a u
     obtain ⟨i, b, rfl⟩ := hLifted a
     exact (C.vertexPart_lift i (b u)).trans (hPartOnA b u)
@@ -137,6 +140,49 @@ theorem cutoffTwoProjectedPartiteForestRamsey
       (C.lifted_controlledIntersection Target hPart hPartOnA hOwner hControlled)
   · intro a b hNe x hx
     exact C.core_contacts_allowed Target hPart hPartOnA hOwner hLifted hRigid a b hNe hx
+  · exact C.system_isHomomorphism Target hPart
+
+/-- The cutoff-two forest witness with its original edge, intersection,
+and colouring assertions. -/
+theorem cutoffTwoProjectedPartiteForestRamsey
+    (A₀ : RelStructure L U) [LinearOrder U] [Finite U]
+    (Target : StructuralRamsey.Partite.System L.withOrder U V)
+    [Finite V]
+    (hSpan : ∃ (R : L.Symbol) (z : Fin (L.arity R) → U),
+      A₀.rel R z ∧ Function.Surjective z)
+    (hPartOnA : ∀ (a : Embedding A₀.ordered Target.toRelStructure) (u : U),
+      Target.part (a u) = u)
+    (hLinear : ALinear A₀.ordered Target.toRelStructure)
+    (hSupport : ∀ x : V,
+      ∃ a : Embedding A₀.ordered Target.toRelStructure, x ∈ copyCarrier a)
+    (allowed : Set U)
+    (hContacts : ∀ a b : Embedding A₀.ordered Target.toRelStructure, ¬ SameCopy a b →
+      ∀ x ∈ copyCarrier a ∩ copyCarrier b, Target.part x ∈ allowed)
+    (κ : Type w) [Fintype κ] [Nonempty κ] :
+    ∃ (W : Type v) (_ : Finite W) (I : Type v) (_ : Finite I)
+      (Core : StructuralRamsey.Partite.System L.withOrder U W)
+      (f : I → StructuralRamsey.Partite.Embedding Target Core),
+      (∀ (a : Embedding A₀.ordered Core.toRelStructure) (u : U), Core.part (a u) = u) ∧
+      ALinear A₀.ordered Core.toRelStructure ∧
+      (∀ x : W, ∃ a : Embedding A₀.ordered Core.toRelStructure, x ∈ copyCarrier a) ∧
+      (∀ a : Embedding A₀.ordered Core.toRelStructure,
+        ∃ (i : I) (b : Embedding A₀.ordered Target.toRelStructure),
+          a = (f i).toEmbedding.comp b) ∧
+      Function.Injective (fun i => bSupportPiece A₀.ordered (f i).toEmbedding) ∧
+      (∀ i, AStrong A₀.ordered Core.toRelStructure (copyCarrier (f i).toEmbedding)) ∧
+      FiniteMixedForestThrough
+        (RelationalMixedSupportTest A₀.ordered (fun i => (f i).toEmbedding)) 2 ∧
+      (∀ a b : Embedding A₀.ordered Core.toRelStructure, ¬ SameCopy a b →
+        ∀ x ∈ copyCarrier a ∩ copyCarrier b, Core.part x ∈ allowed) ∧
+      (∀ χ : Embedding A₀.ordered Core.toRelStructure → κ,
+        ∃ i, ∀ a b : Embedding A₀.ordered Target.toRelStructure,
+          χ ((f i).toEmbedding.comp a) = χ ((f i).toEmbedding.comp b)) := by
+  obtain ⟨W, hW, I, hI, Core, f, hFine, hCoreLinear, hCoreCover, hEdgeCover,
+    hDistinct, hStrong, hForest, hCoreContacts, hArrow, _⟩ :=
+    cutoffTwoProjectedPartiteForestRamsey_withProjection
+      A₀ Target hSpan hPartOnA hLinear hSupport allowed hContacts κ
+  exact ⟨W, hW, I, hI, Core, f, hFine, hCoreLinear, hCoreCover, hEdgeCover,
+    hDistinct, hStrong, hForest, hCoreContacts, hArrow⟩
 
 end StructuralRamsey.Girth
 

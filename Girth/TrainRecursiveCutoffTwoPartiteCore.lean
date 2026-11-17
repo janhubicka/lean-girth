@@ -35,6 +35,23 @@ noncomputable def partiteLift (hPart : C.part = Target.part) (i : I) :
     C.project C.project_lift i
   map_part := fun x => (C.vertexPart_lift i x).trans (congrFun hPart x)
 
+/-- Every relation tuple in the lifted union comes from a lifted target.
+Relational projection through the fine parts therefore survives the lift. -/
+theorem system_isHomomorphism
+    (hPart : C.part = Target.part) {Base : RelStructure L U}
+    (hTarget : Target.toRelStructure.IsHomomorphism Base Target.part) :
+    (C.system Target hPart).toRelStructure.IsHomomorphism Base
+      (C.system Target hPart).part := by
+  intro R t ht
+  obtain ⟨i, s, hs, rfl⟩ := ht
+  have hEq :
+      ((C.system Target hPart).part ∘ ((C.lift i : V → C.Vertex) ∘ s)) =
+        Target.part ∘ s := by
+    funext k
+    exact (C.partiteLift Target hPart i).map_part (s k)
+  rw [hEq]
+  exact hTarget R s hs
+
 /-- The selected lifted union has a homomorphism-embedding to the fine
 part base. Each irreducible is covered by a lifted A-copy, and on that copy
 the part map is the identity in the original target coordinates. -/
@@ -57,15 +74,7 @@ theorem system_isPartiteOver
     rw [hRigid b] at hb
     exact (congrFun hPart (a u)).trans (hb u).symm
   constructor
-  · intro R t ht
-    obtain ⟨i, s, hs, rfl⟩ := ht
-    have hEq :
-        ((C.system Target hPart).part ∘ ((C.lift i : V → C.Vertex) ∘ s)) =
-          Target.part ∘ s := by
-      funext k
-      exact (C.partiteLift Target hPart i).map_part (s k)
-    rw [hEq]
-    exact hTarget.map_rel hs
+  · exact C.system_isHomomorphism Target hPart hTarget.1
   · intro S hS
     obtain ⟨i, a, hCover⟩ := selectedRelationalLiftUnion_all_irreducibles_covered
       C.original C.lift C.project C.project_lift hStrong hCoverage
