@@ -27,6 +27,8 @@ segment. Higher girth is not claimed.
 namespace StructuralRamsey.Girth
 namespace CoherentPort
 
+universe v
+
 private def PrivateBoth3 (a b c : PortSide) : Prop :=
   (a = .left ∨ b = .left ∨ c = .left) ∧
   (a = .right ∨ b = .right ∨ c = .right)
@@ -114,7 +116,7 @@ midpoint-closed interface hypothesis. -/
 theorem no_mixed_triangle_of_closed_port
     {W : Type v} {adj : W → W → Prop} {L R : Set W}
     (hCover : L ∪ R = Set.univ)
-    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \ R → b ∈ R \ L → ¬ adj a b)
     (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
     (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
     {a b c : W} (hac : a ≠ c) (hba : b ≠ a) (hcb : c ≠ b)
@@ -134,7 +136,7 @@ over a midpoint-closed interface. -/
 theorem no_mixed_square_of_closed_port
     {W : Type v} {adj : W → W → Prop} {L R : Set W}
     (hCover : L ∪ R = Set.univ)
-    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \ R → b ∈ R \ L → ¬ adj a b)
     (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
     (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
     {a b c d : W} (hac : a ≠ c) (hbd : b ≠ d)
@@ -158,7 +160,7 @@ over a midpoint-closed interface. -/
 theorem no_mixed_pentagon_of_closed_port
     {W : Type v} {adj : W → W → Prop} {L R : Set W}
     (hCover : L ∪ R = Set.univ)
-    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \ R → b ∈ R \ L → ¬ adj a b)
     (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
     (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
     {a b c d e : W}
