@@ -1,4 +1,4 @@
-import Girth.TrainFillingTemplateConstruction
+import Girth.TrainFillingCanonicalTemplate
 
 set_option Elab.async false
 

@@ -27,7 +27,7 @@ induced-copy property is postulated.
 
 namespace StructuralRamsey.Girth
 
-universe u v
+universe u v w
 variable {I : Type u} {V : Type v}
 
 /-- One full edge relation, unary colour predicates, and a binary
@@ -238,5 +238,75 @@ theorem colouredOrderedEdgeSupport_exact
         ι hiE hColour hWithinOrder)
     rw [colouredOrderedEdgeEmbedding_carrier]
     exact hRange.symm
+
+/-- Replacing the declared edge family by the complete physical support
+preserves precisely that support with the given predicate and order data. -/
+theorem colouredOrderedEdgeSupport_normalized
+    [LinearOrder V]
+    (k : ℕ) (E : Set (Set V))
+    (profile : Fin k → I) (colour : V → I) :
+    let A := colouredOrderedEdgeSource.{u,v} k profile
+    let B := colouredOrderedEdgeTarget k E colour
+    supportCopies A (colouredOrderedEdgeTarget k (supportCopies A B) colour) =
+      supportCopies A B := by
+  dsimp only
+  apply colouredOrderedEdgeSupport_exact
+  rintro e ⟨a, rfl⟩
+  let ι : Fin k ↪ V :=
+    ⟨fun i => a (ULift.up i), fun _ _ h => congrArg ULift.down (a.injective h)⟩
+  refine ⟨ι, ?_, ?_, ?_⟩
+  · ext y
+    constructor
+    · rintro ⟨i, rfl⟩
+      exact ⟨ULift.up i, rfl⟩
+    · rintro ⟨i, rfl⟩
+      exact ⟨i.down, by cases i; rfl⟩
+  · intro i
+    exact (a.map_rel_iff (.inl (.inr (profile i)))
+      (fun _ => ULift.up i)).mpr rfl
+  · intro i j hij
+    have hRel := a.map_rel_iff (.inr ()) ![ULift.up i, ULift.up j]
+    change (colour (ι i) = colour (ι j) ∧ ι i < ι j) ↔
+      (profile i = profile j ∧ i < j) at hRel
+    have hi : colour (ι i) = profile i :=
+      (a.map_rel_iff (.inl (.inr (profile i))) (fun _ => ULift.up i)).mpr rfl
+    have hj : colour (ι j) = profile j :=
+      (a.map_rel_iff (.inl (.inr (profile j))) (fun _ => ULift.up j)).mpr rfl
+    simpa only [hi, hj, hij, true_and] using hRel.symm
+
+/-- An induced family of a coloured target gives a single predicate map
+on its image union. A vertex in two images has the same colour in both,
+by preservation and reflection of the unary relations. -/
+theorem colouredOrderedEdgeFamily_exists_predicate
+    [LinearOrder V] [Nonempty I]
+    (k : ℕ) (E : Set (Set V)) (colour : V → I)
+    {W : Type v} {J : Type w}
+    {C : RelStructure (colouredOrderedEdgeLanguage I k) W}
+    (family : J → RelStructure.Embedding
+      (colouredOrderedEdgeTarget k E colour) C) :
+    ∃ predicate : W → I, ∀ j x, predicate (family j x) = colour x := by
+  classical
+  let hasColour (y : W) (i : I) : Prop :=
+    ∃ j x, family j x = y ∧ colour x = i
+  let predicate (y : W) : I := if h : ∃ i, hasColour y i then
+    Classical.choose h else Classical.choice ‹Nonempty I›
+  refine ⟨predicate, ?_⟩
+  intro j x
+  have h : ∃ i, hasColour (family j x) i := ⟨colour x, j, x, rfl, rfl⟩
+  dsimp only [predicate]
+  rw [dite_eq_left h]
+  obtain ⟨j', x', hImage, hColour⟩ := Classical.choose_spec h
+  have hSource : (colouredOrderedEdgeTarget k E colour).rel
+      (.inl (.inr (colour x'))) (fun _ => x') := by
+    change colour x' = colour x'
+    rfl
+  have hAmbient := ((family j').map_rel_iff
+    (.inl (.inr (colour x'))) (fun _ => x')).mpr hSource
+  change C.rel (.inl (.inr (colour x'))) (fun _ => family j' x') at hAmbient
+  rw [hImage] at hAmbient
+  have hBack := ((family j).map_rel_iff
+    (.inl (.inr (colour x'))) (fun _ => x)).mp hAmbient
+  change colour x = colour x' at hBack
+  exact hColour.symm.trans hBack.symm
 
 end StructuralRamsey.Girth
