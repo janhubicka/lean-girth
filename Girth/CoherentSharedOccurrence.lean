@@ -65,7 +65,7 @@ property. This is the main incidence statement for arbitrary marked
 interface subtrees. It remains conditional on the underlying global
 graph being a tree; constructing that tree from a quotient is the
 separate next lemma. -/
-theorem joinTree_of_coherent_shared_indices
+def joinTree_of_coherent_shared_indices
     (F : Q → HypergraphPiece W)
     (L R : Set Q)
     (hCover : L ∪ R = Set.univ)
@@ -117,7 +117,7 @@ theorem joinTree_of_coherent_shared_indices
 /-- The incidence part of the same theorem automatically respects
 a typed interface compatibility policy, once full intersections are
 certified separately. -/
-theorem typedInterfaceForest_of_coherent_shared_indices
+def typedInterfaceForest_of_coherent_shared_indices
     (F : Q → HypergraphPiece W)
     (compatible : HypergraphPiece W → HypergraphPiece W → Prop)
     (hCompatible : ∀ ⦃i j : Q⦄, i ≠ j → compatible (F i) (F j))
