@@ -39,7 +39,7 @@ theorem linearEdgeSet_of_twoEdgeForestCompletion
     LinearEdgeSet H := by
   classical
   intro e f he hf hef
-  let N : Type v := PUnit.{v} ⊕ PUnit.{v}
+  let N : Type v := PUnit.{v+1} ⊕ PUnit.{v+1}
   let selected : N → HypergraphPiece W
     | .inl _ => HypergraphPiece.oneEdge e
     | .inr _ => HypergraphPiece.oneEdge f

@@ -89,7 +89,7 @@ theorem PhysicalCopySetForestExtension.toLabelFinset
     hPhysical s hSelEligible hBound
   let K : Type v :=
     {T : HypergraphPiece W // T ∈ t.image support}
-  let finiteK : Fintype K := by infer_instance
+  let finiteK : Fintype K := Finset.fintypeCoeSort (t.image support)
   refine ⟨K, finiteK, ?_⟩
   letI : Fintype K := finiteK
   refine ⟨(fun k : K => k.1), hForest, ?_, ?_⟩

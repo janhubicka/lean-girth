@@ -89,16 +89,17 @@ theorem girthGT_union_of_forest_edge_traces
         hEj.trans heq.symm
       refine Or.inr ⟨ei, ?_, ?_, ?_⟩
       · exact (hMem i ei).2
-          ⟨hei, by rw [hEi]; exact Set.Subset.rfl⟩
+          ⟨hei, by rw [hEi]⟩
       · exact (hMem j ei).2
-          ⟨hei, by rw [hEj']; exact Set.Subset.rfl⟩
+          ⟨hei, by rw [hEj']⟩
       · rw [hEi, hEj']
         exact Set.inter_self ei
   have hTraceForest : ForestOfCopies T := by
     refine ⟨hAllowed, ?_⟩
-    rcases hForest.2 with hEmpty | ⟨J⟩
+    rcases hForest.2 with hEmpty | hJoin
     · exact Or.inl hEmpty
-    · refine Or.inr ⟨{
+    · let J := Classical.choice hJoin
+      refine Or.inr ⟨{
         tree := J.tree
         isTree := J.isTree
         running := ?_
@@ -173,6 +174,6 @@ theorem girthGT_selected_of_forest_edge_traces
   apply Set.mem_iUnion.mpr
   refine ⟨i, ?_⟩
   change e ∈ H ∧ e ⊆ (F i).carrier ∩ S
-  exact ⟨hSelectedSub he, by rw [hi]; exact Set.Subset.rfl⟩
+  exact ⟨hSelectedSub he, by rw [hi]⟩
 
 end StructuralRamsey.Girth
