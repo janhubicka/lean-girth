@@ -1,3 +1,4 @@
+import Girth.FiniteTraceDiracSeparatorStep
 import Girth.FiniteTraceChordalEndpoint
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceCycleGraphFacts
@@ -146,3 +147,8 @@ is claimed from creating this file alone. -/
 #print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_and_chordalToPEO
 
 #check StructuralRamsey.Girth.NoLongInducedCycles
+
+#check StructuralRamsey.Girth.StrongDiracAlternative
+
+#check StructuralRamsey.Girth.strongDirac_step_of_clique_separator
+#print axioms StructuralRamsey.Girth.strongDirac_step_of_clique_separator
