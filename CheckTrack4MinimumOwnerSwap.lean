@@ -64,6 +64,7 @@ import Girth.TrainCoverageFreePhysicalNontrivialFtStep
 import Girth.TrainCoverageFreePhysicalDirectPartiteFtStep
 import Girth.TrainCoverageFreePhysicalRawFtWitness
 import Girth.TrainCoverageFreePhysicalRawFtFinitePass
+import Girth.TrainCoverageFreeCanonicalCrossPartOrder
 import Girth.TrainCoverageFreeBoundsFromMixed
 import Girth.TrainCoverageFreeForestOrderStep
 import Girth.TrainSelectedPictureMixedStageAssembly
@@ -389,3 +390,10 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.partiteOrderCompatible_of_fineRelabelling
 #print axioms StructuralRamsey.Girth.rawFineWitness_relabelling_geometry
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.activeAttachment_orderCompatible
+
+-- Canonical cross-fine-part order: physical edge and selected map transport.
+#print axioms StructuralRamsey.Partite.System.crossPartOrder
+#print axioms StructuralRamsey.Partite.System.crossPartOrder_forwardCompatible
+#print axioms StructuralRamsey.Partite.Embedding.crossPartOrder
+#print axioms StructuralRamsey.Partite.physicalEdge_to_ordered
+#print axioms StructuralRamsey.Girth.canonicalCrossPartOrder_relabel_compatible
