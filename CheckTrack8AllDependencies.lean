@@ -1,0 +1,154 @@
+import Girth.FiniteTraceDiracSeparatorStep
+import Girth.FiniteTraceChordalEndpoint
+import Girth.FiniteTracePEOCount
+import Girth.FiniteTraceCycleGraphFacts
+import Girth.FiniteTraceSimplicialCriterion
+import Girth.FiniteTracePEORank
+
+/-! Track 8 exact-head full dependency axiom gate.
+Run only with the repository-pinned Lean toolchain; no certification
+is claimed from creating this file alone. -/
+
+#check StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#check StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
+#check StructuralRamsey.Girth.traceConformal_of_local_completion
+#check StructuralRamsey.Girth.coversNonemptyTraces_empty
+#check StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#check StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+#check StructuralRamsey.Girth.laterNeighborBag_isClique
+#check StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#check StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#check StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#check StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#check StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
+#check StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#check StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#check StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#check StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#check StructuralRamsey.Girth.maximalTrace_subset_Z
+#check StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#check StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#check StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#check StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#check StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
+#check StructuralRamsey.Girth.traceVertices_isClique
+#check StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#check StructuralRamsey.Girth.maximalClique_has_maximalTrace
+#check StructuralRamsey.Girth.traceConformal_of_joinTree
+#check StructuralRamsey.Girth.IsSimplicialWithin.mono
+#check StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#check StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#check StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#check StructuralRamsey.Girth.exists_simplicialOutside_clique
+#check StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+#check StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+#check StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+#check StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#check StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#check StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+#check StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#check StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
+#check StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#check StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#check StructuralRamsey.Girth.JoinTree.traceCarrier
+#check StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_pair_pattern
+#print axioms StructuralRamsey.Girth.pairCliqueOn_contained_of_local_completion
+#print axioms StructuralRamsey.Girth.traceConformal_of_local_completion
+#print axioms StructuralRamsey.Girth.coversNonemptyTraces_empty
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.vertex_coverage
+#print axioms StructuralRamsey.Girth.CoversNonemptyTraces.tuple_coverage
+#print axioms StructuralRamsey.Girth.laterNeighborBag_isClique
+#print axioms StructuralRamsey.Girth.clique_subset_laterNeighborBag_of_least
+#print axioms StructuralRamsey.Girth.clique_contained_in_some_laterNeighborBag
+#print axioms StructuralRamsey.Girth.maximalClique_eq_laterNeighborBag
+#print axioms StructuralRamsey.Girth.finRotate_no_fixed_of_four_le
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_fin_rotate
+#print axioms StructuralRamsey.Girth.exists_maximal_nonempty_trace
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_spec
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentative_injective
+#print axioms StructuralRamsey.Girth.maximalTraceRepresentatives_cover
+#print axioms StructuralRamsey.Girth.maximalTrace_subset_Z
+#print axioms StructuralRamsey.Girth.maximalTraceVertices_nonempty
+#print axioms StructuralRamsey.Girth.maximalTrace_eq_eliminationBag
+#print axioms StructuralRamsey.Girth.maximalTrace_card_le_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_PEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions_and_PEO
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_ranking
+#print axioms StructuralRamsey.Girth.traceVertices_isClique
+#print axioms StructuralRamsey.Girth.maximalTrace_isMaximalClique
+#print axioms StructuralRamsey.Girth.maximalClique_has_maximalTrace
+#print axioms StructuralRamsey.Girth.traceConformal_of_joinTree
+#print axioms StructuralRamsey.Girth.IsSimplicialWithin.mono
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_iff_clique
+#print axioms StructuralRamsey.Girth.isPerfectEliminationOrder_iff_simplicialSuffix
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_of_clique
+#print axioms StructuralRamsey.Girth.exists_simplicialOutside_clique
+#print axioms StructuralRamsey.Girth.isSimplicialWithin_univ_of_neighbors_subset
+#print axioms StructuralRamsey.Girth.no_bounded_chordless_successor_cycle
+#print axioms StructuralRamsey.Girth.JoinTree.pairCovered_in_one_bag
+#print axioms StructuralRamsey.Girth.JoinTree.no_cyclic_unique_pairs
+#print axioms StructuralRamsey.Girth.no_cyclic_unique_pairs_of_internal_completion
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_missing_faces
+#print axioms StructuralRamsey.Girth.exists_third_vertex_of_card_ge_three
+#print axioms StructuralRamsey.Girth.exists_original_bag_covering_faces_of_card_ge_three
+#print axioms StructuralRamsey.Girth.JoinTree.missingFaces_contained_in_one_bag
+#print axioms StructuralRamsey.Girth.joinTreeCompletion_missingFaces_contains
+#print axioms StructuralRamsey.Girth.JoinTree.traceCarrier
+#print axioms StructuralRamsey.Girth.setBagPiece_traceCarrier
+
+#check StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#check StructuralRamsey.Girth.crossPairNonedge_for_all_of_noTriangle
+#check StructuralRamsey.Girth.distinct_two_pairs_have_third
+#check StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#check StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#check StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#check StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#check StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#check StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
+
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_noTriangle
+#print axioms StructuralRamsey.Girth.crossPairNonedge_for_all_of_noTriangle
+#print axioms StructuralRamsey.Girth.distinct_two_pairs_have_third
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_distinct_edges_and_trianglefree
+#print axioms StructuralRamsey.Girth.noTriangleAtPair_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_triangleFreeOn
+#print axioms StructuralRamsey.Girth.triangleFreeOn_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.crossPairNonedge_of_induced_cliqueFree
+#print axioms StructuralRamsey.Girth.no_bounded_fin_cycle_of_triangleFree
+
+#check StructuralRamsey.Girth.IsInducedFinCycle
+#check StructuralRamsey.Girth.IsInducedFinCycle.adj_iff
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.adj_iff
+#check StructuralRamsey.Girth.pairPatternVertices_rotate_eq_range
+#print axioms StructuralRamsey.Girth.pairPatternVertices_rotate_eq_range
+#check StructuralRamsey.Girth.IsInducedFinCycle.image_cliqueFree_three
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.image_cliqueFree_three
+#check StructuralRamsey.Girth.IsInducedFinCycle.image_distinct_edges
+#print axioms StructuralRamsey.Girth.IsInducedFinCycle.image_distinct_edges
+#check StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
+#print axioms StructuralRamsey.Girth.no_bounded_induced_fin_cycle_of_standard_cycle_facts
+
+#check StructuralRamsey.Girth.standardCycle_adj_finRotate
+#check StructuralRamsey.Girth.standardCycle_distinct_finRotate_edges
+#check StructuralRamsey.Girth.standardCycle_cliqueFree_three
+#check StructuralRamsey.Girth.no_bounded_induced_trace_cycle
+#print axioms StructuralRamsey.Girth.standardCycle_adj_finRotate
+#print axioms StructuralRamsey.Girth.standardCycle_distinct_finRotate_edges
+#print axioms StructuralRamsey.Girth.standardCycle_cliqueFree_three
+#print axioms StructuralRamsey.Girth.no_bounded_induced_trace_cycle
+
+#check StructuralRamsey.Girth.tracePairGraph_noLongInducedCycles_of_local
+#print axioms StructuralRamsey.Girth.tracePairGraph_noLongInducedCycles_of_local
+
+#check StructuralRamsey.Girth.smallTrace_selection_of_local_and_chordalToPEO
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_and_chordalToPEO
+
+#check StructuralRamsey.Girth.NoLongInducedCycles
+
+#check StructuralRamsey.Girth.StrongDiracAlternative
+
+#check StructuralRamsey.Girth.strongDirac_step_of_clique_separator
+#print axioms StructuralRamsey.Girth.strongDirac_step_of_clique_separator
