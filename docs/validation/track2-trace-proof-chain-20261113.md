@@ -23,7 +23,7 @@ this file records only the currently retained argument.
 
 ### Correspondence checks
 
-- The manuscript's forest-extension property is over **sets of actual relational copies**. The retained bridge is `FinsetLabelForestCompletionProperty.toSupportIndexed`, with `pictureABLabelSupport` mapping one-edge A-copies and designated complete B-support pieces. It handles repeated supports by image cardinality, not by assuming injectivity. The exploratory support-finset converse and two unused old-active wrappers were deleted.
+- The manuscript's forest-extension property is over **sets of actual relational copies**, not embedding labels. `ForestPhysicalCopySetCompletion.PhysicalCopySetForestExtension` now records a finite set of physical copy keys and a forest on its image of DISTINCT complete support pieces. `ForestPhysicalABCompletion` defines the physical key as a tagged A-carrier/B-carrier and proves that `pictureABLabelSupport` factors through that key. Its theorem `oldActiveInduced_girthGT_of_physicalCopySetExtension` derives old active girth from the faithful physical-set completion property, using the existing labelled-to-indexed adapter internally. Neither the label-to-physical map nor the physical-to-support map is assumed injective. The two tags must be checked against the manuscript's union of physical A/B-copies when A and B might describe the same underlying substructure; the main nontrivial case distinguishes these sorts.
 - The outer forest's join tree transfers to full pieces because pairwise intersections are exact. For large separators, the request is the complete common edge in both members' **own support**, not merely a carrier subset. For singleton separators, no helper member is needed.
 - Duplicate local member labels are safely deleted only after proving that any duplicated piece is one-edge; deleting an arbitrary designated B-piece can destroy foresthood.
 - Old `A`-linearity at `m≥2` follows from the pair-completion property. At `m=1` this is false: `{0,1,2}` and `{0,1,3}` are non-linear but every singleton request can be a forest.
@@ -32,16 +32,16 @@ this file records only the currently retained argument.
 
 ## Verification inventory and reproducible gate
 
-The current branch contains **14 new implementation modules with 28 new theorem candidates**:
-12 in the active-girth chain and 16 in the general lifting chain.
+The current branch contains **16 new implementation modules with 33 new theorem candidates**:
+17 in the active-girth/physical-copy bridge and 16 in the general lifting chain.
 The direct-increment component uses **four existing declarations** in `ForestRecursiveOutputGirth.lean`, not new proof candidates.
 
 | Strict axiom gate | Theorems audited |
 | --- | ---: |
-| `Girth/CheckTrack2ActiveGirth.lean` | 12 new |
+| `Girth/CheckTrack2ActiveGirth.lean` | 17 new |
 | `Girth/CheckTrack2DirectIncrement.lean` | 4 reused |
 | `Girth/CheckTrack2JoinLift.lean` | 16 new |
-| `Girth/CheckTrack2Trace.lean` | 32 total |
+| `Girth/CheckTrack2Trace.lean` | 37 total |
 
 From a real checkout with the repository-pinned Lean/Lake/Mathlib cache restored:
 
@@ -62,7 +62,7 @@ after the three independent gates pass.
 delimiters, no explicit `sorry`/`admit` in the 14 new modules, no missing
 or duplicated axiom probes). The container has no `lean`, `lake`,
 `elan`, pinned Mathlib build cache or outbound GitHub DNS. Therefore
-**none of the 28 new theorem bodies has been compiled or axiom-audited**.
+**none of the 33 new theorem bodies has been compiled or axiom-audited**.
 Do not promote any new `\leanverified` marker or merge the candidate.
 
 ## Bounded diagnostics, not theorem certificates
@@ -89,3 +89,40 @@ selected/added family classification at the real partite step.
 Only then update the validation markers. The general local
 Ramsey-witness existence and complete recursive construction remain
 outside Track 2.
+
+## 17 November — physical-copy (rather than embedding-label) correction
+
+The previous source predicate `FinsetLabelForestCompletionProperty` was
+a convenient abstract intermediate but not literally the paper's invariant:
+multiple embeddings can represent one physical B-copy. A labelled forest
+cannot duplicate a multi-edge B-piece, even though the finite SET of
+physical copies contains just one B-copy. Such duplicates must be collapsed
+**before** requesting a forest completion.
+
+`ForestPhysicalCopySetCompletion.lean` now encodes the actual manuscript
+quantifiers: for each finite set `s` of physical copies of size ≤m, choose
+a finite set `t ⊇ s` with all extra copies designated and with
+`ForestOfCopies` on the finite image `t.image support` of DISTINCT
+complete support pieces. The generic `toLabelFinset` transport takes
+`s := labels.image key`, so its cardinal does not exceed the number
+of selected embedding labels. No cloning of B-pieces is ever needed.
+
+`ForestPhysicalABCompletion.lean` specializes the abstract physical
+keys to tagged A-carriers and B-carriers. The full support of a B-carrier
+is **all** ambient embedded A-copy edges contained in that carrier;
+this depends only on the carrier, not on its embedding presentation.
+These geometric equalities are explicit candidate theorems.
+`oldActiveInduced_girthGT_of_physicalCopySetExtension` composes
+physical-set extension → labelled-set extension → indexed support
+completion → old active girth. As elsewhere, the m≥2 assumption
+already yields ambient A-linearity from two-edge completion.
+
+Important scope: the A/B tags are faithful when these are different
+physical copy sorts, as in the nontrivial theorem case. In degenerate
+cases where one underlying structure could be counted in both sorts,
+a separate identification (or the theorem's trivial-case split)
+is needed. **Do not silently count that object twice.**
+
+All five new theorem declarations have unexecuted strict axiom probes.
+The source remains uncompiled; this is a repair of a mathematical
+interface, not yet a Lean certificate.
