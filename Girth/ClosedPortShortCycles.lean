@@ -46,7 +46,8 @@ theorem no_cross_private_cycle_three :
     ∀ a b c : PortSide,
       PrivateBoth3 a b c →
       Steps3 a b c → PortTriples3 a b c → False := by
-  decide
+  intro a b c
+  cases a <;> cases b <;> cases c <;> decide
 
 private def PrivateBoth4 (a b c d : PortSide) : Prop :=
   (a = .left ∨ b = .left ∨ c = .left ∨ d = .left) ∧
@@ -67,7 +68,8 @@ theorem no_cross_private_cycle_four :
     ∀ a b c d : PortSide,
       PrivateBoth4 a b c d →
       Steps4 a b c d → PortTriples4 a b c d → False := by
-  decide
+  intro a b c d
+  cases a <;> cases b <;> cases c <;> cases d <;> decide
 
 private def PrivateBoth5 (a b c d e : PortSide) : Prop :=
   (a = .left ∨ b = .left ∨ c = .left ∨ d = .left ∨ e = .left) ∧
@@ -90,7 +92,8 @@ theorem no_cross_private_cycle_five :
     ∀ a b c d e : PortSide,
       PrivateBoth5 a b c d e →
       Steps5 a b c d e → PortTriples5 a b c d e → False := by
-  decide
+  intro a b c d e
+  cases a <;> cases b <;> cases c <;> cases d <;> cases e <;> decide
 
 /-- The length-six cyclic side word LLSRRS is combinatorially allowed:
 this witnesses the sharpness of the <6 obstruction at the level of
