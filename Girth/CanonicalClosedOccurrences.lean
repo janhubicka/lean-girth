@@ -45,7 +45,7 @@ def comp
     {A : SimpleGraph U} {B : SimpleGraph V} {C : SimpleGraph W}
     (f : ClosedGraphEmbedding B C) (g : ClosedGraphEmbedding A B) :
     ClosedGraphEmbedding A C where
-  toEmbedding := f.toEmbedding.comp g.toEmbedding
+  toEmbedding := g.toEmbedding.trans f.toEmbedding
   induced := by
     intro u v
     exact (f.induced (g.toEmbedding u) (g.toEmbedding v)).trans
@@ -73,7 +73,7 @@ def comp
 /-- Identity embeddings preserve the entire graph and its midpoint
 closure, and hence define identity maps on closed occurrences. -/
 def id (A : SimpleGraph U) : ClosedGraphEmbedding A A where
-  toEmbedding := Function.Embedding.id
+  toEmbedding := Function.Embedding.refl U
   induced := by
     intro u v
     rfl
