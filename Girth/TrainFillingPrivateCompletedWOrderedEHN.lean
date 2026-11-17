@@ -1,5 +1,4 @@
 import Girth.TrainFillingPrivateCompletedWSupport
-import Girth.TrainFillingPrivateMonotoneEHN
 
 set_option Elab.async false
 
@@ -122,61 +121,5 @@ theorem completedFirstWagon_allACopies_strictMono
       exact hProfileBlocks x.down y.down hxy hSame
     exact completedFirstWagon_order_of_colour_lt
       carrier colour (a x) (a y) hLt
-
-/-- The completed W satisfies the ACTUAL ordered EHN input:
-small A-support linearity and monotonicity of EVERY A-copy.
-The raw coproduct is not used.
-
-The first-wagon carrier/edge data must really be induced
-restrictions of an old A-linear original structure D.
-Every EHN X-output conversion (coveredness, allowed marks,
-selected support and predicate-order completion) is left
-to the separate Track 1 bridge. -/
-theorem completedFirstWagon_orderedEHN
-    [Finite V] [Finite P]
-    (k : ℕ) (hk : 2 ≤ k)
-    (profile : Fin k → I)
-    (hProfileBlocks : ∀ i j : Fin k,
-      i < j → profile i ≠ profile j → profile i < profile j)
-    (oldEdges : Set (Set V)) (colour : V → I)
-    (carrier : P → Set V)
-    (hOriginalLinear : ALinear
-      (colouredOrderedEdgeSource.{u,v} k profile)
-      (colouredOrderedEdgeTarget k oldEdges colour))
-    (κ : Type w) [Fintype κ] [Nonempty κ] :
-    let W := completedFirstWagonColouredUnion k oldEdges colour carrier
-    letI : LinearOrder (FirstWagonUnionVertex carrier) :=
-      firstWagonUnionOrder carrier colour
-    ∃ (X : Type v) (_ : Finite X) (o : LinearOrder X)
-      (C : StructuralRamsey.Structure
-        (closureLanguage (colouredOrderedEdgeLanguage I k)) X),
-      ElementaryCAClass
-        (colouredOrderedEdgeSource.{u,v} k profile) C ∧
-      MonotoneClosedTargetRamseyFamily
-        (colouredOrderedEdgeSource.{u,v} k profile)
-        W o C κ := by
-  let W := completedFirstWagonColouredUnion
-    k oldEdges colour carrier
-  letI : LinearOrder (FirstWagonUnionVertex carrier) :=
-    firstWagonUnionOrder carrier colour
-  have hLin : ALinear
-      (colouredOrderedEdgeSource.{u,v} k profile) W := by
-    apply completedFirstWagon_aLinear
-      k hk profile oldEdges colour carrier
-    intro p
-    exact aLinear_induce hOriginalLinear (carrier p)
-  have hMono : ∀ a :
-      Embedding (colouredOrderedEdgeSource.{u,v} k profile) W,
-      StrictMono a :=
-    completedFirstWagon_allACopies_strictMono
-      k profile hProfileBlocks oldEdges colour carrier
-  have hIrred :
-      (colouredOrderedEdgeSource.{u,v} k profile).Irreducible :=
-    irreducible_of_spanningRelation
-      (colouredOrderedEdgeSource.{u,v} k profile)
-      (colouredOrderedEdgeSource_hasSpanningRelation k profile)
-  exact monotoneClosedTargetRamseyFamily_of_monotone_embeddings
-    (colouredOrderedEdgeSource.{u,v} k profile)
-    W hIrred hLin hMono κ
 
 end StructuralRamsey.Girth
