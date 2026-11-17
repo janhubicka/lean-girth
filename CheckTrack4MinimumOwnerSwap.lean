@@ -41,6 +41,9 @@ import Girth.TrainCoverageFreeDirectPartiteFtStep
 import Girth.TrainCoverageFreeRawFtWitness
 import Girth.TrainCoverageFreeRawFtFinitePass
 import Girth.TrainCoverageFreeACopyProjection
+import Girth.TrainCoverageFreeACopyGeometry
+import Girth.TrainCoverageFreeWeakProjectionGirth
+import Girth.TrainCoverageFreePhysicalStage
 import Girth.TrainCoverageFreeBoundsFromMixed
 import Girth.TrainCoverageFreeForestOrderStep
 import Girth.TrainSelectedPictureMixedStageAssembly
@@ -297,3 +300,16 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.projectsACopies_relabel_of_fineEdges
 #print axioms StructuralRamsey.Girth.projectsACopies_freeAttachment
 #print axioms StructuralRamsey.Girth.activeCarrier_aStrong_of_projectedACopies
+
+-- Weak physical projection/geometry and the representation-correct
+-- coverage-free stage, each requiring exact-head Lean elaboration.
+#print axioms StructuralRamsey.Girth.activeAttachment_geometry_of_projectedACopies
+#print axioms StructuralRamsey.Girth.activeInduced_ACopy_projects_of_projectedACopies
+#print axioms StructuralRamsey.Girth.mapped_activeSupport_eq_projected_of_projectedACopies
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_projectedACopies
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalForestStage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalOrderStage
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalForestStage.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalOrderStage.ofStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalForestStage.activeCarrier_aStrong
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.PhysicalForestStage.withBottom
