@@ -1,0 +1,13 @@
+import Girth.TrainRecursiveCutoffTwoLocalRamsey
+
+#print axioms StructuralRamsey.Girth.cutoffTwoOwner_eq_of_forbidden
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.lift_compatible
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.original_sameCopy_of_forbidden_contact
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.system_isPartiteOver
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.all_core_edges_lifted
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.core_aLinear
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.selected_core_aStrong
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.core_contacts_allowed
+#print axioms StructuralRamsey.Girth.CutoffTwoLiftData.core_selected_arrow
+#print axioms StructuralRamsey.Girth.exists_cutoffTwo_partiteAuxiliaryOrder
+#print axioms StructuralRamsey.Girth.cutoffTwoCoveredPartiteLocalRamsey

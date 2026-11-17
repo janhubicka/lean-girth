@@ -1,5 +1,8 @@
 import Girth.OrderCompletionAttachment
+import Girth.PartiteEdgeOrder
 
 #print axioms StructuralRamsey.Girth.orderedEmbeddingsEquivCompleteOrder
 #print axioms StructuralRamsey.Girth.supportCopies_completeOrder_eq
 #print axioms StructuralRamsey.Girth.orderComparesCopies_attachment_of_irreducible
+#print axioms StructuralRamsey.Partite.System.edgeOrder_comparesCopies
+#print axioms StructuralRamsey.Partite.Embedding.edgeOrder

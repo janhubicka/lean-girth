@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveSelectedLiftCoverage
+
+#print axioms StructuralRamsey.Girth.selectedRelationalLiftUnion_covered_of_compatible
+#print axioms StructuralRamsey.Girth.selectedRelationalLiftUnion_all_irreducibles_covered
