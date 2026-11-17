@@ -54,18 +54,18 @@ def comp
     intro x y z hx hy hxy hxz hyz
     obtain ⟨u, rfl⟩ := hx
     obtain ⟨v, rfl⟩ := hy
+    have hne : g.toEmbedding u ≠ g.toEmbedding v := by
+      intro heq
+      apply hxy
+      exact congrArg f.toEmbedding heq
     have hInHost : z ∈ Set.range f.toEmbedding :=
       f.closed ⟨g.toEmbedding u, rfl⟩
-        ⟨g.toEmbedding v, rfl⟩ hxy hxz hyz
+        ⟨g.toEmbedding v, rfl⟩ hne hxz hyz
     obtain ⟨w, rfl⟩ := hInHost
     have huAdj : B.Adj (g.toEmbedding u) w :=
       (f.induced (g.toEmbedding u) w).mp hxz
     have hvAdj : B.Adj (g.toEmbedding v) w :=
       (f.induced (g.toEmbedding v) w).mp hyz
-    have hne : g.toEmbedding u ≠ g.toEmbedding v := by
-      intro heq
-      apply hxy
-      exact congrArg f.toEmbedding heq
     obtain ⟨t, rfl⟩ :=
       g.closed ⟨u, rfl⟩ ⟨v, rfl⟩ hne huAdj hvAdj
     exact ⟨t, rfl⟩
