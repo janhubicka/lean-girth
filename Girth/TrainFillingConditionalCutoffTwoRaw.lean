@@ -65,21 +65,12 @@ local notation "Filling" => UniformFillingData.ofOrderedSupportCopies Small Temp
     (System.toRelStructure N) lower.aLinear) hTemplateCover
 
 include ht in
-/-- Carry the actual shorter-order witness through the canonical filling
-and into the local cutoff-two predecessor data. The local increment is
-not assumed as a property of the filled witness. -/
-theorem cutoffTwoRawData_of_unrestrictedOrder
+/-- Recover the actual train, girth bounds and arrow from the canonical
+physical filling of the literal selected target maps. -/
+theorem cutoffTwoRawData_of_filledCore
     [Nonempty (C × original.FirstWagon)]
-    (hForward : PartiteOrderCompatible Target)
-    (hPositive : ∀ r : K.Symbol, 0 < K.arity r)
-    (hSourceFine : ∀ a : Embedding Small B, ∀ u, Target.part (a u) = u)
-    (hSupported : ∀ (r : K.Symbol) (z : Fin (K.arity r) → V), Target.rel (.inl r) z →
-      ∃ a : Embedding Small B, ∀ j, z j ∈ copyCarrier a)
-    (hTemplateFine : ∀ (a : Embedding Small Template) x, R.part (a x) = x)
-    (hLocalPart : ∀ (c : C) (p : original.FirstWagon) (x : {v : V // v ∈ Carrier p}),
-      R.part (localCopy c p x) = Target.part x.1)
-    (hCutoff : ∀ j : Fin tail.length, 2 ≤ tail.get j)
-    (r : K.Symbol) (z : Fin (K.arity r) → A) (hSpan : Function.Surjective z) (hz : A₀.rel r z)
+    (hCore : CutoffTwoFilledCore ht A₀ Target R enumerate original prep D family
+      (allowedByPredicates D (cutoffTwoTailSymbols allowedFine)) lower)
     (hTemplateLinear : ALinear Small Template)
     (hFirstParameter : ∀ e f : {s : Set X // s ∈ supportCopies Small Template},
       e ≠ f → e.1 ∩ f.1 ⊆ R.part ⁻¹' allowedFine (0 : Fin (tail.length + 1)).succ)
@@ -92,10 +83,7 @@ theorem cutoffTwoRawData_of_unrestrictedOrder
   classical
   let symbols (ν : Fin (tail.length + 1)) : Set (ShortLanguage).Symbol :=
     cutoffTwoTailSymbols allowedFine ν
-  obtain ⟨E, f, hSupportExact, hPart, hf, hFine, hProjection, hForest⟩ :=
-    exists_fineCutoffTwoCore_of_unrestrictedOrder ht A₀ Target R enumerate original prep D family _
-      lower hForward hPositive hSourceFine hSupported hTemplateFine hLocalPart
-      hCutoff r z hSpan hz
+  obtain ⟨E, f, hSupportExact, hPart, hf, hFine, hProjection, hForest⟩ := hCore
   let H := Filling
   let filled := H.toTrainFilling.inheritedTrain lower.train
   have hFamily : supportCopies Small E.toRelStructure = H.toTrainFilling.newEdges := hSupportExact
@@ -278,5 +266,35 @@ theorem cutoffTwoRawData_of_unrestrictedOrder
     obtain ⟨d, _, hd, hD⟩ := hImage j₀ (i, c) b
     rw [← hE, ← hD]
     exact (hMono _ he).trans (hMono _ hd).symm
+
+include ht in
+/-- Carry the actual shorter-order witness through the canonical filling
+and into the local cutoff-two predecessor data. The local increment is
+not assumed as a property of the filled witness. -/
+theorem cutoffTwoRawData_of_unrestrictedOrder
+    [Nonempty (C × original.FirstWagon)]
+    (hForward : PartiteOrderCompatible Target)
+    (hPositive : ∀ r : K.Symbol, 0 < K.arity r)
+    (hSourceFine : ∀ a : Embedding Small B, ∀ u, Target.part (a u) = u)
+    (hSupported : ∀ (r : K.Symbol) (z : Fin (K.arity r) → V), Target.rel (.inl r) z →
+      ∃ a : Embedding Small B, ∀ j, z j ∈ copyCarrier a)
+    (hTemplateFine : ∀ (a : Embedding Small Template) x, R.part (a x) = x)
+    (hLocalPart : ∀ (c : C) (p : original.FirstWagon) (x : {v : V // v ∈ Carrier p}),
+      R.part (localCopy c p x) = Target.part x.1)
+    (hCutoff : ∀ j : Fin tail.length, 2 ≤ tail.get j)
+    (r : K.Symbol) (z : Fin (K.arity r) → A) (hSpan : Function.Surjective z) (hz : A₀.rel r z)
+    (hTemplateLinear : ALinear Small Template)
+    (hFirstParameter : ∀ e f : {s : Set X // s ∈ supportCopies Small Template},
+      e ≠ f → e.1 ∩ f.1 ⊆ R.part ⁻¹' allowedFine (0 : Fin (tail.length + 1)).succ)
+    (hLocalArrow : ∀ word : {s : Set X // s ∈ supportCopies Small Template} → κ,
+      ∃ (c : C) (colour : κ), ∀ p : original.FirstWagon, ∀ e : {s : Set X // s ∈ supportCopies Small Template},
+        e ∈ selectedCommonEdges W (supportCopies Small Template) (fun _ => rfl) c p →
+          word e = colour) :
+    Nonempty (CutoffTwoRawLocalData (Y := lower.Vertex) (I := Index)
+      Small Target tail original allowedFine κ) :=
+  cutoffTwoRawData_of_filledCore ht A₀ Target R enumerate original prep D family allowedFine lower
+    (exists_fineCutoffTwoCore_of_unrestrictedOrder ht A₀ Target R enumerate original prep D family _
+      lower hForward hPositive hSourceFine hSupported hTemplateFine hLocalPart hCutoff r z hSpan hz)
+    hTemplateLinear hFirstParameter hLocalArrow
 
 end StructuralRamsey.Girth.TrainRecursiveWitness

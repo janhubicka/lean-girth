@@ -140,29 +140,24 @@ local notation "Filling" => UniformFillingData.ofOrderedSupportCopies Small Temp
   (oldACarrier_edges_inter_subsingleton_of_aLinear (RelStructure.ordered ShortSource)
     (System.toRelStructure N) lower.aLinear) hTemplateCover
 
+local notation "FinePart" => orderedFillingPart (System.toRelStructure N) enumerate R.part lower.supportCovers
+
 include ht in
-/-- The conditional cutoff-two core comes from the actual shorter order
-witness. Its fine parts, complete physical support and original target
-embeddings are derived from the same canonical filling. -/
-theorem exists_fineCutoffTwoCore_of_unrestrictedOrder
-    (hForward : PartiteOrderCompatible Target)
-    (hPositive : ∀ r : K.Symbol, 0 < K.arity r)
-    (hSourceFine : ∀ a : Embedding Small B, ∀ u, Target.part (a u) = u)
-    (hSupported : ∀ (r : K.Symbol) (z : Fin (K.arity r) → V), Target.rel (.inl r) z →
-      ∃ a : Embedding Small B, ∀ j, z j ∈ copyCarrier a)
+/-- The canonical physical filling has the exact selected target vertex
+maps, the exact fine parts on every edge, and two-point strongness. -/
+theorem exists_cutoffTwoFillingGeometry
     (hTemplateFine : ∀ (a : Embedding Small Template) x, R.part (a x) = x)
     (hLocalPart : ∀ (c : C) (p : original.FirstWagon) (x : {v : V // v ∈ Carrier p}),
-      R.part (localCopy c p x) = Target.part x.1)
-    (hCutoff : ∀ j : Fin tail.length, 2 ≤ tail.get j)
-    (r : K.Symbol) (z : Fin (K.arity r) → A) (hSpan : Function.Surjective z) (hz : A₀.rel r z) :
-    ∃ (E : System K.withOrder A lower.Vertex)
-      (f : Index → StructuralRamsey.Partite.Embedding Target E),
-      supportCopies Small E.toRelStructure = (Filling).generatedEdges ∧
-      E.part = orderedFillingPart (N).toRelStructure enumerate R.part lower.supportCovers ∧
-      (∀ (i : Index) (x : V), f i x = i.1.1.embedding (tagVertex W i.2 (Sum.inl x))) ∧
-      (∀ (a : Embedding Small E.toRelStructure) x, E.part (a x) = x) ∧
-      E.toRelStructure.IsHomomorphism Small E.part ∧
-      FiniteMixedForestThrough (RelationalMixedSupportTest Small (fun (i : Index) => (f i).toEmbedding)) 1 := by
+      R.part (localCopy c p x) = Target.part x.1) :
+    ∃ (lift : Index → V ↪ lower.Vertex),
+      (∀ (i : Index) (x : V), lift i x = i.1.1.embedding (tagVertex W i.2 (Sum.inl x))) ∧
+      (∀ (i : Index) (x : V), FinePart (lift i x) = Target.part x) ∧
+      (∀ (i : Index) (a : Embedding Small B), lift i '' copyCarrier a ∈ (Filling).generatedEdges) ∧
+      (∀ (i : Index) (e : Set lower.Vertex), e ∈ (Filling).generatedEdges →
+        ∀ x y : V, x ≠ y → lift i x ∈ e → lift i y ∈ e →
+          ∃ a : Embedding Small B, e = lift i '' copyCarrier a) ∧
+      (∀ (e : Set lower.Vertex), e ∈ (Filling).generatedEdges →
+        Set.InjOn FinePart e ∧ ∀ a : A, ∃ y ∈ e, FinePart y = a) := by
   classical
   let hOldLinear : ∀ e f : {s : Set lower.Vertex // s ∈
       supportCopies (ShortSource).ordered (N).toRelStructure}, e ≠ f → (e.1 ∩ f.1).Subsingleton :=
@@ -189,15 +184,6 @@ theorem exists_fineCutoffTwoCore_of_unrestrictedOrder
     selectedOrdered_originalVertex_part W Small Template enumerate hOldLinear hTemplateCover
       FirstLinear M source hSource Target.part R.part partY hPlace hLocalPart hOldCover
       i.1.1.embedding i.2 x
-  have hFullZero : (selectedPictureOrderOneData
-      (ShortSource).ordered M D N family lower.selected lower.train 0).FullSystemGirthGT
-      (tail.get j₀) := lower.allCutGirth j₀
-  have hAgree (i j : Index) (v w : Fin 2 → V) (hEq : lift i ∘ v = lift j ∘ w)
-      (hw : Target.rel (.inr ()) w) : Target.rel (.inr ()) v :=
-    selectedOrdered_agree_targetOrder W Small Template Target hForward enumerate D N M family
-      lower.selected hOldLinear hTemplateCover FirstLinear source hSource hSupport
-      localCopy (fun _ _ _ => rfl) lower.train (hCutoff j₀) hFullZero
-      i.1 j.1 i.2 j.2 v w (congrFun hEq) hw
   have hImages (i : Index) (a : Embedding Small B) : lift i '' copyCarrier a ∈ H.generatedEdges := by
     obtain ⟨s, _, _, hs⟩ := parentwise_originalEdge_target Small B Template Carrier localCopy
       hLocalStrong hLocalCover F original.firstWagon hOwnerCarrier hFirstLinear i a
@@ -222,12 +208,68 @@ theorem exists_fineCutoffTwoCore_of_unrestrictedOrder
   have hPartOnEdge (e : Set lower.Vertex) (he : e ∈ H.generatedEdges) :=
     UniformFillingData.generatedEdge_fineParts Small Template H R.part partY
       rfl hTemplateFine hPlace e he
+  exact ⟨lift, fun _ _ => rfl, hPart, hImages, hStrong, hPartOnEdge⟩
+
+/-- What the physical tail packaging needs from relational realization.
+The incidence and train data are reconstructed from the same filling. -/
+abbrev CutoffTwoFilledCore : Prop :=
+    ∃ (E : System K.withOrder A lower.Vertex)
+      (f : Index → StructuralRamsey.Partite.Embedding Target E),
+      supportCopies Small E.toRelStructure = (Filling).generatedEdges ∧
+      E.part = orderedFillingPart (N).toRelStructure enumerate R.part lower.supportCovers ∧
+      (∀ (i : Index) (x : V), f i x = i.1.1.embedding (tagVertex W i.2 (Sum.inl x))) ∧
+      (∀ (a : Embedding Small E.toRelStructure) x, E.part (a x) = x) ∧
+      E.toRelStructure.IsHomomorphism Small E.part ∧
+      FiniteMixedForestThrough (RelationalMixedSupportTest Small (fun (i : Index) => (f i).toEmbedding)) 1
+
+include ht in
+/-- The conditional cutoff-two core comes from the actual shorter order
+witness. Its fine parts, complete physical support and original target
+embeddings are derived from the same canonical filling. -/
+theorem exists_fineCutoffTwoCore_of_unrestrictedOrder
+    (hForward : PartiteOrderCompatible Target)
+    (hPositive : ∀ r : K.Symbol, 0 < K.arity r)
+    (hSourceFine : ∀ a : Embedding Small B, ∀ u, Target.part (a u) = u)
+    (hSupported : ∀ (r : K.Symbol) (z : Fin (K.arity r) → V), Target.rel (.inl r) z →
+      ∃ a : Embedding Small B, ∀ j, z j ∈ copyCarrier a)
+    (hTemplateFine : ∀ (a : Embedding Small Template) x, R.part (a x) = x)
+    (hLocalPart : ∀ (c : C) (p : original.FirstWagon) (x : {v : V // v ∈ Carrier p}),
+      R.part (localCopy c p x) = Target.part x.1)
+    (hCutoff : ∀ j : Fin tail.length, 2 ≤ tail.get j)
+    (r : K.Symbol) (z : Fin (K.arity r) → A) (hSpan : Function.Surjective z) (hz : A₀.rel r z) :
+    ∃ (E : System K.withOrder A lower.Vertex)
+      (f : Index → StructuralRamsey.Partite.Embedding Target E),
+      supportCopies Small E.toRelStructure = (Filling).generatedEdges ∧
+      E.part = orderedFillingPart (N).toRelStructure enumerate R.part lower.supportCovers ∧
+      (∀ (i : Index) (x : V), f i x = i.1.1.embedding (tagVertex W i.2 (Sum.inl x))) ∧
+      (∀ (a : Embedding Small E.toRelStructure) x, E.part (a x) = x) ∧
+      E.toRelStructure.IsHomomorphism Small E.part ∧
+      FiniteMixedForestThrough (RelationalMixedSupportTest Small (fun (i : Index) => (f i).toEmbedding)) 1 := by
+  classical
+  let H := Filling
+  let partY := FinePart
+  let j₀ : Fin tail.length := ⟨0, ht⟩
+  let hOldLinear := oldACarrier_edges_inter_subsingleton_of_aLinear
+    (ShortSource).ordered (N).toRelStructure lower.aLinear
+  obtain ⟨lift, hLift, hPart, hImages, hStrong, hPartOnEdge⟩ :=
+    exists_cutoffTwoFillingGeometry ht A₀ Target R enumerate original prep D family allowed lower
+      hTemplateFine hLocalPart
+  have hFullZero : (selectedPictureOrderOneData
+      (ShortSource).ordered M D N family lower.selected lower.train 0).FullSystemGirthGT
+      (tail.get j₀) := lower.allCutGirth j₀
+  have hAgree (i j : Index) (v w : Fin 2 → V) (hEq : lift i ∘ v = lift j ∘ w)
+      (hw : Target.rel (.inr ()) w) : Target.rel (.inr ()) v :=
+    selectedOrdered_agree_targetOrder W Small Template Target hForward enumerate D N M family
+      lower.selected hOldLinear hTemplateCover FirstLinear source hSource hSupport
+      localCopy (fun _ _ _ => rfl) lower.train (hCutoff j₀) hFullZero
+      i.1 j.1 i.2 j.2 v w (fun idx =>
+        (hLift i (v idx)).symm.trans ((congrFun hEq idx).trans (hLift j (w idx)))) hw
   let hInj := fun e he => (hPartOnEdge e he).1
   let E := fineFillingCore A₀ Target H.generatedEdges partY lift hInj
   let f := fineFillingCore_lift A₀ Target H.generatedEdges partY lift hInj hPart hForward
     (finePartite_supportedRelations A₀ Target hSourceFine hSupported)
     hPositive prep.targetCover hSourceFine hImages hStrong hAgree
-  refine ⟨E, f, ?_, rfl, fun _ _ => rfl, ?_, ?_, finiteMixedForestThrough_one _⟩
+  refine ⟨E, f, ?_, rfl, hLift, ?_, ?_, finiteMixedForestThrough_one _⟩
   · exact supportCopies_fineFillingCore A₀ Target H.generatedEdges partY lift hInj
       (fun e he => (hPartOnEdge e he).2) r z hSpan hz
   · exact fineFillingCore_fine A₀ Target H.generatedEdges partY lift hInj
