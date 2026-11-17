@@ -37,3 +37,46 @@ The issue is a *representation mismatch*: the current raw witness module \`Train
 - No manuscript validation mark is promoted and no Lean kernel correctness claim is made.
 
 **Next mathematical verification:** explicitly check whether the original paper proof of the direct local F_t attachment uses only the unordered partite projection. If so, state the unordered projection observation in the preparation section; then formalize the order-forgetful attachment interface. This is the decisive q=2 gap, not a desire for stronger forest coverage.
+
+
+## 17 November adversarial strengthening: the issue affects stage partiteness too
+
+The failure is potentially more basic than the six-vertex q=2 example. The
+existing `TrainCoverageFreeForestStage.lean` defines
+`ForestStage.system : Partite.System L P Vertex` together with
+`isPartite : system.IsPartiteOver D`; in the conversion this is instantiated
+with `L.withOrder` and `D : RelStructure L.withOrder P`. The local
+`RawPartiteFtWitness` similarly requires `core.IsPartiteOver A₀.ordered`.
+
+**Conditional elementary obstruction (check the precise library semantics).**
+If `L.withOrder` includes the full strict total order on *all* vertices, and
+`IsPartiteOver` requires the part map to preserve that relation, then
+the part map must be injective: for two distinct vertices `x,y` in the
+same part, exactly one of `x<y` or `y<x` holds in the core, while their
+images coincide, contradicting irreflexivity of the target order. Thus a
+nontrivial blow-up with multiple vertices in any part cannot satisfy the
+ordered `IsPartiteOver` predicate at all. The library theorem
+`ordered_hereditarilyIrreducible` is consistent with this concern. This
+argument is independent of q and does not require the 3-edge example.
+It extends the audit target to the **old coverage-free stage**, its initial
+construction and any generic ordered `Partite.System`, not only raw F_t.
+
+Before replacing any theorem, inspect the actual definition of
+`RelStructure.ordered`, the `L.withOrder` relation and
+`IsHomomorphismEmbedding`: if the order is instead represented only as
+fibrewise auxiliary data, the preceding injectivity argument does not
+apply. No kernel evidence has yet settled this implementation question.
+
+**Minimal representation repair if the order is indeed global:** keep the
+partite projection and EHN geometry on the unordered physical language
+`L` (with vertex-part colours), and put compatible order data on
+the separately chosen vertices in each fine part. Preserve those orders
+along picture embeddings and form the coarse order only at the end.
+Do not silently drop global order on existing copies or assert that an
+arbitrary order-expanded relational embedding is partite. The local
+`F_t` data and the selected physical edge arrow must be transported
+across this representation boundary.
+
+Status: mathematical conditional no-go and source-level audit only.
+It has not been compiled or promoted to a theorem. Existing manuscript
+validation marks remain OPEN.
