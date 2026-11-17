@@ -60,12 +60,15 @@ theorem ncard_internal_edges_eq_induced
         Set.fintypeCard_eq_ncard _
   calc
     (G.edgeSet ∩ S.sym2).ncard
-      = (G.edgeSet ∩ S.sym2).toFinset.card := by
-          rw [Set.ncard_eq_toFinset_card]
-    _ = (G.edgeFinset ∩ S.toFinset.sym2).card := by rw [hFinset]
+      = (G.edgeSet ∩ S.sym2).toFinset.card :=
+          Set.ncard_eq_toFinset_card _
+    _ = (G.edgeFinset ∩ S.toFinset.sym2).card :=
+          congrArg Finset.card hFinset
     _ = ((G.induce S).edgeFinset.map
-          (Embedding.subtype (· ∈ S)).sym2Map).card := by rw [hMap]
-    _ = (G.induce S).edgeFinset.card := by rw [Finset.card_map]
+          (Function.Embedding.subtype (· ∈ S)).sym2Map).card := by
+            rw [hMap]
+    _ = (G.induce S).edgeFinset.card := by
+          simp only [Finset.card_map]
     _ = (G.induce S).edgeSet.ncard := hSourceCard
 
 /-- If every ambient edge lies wholly inside at least one side,
@@ -82,26 +85,30 @@ theorem edgeSet_internal_union_of_free_cover
   rename_i x y
   simp only [Set.mem_union, Set.mem_inter_iff, Set.mk_mem_sym2_iff]
   constructor
-    · rintro (⟨hG, _⟩ | ⟨hG, _⟩) <;> exact hG
-    · intro hG
-      have hx : x ∈ L ∨ x ∈ R := by
-        have h : x ∈ L ∪ R := by rw [hCover]; exact Set.mem_univ _
-        exact h
-      have hy : y ∈ L ∨ y ∈ R := by
-        have h : y ∈ L ∪ R := by rw [hCover]; exact Set.mem_univ _
-        exact h
-      by_cases hLL : x ∈ L ∧ y ∈ L
-      · exact Or.inl ⟨hG, hLL⟩
-      by_cases hRR : x ∈ R ∧ y ∈ R
-      · exact Or.inr ⟨hG, hRR⟩
-      have hBad :
-          (x ∈ L \ R ∧ y ∈ R \ L) ∨
-          (y ∈ L \ R ∧ x ∈ R \ L) := by
-        simp only [Set.mem_diff]
-        tauto
-      rcases hBad with ⟨hxL, hyR⟩ | ⟨hyL, hxR⟩
-      · exact (hNoCross hxL hyR hG).elim
-      · exact (hNoCross hyL hxR (G.symm hG)).elim
+  · rintro (⟨hG, _⟩ | ⟨hG, _⟩) <;> exact hG
+  · intro hG
+    have hx : x ∈ L ∨ x ∈ R := by
+      have h : x ∈ L ∪ R := by
+        rw [hCover]
+        exact Set.mem_univ _
+      exact h
+    have hy : y ∈ L ∨ y ∈ R := by
+      have h : y ∈ L ∪ R := by
+        rw [hCover]
+        exact Set.mem_univ _
+      exact h
+    by_cases hLL : x ∈ L ∧ y ∈ L
+    · exact Or.inl ⟨hG, hLL⟩
+    by_cases hRR : x ∈ R ∧ y ∈ R
+    · exact Or.inr ⟨hG, hRR⟩
+    have hBad :
+        (x ∈ L \ R ∧ y ∈ R \ L) ∨
+        (y ∈ L \ R ∧ x ∈ R \ L) := by
+      simp only [Set.mem_diff]
+      tauto
+    rcases hBad with ⟨hxL, hyR⟩ | ⟨hyL, hxR⟩
+    · exact (hNoCross hxL hyR hG).elim
+    · exact (hNoCross hyL hxR (G.symm hG)).elim
 
 /-- Edge inclusion–exclusion for an actual free union. Exact shared
 indexing is essential: the intersection of internal edge sets is
@@ -121,8 +128,11 @@ theorem edgeSet_induced_inclusion_exclusion
   have hInter :
       EL ∩ ER = G.edgeSet ∩ (L ∩ R).sym2 := by
     ext e
-    simp only [EL, ER, Set.mem_inter_iff,
-      Set.sym2_inter, and_left_comm, and_assoc, and_comm]
+    change (e ∈ G.edgeSet ∩ L.sym2 ∧ e ∈ G.edgeSet ∩ R.sym2) ↔
+      e ∈ G.edgeSet ∩ (L ∩ R).sym2
+    rw [Set.sym2_inter]
+    simp only [Set.mem_inter_iff]
+    tauto
   have hIE := Set.ncard_union_add_ncard_inter EL ER
   rw [hUnion, hInter] at hIE
   have hEL : EL.ncard = (G.induce L).edgeSet.ncard :=
