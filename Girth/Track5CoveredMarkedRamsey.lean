@@ -11,25 +11,11 @@ open StructuralRamsey.RelStructure
 
 universe v w
 
-/-- A linear, covered ordered coloured target with the given marked
-edge intersections has an actual selected EHN Ramsey witness. Its used
-vertex carrier is covered and distinct output edges meet only in the
-allowed predicates. -/
-theorem track5_exists_selectedColouredWitness_marked_covered
-    {I VB : Type v} [LinearOrder I] [LinearOrder VB] [Finite VB]
-    (k : ℕ) (hk : 2 ≤ k)
-    (edgeColour : Fin k → I) (targetColour : VB → I)
-    (E : Set (Set VB)) (allowed : Set I)
-    (hSupport : supportCopies (colouredOrderedEdgeSource.{v, v} k edgeColour)
-      (colouredOrderedEdgeTarget k E targetColour) = E)
-    (hSourceCovered : ∀ x : VB, ∃ e ∈ E, x ∈ e)
-    (hEdgeBlocks : ∀ x y, edgeColour x ≠ edgeColour y → x < y →
-      edgeColour x < edgeColour y)
-    (hTargetBlocks : ∀ x y, targetColour x < targetColour y → x < y)
-    (hGirth : GirthGT E 2)
-    (hRestricted : ∀ e f : Set VB, e ∈ E → f ∈ E → e ≠ f →
-      ∀ x : VB, x ∈ e → x ∈ f → targetColour x ∈ allowed)
-    (κ : Type w) [Fintype κ] [Nonempty κ] :
+/-- The actual finite selected witness on the used split carrier. -/
+abbrev CoveredMarkedColouredWitness
+    {I VB : Type v} [LinearOrder VB]
+    (k : ℕ) (E : Set (Set VB)) (targetColour : VB → I)
+    (allowed : Set I) (κ : Type w) : Prop :=
     ∃ (W J : Type v) (H : ColouredEdgeOwnerSplit W I)
       (selected : J → ColouredOwnerSelectedCopy (W := VB) H)
       (order : LinearOrder H.Vertex),
@@ -61,7 +47,28 @@ theorem track5_exists_selectedColouredWitness_marked_covered
       (∀ χ : H.SplitPhysicalEdge → κ, ∃ j,
         ∀ a b : (selected j).SourceEdge,
           χ (H.physicalSplitEdge ((selected j).physicalEdge a)) =
-          χ (H.physicalSplitEdge ((selected j).physicalEdge b))) := by
+          χ (H.physicalSplitEdge ((selected j).physicalEdge b)))
+
+/-- A linear, covered ordered coloured target with the given marked
+edge intersections has an actual selected EHN Ramsey witness. Its used
+vertex carrier is covered and distinct output edges meet only in the
+allowed predicates. -/
+theorem track5_exists_selectedColouredWitness_marked_covered
+    {I VB : Type v} [LinearOrder I] [LinearOrder VB] [Finite VB]
+    (k : ℕ) (hk : 2 ≤ k)
+    (edgeColour : Fin k → I) (targetColour : VB → I)
+    (E : Set (Set VB)) (allowed : Set I)
+    (hSupport : supportCopies (colouredOrderedEdgeSource.{v, v} k edgeColour)
+      (colouredOrderedEdgeTarget k E targetColour) = E)
+    (hSourceCovered : ∀ x : VB, ∃ e ∈ E, x ∈ e)
+    (hEdgeBlocks : ∀ x y, edgeColour x ≠ edgeColour y → x < y →
+      edgeColour x < edgeColour y)
+    (hTargetBlocks : ∀ x y, targetColour x < targetColour y → x < y)
+    (hGirth : GirthGT E 2)
+    (hRestricted : ∀ e f : Set VB, e ∈ E → f ∈ E → e ≠ f →
+      ∀ x : VB, x ∈ e → x ∈ f → targetColour x ∈ allowed)
+    (κ : Type w) [Fintype κ] [Nonempty κ] :
+    CoveredMarkedColouredWitness k E targetColour allowed κ := by
   classical
   let A := colouredOrderedEdgeSource.{v, v} k edgeColour
   let B := colouredOrderedEdgeTarget k E targetColour
