@@ -51,9 +51,10 @@ abbrev refinedActiveAllowed
     e.toFunctionEmbedding allowed R.permitted
     (Fin.cast (by simp only [List.length_append, List.length_replicate, List.length_cons]; omega) ν)
 
-/-- The active refinement has the exact lower vector's labelled cut bounds
-and part parameters, so the lower forest assertion applies directly. -/
-theorem exists_refinedActiveWitness
+/-- The active refinement has the exact labelled cut bounds and part
+parameters of the smaller vector. All statements use the complete
+active A-support. -/
+theorem refinedActiveInput
     (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
     {B : RelStructure L.withOrder VB} {D : RelStructure L.withOrder P}
     {family : Set (Embedding B D)} {q : ℕ} {tail : List ℕ}
@@ -61,15 +62,18 @@ theorem exists_refinedActiveWitness
     {allowed : Fin ((q :: tail).length + 1) → Set P}
     (stage : PhysicalForestStage A₀.ordered B D family (q :: tail) targetTrain allowed)
     (e : Embedding A₀.ordered D) (R : firstRefinementAt stage e)
-    (ht : Admissible (q :: tail)) (hq : 2 < q) (κ : Type w)
+    (ht : Admissible (q :: tail)) (hq : 2 < q)
     (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding A₀.ordered stage.system
       e.toFunctionEmbedding, copyCarrier a.val ≠ copyCarrier b.val)
-    (hLower : FinePartiteForestAssertion A₀.ordered
-      (List.replicate (R.extraCuts + 1) (q - 1) ++ tail) κ) :
-    Nonempty (FinePartiteFtWitness A₀.ordered
-      (actualActiveSubsystemPartite A₀.ordered stage.system e.toFunctionEmbedding)
-      (List.replicate (R.extraCuts + 1) (q - 1) ++ tail)
-      (refinedActiveTrain stage e R) (refinedActiveAllowed stage e R) κ) := by
+    : let Target := actualActiveSubsystemPartite A₀.ordered stage.system e.toFunctionEmbedding
+      let lower := List.replicate (R.extraCuts + 1) (q - 1) ++ tail
+      let T := refinedActiveTrain stage e R
+      (∀ (a : Embedding A₀.ordered Target.toRelStructure) x, Target.part (a x) = x) ∧
+      (∀ x, ∃ a : Embedding A₀.ordered Target.toRelStructure, x ∈ copyCarrier a) ∧
+      (∃ a b : Embedding A₀.ordered Target.toRelStructure, ¬ SameCopy a b) ∧
+      T.AdjacentParameters (fun e => e.val) (fun ν => Target.part ⁻¹' refinedActiveAllowed stage e R ν) ∧
+      (∀ j : Fin lower.length,
+        LabelledGirthGT (T.wagonClassCarrier (fun edge => edge.val) j.castSucc) (lower.get j)) := by
   let A := A₀.ordered
   let S := activeCarrier A stage.system e.toFunctionEmbedding
   let Shared := sharedOldACarrierInclusion A stage.system.toRelStructure S
@@ -114,8 +118,7 @@ theorem exists_refinedActiveWitness
     (fun edge => edge.1) hLen.symm
     (fun ν => (Target).part ⁻¹' fineAllowedFromRefinement m R.extraCuts hm
       e.toFunctionEmbedding allowed R.permitted ν) hParameters
-  apply hLower Target (refinedActiveTrain stage e R)
-    (refinedActiveAllowed stage e R) hFine hSupport hTwo
+  refine ⟨hFine, hSupport, hTwo, ?_, ?_⟩
   · with_unfolding_all exact hCastParams
   · intro j
     let k := Fin.cast hLen j
@@ -128,5 +131,30 @@ theorem exists_refinedActiveWitness
       (fun edge => edge.1) hLen.symm j.castSucc ((lower).get j)
     rw [hShift]
     exact hFine
+
+/-- The active refinement has the exact lower vector's labelled cut bounds
+and part parameters, so the lower forest assertion applies directly. -/
+theorem exists_refinedActiveWitness
+    (A₀ : RelStructure L UA) [LinearOrder UA] [Finite UA]
+    {B : RelStructure L.withOrder VB} {D : RelStructure L.withOrder P}
+    {family : Set (Embedding B D)} {q : ℕ} {tail : List ℕ}
+    {targetTrain : EdgeTrainLevels (OldACarrierEdge A₀.ordered B) (q :: tail).length}
+    {allowed : Fin ((q :: tail).length + 1) → Set P}
+    (stage : PhysicalForestStage A₀.ordered B D family (q :: tail) targetTrain allowed)
+    (e : Embedding A₀.ordered D) (R : firstRefinementAt stage e)
+    (ht : Admissible (q :: tail)) (hq : 2 < q) (κ : Type w)
+    (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding A₀.ordered stage.system
+      e.toFunctionEmbedding, copyCarrier a.val ≠ copyCarrier b.val)
+    (hLower : FinePartiteForestAssertion A₀.ordered
+      (List.replicate (R.extraCuts + 1) (q - 1) ++ tail) κ) :
+    Nonempty (FinePartiteFtWitness A₀.ordered
+      (actualActiveSubsystemPartite A₀.ordered stage.system e.toFunctionEmbedding)
+      (List.replicate (R.extraCuts + 1) (q - 1) ++ tail)
+      (refinedActiveTrain stage e R) (refinedActiveAllowed stage e R) κ) := by
+  obtain ⟨hFine, hSupport, hTwo, hParams, hGirth⟩ :=
+    refinedActiveInput A₀ stage e R ht hq hPair
+  exact hLower (actualActiveSubsystemPartite A₀.ordered stage.system e.toFunctionEmbedding)
+    (refinedActiveTrain stage e R) (refinedActiveAllowed stage e R)
+    hFine hSupport hTwo hParams hGirth
 
 end StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical

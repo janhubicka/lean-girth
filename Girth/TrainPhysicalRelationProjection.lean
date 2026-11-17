@@ -70,6 +70,24 @@ open StructuralRamsey.RelStructure
 universe u v
 variable {L : RelLanguage.{u}} {U Y : Type v}
 
+/-- Restrict a picture projection to the true active support and read
+the coordinates in the processed copy of the edge type. -/
+theorem activeFine_isHomomorphism_of_partProjection
+    {P : Type v} (A : RelStructure L U) (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P Y) (e : RelStructure.Embedding A D)
+    (hProject : C.toRelStructure.IsHomomorphism D C.part) :
+    let H := actualActiveSubsystemPartite A C e.toFunctionEmbedding
+    H.toRelStructure.IsHomomorphism A H.part := by
+  let H := actualActiveSubsystemPartite A C e.toFunctionEmbedding
+  change H.toRelStructure.IsHomomorphism A H.part
+  intro r z hz
+  apply (e.map_rel_iff r (H.part ∘ z)).mp
+  have hParts : e ∘ (H.part ∘ z) = C.part ∘ (Subtype.val ∘ z) := by
+    funext j
+    exact activeSourcePart_spec A C e.toFunctionEmbedding (z j)
+  rw [hParts]
+  exact hProject r (Subtype.val ∘ z) hz
+
 /-- Combine the hypergraph relation projection with the independent
 forward comparison invariant on the fine parts. -/
 theorem partProjection_of_reduct_and_order
