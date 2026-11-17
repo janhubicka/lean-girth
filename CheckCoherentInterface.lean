@@ -1,5 +1,5 @@
 import Girth.CoherentSharedOccurrence
-import Girth.PortSideP4Geometry
+import Girth.CrossPortP4Endpoint
 import Girth.SupportedPartialClosureEquiv
 
 /-!
@@ -24,3 +24,5 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.crossing_path3_singleton_port_shape
 #print axioms StructuralRamsey.Girth.CoherentPort.only_three_cross_port_P4_types
 #print axioms StructuralRamsey.Girth.CoherentPort.crossing_P4_birth_shape_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint
+#print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint_reversed
