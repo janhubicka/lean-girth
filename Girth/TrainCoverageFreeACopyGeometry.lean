@@ -186,4 +186,42 @@ theorem projectsACopies_and_orderCompatible_freeAttachment
   · exact partiteOrderCompatible_attachment
       C S E f hOrderOld hOrderCore
 
+
+/-- The auxiliary forward-order invariant survives relabelling
+fine A-parts by an order-preserving processed base embedding.
+This does not use IsPartiteOver or any mixed coverage property. -/
+theorem partiteOrderCompatible_of_fineRelabelling
+    {L : RelLanguage.{u}} {UA P Y : Type v}
+    [LT UA] [LT P]
+    (H : StructuralRamsey.Partite.System L.withOrder UA Y)
+    (β : UA ↪ P)
+    (hβ : ∀ a b : UA, a < b → β a < β b)
+    (hFine : PartiteOrderCompatible H) :
+    PartiteOrderCompatible (H.relabel β) := by
+  intro z hz
+  change β (H.part (z 0)) < β (H.part (z 1))
+  exact hβ _ _ (hFine z hz)
+
+/-- Physical A-copy projection and the separately required
+auxiliary forward-order invariant survive the SAME fine relabelling.
+This is precisely the local geometric preparation needed to run
+a weak physical attachment while keeping orders auxiliary. -/
+theorem rawFineWitness_relabelling_geometry
+    {L : RelLanguage.{u}} {UA P Y : Type v}
+    [LT UA] [LT P]
+    (A : StructuralRamsey.RelStructure L.withOrder UA)
+    (D : StructuralRamsey.RelStructure L.withOrder P)
+    (H : StructuralRamsey.Partite.System L.withOrder UA Y)
+    (e : Embedding A D)
+    (hFineEdges : ∀ a : Embedding A H.toRelStructure,
+      ∀ x : UA, H.part (a x) = x)
+    (hOrder : PartiteOrderCompatible H)
+    (hMono : ∀ a b : UA, a < b →
+      e.toFunctionEmbedding a < e.toFunctionEmbedding b) :
+    ProjectsACopies A D (H.relabel e.toFunctionEmbedding) ∧
+      PartiteOrderCompatible (H.relabel e.toFunctionEmbedding) := by
+  exact ⟨projectsACopies_relabel_of_fineEdges A D H e hFineEdges,
+    partiteOrderCompatible_of_fineRelabelling
+      H e.toFunctionEmbedding hMono hOrder⟩
+
 end StructuralRamsey.Girth
