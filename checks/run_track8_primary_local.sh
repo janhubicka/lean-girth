@@ -22,7 +22,7 @@ LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake build \
   Girth.FiniteTraceChordalEndpoint \
   Girth.FiniteTraceSimplicialCriterion \
   Girth.FiniteTracePEORank \
-  Girth.FiniteTraceRelationalExtraction \
+  Girth.FiniteTracePictureExtraction \
   2>&1 | tee "$log_dir/build.log"
 
 echo "Running focused #check / #print axioms gate"
@@ -33,6 +33,11 @@ echo "Running exhaustive dependency #print axioms gate"
 LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake env lean \
   CheckTrack8AllDependencies.lean 2>&1 | tee "$log_dir/all-dependencies.log"
 
+echo "Running actual picture extraction #print axioms gate"
+LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake env lean \
+  CheckTrack8PictureExtraction.lean 2>&1 | tee "$log_dir/picture-extraction.log"
+
 python3 scripts/check_axioms.py "$log_dir/primary.log" CheckTrack8Primary.lean
 python3 scripts/check_axioms.py "$log_dir/all-dependencies.log" CheckTrack8AllDependencies.lean
+python3 scripts/check_axioms.py "$log_dir/picture-extraction.log" CheckTrack8PictureExtraction.lean
 echo "Track 8 local build/check completed. Logs: $log_dir"

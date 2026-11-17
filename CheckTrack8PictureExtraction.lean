@@ -1,0 +1,9 @@
+import Girth.FiniteTracePictureExtraction
+
+#print axioms StructuralRamsey.Girth.ForestOfCopies.distinctSupportImage
+#print axioms StructuralRamsey.Girth.ForestCompletionProperty.toPhysicalCopySet
+#print axioms StructuralRamsey.Girth.PhysicalCopySetForestExtension.of_boundedMixedForests
+#print axioms StructuralRamsey.Girth.finiteForestCompletion_of_physicalKeys
+#print axioms StructuralRamsey.Girth.smallInducedStructure_embeds_supportedTree_of_picture
+#print axioms StructuralRamsey.Girth.smallInducedStructure_embeds_supportedTree_of_assembledPicture
+#print axioms StructuralRamsey.Girth.smallInducedStructure_embeds_supportedTree_in_target
