@@ -1,4 +1,4 @@
-import Girth.FiniteTraceDiracSeparatorStep
+import Girth.FiniteTraceRelationalExtraction
 import Girth.FiniteTraceChordalEndpoint
 import Girth.FiniteTracePEOCount
 import Girth.FiniteTraceSuccessorCycle
@@ -14,9 +14,8 @@ The small-trace proof NO LONGER requires constructing a clique tree,
 parent forest, or deleting contained bags.  This gate imports only the
 direct trace-count route and the cyclic-pair obstruction.
 
-Exact remaining mathematical input: a finite chordal trace pair
-graph admits a perfect elimination order.  In particular, no lemma
-below claims this unformalized graph theorem.
+This gate includes the finite chordal-to-elimination-order theorem and
+induced extraction from a supplied internal forest-completion property.
 
 Run with the repository-pinned Lean/Mathlib toolchain. Do not promote
 manuscript validation markers without actual compilation AND executed
@@ -132,3 +131,14 @@ manuscript validation markers without actual compilation AND executed
 
 #check StructuralRamsey.Girth.strongDirac_step_of_clique_separator
 #print axioms StructuralRamsey.Girth.strongDirac_step_of_clique_separator
+
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_simplicial_subsets
+#print axioms StructuralRamsey.Girth.strongDirac_of_inducedCliqueSeparations
+#print axioms StructuralRamsey.Girth.exists_minimal_separatorIn
+#print axioms StructuralRamsey.Girth.MinimalFor.neighbour_in_separator_component
+#print axioms StructuralRamsey.Girth.exists_inducedPathThrough_componentIn
+#print axioms StructuralRamsey.Girth.minimal_separator_isClique_of_noLongInducedCycles
+#print axioms StructuralRamsey.Girth.exists_perfectEliminationOrder_of_noLongInducedCycles
+#print axioms StructuralRamsey.Girth.smallTrace_selection_of_local_completions
+#print axioms StructuralRamsey.Girth.inducedToMixedFamilyUnion
+#print axioms StructuralRamsey.Girth.smallInducedStructure_embeds_supportedTree_of_forestCompletion

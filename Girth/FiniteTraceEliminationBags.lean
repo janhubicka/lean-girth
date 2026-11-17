@@ -1,3 +1,4 @@
+import Girth.FiniteTraceSimplicialCriterion
 import Girth.FiniteTracePairGraph
 import Mathlib.Data.Finset.Max
 
@@ -26,13 +27,6 @@ namespace StructuralRamsey.Girth
 
 universe v
 variable {V : Type v}
-
-/-- A total ordering of vertices is a perfect elimination order
-when the later neighbours of every vertex form a clique. -/
-def IsPerfectEliminationOrder
-    [LinearOrder V] (G : SimpleGraph V) : Prop :=
-  ∀ (v x y : V), v < x → v < y → x ≠ y →
-    G.Adj v x → G.Adj v y → G.Adj x y
 
 /-- The elimination bag of v: v itself and its later neighbours. -/
 def laterNeighborBag

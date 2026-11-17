@@ -1,3 +1,4 @@
+import Girth.FiniteTraceChordality
 import Girth.FiniteTraceFinRotateCycle
 import Girth.FiniteTraceTriangleCycle
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
@@ -26,17 +27,6 @@ namespace StructuralRamsey.Girth
 
 universe v
 variable {W ι : Type v}
-
-/-- An INDUCED cycle witness, unlike a bare graph embedding
-of cycleGraph k.  The adjacency equivalence explicitly reflects
-nonedges, ruling out false witnesses such as a 4-cycle in K4. -/
-def IsInducedFinCycle
-    {U : Type v} (G : SimpleGraph U) (k : ℕ)
-    (v : Fin k → U) : Prop :=
-  Function.Injective v ∧
-    ∀ i j : Fin k,
-      G.Adj (v i) (v j) ↔
-        (SimpleGraph.cycleGraph k).Adj i j
 
 /-- An induced-cycle witness has the exact two-sided adjacency
 reflection required to transport the cycle graph's absence of

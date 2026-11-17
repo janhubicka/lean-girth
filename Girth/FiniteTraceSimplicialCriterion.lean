@@ -1,27 +1,26 @@
-import Girth.FiniteTraceEliminationBags
+import Mathlib.Combinatorics.SimpleGraph.Clique
+import Mathlib.Data.Fintype.Basic
 
 /-!
 # Simplicial vertices and perfect elimination orders
-
-Definitions and elementary consequences used to isolate the standard
-Dirac theorem still missing from the primary small-trace validation.
-No chordal -> PEO theorem is claimed here.
 
 A vertex is simplicial within an induced vertex set if all its
 neighbours in that set form a clique. A perfect elimination order
 is precisely an order in which every vertex is simplicial among
 the vertices not earlier than it.
-
-The hard missing step is proving that every nonempty induced
-subgraph of a finite chordal graph has a simplicial vertex
-(Dirac's theorem). That step must be proved separately, not
-added as an axiom.
 -/
 
 namespace StructuralRamsey.Girth
 
 universe v
 variable {V : Type v}
+
+/-- A total ordering of vertices is a perfect elimination order
+when the later neighbours of every vertex form a clique. -/
+def IsPerfectEliminationOrder
+    [LinearOrder V] (G : SimpleGraph V) : Prop :=
+  ∀ (v x y : V), v < x → v < y → x ≠ y →
+    G.Adj v x → G.Adj v y → G.Adj x y
 
 /-- The neighbours of v lying in S form a clique. -/
 def IsSimplicialWithin
@@ -50,7 +49,7 @@ theorem isSimplicialWithin_iff_clique
   · intro h x hx y hy hxy
     exact h x hx.1 y hy.1 hxy hx.2 hy.2
   · intro h x hx y hy hxy hvx hvy
-    exact h x ⟨hx, hvx⟩ y ⟨hy, hvy⟩ hxy
+    exact h ⟨hx, hvx⟩ ⟨hy, hvy⟩ hxy
 
 /-- The PEO condition is just simpliciality of each vertex
 within its own suffix. -/
@@ -79,7 +78,7 @@ theorem isSimplicialWithin_of_clique
     (hClique : G.IsClique S) :
     IsSimplicialWithin G S v := by
   intro x hx y hy hxy _ _
-  exact hClique x hx y hy hxy
+  exact hClique hx hy hxy
 
 /-- If S is a clique and T strictly contains S, then either
 T itself is a clique, or two nonadjacent simplicial vertices
@@ -107,7 +106,7 @@ theorem exists_simplicialOutside_clique
     by_cases huS : u ∈ S
     · have hvNotS : v ∉ S := by
         intro hvS
-        exact hNotAdj (hSClique u huS v hvS huv)
+        exact hNotAdj (hSClique huS hvS huv)
       exact ⟨v, ⟨hv, hvNotS⟩, hvSimp⟩
     · exact ⟨u, ⟨hu, huS⟩, huSimp⟩
 

@@ -22,6 +22,7 @@ LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake build \
   Girth.FiniteTraceChordalEndpoint \
   Girth.FiniteTraceSimplicialCriterion \
   Girth.FiniteTracePEORank \
+  Girth.FiniteTraceRelationalExtraction \
   2>&1 | tee "$log_dir/build.log"
 
 echo "Running focused #check / #print axioms gate"
@@ -32,11 +33,6 @@ echo "Running exhaustive dependency #print axioms gate"
 LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake env lean \
   CheckTrack8AllDependencies.lean 2>&1 | tee "$log_dir/all-dependencies.log"
 
-if grep -E -q 'sorryAx|Lean\.sorry|admit' \
-    "$log_dir/primary.log" "$log_dir/all-dependencies.log"; then
-  echo "ERROR: unexpected proof-hole axiom in Track 8 checks" >&2
-  exit 1
-fi
-
-echo "WARNING: inspect every printed transitive axiom, not only the hole grep."
+python3 scripts/check_axioms.py "$log_dir/primary.log" CheckTrack8Primary.lean
+python3 scripts/check_axioms.py "$log_dir/all-dependencies.log" CheckTrack8AllDependencies.lean
 echo "Track 8 local build/check completed. Logs: $log_dir"
