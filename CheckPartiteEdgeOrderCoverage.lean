@@ -1,0 +1,10 @@
+import Girth.PartiteEdgeOrderCoverage
+
+#print axioms StructuralRamsey.Partite.irreducible_of_pairCovered_orderedCopies
+#print axioms StructuralRamsey.Partite.System.edgeOrderCopy
+#print axioms StructuralRamsey.Partite.System.edgeOrder_support_eq
+#print axioms StructuralRamsey.Partite.System.edgeOrder_relationsCoveredBy
+#print axioms StructuralRamsey.Partite.System.edgeOrder_irreducible_iff_pairCovered
+#print axioms StructuralRamsey.Partite.System.edgeOrder_coverage_iff
+#print axioms StructuralRamsey.Partite.System.edgeOrder_isPartiteOver
+#print axioms StructuralRamsey.Partite.System.edgeOrder_isPartiteOver_of_girthGT_three
