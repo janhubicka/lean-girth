@@ -108,5 +108,78 @@ theorem six_cycle_location_pattern_allowed :
     NoHiddenPrivateMidpoint .shared .left .left := by
   decide
 
+/-- Geometric impossibility of a triangle meeting both private sides.
+Distinctness is stated at the two-step distances, as needed by the
+midpoint-closed interface hypothesis. -/
+theorem no_mixed_triangle_of_closed_port
+    {W : Type v} {adj : W → W → Prop} {L R : Set W}
+    (hCover : L ∪ R = Set.univ)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
+    (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
+    {a b c : W} (hac : a ≠ c) (hba : b ≠ a) (hcb : c ≠ b)
+    (hab : adj a b) (hbc : adj b c) (hca : adj c a)
+    (hCross : PrivateBoth3 (sideLocation L R a)
+      (sideLocation L R b) (sideLocation L R c)) : False := by
+  exact no_cross_private_cycle_three _ _ _ hCross
+    ⟨sideLocation_step_of_free_adj hCover hNoCross hSymm hab,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hbc,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hca⟩
+    ⟨sideLocation_no_hidden_midpoint hSymm hPortClosed hac hab hbc,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hba hbc hca,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hcb hca hab⟩
+
+/-- No simple four-cycle can meet both private sides of a free gluing
+over a midpoint-closed interface. -/
+theorem no_mixed_square_of_closed_port
+    {W : Type v} {adj : W → W → Prop} {L R : Set W}
+    (hCover : L ∪ R = Set.univ)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
+    (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
+    {a b c d : W} (hac : a ≠ c) (hbd : b ≠ d)
+    (hab : adj a b) (hbc : adj b c)
+    (hcd : adj c d) (hda : adj d a)
+    (hCross : PrivateBoth4 (sideLocation L R a)
+      (sideLocation L R b) (sideLocation L R c)
+      (sideLocation L R d)) : False := by
+  exact no_cross_private_cycle_four _ _ _ _ hCross
+    ⟨sideLocation_step_of_free_adj hCover hNoCross hSymm hab,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hbc,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hcd,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hda⟩
+    ⟨sideLocation_no_hidden_midpoint hSymm hPortClosed hac hab hbc,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hbd hbc hcd,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hac.symm hcd hda,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hbd.symm hda hab⟩
+
+/-- No simple five-cycle can meet both private sides of a free gluing
+over a midpoint-closed interface. -/
+theorem no_mixed_pentagon_of_closed_port
+    {W : Type v} {adj : W → W → Prop} {L R : Set W}
+    (hCover : L ∪ R = Set.univ)
+    (hNoCross : ∀ ⦃a b⦄, a ∈ L \\ R → b ∈ R \\ L → ¬ adj a b)
+    (hSymm : ∀ ⦃a b⦄, adj a b → adj b a)
+    (hPortClosed : MidpointClosed (adj := adj) (L ∩ R))
+    {a b c d e : W}
+    (hac : a ≠ c) (hbd : b ≠ d) (hce : c ≠ e)
+    (hda : d ≠ a) (heb : e ≠ b)
+    (hab : adj a b) (hbc : adj b c) (hcd : adj c d)
+    (hde : adj d e) (hea : adj e a)
+    (hCross : PrivateBoth5 (sideLocation L R a)
+      (sideLocation L R b) (sideLocation L R c)
+      (sideLocation L R d) (sideLocation L R e)) : False := by
+  exact no_cross_private_cycle_five _ _ _ _ _ hCross
+    ⟨sideLocation_step_of_free_adj hCover hNoCross hSymm hab,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hbc,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hcd,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hde,
+     sideLocation_step_of_free_adj hCover hNoCross hSymm hea⟩
+    ⟨sideLocation_no_hidden_midpoint hSymm hPortClosed hac hab hbc,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hbd hbc hcd,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hce hcd hde,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed hda hde hea,
+     sideLocation_no_hidden_midpoint hSymm hPortClosed heb hea hab⟩
+
 end CoherentPort
 end StructuralRamsey.Girth
