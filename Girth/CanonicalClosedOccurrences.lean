@@ -60,7 +60,7 @@ def comp
       exact congrArg f.toEmbedding heq
     have hInHost : z ∈ Set.range f.toEmbedding :=
       f.closed ⟨g.toEmbedding u, rfl⟩
-        ⟨g.toEmbedding v, rfl⟩ hne hxz hyz
+        ⟨g.toEmbedding v, rfl⟩ hxy hxz hyz
     obtain ⟨w, rfl⟩ := hInHost
     have huAdj : B.Adj (g.toEmbedding u) w :=
       (f.induced (g.toEmbedding u) w).mp hxz
