@@ -73,8 +73,9 @@ theorem track1_triangleFreeRamsey_physicalSelectedFamily
   · intro i j hij
     have hDifferent : ¬ SameCopy (f i) (f j) :=
       track1_physicalRepresentative_distinct family hij
-    exact hControlled (f i) (f j)
+    exact hControlled (f i)
       (track1_physicalRepresentative_spec family i).1
+      (f j)
       (track1_physicalRepresentative_spec family j).1
       hDifferent
   · exact track1_physicalRepresentative_arrow A family hRamsey

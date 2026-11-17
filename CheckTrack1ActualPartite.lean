@@ -3,6 +3,7 @@ import Girth.Track1PhysicalActualSelectedIntersections
 import Girth.Track1PhysicalFamilyActualMixedLF2
 import Girth.Track1TriangleFreePhysicalFamily
 import Girth.Track1ActualSelectedCoverage
+import Girth.Track1EHNColouredPresentation
 
 /-!
 # Numbered Track 1: actual selected-coloured EHN and mixed-LF2 adapters

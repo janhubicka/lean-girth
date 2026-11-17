@@ -26,8 +26,8 @@ namespace StructuralRamsey.Girth
 
 open StructuralRamsey.RelStructure
 
-universe u v
-variable {I : Type u} {VB V Choice : Type v}
+universe v
+variable {I VB V Choice : Type v}
 
 /-- Actual full induced selected B embeddings of the selected-positive
 old hypergraph, obtained directly from the original EHN selected
@@ -67,6 +67,7 @@ noncomputable def track1_oldSelectedEHNColouredEmbedding
   let e := track1_oldSelectedColouredOrderedEmbedding
     A family k sourceColour (oldColourOfRel D default)
       c hMono hPredicate
+  change supportCopies A (colouredOrderedEdgeTarget k E sourceColour) = E at hExact
   simpa only [hExact] using e
 
 #print axioms StructuralRamsey.Girth.track1_oldSelectedEHNColouredEmbedding
