@@ -78,9 +78,8 @@ structure ActiveAttachmentBounds
   coreGirth : 2 < t.headD 0 →
     GirthGT (supportCopies A E.toRelStructure) (t.headD 0)
   cutoffTwo : t.headD 0 = 2 →
-    ∃ μ : Fin (t.length + 1), ∃ q : ℕ, 2 ≤ q ∧
-      (activeGluingWitnessOrderOneData A stage.system e.toFunctionEmbedding
-        E.toRelStructure (fun i => (f i).toEmbedding) U μ).FullSystemGirthGT q
+    ALinear A E.toRelStructure ∧
+      ∀ i, AStrong A E.toRelStructure (copyCarrier (f i).toEmbedding)
   coreParameters : U.AdjacentParameters (fun edge => edge.1)
     (fun ν => E.part ⁻¹' allowed ν)
   interiorFull : ∀ μ : Fin (t.length + 1), 0 < μ.val → μ.val < t.length →
@@ -189,7 +188,7 @@ noncomputable def ForestTailStage.activeAttachment_of_local_bounds :
     exact ⟨active.val u, active, u, rfl⟩
   have hBottom := stage.activeAttachment_bottom_invariants_of_intrinsic
     hA hBaseLinear e hRigid hActive E f bounds.baseStrong
-    bounds.bottomTwo bounds.localForest bounds.coreGirth U bounds.cutoffTwo
+    bounds.bottomTwo bounds.localForest bounds.coreGirth bounds.cutoffTwo
   let hStrong := fun q : {q : DesignatedCopy B D stage.system family // q ∈ stage.selected} =>
     bounds.baseStrong q.1 q.2
   have hTwo : ∀ q : {q : DesignatedCopy B D stage.system family // q ∈ stage.selected},

@@ -1,0 +1,4 @@
+import Girth.TrainRecursiveCoveredBaseTwo
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.ForestTailStage.coveredBaseTwo_pictureStep
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.uniformSelectedPartiteForest_baseTwo

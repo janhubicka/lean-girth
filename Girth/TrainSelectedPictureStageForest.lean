@@ -14,19 +14,16 @@ its selected B-supports.  The actual forest increment can therefore consume
 `stage.bottomForest` directly.  Its output tests precisely the canonical
 transports of those selected copies, as expressed by `testedAB`.
 
-At the cutoff-two forest step, an intrinsic local system-girth bound at
-any supplied cut, with numerical bound at least two, supplies strongness
-of every whole gluing image.
-At larger bottom cutoffs the predecessor mixed forest already supplies
-that strongness, so no intrinsic cycle bound is requested again.  The
+At the cutoff-two forest step the local witness supplies core linearity
+and strongness of every whole gluing image. At larger bottom cutoffs
+the predecessor mixed forest already supplies that strongness. The
 existing actual attachment theorem derives ordinary output girth greater
 than two before applying the forest increment; output geometry is not
 assumed.
 
 The genuine higher-cutoff core ordinary girth bound and the local mixed
 forest bound through its predecessor remain explicit.  At bottom cutoff
-two, the same intrinsic bound already gives core physical linearity and
-hence core ordinary girth greater than two.  The result supplies the output
+two, core linearity gives core ordinary girth greater than two. The result supplies the output
 bottom forest, ordinary support girth, and strongness of each canonical
 selected B-copy.  It asserts neither local Ramsey existence nor any output
 tail system-girth condition.
@@ -73,11 +70,9 @@ variable {t : List ℕ}
 variable {targetTrain : EdgeTrainLevels (OldACarrierEdge A B) t.length}
 variable {allowed : Fin (t.length + 1) → Set P}
 
-/-- A supplied intrinsic local witness preserves the actual old stage's
-bottom forest on the canonical transported selected family.  Whole-image
-strongness and ambient output girth greater than two are derived inputs.
-The local predecessor forest and higher-cutoff core ordinary girth are
-retained; at cutoff two the intrinsic bound supplies core girth as well. -/
+/-- The local witness preserves the bottom forest on the canonical
+transported selected family. At cutoff two it suffices to supply core
+linearity and strongness of the gluing images. -/
 theorem ForestTailStage.activeAttachment_bottom_invariants_of_intrinsic
     (stage : ForestTailStage A B D family t targetTrain allowed)
     (hA : A.Irreducible) [Finite UA]
@@ -105,11 +100,9 @@ theorem ForestTailStage.activeAttachment_bottom_invariants_of_intrinsic
           (RelationalMixedSupportTest A (fun i => (f i).toEmbedding)) (t.headD 0 - 1)))
     (hCoreGirth : 2 < t.headD 0 →
       GirthGT (supportCopies A E.toRelStructure) (t.headD 0))
-    (U : EdgeTrainLevels (OldACarrierEdge A E.toRelStructure) t.length)
-    (hTwoBound : t.headD 0 = 2 →
-      ∃ μ : Fin (t.length + 1), ∃ q : ℕ, 2 ≤ q ∧
-        (activeGluingWitnessOrderOneData A stage.system e.toFunctionEmbedding
-          E.toRelStructure (fun i => (f i).toEmbedding) U μ).FullSystemGirthGT q) :
+    (hTwoGeometry : t.headD 0 = 2 →
+      ALinear A E.toRelStructure ∧
+        ∀ i, AStrong A E.toRelStructure (copyCarrier (f i).toEmbedding)) :
     let S := activeCarrier A stage.system e.toFunctionEmbedding
     let attached := StructuralRamsey.Partite.Attachment.attach stage.system S E f
     let selected := transportedSelectedCopies B D stage.system family stage.selected S E f
@@ -126,16 +119,6 @@ theorem ForestTailStage.activeAttachment_bottom_invariants_of_intrinsic
     GirthGT (supportCopies A attached.toRelStructure) (t.headD 0) ∧
     ∀ b : DesignatedCopy B D attached family, b ∈ selected →
       AStrong A attached.toRelStructure (copyCarrier b.embedding)
-  have hTwoGeometry : t.headD 0 = 2 →
-      ALinear A E.toRelStructure ∧
-        ∀ i, AStrong A E.toRelStructure (copyCarrier (f i).toEmbedding) := by
-    intro hTwo
-    obtain ⟨μ, q, hq, hFull⟩ := hTwoBound hTwo
-    refine ⟨aLinear_of_oldACarrier_edges_inter_subsingleton A E.toRelStructure
-      hFull.1.1, ?_⟩
-    exact activeGluingWitness_images_aStrong_of_fullSystemGirth
-      A stage.system e.toFunctionEmbedding E.toRelStructure
-      (fun i => (f i).toEmbedding) U μ q hq hFull
   have hCore : GirthGT (supportCopies A E.toRelStructure) (t.headD 0) := by
     by_cases hTwo : t.headD 0 = 2
     · rw [hTwo]
