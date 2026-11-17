@@ -126,3 +126,25 @@ is needed. **Do not silently count that object twice.**
 All five new theorem declarations have unexecuted strict axiom probes.
 The source remains uncompiled; this is a repair of a mathematical
 interface, not yet a Lean certificate.
+
+
+**Why the A/B carrier tags are faithful in the nontrivial case.**
+If B contains at least two DISTINCT physical A-copies, then
+`|V(B)| > |V(A)|`: otherwise each copy uses the whole finite
+carrier of B and, as an induced substructure, there can be only
+one physical A-copy. Consequently a physical A-copy and a
+physical B-copy cannot be the same underlying substructure.
+This is the case used by the recursive construction; the paper
+handles `|Copy(A,B)| = 1` separately. Thus the tagged sum
+`Set X ⊕ Set X` does not double-count any actual A/B-copy
+in the nontrivial construction.
+
+**Concrete failure of embedding-label counting.**
+`check_physical_copy_labels.py` uses a physical B-piece with
+carrier `{0,1,2}` and two support edges `{0,1}` and `{1,2}`.
+Two embedding labels of that SAME B-copy have a disallowed
+three-vertex mutual intersection; a labelled two-member forest
+is impossible, whereas its finite physical set has just one
+member and is trivially a forest. This script was executed
+locally and its assertions passed. It is a diagnostic for
+the type-interface correction, not a general Lean certificate.
