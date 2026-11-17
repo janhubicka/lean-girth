@@ -33,6 +33,9 @@ theorem track1_exists_selectedColouredWitness_triangleFree
       (order : LinearOrder H.Vertex),
       Finite H.Vertex ∧ H.allowed = allowed ∧
       (∀ j, (selected j).sourceEdges = E) ∧
+      (∀ j x, H.newPredicate ((selected j).lift x) = targetColour x) ∧
+      (∀ f : H.OldEdge, ∃ j, ∃ a : (selected j).SourceEdge,
+        (selected j).physicalEdge a = f) ∧
       (∀ j, ∃ e : Embedding
         (colouredOrderedEdgeTarget k E targetColour)
         ((@colouredOrderedEdgeTarget I H.Vertex k
@@ -112,8 +115,15 @@ theorem track1_exists_selectedColouredWitness_triangleFree
     track1_selectedColouredWitness_from_EHN_family A family k targetColour
       predicate allowed hRestrict hPredicate (fun j _ _ => hOrder j _ _)
       hStrong hInj hControlled 3 (by decide) hClass.2 hArrow
+  have hPart (j : J) (x : VB) : H.newPredicate ((selected j).lift x) = targetColour x :=
+    (H.selectedLift_preserves_predicate (selected j) x).trans (hPredicate j x)
+  have hOwned : ∀ f : H.OldEdge, ∃ j, ∃ a : (selected j).SourceEdge,
+      (selected j).physicalEdge a = f :=
+    track1_actualSelectedOldEdge_covered A family predicate allowed
+      (track1_selectedForbiddenDegreeOne A family targetColour predicate allowed
+        hRestrict hPredicate)
   refine ⟨W, J, H, selected, order, H.finite_ownerVertex, rfl,
-    fun _ => hSupport, ?_, hCover, hNewGirth, hPair, hNewStrong, hForest, hRamsey⟩
+    fun _ => hSupport, hPart, hOwned, ?_, hCover, hNewGirth, hPair, hNewStrong, hForest, hRamsey⟩
   rw [hSupport] at hLift
   exact hLift
 
