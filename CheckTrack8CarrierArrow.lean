@@ -1,0 +1,3 @@
+import Girth.OrderReductCarrierArrow
+
+#print axioms StructuralRamsey.Girth.arrow_orderReduct_carriers

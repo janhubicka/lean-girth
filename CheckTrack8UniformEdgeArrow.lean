@@ -1,0 +1,5 @@
+import Girth.OrderReductUniformEdge
+
+#print axioms StructuralRamsey.Girth.arrow_orderReduct_carriers
+#print axioms StructuralRamsey.Girth.orderedUniformEdgeSupport_exact
+#print axioms StructuralRamsey.Girth.orderedUniformEdge_carrierLift

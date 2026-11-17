@@ -22,7 +22,7 @@ LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake build \
   Girth.FiniteTraceChordalEndpoint \
   Girth.FiniteTraceSimplicialCriterion \
   Girth.FiniteTracePEORank \
-  Girth.FiniteTraceOrderReduct \
+  Girth.FiniteTraceOrderReduct Girth.OrderReductUniformEdge \
   2>&1 | tee "$log_dir/build.log"
 
 echo "Running focused #check / #print axioms gate"
@@ -41,8 +41,13 @@ echo "Running the order reduct #print axioms gate"
 LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake env lean \
   CheckTrack8OrderReduct.lean 2>&1 | tee "$log_dir/order-reduct.log"
 
+echo "Running the uniform-edge carrier-colouring #print axioms gate"
+LEAN_NUM_THREADS="${LEAN_NUM_THREADS:-2}" lake env lean \
+  CheckTrack8UniformEdgeArrow.lean 2>&1 | tee "$log_dir/uniform-edge-arrow.log"
+
 python3 scripts/check_axioms.py "$log_dir/primary.log" CheckTrack8Primary.lean
 python3 scripts/check_axioms.py "$log_dir/all-dependencies.log" CheckTrack8AllDependencies.lean
 python3 scripts/check_axioms.py "$log_dir/picture-extraction.log" CheckTrack8PictureExtraction.lean
 python3 scripts/check_axioms.py "$log_dir/order-reduct.log" CheckTrack8OrderReduct.lean
+python3 scripts/check_axioms.py "$log_dir/uniform-edge-arrow.log" CheckTrack8UniformEdgeArrow.lean
 echo "Track 8 local build/check completed. Logs: $log_dir"
