@@ -57,7 +57,7 @@ theorem exists_maximal_nonempty_trace
   refine ⟨j, ⟨hjNonempty, ?_⟩, hij⟩
   intro k hjk
   have hkS : k ∈ S := hij.trans hjk
-  exact hjMax k hkS hjk
+  exact hjMax hkS hjk
 
 /-- The set of *distinct* maximal nonempty trace sets.  Its elements
 are subsets of Z and have actual original-cover witnesses. -/
