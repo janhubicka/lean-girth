@@ -1,0 +1,4 @@
+import Girth.FreeAttachmentOrderExtension
+
+#print axioms StructuralRamsey.RelStructure.Attachment.exists_linearOrder_attachment
+#print axioms StructuralRamsey.Partite.Attachment.exists_linearOrder_partiteAttachment
