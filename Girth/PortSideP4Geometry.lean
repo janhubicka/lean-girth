@@ -59,7 +59,7 @@ theorem sideStepAllowed_iff (a b : PortSide) :
     SideStepAllowed a b ↔
       ¬(a = .left ∧ b = .right) ∧
       ¬(a = .right ∧ b = .left) := by
-  cases a <;> cases b <;> decide
+  cases a <;> cases b <;> simp [SideStepAllowed]
 
 theorem sideLocation_step_of_free_adj
     (hCover : L ∪ R = Set.univ)
