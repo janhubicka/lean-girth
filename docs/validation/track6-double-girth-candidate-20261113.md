@@ -8,12 +8,13 @@ Historical checks and unsuccessful variants are in the Git history and
 
 **Candidate branch:** `validation/6-double-count-candidate-20261113`.
 **Status:** four Lean modules with 21 axiom checks in
-`CheckTrack6RefinementDoubleAxioms.lean`. The finite counting lemma,
-adjacent-label lemma, second-occurrence lemma, and singleton-part
-acyclicity passed isolated Lean checks with the standard logical axioms.
-The geometry check used the repository's cyclic successor and labelled
-Berge definitions and proof bodies. The full dependency-tree build
-and axiom audit are still required to certify the doubled bound.
+`CheckTrack6RefinementDoubleAxioms.lean`. The counting module and the
+five one-step declarations passed local Lean and the strict axiom audit.
+The one-step probe used the branch's proof bodies, the project's cyclic
+and labelled Berge definitions, and the compiled narrow
+`LabelledWagonCutProjection` module for the existing incidence lemmas.
+The full dependency-tree build and axiom audit are still required to
+certify the repeated descent and physical-support wrappers.
 
 | Candidate file | Actual new target |
 | --- | --- |
