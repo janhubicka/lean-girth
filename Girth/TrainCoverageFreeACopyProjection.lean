@@ -1,4 +1,5 @@
 import Girth.ActiveCarrierStrong
+import Girth.ActualActivePartitePresentation
 import Girth.TrainRecursiveLargeBaseCoarsening
 import PartiteConstruction.Partite.Attachment
 import Mathlib.Tactic
@@ -64,6 +65,31 @@ theorem projectsACopies_relabel_of_fineEdges
   intro x
   change e x = e (H.part (a x))
   exact congrArg e (hFine a x).symm
+
+/-- Rebasing the true active subsystem makes each actual source edge use
+its own fine coordinates. The weak physical projection condition suffices. -/
+theorem actualActiveSubsystemPartite_fineEdges_of_projectedACopies
+    (A : RelStructure L UA) [Finite UA] (D : RelStructure L P)
+    (C : StructuralRamsey.Partite.System L P X)
+    (hProjected : ProjectsACopies A D C) (e : Embedding A D)
+    (hRigid : ∀ b : Embedding A D, SameCopy b e → b = e)
+    (a : Embedding A (actualActiveSubsystemPartite A C e.toFunctionEmbedding).toRelStructure)
+    (x : UA) :
+    (actualActiveSubsystemPartite A C e.toFunctionEmbedding).part (a x) = x := by
+  let includeActive : Embedding
+      (actualActiveSubsystemPartite A C e.toFunctionEmbedding).toRelStructure
+      C.toRelStructure :=
+    { toFun := Subtype.val
+      injective := Subtype.val_injective
+      map_rel_iff := fun _ _ => Iff.rfl }
+  obtain ⟨b, hb⟩ := hProjected (includeActive.comp a)
+  have hFine (y : UA) :
+      e ((actualActiveSubsystemPartite A C e.toFunctionEmbedding).part (a y)) = b y :=
+    (activeSourcePart_spec A C e.toFunctionEmbedding (a y)).trans (hb y).symm
+  have hSame : SameCopy b e :=
+    sameCopy_of_range_subset b e (fun y => ⟨_, (hFine y).symm⟩)
+  apply e.injective
+  exact (hFine x).trans (congrArg (fun c : Embedding A D => c x) (hRigid b hSame))
 
 /-- A physical A-copy contained in a true partite embedding image
 inherits the original source's projected base copy. -/

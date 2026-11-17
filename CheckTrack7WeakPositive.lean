@@ -1,0 +1,4 @@
+import Girth.TrainCoverageFreeWeakProjectionGirth
+
+#print axioms StructuralRamsey.Girth.actualActiveSubsystemPartite_fineEdges_of_projectedACopies
+#print axioms StructuralRamsey.Girth.attachedSelectedPicture_fullSystemGirth_of_projectedACopies
