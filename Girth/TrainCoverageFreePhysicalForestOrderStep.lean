@@ -164,6 +164,46 @@ theorem PhysicalForestStage.activeAttachment_bottom_full_of_finiteMixed
     A hA B D stage.system family stage.selected e E f
       stage.train U Shared Bottom hStrong hTwo q).mp hRaw
 
+local notation "Next" => PhysicalForestStage.activeAttachment_of_bounds
+  stage hA hBaseLinear e hRigid active E f U bounds
+
+include hA hBaseLinear hRigid active bounds in
+/-- The actual attachment has bottom system girth and the selected picture
+arrow. Keeping its system explicit lets callers carry other invariants. -/
+theorem PhysicalForestStage.activeAttachment_pictureStep_and_bottom_of_physicalFt
+    (hOldBottom : (OldBottom).FullSystemGirthGT q)
+    (hBaseCovered : stage.CoversBase)
+    (a b : Embedding A (stage.system.toRelStructure.induce S))
+    (hTwoSource : ¬ SameCopy a b)
+    (hSelectedSupports : Function.Injective
+      (fun i : I => bSupportPiece A (RF i)))
+    (hLocalMixed : FiniteMixedForestThrough
+      (RelationalMixedSupportTest A RF) q)
+    (κ : Type w) [Nonempty κ]
+    (hCarrierRigid : ∀ c d : Embedding A E.toRelStructure,
+      SameCopy c d → c = d)
+    (hPhysicalArrow :
+      ∀ χ : OldACarrierEdge A E.toRelStructure → κ,
+        ∃ i : I, ∀ c d : Embedding A (stage.system.induce S).toRelStructure,
+          χ (actualEdge ((RF i).comp c)) =
+            χ (actualEdge ((RF i).comp d))) :
+    PictureStep stage Next e.toFunctionEmbedding κ ∧
+      PhysicalForestStage.BottomReady Next := by
+  have hActualBottom : (ActualBottom).FullSystemGirthGT q :=
+    PhysicalForestStage.activeAttachment_bottom_full_of_finiteMixed stage
+      hA hBaseLinear e hRigid active E f U bounds
+      hOldBottom hBaseCovered a b hTwoSource
+      hSelectedSupports hLocalMixed
+  have hEmbeddingArrow :
+      ∀ χ : Embedding A E.toRelStructure → κ,
+        ∃ i : I,
+          ∀ c d : Embedding A (stage.system.induce S).toRelStructure,
+            χ ((RF i).comp c) = χ ((RF i).comp d) :=
+    embeddingArrow_of_physicalEdgeArrow RF
+      hCarrierRigid hPhysicalArrow
+  exact ⟨PhysicalForestStage.activeAttachment_pictureStep_of_familyArrow stage
+    hA hBaseLinear e hRigid active E f U bounds κ hEmbeddingArrow, hActualBottom⟩
+
 include hA hBaseLinear hRigid active bounds in
 /-- A genuine selected order-stage Ramsey PictureStep with the
 literal F_q PHYSICAL A-edge colouring arrow, produced by the
@@ -190,33 +230,11 @@ theorem PhysicalForestStage.activeAttachment_orderPictureStep_of_physicalFt
     ∃ R : PhysicalOrderStage A B D family (q :: tail) targetTrain allowed,
       PictureStep stage R.toPhysicalForestStage
         e.toFunctionEmbedding κ := by
-  have hActualBottom : (ActualBottom).FullSystemGirthGT q :=
-    PhysicalForestStage.activeAttachment_bottom_full_of_finiteMixed stage
-      hA hBaseLinear e hRigid active E f U bounds
-      hOldBottom hBaseCovered a b hTwoSource
-      hSelectedSupports hLocalMixed
-  have hEmbeddingArrow :
-      ∀ χ : Embedding A E.toRelStructure → κ,
-        ∃ i : I,
-          ∀ c d : Embedding A (stage.system.induce S).toRelStructure,
-            χ ((RF i).comp c) = χ ((RF i).comp d) :=
-    embeddingArrow_of_physicalEdgeArrow RF
-      hCarrierRigid hPhysicalArrow
-  let next : PhysicalForestStage A B D family
-      (q :: tail) targetTrain allowed :=
-    PhysicalForestStage.activeAttachment_of_bounds stage
-      hA hBaseLinear e hRigid active E f U bounds
-  have hNextBottom :
-      (selectedPictureOrderOneData A B D next.system family
-        next.selected next.train Bottom).FullSystemGirthGT q :=
-    hActualBottom
-  let result : PhysicalOrderStage A B D family
-      (q :: tail) targetTrain allowed :=
-    next.withBottom hNextBottom
-  refine ⟨result, ?_⟩
-  exact PhysicalForestStage.activeAttachment_pictureStep_of_familyArrow stage
-    hA hBaseLinear e hRigid active E f U bounds
-    κ hEmbeddingArrow
+  obtain ⟨hStep, hNextBottom⟩ :=
+    PhysicalForestStage.activeAttachment_pictureStep_and_bottom_of_physicalFt stage
+      hA hBaseLinear e hRigid active E f U bounds hOldBottom hBaseCovered
+      a b hTwoSource hSelectedSupports hLocalMixed κ hCarrierRigid hPhysicalArrow
+  exact ⟨(Next).withBottom hNextBottom, hStep⟩
 
 end MixedOrderStep
 

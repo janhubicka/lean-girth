@@ -87,12 +87,9 @@ local notation "Out" => (fun μ : Fin ((q :: tail).length + 1) =>
     stage.train U Shared μ)
 
 include hA hBaseLinear hRigid active in
-/-- One selected local F_t witness with the actual MIXED core
-triple constructs the entire mixed attachment bounds and a
-next ORDER-stage selected PictureStep at the SAME cutoff q::tail.
-The local mixed forest supplies the bottom geometry and the
-predecessor forest. -/
-theorem PhysicalForestStage.orderPictureStep_of_nontrivial_Ft
+/-- Build the concrete attachment bounds from the same-vector mixed forest,
+and exhibit two distinct physical A-copies in the active source. -/
+theorem PhysicalForestStage.sameVectorAttachmentBounds_of_finiteMixed
     (hBaseCovered : stage.CoversBase)
     (hSelectedStrong :
       ∀ b : DesignatedCopy B D stage.system family,
@@ -111,7 +108,6 @@ theorem PhysicalForestStage.orderPictureStep_of_nontrivial_Ft
     (hPositive : ∀ j : Fin (q :: tail).length, 0 < j.val →
       (activeGluingWitnessOrderOneData A stage.system e.toFunctionEmbedding
         E.toRelStructure RF U j.castSucc).FullSystemGirthGT ((q :: tail).get j))
-    (hReady : stage.BottomReady)
     (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
       A stage.system e.toFunctionEmbedding,
       copyCarrier a.val ≠ copyCarrier b.val)
@@ -127,20 +123,9 @@ theorem PhysicalForestStage.orderPictureStep_of_nontrivial_Ft
       (RelationalMixedSupportTest A RF) q)
     (hCoreParameters : U.AdjacentParameters
       (fun edge => edge.1)
-      (fun ν => E.part ⁻¹' allowed ν))
-    (κ : Type w) [Nonempty κ]
-    (hCarrierRigid : ∀ a b : Embedding A E.toRelStructure,
-      SameCopy a b → a = b)
-    (hPhysicalArrow :
-      ∀ χ : OldACarrierEdge A E.toRelStructure → κ,
-        ∃ i : I,
-          ∀ a b : Embedding A (stage.system.induce S).toRelStructure,
-            χ (actualEdge ((RF i).comp a)) =
-              χ (actualEdge ((RF i).comp b))) :
-    ∃ next : PhysicalOrderStage A B D family (q :: tail)
-      targetTrain allowed,
-      PictureStep stage next.toPhysicalForestStage
-        e.toFunctionEmbedding κ := by
+      (fun ν => E.part ⁻¹' allowed ν)) :
+    ∃ _bounds : ActiveAttachmentBounds stage hA e active E f U,
+      ∃ a b : Embedding A (stage.system.induce S).toRelStructure, ¬ SameCopy a b := by
   obtain ⟨pa, pb, hDifferent⟩ := hPair
   obtain ⟨edge₁, edge₂, hEdgeNe⟩ :=
     activeSupport_two_distinct_of_projected_carriers
@@ -196,6 +181,68 @@ theorem PhysicalForestStage.orderPictureStep_of_nontrivial_Ft
       hCoreProjectsACopies hCoreSupportNonempty hCoreSupportCovers hSelectedStrong hTargetTwo
       hInterior hHead hSource hSelectedSupports hForest
       hCoreParameters hInteriorTwo hTailSupreme
+  exact ⟨hBounds, a, b, hSourceTwo⟩
+
+include hA hBaseLinear hRigid active in
+/-- One selected local F_t witness with the actual MIXED core
+triple constructs the entire mixed attachment bounds and a
+next ORDER-stage selected PictureStep at the SAME cutoff q::tail.
+The local mixed forest supplies the bottom geometry and the
+predecessor forest. -/
+theorem PhysicalForestStage.orderPictureStep_of_nontrivial_Ft
+    (hBaseCovered : stage.CoversBase)
+    (hSelectedStrong :
+      ∀ b : DesignatedCopy B D stage.system family,
+        b ∈ stage.selected → AStrong A D (copyCarrier b.base))
+    (hTargetTwo : ∃ a b : Embedding A B, ¬ SameCopy a b)
+    (hCutoff : ∀ j : Fin (q :: tail).length, 2 ≤ (q :: tail).get j)
+    (hInterior : ∀ μ : Fin ((q :: tail).length + 1),
+      0 < μ.val → μ.val < (q :: tail).length →
+      ∀ (i : I) (p r : SharedOldACarrierEdge A stage.system.toRelStructure S),
+        stage.train.rel μ p.1 r.1 ↔
+          U.rel μ
+            (sharedOldACarrierCoreEmbedding A stage.system.toRelStructure
+              S E.toRelStructure RF i p)
+            (sharedOldACarrierCoreEmbedding A stage.system.toRelStructure
+              S E.toRelStructure RF i r))
+    (hPositive : ∀ j : Fin (q :: tail).length, 0 < j.val →
+      (activeGluingWitnessOrderOneData A stage.system e.toFunctionEmbedding
+        E.toRelStructure RF U j.castSucc).FullSystemGirthGT ((q :: tail).get j))
+    (hReady : stage.BottomReady)
+    (hPair : ∃ a b : StructuralRamsey.Partite.ProjectedEmbedding
+      A stage.system e.toFunctionEmbedding,
+      copyCarrier a.val ≠ copyCarrier b.val)
+    (hCoreProjectsACopies : ProjectsACopies A D E)
+    (hCoreSupportNonempty :
+      Nonempty (OldACarrierEdge A E.toRelStructure))
+    (hCoreSupportCovers : ∀ y : Y,
+      ∃ edge : OldACarrierEdge A E.toRelStructure,
+        y ∈ edge.1)
+    (hSelectedSupports : Function.Injective
+      (fun i : I => bSupportPiece A (RF i)))
+    (hForest : FiniteMixedForestThrough
+      (RelationalMixedSupportTest A RF) q)
+    (hCoreParameters : U.AdjacentParameters
+      (fun edge => edge.1)
+      (fun ν => E.part ⁻¹' allowed ν))
+    (κ : Type w) [Nonempty κ]
+    (hCarrierRigid : ∀ a b : Embedding A E.toRelStructure,
+      SameCopy a b → a = b)
+    (hPhysicalArrow :
+      ∀ χ : OldACarrierEdge A E.toRelStructure → κ,
+        ∃ i : I,
+          ∀ a b : Embedding A (stage.system.induce S).toRelStructure,
+            χ (actualEdge ((RF i).comp a)) =
+              χ (actualEdge ((RF i).comp b))) :
+    ∃ next : PhysicalOrderStage A B D family (q :: tail)
+      targetTrain allowed,
+      PictureStep stage next.toPhysicalForestStage
+        e.toFunctionEmbedding κ := by
+  obtain ⟨hBounds, a, b, hSourceTwo⟩ :=
+    PhysicalForestStage.sameVectorAttachmentBounds_of_finiteMixed stage
+      hA hBaseLinear e hRigid active E f U hBaseCovered hSelectedStrong hTargetTwo
+      hCutoff hInterior hPositive hPair hCoreProjectsACopies hCoreSupportNonempty
+      hCoreSupportCovers hSelectedSupports hForest hCoreParameters
   exact PhysicalForestStage.activeAttachment_orderPictureStep_of_physicalFt stage
     hA hBaseLinear e hRigid active E f U hBounds
     hReady hBaseCovered a b hSourceTwo

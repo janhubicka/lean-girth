@@ -1,0 +1,6 @@
+import Girth.TrainCoverageFreePhysicalProjectedRawFtStep
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.sameVectorAttachmentBounds_of_finiteMixed
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.PhysicalForestStage.activeAttachment_pictureStep_and_bottom_of_physicalFt
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.RawPartiteFtWitness.toProjectedPictureStep
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.RawPartiteFtWitness.toPictureStep

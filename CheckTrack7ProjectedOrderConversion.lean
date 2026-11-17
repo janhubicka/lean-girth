@@ -1,0 +1,5 @@
+import Girth.TrainRecursiveProjectedOrderConversion
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.unrestrictedPredicateOrder_of_projectedForest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectedOrderEverySpanningType_of_forest
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectedForestAndOrder_of_cutoffTwo
