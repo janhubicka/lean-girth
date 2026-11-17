@@ -40,6 +40,7 @@ import Girth.TrainCoverageFreeSelectedLowerPositive
 import Girth.TrainCoverageFreeDirectPartiteFtStep
 import Girth.TrainCoverageFreeRawFtWitness
 import Girth.TrainCoverageFreeRawFtFinitePass
+import Girth.TrainCoverageFreeACopyProjection
 import Girth.TrainCoverageFreeBoundsFromMixed
 import Girth.TrainCoverageFreeForestOrderStep
 import Girth.TrainSelectedPictureMixedStageAssembly
@@ -288,3 +289,11 @@ import Girth.TrainBottomForestShortOnlySupreme
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.RawPartiteFtWitness
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.RawPartiteFtWitness.toPictureStep
 #print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.initialStrongTrainRamsey_of_rawFtWitnesses
+
+-- A-copy projection is a deliberately weaker geometric invariant than
+-- order-expanded IsPartiteOver; check its exact kernel dependencies.
+#print axioms StructuralRamsey.Girth.ProjectsACopies
+#print axioms StructuralRamsey.Girth.projectsACopies_of_isPartiteOver
+#print axioms StructuralRamsey.Girth.projectsACopies_relabel_of_fineEdges
+#print axioms StructuralRamsey.Girth.projectsACopies_freeAttachment
+#print axioms StructuralRamsey.Girth.activeCarrier_aStrong_of_projectedACopies
