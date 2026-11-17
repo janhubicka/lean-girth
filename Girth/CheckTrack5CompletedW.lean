@@ -1,5 +1,6 @@
 import Girth.TrainFillingPrivateActualCompletedWEHN
 import Girth.TrainFillingPrivateCompletedWMarked
+import Girth.TrainFillingPrivateActualCompletedWFirstParameter
 
 set_option Elab.async false
 
@@ -50,3 +51,13 @@ the imported completed-W chain is validated yet.
 #check StructuralRamsey.Girth.completedFirstWagon_forbidden_vertex_unique_edge
 #print axioms StructuralRamsey.Girth.completedFirstWagon_support_inter_allowed
 #print axioms StructuralRamsey.Girth.completedFirstWagon_forbidden_vertex_unique_edge
+
+-- Actual original T first-parameter parent bound, no synthetic local A₁ assumption.
+#check StructuralRamsey.Girth.EdgeTrainLevels.zeroWagonClassCarrier_eq_edge
+#check StructuralRamsey.Girth.EdgeTrainLevels.zeroWagonLabels_ne
+#check StructuralRamsey.Girth.EdgeTrainLevels.firstParameter_physicalEdge_inter_allowed
+#check StructuralRamsey.Girth.actualFirstWagonCompletedW_support_inter_allowed
+#check StructuralRamsey.Girth.actualFirstWagonCompletedW_marked_of_parentBound
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstParameter_physicalEdge_inter_allowed
+#print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_support_inter_allowed
+#print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_marked_of_parentBound
