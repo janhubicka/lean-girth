@@ -1,4 +1,4 @@
-import Girth.ForestOldActiveSetGirth
+import Girth.ForestPhysicalABCompletion
 import Girth.ForestRecursiveOutputGirth
 import Girth.ForestRetainedSetLift
 
@@ -87,3 +87,14 @@ import Girth.ForestRetainedSetLift
 #print axioms StructuralRamsey.Girth.aStrong_of_finiteMixedForestThrough
 #print axioms StructuralRamsey.Girth.actualActiveAttachment_girthGT_two_of_mixedOld
 #print axioms StructuralRamsey.Girth.actualPartiteDesignatedAB_forest_and_girth_of_localGeometry
+/-! Physical-copy-set correspondence: no embedding-label injectivity. -/
+#check StructuralRamsey.Girth.PhysicalCopySetForestExtension.toLabelFinset
+#check StructuralRamsey.Girth.pictureABLabelSupport_eq_physicalSupport
+#check StructuralRamsey.Girth.pictureABPhysicalKey_eligible
+#check StructuralRamsey.Girth.pictureABPhysicalDesignated_support
+#check StructuralRamsey.Girth.oldActiveInduced_girthGT_of_physicalCopySetExtension
+#print axioms StructuralRamsey.Girth.PhysicalCopySetForestExtension.toLabelFinset
+#print axioms StructuralRamsey.Girth.pictureABLabelSupport_eq_physicalSupport
+#print axioms StructuralRamsey.Girth.pictureABPhysicalKey_eligible
+#print axioms StructuralRamsey.Girth.pictureABPhysicalDesignated_support
+#print axioms StructuralRamsey.Girth.oldActiveInduced_girthGT_of_physicalCopySetExtension
