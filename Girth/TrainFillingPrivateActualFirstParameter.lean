@@ -1,4 +1,3 @@
-import Girth.TrainFillingPrivateActualCompletedWMarked
 import Girth.TrainSharedEdgeQuotients
 import Girth.TrainParameterRestriction
 
@@ -100,6 +99,9 @@ theorem EdgeTrainLevels.firstParameter_physicalEdge_inter_allowed
   have hfCarrier :
       T.wagonClassCarrier edge bottom hf = edge f :=
     T.zeroWagonClassCarrier_eq_edge edge f
-  simpa only [heCarrier, hfCarrier] using hSmall
+  change T.wagonClassCarrier edge bottom he ∩
+      T.wagonClassCarrier edge bottom hf ⊆ allowed at hSmall
+  rw [heCarrier, hfCarrier] at hSmall
+  exact hSmall
 
 end StructuralRamsey.Girth

@@ -40,6 +40,7 @@ the imported completed-W chain is validated yet.
 #print axioms StructuralRamsey.Girth.completedFirstWagonSummand_strictMono
 #print axioms StructuralRamsey.Girth.completedFirstWagon_allACopies_strictMono
 #print axioms StructuralRamsey.Girth.completedFirstWagon_privateEHN
+#print axioms StructuralRamsey.Girth.colouredOrderedEdgeFamily_exists_predicate
 
 #check StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
 #print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
@@ -56,6 +57,8 @@ the imported completed-W chain is validated yet.
 #check StructuralRamsey.Girth.EdgeTrainLevels.firstParameter_physicalEdge_inter_allowed
 #check StructuralRamsey.Girth.actualFirstWagonCompletedW_support_inter_allowed
 #check StructuralRamsey.Girth.actualFirstWagonCompletedW_marked_of_parentBound
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.zeroWagonClassCarrier_eq_edge
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.zeroWagonLabels_ne
 #print axioms StructuralRamsey.Girth.EdgeTrainLevels.firstParameter_physicalEdge_inter_allowed
 #print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_support_inter_allowed
 #print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_marked_of_parentBound

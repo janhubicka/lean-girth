@@ -27,7 +27,7 @@ induced-copy property is postulated.
 
 namespace StructuralRamsey.Girth
 
-universe u v
+universe u v w
 variable {I : Type u} {V : Type v}
 
 /-- One full edge relation, unary colour predicates, and a binary
@@ -238,5 +238,40 @@ theorem colouredOrderedEdgeSupport_exact
         ι hiE hColour hWithinOrder)
     rw [colouredOrderedEdgeEmbedding_carrier]
     exact hRange.symm
+
+/-- An induced family of a coloured target gives a single predicate map
+on its image union. A vertex in two images has the same colour in both,
+by preservation and reflection of the unary relations. -/
+theorem colouredOrderedEdgeFamily_exists_predicate
+    [LinearOrder V] [Nonempty I]
+    (k : ℕ) (E : Set (Set V)) (colour : V → I)
+    {W : Type v} {J : Type w}
+    {C : RelStructure (colouredOrderedEdgeLanguage I k) W}
+    (family : J → RelStructure.Embedding
+      (colouredOrderedEdgeTarget k E colour) C) :
+    ∃ predicate : W → I, ∀ j x, predicate (family j x) = colour x := by
+  classical
+  let hasColour (y : W) (i : I) : Prop :=
+    ∃ j x, family j x = y ∧ colour x = i
+  let predicate (y : W) : I := if h : ∃ i, hasColour y i then
+    Classical.choose h else Classical.choice ‹Nonempty I›
+  refine ⟨predicate, ?_⟩
+  intro j x
+  have h : ∃ i, hasColour (family j x) i := ⟨colour x, j, x, rfl, rfl⟩
+  dsimp only [predicate]
+  rw [dite_eq_left h]
+  obtain ⟨j', x', hImage, hColour⟩ := Classical.choose_spec h
+  have hSource : (colouredOrderedEdgeTarget k E colour).rel
+      (.inl (.inr (colour x'))) (fun _ => x') := by
+    change colour x' = colour x'
+    rfl
+  have hAmbient := ((family j').map_rel_iff
+    (.inl (.inr (colour x'))) (fun _ => x')).mpr hSource
+  change C.rel (.inl (.inr (colour x'))) (fun _ => family j' x') at hAmbient
+  rw [hImage] at hAmbient
+  have hBack := ((family j).map_rel_iff
+    (.inl (.inr (colour x'))) (fun _ => x)).mp hAmbient
+  change colour x = colour x' at hBack
+  exact hColour.symm.trans hBack.symm
 
 end StructuralRamsey.Girth
