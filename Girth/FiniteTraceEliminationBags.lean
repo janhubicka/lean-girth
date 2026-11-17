@@ -66,8 +66,9 @@ theorem clique_subset_laterNeighborBag_of_least
   intro x hx
   by_cases h : x = v
   · exact Or.inl h
-  · have hvx : v < x := lt_of_le_of_ne (hLeast x hx) h.symm
-    exact Or.inr ⟨hvx, hClique hv hx h.symm⟩
+  · have hNe : v ≠ x := fun he => h he.symm
+    have hvx : v < x := lt_of_le_of_ne (hLeast x hx) hNe
+    exact Or.inr ⟨hvx, hClique hv hx hNe⟩
 
 /-- Every nonempty graph clique is contained in at least one
 elimination bag, choosing its least vertex in the total order. -/

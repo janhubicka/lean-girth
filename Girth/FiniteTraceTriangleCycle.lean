@@ -21,8 +21,8 @@ not replace a missing proof with an axiom.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W E : Type v}
+universe v w
+variable {W : Type v} {E : Type w} [DecidableEq W]
 
 /-- An endpoint of the second edge lying outside the first must
 miss at least one endpoint of the first when no triangle is

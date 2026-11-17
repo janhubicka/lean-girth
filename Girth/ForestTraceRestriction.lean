@@ -32,7 +32,7 @@ def HypergraphPiece.traceCarrier
 /-- Restriction to Z preserves the SAME join tree and hence its
 running-intersection condition.  This exact trace operation is used
 after an internal local join-tree completion. -/
-theorem JoinTree.traceCarrier
+def JoinTree.traceCarrier
     {F : ι → HypergraphPiece W}
     (J : JoinTree F) (Z : Set W) :
     JoinTree (fun i => (F i).traceCarrier Z) where

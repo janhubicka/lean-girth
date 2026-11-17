@@ -24,8 +24,8 @@ theorem or maximal-clique join tree is asserted here.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W ι E : Type v}
+universe v w
+variable {W ι : Type v} {E : Type w}
 
 /-- Any required-pair cycle of at most q edges, whose different
 edges can never be covered together by an original bag, prevents

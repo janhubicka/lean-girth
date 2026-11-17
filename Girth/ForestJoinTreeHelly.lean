@@ -16,13 +16,14 @@ only the checked running-intersection property of JoinTree.
 namespace StructuralRamsey.Girth
 
 universe v
-variable {W ι : Type v}
+variable {W : Type v}
 
 /-- If a nonempty set of vertices is pairwise covered by bags of a
 finite join tree, one bag covers the set.  The condition also includes
 the diagonal x=y, so singleton sets are covered without assuming a
 separate vertex-cover hypothesis. -/
 theorem JoinTree.pairCovered_in_one_bag
+    {ι : Type v}
     {F : ι → HypergraphPiece W} [Fintype ι] [Nonempty ι]
     (J : JoinTree F)
     {K : Set W} (hK : K.Nonempty)
@@ -47,7 +48,7 @@ theorem JoinTree.pairCovered_in_one_bag
       J.exists_leaf_attachment
     by_cases hLeaf : ∀ x : W, x ∈ K → x ∈ (F leaf).carrier
     · exact ⟨leaf, hLeaf⟩
-    · push_neg at hLeaf
+    · push Not at hLeaf
       obtain ⟨x₀, hx₀, hx₀NotLeaf⟩ := hLeaf
       let reindexRest :
           {j : ι // j ≠ leaf} ≃

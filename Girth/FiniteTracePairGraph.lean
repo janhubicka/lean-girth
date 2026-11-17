@@ -33,10 +33,12 @@ def tracePairGraph
   Adj x y :=
     x ≠ y ∧ ∃ i : ι, x.1 ∈ F i ∧ y.1 ∈ F i
   symm := by
+    constructor
     intro x y hxy
     obtain ⟨hne, i, hxi, hyi⟩ := hxy
     exact ⟨hne.symm, i, hyi, hxi⟩
   loopless := by
+    constructor
     intro x hxx
     exact hxx.1 rfl
 

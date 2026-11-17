@@ -15,20 +15,6 @@ namespace StructuralRamsey.Girth
 universe v
 variable {V : Type v}
 
-private theorem cycleGraph_adj_iff_of_val_le {k : ℕ} (hk : 4 ≤ k)
-    (i j : Fin k) (hij : i.val ≤ j.val) :
-    (SimpleGraph.cycleGraph k).Adj i j ↔
-      i.val + 1 = j.val ∨ i.val = 0 ∧ j.val + 1 = k := by
-  have hi := i.isLt
-  have hj := j.isLt
-  by_cases h : i = j
-  · subst j
-    simp only [SimpleGraph.irrefl, false_iff]
-    omega
-  · have hlt : i < j := lt_of_le_of_ne hij h
-    rw [SimpleGraph.cycleGraph_adj', Fin.coe_sub_iff_lt.mpr hlt, Fin.sub_val_of_le hij]
-    omega
-
 private theorem induced_cycle_of_separated_paths {G : SimpleGraph V}
     {A B : Set V} {s t : V}
     (p : InducedPathThrough G A s t) (q : InducedPathThrough G B t s)

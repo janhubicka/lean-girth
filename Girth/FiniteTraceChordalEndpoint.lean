@@ -70,7 +70,7 @@ theorem smallTrace_selection_of_local_and_chordalToPEO
 
 /-- The selected original cover members from the bounded internal completions. -/
 theorem smallTrace_selection_of_local_completions
-    {W ι : Type*} [Fintype W] [Fintype ι]
+    {W ι : Type v} [Fintype W] [Fintype ι]
     (F : ι → Set W) (Z : Set W) (q : ℕ)
     (hCover : ∀ x : W, x ∈ Z → ∃ i : ι, x ∈ F i)
     (hLocal : HasInternalJoinTreeCompletions F q)

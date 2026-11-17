@@ -19,8 +19,8 @@ cycles is still a separate obligation.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W ι E : Type v}
+universe v w
+variable {W ι : Type v} {E : Type w}
 
 /-- A fixed-point-free successor permutation whose consecutive
 vertex pairs are edges of the trace graph, and for which the

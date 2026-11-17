@@ -116,9 +116,9 @@ theorem pairCliqueOn_contained_of_local_completion
     intro z hz x hx hne
     have hAtFace :=
       Classical.choose_spec (hFaceExists z hz) x hx hne
-    simpa only [faceBag, dif_pos hz] using hAtFace
+    simpa only [faceBag, dite_eq_left hz] using hAtFace
   exact exists_original_bag_covering_faces_of_card_ge_three
-    F q hLocal T hT hThree faceBag hFace hBudgetT
+    F q hLocal T ⟨z0, hz0⟩ hThree faceBag hFace hBudgetT
 
 /-- The exact conformality conclusion for a finite trace vertex set Z.
 Every clique in the pair graph is covered by an ORIGINAL member;

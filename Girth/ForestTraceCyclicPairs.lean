@@ -23,13 +23,14 @@ trace pair graph to these data remains a separate, exact adapter.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W ι E : Type v}
+universe v w
+variable {W : Type v} {E : Type w}
 
 /-- Cyclic required pairs cannot all be covered by an indexed
 running-intersection family without some member covering two of
 the pairs. No assumptions on support edges are necessary. -/
 theorem JoinTree.no_cyclic_unique_pairs
+    {ι : Type v}
     {F : ι → HypergraphPiece W}
     [Fintype ι] [Nonempty ι]
     (J : JoinTree F)

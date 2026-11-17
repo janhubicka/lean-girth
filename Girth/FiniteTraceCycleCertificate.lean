@@ -44,7 +44,7 @@ theorem IsInducedFinCycle.adj_iff
 nonadjacent cross-pair certificate derived rather than supplied. -/
 theorem no_bounded_fin_cycle_of_triangleFree
     [Fintype ι]
-    (F : ι → Set W) (Z : Set W) (q k : ℕ)
+    (F : ι → Set W) (Z : Set W) [DecidableEq Z] (q k : ℕ)
     (hLocal : HasInternalJoinTreeCompletions F q)
     (hk : 4 ≤ k)
     (hBudget : k ≤ q)
@@ -121,7 +121,7 @@ theorem IsInducedFinCycle.image_cliqueFree_three
 /-- Injectivity of the vertex map preserves the distinction
 between different unordered consecutive pairs. -/
 theorem IsInducedFinCycle.image_distinct_edges
-    {U : Type v} (G : SimpleGraph U) (k : ℕ)
+    {U : Type v} [DecidableEq U] (G : SimpleGraph U) (k : ℕ)
     (v : Fin k → U)
     (h : IsInducedFinCycle G k v)
     (hIndices :
@@ -164,6 +164,7 @@ theorem no_bounded_induced_fin_cycle_of_standard_cycle_facts
     (hCycleTriangleFree :
       (SimpleGraph.cycleGraph k).CliqueFree 3) :
     False := by
+  classical
   have hEdges :
       ∀ i : Fin k,
         (tracePairGraph F Z).Adj (v i)

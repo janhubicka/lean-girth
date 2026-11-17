@@ -21,8 +21,8 @@ remains to be implemented.
 
 namespace StructuralRamsey.Girth
 
-universe v
-variable {W ι E : Type v}
+universe v w
+variable {W ι : Type v} {E : Type w}
 
 /-- An explicit chordlessness certificate for a pair of required
 edges: the endpoints of the two edges include a distinct nonadjacent

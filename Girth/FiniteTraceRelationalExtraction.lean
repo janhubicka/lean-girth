@@ -32,7 +32,8 @@ def inducedToMixedFamilyUnion
   toFun z := ⟨z.1, by
     obtain ⟨i, hz⟩ := hVertices z.1 z.2
     exact Set.mem_iUnion.mpr ⟨i, hz⟩⟩
-  injective := fun _ _ h => Subtype.ext (congrArg Subtype.val h)
+  injective := fun _ _ h =>
+    Subtype.ext (congrArg (fun z : mixedFamilyCarrier m => z.val) h)
   map_rel_iff := by
     intro r t
     change (R.rel r (Subtype.val ∘ t) ∧
@@ -75,7 +76,15 @@ theorem smallInducedStructure_embeds_supportedTree_of_forestCompletion
     obtain ⟨J⟩ := hForest.joinTree_of_nonempty
     refine ⟨S, hSub, ⟨⟨J.tree, J.isTree, ?_⟩⟩⟩
     intro x
-    simpa only [setBagPiece, F, ABMember.supportPiece_carrier] using J.running x
+    change (J.tree.induce {i : {j : ι // j ∈ S} | x ∈ (m i.val).carrier}).Preconnected
+    have hOccurrences :
+        {i : {j : ι // j ∈ S} | x ∈ ((m i.val).supportPiece A).carrier} =
+          {i : {j : ι // j ∈ S} | x ∈ (m i.val).carrier} := by
+      ext i
+      change x ∈ ((m i.val).supportPiece A).carrier ↔ x ∈ (m i.val).carrier
+      rw [ABMember.supportPiece_carrier]
+    rw [← hOccurrences]
+    exact J.running x
   have chooseRequest : ∃ N : Finset ι, N.Nonempty ∧ N.card ≤ q ∧
       CoversNonemptyTraces F Z (N : Set ι) := by
     by_cases hZ : Z.Nonempty
