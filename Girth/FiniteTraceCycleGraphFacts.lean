@@ -71,7 +71,10 @@ theorem standardCycle_cliqueFree_three
   have hij' := (SimpleGraph.cycleGraph_adj').mp hij
   have hil' := (SimpleGraph.cycleGraph_adj').mp hil
   have hjl' := (SimpleGraph.cycleGraph_adj').mp hjl
-  fin_omega
+  rcases hij' with hij' | hij' <;>
+    rcases hil' with hil' | hil' <;>
+    rcases hjl' with hjl' | hjl' <;>
+    fin_omega
 
 /-- No induced cycle of length between four and q can occur in
 the trace graph of an internally q-tree-completable ORIGINAL
