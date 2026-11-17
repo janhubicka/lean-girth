@@ -31,11 +31,12 @@ there is a finite SET of physical copies containing all selected ones,
 with only designated extra copies. Foresthood is tested on the
 distinct complete support pieces, as in the manuscript's definition,
 rather than on arbitrary embedding labels. -/
-def PhysicalCopySetForestExtension
+noncomputable def PhysicalCopySetForestExtension
     (support : Phys → HypergraphPiece W)
     (eligible designated : Phys → Prop)
-    (m : ℕ) : Prop :=
-  ∀ s : Finset Phys,
+    (m : ℕ) : Prop := by
+  classical
+  exact ∀ s : Finset Phys,
     (∀ p : Phys, p ∈ s → eligible p) →
     s.card ≤ m →
       ∃ t : Finset Phys,
