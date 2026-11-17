@@ -24,7 +24,7 @@ the exact-head build and #print axioms still must run.
 namespace StructuralRamsey.Girth
 
 universe v
-variable {W Q : Type v}
+variable {W : Type v}
 
 /-- Lift nonempty local forests over an outer join tree when only
 NON-SINGLETON outer separators carry an explicitly retained
@@ -35,7 +35,7 @@ The output retains every local member, including requests; the
 finite short-auxiliary deletion operation can be applied separately
 to remove precisely unselected separator requests. -/
 theorem forestOfCopies_lift_local_without_singleton_requests
-    {K : Q → Type v}
+    {Q : Type v} {K : Q → Type v}
     [Fintype Q] [Nonempty Q]
     [∀ q : Q, Fintype (K q)]
     [∀ q : Q, Nonempty (K q)]
@@ -79,14 +79,15 @@ theorem forestOfCopies_lift_local_without_singleton_requests
     let R := {q : Q // q ≠ leaf}
     let p : R := ⟨parent, hadj.ne.symm⟩
     letI : Nonempty R := ⟨p⟩
-    let reindexRest :
-        R ≃ {q : Q // q ∈ (({leaf} : Set Q)ᶜ)} :=
-      Equiv.subtypeEquivRight (fun q => by
-        simp only [Set.mem_compl_iff, Set.mem_singleton_iff])
-    let JRest : JoinTree (fun q : R => P q.1) := by
-      simpa [erasePiece, reindexRest] using
-        (JOuter.eraseLeaf hadj huniq).reindex reindexRest
+    let JRest : JoinTree (fun q : R => P q.1) :=
+      JOuter.eraseLeaf hadj huniq
     let KRest : R → Type v := fun q => K q.1
+    letI : ∀ q : R, Fintype (KRest q) := fun q =>
+      inferInstanceAs (Fintype (K q.1))
+    letI : ∀ q : R, Nonempty (KRest q) := fun q =>
+      inferInstanceAs (Nonempty (K q.1))
+    letI : Nonempty (Sigma KRest) :=
+      ⟨⟨p, Classical.choice (inferInstanceAs (Nonempty (KRest p)))⟩⟩
     let FRest :
         (q : R) → KRest q → HypergraphPiece W :=
       fun q k => F q.1 k
@@ -104,15 +105,7 @@ theorem forestOfCopies_lift_local_without_singleton_requests
             FRest q k = HypergraphPiece.oneEdge
               ((P q.1).carrier ∩ (P r.1).carrier) := by
       intro q r hqr hBig
-      have hqr0 :
-          (JOuter.eraseLeaf hadj huniq).tree.Adj
-            (reindexRest q) (reindexRest r) := by
-        exact hqr
-      have hqr1 : JOuter.tree.Adj
-          (reindexRest q).1 (reindexRest r).1 := by
-        exact hqr0
-      have hqr' : JOuter.tree.Adj q.1 r.1 := by
-        simpa [reindexRest] using hqr1
+      have hqr' : JOuter.tree.Adj q.1 r.1 := hqr
       exact hEdgeRequest hqr' hBig
     have hcard :
         Fintype.card R < Fintype.card Q := by
