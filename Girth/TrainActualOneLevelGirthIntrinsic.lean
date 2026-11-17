@@ -134,5 +134,33 @@ theorem attachedSelectedPicture_fullSystemGirth_of_intrinsic_geometry
     q (by omega) hOutputLinear hStrong hTwoCopies
     hActive hCoreStrong hOldFull.2 hWitness
 
+/-- The one-level theorem applied to any specified family of train cuts.
+The chosen cuts may have different cutoffs. -/
+theorem attachedSelectedPicture_fullSystemGirth_at_cuts
+    [Finite UA]
+    (hPartite : C.IsPartiteOver D)
+    (hBaseLinear : ALinear A D)
+    (hRigid : ∀ b : RelStructure.Embedding A D, SameCopy b e → b = e)
+    (hStrong : ∀ r : RelStructure.Embedding B D, r ∈ family →
+      AStrong A D (copyCarrier r))
+    (hTwoCopies : ∀ r : Selected, ∃ a b : OldEdge,
+      a ≠ b ∧ a.1 ⊆ copyCarrier r.1.embedding ∧
+        b.1 ⊆ copyCarrier r.1.embedding)
+    (cuts : Set (Fin (m + 1))) (cutoff : Fin (m + 1) → ℕ)
+    (hCutoff : ∀ j ∈ cuts, 2 ≤ cutoff j)
+    (hOld : ∀ j ∈ cuts,
+      (selectedPictureOrderOneData A B D C family selected T j).FullSystemGirthGT (cutoff j))
+    (hWitness : ∀ j ∈ cuts,
+      (sharedWitnessOrderOneData U j Emb
+        (Subtype.val : CoreEdge → Set Y)).FullSystemGirthGT (cutoff j)) :
+    ∀ j ∈ cuts,
+      (attachedSelectedPictureOrderOneData
+        A hA B D C family selected e R f T U hShared j).FullSystemGirthGT (cutoff j) := by
+  intro j hj
+  exact attachedSelectedPicture_fullSystemGirth_of_intrinsic_geometry
+    A hA B D C family selected e R f T U hShared hRel j
+    hPartite hBaseLinear hRigid hStrong hTwoCopies
+    (cutoff j) (hCutoff j hj) (hOld j hj) (hWitness j hj)
+
 end IntrinsicOneLevelOutputGirth
 end StructuralRamsey.Girth
