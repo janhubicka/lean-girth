@@ -1,0 +1,8 @@
+import Girth.TrainFinePartiteSupportedOrder
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.supportedCrossPartOrder
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.supportedCrossPartOrder_edge
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.supportCopies_supportedCrossPartOrder
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.supportedCrossPartOrder_lift
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.supportedCrossPartOrder_forwardCompatible
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.originalOrder_bounds_of_supportedCrossPartOrder
