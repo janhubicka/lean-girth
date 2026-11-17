@@ -49,7 +49,7 @@ local notation "Core" => RelStructure.Attachment.coreEmbedding C.toRelStructure 
 local notation "CoreActual" => (fun (b : CoreEdge) =>
   actualAPictureEdgeEquiv A hA C.toRelStructure S R f
     (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μBottom
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed

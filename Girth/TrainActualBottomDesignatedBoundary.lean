@@ -77,7 +77,7 @@ local notation "ActualEdge" => OldACarrierEdge A Actual
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
 local notation "Std" => RelStructure.Attachment.copyEmbedding C.toRelStructure S R f
 local notation "Core" => RelStructure.Attachment.coreEmbedding C.toRelStructure S R f
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μBottom
 
@@ -167,8 +167,7 @@ theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_base_strong
     (hCoreMixed :
       ∃ x : RelStructure.Attachment.Vertex S (W := Y) (I := I),
       ∃ p : Quotient
-        ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared)
-          .wagonSetoid μBottom),
+        ((generatedActualASupportTrain A hA C.toRelStructure S R f T U hShared).wagonSetoid μBottom),
         ((K.connector (trainCyclicPred k) = Sum.inl x ∧
             K.connector k = Sum.inr p) ∨
           (K.connector (trainCyclicPred k) = Sum.inr p ∧

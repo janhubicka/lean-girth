@@ -49,7 +49,7 @@ theorem BigCycle.bottom_next_standard_of_edge_wagon
       have hContain := hAllowed (cyclicSucc k)
       rw [hNextOwner] at hContain
       change D.carrier (C.label (cyclicSucc k)) ⊆ stdCarrier s at hContain
-      exact ⟨s, hNextOwner, hNextEdge.trans hContain⟩
+      exact ⟨s, rfl, hNextEdge.trans hContain⟩
   | inr b =>
       have hNextLabel := hAllowed (cyclicSucc k)
       rw [hNextOwner] at hNextLabel
@@ -87,7 +87,7 @@ theorem BigCycle.bottom_previous_standard_of_edge_wagon
       have hContain := hAllowed p
       rw [hPrevOwner] at hContain
       change D.carrier (C.label p) ⊆ stdCarrier s at hContain
-      exact ⟨s, hPrevOwner, hPrevEdge.trans hContain⟩
+      exact ⟨s, rfl, hPrevEdge.trans hContain⟩
   | inr b =>
       have hPrevLabel := hAllowed p
       rw [hPrevOwner] at hPrevLabel
@@ -128,12 +128,14 @@ theorem BigCycle.bottom_minimal_no_isolated_edge_wagon
         D H stdCarrier coreToEdge owner hAllowed k e hLabel hNext
       refine ⟨s, ?_, Or.inr hs.symm⟩
       change D.carrier (C.label k) ⊆ stdCarrier s
-      simpa only [hLabel, D.carrier] using hSub
+      rw [hLabel]
+      exact hSub
     · obtain ⟨s, hs, hSub⟩ := C.bottom_previous_standard_of_edge_wagon
         D H stdCarrier coreToEdge owner hAllowed k e hLabel hPrev
       refine ⟨s, ?_, Or.inl hs.symm⟩
       change D.carrier (C.label k) ⊆ stdCarrier s
-      simpa only [hLabel, D.carrier] using hSub
+      rw [hLabel]
+      exact hSub
   obtain ⟨s, hCan, hAdj⟩ := hNeighbour
   classical
   let alternative : Fin n → Std ⊕ Core :=

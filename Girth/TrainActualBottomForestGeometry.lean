@@ -50,7 +50,7 @@ local notation "CoreActual" => (fun (b : CoreEdge) =>
   Eqv (physicalCoreEdge (sharedOldACarrierInclusion A C.toRelStructure S) I b))
 local notation "Train" => generatedActualASupportTrain
   A hA C.toRelStructure S R f T U hShared
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μBottom
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
@@ -91,7 +91,7 @@ theorem attachedSelectedPicture_bottomForestGeometry
     exact hLinear a b hCopies
   parent_injective := by
     intro edge edge' hEq
-    exact (Train.bottom edge edge').mp (Quotient.exact hEq)
+    exact ((Train).bottom edge edge').mp (Quotient.exact hEq)
 
 /-- At the actual physical bottom cut, the generic two-sort owner
 predicate is the exact already-minimized geometric owner predicate.
@@ -126,7 +126,7 @@ theorem attachedSelectedPicture_bottom_no_mixed_singleton_of_core_boundary
     (hBoundary : ∀ a : (I × {q : DesignatedCopy B D C family // q ∈ selected}) ⊕ ActualEdge,
       (Out).designated a →
         SmallOrWholeEdgeBoundary
-          (Set.univ : Set (Set (RelStructure.Attachment.Vertex S (W := Y) (I := I)))
+          (Set.univ : Set (Set (RelStructure.Attachment.Vertex S (W := Y) (I := I))))
           (copyCarrier (RelStructure.Attachment.coreEmbedding C.toRelStructure S R f))
           ((Out).bottomForestPiece
             (attachedSelectedPicture_bottomForestGeometry

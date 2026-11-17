@@ -49,12 +49,13 @@ local notation "ActualEdge" => OldACarrierEdge A Actual
 local notation "CoreEdge" => OldACarrierEdge A R
 local notation "Selected" => {q : DesignatedCopy B D C family // q ∈ selected}
 local notation "Core" => RelStructure.Attachment.coreEmbedding C.toRelStructure S R f
-local notation "μBottom" => (⟨0, Nat.zero_lt_succ m⟩ : Fin (m + 1))
+local notation "μBottom" => (Fin.mk 0 (Nat.zero_lt_succ m))
 local notation "Out" => attachedSelectedPictureOrderOneData
   A hA B D C family selected e R f T U hShared μBottom
 local notation "GeomAllowed" => selectedOutputGeometricOwnerAllowed
   A hA B D C family selected e R f T U hShared μBottom
 
+include hA in
 /-- Exact A-strongness of the attached core implies that any ambient
 A-edge meeting it in two vertices is wholly inside it. -/
 theorem attachedSelectedPicture_bottom_coreEdges_strong_of_oldStrong
@@ -106,7 +107,7 @@ theorem attachedSelectedPicture_bottom_two_cycle_distinct_owner_supreme
   exact K.two_bottom_supreme_of_core_separated Out H
     (copyCarrier Core)
     (attachedSelectedPicture_bottom_coreEdges_strong_of_oldStrong
-      A hA C e R f hOldStrong)
+      A hA D C e R f hOldStrong)
     hDesignated hCross
 
 end OriginalTwoBottomDistinct

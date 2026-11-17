@@ -110,35 +110,44 @@ theorem BottomForestGeometry.allowedIntersection_of_core_separated
     (hCross : D.carrier a ∩ D.carrier b ⊆ S) :
     AllowedIntersection (D.bottomForestPiece H a)
       (D.bottomForestPiece H b) := by
-  let family : Fin 2 → HypergraphPiece V :=
-    fun j => if j = 0 then D.bottomForestPiece H a
+  let family : ULift.{v} (Fin 2) → HypergraphPiece V :=
+    fun j => if j.down = 0 then D.bottomForestPiece H a
       else D.bottomForestPiece H b
-  have h0 : family 0 = D.bottomForestPiece H a := by
-    simp [family]
-  have h1 : family 1 = D.bottomForestPiece H b := by
-    simp [family]
-  have hBoundary : ∀ j : Fin 2,
+  let left : ULift.{v} (Fin 2) := ⟨0⟩
+  let right : ULift.{v} (Fin 2) := ⟨1⟩
+  have h0 : family left = D.bottomForestPiece H a := by
+    simp [family, left]
+  have h1 : family right = D.bottomForestPiece H b := by
+    simp [family, right]
+  have hBoundary : ∀ j : ULift.{v} (Fin 2),
       SmallOrWholeEdgeBoundary (Set.range D.edgeCarrier) S (family j) := by
-    intro j
+    rintro ⟨j⟩
     fin_cases j
-    · simpa [h0] using
-        (H.everyLabel_smallOrWhole_core D S hCoreStrong hDesignated a)
-    · simpa [h1] using
-        (H.everyLabel_smallOrWhole_core D S hCoreStrong hDesignated b)
-  have hCrossFamily : ∀ ⦃i j : Fin 2⦄, i ≠ j →
+    · change SmallOrWholeEdgeBoundary (Set.range D.edgeCarrier) S (family left)
+      rw [h0]
+      exact H.everyLabel_smallOrWhole_core D S hCoreStrong hDesignated a
+    · change SmallOrWholeEdgeBoundary (Set.range D.edgeCarrier) S (family right)
+      rw [h1]
+      exact H.everyLabel_smallOrWhole_core D S hCoreStrong hDesignated b
+  have hCrossFamily : ∀ ⦃i j : ULift.{v} (Fin 2)⦄, i ≠ j →
       (family i).carrier ∩ (family j).carrier ⊆ S := by
-    intro i j hij
+    rintro ⟨i⟩ ⟨j⟩ hij
     fin_cases i <;> fin_cases j
     · exact False.elim (hij rfl)
-    · simpa only [h0, h1] using hCross
-    · simpa only [h0, h1, Set.inter_comm] using hCross
+    · change (family left).carrier ∩ (family right).carrier ⊆ S
+      rw [h0, h1]
+      exact hCross
+    · change (family right).carrier ∩ (family left).carrier ⊆ S
+      rw [h0, h1, Set.inter_comm]
+      exact hCross
     · exact False.elim (hij rfl)
   have hPair : PairwiseAllowed family :=
     pairwiseAllowed_of_distinctOwner_boundaries family S
       (Set.range D.edgeCarrier)
       (H.allEdgeCarriers_linear D) hBoundary hCrossFamily
-  have hDifferent : (0 : Fin 2) ≠ 1 := by decide
-  simpa only [h0, h1] using hPair hDifferent
+  have hDifferent : left ≠ right := by decide
+  rw [← h0, ← h1]
+  exact hPair hDifferent
 
 /-- The original length-two cycle is already globally supreme when
 its two whole label carriers meet only inside the core. The forest
