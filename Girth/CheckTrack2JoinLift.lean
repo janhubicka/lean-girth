@@ -1,0 +1,46 @@
+import Girth.ForestRetainedSetLift
+
+/-!
+# Track 2 focused local axiom gate: General singleton-free join-tree lift
+
+Part of the 32-declaration Track 2 audit: 28 new candidates and 4 reused existing theorems.
+A source-level declaration is NOT kernel-verified until this file is
+actually compiled with the pinned Lean/mathlib toolchain and the strict
+axiom output is parsed successfully. Do not promote validation markers
+on the basis of this gate file's existence.
+-/
+
+#check StructuralRamsey.Girth.allowedIntersection_oneEdge_self
+#check StructuralRamsey.Girth.ownEdge_of_allowed_oneEdge_large
+#check StructuralRamsey.Girth.allowedIntersection_with_local_request
+#check StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
+#check StructuralRamsey.Girth.forestOfCopies_sum_of_subsingleton_overlap
+#check StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
+#check StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
+#check StructuralRamsey.Girth.ForestOfCopies.finiteImage_of_duplicate_oneEdge
+#check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_on_distinct_image
+#check StructuralRamsey.Girth.isOneEdge_of_linear_carrier_subset_edge
+#check StructuralRamsey.Girth.duplicatedLocalMember_isOneEdge_of_ambient_linear
+#check StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_on_set
+#check StructuralRamsey.Girth.ForestOfCopies.restrict_to_retained_finset
+#check StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_retained_set
+#check StructuralRamsey.Girth.forestOfCopies_lift_retained_set_including_empty_outer
+
+#print axioms StructuralRamsey.Girth.allowedIntersection_oneEdge_self
+#print axioms StructuralRamsey.Girth.ownEdge_of_allowed_oneEdge_large
+#print axioms StructuralRamsey.Girth.allowedIntersection_with_local_request
+#print axioms StructuralRamsey.Girth.allowedIntersection_cross_of_common_request
+#print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_subsingleton_overlap
+#print axioms StructuralRamsey.Girth.forestOfCopies_sum_of_common_edge
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_requests
+#print axioms StructuralRamsey.Girth.ForestOfCopies.finiteImage_of_duplicate_oneEdge
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_on_distinct_image
+#print axioms StructuralRamsey.Girth.isOneEdge_of_linear_carrier_subset_edge
+#print axioms StructuralRamsey.Girth.duplicatedLocalMember_isOneEdge_of_ambient_linear
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_local_without_singleton_on_set
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_to_retained_finset
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_without_singleton_retained_set
+#print axioms StructuralRamsey.Girth.forestOfCopies_lift_retained_set_including_empty_outer
+
+#check StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
+#print axioms StructuralRamsey.Girth.ForestOfCopies.restrict_image_to_selected_added
