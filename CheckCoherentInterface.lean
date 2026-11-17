@@ -1,5 +1,6 @@
 import Girth.CoherentSharedOccurrence
-import Girth.CrossPortP4Endpoint
+import Girth.ClosedPortShortCycles
+import Girth.PortAttachmentUnique
 import Girth.SupportedPartialClosureEquiv
 
 /-!
@@ -26,3 +27,12 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.crossing_P4_birth_shape_of_closed_port
 #print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint
 #print axioms StructuralRamsey.Girth.CoherentPort.crossing_induced_P4_no_endpoint_midpoint_reversed
+#print axioms StructuralRamsey.Girth.CoherentPort.portNeighbours_subsingleton_of_midpointClosed
+#print axioms StructuralRamsey.Girth.CoherentPort.cross_private_midpoint_unique_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_three
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_four
+#print axioms StructuralRamsey.Girth.CoherentPort.no_cross_private_cycle_five
+#print axioms StructuralRamsey.Girth.CoherentPort.six_cycle_location_pattern_allowed
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_triangle_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_square_of_closed_port
+#print axioms StructuralRamsey.Girth.CoherentPort.no_mixed_pentagon_of_closed_port
