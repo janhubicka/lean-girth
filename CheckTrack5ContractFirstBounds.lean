@@ -1,0 +1,4 @@
+import Girth.TrainFillingContractFirstBounds
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.contractFirst_labelledCutGirth
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.contractFirst_adjacentParameters

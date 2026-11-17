@@ -1,0 +1,5 @@
+import Girth.TrainFillingContractFirstTrain
+
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.contractFirst
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.contractFirst_rel_firstWagon
+#print axioms StructuralRamsey.Girth.EdgeTrainLevels.contractFirstWagonEquiv_carrier
