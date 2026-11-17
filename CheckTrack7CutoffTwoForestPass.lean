@@ -1,0 +1,4 @@
+import Girth.TrainPhysicalProjectedForestCutoffTwo
+
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.ramseyForest_cutoffTwo
+#print axioms StructuralRamsey.Girth.TrainRecursiveWitness.CoverageFree.Physical.projectedFinePartiteForest_cutoffTwo
