@@ -1,5 +1,6 @@
 import Girth.TrainCoverageFreeACopyProjection
 import Girth.ActiveSupportProjectionExact
+import Girth.PartiteOrderCompatibility
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -155,5 +156,34 @@ theorem mapped_activeSupport_eq_projected_of_projectedACopies
       _ = copyCarrier proj.val := congrArg copyCarrier heq
   · exact projectedSupportCopies_subset_mapped_activeSupport
       A₀.ordered C β.toFunctionEmbedding
+
+
+/-- The two independent invariants required by the ordered picture:
+true physical A-copy projection AND forward compatibility of the
+retained cross-part auxiliary order. Neither implies the other.
+Both survive free attachment without full ordered IsPartiteOver. -/
+theorem projectsACopies_and_orderCompatible_freeAttachment
+    {L : RelLanguage.{u}} {UA P X Y I : Type v}
+    [LT P]
+    (A : RelStructure L.withOrder UA)
+    (D : RelStructure L.withOrder P)
+    (C : StructuralRamsey.Partite.System L.withOrder P X)
+    (S : Set X)
+    (E : StructuralRamsey.Partite.System L.withOrder P Y)
+    (f : I → StructuralRamsey.Partite.Embedding (C.induce S) E)
+    (hA : A.Irreducible)
+    (hProjectedOld : ProjectsACopies A D C)
+    (hProjectedCore : ProjectsACopies A D E)
+    (hOrderOld : PartiteOrderCompatible C)
+    (hOrderCore : PartiteOrderCompatible E) :
+    ProjectsACopies A D
+      (StructuralRamsey.Partite.Attachment.attach C S E f) ∧
+      PartiteOrderCompatible
+        (StructuralRamsey.Partite.Attachment.attach C S E f) := by
+  constructor
+  · exact projectsACopies_freeAttachment
+      A D C S E f hA hProjectedOld hProjectedCore
+  · exact partiteOrderCompatible_attachment
+      C S E f hOrderOld hOrderCore
 
 end StructuralRamsey.Girth
