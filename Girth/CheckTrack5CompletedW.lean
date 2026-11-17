@@ -1,4 +1,4 @@
-import Girth.TrainFillingPrivateCompletedWPrivateEHN
+import Girth.TrainFillingPrivateActualCompletedWEHN
 
 set_option Elab.async false
 
@@ -40,3 +40,6 @@ the imported completed-W chain is validated yet.
 #print axioms StructuralRamsey.Girth.completedFirstWagon_allACopies_strictMono
 #print axioms StructuralRamsey.Girth.completedFirstWagon_orderedEHN
 #print axioms StructuralRamsey.Girth.completedFirstWagon_privateEHN
+
+#check StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
+#print axioms StructuralRamsey.Girth.actualFirstWagonCompletedW_privateEHN
