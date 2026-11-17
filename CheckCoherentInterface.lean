@@ -1,4 +1,5 @@
 import Girth.FreePortClosureCriterion
+import Girth.TwoStepCoveredClosure
 import Girth.CoherentSharedTreeExact
 import Girth.CanonicalOccurrenceBirth
 import Girth.ClosedPortShortCycles
@@ -52,3 +53,7 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_not_before_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_after_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.midpointClosed_iff_sidewise_and_crossPort
+
+#print axioms StructuralRamsey.Girth.CoherentPort.midpointClosed_of_twoStepCovered
+#print axioms StructuralRamsey.Girth.CoherentPort.twoStepCovered_range_of_induced
+#print axioms StructuralRamsey.Girth.CoherentPort.closedGraphEmbedding_of_twoStepCovered
