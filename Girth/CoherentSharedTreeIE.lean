@@ -42,14 +42,33 @@ theorem isTree_of_two_induced_trees_and_edge_IE
       hTreeL hTreeR G
       (by intro i j hij; exact hij)
       (by intro i j hij; exact hij)
+  classical
+  letI : Fintype Q := Fintype.ofFinite Q
   have hVertexIE :
-      Nat.card Q + Nat.card (L ∩ R) = Nat.card L + Nat.card R := by
-    have h := Set.ncard_union_add_ncard_inter L R
-    rw [hCover, Set.ncard_univ] at h
-    simpa only [← Nat.card_coe_set_eq] using h
-  have hLeftCount := hTreeL.ncard_edgeSet_add_one
-  have hRightCount := hTreeR.ncard_edgeSet_add_one
-  have hSharedCount := hTreeShared.ncard_edgeSet_add_one
+      Nat.card Q + (L ∩ R).ncard = L.ncard + R.ncard := by
+    simpa [hCover, Set.ncard_univ] using
+      (Set.ncard_union_add_ncard_inter L R)
+  have hCounts (S : Set Q) (hS : (G.induce S).IsTree) :
+      (G.induce S).edgeSet.ncard + 1 = S.ncard := by
+    letI : Fintype S := Fintype.ofFinite S
+    letI : Fintype (G.induce S).edgeSet := Fintype.ofFinite _
+    have hEdges :
+        Finset.card (G.induce S).edgeFinset =
+          (G.induce S).edgeSet.ncard := by
+      calc
+        _ = Fintype.card (G.induce S).edgeSet :=
+          (G.induce S).edgeFinset_card
+        _ = (G.induce S).edgeSet.ncard :=
+          Set.fintypeCard_eq_ncard _
+    calc
+      (G.induce S).edgeSet.ncard + 1 =
+          Finset.card (G.induce S).edgeFinset + 1 :=
+        congrArg (· + 1) hEdges.symm
+      _ = Fintype.card S := hS.card_edgeFinset
+      _ = S.ncard := Set.fintypeCard_eq_ncard S
+  have hLeftCount := hCounts L hTreeL
+  have hRightCount := hCounts R hTreeR
+  have hSharedCount := hCounts (L ∩ R) hTreeShared
   have hTotalCount : G.edgeSet.ncard + 1 = Nat.card Q := by
     omega
   exact isTree_of_connected_ncard_edgeSet G hConn hTotalCount
