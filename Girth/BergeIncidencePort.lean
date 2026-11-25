@@ -40,12 +40,12 @@ def graph (P : HypergraphPiece W) : SimpleGraph (IncidenceNode P) where
     | .inl x, .inr e => x.1 ∈ e.1
     | .inr e, .inl x => x.1 ∈ e.1
     | _, _ => False
-  symm := by
+  symm := ⟨by
     intro a b h
-    cases a <;> cases b <;> simpa using h
-  loopless := by
+    cases a <;> cases b <;> simpa using h⟩
+  loopless := ⟨by
     intro a
-    cases a <;> simp
+    cases a <;> simp⟩
 
 /-- Actual incidence is exactly the adjacency of a physical
 carrier vertex and a physical support-edge node. -/
