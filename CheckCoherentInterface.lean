@@ -1,3 +1,4 @@
+import Girth.BergeIncidencePort
 import Girth.FreePortClosureCriterion
 import Girth.CoherentSharedTreeExact
 import Girth.CanonicalOccurrenceBirth
@@ -52,3 +53,9 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_not_before_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_after_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.midpointClosed_iff_sidewise_and_crossPort
+
+#print axioms StructuralRamsey.Girth.BergeIncidence.graph_adj_vertex_edge
+#print axioms StructuralRamsey.Girth.BergeIncidence.graph_adj_edge_vertex
+#print axioms StructuralRamsey.Girth.BergeIncidence.graph_no_vertex_vertex
+#print axioms StructuralRamsey.Girth.BergeIncidence.graph_no_edge_edge
+#print axioms StructuralRamsey.Girth.BergeIncidence.edge_node_subset_carrier
