@@ -1,3 +1,4 @@
+import Girth.BergePortSignature
 import Girth.FreePortClosureCriterion
 import Girth.CoherentSharedTreeExact
 import Girth.CanonicalOccurrenceBirth
@@ -52,3 +53,8 @@ No trusted extra axiom, sorry or placeholder is permitted.
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_not_before_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.occurrence_after_birth
 #print axioms StructuralRamsey.Girth.CoherentPort.midpointClosed_iff_sidewise_and_crossPort
+
+#print axioms StructuralRamsey.Girth.BergePortSignature.finite_shortSignature
+#print axioms StructuralRamsey.Girth.BergePortSignature.ncard_shortSignature_le
+#print axioms StructuralRamsey.Girth.BergePortSignature.shortSignature_empty_of_subsingleton
+#print axioms StructuralRamsey.Girth.BergePortSignature.noShortMixed_of_empty
