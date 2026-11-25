@@ -63,7 +63,7 @@ def ShortSignature
 endpoint/length signatures even if the ambient hypergraph
 has infinitely many edges. -/
 theorem finite_shortSignature
-    [Finite S]
+    {S : Set W} [Finite S]
     (H : Set (Set W)) (g : ℕ) :
     (ShortSignature H S g).Finite := by
   exact Set.toFinite _
@@ -72,7 +72,7 @@ theorem finite_shortSignature
 and the girth cutoff. This is independent of the sizes of the
 two private pieces or of the number of physical path witnesses. -/
 theorem ncard_shortSignature_le
-    [Fintype S]
+    {S : Set W} [Fintype S]
     (H : Set (Set W)) (g : ℕ) :
     (ShortSignature H S g).ncard ≤
       Fintype.card S * Fintype.card S * g := by
@@ -97,7 +97,7 @@ theorem shortSignature_empty_of_subsingleton
       Subtype.ext (hS a.1.property a.2.1.property)
     exact (h.1 hEq).elim
   · intro h
-    exact False.elim (Set.not_mem_empty a h)
+    simp at h
 
 /-- A symbolic short cycle on the port with at least one excursion
 from each side. A two-edge cycle is permitted (the two paths have
@@ -127,6 +127,7 @@ The theorem linking this condition to GirthGT is the next
 proof obligation; it is not assumed anywhere in the verified
 circulation code. -/
 def NoShortMixedPortCycle
+    {S : Set W} {g : ℕ}
     (left right : Set (PortSymbol S g)) : Prop :=
   ¬ Nonempty (MixedPortCycle left right)
 
