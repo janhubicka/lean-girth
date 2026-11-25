@@ -81,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake build Girth.CoherentSharedTreeExact Girth.CanonicalOccurrenceBirth Girth.PersistentProfileColouring Girth.ClosedPortShortCycles Girth.PortAttachmentUnique Girth.BergePortSignature Girth.FreePortClosureCriterion Girth.SupportedPartialClosureEquiv
+          lake build Girth.CoherentSharedTreeExact Girth.CanonicalOccurrenceBirth Girth.PersistentProfileColouring Girth.ClosedPortShortCycles Girth.PortAttachmentUnique Girth.BergePortSignature Girth.BergePortMinimum Girth.FreePortClosureCriterion Girth.SupportedPartialClosureEquiv
       - name: Strict axioms audit for coherent-port research
         shell: bash
         run: |
