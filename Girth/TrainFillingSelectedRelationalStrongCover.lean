@@ -71,7 +71,7 @@ theorem selectedSupportOldEdge_mem_range_of_strong
   calc
     b.toFunctionEmbedding '' copyCarrier q =
         copyCarrier (b.comp q) :=
-      (copyCarrier_comp_eq_image b q).symm
+      UniformPrivateTemplate.image_copyCarrier_comp A M N b q
     _ = copyCarrier a := congrArg copyCarrier hComp
     _ = e.1 := ha.symm
 
