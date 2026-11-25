@@ -30,7 +30,7 @@ universe v
 /-- A finite nonempty graph with all vertex degrees positive and
 even must contain a simple cycle. -/
 theorem exists_cycle_of_positive_even_degree
-    {V : Type v} [Finite V] (G : SimpleGraph V)
+    {V : Type v} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj]
     (hV : Nonempty V)
     (hPositive : ∀ v : V, 0 < G.degree v)
@@ -38,8 +38,6 @@ theorem exists_cycle_of_positive_even_degree
     ∃ (v : V) (p : G.Walk v v), p.IsCycle := by
   classical
   letI : Nonempty V := hV
-  letI : Fintype V := Fintype.ofFinite V
-  letI : Fintype G.edgeSet := Fintype.ofFinite _
   have hTwo : ∀ v : V, 2 ≤ G.degree v := by
     intro v
     obtain ⟨k, hk⟩ := hEven v
@@ -47,7 +45,7 @@ theorem exists_cycle_of_positive_even_degree
     omega
   have hSum : 2 * Fintype.card V ≤ ∑ v : V, G.degree v := by
     calc
-      2 * Fintype.card V = ∑ _v : V, (2 : ℕ) := by simp
+      2 * Fintype.card V = ∑ _v : V, (2 : ℕ) := by simp [mul_comm]
       _ ≤ ∑ v : V, G.degree v := by
         apply Finset.sum_le_sum
         intro v hv
@@ -62,7 +60,11 @@ theorem exists_cycle_of_positive_even_degree
   have hCard : Nat.card V ≤ G.edgeSet.ncard := by
     rw [Nat.card_eq_fintype_card, ← hEdges]
     omega
-  exact G.exists_isCycle_of_card_le hCard
+  have hCycle : ¬ G.IsAcyclic := by
+    intro hAcyclic
+    have hBound := hAcyclic.ncard_edgeSet_add_one_le_card
+    omega
+  exact SimpleGraph.not_isAcyclic_iff_exists_isCycle.mp hCycle
 
 /-- Any finite graph with a nonempty support and even degree at
 every nonisolated vertex has a cycle. Isolated vertices are harmless:
@@ -70,28 +72,25 @@ restrict to the support and use the preceding degree-sum argument.
 This is exactly the form a nonzero finite mod-two incidence
 1-cycle will require. -/
 theorem exists_cycle_of_nonempty_even_support
-    {V : Type v} [Finite V] (G : SimpleGraph V)
+    {V : Type v} [Fintype V] (G : SimpleGraph V)
     [DecidableRel G.Adj]
     (hSupp : G.support.Nonempty)
     (hEven : ∀ v ∈ G.support, Even (G.degree v)) :
     ∃ (v : V) (p : G.Walk v v), p.IsCycle := by
   classical
-  letI : Fintype V := Fintype.ofFinite V
   obtain ⟨x, hx⟩ := hSupp
   letI : Nonempty G.support := ⟨⟨x, hx⟩⟩
   letI : Fintype G.support := Fintype.ofFinite _
   let J : SimpleGraph G.support := G.induce G.support
-  letI : DecidableRel J.Adj := Classical.decRel _
   have hPositive : ∀ v : G.support, 0 < J.degree v := by
     intro v
     change 0 < (G.induce G.support).degree v
-    rw [G.degree_induce_support]
-    exact (G.degree_pos_iff_mem_support v.1).2 v.2
+    simpa only [G.degree_induce_support] using
+      (G.degree_pos_iff_mem_support v.1).2 v.2
   have hEvenJ : ∀ v : G.support, Even (J.degree v) := by
     intro v
     change Even ((G.induce G.support).degree v)
-    rw [G.degree_induce_support]
-    exact hEven v.1 v.2
+    simpa only [G.degree_induce_support] using hEven v.1 v.2
   obtain ⟨v, p, hp⟩ :=
     exists_cycle_of_positive_even_degree J
       (show Nonempty G.support from inferInstance)
