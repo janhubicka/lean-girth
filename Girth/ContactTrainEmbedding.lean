@@ -79,7 +79,8 @@ def filledEdge : E × L ↪ F × L where
   toFun p := (M.edge p.1,p.2)
   inj' := by
     intro a b h
-    exact Prod.ext (M.edge.injective (congrArg Prod.fst h)) (congrArg Prod.snd h)
+    exact Prod.ext (M.edge.injective (congrArg (fun p : F × L => p.1) h))
+      (congrArg (fun p : F × L => p.2) h)
 
 noncomputable def fill {Z : ContactHypergraphData X L K}
     (A : ContactFilling D Z) (B : ContactFilling H Z)
