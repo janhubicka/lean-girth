@@ -96,6 +96,13 @@ jobs:
           lake build +Girth.ContactPreservationBase
           lake env lean CheckContactPreservationBase.lean | tee contact-preservation-axioms.log
           python3 scripts/check_axioms.py contact-preservation-axioms.log CheckContactPreservationBase.lean
+      - name: Build and audit boundary geometry and indexing
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactBoundaryBase
+          lake env lean CheckContactBoundaryBase.lean | tee contact-boundary-axioms.log
+          python3 scripts/check_axioms.py contact-boundary-axioms.log CheckContactBoundaryBase.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
