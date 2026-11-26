@@ -69,7 +69,9 @@ def relabelEdges (e : F ≃ E) : ContactTrainData F m where
   parent := fun μ f => T.parent μ (e f)
   surj := fun μ => (T.surj μ).comp e.surjective
   nested := fun μ ν h a b he => T.nested μ ν h (e a) (e b) he
-  bottom := fun h => e.injective (T.bottom h)
+  bottom := by
+    intro a b h
+    exact e.injective (T.bottom h)
   top := fun a b => T.top (e a) (e b)
 
 end ContactTrainData
