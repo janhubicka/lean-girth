@@ -51,3 +51,17 @@ The initial declarations in ContactGraph, ContactSubstitution, ContactCycles, Co
 - The reusable cyclic restriction weight inequality was extracted from the older TrainCyclicRestriction proof. ContactPolygonSplit constructs the two chord arcs as order embeddings; ContactCoveredSide implements the side-triangle clause. These new proofs require a fresh passing exact-head gate; the first split run failed on two Fin arithmetic normalization steps, subsequently patched.
 - ContactCoreGeometry and ContactAttachmentGeometry implement the common-wagon, mixed triangle and global wagon-linearity arguments with an explicit free-union interface. The actual picture adapter, including incidence pullback and local wagon comparison, remains a genuine obligation. Do not mark the manuscript theorem verified on the basis of an interface theorem.
 - Heuristic progress across the full new manuscript including reusable infrastructure: approximately 30–35%, weighted by difficulty rather than source lines. The entire new proof, in particular the G4 picture preservation and recursive witness, is not yet certified.
+
+
+## Batched validation pass (26 November)
+
+The manuscript has a new reviewed baseline [girth@e9ce630dea068f37d3a682ec42489830b2494949](https://github.com/janhubicka/girth/tree/e9ce630dea068f37d3a682ec42489830b2494949): new figures, duplicate obsolete proof removed, unified two-point incidence proof, and copy restriction localized to an old clique with omitted vertices simplicial within a component. The substantive statements remain unchanged.
+
+- [Run 45794906628](https://github.com/janhubicka/lean-girth/actions/runs/45794906628) compiled ContactPolygonSplit, ContactCoveredSide and ContactCoreGeometry, but failed on the final symmetry elaboration in ContactAttachmentGeometry. That failure is corrected; the enlarged base axiom gate still requires an exact-head pass.
+- ContactPictureData derives all ContactAttachmentGeometry fields from exact common-core vertex, edge and wagon embeddings and coverage, including the bridge pullback and local pair comparison. Constructing these maps from the ordered train picture remains an adapter obligation.
+- ContactBadCycle and ContactCliqueRestriction implement shared-chord localization, absence of three points of a bad polygon in one clique, and abstract G4 restriction.
+- ContactCopyRestriction proves G1–G4 for concrete component/selected-edge data, rather than assuming a graph restriction theorem as a premise.
+- ContactLevelZero gives the pairwise allowed intersection and short polygon-to-labelled-Berge-cycle arguments. The complete join-tree equivalence and conformality adapter remain open.
+- One non-skipped push submits this batch. The workflow now first checks ContactBase (53 declarations), then the enlarged ContactCore (79 declarations), retaining only standard logical axioms. The cache key is pinned by toolchain and manifest, not source SHA; dependencies are saved before proof checking, with project build objects removed. This avoids downloading the same dependency cache repeatedly on proof failures.
+
+All new results in this batch await compilation/axiom checks. Do not mark the manuscript green based on drafted code or the earlier partial compile.
