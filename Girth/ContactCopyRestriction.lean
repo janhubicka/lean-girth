@@ -205,13 +205,12 @@ All required edges are constructed from the old bridge and partition. -/
 theorem preserves_g1 (h1 : D.ContactG1) : A.chosen.ContactG1 := by
   refine ⟨A.chosen_edge_vertices,?_,?_⟩
   · intro j e hne
-    have hn := hne
-    obtain ⟨x,hx,y,hy,hxy⟩ := hn
+    obtain ⟨x,hx,y,hy,hxy⟩ := hne
     have he := h1.strong (A.parentCopy j) e
       ⟨x,⟨hx.1,A.component_vertex_sub j (A.chosen_vertex_sub j hx.2)⟩,
        y,⟨hy.1,A.component_vertex_sub j (A.chosen_vertex_sub j hy.2)⟩,hxy⟩
     exact A.chosen_strong j e
-      (A.edge_in_component j e x he (A.chosen_vertex_sub j hx.2) hx.1) hne
+      (A.edge_in_component j e x he (A.chosen_vertex_sub j hx.2) hx.1) ⟨x,hx,y,hy,hxy⟩
   · intro j p htrigger x hx hxp
     have hxi := A.component_vertex_sub j (A.chosen_vertex_sub j hx)
     have ht : D.contactMeets (A.parentCopy j) p ∨
