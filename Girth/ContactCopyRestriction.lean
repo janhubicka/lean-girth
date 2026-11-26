@@ -205,7 +205,8 @@ All required edges are constructed from the old bridge and partition. -/
 theorem preserves_g1 (h1 : D.ContactG1) : A.chosen.ContactG1 := by
   refine ⟨A.chosen_edge_vertices,?_,?_⟩
   · intro j e hne
-    obtain ⟨x,hx,y,hy,hxy⟩ := hne
+    have hn := hne
+    obtain ⟨x,hx,y,hy,hxy⟩ := hn
     have he := h1.strong (A.parentCopy j) e
       ⟨x,⟨hx.1,A.component_vertex_sub j (A.chosen_vertex_sub j hx.2)⟩,
        y,⟨hy.1,A.component_vertex_sub j (A.chosen_vertex_sub j hy.2)⟩,hxy⟩
@@ -249,7 +250,17 @@ bound, no hypothetical split, and no additional output-girth assumption. -/
 theorem preserves_systemGirth {q : ℕ} (h : D.ContactSystemGirthGT q) :
     A.chosen.ContactSystemGirthGT q := by
   refine ⟨h.linear,A.preserves_g1 h.g1,A.preserves_g2 h.g2,h.g3,?_⟩
-  exact (A.cliqueRestriction h.g1 h.g2).preserves_g4 h.g4
+  have hOld : contactFamily D.contactCopyClique D.contactWagonClique = D.contactClique := by
+    funext a
+    cases a <;> rfl
+  have hNew : contactFamily A.chosen.contactCopyClique D.contactWagonClique =
+      A.chosen.contactClique := by
+    funext a
+    cases a <;> rfl
+  rw [← hNew]
+  apply (A.cliqueRestriction h.g1 h.g2).preserves_g4
+  rw [hOld]
+  exact h.g4
 
 end ContactCopyRestriction
 end StructuralRamsey.Girth
