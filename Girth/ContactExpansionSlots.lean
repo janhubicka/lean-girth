@@ -83,7 +83,7 @@ theorem enum_mem (k : Fin (kept ins).card) : enum ins k ∈ kept ins := by
   classical
   have hm : enum ins k ∈ Finset.univ.image (enum ins) :=
     Finset.mem_image.mpr ⟨k,Finset.mem_univ _,rfl⟩
-  exact (enum_image ins) ▸ hm
+  exact (congrArg (fun t : Finset (Fin (2*n)) => enum ins k ∈ t) (enum_image ins)).mp hm
 
 theorem exists_index {t : Fin (2*n)} (ht : t ∈ kept ins) :
     ∃ k, enum ins k = t := by
