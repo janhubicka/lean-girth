@@ -58,6 +58,7 @@ def firstRetained : Fin (d+1+h+1) := ⟨d+1,by omega⟩
 
 def lastPrefix : Fin (d+1+h+1) := ⟨d,by omega⟩
 
+include hcarrier in
 theorem prefix_carrier (μ : Fin (d+1+h+1)) (hμ : μ.val ≤ d)
     (p : R.train.Wagon μ) :
     (H.atCut (R.train.parent μ)).contactWagonCarrier p =
@@ -116,6 +117,8 @@ theorem standard_parent (μ ν : Fin (d+1+h+1)) (hle : μ ≤ ν)
   rw [R.train.parentMap_parent]
   unfold standard
   rw [R.prefixWagonEquiv_parent,R.prefixWagonEquiv_parent]
+
+include hcarrier
 
 /-- Once a short cycle at a prefix cut is in a single parent at
 the new split level, every wagon of the cycle lies in a single
@@ -181,6 +184,8 @@ theorem prefix_girth_of_lastPrefix (μ : Fin (d+1+h+1)) (hμ : μ.val < d) {g : 
   }
   exact hg ⟨B,hC⟩
 
+omit hcarrier
+
 /-- Distinct new children in a common retained first wagon
 have distinct standard labels by exact restriction. -/
 theorem split_standard_injective (p r : R.train.Wagon ⟨d,by omega⟩)
@@ -206,6 +211,125 @@ theorem split_standard_injective (p r : R.train.Wagon ⟨d,by omega⟩)
   rw [hlevel] at hc
   exact (R.prefix_eq ⟨d,by omega⟩ le_rfl (i,e) (i,f)).mpr
     ⟨rfl,(R.boundary i e f).mpr hc⟩
+
+
+/-- Every pair of edges from different standards meets, if at all,
+inside the corresponding core copies in the permitted overlap of
+the two base edges. This is supplied by the actual tagged picture. -/
+def CrossTrace (_R : ContactSplitRefinement (E := E) (Q := Q) d h) (coreCopy : Q → Set U) (crossAllowed : Set U) : Prop :=
+  ∀ i j, i ≠ j → ∀ e f,
+    H.edgeCarrier (i,e) ∩ H.edgeCarrier (j,f) ⊆
+      coreCopy i ∩ coreCopy j ∩ crossAllowed
+
+/-- The new children of the retained first wagon have girth >g:
+their switch vertices lie in the core-copy intersection and the
+new allowed part. The selected core join tree rules out the cycle. -/
+theorem lastPrefix_girth (coreCopy : Q → Set U) (crossAllowed firstAllowed : Set U)
+    {g : ℕ} (hg : LabelledGirthGT
+      (H.atCut (R.coarse.parent ⟨1,by omega⟩)).contactWagonCarrier g)
+    (hparam : H.Parameter R.coarse ⟨0,by omega⟩ ⟨1,by omega⟩ firstAllowed)
+    (hcross : R.CrossTrace H coreCopy crossAllowed)
+    (hforest : ∀ s : Finset Q, s.Nonempty → s.card ≤ g →
+      Nonempty (ContactJoinTree (fun i : {i // i ∈ s} => coreCopy i.val)))
+    (hinter : ∀ i j, i ≠ j → (coreCopy i ∩ coreCopy j ∩ crossAllowed).Subsingleton) :
+    LabelledGirthGT (H.atCut (R.train.parent ⟨d,by omega⟩)).contactWagonCarrier g := by
+  classical
+  let μ : Fin (d+1+h+1) := ⟨d,by omega⟩
+  let ν : Fin (d+1+h+1) := ⟨d+1,by omega⟩
+  have hle : μ ≤ ν := by change d ≤ d+1; omega
+  have hν : d < ν.val := by change d < d+1; omega
+  have hlev : R.tailLevel ν hν = (⟨1,by omega⟩ : Fin (h+1+1)) := by
+    apply Fin.ext
+    change d+1-d = 1
+    omega
+  have hg' := R.tail_girth H ν hν (by rw [hlev]; exact hg)
+  let F := (H.atCut (R.train.parent μ)).contactWagonCarrier
+  let K := (H.atCut (R.train.parent ν)).contactWagonCarrier
+  let parent := R.train.parentMap μ ν hle
+  let std := R.standard μ (by exact le_rfl)
+  apply contact_split_child_girth F K parent std coreCopy (crossAllowed ∩ firstAllowed)
+    hg' (H.wagon_parent_subset R.train μ ν hle)
+  · exact R.split_standard_injective
+  · intro p r hne hpr x hx
+    obtain ⟨⟨i,e⟩,he,hxe⟩ := hx.1
+    obtain ⟨⟨j,f⟩,hf,hxf⟩ := hx.2
+    have hsi : std p = i := by
+      rw [← he]
+      exact congrArg Prod.fst (R.prefixWagonEquiv_parent μ (by exact le_rfl) (i,e))
+    have hsj : std r = j := by
+      rw [← hf]
+      exact congrArg Prod.fst (R.prefixWagonEquiv_parent μ (by exact le_rfl) (j,f))
+    have hij : i ≠ j := by
+      intro heq
+      apply hne
+      exact R.split_standard_injective p r hpr (hsi.trans (heq.trans hsj.symm))
+    have hp : R.train.parent ν (i,e) = R.train.parent ν (j,f) := by
+      rw [← R.train.parentMap_parent μ ν hle,← R.train.parentMap_parent μ ν hle,he,hf]
+      exact hpr
+    have hp' := (R.tail_eq ν hν (i,e) (j,f)).mp hp
+    rw [hlev] at hp'
+    have hxfirst : x ∈ firstAllowed := by
+      by_contra hn
+      have heq := R.coarse.bottom (hparam (i,e) (j,f) x hp' hxe hxf hn)
+      exact hij (congrArg Prod.fst heq)
+    have h := hcross i j hij e f ⟨hxe,hxf⟩
+    change x ∈ coreCopy (std p) ∩ coreCopy (std r) ∩ (crossAllowed ∩ firstAllowed)
+    rw [hsi,hsj]
+    exact ⟨h.1,h.2,hxfirst⟩
+  · exact hforest
+  · intro i j hne x hx y hy
+    exact hinter i j hne ⟨hx.1,hx.2.1⟩ ⟨hy.1,hy.2.1⟩
+
+/-- The same cross-trace calculation proves the new parameter
+between the split level and the retained first level. -/
+theorem split_parameter (coreCopy : Q → Set U) (crossAllowed firstAllowed : Set U)
+    (hparam : H.Parameter R.coarse ⟨0,by omega⟩ ⟨1,by omega⟩ firstAllowed)
+    (hcross : R.CrossTrace H coreCopy crossAllowed) :
+    H.Parameter R.train ⟨d,by omega⟩ ⟨d+1,by omega⟩
+      (crossAllowed ∩ firstAllowed) := by
+  rintro ⟨i,e⟩ ⟨j,f⟩ x hp hx hy hn
+  have hco := (R.tail_eq ⟨d+1,by omega⟩ (by change d < d+1; omega) (i,e) (j,f)).mp hp
+  have hlev : R.tailLevel ⟨d+1,by omega⟩ (by change d < d+1; omega) =
+      (⟨1,by omega⟩ : Fin (h+1+1)) := by
+    apply Fin.ext
+    change d+1-d = 1
+    omega
+  rw [hlev] at hco
+  by_cases hij : i = j
+  · subst j
+    exact (R.prefix_eq ⟨d,by omega⟩ le_rfl (i,e) (i,f)).mpr
+      ⟨rfl,(R.boundary i e f).mpr hco⟩
+  · have hxCross := (hcross i j hij e f ⟨hx,hy⟩).2
+    have hxFirst : x ∈ firstAllowed := by
+      by_contra h
+      exact hij (congrArg Prod.fst (R.coarse.bottom (hparam _ _ x hco hx hy h)))
+    exact (hn ⟨hxCross,hxFirst⟩).elim
+
+include hcarrier in
+theorem prefix_parameter (μ ν : Fin (d+1+h+1))
+    (hν : ν.val ≤ d) (hμ : μ.val ≤ d)
+    (allowed : Set U)
+    (hpar : ∀ i : Q, D.Parameter R.old (R.depthLevel μ hμ) (R.depthLevel ν hν)
+      (emb i ⁻¹' allowed)) :
+    H.Parameter R.train μ ν allowed := by
+  rintro ⟨i,e⟩ ⟨j,f⟩ x hp hx hy hn
+  obtain ⟨hij,hp'⟩ := (R.prefix_eq ν hν (i,e) (j,f)).mp hp
+  change i = j at hij
+  subst j
+  rw [hcarrier] at hx hy
+  obtain ⟨y,hyE,he⟩ := hx
+  obtain ⟨z,hzF,hf⟩ := hy
+  have hEq := (emb i).injective (he.trans hf.symm)
+  subst z
+  exact (R.prefix_eq μ hμ (i,e) (i,f)).mpr
+    ⟨rfl,hpar i e f y hp' hyE hzF (fun h => hn (he ▸ h))⟩
+
+theorem tail_parameter (μ ν : Fin (d+1+h+1))
+    (hμ : d < μ.val) (hν : d < ν.val) (allowed : Set U)
+    (hp : H.Parameter R.coarse (R.tailLevel μ hμ) (R.tailLevel ν hν) allowed) :
+    H.Parameter R.train μ ν allowed := by
+  intro e f x he hx hy hn
+  exact (R.tail_eq μ hμ e f).mpr (hp e f x ((R.tail_eq ν hν e f).mp he) hx hy hn)
 
 end ContactSplitRefinement
 end StructuralRamsey.Girth
