@@ -161,11 +161,11 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   letI : Finite (Combinatorics.Line (P.projection.StripEdge b) N) :=
     Finite.of_injective (fun l => l.idxFun) (fun _ _ h => Combinatorics.Line.ext h)
   letI : Finite (Q.WordVertex N) :=
-    Finite.of_injective (fun x : Q.WordVertex N => x.val) Subtype.val_injective
+    Finite.of_injective (fun x : Q.WordVertex N => (x.val : (base b) × (N → P.projection.StripVertex b))) Subtype.val_injective
   letI : Finite A.Vertex :=
-    Finite.of_injective (fun x : A.Vertex => x.val) Subtype.val_injective
+    Finite.of_injective (fun x : A.Vertex => (x.val : Q.WordVertex N ⊕ (Combinatorics.Line (P.projection.StripEdge b) N × P.Vertex))) Subtype.val_injective
   letI : Finite A.Edge :=
-    Finite.of_injective (fun x : A.Edge => x.val) Subtype.val_injective
+    Finite.of_injective (fun x : A.Edge => (x.val : (N → P.projection.StripEdge b) ⊕ (Combinatorics.Line (P.projection.StripEdge b) N × P.Edge))) Subtype.val_injective
   exact {
     Vertex := A.Vertex
     Edge := A.Edge
