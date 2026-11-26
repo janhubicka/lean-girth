@@ -143,6 +143,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I P} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 theorem real_copy_iff (i : I) (a : I₀) (x : V₀) :
     (A.std i).vertex x ∈ H.copyCarrier (i,a) ↔ x ∈ L.copyCarrier a := by
