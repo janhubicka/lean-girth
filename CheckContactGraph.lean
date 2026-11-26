@@ -608,3 +608,17 @@ import Girth
 #print axioms StructuralRamsey.Girth.ContactTrainStrip.futureAllowed_subset_first
 #print axioms StructuralRamsey.Girth.ContactTrainStrip.future_refinement_parameters
 #print axioms StructuralRamsey.Girth.ContactTrainStrip.future_refinement_wagonBounds
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstEndpoint
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstEndpoints
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstDisjoint_linear
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstDisjoint_allowed
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.linePadding
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.lineTemplate
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffTemplate_allowed
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffInput
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffInput_arrow
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.paddedPart_place
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.sourcePart_place
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.sourcePart_original
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.orderedSource
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.OrderedSource.edgeWord
