@@ -22,7 +22,9 @@ def pullTrain (f : F ↪ E) : ContactTrainData F m where
   nested := by
     intro μ ν h e g he
     exact Subtype.ext (T.nested μ ν h (f e) (f g) (congrArg Subtype.val he))
-  bottom := fun he => f.injective (T.bottom (congrArg Subtype.val he))
+  bottom := by
+    intro e g he
+    exact f.injective (T.bottom (congrArg Subtype.val he))
   top := fun e g => Subtype.ext (T.top (f e) (f g))
 
 theorem pullTrain_rel (f : F ↪ E) (μ : Fin (m+1)) (e g : F) :
