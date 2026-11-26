@@ -697,10 +697,6 @@ import Girth
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.originalPartOrder
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.originalPartOrder_copy_order
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.originalPartOrder_edge_order
-#print axioms StructuralRamsey.Girth.contact_seedLabel_bijective
-#print axioms StructuralRamsey.Girth.contact_seedLabelEquiv
-#print axioms StructuralRamsey.Girth.contact_seedLabelEquiv_mono
-#print axioms StructuralRamsey.Girth.contact_seedLabelEquiv_parameter
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.relabelStripEndpoints
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.relabelStripEndpoints_part
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.strip_original_parameters
@@ -784,3 +780,8 @@ import Girth
 #print axioms StructuralRamsey.Girth.ContactProfileTrain.carrier_injective_of_linear
 #print axioms StructuralRamsey.Girth.contactProfileRamsey_step
 #print axioms StructuralRamsey.Girth.contactProfileRamsey_wellFounded
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.dedup
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.dedup_systemBounds
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.dedup_injective
+#print axioms StructuralRamsey.Girth.contactProfileRamsey_distinctImages
+#print axioms StructuralRamsey.Girth.contactProfileForestRamsey

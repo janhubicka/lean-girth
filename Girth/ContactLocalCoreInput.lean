@@ -12,61 +12,6 @@ variable {V E I X B L : Type v} {m : ℕ}
 variable {D : ContactHypergraphData V E I} {T : ContactTrainData E m}
 variable {base : B → Set X} [LinearOrder V] [LinearOrder X] [LinearOrder L]
 
-section SeedRelabelling
-variable {a : ℕ} (label : X → L) (word : Fin a ≃o L)
-    (enumeration : B → Fin a ↪o X)
-    (he : ∀ b, base b = Set.range (enumeration b))
-    (hw : ∀ b i, label (enumeration b i) = word i)
-
-/-- On a base edge, the original labels give a bijection, since each
-original part occurs exactly once in the common edge word. -/
-theorem contact_seedLabel_bijective (b : B) :
-    Function.Bijective (fun x : base b => label x.val) := by
-  constructor
-  · intro x y hxy
-    have hx : x.val ∈ Set.range (enumeration b) := he b ▸ x.property
-    have hy : y.val ∈ Set.range (enumeration b) := he b ▸ y.property
-    obtain ⟨i,hi⟩ := hx
-    obtain ⟨j,hj⟩ := hy
-    have h : word i = word j := by rw [← hw b i,← hw b j,hi,hj]; exact hxy
-    exact Subtype.ext (hi.symm.trans ((congrArg (enumeration b) (word.injective h)).trans hj))
-  · intro i
-    let j := word.symm i
-    refine ⟨⟨enumeration b j,?_⟩,?_⟩
-    · rw [he]; exact ⟨j,rfl⟩
-    · rw [hw]; exact word.apply_symm_apply i
-
-/-- This is the actual identification used in the class-wide forest
-boost, not a new choice of labels for each vertex. -/
-noncomputable def contact_seedLabelEquiv (b : B) : base b ≃ L :=
-  Equiv.ofBijective (fun x : base b => label x.val)
-    (contact_seedLabel_bijective label word enumeration he hw b)
-
-/-- It is increasing on the base edge, even if the global seed order
-is not concatenated by the original parts. -/
-theorem contact_seedLabelEquiv_mono (b : B) :
-    Monotone (contact_seedLabelEquiv label word enumeration he hw b) := by
-  intro x y hxy
-  have hx : x.val ∈ Set.range (enumeration b) := he b ▸ x.property
-  have hy : y.val ∈ Set.range (enumeration b) := he b ▸ y.property
-  obtain ⟨i,hi⟩ := hx
-  obtain ⟨j,hj⟩ := hy
-  have h : i ≤ j := by
-    by_contra hn
-    have hh := (enumeration b).strictMono (lt_of_not_ge hn)
-    rw [hi,hj] at hh
-    exact (not_lt_of_ge (show x.val ≤ y.val from hxy)) hh
-  change label x.val ≤ label y.val
-  rw [← hi,← hj,hw,hw]
-  exact word.monotone h
-
-/-- Pullback parameter sets agree on each base edge by definition. -/
-theorem contact_seedLabelEquiv_parameter (b : B) (A : Set L) (x : base b) :
-    x.val ∈ label ⁻¹' A ↔
-      contact_seedLabelEquiv label word enumeration he hw b x ∈ A := Iff.rfl
-
-end SeedRelabelling
-
 namespace ContactBaseProjection
 variable {H : ContactHypergraphData V E I} (P : ContactBaseProjection H base)
 
@@ -171,6 +116,7 @@ def basePart (x : W.Vertex) : X := (r.symm (W.endpoints.part x)).val
     W.basePart ((W.family.emb i).vertex x) = P.projection.stripPart b x := by
   unfold basePart
   rw [W.emb_part]
+  letI : LinearOrder P.Vertex := P.order
   exact P.projection.relabelStripEndpoints_part b r x
 
  theorem basePart_image (e : W.Edge) :
