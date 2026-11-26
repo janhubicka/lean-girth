@@ -76,7 +76,7 @@ theorem slot_shared (hc : Compatible g) (i : I) (x : V) (u : U)
   · have hmem : x ∈ Finset.univ.filter (fun y : V => y ≤ x) :=
       Finset.mem_filter.mpr ⟨Finset.mem_univ _,le_rfl⟩
     have h := Finset.le_sup (f := value g i) hmem
-    simpa only [value,hx,Option.elim] using h
+    simpa only [slot,value,hx,Option.elim] using h
 
 /-- A predecessor of a shared vertex lies strictly before its
 slot, even when it is itself private. -/
@@ -168,6 +168,8 @@ theorem exists_order [Finite I] (hc : Compatible g)
       (∀ i (x y : V), x < y →
         o.lt (contactStandardEmb g hinj i x) (contactStandardEmb g hinj i y)) := by
   classical
+  letI : Finite (ContactGlued g) := Finite.of_injective
+    (fun z : ContactGlued g => (z.val : U ⊕ (I × V))) Subtype.val_injective
   letI : Fintype (ContactGlued g) := Fintype.ofFinite _
   let tie := Fintype.equivFin (ContactGlued g)
   let f : ContactGlued g → (ℕ ×ₗ ℕ) ×ₗ Fin (Fintype.card (ContactGlued g)) :=
