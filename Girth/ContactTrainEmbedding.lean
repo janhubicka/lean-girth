@@ -53,8 +53,7 @@ def comp {W G O : Type v}
   carrier_eq := by
     intro e
     change K.edgeCarrier (N.edge (M.edge e)) = _
-    rw [N.carrier_eq,M.carrier_eq,Set.image_image]
-    rfl
+    rw [N.carrier_eq,M.carrier_eq,Set.image_image] <;> rfl
   rel_iff := fun μ e f => (N.rel_iff μ (M.edge e) (M.edge f)).trans (M.rel_iff μ e f)
   strong := by
     intro g hn
