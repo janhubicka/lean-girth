@@ -58,6 +58,7 @@ private theorem interval_mem {n : ℕ} {i j k : Fin n}
   refine ⟨⟨k.val - i.val, by omega⟩, ?_⟩
   apply Fin.ext
   rw [intervalEmbedding_value]
+  change i.val + (k.val - i.val) = k.val
   omega
 
 private theorem complement_mem_low {n : ℕ} {i j k : Fin n}
@@ -93,8 +94,9 @@ private theorem interval_side {n : ℕ} {i j : Fin n} (h : i.val < j.val)
   by_cases hnext : k.val + 1 < j.val - i.val + 1
   · left
     apply Fin.ext
-    simp only [intervalEmbedding_value, cyclicSucc_value]
-    split_ifs <;> omega
+    have hsource : i.val + k.val + 1 < n := by omega
+    simp only [intervalEmbedding_value, cyclicSucc_value, if_pos hnext, if_pos hsource]
+    <;> omega
   · right
     constructor
     · apply Fin.ext
