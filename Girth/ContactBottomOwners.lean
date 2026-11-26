@@ -23,6 +23,7 @@ def BottomAbsorption : Prop :=
   ∀ c : I × I₀, ∀ e : E, A.core.edge e ∈ H.copyEdges c →
     ∀ x : V, A.core.vertex x ∈ H.copyCarrier c → x ∈ D.edgeCarrier e
 
+include A in
 theorem bottom_wagon_eq_edge (hinj : Function.Injective H.parent)
     (e : F) :
     H.contactWagonCarrier (H.parent e) = H.edgeCarrier e := by
@@ -85,6 +86,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I E} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 /-- At the bottom cut every actual side already has a constituent.
 There is no subdivision in this case. -/
@@ -166,6 +168,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I E} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 theorem forward_next_unprotected
     (h0 : ∀ e, D.parent e = e) (hinj : Function.Injective H.parent)
