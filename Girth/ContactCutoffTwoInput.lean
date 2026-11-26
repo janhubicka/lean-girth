@@ -30,7 +30,7 @@ variable {m : ℕ} {D : ContactHypergraphData V E I}
 
 abbrev Component (c : C) := (A.pad c).Vertex
 abbrev Vertex := Sigma A.Component
-abbrev OldEdge := C × T.FirstWagon
+abbrev OldEdge (_A : ContactCutoffTwoInput D T L C) := C × T.FirstWagon
 abbrev Edge := A.OldEdge × F
 
 noncomputable def source : ContactHypergraphData A.Vertex A.OldEdge PEmpty.{v+1} :=
