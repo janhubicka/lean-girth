@@ -65,3 +65,12 @@ The manuscript has a new reviewed baseline [girth@e9ce630dea068f37d3a682ec424898
 - One non-skipped push submits this batch. The workflow now first checks ContactBase (53 declarations), then the enlarged ContactCore (79 declarations), retaining only standard logical axioms. The cache key is pinned by toolchain and manifest, not source SHA; dependencies are saved before proof checking, with project build objects removed. This avoids downloading the same dependency cache repeatedly on proof failures.
 
 All new results in this batch await compilation/axiom checks. Do not mark the manuscript green based on drafted code or the earlier partial compile.
+
+
+### Checked base and second batched submission
+
+The base step of [run 45796794888](https://github.com/janhubicka/lean-girth/actions/runs/45796794888), exact head 48ef9d05bc86bb62d2dede343dd9345f95f6c735, succeeded: 53 declarations use only standard logical axioms, including the actual chord split, both short-cycle conclusions, and the interface theorem on attachment wagon linearity. ContactBadCycle also compiled, but was not yet covered by the completed axiom gate. The extended step failed in three adapter modules on elaboration issues; no new extended certification is claimed. The dependency cache save succeeded. That run measured 25 fast and 56 integration modules out of 1010 project modules.
+
+The next batch fixes the reported errors and adds ContactTaggedPicture, which explicitly constructs generated vertex, edge and wagon labels from compatible partial injections. The geometric input consists of exact gluing-domain, edge-carrier and parent compatibility; the adapter from the ordered active strip remains to be shown. The core gate now requests 87 audits. Only this final commit triggers the follow-up CI.
+
+Manuscript revision [f17051524f2737757505c16d8c5f59eb13710da3](https://github.com/janhubicka/girth/tree/f17051524f2737757505c16d8c5f59eb13710da3) includes the new exceptional wagon-triple observation in the preservation argument and immutable validation links for the two-sort short-cycle observation and substitution. The general arbitrary-metric observation and the actual picture-step theorem are not marked fully verified.
