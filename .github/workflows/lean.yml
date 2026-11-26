@@ -81,28 +81,21 @@ jobs:
           key: ${{ steps.lake-cache.outputs.cache-primary-key }}
       - name: Inventory focused dependency closures
         run: python3 scripts/contact_inventory.py
-      - name: Build and audit selected-family forest geometry
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/test_check_axioms.py
-          lake build +Girth.ContactTreeBase
-          lake env lean CheckContactTreeBase.lean | tee contact-tree-axioms.log
-          python3 scripts/check_axioms.py contact-tree-axioms.log CheckContactTreeBase.lean
-      - name: Build and audit assembled geometry and simplicial vertices
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake build +Girth.ContactAssemblyBase
-          lake env lean CheckContactAssemblyBase.lean | tee contact-assembly-axioms.log
-          python3 scripts/check_axioms.py contact-assembly-axioms.log CheckContactAssemblyBase.lean
       - name: Audit the complete preservation and mixed-forest converse
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/test_check_axioms.py
           lake build +Girth.ContactPreservationComplete
           lake env lean CheckContactPreservationComplete.lean | tee contact-complete-axioms.log
           python3 scripts/check_axioms.py contact-complete-axioms.log CheckContactPreservationComplete.lean
+      - name: Audit generated train and trace-tree infrastructure
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactIncrementBase
+          lake env lean CheckContactIncrementBase.lean | tee contact-increment-base-axioms.log
+          python3 scripts/check_axioms.py contact-increment-base-axioms.log CheckContactIncrementBase.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
