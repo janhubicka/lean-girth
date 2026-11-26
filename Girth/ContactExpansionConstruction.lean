@@ -186,15 +186,17 @@ theorem expanded_weight (hb : B.Bad H.contactClique) :
   unfold ContactPolygon.twiceWeight
   apply Finset.sum_congr rfl
   intro i _
-  cases h : S.insert i with
-  | none =>
-    have hn : ¬ S.insert i ≠ none := fun he => he h
+  by_cases h : S.insert i = none
+  · have hn : ¬ S.insert i ≠ none := fun he => he h
     rw [dif_neg hn,Nat.add_zero]
     change contactWeight (S.expandedVertex (ContactSlots.original S.insert i))
       (S.expandedVertex (cyclicSucc (ContactSlots.original S.insert i))) = _
     rw [ContactSlots.direct_next S.insert i h,S.expanded_original,S.expanded_original]
-  | some p =>
-    have hn : S.insert i ≠ none := by simp [h]
+  · have hn : S.insert i ≠ none := h
+    obtain ⟨p,h⟩ : ∃ p, S.insert i = some p := by
+      cases he : S.insert i with
+      | none => exact (hn he).elim
+      | some p => exact ⟨p,rfl⟩
     rw [dif_pos hn]
     change contactWeight (S.expandedVertex (ContactSlots.original S.insert i))
       (S.expandedVertex (cyclicSucc (ContactSlots.original S.insert i))) +
@@ -232,6 +234,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I P} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 /-- Positive-core G4 preservation: neither a boundary decomposition
 nor subdivision existence is an assumption. -/
