@@ -189,10 +189,11 @@ noncomputable def segments {q : ℕ}
   exact contactSegments_of_owners (by have := X.polygon.hlength; omega)
     owner X.polygon.vertex A.constituent hm hn
 
+include X
+
 /-- The positive-core case of G4 preservation, once the pure finite
 subdivision indexing has been constructed. This calls the actual
 maximal-run enumeration and the full boundary contradiction. -/
-include X in
 theorem false_of_core_G4 {q : ℕ}
     (C : ContactPictureCopies A) (hlin : D.ContactLinear)
     (h1 : D.ContactG1) (h2 : D.ContactG2)
