@@ -106,7 +106,6 @@ decreasing_by
     (fun i : K => i.val) Subtype.val_injective
   intro hsurj
   obtain ⟨i,hi⟩ := hsurj leaf
-  have hn : i.val ≠ leaf := by simpa using i.property
-  exact hn hi
+  exact (Set.mem_compl_iff.mp i.property) (Set.mem_singleton_iff.mpr hi)
 
 end StructuralRamsey.Girth

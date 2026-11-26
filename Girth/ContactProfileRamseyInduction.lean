@@ -187,7 +187,7 @@ theorem contactProfileRamsey_step
         obtain ⟨C,hC,hS,hA⟩ := R.coarseCore_of_cutoffTwo (Color := Color) b hn hq htwo (hsize b) (by
           intro K
           letI : Finite (S.graph.edgeCarrier b) := Finite.of_injective Subtype.val Subtype.val_injective
-           exact contactBoostBase_from_lower (Color := Color) (by omega) hq hLower K)
+          exact contactBoostBase_from_lower (Color := Color) (by omega) hq hLower K)
         exact ⟨C,hC,hS,hA,True.intro⟩
       exact Q.main_preservesPart (by omega) S.linear hq (fun _ _ => True)
         (fun _ _ _ _ => True.intro) supply hP True.intro hpart hArrow
@@ -223,7 +223,7 @@ theorem contactProfileRamsey_step
           (hsize b) (by
             intro K
             letI : Finite (S.graph.edgeCarrier b) := Finite.of_injective Subtype.val Subtype.val_injective
-             exact contactBoostBase_from_lower (Color := Color) (by omega) (r.boostBounds_two q hg hq) hLower K)
+            exact contactBoostBase_from_lower (Color := Color) (by omega) (r.boostBounds_two q hg hq) hLower K)
         exact ⟨C,hC,hS,hA,C.next_hasFutureRefinements hn hg hg0 hg1 S.linear hq hR hC hS hI⟩
       exact Q.main_preservesPart (by omega) S.linear hq
         (ContactTrainPicture.HasFutureRefinements g)

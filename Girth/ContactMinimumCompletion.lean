@@ -101,7 +101,7 @@ theorem contact_minimumCompletion_cost
           (fun he => h (congrArg Subtype.val he) :
             (⟨z.val,Finset.mem_of_mem_erase z.property⟩ : Q) ≠ a)⟩
       invFun := fun z => ⟨z.val.val,Finset.mem_erase.mpr
-        ⟨fun h => (show z.val ≠ a by simpa using z.property) (Subtype.ext h),
+        ⟨fun h => (Set.mem_compl_iff.mp z.property) (Set.mem_singleton_iff.mpr (Subtype.ext h)),
           z.val.property⟩⟩
       left_inv := fun _ => Subtype.ext rfl
       right_inv := fun _ => Subtype.ext (Subtype.ext rfl) }
@@ -150,6 +150,11 @@ theorem contact_minimumCompletion_cost
   refine ⟨t,hst,ha,⟨T⟩,?_⟩
   apply contact_completion_degree_budget s.card (t \ s).card T.tree.edgeFinset.card g hs hg
   · omega
-  · omega
+  · calc
+      s.card + (g+1)*(t \\ s).card ≤
+          (∑ a ∈ sel, T.tree.degree a) + (∑ a ∈ aux, T.tree.degree a) :=
+        Nat.add_le_add hsdeg hadeg
+      _ = ∑ a : Q, T.tree.degree a := hsum
+      _ = 2*T.tree.edgeFinset.card := hd
 
 end StructuralRamsey.Girth
