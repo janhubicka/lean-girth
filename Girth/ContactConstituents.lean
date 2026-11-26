@@ -15,7 +15,7 @@ namespace ContactPictureData
 variable {D : OrderOneData V E I P} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F J R} (A : ContactPictureData D L H)
 
-def coreConstituent : I ⊕ E → Set (V ⊕ P)
+def coreConstituent (_A : ContactPictureData D L H) : I ⊕ E → Set (V ⊕ P)
   | .inl i => D.contactCopyClique i
   | .inr e => {z | match z with
     | .inl x => x ∈ D.edgeCarrier e
