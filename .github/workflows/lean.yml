@@ -81,21 +81,21 @@ jobs:
           key: ${{ steps.lake-cache.outputs.cache-primary-key }}
       - name: Inventory focused dependency closures
         run: python3 scripts/contact_inventory.py
-      - name: Audit generated train and trace-tree infrastructure
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/test_check_axioms.py
-          lake build +Girth.ContactIncrementBase
-          lake env lean CheckContactIncrementBase.lean | tee contact-increment-base-axioms.log
-          python3 scripts/check_axioms.py contact-increment-base-axioms.log CheckContactIncrementBase.lean
       - name: Audit initial pictures, forest increment and refinement gain
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/test_check_axioms.py
           lake build +Girth.ContactRefinementBase
           lake env lean CheckContactRefinementBase.lean | tee contact-refinement-base-axioms.log
           python3 scripts/check_axioms.py contact-refinement-base-axioms.log CheckContactRefinementBase.lean
+      - name: Audit the compiled filling and split construction
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactConstructionBase
+          lake env lean CheckContactConstructionBase.lean | tee contact-construction-base-axioms.log
+          python3 scripts/check_axioms.py contact-construction-base-axioms.log CheckContactConstructionBase.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
