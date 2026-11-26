@@ -81,21 +81,21 @@ jobs:
           key: ${{ steps.lake-cache.outputs.cache-primary-key }}
       - name: Inventory focused dependency closures
         run: python3 scripts/contact_inventory.py
-      - name: Audit the compiled shorter train and split geometry
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/test_check_axioms.py
-          lake build +Girth.ContactOrderedPreparation
-          lake env lean CheckContactOrderedPreparation.lean | tee contact-ordered-preparation-axioms.log
-          python3 scripts/check_axioms.py contact-ordered-preparation-axioms.log CheckContactOrderedPreparation.lean
       - name: Audit literal strip and local cutoff-two preparation
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/test_check_axioms.py
           lake build +Girth.ContactSeedPreparation
           lake env lean CheckContactSeedPreparation.lean | tee contact-seed-preparation-axioms.log
           python3 scripts/check_axioms.py contact-seed-preparation-axioms.log CheckContactSeedPreparation.lean
+      - name: Audit actual picture and future-strip geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactActualPictureComplete
+          lake env lean CheckContactActualPictureComplete.lean | tee contact-actual-picture-complete-axioms.log
+          python3 scripts/check_axioms.py contact-actual-picture-complete-axioms.log CheckContactActualPictureComplete.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
