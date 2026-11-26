@@ -102,8 +102,8 @@ theorem zero_pairwise_allowed
     have in_piece (c : I ⊕ E) (hxc : x ∈ D.carrier c)
         (hyc : y ∈ D.carrier c) : e ∈ D.edges c := by
       cases c with
-      | inl i => exact h1.strong i e
-          ⟨x,⟨hsub hx,hxc⟩,y,⟨hsub hy,hyc⟩,hxy⟩
+      | inl i =>
+        exact h1.strong i e ⟨x,⟨hsub hx,hxc⟩,y,⟨hsub hy,hyc⟩,hxy⟩
       | inr f =>
         change e = f
         by_contra hne
@@ -134,9 +134,10 @@ theorem zero_no_sparse_polygon {q n : ℕ}
     vertex := fun i => Sum.inl (vtx i)
     vertex_injective := fun _ _ he => hvtx (Sum.inl.inj he)
   }
+  have hnC : 2 ≤ C.length := by change 2 ≤ n; omega
   have hc : C.IsCycle D.contactClique := by
     intro i
-    exact ⟨fun he => contactSucc_ne (by omega) i (hvtx (Sum.inl.inj he)).symm,
+    exact ⟨fun he => contactSucc_ne hnC i (hvtx (Sum.inl.inj he)).symm,
       owner i,(D.zero_piece_contact h0 (owner i) (vtx i)).mpr (left i),
       (D.zero_piece_contact h0 (owner i) (vtx (cyclicSucc i))).mpr (right i)⟩
   have hw : C.twiceWeight ≤ 2*q := by
