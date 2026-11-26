@@ -15,10 +15,10 @@ variable {W I : Type v}
 
 def contactFamilyGraph (F : I → Set W) : SimpleGraph W where
   Adj x y := x ≠ y ∧ ∃ i, x ∈ F i ∧ y ∈ F i
-  symm := {symm := by
+  symm := ⟨by
     intro x y h
     obtain ⟨hne,i,hx,hy⟩ := h
-    exact ⟨hne.symm,i,hy,hx⟩}
+    exact ⟨hne.symm,i,hy,hx⟩⟩
   loopless := {irrefl := fun _ h => h.1 rfl}
 
 def ContactConformal (F : I → Set W) : Prop :=
@@ -166,7 +166,7 @@ theorem contact_private_of_simplicial [Fintype W] {F : I → Set W}
     refine ⟨(mem_contactUsedVertices F y).mpr ⟨i,hy⟩,?_⟩
     by_cases he : y = x
     · exact Or.inl he
-    · exact Or.inr ⟨he.symm,i,hi,hy⟩
+    · exact Or.inr ⟨fun h => he h.symm,i,hi,hy⟩
   intro i hi j hj
   exact (huniq i hi).trans (huniq j hj).symm
 
