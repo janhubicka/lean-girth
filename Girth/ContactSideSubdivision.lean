@@ -281,6 +281,7 @@ noncomputable def sidePlan (B : ContactPolygon U R) (hb : B.IsCycle H.contactCli
     not_direct := ?_
   }
   · intro i hi
+    change direct i
     by_contra hn
     simp [ins,hn] at hi
   · intro i p hi
