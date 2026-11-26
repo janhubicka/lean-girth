@@ -331,5 +331,46 @@ theorem tail_parameter (μ ν : Fin (d+1+h+1))
   intro e f x he hx hy hn
   exact (R.tail_eq μ hμ e f).mpr (hp e f x ((R.tail_eq ν hν e f).mp he) hx hy hn)
 
+
+/-- Combine the prefix and retained tail bounds on the very same
+new train. The cutoff at a retained proper level is unchanged. -/
+def newBounds (g : ℕ) (q : Fin (h+1+1) → ℕ) (μ : Fin (d+1+h+1)) : ℕ :=
+  if hm : μ.val ≤ d then g else q (R.tailLevel μ (by omega))
+
+theorem all_wagonBounds (g : ℕ) (q : Fin (h+1+1) → ℕ)
+    (hprefix : ∀ μ : Fin (d+1+h+1), μ.val ≤ d →
+      LabelledGirthGT (H.atCut (R.train.parent μ)).contactWagonCarrier g)
+    (htail : H.WagonBounds R.coarse q) :
+    H.WagonBounds R.train (R.newBounds g q) := by
+  intro μ hproper
+  by_cases hμ : μ.val ≤ d
+  · simpa only [newBounds,dif_pos hμ] using hprefix μ hμ
+  · have hh : d < μ.val := by omega
+    have hp : (R.tailLevel μ hh).val < h+1 := by
+      change μ.val-d < h+1
+      omega
+    have hg := R.tail_girth H μ hh (htail _ hp)
+    simpa only [newBounds,dif_neg hμ] using hg
+
+/-- The parameters of the new train: retain the old refined
+parameters up to d, insert the one-part intersection parameter,
+and retain the remaining coarse parameters after it. -/
+theorem all_parameters (allowed : Fin (d+1+h) → Set U)
+    (hprefix : ∀ j : Fin (d+1+h), j.val < d →
+      H.Parameter R.train j.castSucc j.succ (allowed j))
+    (hsplit : H.Parameter R.train ⟨d,by omega⟩ ⟨d+1,by omega⟩
+      (allowed ⟨d,by omega⟩))
+    (htail : ∀ j : Fin (d+1+h), d < j.val →
+      H.Parameter R.train j.castSucc j.succ (allowed j)) :
+    H.Parameters R.train allowed := by
+  intro j
+  by_cases hlt : j.val < d
+  · exact hprefix j hlt
+  · by_cases he : j.val = d
+    · have hj : j = (⟨d,by omega⟩ : Fin (d+1+h)) := Fin.ext he
+      rw [hj]
+      exact hsplit
+    · exact htail j (by omega)
+
 end ContactSplitRefinement
 end StructuralRamsey.Girth
