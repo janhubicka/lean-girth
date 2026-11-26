@@ -1,4 +1,5 @@
 import Girth.ContactBottomCore
+import Girth.ContactZeroJoinTrees
 import Girth.ContactSegmentBudget
 import Girth.ContactBoundary
 import Girth.ContactSideSubdivision
@@ -12,15 +13,7 @@ namespace StructuralRamsey.Girth
 universe v
 variable {V E I U F R V₀ E₀ I₀ P₀ : Type v}
 
-namespace OrderOneData
-variable (D : OrderOneData V E I E)
 
-/-- The actual finite-subfamily join-tree part of mixed forests. -/
-def ZeroJoinTreesThrough (q : ℕ) : Prop :=
-  ∀ s : Finset (I ⊕ E), s.Nonempty → s.card ≤ q →
-    Nonempty (ContactJoinTree (fun a : {a // a ∈ s} => D.carrier a.val))
-
-end OrderOneData
 
 namespace ContactPictureData
 variable {D : OrderOneData V E I E} {L : OrderOneData V₀ E₀ I₀ P₀}
