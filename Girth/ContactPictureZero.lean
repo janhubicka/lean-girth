@@ -1,5 +1,4 @@
 import Girth.ContactDisjointCopies
-import Girth.ContactAllLevelPreservation
 
 /-! The whole initial train, obtained by taking vertex-disjoint
 copies at every proper cut and identifying only the universal top.
