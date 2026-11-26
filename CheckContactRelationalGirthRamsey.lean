@@ -1,0 +1,11 @@
+import Girth.ContactRelationalGirthRamsey
+
+#print axioms StructuralRamsey.Girth.contactActualMember
+#print axioms StructuralRamsey.Girth.ContactActualMixedCompletion
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.edge_eq_symm
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.copy_eq_symm
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.all_AStrong
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.BIntersections
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.BSingletonSupported
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.actualCompletion
+#print axioms StructuralRamsey.Girth.contactRelationalGirthRamsey

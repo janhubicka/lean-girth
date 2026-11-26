@@ -15,7 +15,8 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
-  cancel-in-progress: true
+  # Let the preceding exact-head audit finish instead of cancelling it mid-proof.
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -153,6 +154,7 @@ jobs:
           lake env lean CheckContactLocalForestPartite.lean | tee contact-local-partite-axioms.log
           python3 scripts/check_axioms.py contact-local-partite-axioms.log CheckContactLocalForestPartite.lean
       - name: Audit relational restoration geometry
+        id: contact-restoration
         if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
         shell: bash
         run: |
@@ -161,6 +163,7 @@ jobs:
           lake env lean CheckContactOuterRelationalGeometry.lean | tee contact-outer-relational-axioms.log
           python3 scripts/check_axioms.py contact-outer-relational-axioms.log CheckContactOuterRelationalGeometry.lean
       - name: Audit actual relational union and ordered support input
+        id: contact-relational-input
         if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' }}
         shell: bash
         run: |
@@ -170,6 +173,15 @@ jobs:
           python3 scripts/check_axioms.py contact-relational-union-axioms.log CheckContactRelationalUnion.lean
           lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
           python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
+      - name: Audit exact relational copies and forest transport
+        id: contact-relational-exact
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' && steps.contact-restoration.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalExact
+          lake env lean CheckContactRelationalExact.lean | tee contact-relational-exact-axioms.log
+          python3 scripts/check_axioms.py contact-relational-exact-axioms.log CheckContactRelationalExact.lean
       - name: Audit actual outer picture preservation
         id: contact-outer-step
         if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' }}
@@ -189,6 +201,7 @@ jobs:
           lake env lean CheckContactOuterIteration.lean | tee contact-outer-iteration-axioms.log
           python3 scripts/check_axioms.py contact-outer-iteration-axioms.log CheckContactOuterIteration.lean
       - name: Audit the assembled outer girth Ramsey theorem
+        id: contact-outer-assembly
         if: ${{ always() && !cancelled() && steps.contact-outer-iteration.outcome == 'success' && steps.contact-quantitative-completion.outcome == 'success' }}
         shell: bash
         run: |
@@ -196,6 +209,23 @@ jobs:
           lake build +Girth.ContactOuterAssembly
           lake env lean CheckContactOuterAssembly.lean | tee contact-outer-assembly-axioms.log
           python3 scripts/check_axioms.py contact-outer-assembly-axioms.log CheckContactOuterAssembly.lean
+      - name: Audit fully restored support witness
+        id: contact-relational-support
+        if: ${{ always() && !cancelled() && steps.contact-relational-exact.outcome == 'success' && steps.contact-outer-assembly.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalSupportWitness
+          lake env lean CheckContactRelationalSupportWitness.lean | tee contact-relational-support-axioms.log
+          python3 scripts/check_axioms.py contact-relational-support-axioms.log CheckContactRelationalSupportWitness.lean
+      - name: Audit final relational girth Ramsey theorem
+        if: ${{ always() && !cancelled() && steps.contact-relational-support.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalGirthRamsey
+          lake env lean CheckContactRelationalGirthRamsey.lean | tee contact-final-relational-axioms.log
+          python3 scripts/check_axioms.py contact-final-relational-axioms.log CheckContactRelationalGirthRamsey.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash
