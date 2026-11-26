@@ -1,4 +1,4 @@
-import Girth.ContactTreeRewire
+import Girth.ContactTreeRewireTree
 
 /-! General node erasure: replace the deleted star by any join tree
 on its actual neighbour traces. The tree is constructed on the
