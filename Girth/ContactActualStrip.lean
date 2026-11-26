@@ -132,8 +132,8 @@ end ContactBaseProjection
 
 namespace ContactDesignatedEmbeddings
 variable {L : ContactHypergraphData V E I} {base : B → Set X}
-    (P : ContactBaseProjection L base) {m : ℕ} (S : ContactTrainData E m)
-    (b : B)
+    {P : ContactBaseProjection L base} {m : ℕ} {S : ContactTrainData E m}
+    {b : B}
     {D : ContactHypergraphData U F J} {T : ContactTrainData F m}
     (M : ContactDesignatedEmbeddings (P.stripHypergraph b) (P.stripTrain S b) D T)
 
@@ -233,13 +233,15 @@ theorem stripGluing_active (hne : Nonempty (P.StripEdge b)) :
   · intro i x
     constructor
     · rintro ⟨u,hu⟩
-      exact ((M.vertexPartial_iff i x u).mp hu).choose
+      obtain ⟨hx,_⟩ := (M.vertexPartial_iff i x u).mp hu
+      exact hx
     · intro hx
       exact ⟨(M.emb i).vertex ⟨x,hx⟩,(M.vertexPartial_iff i x _).mpr ⟨hx,rfl⟩⟩
   · intro i e
     constructor
     · rintro ⟨f,hf⟩
-      exact ((M.edgePartial_iff i e f).mp hf).choose
+      obtain ⟨he,_⟩ := (M.edgePartial_iff i e f).mp hf
+      exact he
     · intro he
       exact ⟨(M.emb i).edge ⟨e,he⟩,(M.edgePartial_iff i e _).mpr ⟨he,rfl⟩⟩
 
