@@ -1,6 +1,7 @@
 import Girth.ContactLocalCompletion
 import Girth.ContactEraseAuxiliary
 import Girth.ContactCompletionBudget
+import Girth.ContactZeroJoinTrees
 
 /-! Direct forest increment at the level of selected vertex carriers.
 The two cases of the manuscript are both constructed. When all owners
@@ -91,6 +92,8 @@ inputs are the small-family join-tree properties of the two source
 systems, actual carrier containment and the strongness and trace
 facts supplied by the picture construction.
 
+The family edge consists of the embedded core edges, not all
+output edges. Thus hg assumes high girth only in the core.
 G q lists the old pieces available in owner q (including its edge
 copies). The outer carriers are the full lifted standards or
 uncovered core edges; the core trace condition prevents noncore
@@ -229,5 +232,78 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       exact ⟨n,rfl⟩
     let e := Equiv.ofBijective f ⟨hfinj,hfsurj⟩
     exact ⟨Utree.reindex e⟩
+
+
+/-- For cutoff one, every nonempty selected family has exactly
+one member. In particular no pairwise condition is needed. -/
+theorem OrderOneData.zeroSmallMixedForests_one {I : Type v}
+    (D : OrderOneData U E I E) : D.ZeroSmallMixedForestsThrough 1 := by
+  classical
+  refine ⟨fun h => (by omega : False).elim,?_⟩
+  intro s hs hc
+  let J := {a // a ∈ s}
+  letI : Nonempty J := by obtain ⟨a,ha⟩ := hs; exact ⟨⟨a,ha⟩⟩
+  letI : Subsingleton J := ⟨by
+    intro a b
+    apply Subtype.ext
+    by_contra hne
+    have hsub : ({a.val,b.val} : Finset (I ⊕ E)) ⊆ s := by
+      intro z hz
+      simp only [Finset.mem_insert,Finset.mem_singleton] at hz
+      rcases hz with rfl | rfl
+      · exact a.property
+      · exact b.property
+    have hl := Finset.card_le_card hsub
+    rw [Finset.card_pair hne] at hl
+    omega⟩
+  exact ⟨ContactJoinTree.of_subsingleton (fun a : J => D.carrier a.val)⟩
+
+/-- Distinct owners can share only a core trace. If two actual
+selected carriers meet in at least two vertices, the two traces are
+the same full core edge, by core linearity. This proof needs no
+pairwise assumption on the core designated copies at cutoff one. -/
+theorem contact_distinct_owner_intersection (edge : E → Set U)
+    (F : N → Set U) (P : Q → Set U) (C : Set U) (owner : N → Q)
+    (hlin : ∀ e f : E, e ≠ f → (edge e ∩ edge f).Subsingleton)
+    (hContain : ∀ n, F n ⊆ P (owner n))
+    (hCross : ∀ i j, i ≠ j → P i ∩ P j ⊆ C)
+    (hTrace : ContactEdgeTraces edge (fun n => F n ∩ C))
+    (n m : N) (hne : owner n ≠ owner m) :
+    (F n ∩ F m).Subsingleton ∨
+      ∃ e, F n ∩ C = edge e ∧ F m ∩ C = edge e ∧ F n ∩ F m = edge e := by
+  classical
+  by_cases hs : (F n ∩ F m).Subsingleton
+  · exact Or.inl hs
+  have hc : F n ∩ F m ⊆ C :=
+    fun x hx => hCross _ _ hne ⟨hContain n hx.1,hContain m hx.2⟩
+  obtain ⟨x,hx,y,hy,hxy⟩ := Set.not_subsingleton_iff.mp hs
+  have hnx : x ∈ F n ∩ C := ⟨hx.1,hc hx⟩
+  have hny : y ∈ F n ∩ C := ⟨hy.1,hc hy⟩
+  have hmx : x ∈ F m ∩ C := ⟨hx.2,hc hx⟩
+  have hmy : y ∈ F m ∩ C := ⟨hy.2,hc hy⟩
+  obtain ⟨e,he⟩ : ∃ e, F n ∩ C = edge e := by
+    rcases hTrace n with hh | hh
+    · exact (hxy (hh hnx hny)).elim
+    · exact hh
+  obtain ⟨f,hf⟩ : ∃ f, F m ∩ C = edge f := by
+    rcases hTrace m with hh | hh
+    · exact (hxy (hh hmx hmy)).elim
+    · exact hh
+  have hef : e = f := by
+    by_contra hn
+    apply hxy
+    apply hlin e f hn
+    · exact ⟨he ▸ hnx,hf ▸ hmx⟩
+    · exact ⟨he ▸ hny,hf ▸ hmy⟩
+  subst f
+  refine Or.inr ⟨e,he,hf,?_⟩
+  ext z
+  constructor
+  · intro hz
+    exact he ▸ (show z ∈ F n ∩ C from ⟨hz.1,hc hz⟩)
+  · intro hz
+    have hn : z ∈ F n ∩ C := he.symm ▸ hz
+    have hm : z ∈ F m ∩ C := hf.symm ▸ hz
+    exact ⟨hn.1,hm.1⟩
 
 end StructuralRamsey.Girth
