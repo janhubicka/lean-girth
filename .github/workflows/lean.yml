@@ -61,7 +61,7 @@ jobs:
           # No Git process is active before this first Lake invocation.
           for attempt in 1 2 3 4 5; do
             rm -f .lake/packages/batteries/.git/index.lock
-            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup; then
+            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup Mathlib.Combinatorics.HalesJewett Mathlib.Order.PiLex Mathlib.Order.Prod.Lex.Basic; then
               break
             fi
             if [[ "$attempt" -eq 5 ]]; then
@@ -81,21 +81,21 @@ jobs:
           key: ${{ steps.lake-cache.outputs.cache-primary-key }}
       - name: Inventory focused dependency closures
         run: python3 scripts/contact_inventory.py
-      - name: Audit the actual tagged-picture increment
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 scripts/test_check_axioms.py
-          lake build +Girth.ContactIncrementComplete
-          lake env lean CheckContactIncrementComplete.lean | tee contact-increment-complete-axioms.log
-          python3 scripts/check_axioms.py contact-increment-complete-axioms.log CheckContactIncrementComplete.lean
       - name: Audit the compiled shorter train and split geometry
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/test_check_axioms.py
           lake build +Girth.ContactOrderedPreparation
           lake env lean CheckContactOrderedPreparation.lean | tee contact-ordered-preparation-axioms.log
           python3 scripts/check_axioms.py contact-ordered-preparation-axioms.log CheckContactOrderedPreparation.lean
+      - name: Audit literal strip and local cutoff-two preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactSeedPreparation
+          lake env lean CheckContactSeedPreparation.lean | tee contact-seed-preparation-axioms.log
+          python3 scripts/check_axioms.py contact-seed-preparation-axioms.log CheckContactSeedPreparation.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
