@@ -1,4 +1,5 @@
 import Girth.ContactConstituents
+import Girth.ContactRunSegments
 
 /-! The boundary-cycle argument of the new preservation proof.
 Only the subdivision facts remain external: no constituent or wagon
