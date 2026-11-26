@@ -89,13 +89,13 @@ jobs:
           lake build +Girth.ContactIncrementBase
           lake env lean CheckContactIncrementBase.lean | tee contact-increment-base-axioms.log
           python3 scripts/check_axioms.py contact-increment-base-axioms.log CheckContactIncrementBase.lean
-      - name: Audit initial pictures and local forest completion
+      - name: Audit initial pictures, forest increment and refinement gain
         shell: bash
         run: |
           set -euo pipefail
-          lake build +Girth.ContactRecursiveBase
-          lake env lean CheckContactRecursiveBase.lean | tee contact-recursive-base-axioms.log
-          python3 scripts/check_axioms.py contact-recursive-base-axioms.log CheckContactRecursiveBase.lean
+          lake build +Girth.ContactRefinementBase
+          lake env lean CheckContactRefinementBase.lean | tee contact-refinement-base-axioms.log
+          python3 scripts/check_axioms.py contact-refinement-base-axioms.log CheckContactRefinementBase.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
