@@ -45,3 +45,11 @@ import Girth.ContactCore
 #print axioms StructuralRamsey.Girth.ContactPolygon.covered_side_of_covered
 #print axioms StructuralRamsey.Girth.ContactPolygon.covered_side_lift
 #print axioms StructuralRamsey.Girth.contactCoveredSide_of_G4
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_common_vertex_pair
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_two_wagons_force_vertex_in_copy
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_alternating_quad_in_copy
+#print axioms StructuralRamsey.Girth.ContactAttachmentGeometry.core_of_meets_and_outside
+#print axioms StructuralRamsey.Girth.ContactAttachmentGeometry.two_shared_wagons_eq
+#print axioms StructuralRamsey.Girth.ContactAttachmentGeometry.meets_of_two_vertices
+#print axioms StructuralRamsey.Girth.ContactAttachmentGeometry.wagon_pair_with_private
+#print axioms StructuralRamsey.Girth.ContactAttachmentGeometry.wagon_linearity
