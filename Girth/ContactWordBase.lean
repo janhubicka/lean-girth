@@ -1,5 +1,7 @@
 import Girth.ContactTrainData
 import Mathlib.Combinatorics.HalesJewett
+import Mathlib.Order.PiLex
+import Mathlib.Data.Prod.Lex
 
 /-! The word base for an a-partite linear hypergraph. The
 endpoints of an edge are indexed by its parts. The actual new
@@ -145,7 +147,7 @@ theorem lineVertex_inj (l : Combinatorics.Line E N) :
 def lineVertexEmb (l : Combinatorics.Line E N) : V ↪ P.WordVertex N :=
   ⟨P.lineVertex N l,P.lineVertex_inj N l⟩
 
-def lineEdgeEmb (l : Combinatorics.Line E N) : E ↪ (N → E) where
+def lineEdgeEmb (_P : ContactPartiteEndpoints D A) (l : Combinatorics.Line E N) : E ↪ (N → E) where
   toFun := l
   inj' := by
     intro e f he
@@ -205,11 +207,11 @@ theorem line_strong (hlin : ∀ e f : E, e ≠ f →
   cases hi : l.idxFun i with
   | none =>
     have ha' : P.endpoint (w i) a = P.endpoint (w k) a := by
-      rw [hU i,hU k,hi,hk]
-      rfl
+      exact (by simpa [hi] using hU i : P.endpoint (w i) a = u).trans
+        (by simpa [hk] using (hU k).symm)
     have hb' : P.endpoint (w i) b = P.endpoint (w k) b := by
-      rw [hV i,hV k,hi,hk]
-      rfl
+      exact (by simpa [hi] using hV i : P.endpoint (w i) b = v).trans
+        (by simpa [hk] using (hV k).symm)
     have he := P.edge_eq_of_two_endpoints hlin _ _ a b hab ha' hb'
     simpa [Combinatorics.Line.coe_apply,hi] using he.symm
   | some e =>
@@ -240,6 +242,140 @@ theorem exists_word_arrow [Finite E] {Color : Type v} [Finite Color] :
   intro χ
   obtain ⟨l,c,hc⟩ := h χ
   exact ⟨l,c,hc⟩
+
+
+theorem line_part (l : Combinatorics.Line E N) (x : V) :
+    P.wordPart N (P.lineVertexEmb N l x) = P.part x := rfl
+
+/-- A fixed coordinate of a line determines the corresponding
+endpoint of every vertex in the image of the line. -/
+theorem line_fixed_coordinate (l : Combinatorics.Line E N) (i : N) (e : E)
+    (hi : l.idxFun i = some e) (x : P.WordVertex N)
+    (hx : x ∈ Set.range (P.lineVertexEmb N l)) :
+    x.val.2 i = P.endpoint e (P.wordPart N x) := by
+  obtain ⟨u,rfl⟩ := hx
+  change (l.idxFun i).elim u (fun f => P.endpoint f (P.part u)) =
+    P.endpoint e (P.part u)
+  rw [hi]
+  rfl
+
+/-- If a variable coordinate of one line is fixed in another
+line, their entire intersection is contained in one edge of the
+first line. -/
+theorem line_intersection_subset_edge (l k : Combinatorics.Line E N)
+    (i : N) (e : E) (hl : l.idxFun i = none) (hk : k.idxFun i = some e) :
+    Set.range (P.lineVertexEmb N l) ∩ Set.range (P.lineVertexEmb N k) ⊆
+      P.wordCarrier N (P.lineEdgeEmb N l e) := by
+  rintro x ⟨⟨u,rfl⟩,hu⟩
+  have h := P.line_fixed_coordinate N k i e hk (P.lineVertexEmb N l u) hu
+  change (l.idxFun i).elim u _ = P.endpoint e (P.part u) at h
+  rw [hl] at h
+  have he : u = P.endpoint e (P.part u) := h
+  rw [P.line_carrier]
+  exact ⟨u,he.symm ▸ P.endpoint_mem e (P.part u),rfl⟩
+
+/-- Two lines which share vertices in different parts have a
+common edge as their entire intersection. Distinct lines with
+the same variable pattern but different fixed letters cannot
+share two parts, by old edge linearity. -/
+theorem line_pair_intersection
+    (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton)
+    (l k : Combinatorics.Line E N) (hne : l ≠ k)
+    (x y : P.WordVertex N)
+    (hx : x ∈ Set.range (P.lineVertexEmb N l) ∩ Set.range (P.lineVertexEmb N k))
+    (hy : y ∈ Set.range (P.lineVertexEmb N l) ∩ Set.range (P.lineVertexEmb N k))
+    (hparts : P.wordPart N x ≠ P.wordPart N y) :
+    ∃ w : N → E, w ∈ Set.range (P.lineEdgeEmb N l) ∧
+      w ∈ Set.range (P.lineEdgeEmb N k) ∧
+      Set.range (P.lineVertexEmb N l) ∩ Set.range (P.lineVertexEmb N k) =
+        P.wordCarrier N w := by
+  classical
+  have hd : ∃ i, l.idxFun i ≠ k.idxFun i := by
+    by_contra h
+    apply hne
+    apply Combinatorics.Line.ext
+    funext i
+    by_contra hi
+    exact h ⟨i,hi⟩
+  obtain ⟨i,hi⟩ := hd
+  have hxy : x ≠ y := fun he => hparts (congrArg (P.wordPart N) he)
+  have aux (u v : Combinatorics.Line E N) (e : E)
+      (hu : u.idxFun i = none) (hv : v.idxFun i = some e)
+      (hx : x ∈ Set.range (P.lineVertexEmb N u) ∩ Set.range (P.lineVertexEmb N v))
+      (hy : y ∈ Set.range (P.lineVertexEmb N u) ∩ Set.range (P.lineVertexEmb N v)) :
+      ∃ w : N → E, w ∈ Set.range (P.lineEdgeEmb N u) ∧
+        w ∈ Set.range (P.lineEdgeEmb N v) ∧
+        Set.range (P.lineVertexEmb N u) ∩ Set.range (P.lineVertexEmb N v) =
+          P.wordCarrier N w := by
+    let w := P.lineEdgeEmb N u e
+    have hsub := P.line_intersection_subset_edge N u v i e hu hv
+    obtain ⟨f,hf⟩ := P.line_strong N hlin v w
+      ⟨x,⟨hsub hx,hx.2⟩,y,⟨hsub hy,hy.2⟩,hxy⟩
+    refine ⟨w,⟨e,rfl⟩,⟨f,hf⟩,Set.Subset.antisymm hsub ?_⟩
+    intro z hz
+    have hu' : z ∈ Set.range (P.lineVertexEmb N u) := by
+      change z ∈ P.wordCarrier N (P.lineEdgeEmb N u e) at hz
+      rw [P.line_carrier] at hz
+      obtain ⟨a,_,he⟩ := hz
+      exact ⟨a,he⟩
+    have hv' : z ∈ Set.range (P.lineVertexEmb N v) := by
+      rw [← hf,P.line_carrier] at hz
+      obtain ⟨a,_,he⟩ := hz
+      exact ⟨a,he⟩
+    exact ⟨hu',hv'⟩
+  cases hl : l.idxFun i with
+  | none =>
+    cases hk : k.idxFun i with
+    | none => exact (hi (hl.trans hk.symm)).elim
+    | some e => exact aux l k e hl hk hx hy
+  | some e =>
+    cases hk : k.idxFun i with
+    | none =>
+      obtain ⟨w,hw,hw',he⟩ := aux k l e hk hl ⟨hx.2,hx.1⟩ ⟨hy.2,hy.1⟩
+      exact ⟨w,hw',hw,(Set.inter_comm _ _).trans he⟩
+    | some f =>
+      have heq := P.edge_eq_of_two_endpoints hlin e f
+        (P.wordPart N x) (P.wordPart N y) hparts
+        ((P.line_fixed_coordinate N l i e hl x hx.1).symm.trans
+          (P.line_fixed_coordinate N k i f hk x hx.2))
+        ((P.line_fixed_coordinate N l i e hl y hy.1).symm.trans
+          (P.line_fixed_coordinate N k i f hk y hy.2))
+      exact (hi (hl.trans ((congrArg some heq).trans hk.symm))).elim
+
+/-- The word order is lexicographic within each part.
+The first variable coordinate witnesses strict order preservation
+for every line, and all earlier fixed coordinates agree. -/
+noncomputable def wordOrder [LinearOrder A] [LinearOrder V]
+    [LinearOrder N] [WellFoundedLT N] : LinearOrder (P.WordVertex N) :=
+  LinearOrder.lift'
+    (fun z : P.WordVertex N => (toLex (z.val.1,toLex z.val.2) : A ×ₗ Lex (N → V)))
+    (fun x y h => Subtype.ext (Prod.ext
+      (congrArg (fun z : A ×ₗ Lex (N → V) => (ofLex z).1) h)
+      (congrArg (fun z : A ×ₗ Lex (N → V) => ofLex ((ofLex z).2)) h)))
+
+theorem line_order [LinearOrder A] [LinearOrder V] [LinearOrder N] [WellFoundedLT N]
+    (l : Combinatorics.Line E N) (u w : V)
+    (hpart : P.part u = P.part w) (h : u < w) :
+    (P.wordOrder N).lt (P.lineVertexEmb N l u) (P.lineVertexEmb N l w) := by
+  classical
+  let S : Set N := {i | l.idxFun i = none}
+  have hS : S.Nonempty := l.proper
+  obtain ⟨i,hi,hmin⟩ := (inferInstance : WellFoundedLT N).wf.has_min S hS
+  change (toLex (P.part u,toLex ((P.lineTuple N l u).2)) : A ×ₗ Lex (N → V)) <
+    toLex (P.part w,toLex ((P.lineTuple N l w).2))
+  apply Prod.Lex.toLex_lt_toLex.mpr
+  right
+  refine ⟨hpart,?_⟩
+  change ∃ i : N, (∀ j : N, j < i → (P.lineTuple N l u).2 j =
+    (P.lineTuple N l w).2 j) ∧ (P.lineTuple N l u).2 i < (P.lineTuple N l w).2 i
+  refine ⟨i,?_,?_⟩
+  · intro j hj
+    have hn : l.idxFun j ≠ none := fun he => hmin j he hj
+    cases he : l.idxFun j with
+    | none => exact (hn he).elim
+    | some e => simp [lineTuple,he,hpart]
+  · change l.idxFun i = none at hi
+    simpa [lineTuple,hi] using h
 
 end ContactPartiteEndpoints
 end StructuralRamsey.Girth
