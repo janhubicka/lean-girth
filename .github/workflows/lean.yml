@@ -96,6 +96,13 @@ jobs:
           lake build +Girth.ContactAssemblyBase
           lake env lean CheckContactAssemblyBase.lean | tee contact-assembly-axioms.log
           python3 scripts/check_axioms.py contact-assembly-axioms.log CheckContactAssemblyBase.lean
+      - name: Audit the complete preservation and mixed-forest converse
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactPreservationComplete
+          lake env lean CheckContactPreservationComplete.lean | tee contact-complete-axioms.log
+          python3 scripts/check_axioms.py contact-complete-axioms.log CheckContactPreservationComplete.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
