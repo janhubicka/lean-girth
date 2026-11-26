@@ -110,7 +110,8 @@ theorem g4_of_support {F : I → Set W} [Fintype I]
             Subtype.val_injective
           intro hsur
           obtain ⟨x,hx⟩ := hsur leaf
-          have hne : x.val ≠ leaf := by simpa using x.property
+          have hne : x.val ≠ leaf := by
+            simpa only [Set.mem_compl_iff,Set.mem_singleton_iff] using x.property
           exact hne hx
         exact ih (Fintype.card L') hlt L' rfl
           (contactEraseSet K leaf) (T.eraseLeaf hadj huniq)
