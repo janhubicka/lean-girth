@@ -147,10 +147,11 @@ theorem all_wagonBounds (q : Fin (h+2) → ℕ)
     rw [he] at hg
     simpa only [allBounds,if_neg hμ] using hg
 
+include R
+
 /-- The local input has the required short-cycle exclusion. This is a
 consequence of the maintained invariant and current coarse positive
 bounds, rather than a hypothesis on a separately chosen refinement. -/
-include R in
 theorem edge_girth (q : Fin (h+2) → ℕ) (k : ℕ)
     (hk : k ≤ 2*g+1) (hfirst : 0 < h → k ≤ q ⟨1,by omega⟩)
     (hp : D.Parameters T (fun j => P.vertex ⁻¹' allowed j))
