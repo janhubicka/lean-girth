@@ -1,7 +1,10 @@
 name: Contact graph validation
 
 on:
+  # A validation branch with a PR needs only ONE check per exact head.
+  # Direct pushes to the default branch still run CI.
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
     inputs:
@@ -174,6 +177,7 @@ jobs:
           lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
           python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
       - name: Audit order-reduct transfer
+        id: contact-order-reduct
         if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
         shell: bash
         run: |
@@ -236,6 +240,7 @@ jobs:
           lake env lean CheckContactRelationalGirthRamsey.lean | tee contact-final-relational-axioms.log
           python3 scripts/check_axioms.py contact-final-relational-axioms.log CheckContactRelationalGirthRamsey.lean
       - name: Audit literal carrier-set relational theorem
+        id: contact-carrier-completion
         if: ${{ always() && !cancelled() && steps.contact-final-relational.outcome == 'success' }}
         shell: bash
         run: |
@@ -243,6 +248,14 @@ jobs:
           lake build +Girth.ContactCarrierCompletion
           lake env lean CheckContactCarrierCompletion.lean | tee contact-carrier-completion-axioms.log
           python3 scripts/check_axioms.py contact-carrier-completion-axioms.log CheckContactCarrierCompletion.lean
+      - name: Audit full order-extension corollary
+        if: ${{ always() && !cancelled() && steps.contact-carrier-completion.outcome == 'success' && steps.contact-order-reduct.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOrderCompletion
+          lake env lean CheckContactOrderCompletion.lean | tee contact-order-completion-axioms.log
+          python3 scripts/check_axioms.py contact-order-completion-axioms.log CheckContactOrderCompletion.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash
