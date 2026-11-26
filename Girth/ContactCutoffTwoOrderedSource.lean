@@ -190,4 +190,118 @@ noncomputable def OrderedSource.edgeWord [Fintype X]
     part_eq := fun e i => O.place_part e (q i) }
 
 end ContactCutoffTwoInput
+
+namespace ContactPartiteEndpoints
+variable {m : ℕ} {D : ContactHypergraphData V E I}
+    (P₀ : ContactPartiteEndpoints D P) (T : ContactTrainData E (m+1))
+    [LinearOrder V] [LinearOrder P]
+
+/-- Order the disjoint first wagons by part, wagon tag, and the
+old vertex order. The inclusion of each wagon is increasing. -/
+noncomputable def firstOrder [Finite E] :
+    LinearOrder (FirstVertex (D := D) T) := by
+  letI : Finite T.FirstWagon := Finite.of_surjective
+    (T.parent (0 : Fin (m+1)).succ) (T.surj _)
+  letI : Fintype T.FirstWagon := Fintype.ofFinite _
+  let idx := Fintype.equivFin T.FirstWagon
+  let key (x : FirstVertex (D := D) T) : P ×ₗ (Fin (Fintype.card T.FirstWagon) ×ₗ V) :=
+    toLex (P₀.part x.2.val,toLex (idx x.1,x.2.val))
+  apply LinearOrder.lift' key
+  intro x y he
+  rcases x with ⟨p,x⟩
+  rcases y with ⟨q,y⟩
+  have hp : idx p = idx q := congrArg
+    (fun z : P ×ₗ (Fin (Fintype.card T.FirstWagon) ×ₗ V) => (ofLex (ofLex z).2).1) he
+  have hpq := idx.injective hp
+  subst q
+  have hxy : x.val = y.val := congrArg
+    (fun z : P ×ₗ (Fin (Fintype.card T.FirstWagon) ×ₗ V) => (ofLex (ofLex z).2).2) he
+  have heq : x = y := Subtype.ext hxy
+  subst y
+  rfl
+
+theorem firstTag_order [Finite E] (hpart : Monotone P₀.part)
+    (p : T.FirstWagon) (x y : firstCarrier (D := D) T p) (h : x < y) :
+    (P₀.firstOrder T).lt (firstTag (D := D) T p x) (firstTag (D := D) T p y) := by
+  unfold firstOrder
+  apply Prod.Lex.toLex_lt_toLex'.mpr
+  refine ⟨hpart h.le,fun _ => ?_⟩
+  exact Prod.Lex.toLex_lt_toLex.mpr (Or.inr ⟨rfl,h⟩)
+
+variable (N : Type) [LinearOrder N] [WellFoundedLT N]
+
+noncomputable def cutoffWordOrder [Finite E] :
+    LinearOrder (P₀.CutoffWordVertex T N) :=
+  letI : LinearOrder (FirstVertex (D := D) T) := P₀.firstOrder T
+  (P₀.firstEndpoints T).wordOrder N
+
+theorem cutoffWordPart_mono [Finite E] :
+    letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
+    Monotone ((P₀.firstEndpoints T).wordPart N) := by
+  letI : LinearOrder (FirstVertex (D := D) T) := P₀.firstOrder T
+  letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
+  intro x y h
+  rcases lt_or_eq_of_le h with h | rfl
+  · change (toLex (x.val.1,toLex x.val.2) : P ×ₗ Lex (N → FirstVertex (D := D) T)) <
+      toLex (y.val.1,toLex y.val.2) at h
+    exact (Prod.Lex.toLex_lt_toLex'.mp h).1
+  · exact le_rfl
+
+theorem cutoffInside_part (l : Combinatorics.Line E N) (p : T.FirstWagon)
+    (u : firstCarrier (D := D) T p) :
+    (P₀.firstEndpoints T).wordPart N ((P₀.linePadding T N l).inside p u) =
+      P₀.part u.val := rfl
+
+theorem cutoffInside_order [Finite E] (hpart : Monotone P₀.part)
+    (l : Combinatorics.Line E N) (p : T.FirstWagon)
+    (x y : firstCarrier (D := D) T p) (h : x < y) :
+    (P₀.cutoffWordOrder T N).lt ((P₀.linePadding T N l).inside p x)
+      ((P₀.linePadding T N l).inside p y) := by
+  letI : LinearOrder (FirstVertex (D := D) T) := P₀.firstOrder T
+  let Q := P₀.firstEndpoints T
+  let u := firstTag (D := D) T p x
+  let w := firstTag (D := D) T p y
+  have hlt : u < w := P₀.firstTag_order T hpart p x y h
+  have hm : Q.part u ≤ Q.part w := hpart h.le
+  by_cases he : Q.part u = Q.part w
+  · exact Q.line_order N l u w he hlt
+  · change (toLex (Q.part u,toLex ((Q.lineTuple N l u).2)) :
+        P ×ₗ Lex (N → FirstVertex (D := D) T)) <
+      toLex (Q.part w,toLex ((Q.lineTuple N l w).2))
+    exact Prod.Lex.left _ _ (lt_of_le_of_ne hm he)
+
+/-- The actual word-line construction supplies all order and part
+compatibility required by the shorter-input profile. -/
+noncomputable def cutoffOrderedSource [Fintype V] [Finite E] [Fintype N]
+    [Finite P] [Nonempty E] (hm : 0 < m)
+    (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton)
+    (hpart : Monotone P₀.part) :
+    letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
+    (P₀.cutoffInput T N hm hlin).OrderedSource P₀.part ((P₀.firstEndpoints T).wordPart N) := by
+  letI : Finite T.FirstWagon := Finite.of_surjective
+    (T.parent (0 : Fin (m+1)).succ) (T.surj _)
+  letI : Finite (FirstVertex (D := D) T) := Finite.of_injective
+    (fun x : FirstVertex (D := D) T => (x.1,x.2.val))
+    (by
+      rintro ⟨p,x⟩ ⟨q,y⟩ he
+      have hp : p = q := congrArg Prod.fst he
+      subst q
+      have hxy : x = y := Subtype.ext (congrArg Prod.snd he)
+      subst y
+      rfl)
+  letI : Finite (P₀.CutoffWordVertex T N) := Finite.of_injective
+    (fun x : P₀.CutoffWordVertex T N => (x.val : P × (N → FirstVertex (D := D) T)))
+    Subtype.val_injective
+  letI : Fintype (P₀.CutoffWordVertex T N) := Fintype.ofFinite _
+  letI : Finite (Combinatorics.Line E N) := Finite.of_injective
+    (fun l : Combinatorics.Line E N => l.idxFun)
+    (fun _ _ he => Combinatorics.Line.ext he)
+  letI : Fintype (Combinatorics.Line E N) := Fintype.ofFinite _
+  letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
+  exact (P₀.cutoffInput T N hm hlin).orderedSource P₀.part
+    ((P₀.firstEndpoints T).wordPart N) hpart (P₀.cutoffWordPart_mono T N)
+    (P₀.cutoffInside_part T N) (fun l p x y h => P₀.cutoffInside_order T N hpart l p x y h)
+
+end ContactPartiteEndpoints
+
 end StructuralRamsey.Girth
