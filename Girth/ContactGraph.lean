@@ -1,6 +1,6 @@
-import Girth.TrainOrderOneBridge
+import Girth.TrainIncidenceData
 import Girth.TrainCycleWeights
-import Girth.LabelledWagonCutRestriction
+import Girth.LabelledBergeCore
 import Mathlib.Tactic
 
 /-!
