@@ -154,19 +154,17 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
         rw [Fintype.card_sum,T.tree.card_neighborSet_eq_degree]
       rw [hK]
       exact hh.trans hcard
+    have hlocal' (i : Q) (n : N) (he : owner n = i) :
+        ∃ a : J i, F n = G i a := by
+      subst i
+      exact hLocalSel n
     have hH (i : Q) : ∀ k : K i, (H i k).Subsingleton ∨
         ∃ a : J i, H i k = G i a := by
       intro k
       cases k with
       | inl n =>
         right
-        let x := n.val
-        have hn := hLocalSel x
-        have he : owner x = i := n.property
-        have he' : ∃ a : J i, F x = G i a := by
-          rw [← he]
-          exact hn
-        exact he'
+        exact hlocal' i n.val n.property
       | inr j =>
         by_cases hs : (P i ∩ P j.val).Subsingleton
         · exact Or.inl hs
@@ -197,6 +195,11 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
     have hkeep : keep.Nonempty := by
       let n : N := Classical.choice inferInstance
       exact ⟨selected n,⟨n,rfl⟩⟩
+    have hsel (i : Q) (n : {n : N // owner n = i}) :
+        selected n.val = (⟨i,Sum.inl n⟩ : Sigma K) := by
+      rcases n with ⟨n,h⟩
+      subst i
+      rfl
     have haux : ∀ a : Sigma K, a ∉ keep →
         (A a).Subsingleton ∨ ∃ e, A a = edge e := by
       rintro ⟨i,k⟩ hk
@@ -204,15 +207,7 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       | inl n =>
         apply False.elim
         apply hk
-        let x := n.val
-        have hx : owner x = i := n.property
-        refine ⟨x,?_⟩
-        apply Sigma.ext hx
-        cases n with
-        | mk x' hx' =>
-          dsimp [x] at hx ⊢
-          subst i
-          rfl
+        exact ⟨n.val,hsel i n⟩
       | inr j => exact hSep hsmall i j.val j.property.ne
     have hAstr : ∀ a : Sigma K, ∀ e, (edge e ∩ A a).Nontrivial → edge e ⊆ A a := by
       rintro ⟨i,k⟩ e hn
