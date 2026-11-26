@@ -20,10 +20,10 @@ abbrev Wagon (μ : Fin (m+1)) := ContactGlued (A.wagonGlue μ)
 noncomputable def parentAt (μ : Fin (m+1)) : A.Edge → A.Wagon μ :=
   (A.atCut μ).output.parent
 
-def coreW (μ : Fin (m+1)) : T.Wagon μ ↪ A.Wagon μ :=
+noncomputable def coreW (μ : Fin (m+1)) : T.Wagon μ ↪ A.Wagon μ :=
   contactCoreEmb (A.wagonGlue μ)
 
-def stdW (μ : Fin (m+1)) (i : I) : S.Wagon μ ↪ A.Wagon μ :=
+noncomputable def stdW (μ : Fin (m+1)) (i : I) : S.Wagon μ ↪ A.Wagon μ :=
   contactStandardEmb (A.wagonGlue μ) (A.wagonGlue_inj μ) i
 
 theorem parentAt_core (μ : Fin (m+1)) (e : E) :
