@@ -371,8 +371,10 @@ theorem profileFilling_compatible [Finite V] [Finite E] [Finite C]
         ext y
         constructor
         · rintro ⟨z,⟨u,rfl⟩,rfl⟩
-          exact ⟨k.symm u,by change (W.family.emb j).vertex
-            (A.fill.place e (k (k.symm u))) = _; rw [k.apply_symm_apply]⟩
+          refine ⟨k.symm u,?_⟩
+          change (W.family.emb j).vertex (A.fill.place e (k (k.symm u))) =
+            (W.family.emb j).vertex (A.fill.place e u)
+          rw [k.apply_symm_apply]
         · rintro ⟨i,rfl⟩
           exact ⟨A.fill.place e (k i),⟨k i,rfl⟩,rfl⟩
   have h := congrFun (hf.range_inj_of_wellFoundedLT hg |>.mp hr) (k.symm x)
@@ -392,7 +394,7 @@ the full Ramsey theorem at height m on arbitrary profiles. The
 bottom budget q 0 is deliberately irrelevant to this theorem. -/
 theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
     (hm : 0 < m) (hq : ∀ μ : Fin (m+1), μ.val < m → 2 ≤ q μ.succ)
-    (lower : ContactProfileRamsey (fun μ : Fin (m+1) => q μ.succ))
+    (lower : ContactProfileRamsey.{v} (fun μ : Fin (m+1) => q μ.succ))
     (A : ContactBoostInput P (m+1) allowed q) :
     Nonempty (A.Witness Color) := by
   classical
@@ -456,7 +458,7 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
     (fun j => allowed j.succ)
     (fun i => EP.part (Fintype.orderIsoFinOfCardEq X rfl i)) R hR
     ((N → A.Edge) → Color)
-  let B := C.profileFilling W.out
+  let B := C.profileFilling (templatePart := EP.part) W.out
   have hplace : ∀ j e x, B.place ((W.family.emb j).edge e) x =
       (W.family.emb j).vertex (C.fill.place e x) :=
     C.profileFilling_compatible O hsource U.covered allowed A.parameters W
@@ -464,15 +466,16 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
   let S := B.fillTrain W.out.train
   let M := C.resultFamily W.family B hplace
   have hBP (e : W.out.Edge) (x : X) : W.out.part (B.place e x) = EP.part x :=
-    C.profileFilling_part W.out e x
+    C.profileFilling_part (templatePart := EP.part) W.out e x
   have hlin : ∀ e f : N → A.Edge, e ≠ f →
       ((U.cutoffTemplate A.train N).edgeCarrier e ∩
         (U.cutoffTemplate A.train N).edgeCarrier f).Subsingleton :=
     (U.firstEndpoints A.train).word_linear N (U.firstDisjoint_linear A.train A.linear)
   have hWlin := W.out.linear_of_wagonBounds hm (fun μ => q μ.succ)
     (hq 0 (by change (0 : ℕ) < m; omega)) (W.out.graph.systemBounds_wagonBounds W.out.train hW)
+  have hsize : 0 < Fintype.card X := by omega
   have hpositive' := C.result_positiveBounds W.family B hplace
-    (fun μ : Fin (m+1) => q μ.succ) hW (W.out.edge_nonempty (by omega)) hlin
+    (fun μ : Fin (m+1) => q μ.succ) hW (W.out.edge_nonempty hsize) hlin
   have hpositive : H.PositiveBounds S q := by
     intro μ
     refine Fin.cases ?_ (fun ν => ?_) μ
@@ -535,8 +538,10 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
     arrow := C.result_arrow W.family B hplace W.arrow hword }⟩
   · rintro ⟨j,c⟩ x
     change W.out.part ((W.family.emb j).vertex ((C.original c).vertex x)) = U.part x
-    rw [W.emb_part]
-    exact O.original_part c x
+    calc
+      _ = C.sourcePart U.part EP.part ((C.original c).vertex x) :=
+        W.emb_part j ((C.original c).vertex x)
+      _ = U.part x := O.original_part c x
   · rintro ⟨j,c⟩ x y h
     exact W.emb_order j _ _ (O.original_order c x y h)
 

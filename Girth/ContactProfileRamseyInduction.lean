@@ -251,7 +251,10 @@ theorem contactProfileRamsey_wellFounded (M : ℕ) :
       | succ h =>
         apply contactProfileRamsey_step M h q hOK
         intro n p hn hrank hp
-        exact ih (contactCutoffs p) (ht ▸ hrank) n p rfl hn hp
+        have hlt : TrainCountLex M (contactCutoffs p) t := by
+          rw [← ht]
+          exact hrank
+        exact ih (contactCutoffs p) hlt n p rfl hn hp
   intro m q hm hOK
   exact aux (contactCutoffs q) m q rfl hm hOK
 

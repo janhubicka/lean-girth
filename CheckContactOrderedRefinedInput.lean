@@ -1,6 +1,7 @@
 import Girth.ContactAssemblyPreparation
 import Girth.ContactForestBoostClass
-import Girth.ContactRefinementBudgets
+import Girth.ContactRefinedCoreAssembly
+import Girth.ContactRankAssembly
 import Girth.ContactLocalCoreInput
 import Girth.ContactOrderedSeedIteration
 import Girth.ContactCutoffTwoOrderedSource
@@ -734,3 +735,36 @@ class-wide recursive theorem. -/
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds_zero
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds_two
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostClass_girth
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainMap
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainMap_strict
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainMap_zero
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainMap_top
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.restoredTrain
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.restored_rel
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainAllowed_subset
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.restore_parameters
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainBounds_eq
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.restore_positive
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.changeSourceTrain
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.refinedBoostInput
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.restoreCore
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.refinedCore_of_cutoffTwo
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.coarseBoostInput
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.coarseCore
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.nontrivial_of_base
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.coarseCore_of_cutoffTwo
+#print axioms StructuralRamsey.Girth.contactCutoffs
+#print axioms StructuralRamsey.Girth.contactTailBounds
+#print axioms StructuralRamsey.Girth.contactTailBounds_at
+#print axioms StructuralRamsey.Girth.contactTailBounds_succ
+#print axioms StructuralRamsey.Girth.contactCutoffs_length
+#print axioms StructuralRamsey.Girth.contactCutoffs_get
+#print axioms StructuralRamsey.Girth.contactCutoffs_cons
+#print axioms StructuralRamsey.Girth.ContactRankOK
+#print axioms StructuralRamsey.Girth.contactTailBounds_rankOK
+#print axioms StructuralRamsey.Girth.contactTailBounds_rankDecrease_two
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_at
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_cutoffs
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_rankOK
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_rankDecrease
