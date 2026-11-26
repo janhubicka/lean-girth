@@ -1,6 +1,4 @@
-import Girth.ContactBase
-import Girth.ContactPictureInvariant
-import Girth.ContactCopyRestriction
-import Girth.ContactLevelZero
+import Girth.ContactPreservationBase
+import Girth.ContactExpandedPolygon
 
-/-! Fast validation root: the standalone contact graph geometry. -/
+/-! Fast target for the current contact preservation proof. -/
