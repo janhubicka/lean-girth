@@ -13,27 +13,6 @@ namespace StructuralRamsey.Girth
 universe v
 variable {V E I V₀ E₀ I₀ : Type v}
 
-namespace ContactHypergraphData
-variable (D : ContactHypergraphData V E I)
-
-/-- Proper levels only; the value of the bound function at the
-universal top is deliberately immaterial. -/
-def SystemBounds {m : ℕ} (T : ContactTrainData E m)
-    (q : Fin (m+1) → ℕ) : Prop :=
-  ∀ μ, μ.val < m → (D.atCut (T.parent μ)).ContactSystemGirthGT (q μ)
-
-def PositiveBounds {m : ℕ} (T : ContactTrainData E m)
-    (q : Fin (m+1) → ℕ) : Prop :=
-  ∀ μ, 0 < μ.val → μ.val < m →
-    (D.atCut (T.parent μ)).ContactSystemGirthGT (q μ)
-
-/-- The parameters at adjacent levels, expressed with the
-allowed sets of real vertices. -/
-def Parameters {m : ℕ} (T : ContactTrainData E m)
-    (allowed : Fin m → Set V) : Prop :=
-  ∀ j : Fin m, D.Parameter T j.castSucc j.succ (allowed j)
-
-end ContactHypergraphData
 
 namespace ContactTrainStrip
 variable {m : ℕ}
