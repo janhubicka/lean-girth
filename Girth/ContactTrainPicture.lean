@@ -118,12 +118,20 @@ theorem exists_output_order :
   letI : LinearOrder C.Vertex := C.order
   letI : LinearOrder P.Vertex := P.order
   obtain ⟨o,_,hs⟩ := C.family.next_order hne C.copy_order
-  letI : LinearOrder (C.gluing hne).Vertex := o
   let A := C.gluing hne
+  let fi : Fintype A.Vertex := @Fintype.ofFinite _ (C.finiteOutputVertex hne)
+  -- Encode the chosen glued order numerically before lifting the
+  -- lexicographic order; do not synthesize another order on the quotient.
+  let rank : A.Vertex → ℕ := @contactOrderRank A.Vertex fi o
+  have hrank : ∀ x y : A.Vertex, o.lt x y → rank x < rank y :=
+    fun x y h => @contactOrderRank_strict A.Vertex fi o x y h
+  have hri : Function.Injective rank := by
+    letI : LinearOrder A.Vertex := o
+    exact (show StrictMono rank from fun {_ _} h => hrank _ _ h).injective
   let p := (C.nextProjection hne).vertex
-  let key (x : A.Vertex) : X ×ₗ A.Vertex := toLex (p x,x)
+  let key (x : A.Vertex) : X ×ₗ ℕ := toLex (p x,rank x)
   let o' : LinearOrder A.Vertex := LinearOrder.lift' key
-    (fun x y h => congrArg (fun z : X ×ₗ A.Vertex => (ofLex z).2) h)
+    (fun x y h => hri (congrArg (fun z : X ×ₗ ℕ => (ofLex z).2) h))
   have hproj (i : C.Copy) (x : P.Vertex) :
       p (A.stdV i x) = P.projection.vertex x :=
     A.projection_vertex_std P.projection b C.part
@@ -135,7 +143,7 @@ theorem exists_output_order :
   · intro i x y h
     change key (A.stdV i x) < key (A.stdV i y)
     apply Prod.Lex.toLex_lt_toLex'.mpr
-    refine ⟨?_,fun _ => hs i x y h⟩
+    refine ⟨?_,fun _ => hrank _ _ (hs i x y h)⟩
     change p (A.stdV i x) ≤ p (A.stdV i y)
     rw [hproj,hproj]
     exact P.projection_order x y h
@@ -181,10 +189,12 @@ noncomputable def next
     rcases contactGlued_cover A.vertexGlue A.vertex_inj x with ⟨u,rfl⟩ | ⟨i,u,rfl⟩
     · obtain ⟨e,he⟩ := C.covered u
       refine ⟨A.coreE e,?_⟩
+      change A.coreV u ∈ A.outputHypergraph.bottomCut.carrier (Sum.inr (A.coreE e))
       rw [A.output_carrier_core_edge]
       exact ⟨u,he,rfl⟩
     · obtain ⟨e,he⟩ := P.covered u
       refine ⟨A.stdE i e,?_⟩
+      change A.stdV i u ∈ A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i (Sum.inr e))
       rw [A.output_carrier_std i (Sum.inr e)]
       exact ⟨u,he,rfl⟩
 

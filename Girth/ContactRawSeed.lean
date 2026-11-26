@@ -29,10 +29,12 @@ variable {D : ContactHypergraphData V E I} [LinearOrder V]
 only the actual edge and vertex embeddings of the target. -/
 abbrev SeedVertex (_A : ContactOrderedEdgeWord D P a) (N : ℕ) := Fin N × P
 
-abbrev SeedEdge (_A : ContactOrderedEdgeWord D P a) (N : ℕ) := Fin a ↪o Fin N
+-- The contact data use one universe for vertices, edge labels, and copies.
+abbrev SeedEdge (_A : ContactOrderedEdgeWord D P a) (N : ℕ) : Type v :=
+  ULift.{v} (Fin a ↪o Fin N)
 
 def seedCarrier (N : ℕ) (e : A.SeedEdge N) : Set (A.SeedVertex N) :=
-  Set.range (fun i => (e i,A.word i))
+  Set.range (fun i => (e.down i,A.word i))
 
 def seedHypergraph (N : ℕ) :
     ContactHypergraphData (A.SeedVertex N) (A.SeedEdge N) PEmpty.{v+1} where
@@ -48,14 +50,15 @@ def seedVertexMap {N : ℕ} (j : V ↪o Fin N) : V ↪ A.SeedVertex N where
 
 def seedEdgeMap {N : ℕ} (j : V ↪o Fin N)
     (hinj : Function.Injective (fun e : E => D.edgeCarrier e)) : E ↪ A.SeedEdge N where
-  toFun e := (A.enumeration e).trans j
+  toFun e := ⟨(A.enumeration e).trans j⟩
   inj' := by
     intro e f h
     apply hinj
+    change D.edgeCarrier e = D.edgeCarrier f
     rw [A.carrier_eq,A.carrier_eq]
     have he : (A.enumeration e : Fin a → V) = A.enumeration f := by
       funext i
-      exact j.injective (congrArg (fun k : A.SeedEdge N => k i) h)
+      exact j.injective (congrArg (fun k : A.SeedEdge N => k.down i) h)
     rw [he]
 
 theorem seed_carrier_image {N : ℕ} (j : V ↪o Fin N)
@@ -69,8 +72,7 @@ theorem seed_carrier_image {N : ℕ} (j : V ↪o Fin N)
     refine ⟨A.enumeration e i,⟨i,rfl⟩,?_⟩
     exact Prod.ext rfl (A.part_eq e i)
   · rintro ⟨u,⟨i,rfl⟩,rfl⟩
-    refine ⟨i,?_⟩
-    exact Prod.ext rfl (A.part_eq e i).symm
+    exact ⟨i,Prod.ext rfl (A.part_eq e i).symm⟩
 
 /-- The raw seed arrow is a direct finite Ramsey application.
 A colour of an increasing tuple is the colour of its actual
@@ -86,7 +88,7 @@ theorem exists_raw_seed_arrow [Fintype V] {Color : Type v} [Fintype Color]
   refine ⟨N,?_⟩
   intro χ
   let ρ : (Fin a → Fin N) → Color := fun f =>
-    if hf : StrictMono f then χ (OrderEmbedding.ofStrictMono f hf)
+    if hf : StrictMono f then χ ⟨OrderEmbedding.ofStrictMono f hf⟩
     else Classical.choice (inferInstance : Nonempty Color)
   obtain ⟨s,hs,hm⟩ := hN ρ
   let j : V ↪o Fin N :=
@@ -95,19 +97,21 @@ theorem exists_raw_seed_arrow [Fintype V] {Color : Type v} [Fintype Color]
   let e₀ : E := Classical.choice inferInstance
   refine ⟨j,χ (A.seedEdgeMap j hinj e₀),?_⟩
   intro e
-  let f := A.seedEdgeMap j hinj e
-  let g := A.seedEdgeMap j hinj e₀
+  let f := (A.seedEdgeMap j hinj e).down
+  let g := (A.seedEdgeMap j hinj e₀).down
   have hf : StrictMono f := f.strictMono
   have hg : StrictMono g := g.strictMono
   have hmem (u : E) (i : Fin a) :
-      A.seedEdgeMap j hinj u i ∈ s :=
+      (A.seedEdgeMap j hinj u).down i ∈ s :=
     s.orderEmbOfCardLe_mem hs ((Fintype.orderIsoFinOfCardEq V rfl).symm (A.enumeration u i))
   have he := hm f g hf hg (hmem e) (hmem e₀)
-  have heq (k : A.SeedEdge N) :
+  have heq (k : Fin a ↪o Fin N) :
       OrderEmbedding.ofStrictMono k k.strictMono = k := by
     ext i
     rfl
-  simpa only [ρ,dif_pos hf,dif_pos hg,heq] using he
+  have he' : χ (⟨f⟩ : A.SeedEdge N) = χ ⟨g⟩ := by
+    simpa only [ρ,dif_pos hf,dif_pos hg,heq] using he
+  exact he'
 
 /-- In picture zero each target image is a separate component,
 so its edge map is strong there even though the raw seed is
@@ -119,6 +123,7 @@ def rawInitialProjection (N : ℕ)
   edge := fun e => A.seedEdgeMap e.1 hinj e.2
   edge_image := by
     rintro ⟨j,e⟩
+    change _ = (A.seedHypergraph N).edgeCarrier (A.seedEdgeMap j hinj e)
     rw [A.seed_carrier_image j hinj]
     ext x
     constructor
