@@ -217,8 +217,8 @@ theorem preserves_parameter
       (hp : A.parentAt ν (A.stdE i f) = A.parentAt ν (A.coreE e)) :
       A.parentAt μ (A.stdE i f) = A.parentAt μ (A.coreE e) := by
     have he' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := by
-    rw [A.cut_output_eq ν]
-    exact he
+      rw [A.cut_output_eq ν]
+      exact he
     obtain ⟨x,rfl⟩ := P.core.edge_vertex_range he'
     have hxe : x ∈ D.edgeCarrier e := P.core.edge_vertex_reflect e x he'
     have hparent : A.parentAt ν (A.stdE i f) = A.coreW ν (T.parent ν e) :=
