@@ -58,7 +58,8 @@ theorem triangle_not_shared (hlen : C.length = 3) : ¬ C.HasSharedChord K := by
 assumed. The remaining construction must supply the two cyclic intervals,
 their side weights, and the indicated vertex maps. -/
 structure Split (C : ContactPolygon V P) (K : J → Set (V ⊕ P)) where
-  left right : ContactPolygon V P
+  left : ContactPolygon V P
+  right : ContactPolygon V P
   leftMap : Fin left.length → Fin C.length
   rightMap : Fin right.length → Fin C.length
   left_vertex : ∀ i, left.vertex i = C.vertex (leftMap i)
