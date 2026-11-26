@@ -24,7 +24,11 @@ wagon's tag. The same original vertex may occur at several tags. -/
 abbrev FirstVertex := Sigma (fun p : T.FirstWagon => firstCarrier (D := D) T p)
 
 def firstTag (p : T.FirstWagon) : firstCarrier (D := D) T p ↪ FirstVertex (D := D) T :=
-  ⟨Sigma.mk p,by intro u v h; cases h; rfl⟩
+  { toFun := fun u => ⟨p,u⟩
+    inj' := by
+      intro u v h
+      apply Subtype.ext
+      exact congrArg (fun z : FirstVertex (D := D) T => z.2.val) h }
 
 def firstEndpoint (e : E) (a : A) : FirstVertex (D := D) T :=
   ⟨T.parent (0 : Fin (m+1)).succ e,
@@ -51,8 +55,8 @@ def firstEndpoints : ContactPartiteEndpoints (P.firstDisjoint T) A where
     change (⟨T.parent (0 : Fin (m+1)).succ e,
       ⟨P.endpoint e (P.part x),e,rfl,P.endpoint_mem e (P.part x)⟩⟩ :
         FirstVertex (D := D) T) = _
-    cases h
-    rfl
+    exact congrArg (fun u : firstCarrier (D := D) T (T.parent (0 : Fin (m+1)).succ e) =>
+      (⟨T.parent (0 : Fin (m+1)).succ e,u⟩ : FirstVertex (D := D) T)) (Subtype.ext h)
 
 /-- Linearity is inherited inside each original wagon; two
 different wagon tags have disjoint vertex carriers. -/
@@ -76,7 +80,7 @@ theorem firstDisjoint_linear
 
 /-- Actual incidence in a tagged first wagon. -/
 theorem firstEndpoint_tag (e : E) (a : A) :
-    (P.firstEndpoint T e).1 = T.parent (0 : Fin (m+1)).succ e := rfl
+    (P.firstEndpoint T e a).1 = T.parent (0 : Fin (m+1)).succ e := rfl
 
 theorem firstDisjoint_allowed (allowed : Set A)
     (hpar : D.Parameter T 0 (0 : Fin (m+1)).succ (P.part ⁻¹' allowed))
@@ -121,19 +125,22 @@ noncomputable def lineTemplate
     ext x
     constructor
     · rintro ⟨z,⟨a,rfl⟩,rfl⟩
-      exact ⟨P.endpoint e a,P.endpoint_mem e a,rfl⟩
+      refine ⟨P.endpoint e a,P.endpoint_mem e a,?_⟩
+      unfold linePadding ContactWagonPadding.first ContactWagonPadding.firstMember firstTag firstEndpoint
+      rfl
     · rintro ⟨y,hy,rfl⟩
       let a := P.part y
       have he := P.endpoint_of_mem e y hy
       refine ⟨P.firstEndpoint T e a,⟨a,rfl⟩,?_⟩
+      unfold linePadding ContactWagonPadding.first ContactWagonPadding.firstMember firstTag
       change (P.firstEndpoints T).lineVertexEmb N l (P.firstEndpoint T e a) =
         (P.firstEndpoints T).lineVertexEmb N l
           (⟨T.parent (0 : Fin (m+1)).succ e,⟨y,e,rfl,hy⟩⟩ : FirstVertex (D := D) T)
       congr 1
       change (⟨T.parent (0 : Fin (m+1)).succ e,
         ⟨P.endpoint e a,e,rfl,P.endpoint_mem e a⟩⟩ : FirstVertex (D := D) T) = _
-      cases he
-      rfl
+      exact congrArg (fun u : firstCarrier (D := D) T (T.parent (0 : Fin (m+1)).succ e) =>
+        (⟨T.parent (0 : Fin (m+1)).succ e,u⟩ : FirstVertex (D := D) T)) (Subtype.ext he)
   edge_inj := by
     intro e f _ he
     exact ((P.firstEndpoints T).lineEdgeEmb N l).injective he
@@ -155,7 +162,10 @@ noncomputable def lineTemplate
     obtain ⟨a,ha⟩ := hz
     have htag : firstTag (D := D) T p u = P.firstEndpoint T e a :=
       emb.injective (hu.trans (hz'.symm.trans (congrArg emb ha.symm)))
-    exact ⟨e,(congrArg Sigma.fst htag).symm,he⟩
+    refine ⟨e,?_,he⟩
+    have h := congrArg (fun z : FirstVertex (D := D) T => z.1) htag
+    change p = T.parent (0 : Fin (m+1)).succ e at h
+    exact h.symm
 
 /-- Every word-template intersection is in an allowed first
 parameter part. This is stronger than mere linearity. -/
