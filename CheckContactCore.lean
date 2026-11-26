@@ -180,3 +180,16 @@ import Girth.ContactCore
 #print axioms StructuralRamsey.Girth.ContactPictureCopies.bottom_owner_assignment
 #print axioms StructuralRamsey.Girth.ContactPictureCopies.preserves_g4_bottom
 #print axioms StructuralRamsey.Girth.ContactPictureCopies.preserves_systemGirth_bottom
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_selected_no_bad
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_selected_real_g4
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_selected_triangle_covered
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_forbid_three_edges
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_four_deletions_impossible
+#print axioms StructuralRamsey.Girth.OrderOneData.zero_selected_conformal
+#print axioms StructuralRamsey.Girth.contact_isTree_of_connected_ncard_edgeSet
+#print axioms StructuralRamsey.Girth.contact_isTree_sum_sup_edge
+#print axioms StructuralRamsey.Girth.ContactJoinTree.sumBridge
+#print axioms StructuralRamsey.Girth.ContactJoinTree.reindex
+#print axioms StructuralRamsey.Girth.ContactJoinTree.restorePrivate
+#print axioms StructuralRamsey.Girth.ContactJoinTree.attachLeaf
+#print axioms StructuralRamsey.Girth.ContactJoinTree.restoreContained
