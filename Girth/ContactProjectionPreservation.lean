@@ -72,7 +72,7 @@ theorem projection_std_image {base : B → Set X} (P : ContactBaseProjection L b
     (b : B) (p : V → X) (h : A.CoreOver P b p) (i : I) (C : Set V₀) :
     A.outputProjectionVertex P p '' (A.stdV i '' C) = P.vertex '' C := by
   rw [Set.image_image]
-  have he : A.outputProjectionVertex P p ∘ A.stdV i = P.vertex := by
+  have he : (fun x => A.outputProjectionVertex P p (A.stdV i x)) = P.vertex := by
     funext x
     exact A.projection_vertex_std P b p h i x
   rw [he]
@@ -109,25 +109,33 @@ def outputProjection {base : B → Set X} (P : ContactBaseProjection L base)
     rcases contactGlued_cover A.edgeGlue A.edge_inj e with ⟨f,rfl⟩ | ⟨i,f,rfl⟩
     · change A.outputProjectionVertex P p '' A.outputHypergraph.edgeCarrier (A.coreE f) =
         base (A.outputProjectionEdge P b (A.coreE f))
-      have he := A.bottomPicture.output_carrier_core f
-      rw [A.bottomPicture_output_eq] at he
+      have he : A.outputHypergraph.edgeCarrier (A.coreE f) = A.coreV '' D.edgeCarrier f := by
+        have hh := A.bottomPicture.output_carrier_core f
+        rw [A.bottomPicture_output_eq] at hh
+        exact hh
       rw [he,A.projection_core_image,A.projection_edge_core,h.edge_image]
     · change A.outputProjectionVertex P p '' A.outputHypergraph.edgeCarrier (A.stdE i f) =
         base (A.outputProjectionEdge P b (A.stdE i f))
-      have he := A.bottomPicture.output_carrier_standard i f
-      rw [A.bottomPicture_output_eq] at he
+      have he : A.outputHypergraph.edgeCarrier (A.stdE i f) = A.stdV i '' L.edgeCarrier f := by
+        have hh := A.bottomPicture.output_carrier_standard i f
+        rw [A.bottomPicture_output_eq] at hh
+        exact hh
       rw [he,A.projection_std_image P b p h,A.projection_edge_std P b hA,P.edge_image]
   edge_inj := by
     intro e
     rcases contactGlued_cover A.edgeGlue A.edge_inj e with ⟨f,rfl⟩ | ⟨i,f,rfl⟩
     · change Set.InjOn (A.outputProjectionVertex P p) (A.outputHypergraph.edgeCarrier (A.coreE f))
-      have he := A.bottomPicture.output_carrier_core f
-      rw [A.bottomPicture_output_eq] at he
+      have he : A.outputHypergraph.edgeCarrier (A.coreE f) = A.coreV '' D.edgeCarrier f := by
+        have hh := A.bottomPicture.output_carrier_core f
+        rw [A.bottomPicture_output_eq] at hh
+        exact hh
       rw [he]
       exact A.projection_core_injOn P p _ (h.edge_inj f)
     · change Set.InjOn (A.outputProjectionVertex P p) (A.outputHypergraph.edgeCarrier (A.stdE i f))
-      have he := A.bottomPicture.output_carrier_standard i f
-      rw [A.bottomPicture_output_eq] at he
+      have he : A.outputHypergraph.edgeCarrier (A.stdE i f) = A.stdV i '' L.edgeCarrier f := by
+        have hh := A.bottomPicture.output_carrier_standard i f
+        rw [A.bottomPicture_output_eq] at hh
+        exact hh
       rw [he]
       exact A.projection_std_injOn P b p h i _ (P.edge_inj f)
   copy_inj := by
@@ -135,8 +143,10 @@ def outputProjection {base : B → Set X} (P : ContactBaseProjection L base)
     exact A.projection_std_injOn P b p h i _ (P.copy_inj j)
   copy_edge_subset := by
     rintro ⟨i,j⟩ e ⟨f,hf,rfl⟩
-    have he := A.bottomPicture.output_carrier_standard i f
-    rw [A.bottomPicture_output_eq] at he
+    have he : A.outputHypergraph.edgeCarrier (A.stdE i f) = A.stdV i '' L.edgeCarrier f := by
+      have hh := A.bottomPicture.output_carrier_standard i f
+      rw [A.bottomPicture_output_eq] at hh
+      exact hh
     change A.outputHypergraph.edgeCarrier (A.stdE i f) ⊆ A.stdV i '' L.copyCarrier j
     rw [he]
     exact Set.image_mono (P.copy_edge_subset j f hf)
