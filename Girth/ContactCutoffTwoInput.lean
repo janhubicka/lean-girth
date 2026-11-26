@@ -233,5 +233,37 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
       obtain ⟨u,hu⟩ := hz'
       exact ⟨u,congrArg (contactComponentEmb c) hu⟩
 
+
+/-- The actual input to the shorter Ramsey theorem has the
+inherited proper-cut girth vector. -/
+theorem source_wagonBounds (q : Fin (m+1) → ℕ)
+    (hg : ∀ μ : Fin (m+1), μ.val < m →
+      LabelledGirthGT (D.atCut (T.parent μ.succ)).contactWagonCarrier (q μ)) :
+    A.source.WagonBounds A.sourceTrain q := by
+  exact ContactHypergraphData.varying_disjoint_wagonBounds
+    (fun c => (A.pad c).paddedHypergraph) T.shorterTrain A.tail_pos q
+    (fun c => (A.pad c).shorter_wagonBounds q hg)
+
+theorem source_linear
+    (hlin : ∀ p r : T.FirstWagon, p ≠ r →
+      ((D.atCut (T.parent (0 : Fin (m+1)).succ)).contactWagonCarrier p ∩
+        (D.atCut (T.parent (0 : Fin (m+1)).succ)).contactWagonCarrier r).Subsingleton) :
+    ∀ e f : A.OldEdge, e ≠ f →
+      (A.source.edgeCarrier e ∩ A.source.edgeCarrier f).Subsingleton :=
+  ContactHypergraphData.varying_disjoint_linear
+    (fun c => (A.pad c).paddedHypergraph) (fun c => (A.pad c).shorter_linear hlin)
+
+/-- The retained parameters of the shorter input contain
+precisely the images of the allowed original vertices. Private
+padding points never occur in two distinct shorter edges. -/
+theorem source_parameters (allowed : Fin m → Set V)
+    (h : ∀ k : Fin m, D.Parameter T k.castSucc.succ k.succ.succ (allowed k)) :
+    A.source.Parameters A.sourceTrain
+      (fun k => {x | x.2 ∈ (A.pad x.1).oldVertex '' allowed k}) := by
+  apply ContactHypergraphData.varying_disjoint_parameters
+    (fun c => (A.pad c).paddedHypergraph) T.shorterTrain A.tail_pos
+  intro c k
+  exact (A.pad c).shorter_parameter k.castSucc k.succ (allowed k) (h k)
+
 end ContactCutoffTwoInput
 end StructuralRamsey.Girth
