@@ -33,7 +33,7 @@ def noCopies : ContactBaseProjection D.noCopies base where
   edge_inj := P.edge_inj
   copy_inj := PEmpty.elim
   copy_edge_subset := PEmpty.elim
-  copy_strong := PEmpty.elim
+  copy_strong := by intro i; cases i
 
 end ContactBaseProjection
 
@@ -98,8 +98,10 @@ variable {L : ContactHypergraphData V E I} {base : B → Set X}
 
 theorem strip_endpoint_exists (e : P.StripEdge b) (a : base b) :
     ∃ x, x ∈ L.edgeCarrier e.val ∧ P.vertex x = a.val := by
-  have h := a.property
-  rw [← e.property,← P.edge_image] at h
+  have h : (a.val : X) ∈ base (P.edge e.val) := by
+    rw [e.property]
+    exact a.property
+  rw [← P.edge_image] at h
   exact h
 
 noncomputable def stripEndpoint (e : P.StripEdge b) (a : base b) : P.StripVertex b :=
