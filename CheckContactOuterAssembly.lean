@@ -1,0 +1,11 @@
+import Girth.ContactOuterAssembly
+
+#print axioms StructuralRamsey.Girth.contact_joinTree_of_unique_owner
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.disjointCopies_completable
+#print axioms StructuralRamsey.Girth.ContactSeed.initialPicture_outerInvariant
+#print axioms StructuralRamsey.Girth.contactProfileOuterRamsey_qualitative
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.copy_girth_of_source
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.copy_edge_subset_from_embeddings
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.QuantitativeCompletion
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.girth_of_quantitativeCompletion
+#print axioms StructuralRamsey.Girth.contactProfileOuterRamsey_quantitative

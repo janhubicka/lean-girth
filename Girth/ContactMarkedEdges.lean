@@ -106,6 +106,7 @@ decreasing_by
     (fun i : K => i.val) Subtype.val_injective
   intro hsurj
   obtain ⟨i,hi⟩ := hsurj leaf
-  exact (Set.mem_compl_iff.mp i.property) (Set.mem_singleton_iff.mpr hi)
+  have hn : i.val ∉ ({leaf} : Set Q) := i.property
+  exact hn (Set.mem_singleton_iff.mpr hi)
 
 end StructuralRamsey.Girth

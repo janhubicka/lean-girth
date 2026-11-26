@@ -37,8 +37,9 @@ theorem paddedPart_copy (part : V → P) (label : U → P)
     simp only [gluedStandardNode,he]
   | some u =>
     obtain ⟨hx,hxu⟩ := (M.isolatedGlue_iff j x u).mp he
-    rw [(contactStandardEmb_eq_core M.isolatedGlue M.isolatedGlue_inj j x u).mpr he,
-      M.paddedPart_core,← hxu]
+    have hcopy : M.paddedCopy j x = M.paddedCore u :=
+      (contactStandardEmb_eq_core M.isolatedGlue M.isolatedGlue_inj j x u).mpr he
+    rw [hcopy,M.paddedPart_core,← hxu]
     exact hpart j ⟨x,hx⟩
 
 /-- Restore the original orders on every copy and keep a single

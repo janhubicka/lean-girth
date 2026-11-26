@@ -135,6 +135,7 @@ jobs:
           lake env lean CheckContactOuterPreparation.lean | tee contact-outer-preparation-axioms.log
           python3 scripts/check_axioms.py contact-outer-preparation-axioms.log CheckContactOuterPreparation.lean
       - name: Audit quantitative completion by minimum added family
+        id: contact-quantitative-completion
         if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
         shell: bash
         run: |
@@ -161,6 +162,7 @@ jobs:
           lake env lean CheckContactOuterStep.lean | tee contact-outer-step-axioms.log
           python3 scripts/check_axioms.py contact-outer-step-axioms.log CheckContactOuterStep.lean
       - name: Audit outer finite iteration with supplied local cores
+        id: contact-outer-iteration
         if: ${{ always() && !cancelled() && steps.contact-outer-step.outcome == 'success' && steps.contact-local-partite.outcome == 'success' }}
         shell: bash
         run: |
@@ -168,6 +170,14 @@ jobs:
           lake build +Girth.ContactOuterIteration
           lake env lean CheckContactOuterIteration.lean | tee contact-outer-iteration-axioms.log
           python3 scripts/check_axioms.py contact-outer-iteration-axioms.log CheckContactOuterIteration.lean
+      - name: Audit the assembled outer girth Ramsey theorem
+        if: ${{ always() && !cancelled() && steps.contact-outer-iteration.outcome == 'success' && steps.contact-quantitative-completion.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterAssembly
+          lake env lean CheckContactOuterAssembly.lean | tee contact-outer-assembly-axioms.log
+          python3 scripts/check_axioms.py contact-outer-assembly-axioms.log CheckContactOuterAssembly.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash
