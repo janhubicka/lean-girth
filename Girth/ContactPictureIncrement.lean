@@ -26,7 +26,7 @@ theorem local_joinTree {q : ℕ} (hL : L.bottomCut.ZeroJoinTreesThrough q)
   | inr e =>
     let J := {j : A.localIndex (Sum.inr e) // j ∈ s}
     letI : Nonempty J := by obtain ⟨j,hj⟩ := hs; exact ⟨⟨j,hj⟩⟩
-    letI : Subsingleton J := ⟨fun j k => Subtype.ext (Subsingleton.elim j.val k.val)⟩
+    letI : Subsingleton J := ⟨fun j k => Subtype.ext (@Subsingleton.elim PUnit.{v+1} inferInstance j.val k.val)⟩
     exact ⟨ContactJoinTree.of_subsingleton (fun j : J => A.localPiece (Sum.inr e) j.val)⟩
 
 /-- A core edge meets an output piece either in at most one vertex
