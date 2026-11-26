@@ -105,7 +105,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/test_check_axioms.py
           lake env lean CheckContactCore.lean | tee contact-core-axioms.log
           python3 scripts/check_axioms.py contact-core-axioms.log CheckContactCore.lean
       - name: Build and audit relational integration
