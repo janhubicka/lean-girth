@@ -1,4 +1,5 @@
 import Girth.ContactSideSubdivision
+import Girth.ContactBoundary
 
 /-! The expansion of a polygon is a finite cyclic indexing of its
 original vertices and the selected fresh inserted wagons.  All geometric
