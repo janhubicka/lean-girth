@@ -110,7 +110,9 @@ theorem consecutive_trace (hb : B.Bad H.contactClique) :
       exact original_inserted i j w hj hkw hlw
   · rcases X.cover l with ⟨j,rfl⟩ | ⟨j,w',hj,rfl⟩
     · rw [X.original_eq] at hlw
-      exact (original_inserted j i w hi hlw hkw).symm
+      rcases original_inserted j i w hi hlw hkw with he | he
+      · exact Or.inr he
+      · exact Or.inl he
     · rw [X.inserted_eq] at hkw hlw
       have he : w = p := A.core.wagon.injective (show A.core.wagon w = A.core.wagon p from hkw)
       have he' : w' = p := A.core.wagon.injective (show A.core.wagon w' = A.core.wagon p from hlw)
