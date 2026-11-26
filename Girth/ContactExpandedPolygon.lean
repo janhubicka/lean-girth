@@ -27,7 +27,7 @@ structure Expansion where
   inserted_eq : ∀ i p (h : S.insert i = some p),
     polygon.vertex (inserted i p h) = Sum.inr (A.core.wagon p)
   cover : ∀ k : Fin polygon.length,
-    (∃ i, original i = k) ∨ (∃ i p (h : S.insert i = some p), inserted i p h = k)
+    (∃ i, original i = k) ∨ (∃ i p, ∃ h : S.insert i = some p, inserted i p h = k)
   direct_next : ∀ i, S.insert i = none →
     cyclicSucc (original i) = original (cyclicSucc i)
   split_first : ∀ i p (h : S.insert i = some p),
