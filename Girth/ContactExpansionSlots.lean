@@ -1,4 +1,5 @@
-import Girth.ContactRunSegments
+import Girth.ContactBadCycle
+import Mathlib.Data.Finset.Sort
 
 /-! Canonical doubled-slot indexing of a subdivided cyclic word.
 All even slots are retained. Odd slots are retained exactly on the
