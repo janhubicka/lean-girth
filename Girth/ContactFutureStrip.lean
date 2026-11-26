@@ -23,16 +23,16 @@ abbrev NewStripEdge := {f : A.Edge // A.outputProjectionEdge P b f = c}
 
 def oldStripInclusion : A.OldStripEdge P c ↪ E₀ := ⟨Subtype.val,Subtype.val_injective⟩
 
-include hA hne
-
 /-- A future-strip edge of one standard is never glued to a core
 edge. Two different standard labels therefore give distinct edges. -/
+include hA hne in
 theorem future_not_core (i : I) (f : A.OldStripEdge P c) :
     A.stdE i f.val ∉ Set.range A.coreE := by
   rintro ⟨e,he⟩
   have hg := (contactStandardEmb_eq_core A.edgeGlue A.edge_inj i f.val e).mp he.symm
   exact hne (f.property.symm.trans ((hA.edge_domain i f.val).mp ⟨e,hg⟩))
 
+include hA hne in
 theorem future_edge_injective :
     Function.Injective (fun p : I × A.OldStripEdge P c => A.stdE p.1 p.2.val) := by
   intro u w he
@@ -45,12 +45,10 @@ theorem future_edge_injective :
       ⟨f.val,rfl⟩ ⟨g.val,he.symm⟩
     exact (A.future_not_core P b c hA hne i f hx).elim
 
-omit hA hne
-
 noncomputable def futureEdgeEquiv : (I × A.OldStripEdge P c) ≃ A.NewStripEdge P b c := by
   let f : I × A.OldStripEdge P c → A.NewStripEdge P b c := fun p =>
     ⟨A.stdE p.1 p.2.val,(A.projection_edge_std P b hA p.1 p.2.val).trans p.2.property⟩
-  have hi : Function.Injective f := fun a b he =>
+  have hi : Function.Injective f := fun a z he =>
     A.future_edge_injective P b c hA hne (congrArg Subtype.val he)
   have hs : Function.Surjective f := by
     rintro ⟨e,he⟩
@@ -68,10 +66,10 @@ def futureEmbedding : (I × A.OldStripEdge P c) ↪ A.Edge where
   toFun p := A.stdE p.1 p.2.val
   inj' := A.future_edge_injective P b c hA hne
 
-def futureHypergraph : ContactHypergraphData A.Vertex (I × A.OldStripEdge P c) PEmpty.{v+1} :=
+noncomputable def futureHypergraph : ContactHypergraphData A.Vertex (I × A.OldStripEdge P c) PEmpty.{v+1} :=
   A.outputHypergraph.pullEdges (A.futureEmbedding P b c hA hne)
 
-def futureTrain : ContactTrainData (I × A.OldStripEdge P c) m :=
+noncomputable def futureTrain : ContactTrainData (I × A.OldStripEdge P c) m :=
   A.outputTrain.pullTrain (A.futureEmbedding P b c hA hne)
 
 theorem future_carrier (i : I) (f : A.OldStripEdge P c) :
@@ -121,7 +119,7 @@ theorem future_cross_trace (p : V → X) (hc : A.CoreOver P b p)
 /-- The original first-level relation of the future strip in
 each standard is exactly the one retained by the old refinement.
 Construct the new refinement on the actual product edge labels. -/
-def futureRefinement {d h : ℕ} (hm : m = h+1)
+noncomputable def futureRefinement {d h : ℕ} (hm : m = h+1)
     (hd : 0 < d) (R : ContactTrainData (A.OldStripEdge P c) (d+h))
     (hret : ∀ e f, R.parent ⟨d,by omega⟩ e = R.parent ⟨d,by omega⟩ f ↔
       S.parent ⟨1,by omega⟩ e.val = S.parent ⟨1,by omega⟩ f.val) :
@@ -135,11 +133,10 @@ def futureRefinement {d h : ℕ} (hm : m = h+1)
       (A.future_train_rel P b c hA hne ⟨1,by omega⟩ i e f).symm
   }
 
-include hne
-
 /-- Core-copy separators meet the allowed overlap in at most
 one point. This is the only intersection property needed in the
 new split-child girth argument. -/
+include hne in
 theorem core_copy_overlap_subsingleton
     (p : V → X) (hc : A.CoreOver P b p)
     (hbase : ∀ a b : B, a ≠ b → (base a ∩ base b).Subsingleton)
@@ -156,13 +153,12 @@ theorem core_copy_overlap_subsingleton
   subst v'
   rcases hD (Sum.inl i) (Sum.inl j) (fun h => hij (Sum.inl.inj h)) with hs | ⟨e,_,_,he⟩
   · exact congrArg A.coreV (hs ⟨hu,hu'⟩ ⟨hv,hv'⟩)
-  · have huE : u ∈ D.edgeCarrier e := he ▸ (show u ∈ D.copyCarrier i ∩ D.copyCarrier j from ⟨hu,hu'⟩)
+  · change D.copyCarrier i ∩ D.copyCarrier j = D.edgeCarrier e at he
+    have huE : u ∈ D.edgeCarrier e := he ▸ (show u ∈ D.copyCarrier i ∩ D.copyCarrier j from ⟨hu,hu'⟩)
     have hvE : v ∈ D.edgeCarrier e := he ▸ (show v ∈ D.copyCarrier i ∩ D.copyCarrier j from ⟨hv,hv'⟩)
     have heq : p u = p v := hbase b c (fun he => hne he.symm) hx hy
     exact congrArg A.coreV (hc.edge_inj e huE hvE heq)
 
-
-omit hne
 
 /-- Lift the selected core-copy join trees into the output,
 retaining the selected copy labels. -/
