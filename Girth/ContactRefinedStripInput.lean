@@ -103,6 +103,7 @@ both ends of each tail interval and the actual original parameter. -/
 theorem all_parameters (hp : D.Parameters T (fun j => P.vertex ⁻¹' allowed j)) :
     (P.stripHypergraph b).Parameters R.train (fun j => P.stripPart b ⁻¹' R.allAllowed j) := by
   intro j e f x he hx hy hn
+  change P.vertex x.val ∉ R.allAllowed j at hn
   by_cases hj : j.val < R.depth
   · have hn' : P.vertex x.val ∉ R.prefixAllowed ⟨j.val,hj⟩ := by
       simpa only [allAllowed,dif_pos hj] using hn
@@ -149,6 +150,7 @@ theorem all_wagonBounds (q : Fin (h+2) → ℕ)
 /-- The local input has the required short-cycle exclusion. This is a
 consequence of the maintained invariant and current coarse positive
 bounds, rather than a hypothesis on a separately chosen refinement. -/
+include R in
 theorem edge_girth (q : Fin (h+2) → ℕ) (k : ℕ)
     (hk : k ≤ 2*g+1) (hfirst : 0 < h → k ≤ q ⟨1,by omega⟩)
     (hp : D.Parameters T (fun j => P.vertex ⁻¹' allowed j))

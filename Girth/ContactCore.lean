@@ -18,6 +18,7 @@ import Girth.ContactCutoffTwoOrderedSource
 import Girth.ContactStripRefinement
 import Girth.ContactRefinedStripInput
 import Girth.ContactPartPreservation
+import Girth.ContactForestBoostClass
 
 /-! Focused kernel for actual preservation, initial pictures and
 the independent trace-tree preparation for forest increment. -/

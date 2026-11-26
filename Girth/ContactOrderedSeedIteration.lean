@@ -69,8 +69,9 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   letI : LinearOrder Q.Vertex := A.order
   let idx := Fintype.equivFin N
   letI : LinearOrder N := LinearOrder.lift' idx idx.injective
-  letI : WellFoundedLT N := ⟨InvImage.wf idx
-    (inferInstance : WellFoundedLT (Fin (Fintype.card N))).wf⟩
+  letI : WellFoundedLT N := by
+    change WellFounded (fun a b : N => idx a < idx b)
+    exact InvImage.wf idx (inferInstance : WellFoundedLT (Fin (Fintype.card N)))
   let W := Q.projection.stripEndpoints b
   let M := Q.wordCoreFamily b N
   let G := Q.wordGluing b N hne
@@ -82,9 +83,9 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
     Finite.of_injective (fun x : W.WordVertex N =>
       (x.val : (base b) × (N → Q.projection.StripVertex b))) Subtype.val_injective
   letI : Fintype (W.WordVertex N) := Fintype.ofFinite _
-  letI : LinearOrder (W.WordVertex N) := W.wordOrder N
+  letI : LinearOrder ((Q.projection.stripEndpoints b).WordVertex N) := W.wordOrder N
   have hord : ∀ i (x y : Q.projection.StripVertex b), x.val < y.val →
-      (M.emb i).vertex x < (M.emb i).vertex y := by
+      (W.wordOrder N).lt ((M.emb i).vertex x) ((M.emb i).vertex y) := by
     intro i x y hxy
     have hmono := A.projection_mono x.val y.val hxy
     by_cases hEq : W.part x = W.part y
@@ -195,9 +196,10 @@ noncomputable def orderedRawStage (N : ℕ) [Finite V] [Finite E] [Finite P]
     emb_order := ?_
     label_eq := fun _ _ => rfl }
   intro j x y h
+  let j' : V ↪o Fin N := j
   apply ContactOrderedSeedStage.concatenate_part
-  change (toLex (j x,A.part x) : Fin N ×ₗ P) < toLex (j y,A.part y)
-  exact Prod.Lex.left _ _ (j.strictMono h)
+  change (toLex (j' x,A.part x) : Fin N ×ₗ P) < toLex (j' y,A.part y)
+  exact Prod.Lex.left _ _ (j'.strictMono h)
 
 
 /-- The final seed, with a finite ordered hypergraph, the common
@@ -238,7 +240,16 @@ theorem exists_ordered_linear_seed [Fintype V] [Finite E] [Finite P]
   letI : Finite (A.SeedEdge N) := A.seedEdgeFinite N
   letI : Fintype (A.SeedEdge N) := Fintype.ofFinite _
   let Q₀ := A.orderedRawStage N hinj hlin
-  obtain ⟨Q,hQ⟩ := Q₀.exists_linear_seed (Color := Color) hN
+  have hbase : ∀ ρ : A.SeedEdge N → Color, ∃ i : Q₀.stage.Copy, ∃ c : Color,
+      ∀ e, ρ (Q₀.stage.projection.edge ((Q₀.stage.emb i).edge e)) = c := by
+    intro ρ
+    obtain ⟨j,c,h⟩ := hN ρ
+    let i : Q₀.stage.Copy := j
+    refine ⟨i,c,?_⟩
+    intro e
+    change ρ (A.seedEdgeMap j hinj e) = c
+    exact h e
+  obtain ⟨Q,hQ⟩ := Q₀.exists_linear_seed (Color := Color) hbase
   let S := Q.stage
   letI : LinearOrder S.Vertex := Q.order
   let basePoint (e : S.Edge) (i : Fin a) : A.SeedVertex N :=
