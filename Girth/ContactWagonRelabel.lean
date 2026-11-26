@@ -53,7 +53,8 @@ theorem relabel_clique (a : I ⊕ P) (z : V ⊕ P) :
         x ∈ D.contactWagonCarrier p
       rw [D.relabel_carrier e]
     | inr r =>
-      exact ⟨e.injective,congrArg e⟩
+      change e r = e p ↔ r = p
+      exact ⟨fun h => e.injective h,fun h => congrArg e h⟩
 
 theorem relabel_adj (x y : V ⊕ P) :
     contactAdjacent (D.relabelWagons e).contactClique
