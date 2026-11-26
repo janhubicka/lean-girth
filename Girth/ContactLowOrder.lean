@@ -52,7 +52,7 @@ theorem contact_vertex_wagon_vertex_covered (h4 : ContactG4 K 2)
     ∃ j, Sum.inl x ∈ K j ∧ Sum.inr p ∈ K j ∧ Sum.inl y ∈ K j := by
   apply contact_triangle_covered h4 _ _ _ hxp
     (contactAdjacent_symm hyp) (contactAdjacent_symm hxy)
-  decide
+  simp [contactWeight, contactKind, twiceOccurrenceWeight]
 
 /-- One real vertex and two wagons likewise form a weight-two triangle. -/
 theorem contact_vertex_wagon_wagon_covered (h4 : ContactG4 K 2)
@@ -62,7 +62,7 @@ theorem contact_vertex_wagon_wagon_covered (h4 : ContactG4 K 2)
     (hpq : contactAdjacent K (Sum.inr p) (Sum.inr q)) :
     ∃ j, Sum.inl x ∈ K j ∧ Sum.inr p ∈ K j ∧ Sum.inr q ∈ K j := by
   apply contact_triangle_covered h4 _ _ _ hxp hpq (contactAdjacent_symm hxq)
-  decide
+  simp [contactWeight, contactKind, twiceOccurrenceWeight]
 
 /-- The alternating quadrilateral is of weight two. Its only possible
 chords are the real-vertex pair and the wagon pair. -/
