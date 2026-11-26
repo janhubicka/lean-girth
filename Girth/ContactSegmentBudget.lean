@@ -1,4 +1,4 @@
-import Girth.ContactBoundary
+import Girth.ContactRunSegments
 
 /-! Counting segments in the bottom-cut case. When no segment
 consists of a single mixed side, charge two distinct units of
