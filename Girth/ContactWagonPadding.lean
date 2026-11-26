@@ -1,5 +1,5 @@
 import Girth.ContactCanonicalFilling
-import Girth.ContactSplitRefinementGeometry
+import Girth.ContactBadCycle
 
 /-! Padding first wagons to a fixed template in the cutoff-two
 construction. Each padded wagon has its own private template
