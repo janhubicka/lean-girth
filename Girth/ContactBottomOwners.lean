@@ -126,6 +126,7 @@ theorem bottom_mixed_core_incidence (h0 : ∀ e, D.parent e = e)
   cases b with
   | inr r =>
     have he : A.core.wagon p = r := hp
+    change A.core.vertex x ∈ H.contactWagonCarrier r at hx
     simpa only [← he] using hx
   | inl b =>
     obtain ⟨e,he,hpe⟩ := hp
@@ -247,7 +248,7 @@ theorem bottom_owner_assignment
       rw [hx,hp] at hs
       have hinc := C.bottom_mixed_core_incidence h0 hinj habs x p hs
       have hleft := A.bottom_constituent_contains_wagon h0 hinj
-        (out (cyclicSucc k)) p hm (z := Sum.inl (A.core.vertex x)) hinc
+        (out (cyclicSucc k)) p hm (show Sum.inl (A.core.vertex x) ∈ H.contactWagonClique (A.core.wagon p) from hinc)
       simpa only [owner,if_pos (show A.BottomForward B k from ⟨x,p,hx,hp⟩),hx,hp] using
         And.intro hleft hm
     · by_cases hb' : A.BottomBackward B k
@@ -258,7 +259,7 @@ theorem bottom_owner_assignment
         rw [hp,hx] at hs
         have hinc := C.bottom_mixed_core_incidence h0 hinj habs x p hs
         have hright := A.bottom_constituent_contains_wagon h0 hinj
-          (out (contactPrev k)) p hm (z := Sum.inl (A.core.vertex x)) hinc
+          (out (contactPrev k)) p hm (show Sum.inl (A.core.vertex x) ∈ H.contactWagonClique (A.core.wagon p) from hinc)
         simpa only [owner,if_neg hf,if_pos (show A.BottomBackward B k from ⟨x,p,hp,hx⟩),hp,hx] using
           And.intro hm hright
       · rw [hunprotected k hf hb']
