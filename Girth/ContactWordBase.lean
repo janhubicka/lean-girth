@@ -113,6 +113,7 @@ theorem word_intersection_part
   have ha' : a = P.wordPart N x := congrArg (P.wordPart N) ha
   have hb' : b = P.wordPart N x := congrArg (P.wordPart N) hb
   have he := congrArg (fun z : P.WordVertex N => z.val.2 i) (ha.trans hb.symm)
+  change P.endpoint (w i) a = P.endpoint (w' i) b at he
   exact ⟨w i,w' i,hi,by simpa only [ha',hb'] using he⟩
 
 def lineTuple (l : Combinatorics.Line E N) (x : V) : A × (N → V) :=
@@ -167,7 +168,9 @@ theorem line_carrier (l : Combinatorics.Line E N) (e : E) :
   · rintro ⟨a,rfl⟩
     exact ⟨P.endpoint e a,P.endpoint_mem e a,P.line_vertex_endpoint N l e a⟩
   · rintro ⟨u,hu,rfl⟩
-    exact ⟨P.part u,by rw [← P.line_vertex_endpoint,P.endpoint_of_mem e u hu]⟩
+    refine ⟨P.part u,?_⟩
+    change P.wordEnd N (l e) (P.part u) = P.lineVertexEmb N l u
+    rw [← P.line_vertex_endpoint,P.endpoint_of_mem e u hu]
 
 /-- Strong inducedness of a line. Two endpoints in distinct
 parts fix every fixed-coordinate letter; at all variable
@@ -213,11 +216,13 @@ theorem line_strong (hlin : ∀ e f : E, e ≠ f →
       exact (by simpa [hi] using hV i : P.endpoint (w i) b = v).trans
         (by simpa [hk] using (hV k).symm)
     have he := P.edge_eq_of_two_endpoints hlin _ _ a b hab ha' hb'
+    change l (w k) i = w i
     simpa [Combinatorics.Line.coe_apply,hi] using he.symm
   | some e =>
     have ha' : P.endpoint (w i) a = P.endpoint e a := by simpa [hi] using hU i
     have hb' : P.endpoint (w i) b = P.endpoint e b := by simpa [hi] using hV i
     have he := P.edge_eq_of_two_endpoints hlin _ _ a b hab ha' hb'
+    change l (w k) i = w i
     simpa [Combinatorics.Line.coe_apply,hi] using he.symm
 
 def wordHypergraph : ContactHypergraphData (P.WordVertex N) (N → E) (Combinatorics.Line E N) where
@@ -360,7 +365,7 @@ theorem line_order [LinearOrder A] [LinearOrder V] [LinearOrder N] [WellFoundedL
   classical
   let S : Set N := {i | l.idxFun i = none}
   have hS : S.Nonempty := l.proper
-  obtain ⟨i,hi,hmin⟩ := (inferInstance : WellFoundedLT N).wf.has_min S hS
+  obtain ⟨i,hi,hmin⟩ := (inferInstance : WellFoundedLT N).has_min S hS
   change (toLex (P.part u,toLex ((P.lineTuple N l u).2)) : A ×ₗ Lex (N → V)) <
     toLex (P.part w,toLex ((P.lineTuple N l w).2))
   apply Prod.Lex.toLex_lt_toLex.mpr
