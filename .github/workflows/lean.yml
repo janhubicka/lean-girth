@@ -81,35 +81,21 @@ jobs:
           key: ${{ steps.lake-cache.outputs.cache-primary-key }}
       - name: Inventory focused dependency closures
         run: python3 scripts/contact_inventory.py
-      - name: Build and strictly audit the established contact base
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake build +Girth.ContactBase
-          python3 scripts/test_check_axioms.py
-          lake env lean CheckContactBase.lean | tee contact-base-axioms.log
-          python3 scripts/check_axioms.py contact-base-axioms.log CheckContactBase.lean
-      - name: Build and audit picture geometry and restriction
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake build +Girth.ContactPreservationBase
-          lake env lean CheckContactPreservationBase.lean | tee contact-preservation-axioms.log
-          python3 scripts/check_axioms.py contact-preservation-axioms.log CheckContactPreservationBase.lean
-      - name: Build and audit boundary geometry and indexing
-        shell: bash
-        run: |
-          set -euo pipefail
-          lake build +Girth.ContactBoundaryBase
-          lake env lean CheckContactBoundaryBase.lean | tee contact-boundary-axioms.log
-          python3 scripts/check_axioms.py contact-boundary-axioms.log CheckContactBoundaryBase.lean
       - name: Build and audit selected-family forest geometry
         shell: bash
         run: |
           set -euo pipefail
+          python3 scripts/test_check_axioms.py
           lake build +Girth.ContactTreeBase
           lake env lean CheckContactTreeBase.lean | tee contact-tree-axioms.log
           python3 scripts/check_axioms.py contact-tree-axioms.log CheckContactTreeBase.lean
+      - name: Build and audit assembled geometry and simplicial vertices
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactAssemblyBase
+          lake env lean CheckContactAssemblyBase.lean | tee contact-assembly-axioms.log
+          python3 scripts/check_axioms.py contact-assembly-axioms.log CheckContactAssemblyBase.lean
       - name: Build the expanded contact kernel
         shell: bash
         run: |
