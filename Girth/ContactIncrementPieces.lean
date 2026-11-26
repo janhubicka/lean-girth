@@ -101,8 +101,10 @@ theorem output_piece_trace {base : B → Set X} (P : ContactBaseProjection L bas
   obtain ⟨owner,j,rfl⟩ := A.output_has_localLabel a
   cases owner with
   | inl i =>
-    change (A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i j) ∩ A.coreSet).Subsingleton ∨ _
-    rw [A.output_carrier_std,A.output_edges_std]
+    change (A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i j) ∩ A.coreSet).Subsingleton ∨
+      ∃ e, A.coreE e ∈ A.outputHypergraph.bottomCut.edges (A.stdPieceLabel i j) ∧
+        A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i j) ∩ A.coreSet = A.coreV '' D.edgeCarrier e
+    rw [A.output_carrier_std i j,A.output_edges_std i j]
     rcases A.std_piece_trace P b hA hlin i j with hs | ⟨e,f,hf,hg,he⟩
     · exact Or.inl hs
     · exact Or.inr ⟨e,⟨f,hf,A.shared_edge_eq i f e hg⟩,he⟩
@@ -168,22 +170,31 @@ theorem output_pairwise_of_trace {base : B → Set X} (P : ContactBaseProjection
   · subst k
     cases i with
     | inr e =>
-      have he : j = l := Subsingleton.elim _ _
+      have he : j = l := by
+        change PUnit.unit = PUnit.unit
+        rfl
       exact (hne (ha.symm.trans ((congrArg (A.localOutputLabel (Sum.inr e)) he).trans hc))).elim
     | inl i =>
       have hjl : j ≠ l := fun he =>
         hne (ha.symm.trans ((congrArg (A.localOutputLabel (Sum.inl i)) he).trans hc))
       change A.stdPieceLabel i j = a at ha
       change A.stdPieceLabel i l = c at hc
-      rw [← ha,← hc,A.output_carrier_std,A.output_carrier_std,
-        ← contact_image_inter]
+      rw [← ha,← hc]
+      change (A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i j) ∩
+          A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i l)).Subsingleton ∨
+        ∃ e, e ∈ A.outputHypergraph.bottomCut.edges (A.stdPieceLabel i j) ∧
+          e ∈ A.outputHypergraph.bottomCut.edges (A.stdPieceLabel i l) ∧
+          A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i j) ∩
+            A.outputHypergraph.bottomCut.carrier (A.stdPieceLabel i l) =
+              A.outputHypergraph.edgeCarrier e
+      rw [A.output_carrier_std i j,A.output_carrier_std i l,← contact_image_inter]
       rcases hL j l hjl with hs | ⟨f,hf,hf',he⟩
       · exact Or.inl (contact_image_subsingleton (A.stdV i) hs)
       · right
         refine ⟨A.stdE i f,?_,?_,?_⟩
-        · rw [A.output_edges_std]
+        · rw [A.output_edges_std i j]
           exact ⟨f,hf,rfl⟩
-        · rw [A.output_edges_std]
+        · rw [A.output_edges_std i l]
           exact ⟨f,hf',rfl⟩
         · rw [he]
           exact (A.output_carrier_std i (Sum.inr f)).symm
