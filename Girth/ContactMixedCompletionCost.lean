@@ -31,7 +31,9 @@ theorem insertContained [DecidableEq N] {F : N → Set V}
     cases x with
     | inl x =>
       cases y with
-      | inl y => exact congrArg Sum.inl (Subtype.ext (congrArg Subtype.val he))
+      | inl y =>
+        have hxy : x.val = y.val := congrArg (fun z : {i : N // i ∈ insert a s} => z.val) he
+        exact congrArg Sum.inl (Subtype.ext hxy)
       | inr y =>
         have hx : x.val = a := congrArg Subtype.val he
         exact (ha (hx ▸ x.property)).elim
@@ -112,7 +114,8 @@ theorem mixedCompletion_exists
     induction u using Finset.induction_on with
     | empty =>
       intro _
-      simpa only [Finset.union_empty] using hT₁
+      rw [Finset.union_empty]
+      exact hT₁
     | @insert a u hau ih =>
       intro hus
       have hu : u ⊆ s := fun x hx => hus (Finset.mem_insert_of_mem hx)
@@ -143,6 +146,7 @@ theorem mixedCompletion_exists
 
 /-- Sharp completion bound in the actual mixed family. The only
 qualitative premise is completion of small copy-only selections. -/
+open Classical in
 theorem mixedCompletion_cost [Fintype V]
     (g m : ℕ) (hg : 2 ≤ g)
     (hlin : ∀ e f, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton)

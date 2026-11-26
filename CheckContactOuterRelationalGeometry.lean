@@ -1,0 +1,5 @@
+import Girth.ContactOuterRelationalGeometry
+
+#print axioms StructuralRamsey.Girth.contact_conformal_of_threeCompletable
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.padded_pairwise
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.padded_joinTree

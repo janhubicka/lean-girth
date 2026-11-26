@@ -1,3 +1,4 @@
+import Girth.ContactMarkedEdges
 import Girth.ContactQualitativeCompletion
 import Girth.ContactBoostDistinctImages
 

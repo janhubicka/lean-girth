@@ -152,6 +152,14 @@ jobs:
           lake build +Girth.ContactLocalForestPartite
           lake env lean CheckContactLocalForestPartite.lean | tee contact-local-partite-axioms.log
           python3 scripts/check_axioms.py contact-local-partite-axioms.log CheckContactLocalForestPartite.lean
+      - name: Audit relational restoration geometry
+        if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterRelationalGeometry
+          lake env lean CheckContactOuterRelationalGeometry.lean | tee contact-outer-relational-axioms.log
+          python3 scripts/check_axioms.py contact-outer-relational-axioms.log CheckContactOuterRelationalGeometry.lean
       - name: Audit actual outer picture preservation
         id: contact-outer-step
         if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' }}

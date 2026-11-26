@@ -1,7 +1,7 @@
 import Girth.ContactOuterIteration
 import Girth.ContactMixedCompletionCost
 import Girth.ContactSeedAssembly
-import Girth.ContactProfileRamseyInduction
+import Girth.ContactPartPreservation
 
 /-! Connect the initial linear Ramsey seed to the actual outer iteration.
 The qualitative bound m may exceed the girth g of the target. At picture
@@ -110,70 +110,124 @@ theorem initialPicture_outerInvariant [Finite V] [Finite E] [Finite J]
 
 end ContactSeed
 
-/-- The outer Ramsey witness on a covered ordered uniform profile.
-The initial seed is constructed, not supplied. The output has the
-actual designated Ramsey family, pairwise allowed intersections,
-and qualitative completion at the independently specified cutoff m. -/
-theorem contactProfileOuterRamsey_qualitative
-    {P : Type v} [LinearOrder P] [Finite P] {a : ℕ} (ha : 2 ≤ a)
-    {allowed : Fin 1 → Set P} {word : Fin a → P}
-    (A : ContactProfileTrain P 1 a allowed word)
+/-- Ordered outer witnesses preserve the original one-point labels
+and order, but do NOT require the labels to increase with the order.
+This distinction is essential for relational support hypergraphs. -/
+structure ContactOrderedOuterWitness (D : ContactHypergraphData V E I)
+    [LinearOrder V] {P : Type v} (part : V → P) (Color : Type v) where
+  Vertex : Type v
+  Edge : Type v
+  Copy : Type v
+  finiteV : Finite Vertex
+  finiteE : Finite Edge
+  finiteC : Finite Copy
+  graph : ContactHypergraphData Vertex Edge Copy
+  train : ContactTrainData Edge 1
+  family : ContactDesignatedEmbeddings D (contactHeightOne E) graph train
+  order : LinearOrder Vertex
+  label : Vertex → P
+  emb_order : ∀ i x y, x < y → order.lt ((family.emb i).vertex x) ((family.emb i).vertex y)
+  emb_label : ∀ i x, label ((family.emb i).vertex x) = part x
+  arrow : family.Arrow Color
+
+namespace ContactOrderedEdgeWord
+variable {D : ContactHypergraphData V E I} [LinearOrder V]
+    {P : Type v} {a : ℕ} (A : ContactOrderedEdgeWord D P a)
+
+theorem outer_edge_nontrivial (ha : 2 ≤ a) (e : E) : (D.edgeCarrier e).Nontrivial := by
+  rw [A.carrier_eq]
+  refine ⟨A.enumeration e ⟨0,by omega⟩,⟨_,rfl⟩,
+    A.enumeration e ⟨1,by omega⟩,⟨_,rfl⟩,?_⟩
+  intro h
+  have he := congrArg Fin.val ((A.enumeration e).injective h)
+  change (0 : ℕ) = 1 at he
+  omega
+
+theorem outer_carrier_injective (ha : 2 ≤ a)
+    (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton) :
+    Function.Injective D.edgeCarrier := by
+  intro e f he
+  by_contra hn
+  obtain ⟨x,hx,y,hy,hxy⟩ := A.outer_edge_nontrivial ha e
+  exact hxy (hlin e f hn ⟨hx,he ▸ hx⟩ ⟨hy,he ▸ hy⟩)
+
+end ContactOrderedEdgeWord
+
+/-- The actual outer construction for an arbitrary ordered edge word.
+Unlike a recursive profile, the target need not be ordered by its
+labels; the output uses the projection order without resorting it by
+one-point types. -/
+theorem contactOrderedOuterRamsey_qualitative
+    {D : ContactHypergraphData V E I} [Finite V] [Finite E] [Nonempty E]
+    [LinearOrder V] {P : Type v} [LinearOrder P] [Finite P]
+    {a : ℕ} (ha : 2 ≤ a) (A : ContactOrderedEdgeWord D P a)
+    (hcovered : ∀ x, ∃ e, x ∈ D.edgeCarrier e)
     (g m : ℕ) (hg : 2 ≤ g) (hm : 2 ≤ m)
-    (hG : LabelledGirthGT A.graph.edgeCarrier g)
+    (hG : LabelledGirthGT D.edgeCarrier g)
     (Color : Type v) [Finite Color] [Nonempty Color] :
-    ∃ W : A.Witness Color, W.out.graph.CopyCovered ∧
-      W.out.graph.bottomCut.ZeroPairwise ∧
-      ContactCompletable W.out.graph.copyCarrier m ∧
-      (∀ e f : W.out.Edge, e ≠ f →
-        (W.out.graph.edgeCarrier e ∩ W.out.graph.edgeCarrier f).Subsingleton) := by
+    ∃ W : ContactOrderedOuterWitness D A.part Color, W.graph.CopyCovered ∧
+      W.graph.bottomCut.ZeroPairwise ∧ ContactCompletable W.graph.copyCarrier m ∧
+      (∀ e f : W.Edge, e ≠ f → (W.graph.edgeCarrier e ∩ W.graph.edgeCarrier f).Subsingleton) := by
   classical
-  letI : Finite A.Vertex := A.finiteV
-  letI : Fintype A.Vertex := Fintype.ofFinite _
-  letI : Finite A.Edge := A.finiteE
-  letI : Nonempty A.Edge := A.nonemptyE
-  letI : LinearOrder A.Vertex := A.order
+  letI : Fintype V := Fintype.ofFinite _
   letI : Fintype Color := Fintype.ofFinite _
+  let T := contactHeightOne E
+  let allowed : Fin 1 → Set P := fun _ => Set.univ
   let q : Fin 2 → ℕ := fun _ => g
-  have hBounds : A.graph.WagonBounds A.train q := by
+  have hBounds : D.WagonBounds T q := by
     intro μ hμ
     have he : μ = 0 := Fin.ext (by change μ.val = 0; omega)
     rw [he]
-    exact A.graph.bottom_wagon_girth A.train hG
-  have hl := A.linear_of_wagonBounds (by omega : 0 < 1) q hg hBounds
+    exact D.bottom_wagon_girth T hG
+  have hl := contact_pairwise_of_labelledGirth D.edgeCarrier hg hG
   have hlin (μ : Fin 2) (hμ : μ.val < 1) :
-      (A.graph.atCut (A.train.parent μ)).ContactLinear :=
+      (D.atCut (T.parent μ)).ContactLinear :=
     ⟨hl,contact_pairwise_of_labelledGirth _ hg (hBounds μ hμ)⟩
-  let U := A.edgeWord
-  obtain ⟨S⟩ := U.exists_ordered_linear_seed (Color := Color)
-    (A.carrier_injective_of_linear ha hl) hl
+  have hp : D.Parameters T (fun j => A.part ⁻¹' allowed j) := by
+    intro j e f x he hx hy hn
+    exact (hn (Set.mem_univ _)).elim
+  obtain ⟨S⟩ := A.exists_ordered_linear_seed (Color := Color)
+    (A.outer_carrier_injective ha hl) hl
   letI : Finite S.Vertex := S.finiteV
   letI : Finite S.Edge := S.finiteE
   letI : Finite S.Copy := S.finiteC
   letI : Fintype S.Edge := Fintype.ofFinite _
   letI : LinearOrder S.Vertex := S.order
-  let Q := S.trainPicture A.train allowed q (by omega) A.covered hlin hBounds A.parameters
+  let Q := S.trainPicture T allowed q (by omega) hcovered hlin hBounds hp
   have hInv : Q.OuterInvariant m :=
-    S.toSeed.initialPicture_outerInvariant A.train (fun j => S.part ⁻¹' allowed j) q hg
-      (fun i _ _ h => S.emb_order i _ _ h) A.covered hlin hBounds
-      (S.seed_parameters A.train allowed A.parameters) m
+    S.toSeed.initialPicture_outerInvariant T (fun j => S.part ⁻¹' allowed j) q hg
+      (fun i _ _ h => S.emb_order i _ _ h) hcovered hlin hBounds
+      (S.seed_parameters T allowed hp) m
   have hpart : Q.PartPreserving A.part S.part :=
-    S.trainPicture_partPreserving (T := A.train) allowed q (by omega)
-      A.covered hlin hBounds A.parameters
+    S.trainPicture_partPreserving (T := T) allowed q (by omega)
+      hcovered hlin hBounds hp
   have hArrow : ∀ ρ : S.Edge → Color, ∃ i : Q.Copy, ∃ c : Color,
-      ∀ e : A.Edge, ρ (Q.projection.edge ((Q.family.emb i).edge e)) = c :=
-    S.trainPicture_arrow A.train allowed q (by omega) A.covered hlin hBounds A.parameters
+      ∀ e : E, ρ (Q.projection.edge ((Q.family.emb i).edge e)) = c :=
+    S.trainPicture_arrow T allowed q (by omega) hcovered hlin hBounds hp
   have hsize (b : S.Edge) : (S.graph.edgeCarrier b).Nontrivial := by
     rw [S.carrier_eq]
     refine ⟨S.enumeration b ⟨0,by omega⟩,⟨_,rfl⟩,
       S.enumeration b ⟨1,by omega⟩,⟨_,rfl⟩,?_⟩
     intro h
-    have he := (S.enumeration b).injective h
-    have hv := congrArg Fin.val he
-    change (0 : ℕ) = 1 at hv
+    have he := congrArg Fin.val ((S.enumeration b).injective h)
+    change (0 : ℕ) = 1 at he
     omega
   obtain ⟨R,hR,hpartR,hA⟩ := Q.outer_of_seed m hm S.linear hsize hInv hpart hArrow
-  let W := A.witnessFromPicture S.part S.enumeration S.carrier_eq S.part_eq R
-    (fun _ _ => Iff.rfl) hpartR hA
+  let W : ContactOrderedOuterWitness D A.part Color := {
+    Vertex := R.Vertex
+    Edge := R.Edge
+    Copy := R.Copy
+    finiteV := R.finiteV
+    finiteE := R.finiteE
+    finiteC := R.finiteC
+    graph := R.graph
+    train := R.train
+    family := R.family
+    order := R.order
+    label := S.part ∘ R.projection.vertex
+    emb_order := R.copy_order
+    emb_label := hpartR
+    arrow := hA }
   exact ⟨W,hR.1,hR.2.1,hR.2.2,R.linear⟩
 
 namespace ContactDesignatedEmbeddings
@@ -235,6 +289,7 @@ variable (H : ContactHypergraphData V E I)
 /-- The quantitative completion conclusion, using actual mixed labels.
 The constraint on the number of added pieces applies only to families
 of size at least two. The singleton case already has a one-node tree. -/
+open Classical in
 def QuantitativeCompletion (g m : ℕ) : Prop :=
   ∀ s : Finset (I ⊕ E), 2 ≤ s.card → s.card ≤ m →
     ∃ t : Finset (I ⊕ E), s ⊆ t ∧
@@ -257,6 +312,7 @@ theorem girth_of_quantitativeCompletion (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m
     rw [Finset.card_image_of_injective _ hfi,Finset.card_univ,Fintype.card_fin]
   obtain ⟨t,hst,_,⟨J⟩,hcost⟩ := hcomp s
     (by rw [hs]; exact C.hlength) (by rw [hs]; exact hC.trans hm)
+  rw [hs] at hcost
   have hz : (t \ s).card = 0 := by
     by_contra hne
     have hpos : 1 ≤ (t \ s).card := by omega
@@ -305,29 +361,30 @@ theorem girth_of_quantitativeCompletion (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m
 
 end ContactHypergraphData
 
-/-- Ordered uniform-profile outer girth Ramsey theorem, for covered
-input. The completion cutoff is independent of g, provided it is at
-least g. Both large girth and the sharp quantitative bound are
-conclusions about the same actual designated family and its edge labels. -/
-theorem contactProfileOuterRamsey_quantitative
-    {P : Type v} [LinearOrder P] [Finite P] {a : ℕ} (ha : 2 ≤ a)
-    {allowed : Fin 1 → Set P} {word : Fin a → P}
-    (A : ContactProfileTrain P 1 a allowed word)
+/-- Ordered edge-word outer girth Ramsey theorem for covered input.
+The quantitative conclusion is on the same actual designated family
+as the arrow. The larger completion cutoff need not bound target girth. -/
+theorem contactOrderedOuterRamsey_quantitative
+    {D : ContactHypergraphData V E I} [Finite V] [Finite E] [Nonempty E]
+    [LinearOrder V] {P : Type v} [LinearOrder P] [Finite P]
+    {a : ℕ} (ha : 2 ≤ a) (A : ContactOrderedEdgeWord D P a)
+    (hcovered : ∀ x, ∃ e, x ∈ D.edgeCarrier e)
     (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m)
-    (hG : LabelledGirthGT A.graph.edgeCarrier g)
+    (hG : LabelledGirthGT D.edgeCarrier g)
     (Color : Type v) [Finite Color] [Nonempty Color] :
-    ∃ W : A.Witness Color, W.out.graph.CopyCovered ∧
-      W.out.graph.bottomCut.ZeroPairwise ∧ LabelledGirthGT W.out.graph.edgeCarrier g ∧
-      W.out.graph.QuantitativeCompletion g m := by
+    ∃ W : ContactOrderedOuterWitness D A.part Color, W.graph.CopyCovered ∧
+      W.graph.bottomCut.ZeroPairwise ∧ LabelledGirthGT W.graph.edgeCarrier g ∧
+      W.graph.QuantitativeCompletion g m := by
+  classical
   obtain ⟨W,hcov,hpair,hcomp,hlin⟩ :=
-    contactProfileOuterRamsey_qualitative ha A g m hg (hg.trans hm) hG Color
-  letI : Finite W.out.Vertex := W.out.finiteV
-  letI : Fintype W.out.Vertex := Fintype.ofFinite _
-  have hQ : W.out.graph.QuantitativeCompletion g m := by
+    contactOrderedOuterRamsey_qualitative ha A hcovered g m hg (hg.trans hm) hG Color
+  letI : Finite W.Vertex := W.finiteV
+  letI : Fintype W.Vertex := Fintype.ofFinite _
+  have hQ : W.graph.QuantitativeCompletion g m := by
     intro s hs hsm
-    exact W.out.graph.bottomCut.mixedCompletion_cost g m hg hlin hpair hcov.2
+    exact W.graph.bottomCut.mixedCompletion_cost g m hg hlin hpair hcov.2
       W.family.copy_edge_subset_from_embeddings (W.family.copy_girth_of_source hG)
       hcomp s hs hsm
-  exact ⟨W,hcov,hpair,W.out.graph.girth_of_quantitativeCompletion g m hg hm hlin hQ,hQ⟩
+  exact ⟨W,hcov,hpair,W.graph.girth_of_quantitativeCompletion g m hg hm hlin hQ,hQ⟩
 
 end StructuralRamsey.Girth
