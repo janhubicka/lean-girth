@@ -87,6 +87,7 @@ theorem zero_g2_of_pairwise (h0 : ∀ e, D.parent e = e)
     apply (D.zero_clique_support_iff h0 h1 hlin hsize (Sum.inr e) z).mpr
     have hh := hsupport z hz.1 hz.2
     change D.copyCarrier i ∩ D.copyCarrier j = D.edgeCarrier e at he
+    change D.zeroContactSupport z ⊆ D.edgeCarrier e
     rw [← he]
     exact hh
 
