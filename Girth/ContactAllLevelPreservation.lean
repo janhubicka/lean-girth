@@ -45,6 +45,7 @@ theorem preserves_bottomBound {q : ℕ} (hs : A.StripStrong)
   have hc := P.core_strong (A.stripStrong_bottom hs)
   have hpar : Function.Injective P.output.parent := by
     intro e f he
+    change A.bottomPicture.output.parent e = A.bottomPicture.output.parent f at he
     rw [A.bottomPicture_parent,A.bottomPicture_parent] at he
     exact he
   have hout := P.pictureCopies.preserves_systemGirth_bottom
@@ -70,8 +71,11 @@ theorem preserves_systemBounds (q : Fin (m+1) → ℕ)
   intro μ hproper
   by_cases hz : μ.val = 0
   · have he : μ = (⟨0,by omega⟩ : Fin (m+1)) := Fin.ext hz
-    subst μ
-    exact A.preserves_bottomBound hs ha hD0 hsub hsize (hL _ hproper)
+    cases μ with
+    | mk u hu =>
+      change u = 0 at hz
+      subst u
+      exact A.preserves_bottomBound hs ha hD0 hsub hsize (hL _ hproper)
   · exact hpos μ (by omega) hproper
 
 /-- After the bottom preservation step the mixed forests of the
@@ -102,7 +106,9 @@ theorem preserves_parameters (allowed : Fin m → Set A.Vertex)
       (hD j) (fun i => hL i j) hg.1 hg.2
   · have he : j.succ = (⟨m,by omega⟩ : Fin (m+1)) := by
       apply Fin.ext
-      have hj := j.succ.isLt
+      change j.val+1 = m
+      have hj := j.isLt
+      change ¬ j.val+1 < m at hproper
       omega
     have hc := hD j
     have hl : ∀ i, L.Parameter S j.castSucc j.succ (A.stdV i ⁻¹' allowed j) :=
