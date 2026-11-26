@@ -40,7 +40,7 @@ noncomputable def sourceTrain : ContactTrainData A.OldEdge m :=
   T.shorterTrain.disjointTrain C A.tail_pos
 
 noncomputable def fill : ContactFilling A.source L where
-  place := fun p => ((A.pad p.1).place p.2).trans (contactComponentEmb p.1)
+  place := fun p => ((A.pad p.1).place p.2).trans (contactComponentEmb (V := A.Component) p.1)
   range_eq := by
     intro p
     change Set.range (fun x => contactComponentEmb p.1 ((A.pad p.1).place p.2 x)) =
@@ -68,18 +68,19 @@ def localEdge (c : C) : T.FirstWagon × F ↪ A.Edge where
   inj' := by
     intro p r h
     exact Prod.ext (congrArg (fun e : A.Edge => e.1.2) h)
-      (congrArg Prod.snd h)
+      (congrArg (fun e : A.Edge => e.2) h)
 
 theorem local_carrier (c : C) (p : T.FirstWagon × F) :
     A.filled.edgeCarrier (A.localEdge c p) =
-      contactComponentEmb c '' (A.localFill c).output.edgeCarrier p := by
-  change (fun x => contactComponentEmb c ((A.pad c).place p.1 x)) ''
-      L.edgeCarrier p.2 = contactComponentEmb c '' ((A.pad c).place p.1 '' L.edgeCarrier p.2)
+      contactComponentEmb (V := A.Component) c '' (A.localFill c).output.edgeCarrier p := by
+  change (fun x => contactComponentEmb (V := A.Component) c ((A.pad c).place p.1 x)) ''
+      L.edgeCarrier p.2 = contactComponentEmb (V := A.Component) c '' ((A.pad c).place p.1 '' L.edgeCarrier p.2)
   rw [Set.image_image]
 
 theorem edge_component (p : A.Edge) (x : A.Vertex) (hx : x ∈ A.filled.edgeCarrier p) :
     x.1 = p.1.1 := by
   obtain ⟨y,_,he⟩ := hx
+  change (⟨p.1.1,(A.pad p.1.1).place p.1.2 y⟩ : A.Vertex) = x at he
   exact (congrArg Sigma.fst he).symm
 
 /-- Exact relations of each local filled component in the common
@@ -112,7 +113,7 @@ disjoint common filling. -/
 noncomputable def componentEmbedding (c : C) :
     ContactTrainEmbedding (A.localFill c).output ((A.localFill c).fillTrain T.shorterTrain)
       A.filled A.filledTrain where
-  vertex := contactComponentEmb c
+  vertex := contactComponentEmb (V := A.Component) c
   edge := A.localEdge c
   carrier_eq := A.local_carrier c
   rel_iff := A.local_rel c
@@ -120,7 +121,8 @@ noncomputable def componentEmbedding (c : C) :
     intro p hn
     obtain ⟨x,hx,_,_,_⟩ := hn
     obtain ⟨u,hu⟩ := hx.2
-    have h := (congrArg Sigma.fst hu).symm.trans (A.edge_component p x hx.1)
+    change (⟨c,u⟩ : A.Vertex) = x at hu
+    have h := (congrArg Sigma.fst hu).trans (A.edge_component p x hx.1)
     rcases p with ⟨⟨i,r⟩,f⟩
     change c = i at h
     subst i
@@ -168,9 +170,11 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
   chosenE := fun c => Set.range (A.original c).edge
   vertex_sub := by
     rintro c x ⟨u,rfl⟩
+    change (⟨c,(A.pad c).oldVertex u⟩ : A.Vertex).1 = c
     rfl
   edge_sub := by
     rintro c e ⟨f,rfl⟩
+    change ((c,T.parent (0 : Fin (m+1)).succ f),(A.line c).edge f).1.1 = c
     rfl
   edge_vertices := by
     rintro c e ⟨f,rfl⟩
@@ -184,8 +188,9 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
     subst i
     obtain ⟨u,rfl⟩ := hxchosen
     let v := (A.pad c).oldVertex u
-    have hx' : v ∈ (A.localFill c).output.edgeCarrier (p,f) :=
-      ((A.componentEmbedding c).mem_edge_image (p,f) v).mp hx
+    have hx' : v ∈ (A.localFill c).output.edgeCarrier (p,f) := by
+      apply ((A.componentEmbedding c).mem_edge_image (p,f) v).mp
+      exact hx
     revert hp ht
     refine Fin.cases ?_ (fun ν => ?_) μ
     · intro hp
@@ -200,7 +205,9 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
       obtain ⟨a,ha,hu⟩ := (A.line c).chosen_incidence A.cover A.nonempty ν u
         (T.shorterParent ν p) hmem
       refine ⟨(A.original c).edge a,⟨a,rfl⟩,?_,?_⟩
-      · apply (A.local_rel c ν.succ ((A.line c).chosenEdge a) (p,f)).mpr
+      · change A.filledTrain.parent ν.succ (A.localEdge c ((A.line c).chosenEdge a)) =
+          A.filledTrain.parent ν.succ (A.localEdge c (p,f))
+        apply (A.local_rel c ν.succ ((A.line c).chosenEdge a) (p,f)).mpr
         change T.shorterParent ν ((A.pad c).first a) = T.shorterParent ν p
         rw [T.shorterParent_first]
         exact ha
@@ -214,10 +221,12 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
     subst i
     subst j
     rw [show A.filled.edgeCarrier ((c,p),a) =
-      contactComponentEmb c '' (A.localFill c).output.edgeCarrier (p,a) from
+      contactComponentEmb (V := A.Component) c '' (A.localFill c).output.edgeCarrier (p,a) from
       A.local_carrier c (p,a)] at hx
     obtain ⟨z,hz,rfl⟩ := hx
-    have hy' := ((A.componentEmbedding c).mem_edge_image (r,b) z).mp hy
+    have hy' : z ∈ (A.localFill c).output.edgeCarrier (r,b) := by
+      apply ((A.componentEmbedding c).mem_edge_image (r,b) z).mp
+      exact hy
     revert hp ht hne
     refine Fin.cases ?_ (fun ν => ?_) μ
     · intro hp
@@ -231,7 +240,10 @@ noncomputable def selection : ContactLocalSelection A.filled A.filledTrain C whe
         (T.shorterParent ν p) (T.shorterParent ν r) hneq
         ⟨⟨(p,a),rfl,hz⟩,⟨(r,b),rfl,hy'⟩⟩
       obtain ⟨u,hu⟩ := hz'
-      exact ⟨u,congrArg (contactComponentEmb c) hu⟩
+      refine ⟨u,?_⟩
+      change contactComponentEmb (V := A.Component) c ((A.pad c).oldVertex u) =
+        contactComponentEmb (V := A.Component) c z
+      exact congrArg (contactComponentEmb (V := A.Component) c) hu
 
 
 /-- The actual input to the shorter Ramsey theorem has the
@@ -262,6 +274,7 @@ theorem source_parameters (allowed : Fin m → Set V)
       (fun k => {x | x.2 ∈ (A.pad x.1).oldVertex '' allowed k}) := by
   apply ContactHypergraphData.varying_disjoint_parameters
     (fun c => (A.pad c).paddedHypergraph) T.shorterTrain A.tail_pos
+    (fun c k => (A.pad c).oldVertex '' allowed k)
   intro c k
   exact (A.pad c).shorter_parameter k.castSucc k.succ (allowed k) (h k)
 
