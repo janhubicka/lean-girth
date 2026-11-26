@@ -1,4 +1,4 @@
-import Girth.ContactWordPreparation
+import Girth.ContactAssemblyPreparation
 import Girth.ContactAllLevelPreservation
 import Girth.ContactPictureZero
 import Girth.ContactPictureIncrement
@@ -11,6 +11,8 @@ import Girth.ContactActualStepInvariant
 import Girth.ContactSeedPicture
 import Girth.ContactOrderedSeedIteration
 import Girth.ContactRecursiveRank
+import Girth.ContactTrainIteration
+import Girth.ContactRefinementTransfer
 import Girth.ContactImageDedup
 import Girth.ContactCutoffTwoOrderedSource
 
