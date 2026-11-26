@@ -41,7 +41,7 @@ private theorem value_lt_of_image_lt {m n : ℕ}
   omega
 
 /-- An empty increasing gap in the retained image is one cyclic step. -/
-private theorem successor_of_increasing_gap {m n : ℕ}
+theorem successor_of_increasing_gap {m n : ℕ}
     (f : Fin m ↪o Fin n) (i j : Fin m)
     (hij : (f i).val < (f j).val)
     (hgap : ∀ k : Fin m,
@@ -61,7 +61,7 @@ private theorem successor_of_increasing_gap {m n : ℕ}
   exact hnext
 
 /-- An empty wrapping gap has the last and first retained positions as ends. -/
-private theorem successor_of_wrapping_gap {m n : ℕ}
+theorem successor_of_wrapping_gap {m n : ℕ}
     (f : Fin m ↪o Fin n) (i j : Fin m)
     (hmax : ∀ k : Fin m, (f i).val < (f k).val → False)
     (hmin : ∀ k : Fin m, (f k).val < (f j).val → False) :
