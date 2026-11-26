@@ -41,6 +41,7 @@ namespace ContactCliqueRestriction
 
 variable {old : I → Set (V ⊕ P)} {stable : P → Set (V ⊕ P)}
     {new : J → Set (V ⊕ P)} (A : ContactCliqueRestriction old stable new)
+include A
 
 theorem adjacency_old {x y : V ⊕ P} (h : contactAdjacent (contactFamily new stable) x y) :
     contactAdjacent (contactFamily old stable) x y := by
