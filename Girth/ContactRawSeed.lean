@@ -21,9 +21,9 @@ structure ContactOrderedEdgeWord (D : ContactHypergraphData V E I)
   carrier_eq : ∀ e, D.edgeCarrier e = Set.range (enumeration e)
   part_eq : ∀ e i, part (enumeration e i) = word i
 
-/-- Finiteness of order embeddings via their underlying maps. -/
 universe w
 
+/-- Finiteness of order embeddings via their underlying maps. -/
 theorem contactFiniteOrderEmbedding (U : Type v) (W : Type w) [Preorder U] [Preorder W]
     [Finite U] [Finite W] : Finite (U ↪o W) :=
   Finite.of_injective (fun f : U ↪o W => (f : U → W)) (by
@@ -48,7 +48,7 @@ theorem seedEdgeFinite (N : ℕ) : Finite (A.SeedEdge N) :=
     rintro ⟨e⟩ ⟨f⟩ he
     have h : e = f := by
       ext i
-      exact congrFun he i
+      exact congrArg Fin.val (congrFun he i)
     exact congrArg ULift.up h)
 
 def seedCarrier (N : ℕ) (e : A.SeedEdge N) : Set (A.SeedVertex N) :=

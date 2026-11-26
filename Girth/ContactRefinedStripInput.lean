@@ -167,9 +167,9 @@ theorem edge_girth (q : Fin (h+2) → ℕ) (k : ℕ)
     have hpos : 0 < h := by omega
     have hg : LabelledGirthGT (D.atCut (T.parent ⟨1,by omega⟩)).contactWagonCarrier k := by
       rintro ⟨C,hC⟩
-      exact (hb ⟨1,by omega⟩ (by omega) (by change 1 < h+1; omega)).g3 ⟨C,hC.trans (hfirst hpos)⟩
-    have hret := R.retained_girth ⟨1,by omega⟩ (by omega) hg
-    have he : (⟨1+R.depth-1,by omega⟩ : Fin (R.depth+h+1)) = ⟨R.depth,by omega⟩ := Fin.ext (by omega)
+      exact (hb ⟨1,by omega⟩ (by change (0 : ℕ) < 1; omega) (by change 1 < h+1; omega)).g3 ⟨C,hC.trans (hfirst hpos)⟩
+    have hret := R.retained_girth ⟨1,by omega⟩ (by change (0 : ℕ) < 1; omega) hg
+    have he : (⟨1+R.depth-1,by omega⟩ : Fin (R.depth+h+1)) = ⟨R.depth,by omega⟩ := Fin.ext (by change 1+R.depth-1 = R.depth; omega)
     rw [he] at hret
     exact hret
 

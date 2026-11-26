@@ -54,9 +54,9 @@ theorem boundary (e f : P.StripEdge b) :
     R.train.parent ⟨R.depth,by omega⟩ e = R.train.parent ⟨R.depth,by omega⟩ f ↔
       T.parent ⟨1,by omega⟩ e.val = T.parent ⟨1,by omega⟩ f.val := by
   have hd := R.depth_pos
-  have H := R.retained ⟨1,by omega⟩ (by omega) e f
+  have H := R.retained ⟨1,by omega⟩ (by change (0 : ℕ) < 1; omega) e f
   have he : (⟨1+R.depth-1,by omega⟩ : Fin (R.depth+h+1)) =
-      ⟨R.depth,by omega⟩ := Fin.ext (by omega)
+      ⟨R.depth,by omega⟩ := Fin.ext (by change 1+R.depth-1 = R.depth; omega)
   rw [he] at H
   exact H
 
@@ -77,7 +77,7 @@ noncomputable def matchingRefinement (P : ContactBaseProjection D base)
   let shift : Fin (1+h+1) → Fin (h+1+1) := fun μ => ⟨μ.val,by have := μ.isLt; omega⟩
   have hs : Monotone shift := fun _ _ hh => hh
   have hz : shift 0 = 0 := Fin.ext rfl
-  have ht : shift ⟨1+h,by omega⟩ = ⟨h+1,by omega⟩ := Fin.ext (by omega)
+  have ht : shift ⟨1+h,by omega⟩ = ⟨h+1,by omega⟩ := Fin.ext (by change 1+h = h+1; omega)
   refine {
     depth := 1
     depth_pos := by omega
@@ -105,7 +105,7 @@ noncomputable def matchingRefinement (P : ContactBaseProjection D base)
     rw [hz']
     exact D.pull_wagonGirth T (P.stripEdgeEmb b) 0 hg
   · intro μ _ e f
-    have he : shift ⟨μ.val+1-1,by have := μ.isLt; omega⟩ = μ := Fin.ext (by omega)
+    have he : shift ⟨μ.val+1-1,by have := μ.isLt; omega⟩ = μ := Fin.ext (by change μ.val+1-1 = μ.val; omega)
     change U.parent (shift ⟨μ.val+1-1,by have := μ.isLt; omega⟩) e =
       U.parent (shift ⟨μ.val+1-1,by have := μ.isLt; omega⟩) f ↔ _
     rw [he]
@@ -202,11 +202,11 @@ noncomputable def advanceStripRefinement
   · intro j
     have hj := j.isLt
     exact ContactTrainStrip.futureAllowed_singleton (base := base) b c hne
-      R.prefixAllowed allowed R.singleton hbase ⟨j.val,by have := j.isLt; omega⟩ (by omega)
+      R.prefixAllowed allowed R.singleton hbase ⟨j.val,by have := j.isLt; omega⟩ (by change j.val ≤ R.depth; omega)
   · intro j
     have hj := j.isLt
     exact ContactTrainStrip.futureAllowed_subset_first (base := base) b c
-      R.prefixAllowed allowed R.subset_first ⟨j.val,by have := j.isLt; omega⟩ (by omega)
+      R.prefixAllowed allowed R.subset_first ⟨j.val,by have := j.isLt; omega⟩ (by change j.val ≤ R.depth; omega)
   · intro j
     have hh := H.relabelEdges_parameters U.train e.symm
       (fun k => A.outputProjectionVertex P p ⁻¹' a k) hparams
@@ -234,11 +234,9 @@ noncomputable def advanceStripRefinement
       (A.outputTrain.pullTrain (A.futureEmbedding P b c ha hne)).parent μ (e.symm y) ↔ _
     rw [A.outputTrain.pullTrain_rel]
     have hx : A.futureEmbedding P b c ha hne (e.symm x) = x.val := by
-      change (e (e.symm x)).val = x.val
-      rw [e.apply_symm_apply]
+      exact congrArg Subtype.val (e.apply_symm_apply x)
     have hy : A.futureEmbedding P b c ha hne (e.symm y) = y.val := by
-      change (e (e.symm y)).val = y.val
-      rw [e.apply_symm_apply]
+      exact congrArg Subtype.val (e.apply_symm_apply y)
     rw [hx,hy]
 
 end ContactTrainStrip
@@ -281,7 +279,7 @@ theorem next_hasFutureRefinements {g : ℕ} {done : List B}
     by_cases hh : 0 < h
     · rintro ⟨Z,hZ⟩
       exact (hQ ⟨1,by omega⟩ (by change 1 < h+1; omega)).g3 ⟨Z,hZ.trans (hg1 hh)⟩
-    · have he : (⟨1,by omega⟩ : Fin (h+1+1)) = ⟨h+1,by omega⟩ := Fin.ext (by omega)
+    · have he : (⟨1,by omega⟩ : Fin (h+1+1)) = ⟨h+1,by omega⟩ := Fin.ext (by change 1 = h+1; omega)
       rw [he]
       exact A.outputHypergraph.top_wagonGirth A.outputTrain g
   intro c hcd hn
@@ -362,7 +360,7 @@ theorem initial_hasFutureRefinements [Finite V] [Finite E] [Finite J]
     exact hn rfl
   have hbottom : LabelledGirthGT (P.graph.atCut (P.train.parent 0)).contactWagonCarrier g := by
     rintro ⟨Z,hZ⟩
-    exact (hP 0 (by omega)).g3 ⟨Z,hZ.trans hg⟩
+    exact (hP 0 (by change (0 : ℕ) < h+1; omega)).g3 ⟨Z,hZ.trans hg⟩
   exact ⟨P.projection.matchingRefinement P.train allowed g b hmatch hbottom⟩
 
 end ContactSeed
