@@ -1,5 +1,6 @@
 import Girth.ContactBottomCore
 import Girth.ContactSegmentBudget
+import Girth.ContactBoundary
 import Girth.ContactSideSubdivision
 
 /-! The bottom core alternative: a selected join tree supplies the
