@@ -17,16 +17,16 @@ variable {D : OrderOneData V E I P} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     {B : ContactPolygon U R} (S : A.SidePlan B)
 
-private def halfIndex (k : Fin (2*B.length)) : Fin B.length :=
+private def halfIndex {n : ℕ} (k : Fin (2*n)) : Fin n :=
   ⟨k.val / 2,by have := k.isLt; omega⟩
 
-private theorem halfIndex_even (i : Fin B.length) :
+private theorem halfIndex_even {n : ℕ} (i : Fin n) :
     halfIndex (contactEvenSlot i) = i := by
   apply Fin.ext
   change 2*i.val / 2 = i.val
   omega
 
-private theorem halfIndex_odd (i : Fin B.length) :
+private theorem halfIndex_odd {n : ℕ} (i : Fin n) :
     halfIndex (contactOddSlot i) = i := by
   apply Fin.ext
   change (2*i.val+1) / 2 = i.val
