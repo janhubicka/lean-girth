@@ -70,13 +70,15 @@ theorem parentAt_kernel_minimal (μ : Fin (m+1))
     exact hrel.trans h₁ (hc e' e he')
   rcases contactGlued_cover A.edgeGlue A.edge_inj u with ⟨e,rfl⟩ | ⟨i,f,rfl⟩
   · rcases contactGlued_cover A.edgeGlue A.edge_inj w with ⟨e',rfl⟩ | ⟨j,f',rfl⟩
-    · rw [A.parentAt_core,A.parentAt_core] at h
+    · change A.parentAt μ (A.coreE e) = A.parentAt μ (A.coreE e') at h
+      rw [A.parentAt_core,A.parentAt_core] at h
       exact hc e e' ((A.coreW μ).injective h)
     · exact hrel.symm (cross j f' e h.symm)
   · rcases contactGlued_cover A.edgeGlue A.edge_inj w with ⟨e,rfl⟩ | ⟨j,f',rfl⟩
     · exact cross i f e h
     · by_cases hij : i = j
       · subst j
+        change A.parentAt μ (A.stdE i f) = A.parentAt μ (A.stdE i f') at h
         rw [A.parentAt_std,A.parentAt_std] at h
         exact hs i f f' ((A.stdW μ i).injective h)
       · have he : A.stdW μ i (S.parent μ f) = A.stdW μ j (S.parent μ f') := by
@@ -144,13 +146,13 @@ theorem outputTrain_core_rel (μ : Fin (m+1)) (e e' : E) :
     A.outputTrain.toLevels.rel μ (A.coreE e) (A.coreE e') ↔ T.toLevels.rel μ e e' := by
   change A.parentAt μ (A.coreE e) = A.parentAt μ (A.coreE e') ↔ _
   rw [A.parentAt_core,A.parentAt_core]
-  exact ⟨(A.coreW μ).injective,congrArg (A.coreW μ)⟩
+  exact ⟨fun h => (A.coreW μ).injective h,fun h => congrArg (A.coreW μ) h⟩
 
 theorem outputTrain_std_rel (μ : Fin (m+1)) (i : I) (f f' : E₀) :
     A.outputTrain.toLevels.rel μ (A.stdE i f) (A.stdE i f') ↔ S.toLevels.rel μ f f' := by
   change A.parentAt μ (A.stdE i f) = A.parentAt μ (A.stdE i f') ↔ _
   rw [A.parentAt_std,A.parentAt_std]
-  exact ⟨(A.stdW μ i).injective,congrArg (A.stdW μ i)⟩
+  exact ⟨fun h => (A.stdW μ i).injective h,fun h => congrArg (A.stdW μ i) h⟩
 
 end ContactTrainStrip
 end StructuralRamsey.Girth
