@@ -57,11 +57,13 @@ def atCut (μ : Fin (m+1)) (hpos : 0 < μ.val) (hproper : μ.val < m) :
   chosenEdges := (A.selected M).copyEdges
   component_vertex_sub := by
     intro j x hx
+    change x ∈ H.copyCarrier j.1
     rw [M.vertex_eq]
     obtain ⟨u,_,he⟩ := hx
     exact ⟨u,he⟩
   component_edge_sub := by
     intro j e he
+    change e ∈ H.copyEdges j.1
     rw [M.edge_eq]
     obtain ⟨f,_,h⟩ := he
     exact ⟨f,h⟩
