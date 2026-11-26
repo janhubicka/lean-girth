@@ -651,3 +651,17 @@ import Girth
 #print axioms StructuralRamsey.Girth.contactRetainRefinement_strict
 #print axioms StructuralRamsey.Girth.contactRetainRefinement_zero
 #print axioms StructuralRamsey.Girth.contactRetainRefinement_top
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.MainCoreSupply
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.exists_main_chain
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.main_of_coreSupply
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.main_without_refinement
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boundary
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.matchingRefinement
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.HasFutureRefinements
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.hasFutureRefinements_skip
+#print axioms StructuralRamsey.Girth.ContactTrainStrip.future_pull_relabel
+#print axioms StructuralRamsey.Girth.ContactTrainStrip.advanceStripRefinement
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_hasFutureRefinements
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.main_with_refinements
+#print axioms StructuralRamsey.Girth.ContactSeed.initial_hasFutureRefinements

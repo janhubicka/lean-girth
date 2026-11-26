@@ -142,9 +142,9 @@ def rawInitialProjection (N : ℕ)
     subst k
     subst l
     exact Prod.ext rfl ((A.seedVertexMap j).injective he)
-  copy_inj := PEmpty.elim
-  copy_edge_subset := PEmpty.elim
-  copy_strong := PEmpty.elim
+  copy_inj := by intro i; cases i
+  copy_edge_subset := by intro i; cases i
+  copy_strong := by intro i; cases i
 
 theorem rawInitial_linear (N : ℕ)
     (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton) :

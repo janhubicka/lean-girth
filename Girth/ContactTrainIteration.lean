@@ -70,8 +70,8 @@ noncomputable def initialPicture [Finite V] [Finite E] [Finite J]
     rcases x with ⟨l,x⟩
     have hx' : l = i ∧ x ∈ D.edgeCarrier e := hx
     have hy' : l = k ∧ x ∈ D.edgeCarrier f := hy
-    obtain ⟨h₁,hx⟩ := hx'
-    obtain ⟨h₂,hy⟩ := hy'
+    obtain ⟨h₁,hxe⟩ := hx'
+    obtain ⟨h₂,hyf⟩ := hy'
     subst l
     subst k
     have hco : T.parent j.succ e = T.parent j.succ f := by
@@ -82,7 +82,8 @@ noncomputable def initialPicture [Finite V] [Finite E] [Finite J]
         rw [heq]
         exact T.top _ _
       · exact ht
-    have hfine := hpar i j e f x hco hx hy hn
+    have hn' : x ∉ A.vertex i ⁻¹' allowed j := hn
+    have hfine := hpar i j e f x hco hxe hyf hn'
     exact Quotient.sound (Or.inr ⟨rfl,hfine⟩)
 
 theorem initialPicture_fullBounds [Finite V] [Finite E] [Finite J]

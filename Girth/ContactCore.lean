@@ -15,6 +15,7 @@ import Girth.ContactTrainIteration
 import Girth.ContactRefinementTransfer
 import Girth.ContactImageDedup
 import Girth.ContactCutoffTwoOrderedSource
+import Girth.ContactStripRefinement
 
 /-! Focused kernel for actual preservation, initial pictures and
 the independent trace-tree preparation for forest increment. -/
