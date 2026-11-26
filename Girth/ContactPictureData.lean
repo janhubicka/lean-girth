@@ -86,11 +86,11 @@ theorem core_contact (p : P) (x : V)
   rcases A.edge_cover e with ⟨f,rfl⟩ | ⟨i,f,rfl⟩
   · have hp : D.parent f = p := A.core.wagon.injective ((A.core.parent_eq f).symm.trans he)
     have hxf := A.core.edge_vertex_reflect f x hxe
-    exact ⟨by intro hh; cases hh,Sum.inr p,⟨f,hp,hxf⟩,rfl⟩
+    exact ⟨(by intro hh; cases hh),Sum.inr p,⟨f,hp,hxf⟩,rfl⟩
   · have hv := (A.std_core_vertex i x).mp ((A.std i).edge_vertex_range hxe)
     have hm : D.contactMeets i p := (A.std_core_wagon i p).mp
       ⟨L.parent f,((A.std i).parent_eq f).symm.trans he⟩
-    exact ⟨by intro hh; cases hh,Sum.inl i,hv,hm⟩
+    exact ⟨(by intro hh; cases hh),Sum.inl i,hv,hm⟩
 
 /-- A core incidence in a wagon met by a standard pulls back to an
 actual core edge in that standard, by G1. -/
@@ -243,6 +243,7 @@ theorem meets_of_two_vertices (h1 : D.ContactG1) (h2 : D.ContactG2)
   (A.toAttachmentGeometry h1 h2 hL).meets_of_two_vertices
     h1 h2 h4 i r x y hxy hxi hyi hxr hyr
 
+include A in
 theorem wagon_linearity (hD : D.ContactLinear) (h1 : D.ContactG1)
     (h2 : D.ContactG2) (h4 : ContactG4 D.contactClique 2) (hL : L.ContactLinear) :
     ∀ r s : R, r ≠ s → (H.contactWagonCarrier r ∩ H.contactWagonCarrier s).Subsingleton :=
