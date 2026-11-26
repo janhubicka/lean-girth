@@ -78,8 +78,12 @@ theorem common_core_vertex_wagon (ν : Fin (m+1))
       A.coreV x = u ∧ A.coreW ν p = A.parentAt ν (A.stdE i f) ∧
       x ∈ (D.atCut (T.parent ν)).contactWagonCarrier p := by
   let P := (A.atCut ν).toPictureData
-  have huf' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := huf
-  have hug' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE j g) := hug
+  have huf' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := by
+    rw [A.cut_output_eq ν]
+    exact huf
+  have hug' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE j g) := by
+    rw [A.cut_output_eq ν]
+    exact hug
   obtain ⟨x,hx⟩ := P.shared_vertex i j hij u
     ((P.std i).edge_vertex_range huf') ((P.std j).edge_vertex_range hug')
   let w := A.parentAt ν (A.stdE i f)
@@ -122,8 +126,12 @@ theorem common_core_vertex_wagon_top
       x ∈ (D.atCut (T.parent ⟨m,by omega⟩)).contactWagonCarrier p := by
   let ν : Fin (m+1) := ⟨m,by omega⟩
   let P := (A.atCut ν).toPictureData
-  have huf' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := huf
-  have hug' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE j g) := hug
+  have huf' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := by
+    rw [A.cut_output_eq ν]
+    exact huf
+  have hug' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE j g) := by
+    rw [A.cut_output_eq ν]
+    exact hug
   obtain ⟨x,hx⟩ := P.shared_vertex i j hij u
     ((P.std i).edge_vertex_range huf') ((P.std j).edge_vertex_range hug')
   have hxi : x ∈ D.copyCarrier i :=
@@ -131,6 +139,8 @@ theorem common_core_vertex_wagon_top
   obtain ⟨e,he,hxe⟩ := hcover i x hxi
   refine ⟨x,T.parent ν e,hx,?_,⟨e,rfl,hxe⟩⟩
   rw [← A.parentAt_core]
+  change A.outputTrain.parent ⟨m,by omega⟩ (A.coreE e) =
+    A.outputTrain.parent ⟨m,by omega⟩ (A.stdE i f)
   exact A.outputTrain.top _ _
 
 /-- For the shared vertex of a core and a standard edge in a common
@@ -149,7 +159,9 @@ theorem standard_core_representative
     ∃ e, T.parent ν e = p ∧ x ∈ D.edgeCarrier e ∧
       A.parentAt μ (A.stdE i f) = A.parentAt μ (A.coreE e) := by
   let P := (A.atCut ν).toPictureData
-  have huf' : A.coreV x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := huf
+  have huf' : A.coreV x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := by
+    rw [A.cut_output_eq ν]
+    exact huf
   have hxi : x ∈ D.copyCarrier i :=
     (P.std_core_vertex i x).mp ((P.std i).edge_vertex_range huf')
   have hmeet : (D.atCut (T.parent ν)).contactMeets i p :=
@@ -170,7 +182,10 @@ theorem standard_core_representative
     have hx' : A.coreV x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := by
       rw [(A.atCut ν).output_carrier_core]
       exact ⟨x,hxe,rfl⟩
-    rw [hshared,hy]
+    change A.stdV i y ∈ (A.atCut ν).output.edgeCarrier (A.stdE i f')
+    rw [hshared]
+    have hy' : A.stdV i y = A.coreV x := hy
+    rw [hy']
     exact hx'
   have hm := hL f f' y hf'parent.symm hyf hyf' (hallowed y hy)
   refine ⟨e,hpe,hxe,?_⟩
@@ -201,7 +216,9 @@ theorem preserves_parameter
       (hu : u ∉ allowed)
       (hp : A.parentAt ν (A.stdE i f) = A.parentAt ν (A.coreE e)) :
       A.parentAt μ (A.stdE i f) = A.parentAt μ (A.coreE e) := by
-    have he' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := he
+    have he' : u ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := by
+    rw [A.cut_output_eq ν]
+    exact he
     obtain ⟨x,rfl⟩ := P.core.edge_vertex_range he'
     have hxe : x ∈ D.edgeCarrier e := P.core.edge_vertex_reflect e x he'
     have hparent : A.parentAt ν (A.stdE i f) = A.coreW ν (T.parent ν e) :=
@@ -219,10 +236,17 @@ theorem preserves_parameter
   change A.parentAt μ u = A.parentAt μ w
   rcases contactGlued_cover A.edgeGlue A.edge_inj u with ⟨e,rfl⟩ | ⟨i,f,rfl⟩
   · rcases contactGlued_cover A.edgeGlue A.edge_inj w with ⟨d,rfl⟩ | ⟨j,g,rfl⟩
-    · have hx' : x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := hxu
+    · have hx' : x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).coreE e) := by
+        rw [A.cut_output_eq ν]
+        exact hxu
       obtain ⟨y,rfl⟩ := P.core.edge_vertex_range hx'
       have hye := P.core.edge_vertex_reflect e y hx'
-      have hyd := P.core.edge_vertex_reflect d y hxw
+      have hxw' : P.core.vertex y ∈ (A.atCut ν).output.edgeCarrier (P.core.edge d) := by
+        rw [A.cut_output_eq ν]
+        exact hxw
+      have hyd := P.core.edge_vertex_reflect d y hxw'
+      change A.parentAt ν (A.coreE e) = A.parentAt ν (A.coreE d) at hp
+      change A.parentAt μ (A.coreE e) = A.parentAt μ (A.coreE d)
       rw [A.parentAt_core,A.parentAt_core] at hp ⊢
       exact congrArg (A.coreW μ) (hD e d y ((A.coreW ν).injective hp) hye hyd hx)
     · exact (cross j g e x hxw hxu hx hp.symm).symm
@@ -230,10 +254,17 @@ theorem preserves_parameter
     · exact cross i f e x hxu hxw hx hp
     · by_cases hij : i = j
       · subst j
-        have hx' : x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := hxu
+        have hx' : x ∈ (A.atCut ν).output.edgeCarrier ((A.atCut ν).stdE i f) := by
+          rw [A.cut_output_eq ν]
+          exact hxu
         obtain ⟨y,rfl⟩ := (P.std i).edge_vertex_range hx'
         have hyf := (P.std i).edge_vertex_reflect f y hx'
-        have hyg := (P.std i).edge_vertex_reflect g y hxw
+        have hxw' : (P.std i).vertex y ∈ (A.atCut ν).output.edgeCarrier ((P.std i).edge g) := by
+          rw [A.cut_output_eq ν]
+          exact hxw
+        have hyg := (P.std i).edge_vertex_reflect g y hxw'
+        change A.parentAt ν (A.stdE i f) = A.parentAt ν (A.stdE i g) at hp
+        change A.parentAt μ (A.stdE i f) = A.parentAt μ (A.stdE i g)
         rw [A.parentAt_std,A.parentAt_std] at hp ⊢
         exact congrArg (A.stdW μ i) (hL i f g y ((A.stdW ν i).injective hp) hyf hyg hx)
       · obtain ⟨y,p,hy,hp',hyp⟩ := hpair i j hij f g x hxu hxw hp
@@ -249,8 +280,9 @@ theorem preserves_parameter
         obtain ⟨d,hd,hyd,hd'⟩ := A.standard_core_representative μ ν
           (A.stdV j ⁻¹' allowed) (hL j) hbridge j g y p hug hyp hj (hallow j)
         have hsame := hD e d y (he.trans hd.symm) hye hyd (fun hn => hx (hy ▸ hn))
-        refine he'.trans (?_.trans hd'.symm)
-        rw [A.parentAt_core,A.parentAt_core,hsame]
+        have heq : A.parentAt μ (A.coreE e) = A.parentAt μ (A.coreE d) := by
+          rw [A.parentAt_core,A.parentAt_core,hsame]
+        exact he'.trans (heq.trans hd'.symm)
 
 theorem preserves_parameter_proper
     (μ ν : Fin (m+1)) (allowed : Set A.Vertex)
