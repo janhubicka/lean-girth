@@ -261,15 +261,15 @@ def ContactJoinTree.sumBridge
 
 /-- Relabel a join tree along an equivalence of its index type. -/
 def ContactJoinTree.reindex
-    {κ : Type v} {F : ι → Set W}
-    (J : ContactJoinTree F) (e : κ ≃ ι) :
+    {κ : Type v} {F : I → Set W}
+    (J : ContactJoinTree F) (e : κ ≃ I) :
     ContactJoinTree (fun k => F (e k)) where
   tree := J.tree.comap e
   isTree :=
     (SimpleGraph.Iso.comap e J.tree).isTree_iff.mpr J.isTree
   running := by
     intro x
-    let oldOcc : Set ι := {i | x ∈ F i}
+    let oldOcc : Set I := {i | x ∈ F i}
     let newOcc : Set κ := {k | x ∈ F (e k)}
     have hOld : (J.tree.induce oldOcc).Preconnected := by
       simpa [oldOcc] using J.running x
