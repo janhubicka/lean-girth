@@ -128,7 +128,7 @@ theorem preserves_g4 {q : ℕ} (h4 : ContactG4 (contactFamily old stable) q) :
     have hpos : 0 < C.length := by have := C.hlength; omega
     obtain ⟨j,hji,h0⟩ := A.component_cover i (C.vertex ⟨0,hpos⟩) (ha ⟨0,hpos⟩)
     have hall : ∀ k, C.vertex k ∈ A.component j := by
-      apply contactCycle_all_of_zero hpos _ h0
+      apply contactCycle_all_of_zero hpos (fun k => C.vertex k ∈ A.component j) h0
       intro k hk
       obtain ⟨l,hli,hl⟩ := A.component_cover i _ (ha (cyclicSucc k))
       have he := A.adjacent_same_component (hji.trans hli.symm) hk hl (hb.1 k)
