@@ -1,5 +1,4 @@
 import Girth.ContactBottomOwners
-import Girth.ContactPositivePreservation
 
 /-! Assemble the bottom-core preservation alternative.
 The special owner assignment eliminates every single mixed-side
@@ -76,7 +75,8 @@ theorem preserves_g4_bottom {q : ℕ}
     cases b with
     | inl y =>
       rw [← ha,← hb']
-      rfl
+      change 2 ≤ (2 : ℕ)
+      omega
     | inr p =>
       have hf : A.BottomForward B k := ⟨x,p,ha.symm,hb'.symm⟩
       have h := hcut (cyclicSucc i)
@@ -89,7 +89,8 @@ theorem preserves_g4_bottom {q : ℕ}
       exact (hcut i (hback k hb'').symm).elim
     | inr r =>
       rw [← ha,← hb']
-      rfl
+      change 2 ≤ (2 : ℕ)
+      omega
 
 /-- System girth at the bottom cut, from the two-member intersection
 property and selected join trees of the core. The input absorption
