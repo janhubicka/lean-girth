@@ -32,8 +32,12 @@ print(f"Fast import closure: {len(fast)}")
 print(f"Integration import closure: {len(integration)}")
 print(f"Dormant historical modules: {len(all_modules - integration)}")
 print("Fast modules:", ", ".join(sorted(fast)))
+# The following are explicitly new contact-graph modules, not legacy
+# forest proofs. Keep the historical-name guard for all other imports.
+new_forest_modules = {"Girth.ContactMixedForestConverse",
+                      "Girth.ContactForestBoostClass"}
 bad = sorted(name for name in fast
-             if name != "Girth.ContactMixedForestConverse"
+             if name not in new_forest_modules
              and any(s in name for s in ("Supreme", "Acceptable", "BigCycle",
                                         "Replacement", "Support", "Forest")))
 if bad:
