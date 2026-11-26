@@ -28,5 +28,27 @@ pair intersections, as is equivalent when q is at least two). -/
 def ZeroMixedForestsThrough (q : ℕ) : Prop :=
   D.ZeroPairwise ∧ D.ZeroJoinTreesThrough q
 
+
+/-- The exact small-family mixed-forest condition, including cutoff
+one. No global pairwise requirement is imposed until q ≥ 2.
+Use ZeroMixedForestsThrough only at cutoffs at least two. -/
+def ZeroSmallMixedForestsThrough (q : ℕ) : Prop :=
+  (2 ≤ q → D.ZeroPairwise) ∧ D.ZeroJoinTreesThrough q
+
+theorem zeroSmallMixedForests_iff {q : ℕ} (hq : 2 ≤ q) :
+    D.ZeroSmallMixedForestsThrough q ↔ D.ZeroMixedForestsThrough q := by
+  constructor
+  · intro h
+    exact ⟨h.1 hq,h.2⟩
+  · intro h
+    exact ⟨fun _ => h.1,h.2⟩
+
+theorem zeroSmallMixedForests_mono {q r : ℕ}
+    (h : D.ZeroSmallMixedForestsThrough q) (hr : r ≤ q) :
+    D.ZeroSmallMixedForestsThrough r := by
+  refine ⟨fun h₂ => h.1 (h₂.trans hr),?_⟩
+  intro s hs hcard
+  exact h.2 s hs (hcard.trans hr)
+
 end OrderOneData
 end StructuralRamsey.Girth
