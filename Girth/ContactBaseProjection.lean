@@ -2,7 +2,8 @@ import Girth.ContactTrainBottom
 
 /-! The projection/absorption calculation for a picture over a
 linear base. This is the set-theoretic part of the ordered partite
-adapter: the active strip is the inverse image of a base edge.
+adapter: the active strip consists of the vertices covered by
+edges over a base edge (not the full inverse image).
 Transversal copies project injectively and strongly inducedly.
 No forest or system-girth conclusion is an input. -/
 
@@ -25,14 +26,18 @@ namespace ContactBaseProjection
 variable {D : ContactHypergraphData V E I} {base : B → Set X}
     (P : ContactBaseProjection D base)
 
-def strip (b : B) : Set V := P.vertex ⁻¹' base b
+def strip (b : B) : Set V := {x | ∃ e, P.edge e = b ∧ x ∈ D.edgeCarrier e}
+
+theorem strip_projects (b : B) {x : V} (hx : x ∈ P.strip b) :
+    P.vertex x ∈ base b := by
+  obtain ⟨e,he,hxe⟩ := hx
+  rw [← he,← P.edge_image]
+  exact ⟨x,hxe,rfl⟩
 
 theorem edge_subset_strip (e : E) (b : B) (he : P.edge e = b) :
     D.edgeCarrier e ⊆ P.strip b := by
   intro x hx
-  change P.vertex x ∈ base b
-  rw [← he,← P.edge_image]
-  exact ⟨x,hx,rfl⟩
+  exact ⟨e,he,hx⟩
 
 theorem edge_trace (hlin : ∀ a b : B, a ≠ b → (base a ∩ base b).Subsingleton)
     (e : E) (b : B) :
@@ -52,7 +57,7 @@ theorem edge_trace (hlin : ∀ a b : B, a ≠ b → (base a ∩ base b).Subsingl
     exact ⟨y,hy.1,rfl⟩
   have he : P.edge e = b := by
     by_contra hn
-    exact hne (hlin _ _ hn ⟨hxb,hx.2⟩ ⟨hyb,hy.2⟩)
+    exact hne (hlin _ _ hn ⟨hxb,P.strip_projects b hx.2⟩ ⟨hyb,P.strip_projects b hy.2⟩)
   exact Or.inr ⟨he,Set.inter_eq_left.mpr (P.edge_subset_strip e b he)⟩
 
 /-- A transversal designated copy has either a short trace or
@@ -68,13 +73,13 @@ theorem copy_trace (i : I) (b : B) :
   have hne : P.vertex x ≠ P.vertex y :=
     fun he => hxy (P.copy_inj i hx.1 hy.1 he)
   obtain ⟨e,he,hb⟩ := P.copy_strong i b
-    ⟨P.vertex x,⟨hx.2,⟨x,hx.1,rfl⟩⟩,
-     P.vertex y,⟨hy.2,⟨y,hy.1,rfl⟩⟩,hne⟩
+    ⟨P.vertex x,⟨P.strip_projects b hx.2,⟨x,hx.1,rfl⟩⟩,
+     P.vertex y,⟨P.strip_projects b hy.2,⟨y,hy.1,rfl⟩⟩,hne⟩
   refine Or.inr ⟨e,he,hb,Set.Subset.antisymm ?_ ?_⟩
   · intro z hz
     have hmem : P.vertex z ∈ P.vertex '' D.edgeCarrier e := by
       rw [P.edge_image,hb]
-      exact hz.2
+      exact P.strip_projects b hz.2
     obtain ⟨w,hw,hweq⟩ := hmem
     have hEq := P.copy_inj i (P.copy_edge_subset i e he hw) hz.1 hweq
     exact hEq ▸ hw
@@ -88,7 +93,7 @@ theorem copy_absorption (i : I) (b : B) (e : E)
   · intro z hz
     have hmem : P.vertex z ∈ P.vertex '' D.edgeCarrier e := by
       rw [P.edge_image,hb]
-      exact hz.2
+      exact P.strip_projects b hz.2
     obtain ⟨w,hw,heq⟩ := hmem
     exact (P.copy_inj i (P.copy_edge_subset i e he hw) hz.1 heq) ▸ hw
   · intro z hz
@@ -102,8 +107,8 @@ variable {U F J : Type v} {m : ℕ}
     {T : ContactTrainData F m} {S : ContactTrainData E m}
     (A : ContactTrainStrip D L T S)
 
-/-- The active-strip data is the actual preimage of the base edge,
-both on vertices and on edges, for every gluing. -/
+/-- The active-strip data is the actual edge-covered strip over
+the base edge, for every gluing. -/
 structure ActiveOver {base : B → Set X} (P : ContactBaseProjection L base) (b : B) : Prop where
   vertex_domain : ∀ i x, (∃ y, A.vertexGlue i x = some y) ↔ x ∈ P.strip b
   edge_domain : ∀ i e, (∃ f, A.edgeGlue i e = some f) ↔ P.edge e = b
