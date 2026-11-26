@@ -74,7 +74,7 @@ theorem directIncrement [Fintype A.Vertex]
   letI : Nonempty N := by obtain ⟨a,ha⟩ := hs; exact ⟨⟨a,ha⟩⟩
   have hex : ∀ n : N, ∃ a : I ⊕ E, ∃ j : A.localIndex a,
       A.localOutputLabel a j = n.val := fun n => A.output_has_localLabel n.val
-  choose own local hlocalLabel using hex
+  choose own loc hlocalLabel using hex
   let used : Finset (I ⊕ E) := Finset.univ.image own
   let Q := {a // a ∈ used}
   have hused : used.Nonempty := by
@@ -107,9 +107,9 @@ theorem directIncrement [Fintype A.Vertex]
   let edge : E → Set A.Vertex := fun e => A.coreV '' D.edgeCarrier e
   have hcontain : ∀ n, F n ⊆ K (owner n) := by
     intro n
-    have h := A.localOutput_carrier (own n) (local n)
+    have h := A.localOutput_carrier (own n) (loc n)
     rw [hlocalLabel n] at h
-    change F n = A.localPiece (own n) (local n) at h
+    change F n = A.localPiece (own n) (loc n) at h
     rw [h]
     exact A.localPiece_subset_owner _ _
   have hcross : ∀ a c : Q, a ≠ c → K a ∩ K c ⊆ A.coreSet :=
@@ -130,8 +130,8 @@ theorem directIncrement [Fintype A.Vertex]
     · exact Or.inr ⟨e,he⟩
   have hlocalSel : ∀ n, ∃ j : A.localIndex (owner n).val, F n = G (owner n) j := by
     intro n
-    refine ⟨local n,?_⟩
-    have h := A.localOutput_carrier (own n) (local n)
+    refine ⟨loc n,?_⟩
+    have h := A.localOutput_carrier (own n) (loc n)
     rw [hlocalLabel n] at h
     exact h
   have hlocalSep : Fintype.card Q ≤ q-1 → ∀ a c : Q, a ≠ c →
