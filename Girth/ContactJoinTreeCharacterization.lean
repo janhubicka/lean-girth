@@ -97,7 +97,8 @@ theorem chordal [Fintype I] {F : I → Set W} (T : ContactJoinTree F) :
     ContactChordal (contactFamilyGraph F) := by
   classical
   intro n z hn hInj hside
-  let supp : W ⊕ PUnit.{v+1} → Set W
+  let supp : W ⊕ PUnit.{v+1} → Set W := fun z =>
+    match z with
     | .inl x => {x}
     | .inr _ => ∅
   let K : I → Set (W ⊕ PUnit.{v+1}) := fun i => {z | supp z ⊆ F i}
