@@ -46,7 +46,7 @@ def toLevels : EdgeTrainLevels E m where
   rel := fun μ e f => T.parent μ e = T.parent μ f
   equivalent := fun _ => ⟨fun _ => rfl,fun h => h.symm,fun h h' => h.trans h'⟩
   nested := T.nested
-  bottom := fun _ _ => ⟨T.bottom,congrArg _⟩
+  bottom := fun e f => ⟨fun h => T.bottom h,fun h => congrArg _ h⟩
   top := T.top
 
 /-- Actual class labels are bijective to the old quotient API. -/
@@ -82,13 +82,15 @@ def EdgeTrainLevels.toContactTrain {m : ℕ} (T : EdgeTrainLevels E m) :
     induction p using Quotient.inductionOn with
     | h e => exact ⟨e,rfl⟩
   nested := fun μ ν h e f he => Quotient.sound (T.nested μ ν h e f (Quotient.exact he))
-  bottom := fun he => (T.bottom _ _).mp (Quotient.exact he)
+  bottom := by
+    intro e f he
+    exact (T.bottom e f).mp (Quotient.exact he)
   top := fun e f => Quotient.sound (T.top e f)
 
 theorem EdgeTrainLevels.toContactTrain_rel {m : ℕ} (T : EdgeTrainLevels E m)
     (μ : Fin (m+1)) (e f : E) :
     (T.toContactTrain.toLevels).rel μ e f ↔ T.rel μ e f :=
-  ⟨Quotient.exact,Quotient.sound⟩
+  ⟨fun h => Quotient.exact h,fun h => Quotient.sound h⟩
 
 /-- The active-strip gluing is fixed on vertices and edges. Its
 compatibility at each train level is ordinary preservation and
@@ -205,14 +207,20 @@ noncomputable def atCut (μ : Fin (m+1)) :
 /-- The actual generated picture has one hypergraph, independent
 of the cut at which it is viewed. -/
 noncomputable def outputHypergraph : ContactHypergraphData A.Vertex A.Edge (I × I₀) where
-  edgeCarrier := (A.atCut ⟨0,by omega⟩).output.edgeCarrier
+  edgeCarrier := fun e => match e.val with
+    | .inl f => A.coreV '' D.edgeCarrier f
+    | .inr (i,f) => A.stdV i '' L.edgeCarrier f
   copyCarrier := fun j => A.stdV j.1 '' L.copyCarrier j.2
   copyEdges := fun j => A.stdE j.1 '' L.copyEdges j.2
 
 theorem cut_output_eq (μ : Fin (m+1)) :
     (A.atCut μ).output =
       A.outputHypergraph.atCut (A.atCut μ).output.parent := by
-  rfl
+  unfold ContactTaggedPicture.output ContactHypergraphData.atCut outputHypergraph
+  congr 1
+  funext e
+  cases e with
+  | mk t ht => cases t <;> rfl
 
 end ContactTrainStrip
 end StructuralRamsey.Girth
