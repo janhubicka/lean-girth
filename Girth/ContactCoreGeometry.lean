@@ -12,7 +12,8 @@ namespace OrderOneData
 variable (D : OrderOneData V E I P)
 
 /-- Two vertices in a common pair of distinct designated copies belong
-to a unique core wagon; both copies meet it. -/
+to a core wagon; both copies meet it. Under pretrain linearity this
+wagon is unique by contact_wagon_unique_of_pair. -/
 theorem contact_common_vertex_pair
     (h1 : D.ContactG1) (h2 : D.ContactG2)
     {i j : I} (hij : i ≠ j) {x y : V} (hxy : x ≠ y)
