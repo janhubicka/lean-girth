@@ -1,3 +1,4 @@
+import Girth.CyclicSucc
 import Girth.Support
 
 /-! # Berge cycles and support girth
@@ -11,10 +12,6 @@ namespace StructuralRamsey.Girth
 
 universe u v
 variable {W : Type v}
-
-/-- Cyclic successor on a nonempty finite index type. -/
-def cyclicSucc {n : ℕ} (i : Fin n) : Fin n :=
-  ⟨(i.1 + 1) % n, Nat.mod_lt _ (Nat.zero_lt_of_lt i.2)⟩
 
 /-- A Berge cycle with distinct edges and distinct connecting vertices. -/
 structure BergeCycle (H : Set (Set W)) where
