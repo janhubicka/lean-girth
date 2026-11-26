@@ -39,12 +39,14 @@ theorem prefix_carrier (μ : Fin (d+1+h+1)) (hμ : μ.val ≤ d)
     obtain ⟨hij,hfg⟩ := (R.prefix_eq μ hμ (j,g) (i,f)).mp he
     change j = i at hij
     subst j
-    rw [hcarrier] at hx
+    change x ∈ H.edgeCarrier (i,g) at hx
+    rw [hcarrier i g] at hx
     obtain ⟨y,hy,rfl⟩ := hx
     exact ⟨y,⟨g,hfg,hy⟩,rfl⟩
   · rintro ⟨y,⟨g,hg,hy⟩,rfl⟩
     refine ⟨(i,g),(R.prefix_eq μ hμ (i,g) (i,f)).mpr ⟨rfl,hg⟩,?_⟩
-    rw [hcarrier]
+    change emb i y ∈ H.edgeCarrier (i,g)
+    rw [hcarrier i g]
     exact ⟨y,hy,rfl⟩
 
 theorem tail_carrier (μ : Fin (d+1+h+1)) (hμ : d < μ.val)
@@ -105,9 +107,10 @@ theorem prefix_girth_of_lastPrefix (μ : Fin (d+1+h+1)) (hμ : μ.val < d) {g : 
   let j := R.standard μ hμ.le (C.label i₀)
   have hs : ∀ i, R.standard μ hμ.le (C.label i) = j := by
     intro i
-    rw [← R.standard_parent μ ν hle (by exact le_rfl) hμ.le,
-      ← R.standard_parent μ ν hle (by exact le_rfl) hμ.le]
-    exact congrArg (R.standard ν (by exact le_rfl)) (hc i i₀)
+    change R.standard μ hμ.le (C.label i) = R.standard μ hμ.le (C.label i₀)
+    exact (R.standard_parent μ ν hle (by exact le_rfl) hμ.le (C.label i)).symm.trans
+      ((congrArg (R.standard ν (by exact le_rfl)) (hc i i₀)).trans
+        (R.standard_parent μ ν hle (by exact le_rfl) hμ.le (C.label i₀)))
   let lab : Fin C.length → R.old.Wagon (R.depthLevel μ hμ.le) :=
     fun i => (R.prefixWagonEquiv μ hμ.le (C.label i)).2
   have hlabel : Function.Injective lab := by
@@ -227,9 +230,12 @@ theorem lastPrefix_girth (coreCopy : Q → Set U) (crossAllowed firstAllowed : S
       intro heq
       apply hne
       exact R.split_standard_injective p r hpr (hsi.trans (heq.trans hsj.symm))
-    have hp : R.train.parent ν (i,e) = R.train.parent ν (j,f) := by
-      rw [← R.train.parentMap_parent μ ν hle,← R.train.parentMap_parent μ ν hle,he,hf]
-      exact hpr
+    change R.train.parent μ (i,e) = p at he
+    change R.train.parent μ (j,f) = r at hf
+    have hp : R.train.parent ν (i,e) = R.train.parent ν (j,f) :=
+      (R.train.parentMap_parent μ ν hle (i,e)).symm.trans
+        ((congrArg parent he).trans (hpr.trans
+          ((congrArg parent hf).symm.trans (R.train.parentMap_parent μ ν hle (j,f)))))
     have hp' := (R.tail_eq ν hν (i,e) (j,f)).mp hp
     rw [hlev] at hp'
     have hxfirst : x ∈ firstAllowed := by
