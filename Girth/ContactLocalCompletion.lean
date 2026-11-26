@@ -96,7 +96,8 @@ theorem contact_localCompletion [Fintype V] [Fintype K] [Nonempty K]
   by_cases hshort : ∀ k, (F k).Subsingleton
   · exact contact_joinTree_of_all_short F hshort
   · push_neg at hshort
-    obtain ⟨k₀,hk₀⟩ := hshort
+    obtain ⟨k₀,hk₀'⟩ := hshort
+    have hk₀ : ¬ (F k₀).Subsingleton := Set.not_subsingleton_iff.mpr hk₀'
     let L := {k : K // ¬ (F k).Subsingleton}
     letI : Fintype L := Fintype.ofFinite L
     have hex : ∀ k : L, ∃ i, F k.val = G i := by
