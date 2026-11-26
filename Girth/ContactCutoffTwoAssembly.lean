@@ -66,9 +66,11 @@ theorem result_positiveBounds (q : Fin (m+1) → ℕ)
     (hN : H.SystemBounds S q)
     (hNonempty : ∀ e, (H.edgeCarrier e).Nonempty)
     (hL : ∀ e f : F, e ≠ f → (L.edgeCarrier e ∩ L.edgeCarrier f).Subsingleton) :
-    (A.resultHypergraph N B hplace).PositiveBounds (B.fillTrain S) (Fin.cases 0 q) :=
-  A.selection.preserves_positiveBounds (A.filledFamily N B hplace) (Fin.cases 0 q)
-    (B.preserves_positiveBounds S q hNonempty hL hN)
+    (A.resultHypergraph N B hplace).PositiveBounds (B.fillTrain S) (Fin.cases 0 q) := by
+  intro μ hp ht
+  exact A.selection.preserves_positiveBounds (A.filledFamily N B hplace)
+    (fun i : Fin (m+2) => Fin.cases (motive := fun _ => ℕ) 0 q i)
+    (B.preserves_positiveBounds S q hNonempty hL hN) μ hp ht
 
 /-- The selected hypergraph is literally the filled ambient
 hypergraph on vertices and edges; changing designated labels
