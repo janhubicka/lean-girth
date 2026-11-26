@@ -85,8 +85,11 @@ theorem varying_disjoint_carrier (hm : 0 < m)
   ext x
   constructor
   · rintro ⟨⟨j,f⟩,he,hx⟩
-    have h := congrArg (T.disjointWagonEquiv Q hm μ hproper) he
-    rw [T.disjointWagonEquiv_parent,T.disjointWagonEquiv_parent] at h
+    change (T.disjointTrain Q hm).parent μ (j,f) = (T.disjointTrain Q hm).parent μ (i,e) at he
+    have h : (j,T.parent μ f) = (i,T.parent μ e) :=
+      (T.disjointWagonEquiv_parent Q hm μ hproper (j,f)).symm.trans
+        ((congrArg (T.disjointWagonEquiv Q hm μ hproper) he).trans
+          (T.disjointWagonEquiv_parent Q hm μ hproper (i,e)))
     have hj : j = i := congrArg Prod.fst h
     have hf : T.parent μ f = T.parent μ e := congrArg Prod.snd h
     subst j
@@ -94,8 +97,10 @@ theorem varying_disjoint_carrier (hm : 0 < m)
     exact ⟨y,⟨f,hf,hy⟩,rfl⟩
   · rintro ⟨y,⟨f,hf,hy⟩,rfl⟩
     refine ⟨(i,f),?_,⟨y,hy,rfl⟩⟩
+    change (T.disjointTrain Q hm).parent μ (i,f) = (T.disjointTrain Q hm).parent μ (i,e)
     apply (T.disjointWagonEquiv Q hm μ hproper).injective
-    rw [T.disjointWagonEquiv_parent,T.disjointWagonEquiv_parent,hf]
+    exact (T.disjointWagonEquiv_parent Q hm μ hproper (i,f)).trans
+      ((congrArg (Prod.mk i) hf).trans (T.disjointWagonEquiv_parent Q hm μ hproper (i,e)).symm)
 
 theorem varying_disjoint_girth (hm : 0 < m)
     (μ : Fin (m+1)) (hproper : μ.val < m) {g : ℕ}
