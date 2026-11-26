@@ -75,6 +75,52 @@ noncomputable def wordCoreFamily (b : B) (N : Type) :
   vertex_eq := fun _ => rfl
   edge_eq := fun _ => rfl
 
+/-- The actual projection of a word-core vertex onto the active
+base edge. Its definition is independent of the chosen colouring. -/
+noncomputable def wordCorePart (b : B) (N : Type)
+    (x : (P.projection.stripEndpoints b).WordVertex N) : X :=
+  ((P.projection.stripEndpoints b).wordPart N x).val
+
+theorem wordCorePart_emb (b : B) (N : Type)
+    (i : Combinatorics.Line (P.projection.StripEdge b) N)
+    (x : P.projection.StripVertex b) :
+    P.wordCorePart b N (((P.wordCoreFamily b N).emb i).vertex x) =
+      P.projection.stripPart b x := rfl
+
+theorem wordCorePart_image (b : B) (N : Type)
+    (e : N → P.projection.StripEdge b) :
+    P.wordCorePart b N '' ((P.projection.stripEndpoints b).wordHypergraph N).edgeCarrier e =
+      base b := by
+  let Q := P.projection.stripEndpoints b
+  ext x
+  constructor
+  · rintro ⟨y,hy,rfl⟩
+    exact (Q.wordPart N y).property
+  · intro hx
+    let a : base b := ⟨x,hx⟩
+    exact ⟨Q.wordEnd N e a,⟨a,rfl⟩,rfl⟩
+
+theorem wordCorePart_inj (b : B) (N : Type)
+    (e : N → P.projection.StripEdge b) :
+    Set.InjOn (P.wordCorePart b N)
+      ((P.projection.stripEndpoints b).wordHypergraph N).edgeCarrier e := by
+  let Q := P.projection.stripEndpoints b
+  intro x hx y hy he
+  obtain ⟨a,rfl⟩ := hx
+  obtain ⟨c,rfl⟩ := hy
+  change a.val = c.val at he
+  exact congrArg (Q.wordEnd N e) (Subtype.ext he)
+
+noncomputable def wordGluing (b : B) (N : Type)
+    (hne : Nonempty (P.projection.StripEdge b)) :=
+  (P.wordCoreFamily b N).stripGluing hne
+
+theorem wordGluing_coreOver (b : B) (N : Type)
+    (hne : Nonempty (P.projection.StripEdge b)) :
+    (P.wordGluing b N hne).CoreOver P.projection b (P.wordCorePart b N) :=
+  (P.wordCoreFamily b N).stripGluing_coreOver hne (P.wordCorePart b N)
+    (P.wordCorePart_emb b N) (P.wordCorePart_image b N) (P.wordCorePart_inj b N)
+
 /-- Construct the entire next seed stage using an actual finite
 word core. This construction is independent of a colouring;
 the arrow hypothesis only determines which standard to select. -/
@@ -86,30 +132,10 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   letI : Finite P.Copy := P.finiteC
   let Q := P.projection.stripEndpoints b
   let M := P.wordCoreFamily b N
-  let A := M.stripGluing hne
-  let p : Q.WordVertex N → X := fun x => (Q.wordPart N x).val
-  have hp : ∀ i x, p ((M.emb i).vertex x) = P.projection.stripPart b x := by
-    intro i x
-    rfl
-  have himage : ∀ e : N → P.projection.StripEdge b,
-      p '' (Q.wordHypergraph N).edgeCarrier e = base b := by
-    intro e
-    ext x
-    constructor
-    · rintro ⟨y,hy,rfl⟩
-      exact (Q.wordPart N y).property
-    · intro hx
-      let a : base b := ⟨x,hx⟩
-      exact ⟨Q.wordEnd N e a,⟨a,rfl⟩,rfl⟩
-  have hinj : ∀ e : N → P.projection.StripEdge b,
-      Set.InjOn p ((Q.wordHypergraph N).edgeCarrier e) := by
-    intro e x hx y hy he
-    obtain ⟨a,rfl⟩ := hx
-    obtain ⟨c,rfl⟩ := hy
-    change a.val = c.val at he
-    exact congrArg (Q.wordEnd N e) (Subtype.ext he)
+  let A := P.wordGluing b N hne
+  let p := P.wordCorePart b N
   let hA := M.stripGluing_active hne
-  let hc := M.stripGluing_coreOver hne p hp himage hinj
+  let hc := P.wordGluing_coreOver b N hne
   have hpair : A.TwoPartIntersection p := by
     intro i j hij u v hui huj hvi hvj huv
     exact Q.word_pair_geometry N (P.projection.strip_linear b P.linear)
@@ -152,6 +178,19 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
     projection := P'.noCopies
     emb := fun i => ((P.emb i.2).comp (hstd i.1)).noTargetCopies
     linear := hlin }
+
+/-- The new designated embeddings keep the projected vertex map
+of the old target embedding. This is the predicate preservation
+needed to recover the original f-partite label word. -/
+theorem next_emb_vertex (b : B) (N : Type) [Fintype N]
+    (hne : Nonempty (P.projection.StripEdge b))
+    (i : Combinatorics.Line (P.projection.StripEdge b) N) (j : P.Copy) (x : V) :
+    (P.next b N hne).projection.vertex (((P.next b N hne).emb (i,j)).vertex x) =
+      P.projection.vertex ((P.emb j).vertex x) := by
+  change (P.wordGluing b N hne).outputProjectionVertex P.projection (P.wordCorePart b N)
+    ((P.wordGluing b N hne).stdV i ((P.emb j).vertex x)) = _
+  exact (P.wordGluing b N hne).projection_vertex_std P.projection b (P.wordCorePart b N)
+    (P.wordGluing_coreOver b N hne) i ((P.emb j).vertex x)
 
 /-- The constructed nonlinear picture supplies one genuine
 focusing step, using the same actual edge and copy maps. -/
