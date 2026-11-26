@@ -154,6 +154,7 @@ theorem preserves_positiveBounds (q : Fin (m+1) → ℕ)
   intro μ
   refine Fin.cases ?_ (fun ν => ?_) μ
   · intro h
+    change 0 < 0 at h
     omega
   · intro _ h
     have hp : ν.val < m := by change ν.val+1 < m+1 at h; omega
