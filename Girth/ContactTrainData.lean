@@ -217,10 +217,9 @@ theorem cut_output_eq (μ : Fin (m+1)) :
     (A.atCut μ).output =
       A.outputHypergraph.atCut (A.atCut μ).output.parent := by
   unfold ContactTaggedPicture.output ContactHypergraphData.atCut outputHypergraph
-  congr 1
-  funext e
-  cases e with
-  | mk t ht => cases t <;> rfl
+  congr 1 <;> first
+  | rfl
+  | (funext e; rcases e with ⟨t,ht⟩; cases t <;> rfl)
 
 end ContactTrainStrip
 end StructuralRamsey.Girth
