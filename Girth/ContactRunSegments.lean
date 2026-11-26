@@ -114,7 +114,7 @@ theorem contactOwner_arcs_cover {n : ℕ} (owner : Fin n → O)
   · have ht0 : (f first).val < t.val := by omega
     have ht1 : t.val < (f last).val := by omega
     let Q : ℕ → Prop := fun k => ∃ h : k < m, t.val ≤ (f ⟨k,h⟩).val
-    have hex : ∃ k, Q k := ⟨last.val,last.isLt,by omega⟩
+    have hex : ∃ k, Q k := ⟨last.val,last.isLt,ht1.le⟩
     let k := Nat.find hex
     obtain ⟨hkm,hkbound⟩ : Q k := Nat.find_spec hex
     have hkpos : 0 < k := by
@@ -178,12 +178,13 @@ theorem contactOwner_arc_mem {n : ℕ} (hn : 0 < n)
         (by change (f i).val < t.val; omega) ht.2
     · have hl : i = (⟨m-1,by omega⟩ : Fin m) := by
         apply Fin.ext
-        have := i.isLt
+        change i.val = m-1
+        have hi' : i.val < m := i.isLt
         omega
       have hs : cyclicSucc i = (⟨0,hm⟩ : Fin m) := by
         apply Fin.ext
         change (i.val+1) % m = 0
-        rw [show i.val+1 = m by have := i.isLt; omega,Nat.mod_self]
+        rw [show i.val+1 = m by have hi' : i.val < m := i.isLt; omega,Nat.mod_self]
       have hle : (f (⟨0,hm⟩ : Fin m)).val ≤ (f i).val :=
         f.monotone (by change 0 ≤ i.val; omega)
       change contactClosedArc (f i) (f (cyclicSucc i)) t at ht
