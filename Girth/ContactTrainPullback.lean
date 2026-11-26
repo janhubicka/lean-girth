@@ -30,7 +30,9 @@ def pullTrain (f : F ↪ E) : ContactTrainData F m where
 theorem pullTrain_rel (f : F ↪ E) (μ : Fin (m+1)) (e g : F) :
     (T.pullTrain f).parent μ e = (T.pullTrain f).parent μ g ↔
       T.parent μ (f e) = T.parent μ (f g) :=
-  ⟨fun he => congrArg Subtype.val he,Subtype.ext⟩
+  ⟨fun he => congrArg Subtype.val he,fun he => by
+    apply Subtype.ext
+    exact he⟩
 
 end ContactTrainData
 
