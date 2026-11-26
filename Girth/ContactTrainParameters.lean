@@ -242,6 +242,7 @@ theorem preserves_parameter
       obtain ⟨y,rfl⟩ := P.core.edge_vertex_range hx'
       have hye := P.core.edge_vertex_reflect e y hx'
       have hxw' : P.core.vertex y ∈ (A.atCut ν).output.edgeCarrier (P.core.edge d) := by
+        change A.coreV y ∈ (A.atCut ν).output.edgeCarrier (A.coreE d)
         rw [A.cut_output_eq ν]
         exact hxw
       have hyd := P.core.edge_vertex_reflect d y hxw'
@@ -260,6 +261,7 @@ theorem preserves_parameter
         obtain ⟨y,rfl⟩ := (P.std i).edge_vertex_range hx'
         have hyf := (P.std i).edge_vertex_reflect f y hx'
         have hxw' : (P.std i).vertex y ∈ (A.atCut ν).output.edgeCarrier ((P.std i).edge g) := by
+          change A.stdV i y ∈ (A.atCut ν).output.edgeCarrier (A.stdE i g)
           rw [A.cut_output_eq ν]
           exact hxw
         have hyg := (P.std i).edge_vertex_reflect g y hxw'
