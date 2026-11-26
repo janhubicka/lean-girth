@@ -44,7 +44,8 @@ theorem contact_joinTree_no_cycle_on_set
   obtain ⟨prev,hprev⟩ := contactSucc_surjective k
   have hprevne : prev ≠ k := by
     intro he
-    exact contactSucc_ne B.hlength k (he ▸ hprev)
+    subst prev
+    exact contactSucc_ne B.hlength k hprev
   have hxleaf : B.vertex k ∈ F leaf.val := by
     rw [← hk]
     exact (B.left_mem k).1
