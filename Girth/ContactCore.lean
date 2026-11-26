@@ -1,6 +1,6 @@
 import Girth.ContactSubstitution
 import Girth.ContactCoveredSide
-import Girth.ContactLowOrder
+import Girth.ContactAttachmentGeometry
 import Girth.ContactRank
 import Girth.TrainWagonNodeGluing
 
