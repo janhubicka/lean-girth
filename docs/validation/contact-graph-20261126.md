@@ -163,3 +163,20 @@ These are complete proof scripts without an assumed simplicial-vertex, chordal/c
 Manuscript [7bab56e5c97da9929c1dbae97de2bc46b13eadc3](https://github.com/janhubicka/girth/tree/7bab56e5c97da9929c1dbae97de2bc46b13eadc3) includes immutable links to the certified 153-declaration boundary gate and explicitly retains the remaining assembly and ordered-adapter obligations. The shared-chord argument now explicitly distinguishes the copy-copy case from a chord belonging to a wagon clique.
 
 One CI-triggering commit submits 216 core audit requests (220 integration) and retains the 53, 112, 153 intermediate gates. The main open tasks remain kernel certification of the preservation and mixed-forest assembly, the ordered/all-level train adapters, forest increment/completion and the actual recursive/outer Ramsey witnesses.
+
+
+### Generated hierarchy and parameter transfer batch
+
+[Run 45809233891](https://github.com/janhubicka/lean-girth/actions/runs/45809233891), head df05c3628712a7be64d101274d6c73b9156baec7, did not reach Lean: the inventory guard falsely rejected the new module ContactMixedForestConverse because its name includes "Forest". The guard now exempts that exact new module without relaxing the exclusion of old proof imports. [Replay 45812343484](https://github.com/janhubicka/lean-girth/actions/runs/45812343484), head ca6c2b96dcf8dd9588514dddb78fbebbc3678c6e, passed 53, 112 and 153 strict axiom checks again. It also compiled ContactSelectedCycles, ContactConformality, ContactBottomCore, ContactJoinTreeCycles, ContactJoinTreeGlue and ContactJoinTreeRestore. Reported errors in ContactExpandedPolygon (doc-comment/include ordering), ContactBottomBoundary (section-variable inclusion and continuation indentation) and ContactChordalPaths (dependent endpoint rewrites) have been patched. The new 173-declaration gate independently audits those additional compiled results, so final assembly failures do not erase their certification.
+
+New train-level scripts:
+- TrainLevelsData extracts the existing nested equivalences and wagon setoid; historical modules retain their imports, but reuse these definitions.
+- ContactTrainData presents the train by surjective parent maps and proves the quotient-class correspondence. ContactTrainStrip has one vertex and edge gluing for all cuts. It derives each partial wagon gluing and its injectivity from a genuine shared edge and exact preservation/reflection of the source relations. Each cut supplies the actual tagged picture, without a separate wagon-gluing assumption.
+- ContactGeneratedTrain proves that the actual parent kernel is the least equivalence containing the source generators, constructs the nested output train (including bottom injectivity and universal top), and gives exact restriction on core and standards at every level.
+- ContactTrainParameters expresses the usual sibling-wagon intersection condition by pairs of edges. It constructs a core representative through the shared vertex and derives parameter transfer at positive proper levels from G1/G2 and at the universal top from the no-isolated-vertices assumption on core copies.
+
+These new scripts have not been compiled. The adapter from ordered f-partite strips to ContactTrainStrip, normalization of the bottom wagon labels, the vector of system-girth bounds on the actual output train, forest increment and recursive witness remain open. The new hierarchy and parameter-transfer work is not counted as verified.
+
+Manuscript [1c5a1cfacbd2eea69bf55803a0c7d6b8db786e22](https://github.com/janhubicka/girth/tree/1c5a1cfacbd2eea69bf55803a0c7d6b8db786e22) clarifies that wagon contractions mean shared edges, and makes the core representative argument explicitly distinguish the top (no G1/G2 assumed) from positive proper levels.
+
+This turn used one run to repair and replay the previously aborted batch and one larger batch containing the new corrections and train construction. The latter requests 239 core / 243 integration audits, with intermediate gates at 53, 112, 153 and 173. No full preservation or mixed-forest converse certification is asserted.
