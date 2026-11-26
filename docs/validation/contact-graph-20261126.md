@@ -115,3 +115,19 @@ Independent run-index and subdivision-geometry imports are decoupled so that one
 Manuscript [695fe33206922b9ec36b206a941f802f3ea18ba4](https://github.com/janhubicka/girth/tree/695fe33206922b9ec36b206a941f802f3ea18ba4) links the verified shortest-wagon-cycle localization and concrete restriction theorem at 10777409. The bridge-pullback, low-order geometry and trace-clique marks explicitly retain the outstanding ordered-strip adapter. Full picture preservation remains marked open.
 
 Next: close all positive-core compilation issues, then derive bottom-level G4 from the selected join-tree property (including the special side assignment and budget); finish mixed forests at level zero, the recursive Ramsey witness and the ordered relational outer theorem. Do not count a passed positive-core theorem alone as full preservation under the two alternatives.
+
+
+### Bottom-core preservation batch
+
+[Run 45802275426](https://github.com/janhubicka/lean-girth/actions/runs/45802275426), head b04a6fe70b96cfb8c835bd212f071ad47cf8016c, passed the 53- and 112-declaration strict gates again. The extended build also compiled ContactConstituents, ContactCyclicRuns and ContactRunSegments, but failed on local elaboration errors in ContactExpansionSlots, ContactSideSubdivision and ContactBoundary. These reported errors have been patched. The positive-core preservation theorem has not yet been compiled.
+
+New bottom-case proof scripts:
+- ContactJoinTree extracts the old verified pure join-tree leaf attachment and deletion lemmas; ContactJoinTreeCycles proves the G4 consequence directly by leaf deletion, even when a contact point is defined by containment of a fixed support in the real-vertex piece. At the bottom cut, a wagon label has the whole edge as its support. This avoids an additional chordal/conformal/Helly adapter in this direction.
+- ContactBottomCore derives linearity and G1/G2 from the two-member mixed-forest condition (with the ordinary edge-size and subcopy conditions).
+- ContactSegmentBudget charges two weight units to each segment if no segment is one mixed side; ContactBottomBoundary constructs the actual set of used labels and applies its selected join tree.
+- ContactBottomOwners proves that a mixed side between core points is a physical vertex--edge incidence under the one-edge absorption property. It gives that side the owner of the other side at its wagon endpoint, with no conflict by badness. No side-assignment existence hypothesis remains.
+- ContactBottomPreservation assembles G1--G4 using this special assignment and the selected join trees, without assuming G3/G4 of the bottom core. Explicit inputs include the one-edge trace property (BottomAbsorption), a strongly induced core, singleton output wagons, and the mixed-forest hypotheses on the core. The ordered-strip adapter for those inputs remains open.
+
+Manuscript [43987464d0ba3e3bf86e5ff41f2c29a3b5d23516](https://github.com/janhubicka/girth/tree/43987464d0ba3e3bf86e5ff41f2c29a3b5d23516) simplifies the special bottom side assignment: any constituent containing the singleton wagon contains its full edge. Assigning its mixed core side to the constituent of the other side is valid, and cannot conflict with another such assignment. This replaces the unnecessary private-endpoint case discussion.
+
+One CI-triggering commit submits 180 core audit requests (184 integration), with the 53 and 112 strict intermediate gates retained. The new bottom proofs and the corrected positive-core scripts await successful compilation and axiom checks. Still open: bottom system-girth to complete mixed forests (particularly conformality and the converse join-tree construction), ordered/all-level adapters, and recursive/outer witness assembly. No new manuscript green marks from the uncertified extension.
