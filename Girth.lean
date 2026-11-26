@@ -1,4 +1,4 @@
-import Girth.ContactSubstitution
+import Girth.ContactCore
 import Girth.TrainWagonClassRestriction
 import Girth.TrainLabelledCutGirth
 import Girth.TrainWagonNodeGluing
