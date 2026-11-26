@@ -116,6 +116,8 @@ variable {m : ℕ} {L : ContactHypergraphData V E I} {S : ContactTrainData E m}
     {D : ContactHypergraphData U F J} {T : ContactTrainData F m}
     (M : ContactDesignatedEmbeddings (P.stripHypergraph b) (P.stripTrain S b) D T)
 
+include M
+
 theorem copy_strong (i : J) (e : F)
     (h : (D.edgeCarrier e ∩ D.copyCarrier i).Nontrivial) :
     e ∈ D.copyEdges i := by
