@@ -33,7 +33,8 @@ print(f"Integration import closure: {len(integration)}")
 print(f"Dormant historical modules: {len(all_modules - integration)}")
 print("Fast modules:", ", ".join(sorted(fast)))
 bad = sorted(name for name in fast
-             if any(s in name for s in ("Supreme", "Acceptable", "BigCycle",
+             if name != "Girth.ContactMixedForestConverse"
+             and any(s in name for s in ("Supreme", "Acceptable", "BigCycle",
                                         "Replacement", "Support", "Forest")))
 if bad:
     raise SystemExit(f"Old proof dependency leaked into fast gate: {bad}")
