@@ -195,10 +195,12 @@ theorem contactRelationalUnion_extendsOrder
     (contactRelationalUnion B.ordered f).ExtendsOrder := by
   intro x y h
   obtain ⟨j,z,hz,he⟩ := h
-  have hx : f j (z 0) = x := congrFun he 0
-  have hy : f j (z 1) = y := congrFun he 1
+  let i₀ : Fin (L.withOrder.arity (.inr ())) := ⟨0,by change 0 < 2; omega⟩
+  let i₁ : Fin (L.withOrder.arity (.inr ())) := ⟨1,by change 1 < 2; omega⟩
+  have hx : f j (z i₀) = x := congrFun he i₀
+  have hy : f j (z i₁) = y := congrFun he i₁
   rw [← hx,← hy]
-  exact horder j hz
+  exact horder j (show z i₀ < z i₁ from hz)
 
 /-- Conformality rules out irreducible substructures spread across
 several copies. The empty-set case just uses a nonempty family. -/
@@ -237,7 +239,7 @@ theorem contactRelationalUnion_factor
     (hcover : ∀ w, ∃ j, w ∈ Set.range (f j))
     (hconf : ContactConformal (fun j => Set.range (f j)))
     (hA : A.Irreducible) (a : Embedding A (contactRelationalUnion B f)) :
-    ∃ j (b : Embedding A B), (contactRelationalUnion_embedding B f h j).comp b = a := by
+    ∃ (j : J) (b : Embedding A B), (contactRelationalUnion_embedding B f h j).comp b = a := by
   obtain ⟨j,hj⟩ := contactRelationalUnion_irreducible_covered B f hcover hconf
     (Set.range a) (hA.range_embedding a)
   let e := contactRelationalUnion_embedding B f h j

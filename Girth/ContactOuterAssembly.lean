@@ -346,7 +346,7 @@ theorem girth_of_quantitativeCompletion (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m
     vertex_injective := C.vertex_injective
     left_mem := C.left_mem
     right_mem := C.right_mem }
-  apply contact_marked_cycle_impossible (fun i : Fin C.length => H.edgeCarrier (C.label i))
+  refine contact_marked_cycle_impossible (fun i : Fin C.length => H.edgeCarrier (C.label i))
     H.edgeCarrier (fun i => {C.label i}) (fun _ => True) J' ?_ ?_ hlin ?_ C' ?_
   · intro i e he
     have he' : e = C.label i := Set.mem_singleton_iff.mp he

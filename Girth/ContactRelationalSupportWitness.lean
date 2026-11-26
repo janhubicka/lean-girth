@@ -75,7 +75,10 @@ theorem padded_sharedSupported : M.paddedGraph.MixedSharedSupported := by
       have hmem : x ∈ M.paddedGraph.edgeCarrier f := by
         rw [← hEq]
         exact ((M.paddedFamily.emb k).mem_edge_image e z.val).mpr he
-      exact ⟨f,hmem,(M.paddedFamily.emb k).vertex_range_of_edge e⟩
+      refine ⟨f,hmem,?_⟩
+      change M.paddedGraph.edgeCarrier f ⊆ M.paddedGraph.copyCarrier k
+      rw [M.paddedFamily.vertex_eq k]
+      exact (M.paddedFamily.emb k).vertex_range_of_edge e
   exact ⟨aux i hx,aux j hy⟩
 
 /-- Extend the unlabelled global order before restoring the actual

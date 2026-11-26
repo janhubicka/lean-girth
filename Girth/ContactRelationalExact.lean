@@ -15,8 +15,12 @@ theorem contact_ordered_irreducible (A : RelStructure L U) [LinearOrder U] :
     A.ordered.Irreducible := by
   intro x y hne
   rcases lt_or_gt_of_ne hne with h | h
-  · exact ⟨.inr (), ![x,y], 0, 1, h, rfl, rfl⟩
-  · exact ⟨.inr (), ![y,x], 1, 0, h, rfl, rfl⟩
+  · refine ⟨.inr (),?_⟩
+    change ∃ (z : Fin 2 → U) (i j : Fin 2), A.ordered.rel (.inr ()) z ∧ z i = x ∧ z j = y
+    exact ⟨![x,y],0,1,h,rfl,rfl⟩
+  · refine ⟨.inr (),?_⟩
+    change ∃ (z : Fin 2 → U) (i j : Fin 2), A.ordered.rel (.inr ()) z ∧ z i = x ∧ z j = y
+    exact ⟨![y,x],1,0,h,rfl,rfl⟩
 
 theorem contact_ordered_embedding_eq
     {A : RelStructure L U} [Finite U] [LinearOrder U] [LinearOrder W]

@@ -65,6 +65,11 @@ theorem next_completable
   classical
   intro s hs hc
   let A := C.gluing hne
+  letI : Finite C.Copy := C.finiteC
+  letI : Finite P.Copy := P.finiteC
+  letI : Fintype C.Copy := Fintype.ofFinite _
+  letI : Fintype P.Copy := Fintype.ofFinite _
+  letI : DecidableEq (C.Copy × P.Copy) := Classical.decEq _
   let N := {p : C.Copy × P.Copy // p ∈ s}
   let owners : Finset C.Copy := s.image Prod.fst
   let Q := {i : C.Copy // i ∈ owners}
@@ -82,8 +87,6 @@ theorem next_completable
     obtain ⟨n,hn,he⟩ := Finset.mem_image.mp i.property
     exact ⟨⟨n,hn⟩,Subtype.ext he⟩
   letI : Nonempty Q := ⟨owner (Classical.choice (inferInstance : Nonempty N))⟩
-  letI : Finite P.Copy := P.finiteC
-  letI : Fintype P.Copy := Fintype.ofFinite _
   let t₀ : Finset (C.Copy ⊕ C.Edge) := owners.image Sum.inl
   have ht₀ : t₀.Nonempty := by
     let i : Q := Classical.choice inferInstance
@@ -123,7 +126,9 @@ theorem next_completable
     intro u hu huc
     obtain ⟨v,huv,⟨J⟩⟩ := hOld u hu huc
     exact ⟨v,huv,⟨J.mapVertices (A.stdV i.val)⟩⟩
-  have hNcard : Fintype.card N ≤ m := by simpa [N] using hc
+  have hNcard : Fintype.card N ≤ m := by
+    change Fintype.card ↥s ≤ m
+    simpa using hc
   obtain ⟨t,ht,hct,⟨J⟩⟩ := contact_qualitative_completion_lift
     (K := fun _ : Q => P.Copy) m hNcard owner hsurj
     (fun i => Set.range (A.stdV i.val)) J₂ pieces
@@ -141,17 +146,18 @@ theorem next_completable
     have hxy : x = y := Subtype.ext (congrArg Prod.snd he)
     subst y
     rfl
-  let u : Finset (C.Copy × P.Copy) := Finset.univ.image p
+  let pe : L ↪ C.Copy × P.Copy := ⟨p,hp⟩
+  let u : Finset (C.Copy × P.Copy) := Finset.univ.map pe
   have hsu : s ⊆ u := by
     intro z hz
     let n : N := ⟨z,hz⟩
-    exact Finset.mem_image.mpr ⟨⟨owner n,⟨z.2,ht n⟩⟩,Finset.mem_univ _,rfl⟩
+    exact Finset.mem_map.mpr ⟨⟨owner n,⟨z.2,ht n⟩⟩,Finset.mem_univ _,rfl⟩
   let p' (z : L) : {x // x ∈ u} :=
-    ⟨p z,Finset.mem_image.mpr ⟨z,Finset.mem_univ _,rfl⟩⟩
+    ⟨p z,Finset.mem_map.mpr ⟨z,Finset.mem_univ _,rfl⟩⟩
   have hpi : Function.Injective p' := fun x y he => hp (congrArg Subtype.val he)
   have hps : Function.Surjective p' := by
     intro z
-    obtain ⟨a,_,he⟩ := Finset.mem_image.mp z.property
+    obtain ⟨a,_,he⟩ := Finset.mem_map.mp z.property
     exact ⟨a,Subtype.ext he⟩
   let er := Equiv.ofBijective p' ⟨hpi,hps⟩
   have hEq : (fun x : {z // z ∈ u} => pieces (er.symm x).1 (er.symm x).2.val) =
