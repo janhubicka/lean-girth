@@ -81,6 +81,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I E} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 /-- The full bottom boundary contradiction from an actual segment
 decomposition satisfying the single-mixed-side exclusion.
@@ -111,8 +112,8 @@ theorem bottom_bad_contradiction {q : ℕ}
     intro a h
     cases a with
     | inl i => exact C.bad_not_in_standard h1 h2 htwo hlocal B hw hb i h
-    | inr e => exact hWno (D.parent e)
-        (fun k => A.enlarged_edge_subset_wagon e (h k))
+    | inr e =>
+      exact hWno (D.parent e) (fun k => A.enlarged_edge_subset_wagon e (h k))
   have hcnt := S.count_twice_le_weight hheavy
   have hbudget : S.count ≤ q := by omega
   exact A.boundary_contradiction hlin h2 B S ht hno hWno
