@@ -23,9 +23,9 @@ abbrev NewStripEdge := {f : A.Edge // A.outputProjectionEdge P b f = c}
 
 def oldStripInclusion : A.OldStripEdge P c ↪ E₀ := ⟨Subtype.val,Subtype.val_injective⟩
 
+include hA hne in
 /-- A future-strip edge of one standard is never glued to a core
 edge. Two different standard labels therefore give distinct edges. -/
-include hA hne in
 theorem future_not_core (i : I) (f : A.OldStripEdge P c) :
     A.stdE i f.val ∉ Set.range A.coreE := by
   rintro ⟨e,he⟩
@@ -133,10 +133,10 @@ noncomputable def futureRefinement {d h : ℕ} (hm : m = h+1)
       (A.future_train_rel P b c hA hne ⟨1,by omega⟩ i e f).symm
   }
 
+include hne in
 /-- Core-copy separators meet the allowed overlap in at most
 one point. This is the only intersection property needed in the
 new split-child girth argument. -/
-include hne in
 theorem core_copy_overlap_subsingleton
     (p : V → X) (hc : A.CoreOver P b p)
     (hbase : ∀ a b : B, a ≠ b → (base a ∩ base b).Subsingleton)
