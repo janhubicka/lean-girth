@@ -30,7 +30,9 @@ theorem wagon_parent_subset (μ ν : Fin (m+1)) (hle : μ ≤ ν) (p : T.Wagon �
       (D.atCut (T.parent ν)).contactWagonCarrier (T.parentMap μ ν hle p) := by
   rintro x ⟨e,he,hx⟩
   refine ⟨e,?_,hx⟩
-  rw [← he,T.parentMap_parent]
+  change T.parent μ e = p at he
+  change T.parent ν e = T.parentMap μ ν hle p
+  exact (T.parentMap_parent μ ν hle e).symm.trans (congrArg (T.parentMap μ ν hle) he)
 
 theorem top_wagonGirth (g : ℕ) :
     LabelledGirthGT (D.atCut (T.parent ⟨m,by omega⟩)).contactWagonCarrier g := by
