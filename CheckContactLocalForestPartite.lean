@@ -1,0 +1,15 @@
+import Girth.ContactLocalForestPartite
+
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.edge_vertices_used
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered_vertexCoverage
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered_edgeCoverage
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered_girth
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered_smallForests
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.Witness.restrictCovered_injective
+#print axioms StructuralRamsey.Girth.contactProfileForestRamsey_covered
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.paddedPart
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.paddedPart_core
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.paddedPart_copy
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.exists_paddedPartOrder
+#print axioms StructuralRamsey.Girth.contactLocalForestPartite

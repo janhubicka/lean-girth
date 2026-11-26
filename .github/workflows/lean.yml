@@ -97,6 +97,7 @@ jobs:
           lake env lean CheckContactAssemblyPreparation.lean | tee contact-assembly-preparation-axioms.log
           python3 scripts/check_axioms.py contact-assembly-preparation-axioms.log CheckContactAssemblyPreparation.lean
       - name: Audit ordered seeds and refined recursive input
+        id: contact-preparation
         shell: bash
         run: |
           set -euo pipefail
@@ -109,11 +110,29 @@ jobs:
           set -euo pipefail
           lake build +Girth.ContactCore
       - name: Strict standalone axiom audit
+        id: contact-core-audit
         shell: bash
         run: |
           set -euo pipefail
           lake env lean CheckContactCore.lean | tee contact-core-axioms.log
           python3 scripts/check_axioms.py contact-core-axioms.log CheckContactCore.lean
+      - name: Audit covered-family restriction and isolated-vertex geometry
+        id: contact-coverage
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactIsolatedPadding
+          lake env lean CheckContactCoverage.lean | tee contact-coverage-axioms.log
+          python3 scripts/check_axioms.py contact-coverage-axioms.log CheckContactCoverage.lean
+      - name: Audit full local-forest partite application
+        if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactLocalForestPartite
+          lake env lean CheckContactLocalForestPartite.lean | tee contact-local-partite-axioms.log
+          python3 scripts/check_axioms.py contact-local-partite-axioms.log CheckContactLocalForestPartite.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash

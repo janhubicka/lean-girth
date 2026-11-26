@@ -1,5 +1,6 @@
 import Girth.ContactBoostClass
 import Girth.ContactCutoffTwoOrderedSource
+import Girth.ContactCutoffTwoAssembly
 
 /-! Ordered arbitrary-profile train inputs and the actual cutoff-two
 construction from the strictly shorter train theorem. A profile may
