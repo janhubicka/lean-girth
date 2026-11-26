@@ -49,14 +49,18 @@ structure Witness (Color : Type v) where
   arrow : family.Arrow Color
 
 def edgeWord : letI : LinearOrder A.Vertex := A.order
-    ContactOrderedEdgeWord A.graph P a where
-  part := A.part
-  word := word
-  enumeration := A.enumeration
-  carrier_eq := A.carrier_eq
-  part_eq := A.part_eq
+    ContactOrderedEdgeWord A.graph P a := by
+  letI : LinearOrder A.Vertex := A.order
+  exact {
+    part := A.part
+    word := word
+    enumeration := A.enumeration
+    carrier_eq := A.carrier_eq
+    part_eq := A.part_eq }
 
+include A in
 theorem word_mono : Monotone word := by
+  letI : LinearOrder A.Vertex := A.order
   let e := Classical.choice A.nonemptyE
   intro i j h
   rw [← A.part_eq e i,← A.part_eq e j]

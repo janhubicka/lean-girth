@@ -98,6 +98,18 @@ theorem edge_projection_reflect_lt {e : Q.Edge} {x y : Q.Vertex}
   · exact (not_lt_of_ge (Q.projection_order y x hlt)) h
   · exact (lt_irrefl _) (he ▸ h)
 
+/-- Every position of the base edge lifts through the actual
+bijection over that edge. -/
+theorem liftEnumeration_exists (enumeration : B → Fin a ↪o X)
+    (he : ∀ b, base b = Set.range (enumeration b)) (e : Q.Edge) (i : Fin a) :
+    ∃ x, x ∈ Q.graph.edgeCarrier e ∧
+      Q.projection.vertex x = enumeration (Q.projection.edge e) i := by
+  have hm : enumeration (Q.projection.edge e) i ∈ base (Q.projection.edge e) := by
+    rw [he]
+    exact ⟨i,rfl⟩
+  rw [← Q.projection.edge_image e] at hm
+  exact hm
+
 /-- Lift every increasing enumeration of a base edge through the
 actual bijection over that edge. -/
 noncomputable def liftEnumeration (enumeration : B → Fin a ↪o X)
@@ -106,30 +118,27 @@ noncomputable def liftEnumeration (enumeration : B → Fin a ↪o X)
     Fin a ↪o Q.Vertex := by
   classical
   letI : LinearOrder Q.Vertex := Q.order
-  let b := Q.projection.edge e
-  have h (i : Fin a) : ∃ x, x ∈ Q.graph.edgeCarrier e ∧
-      Q.projection.vertex x = enumeration b i := by
-    have hm : enumeration b i ∈ base b := by rw [he]; exact ⟨i,rfl⟩
-    rw [← Q.projection.edge_image e] at hm
-    exact hm
-  let f (i : Fin a) := Classical.choose (h i)
+  let f (i : Fin a) := Classical.choose (Q.liftEnumeration_exists enumeration he e i)
   have hf (i : Fin a) : f i ∈ Q.graph.edgeCarrier e ∧
-      Q.projection.vertex (f i) = enumeration b i := Classical.choose_spec (h i)
+      Q.projection.vertex (f i) = enumeration (Q.projection.edge e) i :=
+    Classical.choose_spec (Q.liftEnumeration_exists enumeration he e i)
   refine OrderEmbedding.ofStrictMono f ?_
   intro i j hij
   apply Q.edge_projection_reflect_lt (hf i).1 (hf j).1
   rw [(hf i).2,(hf j).2]
-  exact (enumeration b).strictMono hij
+  exact (enumeration (Q.projection.edge e)).strictMono hij
 
- theorem liftEnumeration_spec (enumeration : B → Fin a ↪o X)
+theorem liftEnumeration_spec (enumeration : B → Fin a ↪o X)
     (he : ∀ b, base b = Set.range (enumeration b)) (e : Q.Edge) (i : Fin a) :
     letI : LinearOrder Q.Vertex := Q.order
     (Q.liftEnumeration enumeration he e i) ∈ Q.graph.edgeCarrier e ∧
     Q.projection.vertex (Q.liftEnumeration enumeration he e i) =
       enumeration (Q.projection.edge e) i := by
-  classical
-  unfold liftEnumeration
-  exact Classical.choose_spec _
+  letI : LinearOrder Q.Vertex := Q.order
+  change Classical.choose (Q.liftEnumeration_exists enumeration he e i) ∈ Q.graph.edgeCarrier e ∧
+    Q.projection.vertex (Classical.choose (Q.liftEnumeration_exists enumeration he e i)) =
+      enumeration (Q.projection.edge e) i
+  exact Classical.choose_spec (Q.liftEnumeration_exists enumeration he e i)
 
  theorem liftEnumeration_carrier (enumeration : B → Fin a ↪o X)
     (he : ∀ b, base b = Set.range (enumeration b)) (e : Q.Edge) :
@@ -157,16 +166,18 @@ noncomputable def projectedEdgeWord (part : X → P) (word : Fin a → P)
     (he : ∀ b, base b = Set.range (enumeration b))
     (hw : ∀ b i, part (enumeration b i) = word i) :
     letI : LinearOrder Q.Vertex := Q.order
-    ContactOrderedEdgeWord Q.graph P a where
-  part := part ∘ Q.projection.vertex
-  word := word
-  enumeration := Q.liftEnumeration enumeration he
-  carrier_eq := Q.liftEnumeration_carrier enumeration he
-  part_eq := by
-    intro e i
-    change part (Q.projection.vertex (Q.liftEnumeration enumeration he e i)) = word i
-    rw [(Q.liftEnumeration_spec enumeration he e i).2]
-    exact hw _ _
+    ContactOrderedEdgeWord Q.graph P a := by
+  letI : LinearOrder Q.Vertex := Q.order
+  exact {
+    part := part ∘ Q.projection.vertex
+    word := word
+    enumeration := Q.liftEnumeration enumeration he
+    carrier_eq := Q.liftEnumeration_carrier enumeration he
+    part_eq := by
+      intro e i
+      change part (Q.projection.vertex (Q.liftEnumeration enumeration he e i)) = word i
+      rw [(Q.liftEnumeration_spec enumeration he e i).2]
+      exact hw _ _ }
 
 end ContactTrainPicture
 end StructuralRamsey.Girth
