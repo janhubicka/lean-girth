@@ -176,7 +176,10 @@ theorem contact_no_separated_paths {G : SimpleGraph W}
         · rw [hzP _ (by omega),hs]
           exact p.step _ hiP
         · have he : i.val+1 = p.length := by omega
-          rw [hzR _ (by omega),hs,he,Nat.sub_self,r.start_eq,← p.end_eq,← he]
+          rw [hzR _ (by omega),hs,he,Nat.sub_self]
+          have heq : r.point 0 = p.point (i.val+1) :=
+            r.start_eq.trans (p.end_eq.symm.trans (congrArg p.point he.symm))
+          rw [heq]
           exact p.step _ hiP
       · rw [hzR i hiP,hzR _ (by omega),hs]
         have he : i.val+1-p.length = (i.val-p.length)+1 := by omega
@@ -185,7 +188,10 @@ theorem contact_no_separated_paths {G : SimpleGraph W}
     · rw [if_neg hlast] at hs
       have hiR : ¬ i.val < p.length := by omega
       have he : (i.val-p.length)+1 = r.length := by omega
-      rw [hzR i hiR,hzP _ (by omega),hs,p.start_eq,← r.end_eq,← he]
+      rw [hzR i hiR,hzP _ (by omega),hs]
+      have heq : p.point 0 = r.point ((i.val-p.length)+1) :=
+        p.start_eq.trans (r.end_eq.symm.trans (congrArg r.point he.symm))
+      rw [heq]
       exact r.step _ (by omega)
   /- It suffices to consider increasing index pairs. A same-arc edge
   is a path side, and a cross-arc edge either touches a common endpoint
@@ -210,14 +216,14 @@ theorem contact_no_separated_paths {G : SimpleGraph W}
       · rw [hzP i hiP,hzR j hjP] at ha
         have hjR : j.val-p.length < r.length := by omega
         by_cases hi0 : i.val = 0
-        · rw [hi0,p.start_eq,← r.end_eq] at ha
+        · rw [hi0,p.start_eq.trans r.end_eq.symm] at ha
           have hlen := r.no_chord _ _ hjR le_rfl ha.symm
           right
           apply Fin.ext
           rw [contactSucc_value,if_neg (by omega)]
           exact hi0.symm
         · by_cases hj0 : j.val-p.length = 0
-          · rw [hj0,r.start_eq,← p.end_eq] at ha
+          · rw [hj0,r.start_eq.trans p.end_eq.symm] at ha
             have hlen := p.no_chord _ _ hiP le_rfl ha
             exact consecutive (by omega)
           · exact (hcross _ _ (by omega) hiP (by omega) hjR ha).elim
