@@ -1,5 +1,5 @@
 import Girth.ContactBase
-import Girth.ContactTaggedPicture
+import Girth.ContactPictureInvariant
 import Girth.ContactCopyRestriction
 import Girth.ContactLevelZero
 
