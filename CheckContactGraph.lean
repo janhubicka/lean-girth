@@ -38,3 +38,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.contact_rank_drop
 #print axioms StructuralRamsey.Girth.contact_refinement_rank_decreases
 #print axioms StructuralRamsey.Girth.contact_run_length_gt_two_g_plus_one
+#print axioms StructuralRamsey.Girth.ContactCyclicRestriction.contactCyclicSucc_injective
+#print axioms StructuralRamsey.Girth.ContactCyclicRestriction.successor_of_source_successor
+#print axioms StructuralRamsey.Girth.ContactCyclicRestriction.twiceWeight_restrict_le
+#print axioms StructuralRamsey.Girth.ContactPolygon.restrict_weight_le
+#print axioms StructuralRamsey.Girth.ContactPolygon.restrict_nonc
+#print axioms StructuralRamsey.Girth.ContactPolygon.split_of_chord
+#print axioms StructuralRamsey.Girth.contactSharedChordBound_of_G4
+#print axioms StructuralRamsey.Girth.contactSharedChordBound_iff_G4
