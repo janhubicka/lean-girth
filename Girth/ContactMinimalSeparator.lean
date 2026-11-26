@@ -123,6 +123,7 @@ theorem ContactInducedPath.exists_on {G : SimpleGraph W} {U : Set W} {a b : W}
 def contactSeparator (G : SimpleGraph W) (a b : W) (s : Finset W) : Prop :=
   a ∉ s ∧ b ∉ s ∧ ¬ (contactGraphOn G {x | x ∉ s}).Reachable a b
 
+open Classical in
 structure ContactMinimalSeparator (G : SimpleGraph W) (a b : W) where
   cut : Finset W
   separates : contactSeparator G a b cut
