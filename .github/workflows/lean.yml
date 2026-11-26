@@ -173,6 +173,14 @@ jobs:
           python3 scripts/check_axioms.py contact-relational-union-axioms.log CheckContactRelationalUnion.lean
           lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
           python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
+      - name: Audit order-reduct transfer
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOrderReduct
+          lake env lean CheckContactOrderReduct.lean | tee contact-order-reduct-axioms.log
+          python3 scripts/check_axioms.py contact-order-reduct-axioms.log CheckContactOrderReduct.lean
       - name: Audit exact relational copies and forest transport
         id: contact-relational-exact
         if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' && steps.contact-restoration.outcome == 'success' }}
@@ -219,6 +227,7 @@ jobs:
           lake env lean CheckContactRelationalSupportWitness.lean | tee contact-relational-support-axioms.log
           python3 scripts/check_axioms.py contact-relational-support-axioms.log CheckContactRelationalSupportWitness.lean
       - name: Audit final relational girth Ramsey theorem
+        id: contact-final-relational
         if: ${{ always() && !cancelled() && steps.contact-relational-support.outcome == 'success' }}
         shell: bash
         run: |
@@ -226,6 +235,14 @@ jobs:
           lake build +Girth.ContactRelationalGirthRamsey
           lake env lean CheckContactRelationalGirthRamsey.lean | tee contact-final-relational-axioms.log
           python3 scripts/check_axioms.py contact-final-relational-axioms.log CheckContactRelationalGirthRamsey.lean
+      - name: Audit literal carrier-set relational theorem
+        if: ${{ always() && !cancelled() && steps.contact-final-relational.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactCarrierCompletion
+          lake env lean CheckContactCarrierCompletion.lean | tee contact-carrier-completion-axioms.log
+          python3 scripts/check_axioms.py contact-carrier-completion-axioms.log CheckContactCarrierCompletion.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash

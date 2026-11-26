@@ -1,0 +1,10 @@
+import Girth.ContactOrderReduct
+
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_reduct
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_range_irreducible
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_rel_iff_on_copy
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_lift
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_equiv
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_support_eq
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_girth_arrow
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_strong_intersections
