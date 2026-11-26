@@ -45,8 +45,10 @@ def initialProjection : ContactBaseProjection (D.disjointCopies J) base where
     rintro ⟨i,e⟩ ⟨j,x⟩ hx ⟨k,y⟩ hy he
     change j = i ∧ x ∈ D.edgeCarrier e at hx
     change k = i ∧ y ∈ D.edgeCarrier e at hy
-    obtain ⟨rfl,_⟩ := hx
-    obtain ⟨rfl,_⟩ := hy
+    obtain ⟨hj,_⟩ := hx
+    obtain ⟨hk,_⟩ := hy
+    subst j
+    subst k
     exact Prod.ext rfl ((A.vertex i).injective he)
   copy_inj := by
     rintro i ⟨j,x⟩ hx ⟨k,y⟩ hy he
