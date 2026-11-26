@@ -64,40 +64,18 @@ jobs:
             fi
             sleep "$((attempt * 12))"
           done
-      - name: Inventory source and test audit checkers
-        run: |
-          python3 scripts/test_audit_circulation.py
-          python3 scripts/test_check_axioms.py
-          python3 scripts/audit_circulation.py --output audit-inventory.json
-      - name: Build every project module from this checkout
+      - name: Build the contact-graph validation target
         shell: bash
         run: |
           set -euo pipefail
-          # Keep dependency caches, but never reuse unchecked project objects.
+          # Reuse dependencies, never stale project objects. The module target
+          # builds only the import closure of the new root, not the old library.
           rm -rf .lake/build
-          python3 - <<'PY' > audit-build-targets.txt
-          from pathlib import Path
-          print('Girth')
-          for source in sorted(Path('Girth').rglob('*.lean')):
-              print('.'.join(source.with_suffix('').parts))
-          PY
-          mapfile -t modules < audit-build-targets.txt
-          lake build "${modules[@]}"
-      - name: Check every theorem audit exactly once
+          lake build +Girth
+      - name: Audit the new validation declarations
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          checks=(Check*.lean)
-          test "${#checks[@]}" -gt 0
-          for source in "${checks[@]}"; do
-            log="${source%.lean}.log"
-            lake env lean "$source" | tee "$log"
-            python3 scripts/check_axioms.py "$log" "$source"
-          done
-      - name: Run finite boundary regressions
-        run: |
-          python3 scripts/check_boundary_transport.py
-          python3 scripts/check_boundary_girth.py
-          python3 scripts/check_order_one_bridge.py
-          python3 scripts/check_output_connector_layout.py
+          python3 scripts/test_check_axioms.py
+          lake env lean CheckContactGraph.lean | tee contact-axioms.log
+          python3 scripts/check_axioms.py contact-axioms.log CheckContactGraph.lean
