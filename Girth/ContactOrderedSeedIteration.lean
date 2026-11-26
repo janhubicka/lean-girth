@@ -1,4 +1,5 @@
 import Girth.ContactLinearSeedIteration
+import Girth.ContactActualStepInvariant
 
 /-! Compatible part orders for the actual nonlinear seed iteration.
 First extend the core and all standard orders, then concatenate
@@ -189,6 +190,98 @@ noncomputable def orderedRawStage (N : ℕ) [Finite V] [Finite E] [Finite P]
   apply ContactOrderedSeedStage.concatenate_part
   change (toLex (j x,A.part x) : Fin N ×ₗ P) < toLex (j y,A.part y)
   exact Prod.Lex.left _ _ (j.strictMono h)
+
+
+/-- The final seed, with a finite ordered hypergraph, the common
+part word, and actual strongly induced order/part-preserving
+embeddings. The arrow is a theorem about these same embeddings. -/
+structure LinearSeedResult (A : ContactOrderedEdgeWord D P a) (Color : Type v) where
+  Vertex : Type v
+  Edge : Type v
+  Copy : Type v
+  finiteV : Finite Vertex
+  finiteE : Finite Edge
+  finiteC : Finite Copy
+  order : LinearOrder Vertex
+  graph : ContactHypergraphData Vertex Edge PEmpty.{v+1}
+  train : ContactTrainData Edge 1
+  part : Vertex → P
+  enumeration : letI : LinearOrder Vertex := order
+    Edge → Fin a ↪o Vertex
+  carrier_eq : ∀ e, graph.edgeCarrier e = Set.range (enumeration e)
+  part_eq : ∀ e i, part (enumeration e i) = A.word i
+  emb : Copy → ContactTrainEmbedding D (contactHeightOne E) graph train
+  emb_order : ∀ j x y, x < y → order.lt ((emb j).vertex x) ((emb j).vertex y)
+  emb_part : ∀ j x, part ((emb j).vertex x) = A.part x
+  linear : ∀ e f, e ≠ f → (graph.edgeCarrier e ∩ graph.edgeCarrier f).Subsingleton
+  arrow : ∀ χ : Edge → Color, ∃ j : Copy, ∃ c : Color, ∀ e, χ ((emb j).edge e) = c
+
+/-- Every edge of the final picture is the unique lift of its
+base edge. Lifting its increasing tuple gives precisely the
+required ordered enumeration of that edge. -/
+theorem exists_ordered_linear_seed [Fintype V] [Finite E] [Finite P]
+    {Color : Type v} [Fintype Color] [Nonempty Color] [Nonempty E]
+    (hinj : Function.Injective (fun e : E => D.edgeCarrier e))
+    (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton) :
+    Nonempty (A.LinearSeedResult Color) := by
+  classical
+  obtain ⟨N,hN⟩ := A.exists_raw_seed_arrow (Color := Color) hinj
+  letI : LinearOrder (A.SeedVertex N) := A.rawOrder N
+  letI : Fintype (A.SeedEdge N) := Fintype.ofFinite _
+  let Q₀ := A.orderedRawStage N hinj hlin
+  obtain ⟨Q,hQ⟩ := Q₀.exists_linear_seed (Color := Color) hN
+  let S := Q.stage
+  letI : LinearOrder S.Vertex := Q.order
+  let basePoint (e : S.Edge) (i : Fin a) : A.SeedVertex N :=
+    (S.projection.edge e i,A.word i)
+  have hex (e : S.Edge) (i : Fin a) :
+      ∃ x, x ∈ S.graph.edgeCarrier e ∧ S.projection.vertex x = basePoint e i := by
+    have hx : basePoint e i ∈ A.seedCarrier N (S.projection.edge e) := ⟨i,rfl⟩
+    rw [← S.projection.edge_image e] at hx
+    exact hx
+  let lift (e : S.Edge) (i : Fin a) := Classical.choose (hex e i)
+  have hlift (e : S.Edge) (i : Fin a) :
+      lift e i ∈ S.graph.edgeCarrier e ∧ S.projection.vertex (lift e i) = basePoint e i :=
+    Classical.choose_spec (hex e i)
+  have hmono (e : S.Edge) : StrictMono (lift e) := by
+    intro i j hij
+    apply Q.part_order
+    rw [(hlift e i).2,(hlift e j).2]
+    change (toLex (S.projection.edge e i,A.word i) : Fin N ×ₗ P) <
+      toLex (S.projection.edge e j,A.word j)
+    exact Prod.Lex.left _ _ ((S.projection.edge e).strictMono hij)
+  refine ⟨{
+    Vertex := S.Vertex
+    Edge := S.Edge
+    Copy := S.Copy
+    finiteV := S.finiteV
+    finiteE := S.finiteE
+    finiteC := S.finiteC
+    order := Q.order
+    graph := S.graph
+    train := S.train
+    part := fun x => (S.projection.vertex x).2
+    enumeration := fun e => OrderEmbedding.ofStrictMono (lift e) (hmono e)
+    carrier_eq := ?_
+    part_eq := ?_
+    emb := S.emb
+    emb_order := Q.emb_order
+    emb_part := Q.label_eq
+    linear := S.linear
+    arrow := hQ }⟩
+  · intro e
+    ext x
+    constructor
+    · intro hx
+      have hm : S.projection.vertex x ∈ A.seedCarrier N (S.projection.edge e) := by
+        rw [← S.projection.edge_image e]
+        exact ⟨x,hx,rfl⟩
+      obtain ⟨i,hi⟩ := hm
+      exact ⟨i,S.projection.edge_inj e (hlift e i).1 hx ((hlift e i).2.trans hi)⟩
+    · rintro ⟨i,rfl⟩
+      exact (hlift e i).1
+  · intro e i
+    exact congrArg Prod.snd (hlift e i).2
 
 end ContactOrderedEdgeWord
 end StructuralRamsey.Girth
