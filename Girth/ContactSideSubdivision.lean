@@ -1,4 +1,5 @@
-import Girth.ContactBoundary
+import Girth.ContactConstituents
+import Girth.ContactBadCycle
 
 /-! Existence and geometry of the side subdivisions.
 A side not in any constituent must be a real-real side in a core wagon.
