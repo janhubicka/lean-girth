@@ -152,7 +152,7 @@ theorem local_core_edge (a : I ⊕ E) (e : E)
 
 /-- A join tree for a selected family of core owners lifts to their
 full constituents: private points cannot connect different owners. -/
-theorem owner_joinTree {N : Type v} (sel : N ↪ I ⊕ E)
+noncomputable def owner_joinTree {N : Type v} (sel : N ↪ I ⊕ E)
     (T₀ : ContactJoinTree (fun n => D.bottomCut.carrier (sel n))) :
     ContactJoinTree (fun n => A.ownerPiece (sel n)) := by
   let T₁ := T₀.mapVertices A.coreV
@@ -199,8 +199,9 @@ theorem piece_has_owner (a : (I × I₀) ⊕ A.Edge) :
           have h := A.bottomPicture.output_carrier_core f
           rw [A.bottomPicture_output_eq] at h
           exact h
-        exact ⟨Sum.inr f,by rw [show A.outputHypergraph.bottomCut.carrier (Sum.inr (A.coreE f)) =
-            A.outputHypergraph.edgeCarrier (A.coreE f) from rfl,he]; exact Set.Subset.rfl,
+        exact ⟨Sum.inr f,by
+            change A.outputHypergraph.edgeCarrier (A.coreE f) ⊆ A.coreV '' D.edgeCarrier f
+            rw [he],
           PUnit.unit,he⟩
       · exact (h ⟨i,f,hf⟩).elim
 
