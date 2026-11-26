@@ -1,4 +1,4 @@
-import Girth.ContactIncrementComplete
+import Girth.ContactOrderedPreparation
 import Girth.ContactAllLevelPreservation
 import Girth.ContactPictureZero
 import Girth.ContactPictureIncrement
@@ -7,7 +7,10 @@ import Girth.ContactForgetLevels
 import Girth.ContactCanonicalFilling
 import Girth.ContactFutureStrip
 import Girth.ContactCutoffTwoAssembly
-import Girth.ContactFocusingChain
+import Girth.ContactActualStepInvariant
+import Girth.ContactSeedPicture
+import Girth.ContactWordBase
+import Girth.ContactRecursiveRank
 
 /-! Focused kernel for actual preservation, initial pictures and
 the independent trace-tree preparation for forest increment. -/
