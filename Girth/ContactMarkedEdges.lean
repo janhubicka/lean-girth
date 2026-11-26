@@ -97,8 +97,11 @@ theorem contact_marked_cycle_impossible {Q : Type v} [Fintype Q]
           by_contra hn
           exact hxy (hlin _ _ hn ⟨hy,hyp⟩ ⟨hx,hxp⟩)
         exact hk ⟨parent,by simpa using hadj.ne.symm⟩ (heq.symm ▸ heP)
-termination_by Fintype.card Q
+termination_by Nat.card Q
 decreasing_by
+  classical
+  letI : Fintype K := Fintype.ofFinite K
+  simp only [Nat.card_eq_fintype_card]
   apply Fintype.card_lt_of_injective_not_surjective
     (fun i : K => i.val) Subtype.val_injective
   intro hsurj

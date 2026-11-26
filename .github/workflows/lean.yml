@@ -101,7 +101,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake build +Girth.ContactRefinedCoreAssembly +Girth.ContactRankAssembly +Girth.ContactCutoffTwoOrderedSource +Girth.ContactCoverage +Girth.ContactBoostDistinctImages
+          lake build +Girth.ContactRefinedCoreAssembly +Girth.ContactRankAssembly +Girth.ContactCutoffTwoProfileRamsey +Girth.ContactCoverage +Girth.ContactBoostDistinctImages
           lake env lean CheckContactOrderedRefinedInput.lean | tee contact-ordered-refined-axioms.log
           python3 scripts/check_axioms.py contact-ordered-refined-axioms.log CheckContactOrderedRefinedInput.lean
       - name: Build the expanded contact kernel
@@ -126,6 +126,7 @@ jobs:
           lake env lean CheckContactCoverage.lean | tee contact-coverage-axioms.log
           python3 scripts/check_axioms.py contact-coverage-axioms.log CheckContactCoverage.lean
       - name: Audit outer marked edges and qualitative completion
+        id: contact-outer-preparation
         if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
         shell: bash
         run: |
@@ -142,6 +143,7 @@ jobs:
           lake env lean CheckContactQuantitativeCompletion.lean | tee contact-quantitative-completion-axioms.log
           python3 scripts/check_axioms.py contact-quantitative-completion-axioms.log CheckContactQuantitativeCompletion.lean
       - name: Audit full local-forest partite application
+        id: contact-local-partite
         if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
         shell: bash
         run: |
@@ -149,6 +151,23 @@ jobs:
           lake build +Girth.ContactLocalForestPartite
           lake env lean CheckContactLocalForestPartite.lean | tee contact-local-partite-axioms.log
           python3 scripts/check_axioms.py contact-local-partite-axioms.log CheckContactLocalForestPartite.lean
+      - name: Audit actual outer picture preservation
+        id: contact-outer-step
+        if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterCompletionStep
+          lake env lean CheckContactOuterStep.lean | tee contact-outer-step-axioms.log
+          python3 scripts/check_axioms.py contact-outer-step-axioms.log CheckContactOuterStep.lean
+      - name: Audit outer finite iteration with supplied local cores
+        if: ${{ always() && !cancelled() && steps.contact-outer-step.outcome == 'success' && steps.contact-local-partite.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterIteration
+          lake env lean CheckContactOuterIteration.lean | tee contact-outer-iteration-axioms.log
+          python3 scripts/check_axioms.py contact-outer-iteration-axioms.log CheckContactOuterIteration.lean
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash

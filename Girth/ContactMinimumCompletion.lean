@@ -67,7 +67,6 @@ theorem contact_minimumCompletion_cost
     by_contra hn
     have hd : T.tree.degree a ≤ g := by omega
     let L := T.tree.neighborSet a
-    letI : Fintype L := Fintype.ofFinite _
     letI : Nonempty L := by
       obtain ⟨b,hb⟩ := exists_ne a
       obtain ⟨j,hj,_⟩ := T.exists_neighbor_reachable_after_delete hb
@@ -95,17 +94,17 @@ theorem contact_minimumCompletion_cost
     have ha' : ∀ z ∈ t', z ∉ s → add z :=
       fun z hz hn => ha z (Finset.mem_of_mem_erase hz) hn
     let J := T.eraseWithTraces a R
-    let r : {i : N // i ∈ t'} ≃ {i : Q // i ∈ ({a} : Set Q)ᶜ} where
-      toFun z := ⟨⟨z.val,Finset.mem_of_mem_erase z.property⟩,by
+    let r : {i : N // i ∈ t'} ≃ {i : Q // i ∈ ({a} : Set Q)ᶜ} := {
+      toFun := fun z => ⟨⟨z.val,Finset.mem_of_mem_erase z.property⟩,by
         have h : z.val ≠ a.val := (Finset.mem_erase.mp z.property).1
         simpa only [Set.mem_compl_iff,Set.mem_singleton_iff] using
           (fun he => h (congrArg Subtype.val he) :
             (⟨z.val,Finset.mem_of_mem_erase z.property⟩ : Q) ≠ a)⟩
-      invFun z := ⟨z.val.val,Finset.mem_erase.mpr
+      invFun := fun z => ⟨z.val.val,Finset.mem_erase.mpr
         ⟨fun h => (show z.val ≠ a by simpa using z.property) (Subtype.ext h),
           z.val.property⟩⟩
       left_inv := fun _ => Subtype.ext rfl
-      right_inv := fun _ => Subtype.ext (Subtype.ext rfl)
+      right_inv := fun _ => Subtype.ext (Subtype.ext rfl) }
     have htree : Nonempty (ContactJoinTree (fun i : {i // i ∈ t'} => F i.val)) :=
       ⟨J.reindex r⟩
     have hsmall : Nat.find hp ≤ t'.card :=
@@ -114,19 +113,19 @@ theorem contact_minimumCompletion_cost
     omega
   let sel : Finset Q := Finset.univ.filter (fun a : Q => a.val ∈ s)
   let aux : Finset Q := Finset.univ.filter (fun a : Q => a.val ∉ s)
-  let es : {a : Q // a ∈ sel} ≃ {a : N // a ∈ s} where
-    toFun a := ⟨a.val.val,(Finset.mem_filter.mp a.property).2⟩
-    invFun a := ⟨⟨a.val,hst a.property⟩,Finset.mem_filter.mpr
+  let es : {a : Q // a ∈ sel} ≃ {a : N // a ∈ s} := {
+    toFun := fun a => ⟨a.val.val,(Finset.mem_filter.mp a.property).2⟩
+    invFun := fun a => ⟨⟨a.val,hst a.property⟩,Finset.mem_filter.mpr
       ⟨Finset.mem_univ _,a.property⟩⟩
     left_inv := fun _ => Subtype.ext (Subtype.ext rfl)
-    right_inv := fun _ => Subtype.ext rfl
-  let ea : {a : Q // a ∈ aux} ≃ {a : N // a ∈ t \ s} where
-    toFun a := ⟨a.val.val,Finset.mem_sdiff.mpr
+    right_inv := fun _ => Subtype.ext rfl }
+  let ea : {a : Q // a ∈ aux} ≃ {a : N // a ∈ t \ s} := {
+    toFun := fun a => ⟨a.val.val,Finset.mem_sdiff.mpr
       ⟨a.val.property,(Finset.mem_filter.mp a.property).2⟩⟩
-    invFun a := ⟨⟨a.val,(Finset.mem_sdiff.mp a.property).1⟩,
+    invFun := fun a => ⟨⟨a.val,(Finset.mem_sdiff.mp a.property).1⟩,
       Finset.mem_filter.mpr ⟨Finset.mem_univ _,(Finset.mem_sdiff.mp a.property).2⟩⟩
     left_inv := fun _ => Subtype.ext (Subtype.ext rfl)
-    right_inv := fun _ => Subtype.ext rfl
+    right_inv := fun _ => Subtype.ext rfl }
   have hsc : sel.card = s.card := by
     simpa using Fintype.card_congr es
   have hac : aux.card = (t \ s).card := by

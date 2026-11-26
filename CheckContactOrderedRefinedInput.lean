@@ -1,6 +1,7 @@
 import Girth.ContactAssemblyPreparation
 import Girth.ContactForestBoostClass
 import Girth.ContactRefinedCoreAssembly
+import Girth.ContactCutoffTwoProfileRamsey
 import Girth.ContactCoverage
 import Girth.ContactBoostDistinctImages
 import Girth.ContactRankAssembly
@@ -793,3 +794,16 @@ class-wide recursive theorem. -/
 #print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_smallForests
 #print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_injective
 #print axioms StructuralRamsey.Girth.ContactBoostInput.forestBoost_distinctImages
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.edgeWord
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.word_mono
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.edge_nonempty
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.edge_nontrivial
+#print axioms StructuralRamsey.Girth.ContactProfileTrain.linear_of_wagonBounds
+#print axioms StructuralRamsey.Girth.ContactProfileRamsey
+#print axioms StructuralRamsey.Girth.ContactBoostInput.cutoffTwo_heightOne
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.source_covered
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.profileSource
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.profileFilling
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.profileFilling_part
+#print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.profileFilling_compatible
+#print axioms StructuralRamsey.Girth.ContactBoostInput.cutoffTwo_of_tailRamsey

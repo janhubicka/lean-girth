@@ -1,0 +1,11 @@
+import Girth.ContactOuterCompletionStep
+
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.CopyCovered
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.marked_edge_unique
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.strip_girth_of_qualitativeCompletion
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.OuterInvariant
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_copyCovered
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_pairwise
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.separator_covered
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_completable
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_outerInvariant
