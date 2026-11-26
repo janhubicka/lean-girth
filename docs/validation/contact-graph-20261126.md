@@ -43,3 +43,11 @@ The initial declarations in ContactGraph, ContactSubstitution, ContactCycles, Co
 3. Prove restriction and full preservation, both core alternatives, and level-zero mixed forests.
 4. Port forest boost, cutoff-two ordered filling and single-part refinement; close the true rank-recursive witness.
 5. Audit the arbitrary-B outer construction and quantitative completion; run a clean full integration check. Keep the draft PR unmerged until the new theorem is genuinely validated.
+
+
+## Progress during the second validation pass
+
+- Exact head 919614660b7ee6f05c696087acc92dfe774949ee: [Actions run 45793846599](https://github.com/janhubicka/lean-girth/actions/runs/45793846599) passed the standalone build and all 34 printed axiom checks (the job was cancelled only in post-build caching). This includes ContactSubstitution.preserves_systemGirth for its explicit covering record, all mixed triangle/quad lemmas, and the new half-cutoff rank. The integration gate was not run.
+- The reusable cyclic restriction weight inequality was extracted from the older TrainCyclicRestriction proof. ContactPolygonSplit constructs the two chord arcs as order embeddings; ContactCoveredSide implements the side-triangle clause. These new proofs require a fresh passing exact-head gate; the first split run failed on two Fin arithmetic normalization steps, subsequently patched.
+- ContactCoreGeometry and ContactAttachmentGeometry implement the common-wagon, mixed triangle and global wagon-linearity arguments with an explicit free-union interface. The actual picture adapter, including incidence pullback and local wagon comparison, remains a genuine obligation. Do not mark the manuscript theorem verified on the basis of an interface theorem.
+- Heuristic progress across the full new manuscript including reusable infrastructure: approximately 30–35%, weighted by difficulty rather than source lines. The entire new proof, in particular the G4 picture preservation and recursive witness, is not yet certified.
