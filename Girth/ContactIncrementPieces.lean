@@ -170,9 +170,7 @@ theorem output_pairwise_of_trace {base : B → Set X} (P : ContactBaseProjection
   · subst k
     cases i with
     | inr e =>
-      have he : j = l := by
-        change PUnit.unit = PUnit.unit
-        rfl
+      have he : j = l := @Subsingleton.elim PUnit.{v+1} inferInstance j l
       exact (hne (ha.symm.trans ((congrArg (A.localOutputLabel (Sum.inr e)) he).trans hc))).elim
     | inl i =>
       have hjl : j ≠ l := fun he =>
