@@ -504,8 +504,12 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
       rw [hBP,EP.part_endpoint]
     carrier_eq := by
       intro e
-      change B.place e.1 '' (U.cutoffTemplate A.train N).edgeCarrier e.2 = _
-      rw [EP.carrier_eq,Set.image_range]
+      change B.place e.1 '' ((U.firstEndpoints A.train).wordHypergraph N).edgeCarrier e.2 =
+        Set.range (fun p : P => B.place e.1 (EP.endpoint e.2 p))
+      calc
+        _ = B.place e.1 '' Set.range (EP.endpoint e.2) :=
+          congrArg (fun s : Set X => B.place e.1 '' s) (EP.carrier_eq e.2)
+        _ = _ := by rw [Set.image_range] <;> rfl
     covered := by
       intro x
       obtain ⟨e,he⟩ := W.out.covered x

@@ -236,11 +236,12 @@ theorem restrictCovered_arrow {Color : Type v} [Nonempty Color] (h : M.Arrow Col
   intro e
   have he : ∃ j', (M.emb j).edge e ∈ H.copyEdges j' := (M.usedEdge j e).property
   have h' := hj e
-  change χ (M.usedEdge j e) = c
+  change χ (⟨(M.emb j).edge e,he⟩ : H.UsedEdge) = c
   simpa only [χ',dif_pos he] using h'
 
-/-- If the target is covered by its edges, the restriction is
-also covered by edges, not just by designated copies. -/
+/- If the target is covered by its edges, the restriction is also
+covered by edges, not just by designated copies. -/
+include M in
 theorem restrictCovered_noIsolated (hc : ∀ x, ∃ e, x ∈ D.edgeCarrier e) :
     ∀ x : H.UsedVertex, ∃ e : H.UsedEdge, x ∈ H.usedGraph.edgeCarrier e := by
   intro x

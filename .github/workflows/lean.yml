@@ -125,6 +125,14 @@ jobs:
           lake build +Girth.ContactIsolatedPadding
           lake env lean CheckContactCoverage.lean | tee contact-coverage-axioms.log
           python3 scripts/check_axioms.py contact-coverage-axioms.log CheckContactCoverage.lean
+      - name: Audit outer marked edges and qualitative completion
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactQualitativeCompletion +Girth.ContactBoostDistinctImages
+          lake env lean CheckContactOuterPreparation.lean | tee contact-outer-preparation-axioms.log
+          python3 scripts/check_axioms.py contact-outer-preparation-axioms.log CheckContactOuterPreparation.lean
       - name: Audit full local-forest partite application
         if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
         shell: bash
