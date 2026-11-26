@@ -1,7 +1,7 @@
 import Girth.ContactTrainData
 import Mathlib.Combinatorics.HalesJewett
 import Mathlib.Order.PiLex
-import Mathlib.Data.Prod.Lex
+import Mathlib.Order.Prod.Lex.Basic
 
 /-! The word base for an a-partite linear hypergraph. The
 endpoints of an edge are indexed by its parts. The actual new
