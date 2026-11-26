@@ -77,9 +77,12 @@ theorem contact_conformal_of_threeCompletable (F : I → Set V)
         · exact ⟨j',hj (Finset.mem_erase.mpr ⟨hyj.1,hu⟩),hj (Finset.mem_erase.mpr ⟨hyj.2,hw⟩)⟩
         have hh : u ≠ z ∧ w ≠ z := by
           by_contra hn
-          push_neg at hxi hyj hn
-          rcases hxi with h | h <;> rcases hyj with h' | h' <;>
-            rcases hn with h'' | h'' <;> subst_vars <;> contradiction
+          have either (p : V) (h : ¬ (u ≠ p ∧ w ≠ p)) : u = p ∨ w = p := by
+            by_cases hu : u = p
+            · exact Or.inl hu
+            · exact Or.inr (by by_contra hw; exact h ⟨hu,hw⟩)
+          rcases either x hxi with h | h <;> rcases either y hyj with h' | h' <;>
+            rcases either z hn with h'' | h'' <;> subst_vars <;> contradiction
         exact ⟨k',hk (Finset.mem_erase.mpr ⟨hh.1,hu⟩),hk (Finset.mem_erase.mpr ⟨hh.2,hw⟩)⟩
       obtain ⟨a,ha⟩ := J.conformal s ⟨x,hx⟩ hv' hp'
       exact ⟨a.val,ha⟩

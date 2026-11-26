@@ -286,10 +286,10 @@ end ContactDesignatedEmbeddings
 namespace ContactHypergraphData
 variable (H : ContactHypergraphData V E I)
 
+open Classical in
 /-- The quantitative completion conclusion, using actual mixed labels.
 The constraint on the number of added pieces applies only to families
 of size at least two. The singleton case already has a one-node tree. -/
-open Classical in
 def QuantitativeCompletion (g m : ℕ) : Prop :=
   ∀ s : Finset (I ⊕ E), 2 ≤ s.card → s.card ≤ m →
     ∃ t : Finset (I ⊕ E), s ⊆ t ∧

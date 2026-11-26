@@ -144,9 +144,9 @@ theorem mixedCompletion_exists
   obtain ⟨i,hi,he⟩ := Finset.mem_image.mp h
   exact ⟨i,he.symm⟩
 
+open Classical in
 /-- Sharp completion bound in the actual mixed family. The only
 qualitative premise is completion of small copy-only selections. -/
-open Classical in
 theorem mixedCompletion_cost [Fintype V]
     (g m : ℕ) (hg : 2 ≤ g)
     (hlin : ∀ e f, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton)
@@ -163,8 +163,8 @@ theorem mixedCompletion_cost [Fintype V]
       Nonempty (ContactJoinTree (fun a : {a // a ∈ t} => D.carrier a.val)) ∧
       (g-1)*(t \ s).card ≤ s.card-2 := by
   classical
-  apply contact_minimumCompletion_cost D.carrier D.edgeCarrier D.edges
-    (fun a => ∃ i, a = Sum.inl i) g hg hlin ?_ ?_ s hs
+  refine contact_minimumCompletion_cost D.carrier D.edgeCarrier D.edges
+    (fun a => ∃ i, a = Sum.inl i) g hg hlin ?_ ?_ s hs ?_
   · intro a ha
     obtain ⟨i,rfl⟩ := ha
     exact hG i

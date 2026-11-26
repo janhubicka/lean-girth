@@ -160,6 +160,16 @@ jobs:
           lake build +Girth.ContactOuterRelationalGeometry
           lake env lean CheckContactOuterRelationalGeometry.lean | tee contact-outer-relational-axioms.log
           python3 scripts/check_axioms.py contact-outer-relational-axioms.log CheckContactOuterRelationalGeometry.lean
+      - name: Audit actual relational union and ordered support input
+        if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalInput
+          lake env lean CheckContactRelationalUnion.lean | tee contact-relational-union-axioms.log
+          python3 scripts/check_axioms.py contact-relational-union-axioms.log CheckContactRelationalUnion.lean
+          lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
+          python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
       - name: Audit actual outer picture preservation
         id: contact-outer-step
         if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' }}

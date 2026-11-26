@@ -46,6 +46,7 @@ theorem separator_covered
     intro x hx
     have hmem : x ∈ A.coreV '' C.graph.edgeCarrier e := he ▸ hx
     have hEq := A.shared_edge_carrier i f e hf
+    change (A.stdV i '' P.graph.edgeCarrier f) = (A.coreV '' C.graph.edgeCarrier e) at hEq
     rw [← hEq] at hmem
     obtain ⟨u,hu,hr⟩ := hmem
     exact ⟨u,P.projection.copy_edge_subset k f hk hu,hr⟩
@@ -67,6 +68,12 @@ theorem next_completable
   let N := {p : C.Copy × P.Copy // p ∈ s}
   let owners : Finset C.Copy := s.image Prod.fst
   let Q := {i : C.Copy // i ∈ owners}
+  letI : Fintype N := by
+    change Fintype {p : C.Copy × P.Copy // p ∈ s}
+    infer_instance
+  letI : Fintype Q := by
+    change Fintype {i : C.Copy // i ∈ owners}
+    infer_instance
   letI : Nonempty N := by obtain ⟨n,hn⟩ := hs; exact ⟨⟨n,hn⟩⟩
   let owner (n : N) : Q :=
     ⟨n.val.1,Finset.mem_image.mpr ⟨n.val,n.property,rfl⟩⟩
@@ -123,7 +130,9 @@ theorem next_completable
     (fun n => n.val.2) connector hcontain
     (fun i j hadj => hconnector i ⟨j,hadj⟩) hlocal
   let L := Sigma (fun i : Q => {k : P.Copy // k ∈ t i})
-  letI : Fintype L := inferInstance
+  letI : Fintype L := by
+    change Fintype (Sigma (fun i : Q => {k : P.Copy // k ∈ t i}))
+    infer_instance
   let p (z : L) : C.Copy × P.Copy := (z.1.val,z.2.val)
   have hp : Function.Injective p := by
     rintro ⟨i,x⟩ ⟨j,y⟩ he

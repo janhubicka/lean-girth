@@ -143,7 +143,7 @@ theorem exists_outer_chain {Color : Type v} [Finite Color] [Nonempty Color]
   | cons b l ih =>
     obtain ⟨Q,hQ,hpartQ,hchain⟩ := ih
     by_cases hne : Nonempty (Q.projection.StripEdge b)
-    · obtain ⟨C,hCover,hF,hArrow⟩ := Q.outerCore_of_invariant b hne m hm (hsize b) hQ
+    · obtain ⟨C,hCover,hF,hArrow⟩ := Q.outerCore_of_invariant (Color := Color) b hne m hm (hsize b) hQ
       exact ⟨C.next hne hbase hq,C.next_outerInvariant hne hbase hq m hm hQ hCover hF,
         C.next_partPreserving hne hbase hq hpartQ,
         ContactFocusPicture.Chain.snoc hchain (C.next_focus hne hbase hq hArrow)⟩

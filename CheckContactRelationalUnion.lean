@@ -1,0 +1,13 @@
+import Girth.ContactRelationalUnion
+
+#print axioms StructuralRamsey.Girth.contactRelationalTarget
+#print axioms StructuralRamsey.Girth.contactRelationalTarget_girth
+#print axioms StructuralRamsey.Girth.contact_strictMono_eq_of_range_eq
+#print axioms StructuralRamsey.Girth.ContactDiagonalEq
+#print axioms StructuralRamsey.Girth.contactDiagonalSetoid
+#print axioms StructuralRamsey.Girth.contact_relational_overlap_agrees
+#print axioms StructuralRamsey.Girth.contactRelationalUnion
+#print axioms StructuralRamsey.Girth.contactRelationalUnion_embedding
+#print axioms StructuralRamsey.Girth.contactRelationalUnion_extendsOrder
+#print axioms StructuralRamsey.Girth.contactRelationalUnion_irreducible_covered
+#print axioms StructuralRamsey.Girth.contactRelationalUnion_factor
