@@ -1,0 +1,36 @@
+import Girth.ContactCore
+
+#print axioms StructuralRamsey.Girth.contactWeight_triangle
+#print axioms StructuralRamsey.Girth.contactDistance_triangle
+#print axioms StructuralRamsey.Girth.contactWeight_subdivide
+#print axioms StructuralRamsey.Girth.OrderOneData.contactSystemGirthGT_mono
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_shared_pair_in_wagon
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_wagon_unique_of_pair
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_two_common_wagons_eq
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_bridges_of_shared_mixed
+#print axioms StructuralRamsey.Girth.ContactSubstitution.wagonCarrier_eq
+#print axioms StructuralRamsey.Girth.ContactSubstitution.meets_iff
+#print axioms StructuralRamsey.Girth.ContactSubstitution.clique_eq
+#print axioms StructuralRamsey.Girth.ContactSubstitution.adjacent_iff
+#print axioms StructuralRamsey.Girth.ContactSubstitution.preserves_g1
+#print axioms StructuralRamsey.Girth.ContactSubstitution.preserves_systemGirth
+#print axioms StructuralRamsey.Girth.labelledGirthGT_of_injective_shrinking
+#print axioms StructuralRamsey.Girth.gluedStandardNode_injective
+#print axioms StructuralRamsey.Girth.trainCountLex_wellFounded
+#print axioms StructuralRamsey.Girth.refinementRun_length_ge_two_g_plus_two
+#print axioms StructuralRamsey.Girth.ContactPolygon.shared_hasChord
+#print axioms StructuralRamsey.Girth.ContactPolygon.covered_hasChord
+#print axioms StructuralRamsey.Girth.ContactPolygon.triangle_not_shared
+#print axioms StructuralRamsey.Girth.ContactPolygon.Split.join_alternatives
+#print axioms StructuralRamsey.Girth.contactG4_of_sharedChordBound
+#print axioms StructuralRamsey.Girth.contactSharedChordBound_of_G4_of_splits
+#print axioms StructuralRamsey.Girth.contact_triangle_covered
+#print axioms StructuralRamsey.Girth.contact_vertex_wagon_vertex_covered
+#print axioms StructuralRamsey.Girth.contact_vertex_wagon_wagon_covered
+#print axioms StructuralRamsey.Girth.contact_alternating_quad_chord
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_two_wagon_triangle_in_copy
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_one_wagon_triangle
+#print axioms StructuralRamsey.Girth.contact_refinement_cutoff_lt
+#print axioms StructuralRamsey.Girth.contact_rank_drop
+#print axioms StructuralRamsey.Girth.contact_refinement_rank_decreases
+#print axioms StructuralRamsey.Girth.contact_run_length_gt_two_g_plus_one
