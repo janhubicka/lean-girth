@@ -1,5 +1,4 @@
 import Girth.ContactPictureInvariant
-import Girth.ContactRunSegments
 
 /-! The actual constituents used to reduce a contact polygon.
 They are standard contact domains and enlarged core edges. Their
