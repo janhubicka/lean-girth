@@ -13,11 +13,6 @@ variable {V E I V₀ E₀ I₀ : Type v}
 namespace ContactHypergraphData
 variable (D : ContactHypergraphData V E I)
 
-def Parameter {m : ℕ} (T : ContactTrainData E m)
-    (μ ν : Fin (m+1)) (allowed : Set V) : Prop :=
-  ∀ e f x, T.parent ν e = T.parent ν f →
-    x ∈ D.edgeCarrier e → x ∈ D.edgeCarrier f → x ∉ allowed →
-    T.parent μ e = T.parent μ f
 
 theorem parameter_iff_wagon_intersection {m : ℕ} (T : ContactTrainData E m)
     (μ ν : Fin (m+1)) (hle : μ ≤ ν) (allowed : Set V) :
