@@ -140,9 +140,9 @@ theorem future_refinement_wagonBounds {g : ℕ} (hg : 2 ≤ g)
       (A.outputHypergraph.atCut (A.outputTrain.parent ⟨1,by omega⟩)).contactWagonCarrier g := by
     by_cases hh : 0 < h
     · rintro ⟨C,hC⟩
-      exact hH ⟨1,by omega⟩ (by omega) ⟨C,hC.trans (hq hh)⟩
+      exact hH ⟨1,by omega⟩ (by change 1 < h+1; omega) ⟨C,hC.trans (hq hh)⟩
     · have he : (⟨1,by omega⟩ : Fin (h+1+1)) = ⟨h+1,by omega⟩ :=
-        Fin.ext (by omega)
+        Fin.ext (by change 1 = h+1; omega)
       rw [he]
       exact A.outputHypergraph.top_wagonGirth A.outputTrain g
   have hp := A.future_refinement_prefix_girth P b c ha hne rfl hd hg R hret p hc
