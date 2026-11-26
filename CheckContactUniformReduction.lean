@@ -1,0 +1,16 @@
+import Girth.ContactUniformReduction
+
+#print axioms StructuralRamsey.Girth.contactUniformLanguage
+#print axioms StructuralRamsey.Girth.contactUniformStructure
+#print axioms StructuralRamsey.Girth.contactUniformEdge
+#print axioms StructuralRamsey.Girth.contactUniformReduct
+#print axioms StructuralRamsey.Girth.contact_uniform_range_comp
+#print axioms StructuralRamsey.Girth.contact_uniform_tuple_surjective
+#print axioms StructuralRamsey.Girth.contact_uniform_placement
+#print axioms StructuralRamsey.Girth.contact_uniform_edge_embedding
+#print axioms StructuralRamsey.Girth.contact_uniform_copy_edge
+#print axioms StructuralRamsey.Girth.contact_uniform_reduct_ordered
+#print axioms StructuralRamsey.Girth.contact_uniform_support_ordered
+#print axioms StructuralRamsey.Girth.contact_uniform_tuple_irreducible
+#print axioms StructuralRamsey.Girth.contact_uniform_support_reduct
+#print axioms StructuralRamsey.Girth.contact_uniform_copy_induced

@@ -244,12 +244,14 @@ theorem copy_girth_of_source {g : ℕ} (hg : LabelledGirthGT D.edgeCarrier g)
   rintro ⟨C,hC⟩
   let f := M.emb j
   have hex (i : Fin C.length) : ∃ e : E, f.edge e = (C.label i).val := by
-    have h := (C.label i).property
-    rw [M.edge_eq j] at h
-    exact h
+    let z := (C.label i).val
+    have h : z ∈ H.copyEdges j := (C.label i).property
+    exact M.edge_eq j ▸ h
   choose e he using hex
-  have hvx (i : Fin C.length) : ∃ x : V, f.vertex x = C.vertex i :=
-    f.vertex_range_of_edge (e i) (by rw [he i]; exact C.left_mem i)
+  have hvx (i : Fin C.length) : ∃ x : V, f.vertex x = C.vertex i := by
+    apply f.vertex_range_of_edge (e i)
+    rw [he i]
+    exact C.left_mem i
   choose x hx using hvx
   let C' : LabelledBergeCycle D.edgeCarrier := {
     length := C.length

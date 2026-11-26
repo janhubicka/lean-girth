@@ -1,0 +1,9 @@
+import Girth.ContactUniformLocalRamsey
+
+#print axioms StructuralRamsey.Girth.contactInducedHypergraphPiece
+#print axioms StructuralRamsey.Girth.contact_uniform_supportPiece
+#print axioms StructuralRamsey.Girth.ContactUniformLocalCompletion
+#print axioms StructuralRamsey.Girth.contact_uniform_completion_transfer
+#print axioms StructuralRamsey.Girth.ContactUniformRamseyWitness
+#print axioms StructuralRamsey.Girth.contactUniformLocalRamsey_of_relational
+#print axioms StructuralRamsey.Girth.contactUniformLocalRamsey

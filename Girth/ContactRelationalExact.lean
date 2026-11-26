@@ -59,9 +59,11 @@ theorem girth {g : ℕ} (hG : LabelledGirthGT H.edgeCarrier g) :
   classical
   rintro ⟨C,hC⟩
   have hex (i : Fin C.length) : ∃ e : F, H.edgeCarrier e = C.edge i := by
-    have h := C.edge_mem i
-    rw [R.support_exact] at h
-    exact h
+    let s := C.edge i
+    have h : s ∈ supportCopies A R.ambient := C.edge_mem i
+    have h' : s ∈ Set.range H.edgeCarrier :=
+      R.support_exact ▸ h
+    exact h'
   choose e he using hex
   let D : LabelledBergeCycle H.edgeCarrier := {
     length := C.length
@@ -131,14 +133,21 @@ theorem mixedForest_of_joinTree {K : Type v} (sel : K ↪ J ⊕ F)
     rw [R.member_piece_carrier,R.member_piece_carrier]
     rcases h with hs | ⟨e,hei,hej,he⟩
     · exact Or.inl hs
-    · exact Or.inr ⟨H.edgeCarrier e,
-        R.member_edge (sel i) e hei (he ▸ Set.inter_subset_left),
-        R.member_edge (sel j) e hej (he ▸ Set.inter_subset_right),he⟩
+    · change H.bottomCut.carrier (sel i) ∩ H.bottomCut.carrier (sel j) = H.edgeCarrier e at he
+      have hi : H.edgeCarrier e ⊆ H.bottomCut.carrier (sel i) := by
+        rw [← he]
+        exact Set.inter_subset_left
+      have hj : H.edgeCarrier e ⊆ H.bottomCut.carrier (sel j) := by
+        rw [← he]
+        exact Set.inter_subset_right
+      exact Or.inr ⟨H.edgeCarrier e,R.member_edge (sel i) e hei hi,
+        R.member_edge (sel j) e hej hj,he⟩
   · intro x
     have he : {k : K | x ∈ ((R.member (sel k)).supportPiece A).carrier} =
         {k : K | x ∈ H.bottomCut.carrier (sel k)} := by
       ext k
-      change x ∈ ((R.member (sel k)).supportPiece A).carrier ↔ _
+      change x ∈ ((R.member (sel k)).supportPiece A).carrier ↔
+        x ∈ H.bottomCut.carrier (sel k)
       rw [R.member_piece_carrier]
     rw [he]
     exact T.running x
@@ -208,7 +217,8 @@ theorem ContactDesignatedEmbeddings.copy_injective_of_twoEdges
     exact ⟨(M.emb i).vertex x,⟨x,hx,rfl⟩,(M.emb i).vertex y,⟨y,hy,rfl⟩,
       fun h => hxy ((M.emb i).vertex.injective h)⟩
   rcases hpair (Sum.inl i) (Sum.inl j) (fun h => hn (Sum.inl.inj h)) with hs | ⟨k,_,_,hk⟩
-  · obtain ⟨x,hx,y,hy,hxy⟩ := hnt e
+  · change (H.copyCarrier i ∩ H.copyCarrier j).Subsingleton at hs
+    obtain ⟨x,hx,y,hy,hxy⟩ := hnt e
     exact hxy (hs ⟨hsub e hx,he ▸ hsub e hx⟩ ⟨hsub e hy,he ▸ hsub e hy⟩)
   · change H.copyCarrier i ∩ H.copyCarrier j = H.edgeCarrier k at hk
     have hEq (d : U) : (M.emb i).edge d = k := by

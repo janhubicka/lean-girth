@@ -176,6 +176,15 @@ jobs:
           python3 scripts/check_axioms.py contact-relational-union-axioms.log CheckContactRelationalUnion.lean
           lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
           python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
+      - name: Audit unordered uniform hypergraph reduction
+        id: contact-uniform-reduction
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactUniformReduction
+          lake env lean CheckContactUniformReduction.lean | tee contact-uniform-reduction-axioms.log
+          python3 scripts/check_axioms.py contact-uniform-reduction-axioms.log CheckContactUniformReduction.lean
       - name: Audit order-reduct transfer
         id: contact-order-reduct
         if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
@@ -248,6 +257,14 @@ jobs:
           lake build +Girth.ContactCarrierCompletion
           lake env lean CheckContactCarrierCompletion.lean | tee contact-carrier-completion-axioms.log
           python3 scripts/check_axioms.py contact-carrier-completion-axioms.log CheckContactCarrierCompletion.lean
+      - name: Audit unordered hypergraph local-forest Ramsey theorem
+        if: ${{ always() && !cancelled() && steps.contact-carrier-completion.outcome == 'success' && steps.contact-uniform-reduction.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactUniformLocalRamsey
+          lake env lean CheckContactUniformLocalRamsey.lean | tee contact-uniform-ramsey-axioms.log
+          python3 scripts/check_axioms.py contact-uniform-ramsey-axioms.log CheckContactUniformLocalRamsey.lean
       - name: Audit full order-extension corollary
         if: ${{ always() && !cancelled() && steps.contact-carrier-completion.outcome == 'success' && steps.contact-order-reduct.outcome == 'success' }}
         shell: bash

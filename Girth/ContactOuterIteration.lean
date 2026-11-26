@@ -30,6 +30,7 @@ theorem outerCore_of_invariant {Color : Type v} [Finite Color] [Nonempty Color]
   classical
   letI : Finite P.Vertex := P.finiteV
   let C₀ := P.coarseBoostInput b hne
+  letI : Finite C₀.Vertex := C₀.finiteV
   let EP := C₀.endpoints
   letI : LinearOrder C₀.Vertex := C₀.order
   letI : Finite (base b) := Finite.of_injective

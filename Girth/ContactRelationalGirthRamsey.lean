@@ -86,9 +86,10 @@ theorem BSingletonSupported (h : H.MixedSharedSupported) :
   have hn : i ≠ j := by
     intro he
     exact hne (hi.symm.trans ((congrArg H.copyCarrier he).trans hj))
+  have hxi : x ∈ H.copyCarrier i := hi.symm ▸ hx.1
+  have hxj : x ∈ H.copyCarrier j := hj.symm ▸ hx.2
   obtain ⟨⟨e,he,he'⟩,⟨f,hf,hf'⟩⟩ :=
-    h (Sum.inl i) (Sum.inl j) (fun he => hn (Sum.inl.inj he)) x
-      (hi.symm ▸ hx.1) (hj.symm ▸ hx.2)
+    h (Sum.inl i) (Sum.inl j) (fun he => hn (Sum.inl.inj he)) x hxi hxj
   constructor
   · refine ⟨R.edge e,?_,?_⟩
     · rw [R.edge_eq]; exact he
