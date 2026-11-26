@@ -30,18 +30,21 @@ the maps already used to pad the wagons. -/
 structure TemplateEmbedding where
   edge : E → F
   edge_image : ∀ e, L.edgeCarrier (edge e) =
-    {x | ∃ y (hy : y ∈ D.edgeCarrier e), A.inside (A.first e) (A.firstMember e y hy) = x}
+    {x | ∃ (y : V) (hy : y ∈ D.edgeCarrier e), A.inside (A.first e) (A.firstMember e y hy) = x}
   edge_inj : ∀ e f, A.first e = A.first f → edge e = edge f → e = f
   strong : ∀ p : T.FirstWagon, ∀ f,
     (L.edgeCarrier f ∩ Set.range (A.inside p)).Nontrivial →
       ∃ e, A.first e = p ∧ edge e = f
 
 namespace TemplateEmbedding
+variable {A L}
 variable (M : A.TemplateEmbedding L)
 
 def chosenEdge : E ↪ (T.FirstWagon × F) where
   toFun e := (A.first e,M.edge e)
-  inj' := fun e f h => M.edge_inj e f (congrArg Prod.fst h) (congrArg Prod.snd h)
+  inj' := fun e f h => M.edge_inj e f
+    (congrArg (fun p : T.FirstWagon × F => p.1) h)
+    (congrArg (fun p : T.FirstWagon × F => p.2) h)
 
 variable (hcover : ∀ x, ∃ f, x ∈ L.edgeCarrier f) (hne : Nonempty F)
 
