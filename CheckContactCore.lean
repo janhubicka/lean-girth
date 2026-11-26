@@ -42,3 +42,6 @@ import Girth.ContactCore
 #print axioms StructuralRamsey.Girth.ContactPolygon.split_of_chord
 #print axioms StructuralRamsey.Girth.contactSharedChordBound_of_G4
 #print axioms StructuralRamsey.Girth.contactSharedChordBound_iff_G4
+#print axioms StructuralRamsey.Girth.ContactPolygon.covered_side_of_covered
+#print axioms StructuralRamsey.Girth.ContactPolygon.covered_side_lift
+#print axioms StructuralRamsey.Girth.contactCoveredSide_of_G4
