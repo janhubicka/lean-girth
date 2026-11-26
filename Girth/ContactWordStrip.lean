@@ -31,8 +31,8 @@ def noCopies : ContactBaseProjection D.noCopies base where
   edge := P.edge
   edge_image := P.edge_image
   edge_inj := P.edge_inj
-  copy_inj := PEmpty.elim
-  copy_edge_subset := PEmpty.elim
+  copy_inj := by intro i; cases i
+  copy_edge_subset := by intro i; cases i
   copy_strong := by intro i; cases i
 
 end ContactBaseProjection
