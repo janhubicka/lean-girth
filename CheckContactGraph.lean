@@ -665,3 +665,16 @@ import Girth
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.Core.next_hasFutureRefinements
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.main_with_refinements
 #print axioms StructuralRamsey.Girth.ContactSeed.initial_hasFutureRefinements
+#print axioms StructuralRamsey.Girth.contactFiniteOrderEmbedding
+#print axioms StructuralRamsey.Girth.ContactOrderedEdgeWord.seedEdgeFinite
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.allAllowed
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.allBounds
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainedWagon
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainedWagon_parent
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainedWagon_injective
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retainedWagon_subset
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.retained_girth
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.covered_prefix_girth
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.all_parameters
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.all_wagonBounds
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.edge_girth

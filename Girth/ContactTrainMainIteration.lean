@@ -85,7 +85,7 @@ theorem main_of_coreSupply (P : ContactTrainPicture D T base allowed q)
     ∃ Q : ContactTrainPicture D T base allowed q, Q.FullBounds ∧ Q.family.Arrow Color := by
   classical
   let l := (Finset.univ : Finset B).toList
-  have hl : l.Nodup := by simp [l]
+  have hl : l.Nodup := Finset.nodup_toList _
   obtain ⟨Q,hQ,_,hchain⟩ := P.exists_main_chain hm hbase hq Inv hskip supply hP hInv l hl
   refine ⟨Q,hQ,hchain.arrow_of_base ?_ hArrow⟩
   intro b

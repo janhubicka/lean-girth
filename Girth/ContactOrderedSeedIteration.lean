@@ -69,12 +69,18 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   letI : LinearOrder Q.Vertex := A.order
   let idx := Fintype.equivFin N
   letI : LinearOrder N := LinearOrder.lift' idx idx.injective
-  letI : WellFoundedLT N := InvImage.wf idx (inferInstance : WellFoundedLT (Fin (Fintype.card N)))
+  letI : WellFoundedLT N := ⟨InvImage.wf idx
+    (inferInstance : WellFoundedLT (Fin (Fintype.card N))).wf⟩
   let W := Q.projection.stripEndpoints b
   let M := Q.wordCoreFamily b N
   let G := Q.wordGluing b N hne
   letI : Finite (Combinatorics.Line (Q.projection.StripEdge b) N) :=
     Finite.of_injective (fun l => l.idxFun) (fun _ _ h => Combinatorics.Line.ext h)
+  letI : Finite (base b) := Finite.of_injective
+    (W.endpoint (Classical.choice hne)) (W.endpoint_inj _)
+  letI : Finite (W.WordVertex N) :=
+    Finite.of_injective (fun x : W.WordVertex N =>
+      (x.val : (base b) × (N → Q.projection.StripVertex b))) Subtype.val_injective
   letI : Fintype (W.WordVertex N) := Fintype.ofFinite _
   letI : LinearOrder (W.WordVertex N) := W.wordOrder N
   have hord : ∀ i (x y : Q.projection.StripVertex b), x.val < y.val →
@@ -84,7 +90,7 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
     by_cases hEq : W.part x = W.part y
     · exact W.line_order N i x y hEq hxy
     · have hlt : W.part x < W.part y := by
-        exact lt_of_le_of_ne hmono hEq
+        exact lt_of_le_of_ne (show W.part x ≤ W.part y from hmono) hEq
       change (W.wordOrder N).lt (W.lineVertexEmb N i x) (W.lineVertexEmb N i y)
       change (toLex (W.part x,toLex ((W.lineTuple N i x).2)) :
           (base b) ×ₗ Lex (N → Q.projection.StripVertex b)) <
@@ -229,13 +235,14 @@ theorem exists_ordered_linear_seed [Fintype V] [Finite E] [Finite P]
   classical
   obtain ⟨N,hN⟩ := A.exists_raw_seed_arrow (Color := Color) hinj
   letI : LinearOrder (A.SeedVertex N) := A.rawOrder N
+  letI : Finite (A.SeedEdge N) := A.seedEdgeFinite N
   letI : Fintype (A.SeedEdge N) := Fintype.ofFinite _
   let Q₀ := A.orderedRawStage N hinj hlin
   obtain ⟨Q,hQ⟩ := Q₀.exists_linear_seed (Color := Color) hN
   let S := Q.stage
   letI : LinearOrder S.Vertex := Q.order
   let basePoint (e : S.Edge) (i : Fin a) : A.SeedVertex N :=
-    (S.projection.edge e i,A.word i)
+    ((S.projection.edge e).down i,A.word i)
   have hex (e : S.Edge) (i : Fin a) :
       ∃ x, x ∈ S.graph.edgeCarrier e ∧ S.projection.vertex x = basePoint e i := by
     have hx : basePoint e i ∈ A.seedCarrier N (S.projection.edge e) := ⟨i,rfl⟩
@@ -249,9 +256,9 @@ theorem exists_ordered_linear_seed [Fintype V] [Finite E] [Finite P]
     intro i j hij
     apply Q.part_order
     rw [(hlift e i).2,(hlift e j).2]
-    change (toLex (S.projection.edge e i,A.word i) : Fin N ×ₗ P) <
-      toLex (S.projection.edge e j,A.word j)
-    exact Prod.Lex.left _ _ ((S.projection.edge e).strictMono hij)
+    change (toLex ((S.projection.edge e).down i,A.word i) : Fin N ×ₗ P) <
+      toLex ((S.projection.edge e).down j,A.word j)
+    exact Prod.Lex.left _ _ ((S.projection.edge e).down.strictMono hij)
   refine ⟨{
     Vertex := S.Vertex
     Edge := S.Edge

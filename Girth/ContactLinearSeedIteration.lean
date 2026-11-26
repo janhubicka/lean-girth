@@ -50,7 +50,7 @@ theorem height_one_rel (T : ContactTrainData E 1) (μ : Fin 2) (e f : E) :
       exact Or.inr (T.bottom h)
   · rintro (ht | rfl)
     · have ht' : μ = (⟨1,by omega⟩ : Fin 2) := Fin.ext ht
-      subst μ
+      rw [ht']
       exact T.top e f
     · rfl
 
@@ -103,7 +103,7 @@ theorem wordCorePart_image (b : B) (N : Type)
 theorem wordCorePart_inj (b : B) (N : Type)
     (e : N → P.projection.StripEdge b) :
     Set.InjOn (P.wordCorePart b N)
-      ((P.projection.stripEndpoints b).wordHypergraph N).edgeCarrier e := by
+      (((P.projection.stripEndpoints b).wordHypergraph N).edgeCarrier e) := by
   let Q := P.projection.stripEndpoints b
   intro x hx y hy he
   obtain ⟨a,rfl⟩ := hx
@@ -160,6 +160,8 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   let P' := A.outputProjection P.projection b p hA hc
   letI : Finite (Combinatorics.Line (P.projection.StripEdge b) N) :=
     Finite.of_injective (fun l => l.idxFun) (fun _ _ h => Combinatorics.Line.ext h)
+  letI : Finite (base b) := Finite.of_injective
+    (Q.endpoint (Classical.choice hne)) (Q.endpoint_inj _)
   letI : Finite (Q.WordVertex N) :=
     Finite.of_injective (fun x : Q.WordVertex N => (x.val : (base b) × (N → P.projection.StripVertex b))) Subtype.val_injective
   letI : Finite A.Vertex :=
@@ -268,7 +270,9 @@ variable {D : ContactHypergraphData V E I} {P : Type v} [LinearOrder V]
 noncomputable def rawStage (N : ℕ) [Finite V] [Finite E] [Finite P]
     (hinj : Function.Injective (fun e : E => D.edgeCarrier e))
     (hlin : ∀ e f : E, e ≠ f → (D.edgeCarrier e ∩ D.edgeCarrier f).Subsingleton) :
-    ContactSeedStage D (A.seedCarrier N) where
+    ContactSeedStage D (A.seedCarrier N) := by
+  letI : Finite (V ↪o Fin N) := contactFiniteOrderEmbedding V (Fin N)
+  exact {
   Vertex := (V ↪o Fin N) × V
   Edge := (V ↪o Fin N) × E
   Copy := V ↪o Fin N
@@ -297,7 +301,7 @@ noncomputable def rawStage (N : ℕ) [Finite V] [Finite E] [Finite P]
       have he : j = k := (congrArg Prod.fst hy).trans hx.1.1
       subst k
       exact ⟨e,rfl⟩ }
-  linear := A.rawInitial_linear N hlin
+  linear := rawInitial_linear (D := D) N hlin }
 
 /-- Complete elementary linear-seed existence on actual labelled
 hypergraphs, using finite Ramsey followed by nonlinear-base
@@ -312,6 +316,7 @@ theorem exists_unordered_linear_seed [Fintype V] [Finite E] [Finite P]
         ∀ e, χ ((Q.emb i).edge e) = c := by
   classical
   obtain ⟨N,hN⟩ := A.exists_raw_seed_arrow (Color := Color) hinj
+  letI : Finite (A.SeedEdge N) := A.seedEdgeFinite N
   letI : Fintype (A.SeedEdge N) := Fintype.ofFinite _
   obtain ⟨Q,hQ⟩ := (A.rawStage N hinj hlin).exists_linear_seed (Color := Color) hN
   exact ⟨N,Q,hQ⟩

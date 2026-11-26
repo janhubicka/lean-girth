@@ -239,13 +239,13 @@ theorem cutoffWordPart_mono [Finite E] :
     letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
     Monotone ((P₀.firstEndpoints T).wordPart N) := by
   letI : LinearOrder (FirstVertex (D := D) T) := P₀.firstOrder T
-  letI : LinearOrder (P₀.CutoffWordVertex T N) := P₀.cutoffWordOrder T N
   intro x y h
-  rcases lt_or_eq_of_le h with h | rfl
-  · change (toLex (x.val.1,toLex x.val.2) : P ×ₗ Lex (N → FirstVertex (D := D) T)) <
+  change (toLex (x.val.1,toLex x.val.2) : P ×ₗ Lex (N → FirstVertex (D := D) T)) ≤
       toLex (y.val.1,toLex y.val.2) at h
-    exact (Prod.Lex.toLex_lt_toLex'.mp h).1
-  · exact le_rfl
+  rcases lt_or_eq_of_le h with hlt | he
+  · exact (Prod.Lex.toLex_lt_toLex'.mp hlt).1
+  · exact le_of_eq (congrArg
+      (fun z : P ×ₗ Lex (N → FirstVertex (D := D) T) => (ofLex z).1) he)
 
 theorem cutoffInside_part (l : Combinatorics.Line E N) (p : T.FirstWagon)
     (u : firstCarrier (D := D) T p) :
