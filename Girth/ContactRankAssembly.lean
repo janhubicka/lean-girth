@@ -1,4 +1,4 @@
-import Girth.ContactRefinedCoreAssembly
+import Girth.ContactRefinementBudgets
 import Girth.ContactRecursiveRank
 
 /-! Numerical interface between finite cut functions and the manuscript's

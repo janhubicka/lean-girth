@@ -1,4 +1,5 @@
 import Girth.ContactRankAssembly
+import Girth.ContactRefinedCoreAssembly
 import Girth.ContactCutoffTwoProfileRamsey
 
 /-! The actual finite train Ramsey induction. The induction hypothesis

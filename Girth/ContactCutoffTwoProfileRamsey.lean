@@ -1,4 +1,4 @@
-import Girth.ContactRefinedCoreAssembly
+import Girth.ContactBoostClass
 import Girth.ContactCutoffTwoOrderedSource
 
 /-! Ordered arbitrary-profile train inputs and the actual cutoff-two

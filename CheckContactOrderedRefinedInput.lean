@@ -1,5 +1,6 @@
 import Girth.ContactAssemblyPreparation
-import Girth.ContactPartPreservation
+import Girth.ContactBoostClass
+import Girth.ContactLocalCoreInput
 import Girth.ContactOrderedSeedIteration
 import Girth.ContactCutoffTwoOrderedSource
 
@@ -701,3 +702,24 @@ class-wide recursive theorem. -/
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.originalPartOrder_copy_order
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.originalPartOrder_edge_order
 #print axioms StructuralRamsey.Girth.ContactTrainPicture.liftEnumeration_exists
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.relabelStripEndpoints
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.relabelStripEndpoints_part
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.strip_original_parameters
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.strip_positive_wagonBounds
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.strip_original_order
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.basePart
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.basePart_emb
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.basePart_image
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.basePart_inj
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.toCore
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.LocalWitness.nontrivial_edges
+#print axioms StructuralRamsey.Girth.contact_pairwise_of_labelledGirth
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.bottom_wagon_carrier
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.bottom_wagon_girth
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.edgeLabelEquiv
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.wordEndpoints
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.wordSeed
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.wordSeed_order
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.wordPart_order
+#print axioms StructuralRamsey.Girth.ContactBoostInput.all_wagonBounds
+#print axioms StructuralRamsey.Girth.ContactBoostInput.all_cutLinear
