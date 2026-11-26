@@ -69,7 +69,7 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
   letI : LinearOrder Q.Vertex := A.order
   let idx := Fintype.equivFin N
   letI : LinearOrder N := LinearOrder.lift' idx idx.injective
-  letI : WellFoundedLT N := ⟨InvImage.wf idx (inferInstance : WellFoundedLT (Fin (Fintype.card N))).wf⟩
+  letI : WellFoundedLT N := InvImage.wf idx (inferInstance : WellFoundedLT (Fin (Fintype.card N)))
   let W := Q.projection.stripEndpoints b
   let M := Q.wordCoreFamily b N
   let G := Q.wordGluing b N hne
@@ -90,7 +90,9 @@ noncomputable def next (b : B) (N : Type) [Fintype N]
           (base b) ×ₗ Lex (N → Q.projection.StripVertex b)) <
         toLex (W.part y,toLex ((W.lineTuple N i y).2))
       exact Prod.Lex.left _ _ hlt
-  obtain ⟨o,_,hstd⟩ := M.next_order hne hord
+  let ho := M.next_order hne hord
+  let o := Classical.choose ho
+  have hstd := (Classical.choose_spec ho).2
   let R := Q.next b N hne
   let o' := concatenate o R.projection.vertex
   refine {
