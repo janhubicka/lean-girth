@@ -52,7 +52,6 @@ theorem contactOddSlot_succ {n : ℕ} (i : Fin n) :
   · have he : i.val+1 = n := by have := i.isLt; omega
     have hsum : 2*i.val+1+1 = 2*n := by omega
     rw [if_neg h,hsum,Nat.mod_self]
-    rfl
 
 universe v
 variable {P : Type v} {n : ℕ}
@@ -82,8 +81,9 @@ theorem enum_image : Finset.univ.image (enum ins) = kept ins := by
 
 theorem enum_mem (k : Fin (kept ins).card) : enum ins k ∈ kept ins := by
   classical
-  rw [← enum_image ins]
-  exact Finset.mem_image.mpr ⟨k,Finset.mem_univ _,rfl⟩
+  have hm : enum ins k ∈ Finset.univ.image (enum ins) :=
+    Finset.mem_image.mpr ⟨k,Finset.mem_univ _,rfl⟩
+  exact (enum_image ins) ▸ hm
 
 theorem exists_index {t : Fin (2*n)} (ht : t ∈ kept ins) :
     ∃ k, enum ins k = t := by
@@ -148,7 +148,7 @@ theorem count_ge : n ≤ (kept ins).card := by
 unique odd slot of a selected side. -/
 theorem cover (k : Fin (kept ins).card) :
     (∃ i, original ins i = k) ∨
-      (∃ i (h : ins i ≠ none), inserted ins i h = k) := by
+      (∃ i, ∃ h : ins i ≠ none, inserted ins i h = k) := by
   classical
   have hk := enum_mem ins k
   rcases Finset.mem_union.mp hk with he | ho
