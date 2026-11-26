@@ -145,3 +145,21 @@ New proof scripts:
 Manuscript [c4543d869ba601a22cbcf36ca87d6923299d84d3](https://github.com/janhubicka/girth/tree/c4543d869ba601a22cbcf36ca87d6923299d84d3) unifies the uncovered triangle and longer chordless cycle proofs, explicitly proves distinctness of the three common edges in the larger-clique case, and marks only the already audited pairwise and sparse-polygon kernels as verified.
 
 This batch adds a separate 153-declaration boundary base gate, so the already compiled independent geometry is axiom-audited before the new assembly. The expanded core requests 193 audits (197 integration). One non-skipped commit submits all changes. No full preservation theorem, complete mixed-forest converse, ordered train adapter, or recursive Ramsey witness is certified yet.
+
+
+### Complete join-tree converse batch
+
+[Run 45806522232](https://github.com/janhubicka/lean-girth/actions/runs/45806522232), exact head 1f184f09645b84aed09f7155d7719e80d6416bb1, passed all three intermediate gates (53, 112, and 153 audited declarations; standard logical axioms only). This certifies the full abstract boundary contradiction, actual cyclic-run segmentation, geometric subdivision choices and the doubled-slot indexing, as well as the segment budget. The expanded build also compiled ContactSelectedCycles, ContactJoinTreeCycles, ContactJoinTreeGlue and ContactJoinTreeRestore. The remaining errors in ContactExpandedPolygon (section-variable inclusion), ContactBottomCore (explicit carrier coercion) and ContactConformality (two finite-set membership goals) were patched. The full positive and bottom preservation assembly remains uncertified.
+
+The new generic graph-theory proof scripts are:
+- ContactChordalPaths constructs induced paths from shortest walks and excludes separated pairs of induced paths in a chordal graph.
+- ContactMinimalSeparator constructs minimum-cardinality vertex separators and proves that each is a clique using the two full components.
+- ContactSimplicial proves the strong simplicial-vertex lemma outside any proper clique by induction on a component together with its separator.
+- ContactJoinTreeConverse constructs actual join trees by induction on the number of labelled pieces plus used vertices. Remove a contained piece; otherwise conformality and a simplicial used vertex give a private vertex. Restore the tree using the earlier construction.
+- ContactJoinTreeCharacterization supplies both directions of the finite running-intersection tree theorem.
+- ContactMixedForestConverse assembles the whole level-zero conclusion from the actual selected-family obstructions and the independently constructed join-tree theorem.
+These are complete proof scripts without an assumed simplicial-vertex, chordal/conformal converse, or join-tree existence axiom, but have not yet passed Lean compilation. The shared mixed-forest definitions now reside in ContactZeroJoinTrees.
+
+Manuscript [7bab56e5c97da9929c1dbae97de2bc46b13eadc3](https://github.com/janhubicka/girth/tree/7bab56e5c97da9929c1dbae97de2bc46b13eadc3) includes immutable links to the certified 153-declaration boundary gate and explicitly retains the remaining assembly and ordered-adapter obligations. The shared-chord argument now explicitly distinguishes the copy-copy case from a chord belonging to a wagon clique.
+
+One CI-triggering commit submits 216 core audit requests (220 integration) and retains the 53, 112, 153 intermediate gates. The main open tasks remain kernel certification of the preservation and mixed-forest assembly, the ordered/all-level train adapters, forest increment/completion and the actual recursive/outer Ramsey witnesses.
