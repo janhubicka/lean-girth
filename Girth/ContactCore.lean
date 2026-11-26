@@ -1,7 +1,7 @@
-import Girth.ContactTreeBase
-import Girth.ContactPositivePreservation
-import Girth.ContactBottomPreservation
-import Girth.ContactMixedForestConverse
-import Girth.ContactTrainParameters
+import Girth.ContactAssemblyBase
+import Girth.ContactAllLevelPreservation
+import Girth.ContactPictureZero
+import Girth.ContactEdgeTraces
 
-/-! Fast target for the current contact preservation proof. -/
+/-! Focused kernel for actual preservation, initial pictures and
+the independent trace-tree preparation for forest increment. -/
