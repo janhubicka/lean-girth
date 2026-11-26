@@ -153,8 +153,7 @@ theorem boundaryPolygon_right (C : ContactPolygon U R)
     (i : Fin S.count) :
     (A.boundaryPolygon C S h3).vertex (cyclicSucc i) ∈ A.coreConstituent (S.owner i) := by
   apply (A.core_constituent_iff _ _).mp
-  rw [A.boundaryPolygon_lift C S h3 (cyclicSucc i)]
-  exact S.right_mem i
+  exact (A.boundaryPolygon_lift C S h3 (cyclicSucc i)).symm ▸ S.right_mem i
 
 theorem boundaryPolygon_cycle (C : ContactPolygon U R)
     (S : ContactRunSegments C.vertex A.constituent) (h3 : 3 ≤ S.count) :
@@ -176,8 +175,10 @@ theorem boundaryPolygon_weight (C : ContactPolygon U R)
     change contactWeight ((A.boundaryPolygon C S h3).vertex i)
       ((A.boundaryPolygon C S h3).vertex (cyclicSucc i)) =
       contactWeight (C.vertex (S.boundary i)) (C.vertex (S.boundary (cyclicSucc i)))
-    rw [← A.boundaryPolygon_lift C S h3 i,
-      ← A.boundaryPolygon_lift C S h3 (cyclicSucc i),A.core_contact_weight]
+    exact (A.core_contact_weight ((A.boundaryPolygon C S h3).vertex i)
+      ((A.boundaryPolygon C S h3).vertex (cyclicSucc i))).symm.trans
+        (congrArg₂ contactWeight (A.boundaryPolygon_lift C S h3 i)
+          (A.boundaryPolygon_lift C S h3 (cyclicSucc i)))
   rw [he]
   exact C.restrict_weight_le h3 S.boundary
 
