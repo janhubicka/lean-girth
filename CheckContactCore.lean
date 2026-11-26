@@ -618,3 +618,10 @@ import Girth.ContactCore
 #print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.sourcePart_original
 #print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.orderedSource
 #print axioms StructuralRamsey.Girth.ContactCutoffTwoInput.OrderedSource.edgeWord
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstOrder
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.firstTag_order
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffWordOrder
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffWordPart_mono
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffInside_part
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffInside_order
+#print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.cutoffOrderedSource
