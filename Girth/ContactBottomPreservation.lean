@@ -13,6 +13,7 @@ namespace ContactPictureCopies
 variable {D : OrderOneData V E I E} {L : OrderOneData V₀ E₀ I₀ P₀}
     {H : OrderOneData U F (I × I₀) R} {A : ContactPictureData D L H}
     (C : ContactPictureCopies A)
+include C
 
 theorem preserves_g4_bottom {q : ℕ}
     (h0 : ∀ e, D.parent e = e) (hinj : Function.Injective H.parent)
