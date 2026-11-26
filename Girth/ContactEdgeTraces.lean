@@ -179,7 +179,8 @@ theorem contact_trace_conformal [Fintype J]
     fin_cases i
     · exact (contact_trace_real_adj F x y).mpr ⟨hxy,hpair x hx y hy hxy⟩
     · exact (contact_trace_real_adj F y z).mpr ⟨(fun he => hzy he.symm),hpair y hy z hz (fun he => hzy he.symm)⟩
-    · exact (contact_trace_real_adj F z x).mpr ⟨hzx,hpair z hz x hx hzx⟩
+    · simpa [C,cyclicSucc] using (contact_trace_real_adj F z x).mpr
+        ⟨hzx,hpair z hz x hx hzx⟩
   have hw : C.twiceWeight ≤ 2*3 := by
     simp [ContactPolygon.twiceWeight,C,Fin.sum_univ_succ,cyclicSucc,
       contactWeight,contactKind,twiceOccurrenceWeight]
