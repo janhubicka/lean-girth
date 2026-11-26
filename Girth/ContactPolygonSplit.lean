@@ -201,6 +201,7 @@ private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle 
     left_nonc := fun a b h => C.restrict_nonc hL f a b h
     right_nonc := fun a b h => C.restrict_nonc hR g a b h
     cover := ?_
+    side_cover := ?_
     chord := ?_
   }⟩
   · intro k
@@ -229,6 +230,41 @@ private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle 
     by_cases hr : j.val ≤ k.val
     · exact Or.inr (complement_mem_high hij hr)
     · exact Or.inl (interval_mem hij.le (by omega) (by omega))
+  · intro k
+    have hk := k.isLt
+    have hside :
+        (k ∈ Set.range f ∧ cyclicSucc k ∈ Set.range f) ∨
+          (k ∈ Set.range g ∧ cyclicSucc k ∈ Set.range g) := by
+      by_cases hki : k.val < i.val
+      · right
+        refine ⟨complement_mem_low hij (by omega), complement_mem_low hij ?_⟩
+        rw [cyclicSucc_value, if_pos (by omega)]
+        omega
+      by_cases hkj : k.val < j.val
+      · left
+        refine ⟨interval_mem hij.le (by omega) (by omega), interval_mem hij.le ?_ ?_⟩
+        · rw [cyclicSucc_value, if_pos (by omega)]
+          omega
+        · rw [cyclicSucc_value, if_pos (by omega)]
+          omega
+      · right
+        refine ⟨complement_mem_high hij (by omega), ?_⟩
+        by_cases hnext : k.val + 1 < C.length
+        · apply complement_mem_high hij
+          rw [cyclicSucc_value, if_pos hnext]
+          omega
+        · apply complement_mem_low hij
+          rw [cyclicSucc_value, if_neg hnext]
+          omega
+    rcases hside with ⟨⟨a,ha⟩,⟨b,hb⟩⟩ | ⟨⟨a,ha⟩,⟨b,hb⟩⟩
+    · left
+      have hab : b = cyclicSucc a :=
+        ContactCyclicRestriction.successor_of_source_successor f a b (by rw [ha,hb])
+      exact ⟨a,ha,by rw [← hab,hb]⟩
+    · right
+      have hab : b = cyclicSucc a :=
+        ContactCyclicRestriction.successor_of_source_successor g a b (by rw [ha,hb])
+      exact ⟨a,ha,by rw [← hab,hb]⟩
   · exact ⟨i,j,hnc,interval_mem hij.le (le_refl _) hij.le,
       interval_mem hij.le hij.le (le_refl _),complement_mem_low hij (le_refl _),
       complement_mem_high hij (le_refl _)⟩
