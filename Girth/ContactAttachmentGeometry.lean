@@ -186,7 +186,7 @@ theorem wagon_linearity (hlin : D.ContactLinear)
         (A.core_contact p u hx.1) (A.core_contact q u hx.2)
         (A.core_contact p v hy.1) (A.core_contact q v hy.2)
       exact noStd i ((A.standard_core i u).mpr hui) ((A.standard_core i v).mpr hvi)
-    · exact hne (A.wagon_pair_with_private h1 h2 h4 hxy.symm
+    · exact hne (A.wagon_pair_with_private h1 h2 h4 (fun he => hxy he.symm)
         hy.1 hx.1 hy.2 hx.2 hxCore)
   · exact hne (A.wagon_pair_with_private h1 h2 h4 hxy
       hx.1 hy.1 hx.2 hy.2 hyCore)
