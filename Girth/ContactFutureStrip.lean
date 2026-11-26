@@ -23,6 +23,8 @@ abbrev NewStripEdge := {f : A.Edge // A.outputProjectionEdge P b f = c}
 
 def oldStripInclusion : A.OldStripEdge P c ↪ E₀ := ⟨Subtype.val,Subtype.val_injective⟩
 
+include hA hne
+
 /-- A future-strip edge of one standard is never glued to a core
 edge. Two different standard labels therefore give distinct edges. -/
 theorem future_not_core (i : I) (f : A.OldStripEdge P c) :
@@ -42,6 +44,8 @@ theorem future_edge_injective :
   · have hx := contactGlued_shared A.edgeGlue A.edge_inj i j hij (A.stdE i f.val)
       ⟨f.val,rfl⟩ ⟨g.val,he.symm⟩
     exact (A.future_not_core P b c hA hne i f hx).elim
+
+omit hA hne
 
 noncomputable def futureEdgeEquiv : (I × A.OldStripEdge P c) ≃ A.NewStripEdge P b c := by
   let f : I × A.OldStripEdge P c → A.NewStripEdge P b c := fun p =>
@@ -131,6 +135,8 @@ def futureRefinement {d h : ℕ} (hm : m = h+1)
       (A.future_train_rel P b c hA hne ⟨1,by omega⟩ i e f).symm
   }
 
+include hne
+
 /-- Core-copy separators meet the allowed overlap in at most
 one point. This is the only intersection property needed in the
 new split-child girth argument. -/
@@ -154,6 +160,81 @@ theorem core_copy_overlap_subsingleton
     have hvE : v ∈ D.edgeCarrier e := he ▸ (show v ∈ D.copyCarrier i ∩ D.copyCarrier j from ⟨hv,hv'⟩)
     have heq : p u = p v := hbase b c (fun he => hne he.symm) hx hy
     exact congrArg A.coreV (hc.edge_inj e huE hvE heq)
+
+
+omit hne
+
+/-- Lift the selected core-copy join trees into the output,
+retaining the selected copy labels. -/
+theorem future_core_joinTree {g : ℕ} (hD : D.bottomCut.ZeroJoinTreesThrough g)
+    (s : Finset I) (hs : s.Nonempty) (hcard : s.card ≤ g) :
+    Nonempty (ContactJoinTree (fun i : {i // i ∈ s} => A.coreV '' D.copyCarrier i.val)) := by
+  classical
+  let t : Finset (I ⊕ E) := s.image Sum.inl
+  have ht : t.Nonempty := by
+    obtain ⟨i,hi⟩ := hs
+    exact ⟨Sum.inl i,Finset.mem_image.mpr ⟨i,hi,rfl⟩⟩
+  have htc : t.card ≤ g := Finset.card_image_le.trans hcard
+  obtain ⟨J⟩ := hD t ht htc
+  let f : {i // i ∈ s} → {a // a ∈ t} := fun i =>
+    ⟨Sum.inl i.val,Finset.mem_image.mpr ⟨i.val,i.property,rfl⟩⟩
+  have hi : Function.Injective f := fun a b he => Subtype.ext (Sum.inl.inj (congrArg Subtype.val he))
+  have hsurj : Function.Surjective f := by
+    intro a
+    obtain ⟨i,hi,he⟩ := Finset.mem_image.mp a.property
+    exact ⟨⟨i,hi⟩,Subtype.ext he⟩
+  let e := Equiv.ofBijective f ⟨hi,hsurj⟩
+  have U : ContactJoinTree (fun i : {i // i ∈ s} => D.copyCarrier i.val) :=
+    J.reindex e
+  exact ⟨U.mapVertices A.coreV⟩
+
+/-- Complete the actual prefix girth bound after a picture step.
+The old refinement supplies all levels strictly below d, while
+the new last-prefix cut is controlled by the core forests.
+All labels are those of the actual future strip. -/
+theorem future_refinement_prefix_girth {d h g : ℕ}
+    (hm : m = h+1) (hd : 0 < d) (hg : 2 ≤ g)
+    (R : ContactTrainData (A.OldStripEdge P c) (d+h))
+    (hret : ∀ e f, R.parent ⟨d,by omega⟩ e = R.parent ⟨d,by omega⟩ f ↔
+      S.parent ⟨1,by omega⟩ e.val = S.parent ⟨1,by omega⟩ f.val)
+    (p : V → X) (hc : A.CoreOver P b p)
+    (hbase : ∀ a b : B, a ≠ b → (base a ∩ base b).Subsingleton)
+    (hD : D.bottomCut.ZeroSmallMixedForestsThrough g)
+    (firstAllowed : Set A.Vertex)
+    (hpar : A.outputHypergraph.Parameter A.outputTrain ⟨0,by omega⟩ ⟨1,by omega⟩ firstAllowed)
+    (hcoarse : LabelledGirthGT
+      (A.outputHypergraph.atCut (A.outputTrain.parent ⟨1,by omega⟩)).contactWagonCarrier g)
+    (hold : ∀ μ : Fin (d+h+1), μ.val < d →
+      LabelledGirthGT ((L.pullEdges (A.oldStripInclusion P c)).atCut (R.parent μ)).contactWagonCarrier g) :
+    ∀ μ : Fin (d+1+h+1), μ.val ≤ d →
+      LabelledGirthGT ((A.futureHypergraph P b c hA hne).atCut
+        ((A.futureRefinement P b c hA hne hm hd R hret).train.parent μ)).contactWagonCarrier g := by
+  subst m
+  let U := A.futureRefinement P b c hA hne rfl hd R hret
+  let D₀ := L.pullEdges (A.oldStripInclusion P c)
+  let H := A.futureHypergraph P b c hA hne
+  let K : I → Set A.Vertex := fun i => A.coreV '' D.copyCarrier i
+  let C : Set A.Vertex := A.outputProjectionVertex P p ⁻¹' (base b ∩ base c)
+  have hcarrier : ∀ i e, H.edgeCarrier (i,e) = A.stdV i '' D₀.edgeCarrier e :=
+    A.future_carrier P b c hA hne
+  have hcross : U.CrossTrace H K C :=
+    A.future_cross_trace P b c hA hne p hc
+  have hpar' : H.Parameter U.coarse ⟨0,by omega⟩ ⟨1,by omega⟩ firstAllowed :=
+    A.outputHypergraph.pull_parameter A.outputTrain (A.futureEmbedding P b c hA hne)
+      _ _ firstAllowed hpar
+  have hg' : LabelledGirthGT (H.atCut (U.coarse.parent ⟨1,by omega⟩)).contactWagonCarrier g :=
+    A.outputHypergraph.pull_wagonGirth A.outputTrain (A.futureEmbedding P b c hA hne) _ hcoarse
+  have hLast := U.lastPrefix_girth H K C firstAllowed hg' hpar' hcross
+    (A.future_core_joinTree hD.2)
+    (A.core_copy_overlap_subsingleton P b c hne p hc hbase (hD.1 hg))
+  intro μ hμ
+  by_cases he : μ.val = d
+  · have heq : μ = (⟨d,by omega⟩ : Fin (d+1+h+1)) := Fin.ext he
+    rw [heq]
+    exact hLast
+  · have hlt : μ.val < d := by omega
+    exact U.prefix_girth_of_lastPrefix D₀ H A.stdV hcarrier μ hlt
+      (hold (U.depthLevel μ hlt.le) hlt) hLast
 
 end ContactTrainStrip
 end StructuralRamsey.Girth
