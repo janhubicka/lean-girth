@@ -111,10 +111,10 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
     (hCross : ∀ i j, i ≠ j → P i ∩ P j ⊆ C)
     (hTrace : ContactEdgeTraces edge (fun n => F n ∩ C))
     (hStrong : ∀ n e, (edge e ∩ F n).Nontrivial → edge e ⊆ F n)
-    (hSep : ∀ i j, i ≠ j → (P i ∩ P j).Subsingleton ∨
+    (hSep : Fintype.card Q ≤ q-1 → ∀ i j, i ≠ j → (P i ∩ P j).Subsingleton ∨
       (∃ e, P i ∩ P j = edge e))
     (hLocalSel : ∀ n, ∃ a : J (owner n), F n = G (owner n) a)
-    (hLocalSep : ∀ i j, i ≠ j → ¬ (P i ∩ P j).Subsingleton →
+    (hLocalSep : Fintype.card Q ≤ q-1 → ∀ i j, i ≠ j → ¬ (P i ∩ P j).Subsingleton →
       ∃ a : J i, P i ∩ P j = G i a)
     (hlocal : ∀ i (s : Finset (J i)), s.Nonempty → s.card ≤ q →
       Nonempty (ContactJoinTree (fun a : {a // a ∈ s} => G i a.val)))
@@ -168,7 +168,7 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       | inr j =>
         by_cases hs : (P i ∩ P j.val).Subsingleton
         · exact Or.inl hs
-        · exact Or.inr (hLocalSep i j.val j.property.ne hs)
+        · exact Or.inr (hLocalSep hsmall i j.val j.property.ne hs)
     have hTrees : ∀ i, Nonempty (ContactJoinTree (H i)) :=
       fun i => contact_localCompletion (H i) (G i) q (hBudget i) (hlocal i) (hH i)
     let localTree : ∀ i, ContactJoinTree (H i) := fun i => Classical.choice (hTrees i)
@@ -206,12 +206,12 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
         have he := n.property
         cases he
         rfl
-      | inr j => exact hSep i j.val j.property.ne
+      | inr j => exact hSep hsmall i j.val j.property.ne
     have hAstr : ∀ a : Sigma K, ∀ e, (edge e ∩ A a).Nontrivial → edge e ⊆ A a := by
       rintro ⟨i,k⟩ e hn
       cases k with
       | inl n => exact hStrong n.val e hn
-      | inr j => exact contact_edgeTrace_strong edge hlin _ (hSep i j.val j.property.ne) e hn
+      | inr j => exact contact_edgeTrace_strong edge hlin _ (hSep hsmall i j.val j.property.ne) e hn
     have hshort : ∀ a ∉ keep, ∀ b : Sigma K, b ≠ a →
         (A a ∩ A b).Subsingleton ∨ A a ∩ A b = A a :=
       fun a ha b _ => contact_auxiliary_intersection edge hlin _ _ (haux a ha) (hAstr b)
