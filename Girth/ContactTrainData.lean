@@ -71,6 +71,34 @@ theorem wagonEquiv_mk (μ : Fin (m+1)) (e : E) :
 
 end ContactTrainData
 
+namespace ContactHypergraphData
+variable (D : ContactHypergraphData V E I)
+
+def Parameter {m : ℕ} (T : ContactTrainData E m)
+    (μ ν : Fin (m+1)) (allowed : Set V) : Prop :=
+  ∀ e f x, T.parent ν e = T.parent ν f →
+    x ∈ D.edgeCarrier e → x ∈ D.edgeCarrier f → x ∉ allowed →
+    T.parent μ e = T.parent μ f
+
+/-- Proper levels only; the value of the bound function at the
+universal top is deliberately immaterial. -/
+def SystemBounds {m : ℕ} (T : ContactTrainData E m)
+    (q : Fin (m+1) → ℕ) : Prop :=
+  ∀ μ, μ.val < m → (D.atCut (T.parent μ)).ContactSystemGirthGT (q μ)
+
+def PositiveBounds {m : ℕ} (T : ContactTrainData E m)
+    (q : Fin (m+1) → ℕ) : Prop :=
+  ∀ μ, 0 < μ.val → μ.val < m →
+    (D.atCut (T.parent μ)).ContactSystemGirthGT (q μ)
+
+/-- The parameters at adjacent levels, expressed with the
+allowed sets of real vertices. -/
+def Parameters {m : ℕ} (T : ContactTrainData E m)
+    (allowed : Fin m → Set V) : Prop :=
+  ∀ j : Fin m, D.Parameter T j.castSucc j.succ (allowed j)
+
+end ContactHypergraphData
+
 /-- Every old nested-equivalence train has the corresponding
 surjective class-label presentation. -/
 def EdgeTrainLevels.toContactTrain {m : ℕ} (T : EdgeTrainLevels E m) :
