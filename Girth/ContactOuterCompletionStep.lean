@@ -70,12 +70,10 @@ theorem next_completable
   letI : Fintype C.Copy := Fintype.ofFinite _
   letI : Fintype P.Copy := Fintype.ofFinite _
   letI : DecidableEq (C.Copy × P.Copy) := Classical.decEq _
-  let N := {p : C.Copy × P.Copy // p ∈ s}
+  let N := ↥s
   let owners : Finset C.Copy := s.image Prod.fst
   let Q := {i : C.Copy // i ∈ owners}
-  letI : Fintype N := by
-    change Fintype {p : C.Copy × P.Copy // p ∈ s}
-    infer_instance
+  letI : Fintype N := Finset.Subtype.fintype s
   letI : Fintype Q := by
     change Fintype {i : C.Copy // i ∈ owners}
     infer_instance
@@ -127,8 +125,11 @@ theorem next_completable
     obtain ⟨v,huv,⟨J⟩⟩ := hOld u hu huc
     exact ⟨v,huv,⟨J.mapVertices (A.stdV i.val)⟩⟩
   have hNcard : Fintype.card N ≤ m := by
-    change Fintype.card ↥s ≤ m
-    simpa using hc
+    have he : Fintype.card N = s.card := by
+      calc
+        Fintype.card N = @Fintype.card ↥s (Finset.Subtype.fintype s) := rfl
+        _ = s.card := by simp
+    exact he ▸ hc
   obtain ⟨t,ht,hct,⟨J⟩⟩ := contact_qualitative_completion_lift
     (K := fun _ : Q => P.Copy) m hNcard owner hsurj
     (fun i => Set.range (A.stdV i.val)) J₂ pieces

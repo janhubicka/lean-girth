@@ -1,6 +1,7 @@
 import Girth.ContactOuterCompletionStep
 import Girth.ContactCoveredProfile
 import Girth.ContactRefinedCoreAssembly
+import Girth.ContactPartPreservation
 
 /-! The outer iteration with a genuinely supplied local-forest core.
 The same height-one picture data are reused. The outer property is

@@ -98,11 +98,11 @@ theorem initialPicture_outerInvariant [Finite V] [Finite E] [Finite J]
     (hg : D.WagonBounds T q)
     (hpar : ∀ i : J, D.Parameters T (fun j => A.vertex i ⁻¹' allowed j))
     (m : ℕ) :
-    (A.initialPicture (by omega : 0 < 1) allowed q horder hcovered hlin hg hpar).OuterInvariant m := by
-  let Q := A.initialPicture (by omega : 0 < 1) allowed q horder hcovered hlin hg hpar
-  have hfull : Q.FullBounds := A.initialPicture_fullBounds
+    (A.initialPicture (T := T) (by omega : 0 < 1) allowed q horder hcovered hlin hg hpar).OuterInvariant m := by
+  let Q := A.initialPicture (T := T) (by omega : 0 < 1) allowed q horder hcovered hlin hg hpar
+  have hfull : Q.FullBounds := A.initialPicture_fullBounds (T := T)
     (by omega : 0 < 1) allowed q horder hcovered hlin hg hpar
-  refine ⟨?_,(Q.forests_of_fullBounds (by omega) hfull hq).1 (by omega),?_⟩
+  refine ⟨?_,(Q.forests_of_fullBounds (by omega) (j := 2) hfull hq).1 (by omega),?_⟩
   · change (∀ x : J × V, ∃ j : J, x.1 = j) ∧
       (∀ e : J × E, ∃ j : J, e.1 = j)
     exact ⟨fun x => ⟨x.1,rfl⟩,fun e => ⟨e.1,rfl⟩⟩

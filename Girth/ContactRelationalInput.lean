@@ -19,7 +19,8 @@ def contactDiagonalLabel (B : RelStructure L V) (x : V) : ContactDiagonalType B 
 
 theorem contactDiagonalLabel_eq_iff (B : RelStructure L V) (x y : V) :
     contactDiagonalLabel B x = contactDiagonalLabel B y ↔ ContactDiagonalEq B x y :=
-  ⟨Quotient.exact,Quotient.sound⟩
+  ⟨fun h => @Quotient.exact V (contactDiagonalSetoid B) x y h,
+    fun h => @Quotient.sound V (contactDiagonalSetoid B) x y h⟩
 
 theorem contactDiagonalType_finite (B : RelStructure L V) [Finite V] :
     Finite (ContactDiagonalType B) :=
