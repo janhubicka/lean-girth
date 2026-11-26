@@ -85,3 +85,20 @@ The next batch extracts the pure shortest labelled Berge-cycle geometry from Tra
 The manuscript at [d722de9a2d5be7aae2b6e64b987e83c64989364a](https://github.com/janhubicka/girth/tree/d722de9a2d5be7aae2b6e64b987e83c64989364a) now separates shortest-wagon-cycle localization and simplifies the final boundary lifting. It is unnecessary to eliminate subdivisions before lifting: a segment with endpoints shared by the covering standard and another constituent cannot span the outer points of an exceptional wagon triple, so it is a single side of the subdivided polygon. This avoids the former additional argument about inserted wagon vertices.
 
 Remaining central obligation: construct the subdivided polygon and cyclic segment boundaries and prove G4, with separate level-zero forest completion for the core. The ordered partite train interfaces and complete recursive witnesses are still open. New proof scripts are not counted as verified until the exact-head audit. The current batch is submitted with one non-skipped commit; historical code and main remain intact.
+
+
+### Boundary reduction batch
+
+[Run 45798581650](https://github.com/janhubicka/lean-girth/actions/runs/45798581650), head 4931c2144f302bc2d25c256746c48e0a855e83fb, again passed all 53 base axiom checks. Every module of the expanded preparation compiled except ContactCopyRestriction, whose two errors concerned a destructured nontriviality witness and identification of generating clique families. The tagged union, strongness, contact traces, G1/G2 preservation, G3 deduction and extracted shortest-cycle window modules all compiled. Their extended axiom audit was skipped; do not claim it passed. Both copy-restriction errors are patched.
+
+New modules:
+- ContactCyclicRuns extracts the pure finite run enumeration from the historical library.
+- ContactRunSegments constructs the actual closed arcs between successive owner changes, including wrap, with their constituent membership and coverage.
+- ContactConstituents identifies core traces and intersections of standard and enlarged-edge constituents.
+- ContactBoundary constructs the contracted boundary polygon, proves weight nonincrease, excludes two boundaries, shared chords and any covering clique, from the common-pair consecutive-trace fact.
+- ContactSideSubdivision proves the geometric choice of inserted wagon, half-side constituent witnesses, freshness and injectivity of insertions, and noncontainment of the old bad polygon in a standard.
+- ContactExpandedPolygon proves the consecutive-trace fact, constructs maximal segments from expanded sides, and derives the positive-core G4 contradiction from an exact finite expansion. The actual cyclic indexing of inserted vertices and its weight equality are the remaining combinatorial obligation of that theorem; they are not assumed solved. The bottom-level forest-core alternative still needs the join-tree bound and special assignment.
+
+Manuscript [1a0ed810d07e9fc0d432eee4cec562e22abe6654](https://github.com/janhubicka/girth/tree/1a0ed810d07e9fc0d432eee4cec562e22abe6654) uses one common-pair consecutive-trace observation instead of the exceptional-triple case distinction for the boundary count, shared chord and covering wagon arguments. This is a mathematical simplification, not a new hypothesis.
+
+One batched CI submission: 53 base, 112 intermediate, 141 extended core audit requests. The intermediate gate prevents a failure in the new finite-cycle arguments from obscuring a successful audit of the picture preparation. The earlier root and main are untouched.
