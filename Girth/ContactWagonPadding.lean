@@ -129,7 +129,7 @@ carrier is the union of the padded wagons in its class. -/
 noncomputable def unionCarrier {W : Type v} (parent : P → W) (w : W) : Set A.Vertex :=
   {x | ∃ p, parent p = w ∧ x ∈ A.padded p}
 
-def oldUnionCarrier {W : Type v} (parent : P → W) (w : W) : Set V :=
+def oldUnionCarrier (_A : ContactWagonPadding K X) {W : Type v} (parent : P → W) (w : W) : Set V :=
   {x | ∃ p, parent p = w ∧ x ∈ K p}
 
 /-- Every shared connector of distinct padded higher wagons is
