@@ -1,4 +1,4 @@
-import Girth.ContactOrderedPreparation
+import Girth.ContactSeedPreparation
 import Girth.ContactAllLevelPreservation
 import Girth.ContactPictureZero
 import Girth.ContactPictureIncrement
@@ -9,7 +9,7 @@ import Girth.ContactFutureStrip
 import Girth.ContactCutoffTwoAssembly
 import Girth.ContactActualStepInvariant
 import Girth.ContactSeedPicture
-import Girth.ContactWordBase
+import Girth.ContactOrderedSeedIteration
 import Girth.ContactRecursiveRank
 
 /-! Focused kernel for actual preservation, initial pictures and
