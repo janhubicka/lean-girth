@@ -95,8 +95,10 @@ private theorem interval_side {n : ℕ} {i j : Fin n} (h : i.val < j.val)
   · left
     apply Fin.ext
     have hsource : i.val + k.val + 1 < n := by omega
-    simp only [intervalEmbedding_value, cyclicSucc_value, if_pos hnext, if_pos hsource]
-    <;> omega
+    simp only [intervalEmbedding_value, cyclicSucc_value, if_pos hnext]
+    change i.val + (k.val + 1) =
+      (if i.val + k.val + 1 < n then i.val + k.val + 1 else 0)
+    rw [if_pos hsource] <;> omega
   · right
     constructor
     · apply Fin.ext
@@ -262,11 +264,11 @@ private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle 
     · left
       have hab : b = cyclicSucc a :=
         ContactCyclicRestriction.successor_of_source_successor f a b (by rw [ha,hb])
-      exact ⟨a,ha,by rw [← hab,hb]⟩
+      exact ⟨a,ha,(congrArg (fun t => f t) hab.symm).trans hb⟩
     · right
       have hab : b = cyclicSucc a :=
         ContactCyclicRestriction.successor_of_source_successor g a b (by rw [ha,hb])
-      exact ⟨a,ha,by rw [← hab,hb]⟩
+      exact ⟨a,ha,(congrArg (fun t => g t) hab.symm).trans hb⟩
   · exact ⟨i,j,hnc,interval_mem hij.le (le_refl _) hij.le,
       interval_mem hij.le hij.le (le_refl _),complement_mem_low hij (le_refl _),
       complement_mem_high hij (le_refl _)⟩
