@@ -116,6 +116,7 @@ theorem contact_removeVertex_conformal {F : I → Set W} (x : W)
   obtain ⟨j,hj⟩ := hv u hu
   exact ⟨ha hu,hj.2⟩
 
+open Classical in
 theorem contact_removeVertex_used [Fintype W] (F : I → Set W) (x : W) :
     contactUsedVertices (fun i => F i \ {x}) = (contactUsedVertices F).erase x := by
   classical
