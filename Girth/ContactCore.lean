@@ -1,5 +1,5 @@
 import Girth.ContactSubstitution
-import Girth.ContactCycles
+import Girth.ContactPolygonSplit
 import Girth.ContactLowOrder
 import Girth.ContactRank
 import Girth.TrainWagonNodeGluing
