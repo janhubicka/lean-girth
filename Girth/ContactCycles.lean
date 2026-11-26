@@ -75,6 +75,11 @@ structure Split (C : ContactPolygon V P) (K : J → Set (V ⊕ P)) where
   right_nonc : ∀ i j, right.Nonconsecutive i j →
     C.Nonconsecutive (rightMap i) (rightMap j)
   cover : ∀ i : Fin C.length, i ∈ Set.range leftMap ∨ i ∈ Set.range rightMap
+  side_cover : ∀ i : Fin C.length,
+    (∃ a : Fin left.length, leftMap a = i ∧
+      leftMap (cyclicSucc a) = cyclicSucc i) ∨
+    (∃ a : Fin right.length, rightMap a = i ∧
+      rightMap (cyclicSucc a) = cyclicSucc i)
   chord : ∃ i j, C.Nonconsecutive i j ∧
     i ∈ Set.range leftMap ∧ j ∈ Set.range leftMap ∧
     i ∈ Set.range rightMap ∧ j ∈ Set.range rightMap
