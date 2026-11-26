@@ -215,7 +215,16 @@ theorem zero_selected_conformal [Fintype J] {q : ℕ}
         · rw [Finset.card_pair hxy]
           exact hle
       obtain ⟨a,ha,ha'⟩ := hpair x (ht hx) y (ht hy') hxy
-      exact htbad ⟨a,by rw [← he]; simp [ha,ha']⟩
+      apply htbad
+      refine ⟨a,?_⟩
+      intro u hu
+      have hm : u ∈ ({x,y} : Finset V) := by
+        rw [he]
+        exact hu
+      simp only [Finset.mem_insert,Finset.mem_singleton] at hm
+      rcases hm with rfl | rfl
+      · exact ha
+      · exact ha'
   have hbudget : t.card ≤ q := by
     have hx : ∀ x : {x // x ∈ t}, ∃ a : J,
         (∀ u ∈ t, u ≠ x.val → u ∈ D.carrier (sel a)) ∧
@@ -258,7 +267,17 @@ theorem zero_selected_conformal [Fintype J] {q : ℕ}
       (hpair x (ht hx) y (ht hy') hxy)
       (hpair y (ht hy') z (ht hz') hyz)
       (hpair z (ht hz') x (ht hx) hxz.symm)
-    exact htbad ⟨a,by rw [← hset]; simp [ha,hb,hc]⟩
+    apply htbad
+    refine ⟨a,?_⟩
+    intro u hu
+    have hm : u ∈ ({x,y,z} : Finset V) := by
+      rw [hset]
+      exact hu
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hm
+    rcases hm with rfl | rfl | rfl
+    · exact ha
+    · exact hb
+    · exact hc
   · have h4ne : (((t.erase x).erase y).erase z).Nonempty := Finset.card_pos.mp
       (by rw [Finset.card_erase_of_mem hz,Finset.card_erase_of_mem hy,
         Finset.card_erase_of_mem hx]; omega)
