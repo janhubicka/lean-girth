@@ -1,6 +1,7 @@
 import Girth.ContactTrainEmbedding
 import Girth.ContactTrainBottom
 import Girth.ContactZeroJoinTrees
+import Girth.ContactJoinTreeGlue
 
 /-! Remove repeated designated vertex images without changing the
 underlying train. For strongly induced copies and edges of size
@@ -158,6 +159,76 @@ theorem dedup_systemGirth {q : ℕ} (h : D.ContactSystemGirthGT q)
     · intro hlen
       obtain ⟨i,j,hij,he⟩ := hchord hlen
       exact ⟨i,j,hij,(hadj _ _).mpr he⟩
+
+end OrderOneData
+
+
+namespace OrderOneData
+variable (D : OrderOneData V E I E)
+
+/-- The retained mixed pieces use a genuine injection into the old
+mixed-piece labels (including the edge labels, which are fixed). -/
+noncomputable def dedupPiece : (D.ImageLabel ⊕ E) ↪ (I ⊕ E) where
+  toFun := fun a => a.map D.imageRep id
+  inj' := by
+    intro a b h
+    cases a with
+    | inl i =>
+      cases b with
+      | inl j =>
+        exact congrArg Sum.inl (D.imageRep_injective (Sum.inl.inj h))
+      | inr e => cases h
+    | inr e =>
+      cases b with
+      | inl j => cases h
+      | inr f => exact congrArg Sum.inr (Sum.inr.inj h)
+
+theorem dedupPiece_carrier (a : D.ImageLabel ⊕ E) :
+    D.dedup.carrier a = D.carrier (D.dedupPiece a) := by
+  cases a with
+  | inl i => exact (D.imageRep_carrier i).symm
+  | inr e => rfl
+
+theorem dedupPiece_edges (a : D.ImageLabel ⊕ E) :
+    D.dedup.edges a = D.edges (D.dedupPiece a) := by
+  cases a <;> rfl
+
+/-- Deduplication also preserves the exact small-family property,
+including the cutoff-one case, without requiring system girth. -/
+theorem dedup_smallForests {q : ℕ}
+    (h : D.ZeroSmallMixedForestsThrough q) :
+    D.dedup.ZeroSmallMixedForestsThrough q := by
+  classical
+  constructor
+  · intro hq a b hne
+    have h' := h.1 hq (D.dedupPiece a) (D.dedupPiece b)
+      (fun he => hne (D.dedupPiece.injective he))
+    rw [D.dedupPiece_carrier a,D.dedupPiece_carrier b,
+      D.dedupPiece_edges a,D.dedupPiece_edges b]
+    exact h'
+  · intro s hs hc
+    let t := s.image D.dedupPiece
+    have ht : t.Nonempty := by
+      obtain ⟨a,ha⟩ := hs
+      exact ⟨D.dedupPiece a,Finset.mem_image.mpr ⟨a,ha,rfl⟩⟩
+    have htc : t.card ≤ q := Finset.card_image_le.trans hc
+    obtain ⟨T⟩ := h.2 t ht htc
+    let f : {a // a ∈ s} → {b // b ∈ t} := fun a =>
+      ⟨D.dedupPiece a.val,Finset.mem_image.mpr ⟨a.val,a.property,rfl⟩⟩
+    have hi : Function.Injective f := by
+      intro a b he
+      exact Subtype.ext (D.dedupPiece.injective (congrArg Subtype.val he))
+    have hsurj : Function.Surjective f := by
+      intro b
+      obtain ⟨a,ha,he⟩ := Finset.mem_image.mp b.property
+      exact ⟨⟨a,ha⟩,Subtype.ext he⟩
+    let e := Equiv.ofBijective f ⟨hi,hsurj⟩
+    have U : ContactJoinTree (fun a : {a // a ∈ s} => D.carrier (D.dedupPiece a.val)) :=
+      T.reindex e
+    have heq : (fun a : {a // a ∈ s} => D.dedup.carrier a.val) =
+        (fun a : {a // a ∈ s} => D.carrier (D.dedupPiece a.val)) :=
+      funext (fun a => D.dedupPiece_carrier a.val)
+    exact ⟨heq.symm ▸ U⟩
 
 end OrderOneData
 
