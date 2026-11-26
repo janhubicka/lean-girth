@@ -43,10 +43,10 @@ theorem Chain.focus {P Q : ContactFocusPicture A B} {l : List B}
       (∀ i e, Q.copy (lift i) e = f (P.copy i e)) ∧
       (∀ b ∈ l, ∃ c : Color, ∀ e, P.projection e = b → χ (f e) = c) := by
   induction H with
-  | nil P =>
+  | nil =>
     exact ⟨Function.Embedding.refl _,id,fun _ => rfl,fun _ _ => rfl,
       fun b hb => (by simpa using hb : False).elim⟩
-  | @snoc P Q R l b H hstep ih =>
+  | @snoc Q R l b H hstep ih =>
     obtain ⟨g,k,hg,hk,c,hc⟩ := hstep χ
     obtain ⟨f,j,hf,hj,hm⟩ := ih (fun e => χ (g e))
     refine ⟨f.trans g,k ∘ j,?_,?_,?_⟩
