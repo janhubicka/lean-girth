@@ -83,3 +83,11 @@ import Girth
 #print axioms StructuralRamsey.Girth.OrderOneData.zero_pair_edge_of_distinct_cliques
 #print axioms StructuralRamsey.Girth.OrderOneData.zero_pairwise_allowed
 #print axioms StructuralRamsey.Girth.OrderOneData.zero_no_sparse_polygon
+#print axioms StructuralRamsey.Girth.contactCoreEmb_mem_standard
+#print axioms StructuralRamsey.Girth.contactGlued_cover
+#print axioms StructuralRamsey.Girth.contactGlued_shared
+#print axioms StructuralRamsey.Girth.ContactTaggedPicture.output_carrier_standard
+#print axioms StructuralRamsey.Girth.ContactTaggedPicture.output_parent_standard
+#print axioms StructuralRamsey.Girth.ContactTaggedPicture.output_parent_surj
+#print axioms StructuralRamsey.Girth.ContactTaggedPicture.toPictureData
+#print axioms StructuralRamsey.Girth.ContactTaggedPicture.output_wagon_linearity
