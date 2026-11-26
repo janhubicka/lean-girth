@@ -101,7 +101,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake build +Girth.ContactRefinedCoreAssembly +Girth.ContactRankAssembly +Girth.ContactCutoffTwoOrderedSource
+          lake build +Girth.ContactRefinedCoreAssembly +Girth.ContactRankAssembly +Girth.ContactCutoffTwoOrderedSource +Girth.ContactCoverage +Girth.ContactBoostDistinctImages
           lake env lean CheckContactOrderedRefinedInput.lean | tee contact-ordered-refined-axioms.log
           python3 scripts/check_axioms.py contact-ordered-refined-axioms.log CheckContactOrderedRefinedInput.lean
       - name: Build the expanded contact kernel
@@ -130,9 +130,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake build +Girth.ContactQualitativeCompletion +Girth.ContactBoostDistinctImages
+          lake build +Girth.ContactMarkedEdges +Girth.ContactQualitativeCompletion +Girth.ContactBoostDistinctImages
           lake env lean CheckContactOuterPreparation.lean | tee contact-outer-preparation-axioms.log
           python3 scripts/check_axioms.py contact-outer-preparation-axioms.log CheckContactOuterPreparation.lean
+      - name: Audit quantitative completion by minimum added family
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactMixedCompletionCost
+          lake env lean CheckContactQuantitativeCompletion.lean | tee contact-quantitative-completion-axioms.log
+          python3 scripts/check_axioms.py contact-quantitative-completion-axioms.log CheckContactQuantitativeCompletion.lean
       - name: Audit full local-forest partite application
         if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
         shell: bash

@@ -47,12 +47,12 @@ variable {D : ContactHypergraphData V E I}
 /-- Glue precisely the nonisolated target vertices; all other
 vertices of each restored copy are private. -/
 noncomputable def isolatedGlue : J → V → Option U :=
-  fun j => contactPartial {x : V | ∃ e, x ∈ D.edgeCarrier e} (M.emb j).vertex
+  fun j => ContactBaseProjection.contactPartial {x : V | ∃ e, x ∈ D.edgeCarrier e} (M.emb j).vertex
 
 theorem isolatedGlue_iff (j : J) (x : V) (u : U) :
     M.isolatedGlue j x = some u ↔
       ∃ hx : ∃ e, x ∈ D.edgeCarrier e, (M.emb j).vertex ⟨x,hx⟩ = u :=
-  contactPartial_some_iff _ _ _ _
+  ContactBaseProjection.contactPartial_some_iff _ _ _ _
 
 theorem isolatedGlue_inj (j : J) (x y : V) (u : U)
     (hx : M.isolatedGlue j x = some u) (hy : M.isolatedGlue j y = some u) :

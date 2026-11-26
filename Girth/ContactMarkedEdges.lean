@@ -8,13 +8,13 @@ arbitrary equal carrier sets. -/
 
 namespace StructuralRamsey.Girth
 universe v
-variable {V E Q : Type v}
+variable {V E : Type v}
 
 /-- A forest of linear support pieces, each containing at most one
 marked edge, cannot contain a Berge cycle of marked edges. The
 separator of adjacent pieces is an actual common edge or has
 at most one vertex. -/
-theorem contact_marked_cycle_impossible [Fintype Q]
+theorem contact_marked_cycle_impossible {Q : Type v} [Fintype Q]
     (carrier : Q → Set V) (edge : E → Set V) (supports : Q → Set E)
     (marked : E → Prop)
     (J : ContactJoinTree carrier)
@@ -45,8 +45,9 @@ theorem contact_marked_cycle_impossible [Fintype Q]
     obtain ⟨leaf,parent,hadj,huniq,_⟩ := J.exists_leaf_attachment
     let K := {i : Q // i ∈ ({leaf} : Set Q)ᶜ}
     by_cases hkeep : ∀ k, ∃ i : K, (C.label k).val ∈ supports i.val
-    · let J' := J.eraseLeaf hadj huniq
-      exact contact_marked_cycle_impossible (fun i : K => carrier i.val) edge
+    · letI : Fintype K := Fintype.ofFinite K
+      let J' := J.eraseLeaf hadj huniq
+      exact contact_marked_cycle_impossible (Q := K) (fun i : K => carrier i.val) edge
         (fun i : K => supports i.val) marked J'
         (fun i e he => hsub i.val e he)
         (fun i e f he hf hme hmf => hmark i.val e f he hf hme hmf)

@@ -509,7 +509,13 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
       calc
         _ = B.place e.1 '' Set.range (EP.endpoint e.2) :=
           congrArg (fun s : Set X => B.place e.1 '' s) (EP.carrier_eq e.2)
-        _ = _ := by rw [Set.image_range] <;> rfl
+        _ = _ := by
+          ext z
+          constructor
+          · rintro ⟨x,⟨p,rfl⟩,rfl⟩
+            exact ⟨p,rfl⟩
+          · rintro ⟨p,rfl⟩
+            exact ⟨EP.endpoint e.2 p,⟨p,rfl⟩,rfl⟩
     covered := by
       intro x
       obtain ⟨e,he⟩ := W.out.covered x

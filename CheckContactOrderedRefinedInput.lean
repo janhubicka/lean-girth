@@ -1,6 +1,8 @@
 import Girth.ContactAssemblyPreparation
 import Girth.ContactForestBoostClass
 import Girth.ContactRefinedCoreAssembly
+import Girth.ContactCoverage
+import Girth.ContactBoostDistinctImages
 import Girth.ContactRankAssembly
 import Girth.ContactLocalCoreInput
 import Girth.ContactOrderedSeedIteration
@@ -768,3 +770,26 @@ class-wide recursive theorem. -/
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_cutoffs
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_rankOK
 #print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.shorter_refined_rankDecrease
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedVertexEmb
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedEdgeEmb
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_vertexCoverage
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_edgeCoverage
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_copyCarrier_injective
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_girth
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedPiece
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedPiece_carrier
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedPiece_edges_mem
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedPiece_edge_survives
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_pairwise
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.usedGraph_smallForests
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.usedVertex
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.usedEdge
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.restrictCovered
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.restrictCovered_arrow
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.restrictCovered_noIsolated
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.edge_nontrivial
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_smallForests
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_injective
+#print axioms StructuralRamsey.Girth.ContactBoostInput.forestBoost_distinctImages

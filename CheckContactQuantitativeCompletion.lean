@@ -1,0 +1,7 @@
+import Girth.ContactMixedCompletionCost
+
+#print axioms StructuralRamsey.Girth.contact_completion_degree_budget
+#print axioms StructuralRamsey.Girth.contact_minimumCompletion_cost
+#print axioms StructuralRamsey.Girth.ContactJoinTree.insertContained
+#print axioms StructuralRamsey.Girth.OrderOneData.mixedCompletion_exists
+#print axioms StructuralRamsey.Girth.OrderOneData.mixedCompletion_cost

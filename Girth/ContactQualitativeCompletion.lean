@@ -1,6 +1,5 @@
 import Girth.ContactJoinTreeLift
 import Girth.ContactCompletionBudget
-import Girth.ContactMarkedEdges
 
 /-! The qualitative outer completion step. Unlike the inner
 forest increment, the local family is allowed to add genuine
