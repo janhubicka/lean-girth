@@ -39,8 +39,8 @@ theorem contactCutoffs_length {m : ℕ} (q : Fin (m+1) → ℕ) :
 theorem contactCutoffs_get {m : ℕ} (q : Fin (m+1) → ℕ)
     (i : ℕ) (hi : i < (contactCutoffs q).length) :
     (contactCutoffs q)[i] = q ⟨i,by rw [contactCutoffs_length] at hi; omega⟩ := by
-  unfold contactCutoffs
-  rw [List.getElem_ofFn] <;> rfl
+  exact List.getElem_ofFn (f := fun j : Fin m => q j.castSucc)
+    (show i < (List.ofFn (fun j : Fin m => q j.castSucc)).length from hi)
 
 theorem contactCutoffs_cons {h : ℕ} (q : Fin (h+2) → ℕ) :
     contactCutoffs q = q 0 :: contactCutoffs (contactTailBounds q) := by
@@ -112,15 +112,33 @@ theorem shorter_refined_cutoffs (q : Fin (h+2) → ℕ) :
     have he := R.shorter_refined_at q
       ⟨i,by omega⟩ (by exact hi)
     rw [he]
+    change (if i+1 < R.depth then g else q ⟨i+1-R.depth+1,by omega⟩) =
+      (List.replicate (R.depth-1) g ++ contactCutoffs (contactTailBounds q))[i]'hR
     by_cases hs : i < R.depth-1
-    · rw [if_pos (by omega),List.getElem_append_left (by simpa using hs)]
-      simp
-    · rw [if_neg (by omega),List.getElem_append_right (by simpa using Nat.le_of_not_gt hs)]
-      rw [List.length_replicate,contactCutoffs_get,contactTailBounds_at _ (by omega)]
-      congr 1
-      apply Fin.ext
-      change i+1-R.depth+1 = i-(R.depth-1)+1
-      omega
+    · rw [if_pos (show i+1 < R.depth by omega)]
+      have hrep : i < (List.replicate (R.depth-1) g).length := by
+        simpa only [List.length_replicate] using hs
+      exact ((List.getElem_append_left hrep).trans (List.getElem_replicate hrep)).symm
+    · rw [if_neg (show ¬ i+1 < R.depth by omega)]
+      have hrep : (List.replicate (R.depth-1) g).length ≤ i := by
+        simpa only [List.length_replicate] using Nat.le_of_not_gt hs
+      have ht : i - (List.replicate (R.depth-1) g).length <
+          (contactCutoffs (contactTailBounds q)).length := by
+        rw [List.length_append] at hR
+        omega
+      calc
+        q ⟨i+1-R.depth+1,by omega⟩ =
+          contactTailBounds q ⟨i-(List.replicate (R.depth-1) g).length,
+            by rw [contactCutoffs_length] at ht; omega⟩ := by
+          rw [contactTailBounds_at _ (by omega)]
+          apply congrArg q
+          apply Fin.ext
+          change i+1-R.depth+1 = i-(List.replicate (R.depth-1) g).length+1
+          simp only [List.length_replicate]
+          omega
+        _ = (contactCutoffs (contactTailBounds q))[i-(List.replicate (R.depth-1) g).length]'ht :=
+          (contactCutoffs_get _ _ ht).symm
+        _ = _ := (List.getElem_append_right hrep).symm
 
 /-- The lower-rank vector is still nondecreasing in its proper cuts.
 This statement deliberately does not assert monotonicity of the
@@ -158,7 +176,10 @@ theorem shorter_refined_rankDecrease (M : ℕ) (q : Fin (h+2) → ℕ)
     (hg : g = contactRefinementCutoff (q 0)) :
     TrainCountLex M (contactCutoffs (contactTailBounds (R.boostBounds q)))
       (contactCutoffs q) := by
-  rw [R.shorter_refined_cutoffs q,contactCutoffs_cons q,hg]
+  rw [R.shorter_refined_cutoffs q,contactCutoffs_cons q]
+  have he := congrArg (fun k => List.replicate (R.depth-1) k ++
+    contactCutoffs (contactTailBounds q)) hg
+  rw [he]
   exact contact_refinement_rankDecrease M (q 0) R.depth _
     hq (hOK.1 0 (by change (0 : ℕ) < h+1; omega)).2
 

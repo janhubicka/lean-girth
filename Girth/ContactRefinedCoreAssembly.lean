@@ -393,7 +393,7 @@ theorem coarseCore_of_cutoffTwo {Color : Type v} [Finite Color] [Nonempty Color]
     (allowed := fun j => Subtype.val ⁻¹' allowed j) (q := q)
     (by omega) hq hG supply 1 (by rw [hzero]) (Q.coarseBoostInput b hne)
   let C := Q.coarseCore b hne W
-  refine ⟨C,?_,C.nontrivial_of_base hsize,W.arrow⟩
+  refine ⟨C,?_,Core.nontrivial_of_base Q b C hsize,W.arrow⟩
   rw [hzero]
   exact hW
 

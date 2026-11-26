@@ -77,6 +77,7 @@ theorem edge_nontrivial (ha : 2 ≤ a) (e : A.Edge) : (A.graph.edgeCarrier e).No
   intro h
   have he := (A.enumeration e).injective h
   have hval := congrArg Fin.val he
+  change (0 : ℕ) = 1 at hval
   omega
 
 theorem linear_of_wagonBounds (hm : 0 < m) (q : Fin (m+1) → ℕ)
@@ -237,34 +238,31 @@ noncomputable def profileSource [Finite V] [Finite E] [Finite C]
     ContactProfileTrain P m (Fintype.card X) (fun j => allowed j.succ)
       (fun i => templatePart (Fintype.orderIsoFinOfCardEq X rfl i)) := by
   letI : Finite T.FirstWagon := Finite.of_surjective (T.parent (0 : Fin (m+1)).succ) (T.surj _)
-  letI : Finite A.Vertex := Finite.of_injective (fun z : A.Vertex =>
-    (z.1,match z.2 with
+  letI : ∀ c : C, Finite (A.Component c) := fun c => by
+    apply Finite.of_injective (fun z : A.Component c =>
+      match z with
       | .inl x => (Sum.inl x : V ⊕ (T.FirstWagon × X))
-      | .inr x => Sum.inr (x.1,x.2.val))) (by
-      rintro ⟨c,x⟩ ⟨d,y⟩ he
-      have hcd := congrArg Prod.fst he
-      subst d
-      have hxy := congrArg Prod.snd he
-      cases x with
-      | inl x =>
-        cases y with
-        | inl y =>
-          have h := Sum.inl.inj hxy
-          subst y
-          rfl
-        | inr y => cases hxy
-      | inr x =>
-        cases y with
-        | inl y => cases hxy
-        | inr y =>
-          rcases x with ⟨p,⟨x,hx⟩⟩
-          rcases y with ⟨q,⟨y,hy⟩⟩
-          have h := Sum.inr.inj hxy
-          have hp := congrArg Prod.fst h
-          have hxy := congrArg Prod.snd h
-          subst q
-          subst y
-          rfl)
+      | .inr p => Sum.inr (p.1,p.2.val))
+    intro x y he
+    cases x with
+    | inl x =>
+      cases y with
+      | inl y => exact congrArg Sum.inl (Sum.inl.inj he)
+      | inr y => cases he
+    | inr x =>
+      rcases x with ⟨p,⟨u,hu⟩⟩
+      cases y with
+      | inl y => cases he
+      | inr y =>
+        rcases y with ⟨q,⟨w,hw⟩⟩
+        have h := Sum.inr.inj he
+        have hp : p = q := congrArg Prod.fst h
+        have hu' : u = w := congrArg Prod.snd h
+        subst q
+        subst w
+        rfl
+  letI : Finite A.Vertex := inferInstanceAs (Finite (Sigma A.Component))
+  letI : LinearOrder A.Vertex := O.order
   let W := O.edgeWord
   refine {
     Vertex := A.Vertex
@@ -292,7 +290,12 @@ noncomputable def profileSource [Finite V] [Finite E] [Finite C]
   · intro j
     apply A.source.parameter_mono A.sourceTrain j.castSucc j.succ
       (A := {x | x.2 ∈ (A.pad x.1).oldVertex '' (part ⁻¹' allowed j.succ)})
-    · rintro ⟨c,x⟩ ⟨u,hu,rfl⟩
+    · intro z hz
+      rcases z with ⟨c,x⟩
+      change x ∈ (A.pad c).oldVertex '' (part ⁻¹' allowed j.succ) at hz
+      obtain ⟨u,hu,hux⟩ := hz
+      change A.paddedPart part templatePart c x ∈ allowed j.succ
+      rw [← hux]
       exact hu
     · exact A.source_parameters (fun j => part ⁻¹' allowed j.succ)
         (fun j => hp j.succ) j
@@ -353,19 +356,25 @@ theorem profileFilling_compatible [Finite V] [Finite E] [Finite C]
   let f : Fin (Fintype.card X) → W.out.Vertex :=
     W.out.enumeration ((W.family.emb j).edge e)
   let g : Fin (Fintype.card X) → W.out.Vertex :=
-    fun i => (W.family.emb j).vertex (R.enumeration e i)
+    fun i => (W.family.emb j).vertex (A.fill.place e (k i))
   have hf : StrictMono f := (W.out.enumeration _).strictMono
   have hg : StrictMono g := fun i l h =>
-    W.emb_order j _ _ ((R.enumeration e).strictMono h)
+    W.emb_order j _ _ (O.place_order e _ _ (k.strictMono h))
   have hr : Set.range f = Set.range g := by
-    change Set.range (W.out.enumeration ((W.family.emb j).edge e)) = _
-    rw [← W.out.carrier_eq,(W.family.emb j).carrier_eq,R.carrier_eq]
-    ext y
-    constructor
-    · rintro ⟨z,⟨i,rfl⟩,rfl⟩
-      exact ⟨i,rfl⟩
-    · rintro ⟨i,rfl⟩
-      exact ⟨R.enumeration e i,⟨i,rfl⟩,rfl⟩
+    calc
+      Set.range f = W.out.graph.edgeCarrier ((W.family.emb j).edge e) :=
+        (W.out.carrier_eq ((W.family.emb j).edge e)).symm
+      _ = (W.family.emb j).vertex '' A.source.edgeCarrier e :=
+        (W.family.emb j).carrier_eq e
+      _ = Set.range g := by
+        rw [← A.fill.range_eq e]
+        ext y
+        constructor
+        · rintro ⟨z,⟨u,rfl⟩,rfl⟩
+          exact ⟨k.symm u,by change (W.family.emb j).vertex
+            (A.fill.place e (k (k.symm u))) = _; rw [k.apply_symm_apply]⟩
+        · rintro ⟨i,rfl⟩
+          exact ⟨A.fill.place e (k i),⟨k i,rfl⟩,rfl⟩
   have h := congrFun (hf.range_inj_of_wellFoundedLT hg |>.mp hr) (k.symm x)
   change W.out.enumeration ((W.family.emb j).edge e) (k.symm x) =
     (W.family.emb j).vertex (A.fill.place e (k (k.symm x))) at h
@@ -403,10 +412,10 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
     exact InvImage.wf idx (inferInstance : WellFoundedLT (Fin (Fintype.card N)))
   letI : Finite A.train.FirstWagon := Finite.of_surjective
     (A.train.parent (0 : Fin (m+1)).succ) (A.train.surj _)
-  letI : Finite (FirstVertex (D := A.graph) A.train) := Finite.of_injective
-    (fun x : FirstVertex (D := A.graph) A.train => (x.1,x.2.val)) (by
+  letI : Finite (ContactPartiteEndpoints.FirstVertex (D := A.graph) A.train) := Finite.of_injective
+    (fun x : ContactPartiteEndpoints.FirstVertex (D := A.graph) A.train => (x.1,x.2.val)) (by
       rintro ⟨p,x⟩ ⟨r,y⟩ he
-      have hp := congrArg Prod.fst he
+      have hp : p = r := congrArg Prod.fst he
       subst r
       have he' : x = y := Subtype.ext (congrArg Prod.snd he)
       subst y
@@ -414,7 +423,7 @@ theorem cutoffTwo_of_tailRamsey {Color : Type v} [Finite Color] [Nonempty Color]
   let EP := (U.firstEndpoints A.train).wordEndpoints N
   let X := U.CutoffWordVertex A.train N
   letI : Finite X := Finite.of_injective
-    (fun x : X => (x.val : P × (N → FirstVertex (D := A.graph) A.train))) Subtype.val_injective
+    (fun x : X => (x.val : P × (N → ContactPartiteEndpoints.FirstVertex (D := A.graph) A.train))) Subtype.val_injective
   letI : Fintype X := Fintype.ofFinite _
   letI : LinearOrder X := U.cutoffWordOrder A.train N
   letI : Finite (Combinatorics.Line A.Edge N) :=

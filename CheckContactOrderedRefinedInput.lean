@@ -1,5 +1,6 @@
 import Girth.ContactAssemblyPreparation
-import Girth.ContactBoostClass
+import Girth.ContactForestBoostClass
+import Girth.ContactRefinementBudgets
 import Girth.ContactLocalCoreInput
 import Girth.ContactOrderedSeedIteration
 import Girth.ContactCutoffTwoOrderedSource
@@ -723,3 +724,13 @@ class-wide recursive theorem. -/
 #print axioms StructuralRamsey.Girth.ContactPartiteEndpoints.wordPart_order
 #print axioms StructuralRamsey.Girth.ContactBoostInput.all_wagonBounds
 #print axioms StructuralRamsey.Girth.ContactBoostInput.all_cutLinear
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.outputEndpoints
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.boostStripInput
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.boostCore
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.boostWitness
+#print axioms StructuralRamsey.Girth.ContactBoostInput.boost_step
+#print axioms StructuralRamsey.Girth.ContactBoostInput.forestBoost
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostAllowed
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds_zero
+#print axioms StructuralRamsey.Girth.ContactBaseProjection.StripRefinement.boostBounds_two

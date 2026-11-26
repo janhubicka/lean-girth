@@ -167,6 +167,7 @@ theorem contactProfileRamsey_step
     intro h
     have he := (S.enumeration b).injective h
     have hv := congrArg Fin.val he
+    change (0 : ℕ) = 1 at hv
     omega
   have hnt (b : S.Edge) : Nontrivial (S.graph.edgeCarrier b) := by
     obtain ⟨x,hx,y,hy,hxy⟩ := hsize b
