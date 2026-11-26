@@ -45,9 +45,7 @@ theorem preserves_bottomBound {q : ℕ} (hs : A.StripStrong)
   have hc := P.core_strong (A.stripStrong_bottom hs)
   have hpar : Function.Injective P.output.parent := by
     intro e f he
-    change A.bottomPicture.output.parent e = A.bottomPicture.output.parent f at he
-    rw [A.bottomPicture_parent,A.bottomPicture_parent] at he
-    exact he
+    exact (A.bottomPicture_parent e).symm.trans (he.trans (A.bottomPicture_parent f))
   have hout := P.pictureCopies.preserves_systemGirth_bottom
     (fun _ => rfl) hpar (A.bottomAbsorption_of_strip ha) hc
     hD.1 hsub hsize hD.2 hL'
