@@ -38,6 +38,7 @@ structure ContactSubstitution (old : OrderOneData V E I P)
 namespace ContactSubstitution
 
 variable (S : ContactSubstitution old new)
+include S
 
 theorem cover_surjective : Function.Surjective S.cover := by
   intro e
