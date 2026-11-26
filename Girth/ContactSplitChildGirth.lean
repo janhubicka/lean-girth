@@ -36,32 +36,33 @@ theorem contact_joinTree_no_cycle_on_set
     intro i
     obtain ⟨k,_,hk⟩ := Finset.mem_image.mp i.property
     exact ⟨k,Subtype.ext hk⟩
-  let e := Equiv.ofBijective idx ⟨hinj,hsurj⟩
-  let K : Fin B.length → Set V := fun i => F (B.label i)
-  let U : ContactJoinTree K := T.reindex e
-  letI : Nontrivial (Fin B.length) := ⟨⟨i₀,cyclicSucc i₀,
-    (contactSucc_ne B.hlength i₀).symm⟩⟩
-  obtain ⟨leaf,parent,hadj,huniq,_⟩ := U.exists_leaf_attachment
-  obtain ⟨prev,hprev⟩ := contactSucc_surjective leaf
-  have hprevne : prev ≠ leaf := by
+  let J := {i // i ∈ s}
+  letI : Nontrivial J := ⟨⟨idx i₀,idx (cyclicSucc i₀),
+    fun he => contactSucc_ne B.hlength i₀ (hinj he).symm⟩⟩
+  obtain ⟨leaf,parent,hadj,huniq,_⟩ := T.exists_leaf_attachment
+  obtain ⟨k,hk⟩ := hsurj leaf
+  obtain ⟨prev,hprev⟩ := contactSucc_surjective k
+  have hprevne : prev ≠ k := by
     intro he
-    subst prev
-    exact contactSucc_ne B.hlength leaf hprev
-  have hxleaf : B.vertex leaf ∈ K leaf := (B.left_mem leaf).1
-  have hyleaf : B.vertex prev ∈ K leaf := by
+    exact contactSucc_ne B.hlength k (he ▸ hprev)
+  have hxleaf : B.vertex k ∈ F leaf.val := by
+    rw [← hk]
+    exact (B.left_mem k).1
+  have hyleaf : B.vertex prev ∈ F leaf.val := by
+    rw [← hk]
     have h := (B.right_mem prev).1
     rw [hprev] at h
     exact h
-  have hxparent := U.mem_parent_of_mem_leaf_and_other hadj huniq
-    (contactSucc_ne B.hlength leaf) hxleaf (B.right_mem leaf).1
-  have hyparent := U.mem_parent_of_mem_leaf_and_other hadj huniq
-    hprevne hyleaf (B.left_mem prev).1
-  have he := hinter (B.label leaf) (B.label parent)
-    (fun h => hadj.ne (B.label_injective h))
-    (show B.vertex leaf ∈ F (B.label leaf) ∩ F (B.label parent) ∩ C from
-      ⟨⟨hxleaf,hxparent⟩,(B.left_mem leaf).2⟩)
-    (show B.vertex prev ∈ F (B.label leaf) ∩ F (B.label parent) ∩ C from
-      ⟨⟨hyleaf,hyparent⟩,(B.left_mem prev).2⟩)
+  have hxparent := T.mem_parent_of_mem_leaf_and_other hadj huniq
+    (show idx (cyclicSucc k) ≠ leaf from fun he =>
+      contactSucc_ne B.hlength k (hinj (he.trans hk.symm)))
+    hxleaf (show B.vertex k ∈ F (idx (cyclicSucc k)).val from (B.right_mem k).1)
+  have hyparent := T.mem_parent_of_mem_leaf_and_other hadj huniq
+    (show idx prev ≠ leaf from fun he => hprevne (hinj (he.trans hk.symm)))
+    hyleaf (show B.vertex prev ∈ F (idx prev).val from (B.left_mem prev).1)
+  have he := hinter leaf.val parent.val (fun h => hadj.ne (Subtype.ext h))
+    ⟨⟨hxleaf,hxparent⟩,(B.left_mem k).2⟩
+    ⟨⟨hyleaf,hyparent⟩,(B.left_mem prev).2⟩
   exact hprevne (B.vertex_injective he.symm)
 
 /-- A labelled family refined into smaller carriers has girth
