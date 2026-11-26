@@ -160,11 +160,13 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       cases k with
       | inl n =>
         right
-        have hn := hLocalSel n.val
-        have he := n.property
-        change ∃ a : J i, F n.val = G i a
-        rw [← he]
-        exact hn
+        let x := n.val
+        have hn := hLocalSel x
+        have he : owner x = i := n.property
+        have he' : ∃ a : J i, F x = G i a := by
+          rw [← he]
+          exact hn
+        exact he'
       | inr j =>
         by_cases hs : (P i ∩ P j.val).Subsingleton
         · exact Or.inl hs
@@ -176,9 +178,9 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       intro i k
       cases k with
       | inl n =>
-        change F n.val ⊆ P i
-        rw [← n.property]
-        exact hContain n.val
+        have hn := hContain n.val
+        rw [n.property] at hn
+        exact hn
       | inr j => exact Set.inter_subset_left
     let connector : (i j : Q) → K i := fun i j =>
       if h : T.tree.Adj i j then Sum.inr ⟨j,h⟩
@@ -202,10 +204,15 @@ theorem contact_directIncrement_joinTree [Fintype U] [Fintype N] [Nonempty N]
       | inl n =>
         apply False.elim
         apply hk
-        refine ⟨n.val,?_⟩
-        have he := n.property
-        cases he
-        rfl
+        let x := n.val
+        have hx : owner x = i := n.property
+        refine ⟨x,?_⟩
+        apply Sigma.ext hx
+        cases n with
+        | mk x' hx' =>
+          dsimp [x] at hx ⊢
+          subst i
+          rfl
       | inr j => exact hSep hsmall i j.val j.property.ne
     have hAstr : ∀ a : Sigma K, ∀ e, (edge e ∩ A a).Nontrivial → edge e ⊆ A a := by
       rintro ⟨i,k⟩ e hn
