@@ -1,4 +1,5 @@
 import Girth.ContactDisjointCopies
+import Girth.ContactTrainBottom
 
 /-! The whole initial train, obtained by taking vertex-disjoint
 copies at every proper cut and identifying only the universal top.
@@ -62,7 +63,8 @@ noncomputable def disjointWagonEquiv (J : Type v) (hm : 0 < m)
       · omega
       · exact Prod.ext h₁ h₂
     · intro h
-      exact Or.inr ⟨congrArg Prod.fst h,congrArg Prod.snd h⟩
+      exact Or.inr ⟨congrArg (fun z : J × T.Wagon μ => z.1) h,
+        congrArg (fun z : J × T.Wagon μ => z.2) h⟩
   let f : (T.disjointTrain J hm).Wagon μ → J × T.Wagon μ :=
     Quotient.lift g (fun _ _ h => (hiff _ _).mp h)
   have hinj : Function.Injective f := by
