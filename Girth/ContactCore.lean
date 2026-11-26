@@ -1,7 +1,6 @@
 import Girth.ContactBoundaryBase
 import Girth.ContactPositivePreservation
 import Girth.ContactBottomPreservation
-import Girth.ContactConformality
-import Girth.ContactJoinTreeRestore
+import Girth.ContactMixedForestConverse
 
 /-! Fast target for the current contact preservation proof. -/
