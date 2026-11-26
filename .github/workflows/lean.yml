@@ -1,9 +1,14 @@
-name: Lean
+name: Contact graph validation
 
 on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      integration:
+        description: "Also build and audit the reused relational integration root"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -64,18 +69,26 @@ jobs:
             fi
             sleep "$((attempt * 12))"
           done
-      - name: Build the contact-graph validation target
+      - name: Inventory focused dependency closures
+        run: python3 scripts/contact_inventory.py
+      - name: Build standalone contact kernel
         shell: bash
         run: |
           set -euo pipefail
-          # Reuse dependencies, never stale project objects. The module target
-          # builds only the import closure of the new root, not the old library.
           rm -rf .lake/build
-          lake build +Girth
-      - name: Audit the new validation declarations
+          lake build +Girth.ContactCore
+      - name: Strict standalone axiom audit
         shell: bash
         run: |
           set -euo pipefail
           python3 scripts/test_check_axioms.py
+          lake env lean CheckContactCore.lean | tee contact-core-axioms.log
+          python3 scripts/check_axioms.py contact-core-axioms.log CheckContactCore.lean
+      - name: Build and audit relational integration
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth
           lake env lean CheckContactGraph.lean | tee contact-axioms.log
           python3 scripts/check_axioms.py contact-axioms.log CheckContactGraph.lean
