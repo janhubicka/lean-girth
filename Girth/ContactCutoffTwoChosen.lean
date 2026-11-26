@@ -45,7 +45,7 @@ def chosenEdge : E ↪ (T.FirstWagon × F) where
 
 variable (hcover : ∀ x, ∃ f, x ∈ L.edgeCarrier f) (hne : Nonempty F)
 
-abbrev Filled (_M : A.TemplateEmbedding L) := (A.filling L hcover hne).output
+noncomputable def Filled (_M : A.TemplateEmbedding L) := (A.filling L hcover hne).output
 
 theorem chosen_carrier (e : E) :
     (M.Filled hcover hne).edgeCarrier (M.chosenEdge e) =
