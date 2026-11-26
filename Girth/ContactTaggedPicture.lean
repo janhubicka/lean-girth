@@ -178,9 +178,9 @@ theorem output_parent_surj : Function.Surjective T.output.parent := by
   intro r
   rcases contactGlued_cover T.wagonGlue T.wagon_inj r with ⟨p,rfl⟩ | ⟨i,p,rfl⟩
   · obtain ⟨e,he⟩ := T.core_parent_surj p
-    exact ⟨T.coreE e,by rw [T.output_parent_core,he]⟩
+    exact ⟨T.coreE e,by rw [T.output_parent_core,he]; rfl⟩
   · obtain ⟨e,he⟩ := T.old_parent_surj p
-    exact ⟨T.stdE i e,by rw [T.output_parent_standard,he]⟩
+    exact ⟨T.stdE i e,by rw [T.output_parent_standard,he]; rfl⟩
 
 /-- The full actual one-level free-union picture data. Every map and
 coverage field is supplied by the concrete tagged construction. -/
