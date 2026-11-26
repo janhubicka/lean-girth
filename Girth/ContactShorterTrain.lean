@@ -117,9 +117,8 @@ theorem shorter_wagonGirth (μ : Fin (m+1)) {g : ℕ}
       (D.atCut (T.parent μ.succ)).contactWagonCarrier := by
     funext p
     exact A.original_union_eq μ p
-  apply A.union_girth
-  rw [he]
-  exact hg
+  exact A.union_girth (T.shorterParent μ)
+    (show LabelledGirthGT (A.oldUnionCarrier (T.shorterParent μ)) g from he.symm ▸ hg)
 
 theorem shorter_wagonBounds (q : Fin (m+1) → ℕ)
     (hg : ∀ μ : Fin (m+1), μ.val < m →
