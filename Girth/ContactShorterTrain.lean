@@ -108,7 +108,11 @@ theorem shorter_wagonGirth (μ : Fin (m+1)) {g : ℕ}
     (hg : LabelledGirthGT (D.atCut (T.parent μ.succ)).contactWagonCarrier g) :
     LabelledGirthGT
       (A.paddedHypergraph.atCut (T.shorterTrain.parent μ)).contactWagonCarrier g := by
-  rw [A.shorter_carrier_eq μ]
+  have hcarrier : (A.paddedHypergraph.atCut (T.shorterTrain.parent μ)).contactWagonCarrier =
+      A.unionCarrier (T.shorterParent μ) := by
+    funext p
+    exact A.shorter_carrier_eq μ p
+  rw [hcarrier]
   have he : A.oldUnionCarrier (T.shorterParent μ) =
       (D.atCut (T.parent μ.succ)).contactWagonCarrier := by
     funext p
