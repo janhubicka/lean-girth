@@ -149,8 +149,8 @@ noncomputable def orderedPlacement [Fintype X] [Finite V]
   let h : Fintype.card (D.edgeCarrier e) = Fintype.card X := by
     rw [← Nat.card_eq_fintype_card]
     exact hcard
-  exact ((Fintype.orderIsoFinOfCardEq X rfl).toOrderEmbedding.trans
-    (Fintype.orderIsoFinOfCardEq (D.edgeCarrier e) h).symm.toOrderEmbedding).trans
+  exact ((Fintype.orderIsoFinOfCardEq X rfl).symm.toOrderEmbedding.trans
+    (Fintype.orderIsoFinOfCardEq (D.edgeCarrier e) h).toOrderEmbedding).trans
       (OrderEmbedding.subtype _)
 
 theorem orderedPlacement_range [Fintype X] [Finite V]
@@ -161,8 +161,8 @@ theorem orderedPlacement_range [Fintype X] [Finite V]
   let h : Fintype.card (D.edgeCarrier e) = Fintype.card X := by
     rw [← Nat.card_eq_fintype_card]
     exact hcard
-  let q := (Fintype.orderIsoFinOfCardEq X rfl).trans
-    (Fintype.orderIsoFinOfCardEq (D.edgeCarrier e) h).symm
+  let q := (Fintype.orderIsoFinOfCardEq X rfl).symm.trans
+    (Fintype.orderIsoFinOfCardEq (D.edgeCarrier e) h)
   ext v
   constructor
   · rintro ⟨x,rfl⟩
