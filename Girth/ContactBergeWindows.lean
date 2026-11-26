@@ -648,7 +648,7 @@ theorem LabelledBergeCycle.contact_outside_wagon_contact_window_of_minimal
 /-- Full labelled chordless contact window: selected wagon labels have
 only their two prescribed boundary contacts, while every unselected
 wagon has at most one contact. -/
-theorem LabelledBergeCycle.contact_window_of_global_minimal
+theorem LabelledBergeCycle.contact_shortest_window
     (carrier : I → Set V) (C : LabelledBergeCycle carrier)
     (hMin : ∀ B : LabelledBergeCycle carrier, C.length ≤ B.length)
     (hLinear : ∀ a b : I, a ≠ b →
