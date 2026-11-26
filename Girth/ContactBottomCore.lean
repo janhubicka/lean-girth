@@ -1,4 +1,5 @@
 import Girth.ContactJoinTreeCycles
+import Girth.ContactZeroJoinTrees
 
 /-! The two-member part of the mixed-forest property implies the
 bottom G1 and G2 clauses. All copy and edge labels are kept distinct.
@@ -11,11 +12,6 @@ variable {V E I : Type v}
 namespace OrderOneData
 variable (D : OrderOneData V E I E)
 
-def ZeroPairwise : Prop :=
-  ∀ a b : I ⊕ E, a ≠ b →
-    (D.carrier a ∩ D.carrier b).Subsingleton ∨
-      ∃ e, e ∈ D.edges a ∧ e ∈ D.edges b ∧
-        D.carrier a ∩ D.carrier b = D.edgeCarrier e
 
 theorem zero_g1_of_pairwise (h0 : ∀ e, D.parent e = e)
     (hp : D.ZeroPairwise)
