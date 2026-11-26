@@ -1,5 +1,5 @@
 import Girth.ContactTaggedPicture
-import Mathlib.Data.Prod.Lex
+import Mathlib.Order.Prod.Lex.Basic
 import Mathlib.Data.Finset.Lattice.Fold
 
 /-! Compatible finite orders on the actual tagged free union.
