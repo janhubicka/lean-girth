@@ -43,8 +43,8 @@ noncomputable def fill : ContactFilling A.source L where
   place := fun p => ((A.pad p.1).place p.2).trans (contactComponentEmb (V := A.Component) p.1)
   range_eq := by
     intro p
-    change Set.range (fun x => contactComponentEmb p.1 ((A.pad p.1).place p.2 x)) =
-      contactComponentEmb p.1 '' Set.range ((A.pad p.1).place p.2)
+    change Set.range (fun x : X => contactComponentEmb (V := A.Component) p.1 ((A.pad p.1).place p.2 x)) =
+      contactComponentEmb (V := A.Component) p.1 '' Set.range ((A.pad p.1).place p.2)
     ext x
     constructor
     · rintro ⟨y,rfl⟩
