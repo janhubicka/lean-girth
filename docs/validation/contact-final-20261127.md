@@ -1,5 +1,73 @@
 # Local validation of the contact-graph proof — 27 November 2026
 
+## Published validation and independent review
+
+The first complete proof batch was merged in
+[PR #1091](https://github.com/janhubicka/lean-girth/pull/1091).
+[Hosted run 45994948824](https://github.com/janhubicka/lean-girth/actions/runs/45994948824)
+finished successfully at 12:13:25 UTC on 27 November 2026. Its completed job
+log confirms the 3,610-job build and all three original audits: 781 core,
+61 principal, and 48 newly linked manuscript declarations. The source head,
+actual CI checkout, and final merge have the identical Git tree
+`7540c1591b85acf3ba5036138b9dc45714f6ac32`:
+
+| Role | Commit |
+| --- | --- |
+| Locally checked and published source | `ca88c6d664a98e3b59180e082a2c0f16fd215a70` |
+| Actual synthetic-merge checkout in CI | `27013847ee74cf8ed3e7f788ae6de6b5ff6450f5` |
+| Merged main | `22b1ff50fcbfb0b74e40cc5b8f2e6eccb279724c` |
+
+The manuscript annotations were published in
+[`janhubicka/girth@0d5341ce`](https://github.com/janhubicka/girth/commit/0d5341ce95d6104b1d46fd2a5731e1c0fbb96d72).
+After removing validation macros and comments, all 21 regular-tree source
+files had unchanged mathematical text. The normal and annotated TeX builds
+both produced 26 pages; the annotated version had two automatic margin-note
+placement warnings and no overfull or underfull boxes.
+
+A subsequent independent review compared the actual theorem contracts and
+definitions with the manuscript. It found no missing hypothesis or weakened
+conclusion in the main relational theorem, unordered reduction, small induced
+substructures, arbitrary-size chordality criterion, or any-linear-extension
+corollary. The review explicitly checked literal carrier counting, generated
+versus induced unions, finiteness, nullary tuples, and empty induced sets.
+
+The review did identify two concrete checker defects. Python optimization
+disabled assertion-based validation, and a repeated declaration report could
+overwrite an earlier report. `scripts/check_axioms.py` now uses explicit
+failures and rejects duplicate reports. Nine regression tests exercise 24
+checker subprocess cases under normal and optimized Python. A separate
+inspection of the original complete log found exactly the expected unique
+reports and only standard axioms, so neither defect affected the earlier
+recorded result. Fresh Lean audit outputs also passed the repaired checker
+under `python3 -O`.
+
+The forest-definition interface now has a direct certificate:
+`JoinTree.pairwiseAllowed_of_links` derives pairwise allowed intersections
+from allowed separators only on tree links and ambient edge linearity.
+`contact_forestOfCopies_iff_linkAllowed` proves the exact equivalence with
+the manuscript definition, including empty families. This removes a former
+scope distinction in the annotations; the main theorem had already proved
+the stronger pairwise condition.
+
+`contact_forestOfCopies_iff_admissibleAttachments` now gives the exact
+finite-forest enumeration equivalence. Each new member meets the entire
+preceding union in at most one vertex or in an edge common to it and an
+earlier member. The reverse direction derives global pairwise compatibility
+from these attachments and ambient linearity; it does not assume it.
+Empty and singleton families and separators are included. Both new modules
+compiled without warnings, and the enumeration proof passed independent
+semantic review.
+
+The provenance audit inspected all 228 pre-existing Lean markers: every
+linked file and declaration name exists at its immutable revision. These
+markers use 127 distinct revision/file pairs across 27 revisions. Their
+current versions, together with two partite-construction interfaces, give
+216 distinct declarations. Eleven older declarations needed five explicit
+audit-only module targets. The final manuscript audit adds the three new
+forest links, bringing it to 219 declarations. Source resolution at historic
+revisions and kernel checking of current declarations are separate checks;
+the older snapshots were not rebuilt with their historical toolchains.
+
 ## Verified scope
 
 The complete new main proof is kernel-checked locally. This is a statement-level
@@ -42,6 +110,8 @@ theorems on literal carrier sets.
 | Metric shared-chord equivalence | `contactSharedChordBound_iff_metricG4` | Passed |
 | Admissible attachments produce a join tree | `contact_joinTree_of_admissibleAttachments` | Passed |
 | Join tree iff an admissible enumeration exists | `contact_joinTree_iff_admissibleRank` | Passed |
+| Link-local forest definition iff pairwise forest interface | `contact_forestOfCopies_iff_linkAllowed` | Passed |
+| Forest iff the literal admissible-attachment condition | `contact_forestOfCopies_iff_admissibleAttachments` | Passed |
 | Any specified leaf can be enumerated last | `ContactJoinTree.exists_admissibleRank_leaf_last` | Passed |
 | Exact one-added-copy completion sharpness | `contactSharp_actual_completion` | Passed |
 | Exact vertex-cutoff sharpness with all five witness clauses | `contact_vertex_cutoff_sharp` | Passed |
@@ -52,16 +122,18 @@ and the unordered reductions are checked as separate exported theorems.
 
 ## Local build and logical assumptions
 
-The complete local build succeeded with 3,610 jobs. The reproducible command is:
+The consolidated follow-up local build succeeded with 3,793 jobs. The
+reproducible command is:
 
 ```sh
 bash scripts/check_contact_validation.sh
 ```
 
-This builds `+Girth`, checks all 781 declarations requested by
-`CheckContactCore.lean`, the 61 principal declarations requested by
-`CheckContactValidation.lean`, and the 48 newly linked manuscript declarations
-in `CheckContactManuscript.lean`. The union contains 841 distinct declarations;
+This first tests the checker, builds `+Girth` and the five audit-only roots,
+and checks all 781 declarations requested by `CheckContactCore.lean`, the
+70 principal declarations requested by `CheckContactValidation.lean`, and
+the 219 manuscript-linked declarations in `CheckContactManuscript.lean`.
+The union contains 888 distinct declarations;
 the three lists overlap. All checks completed successfully and their
 transitive axiom dependencies are subsets of:
 
@@ -74,12 +146,15 @@ Quot.sound
 In particular, the audited proofs have no dependency on `sorryAx`, a custom
 axiom, or a native computation axiom. The axiom checker also rejects missing
 declaration reports, so an incomplete audit log cannot count as a pass.
-All six regression tests of that strict checker also passed with
-`python3 scripts/test_check_axioms.py`.
+All nine regression tests of that strict checker also passed with
+`python3 scripts/test_check_axioms.py`, exercising normal and optimized Python.
 
 The focused default root includes both final main theorems, the corollaries,
-and the supporting observations. The CI workflow now runs this complete build
-and all three strict audits in addition to its diagnostic component checks.
+and the supporting observations: 239 project modules. The complete validation
+adds the historically linked interfaces, for 420 project modules altogether.
+The remaining 760 historical modules are outside this validation scope. The
+CI workflow runs the complete script and all three strict audits in addition
+to its diagnostic component checks.
 
 ## Exact dependency versions
 

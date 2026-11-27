@@ -12,6 +12,8 @@ import Girth.ContactAcyclicTraces
 import Girth.ContactManuscriptAdapters
 import Girth.ContactMetricTriangulation
 import Girth.ContactRootedEnumeration
+import Girth.ContactForestInterfaces
+import Girth.ContactForestEnumeration
 import Girth.ContactCompletionSharpness
 import Girth.ContactVertexSharpness
 
@@ -33,6 +35,11 @@ Covered triangulations, covered sides, and the shared-chord equivalence
 are included for arbitrary real-valued metric weights.
 Parent-first admissible enumerations, their converse, and a listing ending
 at any specified leaf are included for finite join trees.
+The exact forest interface equates allowed separators on tree links with
+pairwise allowed intersections in a linear ambient hypergraph, including
+the empty-family convention. Its admissible-enumeration equivalence uses
+the literal whole-preceding-union attachment condition, including empty
+and singleton families and separators.
 The completion-budget sharpness example uses actual ordered edge copies,
 their generated relational union, and the obstruction to embedding that
 union into any supported tree before the containing copy is added.

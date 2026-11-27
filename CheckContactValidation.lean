@@ -1,5 +1,15 @@
 import Girth.ContactValidation
 
+#print axioms StructuralRamsey.Girth.JoinTree.mem_of_mem_path
+#print axioms StructuralRamsey.Girth.JoinTree.pairwiseAllowed_of_links
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_linkAllowed
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank.toAdmissibleRank
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank.pairwiseAllowed
+#print axioms StructuralRamsey.Girth.contact_forestAdmissibleRank_of_attachments
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_admissibleRank
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_admissibleAttachments
+
 -- Recursive construction and the partite lemma.
 #print axioms StructuralRamsey.Girth.contactProfileRamsey_wellFounded
 #print axioms StructuralRamsey.Girth.contactProfileRamsey_distinctImages

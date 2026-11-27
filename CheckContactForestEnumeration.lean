@@ -1,0 +1,8 @@
+import Girth.ContactForestEnumeration
+
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank.toAdmissibleRank
+#print axioms StructuralRamsey.Girth.contact_forestAdmissibleRank_of_attachments
+#print axioms StructuralRamsey.Girth.ContactForestAdmissibleRank.pairwiseAllowed
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_admissibleRank
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_admissibleAttachments

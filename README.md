@@ -1,6 +1,6 @@
 # lean-girth
 
-## Current proof: local validation on 27 November 2026
+## Current proof: local and hosted validation on 27 November 2026
 
 The contact-graph proof of `regular-tree-girth.tex` now builds locally with
 Lean **4.35.0-rc3**. The complete main relational theorem, its literal
@@ -10,7 +10,11 @@ chordality characterization for arbitrary induced vertex sets have passed
 strict transitive axiom audits. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur. The proof does not assume the girth Ramsey theorem.
 
-Run the complete focused build and audit with:
+[PR #1091](https://github.com/janhubicka/lean-girth/pull/1091) is merged.
+The complete [hosted validation run](https://github.com/janhubicka/lean-girth/actions/runs/45994948824)
+passed on exactly the same source tree as the local build and the merged commit.
+
+Run the checker regressions, complete focused build, and axiom audits with:
 
 ```sh
 bash scripts/check_contact_validation.sh
@@ -19,8 +23,9 @@ bash scripts/check_contact_validation.sh
 `Girth.lean` imports the final aggregate
 [`Girth/ContactValidation.lean`](Girth/ContactValidation.lean), so the default
 build includes the final application theorems. The aggregate also retains the
-previous regression imports. Historical proof files remain available without
-being part of this active build.
+previous regression imports. The complete script additionally builds five
+auxiliary roots used by older manuscript references. Other historical source
+files remain outside these focused validation targets.
 
 | Manuscript statement | Main Lean declaration |
 | --- | --- |
@@ -34,13 +39,15 @@ being part of this active build.
 | Small induced subhypergraphs, including edgeless targets | `contactUniformSmallRamsey` |
 | Arbitrary metric triangulation and shared-chord criterion | `contactSharedChordBound_iff_metricG4` |
 | Join trees iff admissible enumerations | `contact_joinTree_iff_admissibleRank` |
+| Forest definition by allowed tree links iff pairwise allowed intersections | `contact_forestOfCopies_iff_linkAllowed` |
+| Forests iff admissible attachments to the entire preceding union | `contact_forestOfCopies_iff_admissibleAttachments` |
 | Exact one-added-copy completion sharpness | `contactSharp_actual_completion` |
 | Exact vertex-cutoff sharpness with all five witness clauses | `contact_vertex_cutoff_sharp` |
 
 See the [local validation record](docs/validation/contact-final-20261127.md)
 for the exact statement scope, dependency pins, sharpness certificates, and
-reproducible build and axiom-audit results. The manuscript's newly promoted
-validation links have a separate declaration audit in
+reproducible build and axiom-audit results. The manuscript's current and
+historically pinned validation links have a separate declaration audit in
 [`CheckContactManuscript.lean`](CheckContactManuscript.lean).
 
 ## Earlier validation history
@@ -55,4 +62,4 @@ Initial formalization target: manuscript `main` as of commit containing `paper/0
 
 The current proposed girth manuscript is being checked in **numbered tracks 1–8**, separate from the older lettered tracks. See [the track index](docs/validation/numbered-tracks-20261113.md) and [programme issue #1060](https://github.com/janhubicka/lean-girth/issues/1060).
 
-The 41-page audited manuscript is **merged to [`janhubicka/girth/main@8c9cfa6e`](https://github.com/janhubicka/girth/commit/8c9cfa6eb6d817a08f3009fe048fc0be07426ece)**. The pre-merge annotated tag preserves the original `main@c195cdba`. The [numbered index](docs/validation/numbered-tracks-20261113.md) fixes the exact source digest and distinguishes reusable checked theorems from conditional interfaces and new obligations. **No new Lean proof certification is implied by the manuscript merge.** Existing checked modules and historical gates remain intact; promote only after an exact source/hypothesis comparison, local build and `#print axioms` audit. This repository's `lean.yml` triggers a full build on every branch push, so create numbered validation branches when actual proof changes are ready, not eight empty branches at once.
+The 41-page audited manuscript is **merged to [`janhubicka/girth/main@8c9cfa6e`](https://github.com/janhubicka/girth/commit/8c9cfa6eb6d817a08f3009fe048fc0be07426ece)**. The pre-merge annotated tag preserves the original `main@c195cdba`. The [numbered index](docs/validation/numbered-tracks-20261113.md) fixes the exact source digest and distinguishes reusable checked theorems from conditional interfaces and new obligations. **No new Lean proof certification is implied by that manuscript merge.** This paragraph records the earlier validation scope; the completed contact-graph proof is recorded above. The current [`lean.yml`](.github/workflows/lean.yml) runs on pull requests and direct pushes to `main`, avoiding duplicate branch-push and pull-request runs.
