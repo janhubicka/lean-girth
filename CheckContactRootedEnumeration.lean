@@ -1,0 +1,16 @@
+import Girth.ContactRootedEnumeration
+
+#print axioms StructuralRamsey.Girth.ContactJoinTree.rootPath
+#print axioms StructuralRamsey.Girth.ContactJoinTree.rootPath_isPath
+#print axioms StructuralRamsey.Girth.ContactJoinTree.rootPath_unique
+#print axioms StructuralRamsey.Girth.ContactJoinTree.rootPath_length_eq_dist
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parent
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parent_adj
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parent_dist_add_one
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirstRank
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirstRank_injective
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirstRank_parent_lt
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirstRank_root_lt
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirstRank_admissible
+#print axioms StructuralRamsey.Girth.ContactJoinTree.exists_admissibleRank_leaf_last
+#print axioms StructuralRamsey.Girth.contact_joinTree_iff_admissibleRank

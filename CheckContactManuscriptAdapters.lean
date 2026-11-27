@@ -1,0 +1,5 @@
+import Girth.ContactManuscriptAdapters
+
+#print axioms StructuralRamsey.Girth.contactCoveredLinearSeed
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_wagon_strong
+#print axioms StructuralRamsey.Girth.OrderOneData.contact_outside_wagon_intersection_subsingleton

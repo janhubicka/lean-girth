@@ -273,6 +273,9 @@ jobs:
           lake build +Girth.ContactOrderCompletion
           lake env lean CheckContactOrderCompletion.lean | tee contact-order-completion-axioms.log
           python3 scripts/check_axioms.py contact-order-completion-axioms.log CheckContactOrderCompletion.lean
+      - name: Build complete proof and audit principal theorems
+        shell: bash
+        run: bash scripts/check_contact_validation.sh
       - name: Build and audit relational integration
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
         shell: bash

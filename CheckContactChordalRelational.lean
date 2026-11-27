@@ -1,0 +1,8 @@
+import Girth.ContactChordalRelational
+
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_induce
+#print axioms StructuralRamsey.Girth.contact_clique_pair
+#print axioms StructuralRamsey.Girth.ContactChordalCopyWitness
+#print axioms StructuralRamsey.Girth.contact_chordal_copyWitness
+#print axioms StructuralRamsey.Girth.contact_induced_supported_of_chordal
+#print axioms StructuralRamsey.Girth.contact_induced_supported_iff_chordal

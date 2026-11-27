@@ -1,0 +1,8 @@
+import Girth.ContactEnumeration
+
+#print axioms StructuralRamsey.Girth.ContactJoinTree.inter_preconnected_eq_parent
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirst_preconnected
+#print axioms StructuralRamsey.Girth.ContactJoinTree.parentFirst_inter_eq
+#print axioms StructuralRamsey.Girth.contact_joinTree_of_admissibleRank
+#print axioms StructuralRamsey.Girth.contact_admissibleRank_of_attachments
+#print axioms StructuralRamsey.Girth.contact_joinTree_of_admissibleAttachments

@@ -92,7 +92,8 @@ def contact_uniform_edge_embedding [Fintype U] [LinearOrder U] [LinearOrder V]
         rw [contact_uniform_range_comp,Set.mem_singleton_iff.mp h.2,Set.image_univ]
         exact hf
     | inr r =>
-      change f (x (0 : Fin 2)) < f (x (1 : Fin 2)) ↔ x 0 < x 1
+      change f (x (0 : Fin 2)) < f (x (1 : Fin 2)) ↔
+        x (0 : Fin 2) < x (1 : Fin 2)
       exact f.strictMono.lt_iff_lt
 
 theorem contact_uniform_copy_edge [Fintype U] [LinearOrder U]
@@ -181,8 +182,7 @@ theorem contact_uniform_support_reduct [Fintype U] [Finite V]
     have hEq : b.toFun ∘ y = x := funext hy
     have hyrel : (contactUniformStructure a H).ordered.rel (.inl ()) y := by
       apply (b.map_rel_iff (.inl ()) y).mp
-      rw [hEq]
-      exact hx
+      exact hEq.symm ▸ hx
     have hY : Set.range y ∈ H := hyrel.2
     have hS : Set.range y ∈ supportCopies (contactUniformEdge a U).ordered
         (contactUniformStructure a H).ordered := by
@@ -222,8 +222,7 @@ theorem contact_uniform_copy_induced [Finite V] {a : ℕ}
     have hEq : b.toFun ∘ y = x := funext (fun i => (hy i).2)
     have hrel : (contactUniformStructure a H).ordered.rel (.inl ()) y := by
       apply (b.map_rel_iff (.inl ()) y).mp
-      rw [hEq]
-      exact hx
+      exact hEq.symm ▸ hx
     have hr : Set.range y = S := by
       ext z
       constructor

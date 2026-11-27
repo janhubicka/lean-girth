@@ -80,7 +80,8 @@ def contactCompleteOrder_mixedUnion
   toFun x := ⟨x.val,by
     obtain ⟨i,hi⟩ := Set.mem_iUnion.mp x.property
     exact Set.mem_iUnion.mpr ⟨i,contactCompleteOrder_member_carrier hC (m i) ▸ hi⟩⟩
-  injective := fun _ _ h => Subtype.ext (congrArg Subtype.val h)
+  injective := fun _ _ h => Subtype.ext
+    (congrArg (fun z : mixedFamilyCarrier m => z.val) h)
   map_rel_iff := by
     intro R x
     change (C.rel R (Subtype.val ∘ x) ∧

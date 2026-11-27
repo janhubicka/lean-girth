@@ -140,9 +140,9 @@ theorem actualCompletion (g n : ℕ)
         exact ⟨⟨i,hi⟩⟩
       letI : Subsingleton K := ⟨by
         intro i j
-        have hi := i.property
-        have hj := j.property
-        rw [ha] at hi hj
+        have hsub : s₀ ⊆ {a} := by rw [ha]
+        have hi := hsub i.property
+        have hj := hsub j.property
         exact Subtype.ext ((Finset.mem_singleton.mp hi).trans (Finset.mem_singleton.mp hj).symm)⟩
       exact ⟨s₀,Finset.Subset.rfl,fun _ h hn => (hn h).elim,fun _ => rfl,
         by simp,⟨ContactJoinTree.of_subsingleton _⟩⟩
@@ -185,7 +185,7 @@ theorem actualCompletion (g n : ℕ)
     funext a
     change R.actualMember (e (e.symm a.val)) = contactActualMember a.val
     rw [e.apply_symm_apply]
-    rfl
+    cases a.val <;> rfl
   letI : Nonempty {a // a ∈ t} := by
     obtain ⟨a,ha⟩ := hs
     exact ⟨⟨a,hst ha⟩⟩

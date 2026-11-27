@@ -134,6 +134,8 @@ namespace ContactOrderedEdgeWord
 variable {D : ContactHypergraphData V E I} [LinearOrder V]
     {P : Type v} {a : ℕ} (A : ContactOrderedEdgeWord D P a)
 
+include A
+
 theorem outer_edge_nontrivial (ha : 2 ≤ a) (e : E) : (D.edgeCarrier e).Nontrivial := by
   rw [A.carrier_eq]
   refine ⟨A.enumeration e ⟨0,by omega⟩,⟨_,rfl⟩,
@@ -236,6 +238,8 @@ variable {U F K : Type v} {m : ℕ}
     {H : ContactHypergraphData U F K} {S : ContactTrainData F m}
     (M : ContactDesignatedEmbeddings D T H S)
 
+include M
+
 /-- Local girth is transported along the actual designated embeddings;
 this is independent of any ambient girth conclusion. -/
 theorem copy_girth_of_source {g : ℕ} (hg : LabelledGirthGT D.edgeCarrier g)
@@ -246,7 +250,8 @@ theorem copy_girth_of_source {g : ℕ} (hg : LabelledGirthGT D.edgeCarrier g)
   have hex (i : Fin C.length) : ∃ e : E, f.edge e = (C.label i).val := by
     let z := (C.label i).val
     have h : z ∈ H.copyEdges j := (C.label i).property
-    exact M.edge_eq j ▸ h
+    rw [M.edge_eq j] at h
+    exact h
   choose e he using hex
   have hvx (i : Fin C.length) : ∃ x : V, f.vertex x = C.vertex i := by
     apply f.vertex_range_of_edge (e i)
@@ -329,15 +334,18 @@ theorem girth_of_quantitativeCompletion (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m
     simp at hx
   have hEq : t = s := Finset.Subset.antisymm hts hst
   subst t
-  let p (i : Fin C.length) : {a : I ⊕ E // a ∈ s} :=
-    ⟨f i,Finset.mem_image.mpr ⟨i,Finset.mem_univ _,rfl⟩⟩
-  have hpi : Function.Injective p := fun i j h => hfi (congrArg Subtype.val h)
+  let p (i : ULift.{v} (Fin C.length)) : {a : I ⊕ E // a ∈ s} :=
+    ⟨f i.down,Finset.mem_image.mpr ⟨i.down,Finset.mem_univ _,rfl⟩⟩
+  have hpi : Function.Injective p := by
+    intro i j h
+    apply ULift.ext
+    exact hfi (congrArg Subtype.val h)
   have hps : Function.Surjective p := by
     intro a
     obtain ⟨i,_,hi⟩ := Finset.mem_image.mp a.property
-    exact ⟨i,Subtype.ext hi⟩
+    exact ⟨⟨i⟩,Subtype.ext hi⟩
   let r := Equiv.ofBijective p ⟨hpi,hps⟩
-  let J' : ContactJoinTree (fun i : Fin C.length => H.edgeCarrier (C.label i)) :=
+  let J' : ContactJoinTree (fun i : ULift.{v} (Fin C.length) => H.edgeCarrier (C.label i.down)) :=
     J.reindex r
   let C' : LabelledBergeCycle (fun e : {e : E // True} => H.edgeCarrier e.val) := {
     length := C.length
@@ -348,18 +356,18 @@ theorem girth_of_quantitativeCompletion (g m : ℕ) (hg : 2 ≤ g) (hm : g ≤ m
     vertex_injective := C.vertex_injective
     left_mem := C.left_mem
     right_mem := C.right_mem }
-  refine contact_marked_cycle_impossible (fun i : Fin C.length => H.edgeCarrier (C.label i))
-    H.edgeCarrier (fun i => {C.label i}) (fun _ => True) J' ?_ ?_ hlin ?_ C' ?_
+  refine contact_marked_cycle_impossible (fun i : ULift.{v} (Fin C.length) => H.edgeCarrier (C.label i.down))
+    H.edgeCarrier (fun i => {C.label i.down}) (fun _ => True) J' ?_ ?_ hlin ?_ C' ?_
   · intro i e he
-    have he' : e = C.label i := Set.mem_singleton_iff.mp he
+    have he' : e = C.label i.down := Set.mem_singleton_iff.mp he
     subst e
     exact Set.Subset.rfl
   · intro i e f he hf _ _
     exact (Set.mem_singleton_iff.mp he).trans (Set.mem_singleton_iff.mp hf).symm
   · intro i j hne
-    exact Or.inl (hlin _ _ (fun h => hne (C.label_injective h)))
+    exact Or.inl (hlin _ _ (fun h => hne (ULift.ext (C.label_injective h))))
   · intro i
-    exact ⟨i,rfl⟩
+    exact ⟨⟨i⟩,rfl⟩
 
 end ContactHypergraphData
 

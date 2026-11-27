@@ -164,7 +164,8 @@ theorem restrict_nonc (C : ContactPolygon V P) {m : ℕ} (hm : 3 ≤ m)
 private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle K)
     (i j : Fin C.length) (hij : i.val < j.val) (hnc : C.Nonconsecutive i j)
     (hadj : contactAdjacent K (C.vertex i) (C.vertex j)) :
-    Nonempty (C.Split K) := by
+    ∃ S : C.Split K, StrictMono S.leftMap ∧ StrictMono S.rightMap ∧
+      S.left.length + S.right.length = C.length + 2 := by
   have hi := i.isLt
   have hj := j.isLt
   have hgap : i.val + 1 < j.val := by
@@ -207,7 +208,7 @@ private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle 
     cover := ?_
     side_cover := ?_
     chord := ?_
-  }⟩
+  }, f.strictMono, g.strictMono, by dsimp [restrict]; omega⟩
   · intro k
     change contactAdjacent K (C.vertex (f k)) (C.vertex (f (cyclicSucc k)))
     rcases interval_side hij k with h | ⟨h1,h2⟩
@@ -273,11 +274,12 @@ private theorem split_of_ordered_chord (C : ContactPolygon V P) (hc : C.IsCycle 
       interval_mem hij.le hij.le (le_refl _),complement_mem_low hij (le_refl _),
       complement_mem_high hij (le_refl _)⟩
 
-/-- Every actual chord yields the complete split record; no weight,
-intersection, or cyclic interval hypothesis remains external. -/
-theorem split_of_chord (C : ContactPolygon V P)
+/-- The two children of an actual chord split retain the original cyclic
+order, represented by strictly increasing vertex maps. -/
+theorem split_of_chord_monotone (C : ContactPolygon V P)
     (hc : C.IsCycle K) (hd : C.HasChord K) :
-    Nonempty (C.Split K) := by
+    ∃ S : C.Split K, StrictMono S.leftMap ∧ StrictMono S.rightMap ∧
+      S.left.length + S.right.length = C.length + 2 := by
   obtain ⟨i,j,hnc,hadj⟩ := hd
   by_cases h : i.val < j.val
   · exact C.split_of_ordered_chord hc i j h hnc hadj
@@ -288,6 +290,14 @@ theorem split_of_chord (C : ContactPolygon V P)
       obtain ⟨hne',a,ha,hb⟩ := hadj
       exact ⟨hne'.symm,a,hb,ha⟩
     exact C.split_of_ordered_chord hc j i hj hrev ha
+
+/-- Every actual chord yields the complete split record; no weight,
+intersection, or cyclic interval hypothesis remains external. -/
+theorem split_of_chord (C : ContactPolygon V P)
+    (hc : C.IsCycle K) (hd : C.HasChord K) :
+    Nonempty (C.Split K) := by
+  obtain ⟨S, _, _, _⟩ := C.split_of_chord_monotone hc hd
+  exact ⟨S⟩
 
 end ContactPolygon
 

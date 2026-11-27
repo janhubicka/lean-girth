@@ -1,0 +1,27 @@
+import Girth.ContactMetricTriangulation
+
+#print axioms StructuralRamsey.Girth.ContactPolygon.split_of_chord_monotone
+#print axioms StructuralRamsey.Girth.contact_metric_cyclic_restriction_le
+#print axioms StructuralRamsey.Girth.ContactPolygon.metricWeight
+#print axioms StructuralRamsey.Girth.ContactPolygon.metricWeight_le_of_increasing
+#print axioms StructuralRamsey.Girth.ContactPolygon.metricWeight_restrict_le
+#print axioms StructuralRamsey.Girth.ContactCycleBudgetStable
+#print axioms StructuralRamsey.Girth.ContactBudgetG4
+#print axioms StructuralRamsey.Girth.ContactBudgetSharedChord
+#print axioms StructuralRamsey.Girth.ContactCoveredTriangulation
+#print axioms StructuralRamsey.Girth.ContactCoveredTriangulation.triangleCount
+#print axioms StructuralRamsey.Girth.ContactCoveredTriangulation.triangleCount_add_two
+#print axioms StructuralRamsey.Girth.ContactCoveredTriangulation.covered_or_shared_chord
+#print axioms StructuralRamsey.Girth.ContactCoveredTriangulation.covered_side
+#print axioms StructuralRamsey.Girth.contactCoveredTriangulation_of_budgetG4
+#print axioms StructuralRamsey.Girth.contactBudgetSharedChord_of_G4
+#print axioms StructuralRamsey.Girth.contactBudgetG4_of_sharedChord
+#print axioms StructuralRamsey.Girth.contactBudgetSharedChord_iff_G4
+#print axioms StructuralRamsey.Girth.contactBudgetCoveredSide_of_G4
+#print axioms StructuralRamsey.Girth.contactMetricBudget_stable
+#print axioms StructuralRamsey.Girth.ContactMetricG4
+#print axioms StructuralRamsey.Girth.ContactMetricSharedChordBound
+#print axioms StructuralRamsey.Girth.contactCoveredTriangulation_of_metricG4
+#print axioms StructuralRamsey.Girth.contactCoveredSide_of_metricG4
+#print axioms StructuralRamsey.Girth.contactSharedChordBound_of_metricG4
+#print axioms StructuralRamsey.Girth.contactSharedChordBound_iff_metricG4

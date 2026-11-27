@@ -1,0 +1,5 @@
+import Girth.ContactAcyclicTraces
+
+#print axioms StructuralRamsey.Girth.contact_labelledGirth_of_incidence_acyclic
+#print axioms StructuralRamsey.Girth.contact_trace_joinTree_of_incidence_acyclic
+#print axioms StructuralRamsey.Girth.ContactJoinTree.erase_of_incidence_acyclic

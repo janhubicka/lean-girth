@@ -16,7 +16,7 @@ def contactInducedHypergraphPiece (H : Set (Set W)) (S : Set W) :
     HypergraphPiece W where
   carrier := S
   edges := {e | e ∈ H ∧ e ⊆ S}
-  edge_subset_carrier := fun he => he.2
+  edge_subset_carrier := fun {_} he => he.2
 
 theorem contact_uniform_supportPiece
     {L : RelLanguage} {A : RelStructure L U} {B : RelStructure L V}

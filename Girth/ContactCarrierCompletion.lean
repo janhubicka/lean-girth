@@ -91,12 +91,17 @@ def contactMixedUnion_reindex
   toFun x := ⟨x.val,by
     obtain ⟨j,hj⟩ := Set.mem_iUnion.mp x.property
     exact Set.mem_iUnion.mpr ⟨e j,hj⟩⟩
-  injective := fun x y h => Subtype.ext (congrArg Subtype.val h)
+  injective := fun x y h => Subtype.ext
+    (congrArg (fun z : mixedFamilyCarrier m => z.val) h)
   map_rel_iff := by
     intro R x
     constructor
     · rintro ⟨hx,i,hi⟩
-      exact ⟨hx,e.symm i,fun k => by rw [e.apply_symm_apply]; exact hi k⟩
+      refine ⟨hx,e.symm i,?_⟩
+      intro k
+      change (x k).val ∈ (m (e (e.symm i))).carrier
+      rw [e.apply_symm_apply]
+      exact hi k
     · rintro ⟨hx,j,hj⟩
       exact ⟨hx,e j,hj⟩
 
@@ -174,7 +179,8 @@ theorem contactCarrierMixedCompletion_of_actual
       have he' : c b.val = X := hb
       exact hnot (he.symm.trans he' ▸ Y.property)
     obtain ⟨d,hd⟩ := hadd b.val b.property hb'
-    exact ⟨d,hd ▸ (show c b.val = X from hb)⟩
+    have hcarrier : c b.val = copyCarrier d := congrArg c hd
+    exact ⟨d,hcarrier.symm.trans (show c b.val = X from hb)⟩
   · intro h1
     have he := hsingle (hsc.trans h1)
     apply Finset.Subset.antisymm ?_ hst'
@@ -190,9 +196,10 @@ theorem contactCarrierMixedCompletion_of_actual
   · refine ⟨?_,?_⟩
     · intro X Y hne
       exact hforest.1 (fun he => hne (e.injective he))
-    · rcases hforest.2 with hEmpty | ⟨T⟩
+    · rcases hforest.2 with hEmpty | hTree
       · exact Or.inl ⟨fun X => hEmpty.false (e X)⟩
-      · exact Or.inr ⟨T.reindex e⟩
+      · obtain ⟨T⟩ := hTree
+        exact Or.inr ⟨T.reindex e⟩
   · obtain ⟨Y,D,hEmb,hD⟩ := hUnion
     exact ⟨Y,D,hEmb.comp (contactMixedUnion_reindex m₀ e),hD⟩
 

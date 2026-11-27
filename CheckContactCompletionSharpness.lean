@@ -1,0 +1,35 @@
+import Girth.ContactCompletionSharpness
+
+#print axioms StructuralRamsey.Girth.contact_linear_cycle_no_joinTree
+#print axioms StructuralRamsey.Girth.contact_completion_star_forest
+#print axioms StructuralRamsey.Girth.contactCycleEdge_injective
+#print axioms StructuralRamsey.Girth.contactCycleEdge_linear
+#print axioms StructuralRamsey.Girth.contactCycleEdge_card
+#print axioms StructuralRamsey.Girth.contactCycleBerge
+#print axioms StructuralRamsey.Girth.contactCycleEdge_cycle_length
+#print axioms StructuralRamsey.Girth.contactCycleEdge_girth
+#print axioms StructuralRamsey.Girth.contactCycleStar_carrier_injective
+#print axioms StructuralRamsey.Girth.contact_cycle_completion_sharp
+#print axioms StructuralRamsey.Girth.contact_ternary_cycle_no_supported_embedding
+#print axioms StructuralRamsey.Girth.contactSharpEdgeUnion_comparison
+#print axioms StructuralRamsey.Girth.contactSharpEdgeUnion_no_embedding
+#print axioms StructuralRamsey.Girth.contactSharpEdgeUnion_relation_union
+#print axioms StructuralRamsey.Girth.contactSharpEdgeEmbedding
+#print axioms StructuralRamsey.Girth.contactSharpEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.contactSharpCycle_edge_copy
+#print axioms StructuralRamsey.Girth.contactSharpCycle_supportCopies
+#print axioms StructuralRamsey.Girth.contactSharpCycle_support_girth
+#print axioms StructuralRamsey.Girth.contactSharpCycleEdgeMembers_carrier
+#print axioms StructuralRamsey.Girth.contactSharpEdgeUnion_iso
+#print axioms StructuralRamsey.Girth.contactSharpCycle_mixedUnion_no_embedding
+#print axioms StructuralRamsey.Girth.contactSharpCycleStarMembers_forest
+#print axioms StructuralRamsey.Girth.contactSharpCycleStar_union_iso
+#print axioms StructuralRamsey.Girth.contactSharpCycleEdgeMembers_injective
+#print axioms StructuralRamsey.Girth.contactSharpCycleStarMembers_carrier_injective
+#print axioms StructuralRamsey.Girth.contactSharp_actual_completion
+#print axioms StructuralRamsey.Girth.contactCycleEdge_small_family_forest
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_extends
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_comparison
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_not_chordal
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_no_embedding
+#print axioms StructuralRamsey.Girth.contact_vertex_cutoff_cycle_obstruction

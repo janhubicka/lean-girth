@@ -1,0 +1,11 @@
+import Girth.ContactWagonGirthEquivalence
+
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.finer_cycle_constant_at_coarser_cut
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.finer_cycle_in_one_coarser_wagon
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.finer_cycle_in_one_coarser_wagon_of_acyclic
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.parentChildCarrier
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.parent_child_girth_of_global
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.finer_girth_of_parent_and_children
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.ProperWagonGirth
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.ParentWagonGirth
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.properWagonGirth_iff_parentWagonGirth

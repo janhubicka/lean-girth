@@ -1,0 +1,13 @@
+import Girth.ContactTreeAmalgamChordal
+
+#print axioms StructuralRamsey.Girth.contactComparisonGraph
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_embedding
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_ordered_adj
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_embedding_ordered
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_chordal_of_embedding
+#print axioms StructuralRamsey.Girth.contactChordal_of_complete
+#print axioms StructuralRamsey.Girth.contactChordal_cliqueExtension
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_freeAmalgam_side
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_freeAmalgam_chordal
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.comparison_chordal
+#print axioms StructuralRamsey.Girth.contactComparisonGraph_chordal_of_supportedTree_embedding
