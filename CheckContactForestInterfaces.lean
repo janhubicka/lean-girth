@@ -1,0 +1,5 @@
+import Girth.ContactForestInterfaces
+
+#print axioms StructuralRamsey.Girth.JoinTree.mem_of_mem_path
+#print axioms StructuralRamsey.Girth.JoinTree.pairwiseAllowed_of_links
+#print axioms StructuralRamsey.Girth.contact_forestOfCopies_iff_linkAllowed

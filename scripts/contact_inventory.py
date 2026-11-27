@@ -27,10 +27,13 @@ all_modules = {".".join(p.relative_to(root).with_suffix("").parts)
                for p in (root / "Girth").rglob("*.lean")} | {"Girth"}
 fast = closure("Girth.ContactCore")
 integration = closure("Girth")
+manuscript = closure("CheckContactManuscript") & all_modules
+validation = integration | manuscript
 print(f"Project modules: {len(all_modules)}")
 print(f"Fast import closure: {len(fast)}")
 print(f"Integration import closure: {len(integration)}")
-print(f"Dormant historical modules: {len(all_modules - integration)}")
+print(f"Complete validation import closure: {len(validation)}")
+print(f"Dormant historical modules: {len(all_modules - validation)}")
 print("Fast modules:", ", ".join(sorted(fast)))
 # The following are explicitly new contact-graph modules, not legacy
 # forest proofs. Keep the historical-name guard for all other imports.
@@ -42,4 +45,5 @@ bad = sorted(name for name in fast
                                         "Replacement", "Support", "Forest")))
 if bad:
     raise SystemExit(f"Old proof dependency leaked into fast gate: {bad}")
-assert fast <= integration
+if not fast <= integration:
+    raise SystemExit("The default target omits part of the contact kernel")
