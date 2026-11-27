@@ -1,0 +1,23 @@
+import Girth.ContactVertexSharpness
+
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_irreducible_edge
+#print axioms StructuralRamsey.Girth.contactSharpTwoPoint
+#print axioms StructuralRamsey.Girth.contactSharpPureEdgeEmbedding
+#print axioms StructuralRamsey.Girth.contactSharpPureEdgeEmbedding_carrier
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_edge_copy
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_embedding_edge
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_supportCopies
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_actual_carriers
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_support_girth
+#print axioms StructuralRamsey.Girth.contactSharpTwoPoint_support_girth
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_arrow
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_linear
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_strong
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_intersections
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_shared_support
+#print axioms StructuralRamsey.Girth.contactSharpTwoPoint_member_support_edges
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_small_family
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_completion
+#print axioms StructuralRamsey.Girth.contactSharpPureCycle_irreducible_cover
+#print axioms StructuralRamsey.Girth.contactSharpTwoPoint_input
+#print axioms StructuralRamsey.Girth.contact_vertex_cutoff_sharp

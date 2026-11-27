@@ -1,4 +1,5 @@
 import Girth.Berge
+import Girth.TrainLevelsData
 
 /-!
 # Restriction of nested train edge-equivalence levels
@@ -24,17 +25,6 @@ namespace StructuralRamsey.Girth
 
 universe v
 variable {E F W : Type v}
-
-/-- The equivalence-level data of a height-m train, with
-explicit bottom equality, top universal class and nesting. -/
-structure EdgeTrainLevels (E : Type v) (m : ℕ) where
-  rel : Fin (m + 1) → E → E → Prop
-  equivalent : ∀ μ, Equivalence (rel μ)
-  nested : ∀ μ ν : Fin (m + 1), μ ≤ ν →
-    ∀ e f : E, rel μ e f → rel ν e f
-  bottom : ∀ e f : E,
-    rel ⟨0, Nat.zero_lt_succ m⟩ e f ↔ e = f
-  top : ∀ e f : E, rel ⟨m, Nat.lt_succ_self m⟩ e f
 
 /-- Restrict every train equivalence level along an injective
 embedding of surviving edge labels. -/

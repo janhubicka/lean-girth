@@ -1,0 +1,17 @@
+import Girth.ContactRelationalExact
+
+#print axioms StructuralRamsey.Girth.contact_ordered_irreducible
+#print axioms StructuralRamsey.Girth.contact_ordered_embedding_eq
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.support_exact
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.girth
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.mixedEquiv
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.member_carrier
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.member_piece_carrier
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.member_edge
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.mixedForest_of_joinTree
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.mixedShared_of_supported
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.mixedTree_of_joinTree
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.copy_injective_of_twoEdges
+#print axioms StructuralRamsey.Girth.contactRealizeSupport
+#print axioms StructuralRamsey.Girth.ContactRelationalRealization.arrow

@@ -1,0 +1,10 @@
+import Girth.ContactOrderCompletion
+
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_member
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_member_carrier
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_member_rel_iff
+#print axioms StructuralRamsey.Girth.contactHypergraphPiece_eq
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_member_piece
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_mixedUnion
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_carrierCompletion
+#print axioms StructuralRamsey.Girth.contactCompleteOrder_fullCorollary

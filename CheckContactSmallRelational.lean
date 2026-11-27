@@ -1,0 +1,10 @@
+import Girth.ContactSmallRelational
+
+#print axioms StructuralRamsey.Girth.contact_chordal_cliqueCover
+#print axioms StructuralRamsey.Girth.contact_chordal_cliqueCover_nonempty
+#print axioms StructuralRamsey.Girth.contact_comparison_clique_irreducible
+#print axioms StructuralRamsey.Girth.contact_comparison_adj_copy
+#print axioms StructuralRamsey.Girth.contact_mixed_member_clique
+#print axioms StructuralRamsey.Girth.contact_small_comparison_chordal
+#print axioms StructuralRamsey.Girth.contact_relation_range_irreducible
+#print axioms StructuralRamsey.Girth.contact_small_induced_supported

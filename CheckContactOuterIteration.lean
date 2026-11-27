@@ -1,0 +1,5 @@
+import Girth.ContactOuterIteration
+
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.outerCore_of_invariant
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.exists_outer_chain
+#print axioms StructuralRamsey.Girth.ContactTrainPicture.outer_of_seed

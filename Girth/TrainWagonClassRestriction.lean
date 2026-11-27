@@ -19,13 +19,6 @@ namespace StructuralRamsey.Girth
 universe v
 variable {E F W : Type v}
 
-/-- The setoid whose classes are the μ-wagons of the edge train. -/
-def EdgeTrainLevels.wagonSetoid
-    {m : ℕ} (T : EdgeTrainLevels E m)
-    (μ : Fin (m + 1)) : Setoid E where
-  r := T.rel μ
-  iseqv := T.equivalent μ
-
 /-- A surviving μ-wagon maps to its ORIGINAL μ-wagon, and this
 map is injective. In particular, repeated carrier sets are not
 collapsed merely because they happen to have the same vertices. -/

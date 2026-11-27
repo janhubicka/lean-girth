@@ -1,0 +1,10 @@
+import Girth.ContactRelationalSupportWitness
+
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.MixedSharedSupported
+#print axioms StructuralRamsey.Girth.ContactHypergraphData.linear_of_pairwise
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.padded_completable
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.padded_sharedSupported
+#print axioms StructuralRamsey.Girth.ContactDesignatedEmbeddings.exists_paddedOrder
+#print axioms StructuralRamsey.Girth.ContactRelationalSupportWitness
+#print axioms StructuralRamsey.Girth.contactRelationalSupportWitness_single
+#print axioms StructuralRamsey.Girth.contactRelationalSupportWitness_exists

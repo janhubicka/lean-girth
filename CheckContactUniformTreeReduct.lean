@@ -1,0 +1,8 @@
+import Girth.ContactUniformTreeReduct
+
+#print axioms StructuralRamsey.Girth.contactOrderReduct_embedding
+#print axioms StructuralRamsey.Girth.contactOrderReduct_iso
+#print axioms StructuralRamsey.Girth.contactOrderReduct_free
+#print axioms StructuralRamsey.Girth.ASupportedTreeAmalgam.contact_orderReduct
+#print axioms StructuralRamsey.Girth.contact_uniform_tuple_rel_iff
+#print axioms StructuralRamsey.Girth.contact_uniform_induced_reduct

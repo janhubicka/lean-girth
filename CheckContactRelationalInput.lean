@@ -1,0 +1,8 @@
+import Girth.ContactRelationalInput
+
+#print axioms StructuralRamsey.Girth.ContactDiagonalType
+#print axioms StructuralRamsey.Girth.contactDiagonalLabel
+#print axioms StructuralRamsey.Girth.contactDiagonalLabel_eq_iff
+#print axioms StructuralRamsey.Girth.contactDiagonalType_finite
+#print axioms StructuralRamsey.Girth.contactDiagonalType_order
+#print axioms StructuralRamsey.Girth.contactRelationalTrimWord

@@ -1,16 +1,25 @@
-name: Lean
+name: Contact graph validation
 
 on:
+  # A validation branch with a PR needs only ONE check per exact head.
+  # Direct pushes to the default branch still run CI.
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      integration:
+        description: "Also build and audit the reused relational integration root"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref || github.ref_name }}
-  cancel-in-progress: true
+  # Let the preceding exact-head audit finish instead of cancelling it mid-proof.
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -22,11 +31,12 @@ jobs:
         with:
           path: ~/.elan/toolchains
           key: lean-toolchain-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}
-      - name: Cache Lake workspace
-        uses: actions/cache@v5
+      - name: Restore pinned Lake dependency cache
+        id: lake-cache
+        uses: actions/cache/restore@v5
         with:
           path: .lake
-          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-${{ github.sha }}
+          key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-contact-deps-v1
           restore-keys: |
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json') }}-
       - name: Install elan
@@ -55,7 +65,7 @@ jobs:
           # No Git process is active before this first Lake invocation.
           for attempt in 1 2 3 4 5; do
             rm -f .lake/packages/batteries/.git/index.lock
-            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup; then
+            if lake exe cache get Mathlib.Tactic Mathlib.Data.Fintype.Pi Mathlib.Data.Fintype.Basic Mathlib.Data.Finset.Dedup Mathlib.Combinatorics.HalesJewett Mathlib.Order.PiLex Mathlib.Order.Prod.Lex.Basic; then
               break
             fi
             if [[ "$attempt" -eq 5 ]]; then
@@ -64,40 +74,213 @@ jobs:
             fi
             sleep "$((attempt * 12))"
           done
-      - name: Inventory source and test audit checkers
+      - name: Remove all old project build objects
+        run: rm -rf .lake/build
+      - name: Save pinned dependencies before proof checking
+        if: steps.lake-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: .lake
+          key: ${{ steps.lake-cache.outputs.cache-primary-key }}
+      - name: Inventory focused dependency closures
+        run: python3 scripts/contact_inventory.py
+      - name: Audit the compiled word base and complete step invariants
+        shell: bash
         run: |
-          python3 scripts/test_audit_circulation.py
+          set -euo pipefail
           python3 scripts/test_check_axioms.py
-          python3 scripts/audit_circulation.py --output audit-inventory.json
-      - name: Build every project module from this checkout
+          lake build +Girth.ContactWordPreparation
+          lake env lean CheckContactWordPreparation.lean | tee contact-word-preparation-axioms.log
+          python3 scripts/check_axioms.py contact-word-preparation-axioms.log CheckContactWordPreparation.lean
+      - name: Audit the complete refinement and cutoff-two assembly
         shell: bash
         run: |
           set -euo pipefail
-          # Keep dependency caches, but never reuse unchecked project objects.
-          rm -rf .lake/build
-          python3 - <<'PY' > audit-build-targets.txt
-          from pathlib import Path
-          print('Girth')
-          for source in sorted(Path('Girth').rglob('*.lean')):
-              print('.'.join(source.with_suffix('').parts))
-          PY
-          mapfile -t modules < audit-build-targets.txt
-          lake build "${modules[@]}"
-      - name: Check every theorem audit exactly once
+          lake build +Girth.ContactAssemblyPreparation
+          lake env lean CheckContactAssemblyPreparation.lean | tee contact-assembly-preparation-axioms.log
+          python3 scripts/check_axioms.py contact-assembly-preparation-axioms.log CheckContactAssemblyPreparation.lean
+      - name: Audit ordered seeds and refined recursive input
+        id: contact-preparation
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          checks=(Check*.lean)
-          test "${#checks[@]}" -gt 0
-          for source in "${checks[@]}"; do
-            log="${source%.lean}.log"
-            lake env lean "$source" | tee "$log"
-            python3 scripts/check_axioms.py "$log" "$source"
-          done
-      - name: Run finite boundary regressions
+          lake build +Girth.ContactRefinedCoreAssembly +Girth.ContactRankAssembly +Girth.ContactCutoffTwoProfileRamsey +Girth.ContactCoverage +Girth.ContactBoostDistinctImages
+          lake env lean CheckContactOrderedRefinedInput.lean | tee contact-ordered-refined-axioms.log
+          python3 scripts/check_axioms.py contact-ordered-refined-axioms.log CheckContactOrderedRefinedInput.lean
+      - name: Build the expanded contact kernel
+        shell: bash
         run: |
-          python3 scripts/check_boundary_transport.py
-          python3 scripts/check_boundary_girth.py
-          python3 scripts/check_order_one_bridge.py
-          python3 scripts/check_output_connector_layout.py
+          set -euo pipefail
+          lake build +Girth.ContactCore
+      - name: Strict standalone axiom audit
+        id: contact-core-audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean CheckContactCore.lean | tee contact-core-axioms.log
+          python3 scripts/check_axioms.py contact-core-axioms.log CheckContactCore.lean
+      - name: Audit covered-family restriction and isolated-vertex geometry
+        id: contact-coverage
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactIsolatedPadding
+          lake env lean CheckContactCoverage.lean | tee contact-coverage-axioms.log
+          python3 scripts/check_axioms.py contact-coverage-axioms.log CheckContactCoverage.lean
+      - name: Audit outer marked edges and qualitative completion
+        id: contact-outer-preparation
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactMarkedEdges +Girth.ContactQualitativeCompletion +Girth.ContactBoostDistinctImages
+          lake env lean CheckContactOuterPreparation.lean | tee contact-outer-preparation-axioms.log
+          python3 scripts/check_axioms.py contact-outer-preparation-axioms.log CheckContactOuterPreparation.lean
+      - name: Audit quantitative completion by minimum added family
+        id: contact-quantitative-completion
+        if: ${{ always() && !cancelled() && steps.contact-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactMixedCompletionCost
+          lake env lean CheckContactQuantitativeCompletion.lean | tee contact-quantitative-completion-axioms.log
+          python3 scripts/check_axioms.py contact-quantitative-completion-axioms.log CheckContactQuantitativeCompletion.lean
+      - name: Audit full local-forest partite application
+        id: contact-local-partite
+        if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactLocalForestPartite
+          lake env lean CheckContactLocalForestPartite.lean | tee contact-local-partite-axioms.log
+          python3 scripts/check_axioms.py contact-local-partite-axioms.log CheckContactLocalForestPartite.lean
+      - name: Audit relational restoration geometry
+        id: contact-restoration
+        if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' && steps.contact-coverage.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterRelationalGeometry
+          lake env lean CheckContactOuterRelationalGeometry.lean | tee contact-outer-relational-axioms.log
+          python3 scripts/check_axioms.py contact-outer-relational-axioms.log CheckContactOuterRelationalGeometry.lean
+      - name: Audit actual relational union and ordered support input
+        id: contact-relational-input
+        if: ${{ always() && !cancelled() && steps.contact-core-audit.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalInput
+          lake env lean CheckContactRelationalUnion.lean | tee contact-relational-union-axioms.log
+          python3 scripts/check_axioms.py contact-relational-union-axioms.log CheckContactRelationalUnion.lean
+          lake env lean CheckContactRelationalInput.lean | tee contact-relational-input-axioms.log
+          python3 scripts/check_axioms.py contact-relational-input-axioms.log CheckContactRelationalInput.lean
+      - name: Audit unordered uniform hypergraph reduction
+        id: contact-uniform-reduction
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactUniformReduction
+          lake env lean CheckContactUniformReduction.lean | tee contact-uniform-reduction-axioms.log
+          python3 scripts/check_axioms.py contact-uniform-reduction-axioms.log CheckContactUniformReduction.lean
+      - name: Audit order-reduct transfer
+        id: contact-order-reduct
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOrderReduct
+          lake env lean CheckContactOrderReduct.lean | tee contact-order-reduct-axioms.log
+          python3 scripts/check_axioms.py contact-order-reduct-axioms.log CheckContactOrderReduct.lean
+      - name: Audit exact relational copies and forest transport
+        id: contact-relational-exact
+        if: ${{ always() && !cancelled() && steps.contact-relational-input.outcome == 'success' && steps.contact-restoration.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalExact
+          lake env lean CheckContactRelationalExact.lean | tee contact-relational-exact-axioms.log
+          python3 scripts/check_axioms.py contact-relational-exact-axioms.log CheckContactRelationalExact.lean
+      - name: Audit actual outer picture preservation
+        id: contact-outer-step
+        if: ${{ always() && !cancelled() && steps.contact-outer-preparation.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterCompletionStep
+          lake env lean CheckContactOuterStep.lean | tee contact-outer-step-axioms.log
+          python3 scripts/check_axioms.py contact-outer-step-axioms.log CheckContactOuterStep.lean
+      - name: Audit outer finite iteration with supplied local cores
+        id: contact-outer-iteration
+        if: ${{ always() && !cancelled() && steps.contact-outer-step.outcome == 'success' && steps.contact-local-partite.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterIteration
+          lake env lean CheckContactOuterIteration.lean | tee contact-outer-iteration-axioms.log
+          python3 scripts/check_axioms.py contact-outer-iteration-axioms.log CheckContactOuterIteration.lean
+      - name: Audit the assembled outer girth Ramsey theorem
+        id: contact-outer-assembly
+        if: ${{ always() && !cancelled() && steps.contact-outer-iteration.outcome == 'success' && steps.contact-quantitative-completion.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOuterAssembly
+          lake env lean CheckContactOuterAssembly.lean | tee contact-outer-assembly-axioms.log
+          python3 scripts/check_axioms.py contact-outer-assembly-axioms.log CheckContactOuterAssembly.lean
+      - name: Audit fully restored support witness
+        id: contact-relational-support
+        if: ${{ always() && !cancelled() && steps.contact-relational-exact.outcome == 'success' && steps.contact-outer-assembly.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalSupportWitness
+          lake env lean CheckContactRelationalSupportWitness.lean | tee contact-relational-support-axioms.log
+          python3 scripts/check_axioms.py contact-relational-support-axioms.log CheckContactRelationalSupportWitness.lean
+      - name: Audit final relational girth Ramsey theorem
+        id: contact-final-relational
+        if: ${{ always() && !cancelled() && steps.contact-relational-support.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactRelationalGirthRamsey
+          lake env lean CheckContactRelationalGirthRamsey.lean | tee contact-final-relational-axioms.log
+          python3 scripts/check_axioms.py contact-final-relational-axioms.log CheckContactRelationalGirthRamsey.lean
+      - name: Audit literal carrier-set relational theorem
+        id: contact-carrier-completion
+        if: ${{ always() && !cancelled() && steps.contact-final-relational.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactCarrierCompletion
+          lake env lean CheckContactCarrierCompletion.lean | tee contact-carrier-completion-axioms.log
+          python3 scripts/check_axioms.py contact-carrier-completion-axioms.log CheckContactCarrierCompletion.lean
+      - name: Audit unordered hypergraph local-forest Ramsey theorem
+        if: ${{ always() && !cancelled() && steps.contact-carrier-completion.outcome == 'success' && steps.contact-uniform-reduction.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactUniformLocalRamsey
+          lake env lean CheckContactUniformLocalRamsey.lean | tee contact-uniform-ramsey-axioms.log
+          python3 scripts/check_axioms.py contact-uniform-ramsey-axioms.log CheckContactUniformLocalRamsey.lean
+      - name: Audit full order-extension corollary
+        if: ${{ always() && !cancelled() && steps.contact-carrier-completion.outcome == 'success' && steps.contact-order-reduct.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth.ContactOrderCompletion
+          lake env lean CheckContactOrderCompletion.lean | tee contact-order-completion-axioms.log
+          python3 scripts/check_axioms.py contact-order-completion-axioms.log CheckContactOrderCompletion.lean
+      - name: Build complete proof and audit principal theorems
+        shell: bash
+        run: bash scripts/check_contact_validation.sh
+      - name: Build and audit relational integration
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.integration }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build +Girth
+          lake env lean CheckContactGraph.lean | tee contact-axioms.log
+          python3 scripts/check_axioms.py contact-axioms.log CheckContactGraph.lean

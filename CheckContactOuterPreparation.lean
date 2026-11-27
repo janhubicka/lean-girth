@@ -1,0 +1,12 @@
+import Girth.ContactMarkedEdges
+import Girth.ContactQualitativeCompletion
+import Girth.ContactBoostDistinctImages
+
+#print axioms StructuralRamsey.Girth.contact_marked_cycle_impossible
+#print axioms StructuralRamsey.Girth.ContactCompletable
+#print axioms StructuralRamsey.Girth.contact_qualitative_completion_lift
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.edge_nontrivial
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_smallForests
+#print axioms StructuralRamsey.Girth.ContactBoostInput.Witness.dedup_injective
+#print axioms StructuralRamsey.Girth.ContactBoostInput.forestBoost_distinctImages

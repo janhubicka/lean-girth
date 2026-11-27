@@ -1,0 +1,10 @@
+import Girth.ContactCarrierCompletion
+
+#print axioms StructuralRamsey.Girth.ContactActualCarrier.Canonical
+#print axioms StructuralRamsey.Girth.ContactActualCarrier.exists_canonical
+#print axioms StructuralRamsey.Girth.ContactActualCarrier.canonical_injective
+#print axioms StructuralRamsey.Girth.ContactCarrierMixedCompletion
+#print axioms StructuralRamsey.Girth.contactMixedUnion_reindex
+#print axioms StructuralRamsey.Girth.contactCarrierMixedCompletion_of_actual
+
+#print axioms StructuralRamsey.Girth.contactRelationalGirthRamsey_carriers

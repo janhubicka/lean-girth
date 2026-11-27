@@ -1,0 +1,7 @@
+import Girth.ContactSmallHypergraph
+
+#print axioms StructuralRamsey.Girth.contact_uniform_reduct_uniform
+#print axioms StructuralRamsey.Girth.contact_uniform_arrow_transfer
+#print axioms StructuralRamsey.Girth.ContactUniformSmallRamseyWitness
+#print axioms StructuralRamsey.Girth.contactUniformSmallRamsey_edgeless
+#print axioms StructuralRamsey.Girth.contactUniformSmallRamsey

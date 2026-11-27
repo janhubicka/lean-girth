@@ -1,0 +1,8 @@
+import Girth.ContactChordalTreeEmbedding
+
+#print axioms StructuralRamsey.Girth.ContactFreeTree
+#print axioms StructuralRamsey.Girth.ContactFreeTree.embeds_supportedTree
+#print axioms StructuralRamsey.Girth.contact_freeAmalgam_map
+#print axioms StructuralRamsey.Girth.contact_trace_attach
+#print axioms StructuralRamsey.Girth.contact_trace_tree_unfold
+#print axioms StructuralRamsey.Girth.contact_trace_tree_embeds_supported
